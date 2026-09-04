@@ -5,7 +5,7 @@
 #include "ResultsProcessor.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryMeBondCurves.h"
+#include "tryAqBondsCurves.h"
 #include "tryMeLWOBond.h"
 
 #include "FolderConfig.h"
@@ -206,7 +206,7 @@ namespace
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 		infoBlocks.push_back( getTableInfoFromStringMatrix( bondMarketData ));
 
-		std::string objectName = validation::tryMeBondCurveCreate( bondCurveName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryAqBondsCurveCreate( bondCurveName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -226,7 +226,7 @@ namespace
 		std::vector<validation::TableInfo> infoBlocks;
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 
-		std::string objectName = validation::tryMeBondCurveCreate( bondspreadCurveName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryAqBondsCurveCreate( bondspreadCurveName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -335,7 +335,7 @@ namespace google_test
 		const std::vector<double> bondMaturities = nsCalibrationInputFile["bondMaturities"];
 		const std::vector<double> bondYields     = nsCalibrationInputFile["bondYields"];
 
-		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation::tryMeBondCurveNelsonSiegelCalibrate( bondMaturities, bondYields,
+		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation::tryAqBondsCurveNelsonSiegelCalibrate( bondMaturities, bondYields,
 																														 initialGuess,
 																														 maxIterations, maxStationaryStateIterations,
 																														 lowerBounds, upperBounds );
@@ -386,7 +386,7 @@ namespace google_test
 		const std::vector<double> bondMaturities = svenssonCalibrationInputFile["bondMaturities"];
 		const std::vector<double> bondYields     = svenssonCalibrationInputFile["bondYields"];
 
-		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation::tryMeBondCurveSvenssonCalibrate( bondMaturities, bondYields,
+		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation::tryAqBondsCurveSvenssonCalibrate( bondMaturities, bondYields,
 																													 initialGuess,
 																													 maxIterations, maxStationaryStateIterations,
 																													 lowerBounds, upperBounds );
@@ -433,7 +433,7 @@ namespace google_test
 		const std::vector<double> bondMaturities = polynomialCalibrationInputFile["bondMaturities"];
 		const std::vector<double> bondYields     = polynomialCalibrationInputFile["bondYields"];
 
-		etrading::PolynomialCalibrationResults calibrationResult = validation::tryMeBondCurvePolynomialCalibrate( polynomialOrder,
+		etrading::PolynomialCalibrationResults calibrationResult = validation::tryAqBondsCurvePolynomialCalibrate( polynomialOrder,
 																														bondMaturities,
 																														bondYields,
 																														maxIterations,
@@ -468,7 +468,7 @@ namespace google_test
 		// Bond maturities to calculate
 		const std::vector<double> bondMaturities = nsBondYieldInputFile["maturities"];
 
-		const std::vector<double> calculatedYields = validation::tryMeBondCurveNelsonSiegelYield( beta0, beta1, beta2, lambda, bondMaturities );
+		const std::vector<double> calculatedYields = validation::tryAqBondsCurveNelsonSiegelYield( beta0, beta1, beta2, lambda, bondMaturities );
 
         // Compare Results
         const double tolerance = 0.000000001;
@@ -493,7 +493,7 @@ namespace google_test
 		// Bond maturities to calculate
 		const std::vector<double> bondMaturities = svenssonBondYieldInputFile["maturities"];
 
-		const std::vector<double> calculatedYields = validation::tryMeBondCurveSvenssonYield( beta0, beta1, beta2, beta3, lambda1, lambda2, bondMaturities );
+		const std::vector<double> calculatedYields = validation::tryAqBondsCurveSvenssonYield( beta0, beta1, beta2, beta3, lambda1, lambda2, bondMaturities );
 
         // Compare Results
         const double tolerance = 0.000000001;
@@ -513,7 +513,7 @@ namespace google_test
 		// Bond maturities to calculate
 		const std::vector<double> bondMaturities = polynomialBondYieldInputFile["maturities"];
 
-		const std::vector<double> calculatedYields = validation::tryMeBondCurvePolynomialYield( coefficients, bondMaturities );
+		const std::vector<double> calculatedYields = validation::tryAqBondsCurvePolynomialYield( coefficients, bondMaturities );
 
         // Compare Results
         const double tolerance = 0.000000001;
@@ -531,7 +531,7 @@ namespace google_test
         const ReadDataFile::Load bondCurveDisplayInputFile( bondCurveDisplay_inputs.c_str() );
 		const std::string bondCurveObjectName  = bondCurveDisplayInputFile["bondCurveName"];
 
-		const AnyTypeMatrix calibratedYields = validation::tryMeBondCurveDisplay( bondCurveObjectName );
+		const AnyTypeMatrix calibratedYields = validation::tryAqBondsCurveDisplay( bondCurveObjectName );
 
 		const double tolerance = 1.0e-9;
 		checkBondCurveCalibration( calibratedYields, bondCurveDisplay_outputs, tolerance );

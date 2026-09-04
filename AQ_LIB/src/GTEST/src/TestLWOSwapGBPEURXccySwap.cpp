@@ -1,11 +1,11 @@
 // TestLWOSwapGBPEURXccySwap.cpp
 
 // Curves
-#include "TryMeCurveOis.h"
-#include "TryMeCurveStd.h"
-#include "TryMeCurveTenorBasis.h"
-#include "TryMeCurveXccyBasis.h"
-#include "TryMeCurveFwdFxConst.h"
+#include "TryAqCurvesOis.h"
+#include "TryAqCurvesStd.h"
+#include "TryAqCurvesTenorBasis.h"
+#include "TryAqCurvesXccyBasis.h"
+#include "TryAqCurvesFwdFxConst.h"
 
 // Swap Creation and Pricing
 #include "tryMeLWOSwapCreation.h"

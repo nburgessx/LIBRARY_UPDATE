@@ -9,8 +9,8 @@
 #include "ParameterValidation.h"
 #include "RecordMacros.h"
 #include "StructuredExceptionHandler.h"
-#include "tryMeCurveDiscountFactor.h" // needed for the utility functions
-#include "tryMeDate.h"
+#include "tryAqCurvesDiscountFactor.h" // needed for the utility functions
+#include "tryAqDates.h"
 
 #include <string>
 #include <limits>
@@ -21,7 +21,7 @@ using etrading::decorateCurvename;
 
 namespace validation
 {
-    /* @brief			validation method for meCurveDiscountFactorsFromYearFractions
+    /* @brief			validation method for aqCurvesDiscountFactorsFromYearFractions
     *  @param [in]		lwoCurveName	Curve Name
     *  @param [in]		yearFractions	An array of yearFractions by year count
     *  @param [in]		dayCount	    The daycount fraction used to generate the yearFraction
@@ -79,7 +79,7 @@ namespace validation
     }
 
 
-    /* @brief			validation method for meCurveDiscountFactorsFromTenors
+    /* @brief			validation method for aqCurvesDiscountFactorsFromTenors
     *  @param [in]		lwoCurveName	Curve Name
     *  @param [in]		tenors			An array of tenor strings
     *  @param [in]		businessDayAdj	Rule that decides if end date should roll forward or backward etc, ie, MF. Default to 'NO_CHANGE'.
@@ -218,7 +218,7 @@ namespace validation
     }
 
 
-    /* @brief			validation method for meCurveDiscountFactorsForwardStartingFromYearFractions
+    /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromYearFractions
     *  @param [in]		lwoCurveName		Curve Name
     *  @param [in]		fromDates			An array of from-dates in YYYYMMDD formate
     *  @param [in]		yearFractions		An array of year fraction yearFractions
@@ -293,7 +293,7 @@ namespace validation
     }
 
 
-    /* @brief			validation method for meCurveDiscountFactorsForwardStartingFromTenor
+    /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromTenor
     *  @param [in]		lwoCurveName		Curve Name
     *  @param [in]		fromDates		An array of from-dates in YYYYMMDD formate
     *  @param [in]		tenor			A tenor string

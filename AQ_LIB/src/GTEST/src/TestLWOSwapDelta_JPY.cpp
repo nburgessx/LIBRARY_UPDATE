@@ -2,11 +2,11 @@
 #include <sstream>
 
 // Curves
-#include "TryMeCurveOis.h"
-#include "TryMeCurveStd.h"
-#include "TryMeCurveTenorBasis.h"
-#include "TryMeCurveXccyBasis.h"
-#include "TryMeCurveFwdFxConst.h"
+#include "TryAqCurvesOis.h"
+#include "TryAqCurvesStd.h"
+#include "TryAqCurvesTenorBasis.h"
+#include "TryAqCurvesXccyBasis.h"
+#include "TryAqCurvesFwdFxConst.h"
 
 // Swap Creation and Pricing
 #include "tryMeLWOSwapCreation.h"
@@ -70,9 +70,9 @@ namespace google_test
 	void buildCurves_JPY()
 	{
 		// Set up minimal JPY curves required for LCH6M
-		setUpMeOISCurve( JPYYC_OIS );
-		setUpMeSTDCurve( JPYYC_JSCC_STD );
-		setUpMeSTDCurve( JPYYC_LCH_6M );
+		setUpAqOISCurve( JPYYC_OIS );
+		setUpAqSTDCurve( JPYYC_JSCC_STD );
+		setUpAqSTDCurve( JPYYC_LCH_6M );
 	}
 
 

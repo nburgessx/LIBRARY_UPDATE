@@ -1,7 +1,7 @@
 // Curves
-#include "TryMeCurveOis.h"
-#include "TryMeCurveStd.h"
-#include "TryMeCurveTenorBasis.h"
+#include "TryAqCurvesOis.h"
+#include "TryAqCurvesStd.h"
+#include "TryAqCurvesTenorBasis.h"
 
 // Leg Creation and Pricing
 #include "tryMeLWOLeg.h"

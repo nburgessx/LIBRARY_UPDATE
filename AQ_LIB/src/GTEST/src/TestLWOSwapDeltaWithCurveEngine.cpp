@@ -13,7 +13,7 @@
 #include "ReadDataFile.h"
 #include "CreateDataFile.h"
 #include "ResultsProcessor.h"
-#include "tryMeUtilitySetup.h"
+#include "tryAqToolsSetup.h"
 #include <gTest/gTest.h>
 #include "BuildMarketDataObjectFromFile.h"
 #include "BuildSwapTradeFromGenerator.h"
@@ -145,7 +145,7 @@ namespace google_test
 
 			//------------------------------------------------
 			// 4. Flush the curve curves
-			validation::tryMeUtilityClearEntityPool();
+			validation::tryAqToolsClearEntityPool();
 		}		
 	}
 	
@@ -217,7 +217,7 @@ namespace google_test
 	// 
 	// 		//------------------------------------------------
 	// 		// 4. Flush the object pool cache
-	// 		validation::tryMeUtilityClearEntityPool();
+	// 		validation::tryAqToolsClearEntityPool();
 	// 	}
 	// }
 

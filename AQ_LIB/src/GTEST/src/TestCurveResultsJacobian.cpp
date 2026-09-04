@@ -7,7 +7,7 @@
 #include "RecordMacros.h"						// Logfile Macros
 #include "ResultsProcessor.h"					// Test Rebase Methods
 #include "tryMeLWO.h"							// LWO Curve Loading et al.
-#include "tryMeCurveResults.h"					// Curve Results Jacobian 
+#include "tryAqCurvesResults.h"					// Curve Results Jacobian 
 
 
 // Test Folders
@@ -63,7 +63,7 @@ namespace google_test
 		const std::string loadUSDOISCurve		        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
 
 		// Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDeltas = validation::tryMeCurveResultsJacobianDiscountFactorDelta( "USDYC", "USDOIS" );
+		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USDOIS" );
 
 		// Validation: Check if results are empty and if present FlatShift Discount Factor Deltas should have two columns
 		ASSERT_GT( discountFactorDeltas.size(), (unsigned int)(0) );
@@ -87,7 +87,7 @@ namespace google_test
         const std::string loadUSD3MLCurve		        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
         
 		// Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDeltas = validation::tryMeCurveResultsJacobianDiscountFactorDelta( "USDYC", "USD3ML" );
+		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USD3ML" );
 
 		// Validation: Check if results are empty and if present FlatShift Discount Factor Deltas should have two columns
 		ASSERT_GT( discountFactorDeltas.size(), (unsigned int)(0) );
@@ -114,7 +114,7 @@ namespace google_test
         const std::string loadUSD6MLCurve		        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_NoBump, etrading::JSON );
 
 		// Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDeltas = validation::tryMeCurveResultsJacobianDiscountFactorDelta( "USDYC", "USD6ML" );
+		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USD6ML" );
 
 		// Validation: Check if results are empty and if present FlatShift Discount Factor Deltas should have two columns
 		ASSERT_GT( discountFactorDeltas.size(), (unsigned int)(0) );
@@ -142,10 +142,10 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 1.	Original Discount Factors
-		etrading::VariantMatrix originalDiscountFactors	= validation::tryMeCurveResultsDiscountFactorsDisplayAll("USDYC","USDOIS");
+		etrading::VariantMatrix originalDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USDOIS");
 
 		// 2.	Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDelta	= validation::tryMeCurveResultsJacobianDiscountFactorDelta( "USDYC", "USDOIS" );
+		etrading::VariantMatrix discountFactorDelta	= validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USDOIS" );
 		
 		// 3.	Discount Factor Delta01 i.e. the Delta scaled by 1 basis point
 		etrading::VariantMatrix discountFactorDelta01 = discountFactorDelta;
@@ -177,7 +177,7 @@ namespace google_test
 		const std::string shiftedCurveUSDOIS = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_Bumped, etrading::JSON );
 
 		// 6. Shifted Discount Factors
-		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryMeCurveResultsDiscountFactorsDisplayAll("USDYC","USDOIS");
+		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USDOIS");
 
 		// Dimension Validation
 		ASSERT_EQ( actualShiftedDiscountFactors.size(), expectedShiftedDiscountFactors.size() );
@@ -210,10 +210,10 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 1.	Original Discount Factors
-		etrading::VariantMatrix originalDiscountFactors	= validation::tryMeCurveResultsDiscountFactorsDisplayAll("USDYC","USD3ML");
+		etrading::VariantMatrix originalDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USD3ML");
 
 		// 2.	Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDelta	= validation::tryMeCurveResultsJacobianDiscountFactorDelta( "USDYC", "USD3ML" );
+		etrading::VariantMatrix discountFactorDelta	= validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USD3ML" );
 		
 		// 3.	Discount Factor Delta01 i.e. the Delta scaled by 1 basis point
 		etrading::VariantMatrix discountFactorDelta01 = discountFactorDelta;
@@ -245,7 +245,7 @@ namespace google_test
 		const std::string shiftedCurveUSD3ML = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_Bumped, etrading::JSON );
 
 		// 6. Shifted Discount Factors
-		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryMeCurveResultsDiscountFactorsDisplayAll("USDYC","USD3ML");
+		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USD3ML");
 
 		// Dimension Validation
 		ASSERT_EQ( actualShiftedDiscountFactors.size(), expectedShiftedDiscountFactors.size() );
@@ -280,10 +280,10 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 1.	Original Discount Factors
-		etrading::VariantMatrix originalDiscountFactors	= validation::tryMeCurveResultsDiscountFactorsDisplayAll("USDYC","USD6ML");
+		etrading::VariantMatrix originalDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USD6ML");
 
 		// 2.	Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDelta	= validation::tryMeCurveResultsJacobianDiscountFactorDelta( "USDYC", "USD6ML" );
+		etrading::VariantMatrix discountFactorDelta	= validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USD6ML" );
 		
 		// 3.	Discount Factor Delta01 i.e. the Delta scaled by 1 basis point
 		etrading::VariantMatrix discountFactorDelta01 = discountFactorDelta;
@@ -315,7 +315,7 @@ namespace google_test
 		const std::string shiftedCurveUSD6ML = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_Bumped, etrading::JSON );
 
 		// 6. Shifted Discount Factors
-		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryMeCurveResultsDiscountFactorsDisplayAll("USDYC","USD6ML");
+		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USD6ML");
 
 		// Dimension Validation
 		ASSERT_EQ( actualShiftedDiscountFactors.size(), expectedShiftedDiscountFactors.size() );

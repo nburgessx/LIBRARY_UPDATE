@@ -9,7 +9,7 @@
 #include "YieldCurveUtil.h"
 #include "AQLDateScheduleHelpers.h"
 #include "InitializeETrading.h"
-#include "tryMeUtilitySetup.h"
+#include "tryAqToolsSetup.h"
 #include <sstream>
 
 using etrading::ReadDataFile;
@@ -271,7 +271,7 @@ namespace google_test
 			}
 
 			// Flush the cache in preparation for a new set of curves
-			validation::tryMeUtilityClearEntityPool();
+			validation::tryAqToolsClearEntityPool();
 		}
 
 		if ( etrading::CreateDataFile::rebaseResultsEnabled() )

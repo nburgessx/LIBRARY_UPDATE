@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryMeUtilitySetup.h"
+#include "tryAqToolsSetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
 #include "CommonConstants.h"
@@ -16,17 +16,17 @@
 #include "CurveOis.h"
 
 // "me" API
-#include "TryMeCurveOis.h"
-#include "TryMeCurveStd.h"
-#include "TryMeCurveTenorBasis.h"
-#include "TryMeCurveXccyBasis.h"
+#include "TryAqCurvesOis.h"
+#include "TryAqCurvesStd.h"
+#include "TryAqCurvesTenorBasis.h"
+#include "TryAqCurvesXccyBasis.h"
 
 // "Generator" API
 #include "tryMeLWOCurveMarketData.h"
 #include "tryMeLWOCurveCalibrate.h"
 
 // Forward Rates Table
-#include "tryMeCurveForwardRate.h"
+#include "tryAqCurvesForwardRate.h"
 
 using etrading::ReadDataFile;
 
@@ -190,49 +190,49 @@ namespace google_test
 	//----------------------------------------------------------------------------------------
 
 	/* @brief			Builds OIS curve using ME and Generator functions
-    *  @param [in]		meCurveCalibrate	The filename specifying ME curve data
+    *  @param [in]		aqCurvesCalibrate	The filename specifying ME curve data
 	*  @param [in]		genCurveMarketData	The filename specifying generator curve data
-	*  @param [in]		meCurveCalibrate	The filename specifying generator curve build instructions
+	*  @param [in]		aqCurvesCalibrate	The filename specifying generator curve build instructions
 	*/
-    void buildMeAndGeneratorCurves_OIS( const AQLString& meCurveCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
+    void buildAqAndGeneratorCurves_OIS( const AQLString& aqCurvesCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
 	{
 		// Build ME curve	
-		setUpMeOISCurve( meCurveCalibrate );
+		setUpAqOISCurve( aqCurvesCalibrate );
 
 		// Build Generator curve
 		setUpGeneratorCurve( genCurveMarketData, genCurveCalibrate );
 	}
 
 	/* @brief			Builds swap curve using ME and Generator functions
-    *  @param [in]		meCurveCalibrate	The filename specifying ME curve data
+    *  @param [in]		aqCurvesCalibrate	The filename specifying ME curve data
 	*  @param [in]		genCurveMarketData	The filename specifying generator curve data
-	*  @param [in]		meCurveCalibrate	The filename specifying generator curve build instructions
+	*  @param [in]		aqCurvesCalibrate	The filename specifying generator curve build instructions
 	*/
-	void buildMeAndGeneratorCurves_STD( const AQLString& meCurveCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
+	void buildAqAndGeneratorCurves_STD( const AQLString& aqCurvesCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
 	{
-		setUpMeSTDCurve( meCurveCalibrate );							// Build "ME" curve
+		setUpAqSTDCurve( aqCurvesCalibrate );							// Build "ME" curve
 		setUpGeneratorCurve( genCurveMarketData, genCurveCalibrate );	// Build "Generator" curve
 	}
 
 	/* @brief			Builds tenor basis curve using ME and Generator functions
-    *  @param [in]		meCurveCalibrate	The filename specifying ME curve data
+    *  @param [in]		aqCurvesCalibrate	The filename specifying ME curve data
 	*  @param [in]		genCurveMarketData	The filename specifying generator curve data
-	*  @param [in]		meCurveCalibrate	The filename specifying generator curve build instructions
+	*  @param [in]		aqCurvesCalibrate	The filename specifying generator curve build instructions
 	*/
-	void buildMeAndGeneratorCurves_BASIS( const AQLString& meCurveCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
+	void buildAqAndGeneratorCurves_BASIS( const AQLString& aqCurvesCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
 	{
-		setUpMeTenorBasisCurve( meCurveCalibrate );						// Build "ME" curve
+		setUpAqTenorBasisCurve( aqCurvesCalibrate );						// Build "ME" curve
 		setUpGeneratorCurve( genCurveMarketData, genCurveCalibrate );	// Build Generator curve
 	}
 
 	/* @brief			Builds XccyBasis curve using ME and Generator functions
-    *  @param [in]		meCurveCalibrate	The filename specifying ME curve data
+    *  @param [in]		aqCurvesCalibrate	The filename specifying ME curve data
 	*  @param [in]		genCurveMarketData	The filename specifying generator curve data
-	*  @param [in]		meCurveCalibrate	The filename specifying generator curve build instructions
+	*  @param [in]		aqCurvesCalibrate	The filename specifying generator curve build instructions
 	*/
-	void buildMeAndGeneratorCurves_XCCY( const AQLString& meCurveCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
+	void buildAqAndGeneratorCurves_XCCY( const AQLString& aqCurvesCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
 	{
-		setUpMeXccyBasisCurve( meCurveCalibrate );						// Build "ME" curve
+		setUpAqXccyBasisCurve( aqCurvesCalibrate );						// Build "ME" curve
 		setUpGeneratorCurve( genCurveMarketData, genCurveCalibrate );	// Build Generator curve
 	}
 
@@ -258,43 +258,43 @@ namespace google_test
 	}
 
 	/* @brief			Check forward rate consistency between ME and Generator curves
-    *  @param [in]		meCurveCollection		The curve collection containing ME curves
+    *  @param [in]		aqCurvesCollection		The curve collection containing ME curves
     *  @param [in]		genCurveCollection		The curve collection containing Generator curves
     *  @param [in]		curveIndices			A vector of curveIndices to check
 	*/
-	void checkForwardRatesConsistency( const AQLString& meCurveCollection, const AQLString& genCurveCollection, const AQLStringVector& curveIndices )
+	void checkForwardRatesConsistency( const AQLString& aqCurvesCollection, const AQLString& genCurveCollection, const AQLStringVector& curveIndices )
 	{
-		DateVector meFixingDates;
-		DoubleMatrix meForwardRates;
-		getForwardRatesForCollection( meCurveCollection, curveIndices, meFixingDates, meForwardRates );
+		DateVector aqRatesFixingDates;
+		DoubleMatrix aqRatesForwardRates;
+		getForwardRatesForCollection( aqCurvesCollection, curveIndices, aqRatesFixingDates, aqRatesForwardRates );
 
 		DateVector genFixingDates;
 		DoubleMatrix genForwardRates;
 		getForwardRatesForCollection( genCurveCollection, curveIndices, genFixingDates, genForwardRates );
 
 		// First some basic sanity checks on the result of calling tryMeLWOCurveForwardRatesTable()
-		if ( meFixingDates.size() != genFixingDates.size() )
+		if ( aqRatesFixingDates.size() != genFixingDates.size() )
 		{
-			FAIL() << "meFixingDates has different number of dates to genFixingDates: " << meFixingDates.size() << " vs " << genFixingDates.size() << std::endl;
+			FAIL() << "meFixingDates has different number of dates to genFixingDates: " << aqRatesFixingDates.size() << " vs " << genFixingDates.size() << std::endl;
 		}
 
-		const size_t numMeForwardRateCols  = meForwardRates.size();
+		const size_t numAqForwardRateCols  = aqRatesForwardRates.size();
 		const size_t numGenForwardRateCols = genForwardRates.size();
 		const size_t numCurveIndices       = curveIndices.size();
-		if ( numMeForwardRateCols != numCurveIndices )
+		if ( numAqForwardRateCols != numCurveIndices )
 		{
-			FAIL() << "Expecting meForwardRates to have " << numCurveIndices << " columns, but it contained this many:" << numMeForwardRateCols << std::endl;
+			FAIL() << "Expecting meForwardRates to have " << numCurveIndices << " columns, but it contained this many:" << numAqForwardRateCols << std::endl;
 		}
 		if ( numGenForwardRateCols != numCurveIndices )
 		{
 			FAIL() << "Expecting genForwardRates to have " << numCurveIndices << " columns, but it contained this many:" << numGenForwardRateCols << std::endl;
 		}
 
-		size_t numMeForwardRateRows  = meForwardRates[0].size();
+		size_t numAqForwardRateRows  = aqRatesForwardRates[0].size();
 		size_t numGenForwardRateRows = genForwardRates[0].size();
-		if ( meFixingDates.size() != numMeForwardRateRows )
+		if ( aqRatesFixingDates.size() != numAqForwardRateRows )
 		{
-			FAIL() << "meFixingDates size is different to the number of rows in meForwardRates matrix: " << meFixingDates.size() << " vs " << numMeForwardRateRows << std::endl;
+			FAIL() << "meFixingDates size is different to the number of rows in meForwardRates matrix: " << aqRatesFixingDates.size() << " vs " << numAqForwardRateRows << std::endl;
 		}
 		if ( genFixingDates.size() != numGenForwardRateRows )
 		{
@@ -302,20 +302,20 @@ namespace google_test
 		}
 
 		// Now check all the forwards
-		for (size_t i=0; i<numMeForwardRateCols; i++)
+		for (size_t i=0; i<numAqForwardRateCols; i++)
 		{
-			for (size_t j=0; j<numMeForwardRateRows; j++)
+			for (size_t j=0; j<numAqForwardRateRows; j++)
 			{
-				AQLDate fixingDate                = meFixingDates[j];
-				double meCurveForwardRate        = meForwardRates[i][j];
+				AQLDate fixingDate                = aqRatesFixingDates[j];
+				double aqCurvesForwardRate        = aqRatesForwardRates[i][j];
 				double generatorCurveForwardRate = genForwardRates[i][j];
 
-				ASSERT_NEAR( meCurveForwardRate, generatorCurveForwardRate, tolerance ) << "#Error: forward rates do not match for fixing date: " << fixingDate 
+				ASSERT_NEAR( aqCurvesForwardRate, generatorCurveForwardRate, tolerance ) << "#Error: forward rates do not match for fixing date: " << fixingDate 
 																						 << " and curve: " << curveIndices[ i ] << std::endl;
 			}
 		}
 
-		validation::tryMeUtilityClearEntityPool();
+		validation::tryAqToolsClearEntityPool();
 	}
 
 	TEST_F( TestCurveGeneratorForwardRates, CONSISTENCY_MeVsLWOCurveForwardRatesFor25Y_USD )
@@ -323,11 +323,11 @@ namespace google_test
 		// Build ME and Generator curves for OIS, STD, 3X6Basis, 1X3Basis and 3X12Basis.
 		// The ME curves are stored in the "USDME" collection,
 		// while Generator curves are stored in the "USDGEN" collection
-        buildMeAndGeneratorCurves_OIS( ME_USD_OIS_CURVE, GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
-		buildMeAndGeneratorCurves_STD( ME_USD_STD_CURVE, GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
-		buildMeAndGeneratorCurves_BASIS( ME_USD_3X6BASIS_CURVE, GEN_USD_3X6BASIS_MARKETDATA, GEN_USD_3X6BASIS_CURVE );
-		buildMeAndGeneratorCurves_BASIS( ME_USD_1X3BASIS_CURVE, GEN_USD_1X3BASIS_MARKETDATA, GEN_USD_1X3BASIS_CURVE );
-		buildMeAndGeneratorCurves_BASIS( ME_USD_3X12BASIS_CURVE, GEN_USD_3X12BASIS_MARKETDATA, GEN_USD_3X12BASIS_CURVE );
+        buildAqAndGeneratorCurves_OIS( ME_USD_OIS_CURVE, GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
+		buildAqAndGeneratorCurves_STD( ME_USD_STD_CURVE, GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
+		buildAqAndGeneratorCurves_BASIS( ME_USD_3X6BASIS_CURVE, GEN_USD_3X6BASIS_MARKETDATA, GEN_USD_3X6BASIS_CURVE );
+		buildAqAndGeneratorCurves_BASIS( ME_USD_1X3BASIS_CURVE, GEN_USD_1X3BASIS_MARKETDATA, GEN_USD_1X3BASIS_CURVE );
+		buildAqAndGeneratorCurves_BASIS( ME_USD_3X12BASIS_CURVE, GEN_USD_3X12BASIS_MARKETDATA, GEN_USD_3X12BASIS_CURVE );
 
 		// Compare forward rates between USDME and USDGEN collections
 		AQLStringVector curveIndices;
@@ -341,11 +341,11 @@ namespace google_test
 	
 	TEST_F( TestCurveGeneratorForwardRates, CONSISTENCY_MeVsLWOCurveForwardRatesFor25Y_EUR )
     {
-		buildMeAndGeneratorCurves_OIS( ME_USD_OIS_CURVE2, GEN_USD_OIS_MARKETDATA2, GEN_USD_OIS_CURVE2 );
-		buildMeAndGeneratorCurves_STD( ME_USD_STD_CURVE2, GEN_USD_STD_MARKETDATA2, GEN_USD_STD_CURVE2 );
+		buildAqAndGeneratorCurves_OIS( ME_USD_OIS_CURVE2, GEN_USD_OIS_MARKETDATA2, GEN_USD_OIS_CURVE2 );
+		buildAqAndGeneratorCurves_STD( ME_USD_STD_CURVE2, GEN_USD_STD_MARKETDATA2, GEN_USD_STD_CURVE2 );
 
-        buildMeAndGeneratorCurves_OIS( ME_EUR_OIS_CURVE2, GEN_EUR_OIS_MARKETDATA2, GEN_EUR_OIS_CURVE2 );
-		buildMeAndGeneratorCurves_STD( ME_EUR_STD_CURVE2, GEN_EUR_STD_MARKETDATA2, GEN_EUR_STD_CURVE2 );
+        buildAqAndGeneratorCurves_OIS( ME_EUR_OIS_CURVE2, GEN_EUR_OIS_MARKETDATA2, GEN_EUR_OIS_CURVE2 );
+		buildAqAndGeneratorCurves_STD( ME_EUR_STD_CURVE2, GEN_EUR_STD_MARKETDATA2, GEN_EUR_STD_CURVE2 );
 
 		AQLStringVector curveIndices;
 		curveIndices.push_back( AQLString( "OIS" ) );
@@ -356,24 +356,24 @@ namespace google_test
 
 	TEST_F( TestCurveGeneratorForwardRates, CONSISTENCY_MeVsLWOCurveForwardRatesFor25Y_JPY )
     {
-		buildMeAndGeneratorCurves_OIS( ME_USD_OIS_CURVE, GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
-		buildMeAndGeneratorCurves_STD( ME_USD_STD_CURVE, GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
+		buildAqAndGeneratorCurves_OIS( ME_USD_OIS_CURVE, GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
+		buildAqAndGeneratorCurves_STD( ME_USD_STD_CURVE, GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
 
-		buildMeAndGeneratorCurves_OIS( ME_JPY_OIS_CURVE, GEN_JPY_OIS_MARKETDATA, GEN_JPY_OIS_CURVE );
-		buildMeAndGeneratorCurves_STD( ME_JPY_JSCC_SWAP_CURVE, GEN_JPY_JSCC_SWAP_MARKETDATA, GEN_JPY_JSCC_SWAP_CURVE );
-		buildMeAndGeneratorCurves_BASIS( ME_JPY_JSCC_3X6BASIS_CURVE, GEN_JPY_JSCC_3X6BASIS_MARKETDATA, GEN_JPY_JSCC_3X6BASIS_CURVE );
-		buildMeAndGeneratorCurves_BASIS( ME_JPY_JSCC_1X6BASIS_CURVE, GEN_JPY_JSCC_1X6BASIS_MARKETDATA, GEN_JPY_JSCC_1X6BASIS_CURVE );
+		buildAqAndGeneratorCurves_OIS( ME_JPY_OIS_CURVE, GEN_JPY_OIS_MARKETDATA, GEN_JPY_OIS_CURVE );
+		buildAqAndGeneratorCurves_STD( ME_JPY_JSCC_SWAP_CURVE, GEN_JPY_JSCC_SWAP_MARKETDATA, GEN_JPY_JSCC_SWAP_CURVE );
+		buildAqAndGeneratorCurves_BASIS( ME_JPY_JSCC_3X6BASIS_CURVE, GEN_JPY_JSCC_3X6BASIS_MARKETDATA, GEN_JPY_JSCC_3X6BASIS_CURVE );
+		buildAqAndGeneratorCurves_BASIS( ME_JPY_JSCC_1X6BASIS_CURVE, GEN_JPY_JSCC_1X6BASIS_MARKETDATA, GEN_JPY_JSCC_1X6BASIS_CURVE );
 
-		buildMeAndGeneratorCurves_STD( ME_JPY_LCH_SWAP_CURVE, GEN_JPY_LCH_SWAP_MARKETDATA, GEN_JPY_LCH_SWAP_CURVE );
-		buildMeAndGeneratorCurves_BASIS( ME_JPY_LCH_3X6BASIS_CURVE, GEN_JPY_LCH_3X6BASIS_MARKETDATA, GEN_JPY_LCH_3X6BASIS_CURVE );
-		buildMeAndGeneratorCurves_BASIS( ME_JPY_LCH_1X6BASIS_CURVE, GEN_JPY_LCH_1X6BASIS_MARKETDATA, GEN_JPY_LCH_1X6BASIS_CURVE );
+		buildAqAndGeneratorCurves_STD( ME_JPY_LCH_SWAP_CURVE, GEN_JPY_LCH_SWAP_MARKETDATA, GEN_JPY_LCH_SWAP_CURVE );
+		buildAqAndGeneratorCurves_BASIS( ME_JPY_LCH_3X6BASIS_CURVE, GEN_JPY_LCH_3X6BASIS_MARKETDATA, GEN_JPY_LCH_3X6BASIS_CURVE );
+		buildAqAndGeneratorCurves_BASIS( ME_JPY_LCH_1X6BASIS_CURVE, GEN_JPY_LCH_1X6BASIS_MARKETDATA, GEN_JPY_LCH_1X6BASIS_CURVE );
 
-		buildMeAndGeneratorCurves_XCCY( ME_JPY_XCCY_CURVE, GEN_JPY_XCCY_MARKETDATA, GEN_JPY_XCCY_CURVE );
+		buildAqAndGeneratorCurves_XCCY( ME_JPY_XCCY_CURVE, GEN_JPY_XCCY_MARKETDATA, GEN_JPY_XCCY_CURVE );
 
-        buildMeAndGeneratorCurves_STD( ME_JPY_TIBOR_SWAP_CURVE, GEN_JPY_TIBOR_SWAP_MARKETDATA, GEN_JPY_TIBOR_SWAP_CURVE );
-		buildMeAndGeneratorCurves_BASIS( ME_JPY_TIBOR_6M_BASIS_CURVE, GEN_JPY_TIBOR_6M_BASIS_MARKETDATA, GEN_JPY_TIBOR_6M_BASIS_CURVE );
-		buildMeAndGeneratorCurves_BASIS( ME_JPY_TIBOR_3X6BASIS_CURVE, GEN_JPY_TIBOR_3X6BASIS_MARKETDATA, GEN_JPY_TIBOR_3X6BASIS_CURVE );
-		buildMeAndGeneratorCurves_BASIS( ME_JPY_TIBOR_1X6BASIS_CURVE, GEN_JPY_TIBOR_1X6BASIS_MARKETDATA, GEN_JPY_TIBOR_1X6BASIS_CURVE );
+        buildAqAndGeneratorCurves_STD( ME_JPY_TIBOR_SWAP_CURVE, GEN_JPY_TIBOR_SWAP_MARKETDATA, GEN_JPY_TIBOR_SWAP_CURVE );
+		buildAqAndGeneratorCurves_BASIS( ME_JPY_TIBOR_6M_BASIS_CURVE, GEN_JPY_TIBOR_6M_BASIS_MARKETDATA, GEN_JPY_TIBOR_6M_BASIS_CURVE );
+		buildAqAndGeneratorCurves_BASIS( ME_JPY_TIBOR_3X6BASIS_CURVE, GEN_JPY_TIBOR_3X6BASIS_MARKETDATA, GEN_JPY_TIBOR_3X6BASIS_CURVE );
+		buildAqAndGeneratorCurves_BASIS( ME_JPY_TIBOR_1X6BASIS_CURVE, GEN_JPY_TIBOR_1X6BASIS_MARKETDATA, GEN_JPY_TIBOR_1X6BASIS_CURVE );
 
 		AQLStringVector curveIndices;
 		curveIndices.push_back( AQLString( "OIS" ) );

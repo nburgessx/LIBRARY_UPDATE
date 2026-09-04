@@ -22,7 +22,7 @@
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
 #include "InitializeGoogleTest.h"
-#include "tryMeUtilitySetup.h"
+#include "tryAqToolsSetup.h"
 #include "BuildMarketDataObjectFromFile.h"
 
 using etrading::ReadDataFile;

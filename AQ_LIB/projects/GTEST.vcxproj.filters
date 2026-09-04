@@ -148,79 +148,79 @@
     <ClCompile Include="..\src\GTEST\src\TestRiskSwapDeltaLadder.cpp">
       <Filter>src\Legacy\Risks</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeCurveAccessors.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqCurvesAccessors.cpp">
       <Filter>src\etrading\Curves\CurveAccessors</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeCurveFwdFxConst.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqCurvesFwdFxConst.cpp">
       <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeCurveTenorBasis.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqCurvesTenorBasis.cpp">
       <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeCurveStd.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqCurvesStd.cpp">
       <Filter>src\etrading\Curves\CurveSTD</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeCurveXccyBasis.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqCurvesXccyBasis.cpp">
       <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveFwdFxConstEURGBP.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveFwdFxConstEURGBP.cpp">
       <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveTenorBasisEUR3M6M.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisEUR3M6M.cpp">
       <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveTenorBasisUSD3M6M.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisUSD3M6M.cpp">
       <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveTenorBasisGBP3M6M.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisGBP3M6M.cpp">
       <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveTenorBasisJPY3M6M.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisJPY3M6M.cpp">
       <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveOisEUR.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveOisEUR.cpp">
       <Filter>src\etrading\Curves\CurveOIS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveOisUSD.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveOisUSD.cpp">
       <Filter>src\etrading\Curves\CurveOIS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveOisGBP.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveOisGBP.cpp">
       <Filter>src\etrading\Curves\CurveOIS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveOisJPY.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveOisJPY.cpp">
       <Filter>src\etrading\Curves\CurveOIS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeCurveOis.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqCurvesOis.cpp">
       <Filter>src\etrading\Curves\CurveOIS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdEUR.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdEUR.cpp">
       <Filter>src\etrading\Curves\CurveSTD</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdUSD.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdUSD.cpp">
       <Filter>src\etrading\Curves\CurveSTD</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdGBP.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdGBP.cpp">
       <Filter>src\etrading\Curves\CurveSTD</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdJPY.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdJPY.cpp">
       <Filter>src\etrading\Curves\CurveSTD</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveXccyBasisEUR.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveXccyBasisEUR.cpp">
       <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveXccyBasisJPY.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveXccyBasisJPY.cpp">
       <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveXccyBasisGBP.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveXccyBasisGBP.cpp">
       <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveFwdFxConstGBPJPY.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveFwdFxConstGBPJPY.cpp">
       <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveFwdFxConstUSDEUR.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveFwdFxConstUSDEUR.cpp">
       <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveFwdFxConstJPYEUR.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveFwdFxConstJPYEUR.cpp">
       <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestRiskTenorBasisCurve.cpp">
@@ -229,7 +229,7 @@
     <ClCompile Include="..\src\GTEST\src\ResultsProcessor.cpp">
       <Filter>src\etrading\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveTenorBasisJPY3M6MConvergence.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisJPY3M6MConvergence.cpp">
       <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveOisEUR_Compounding.cpp">
@@ -277,7 +277,7 @@
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURUSDXccySwap.cpp">
       <Filter>src\etrading\Swaps\XccySwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeCurveOisAUD.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqCurvesOisAUD.cpp">
       <Filter>src\etrading\Curves\CurveOIS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapDelta.cpp">
@@ -304,7 +304,7 @@
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapGBPEURXccySwap.cpp">
       <Filter>src\etrading\Swaps\XccySwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeDateYearFraction.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqDatesYearFraction.cpp">
       <Filter>src\etrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURUSDXccySwapFixedFixed.cpp">
@@ -379,7 +379,7 @@
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapFloatRate.cpp">
       <Filter>src\etrading\Swaps\FixingTable</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeDateFuturesContract.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqDatesFuturesContract.cpp">
       <Filter>src\etrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveForwardRates.cpp">
@@ -394,13 +394,13 @@
     <ClCompile Include="..\src\GTEST\src\TestExceptionMacros.cpp">
       <Filter>src\etrading\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeCurveCheapestToDeliver_USD_SEK.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqCurvesCheapestToDeliver_USD_SEK.cpp">
       <Filter>src\etrading\Curves\CurveCheapestToDeliver</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeCurveCTD.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqCurvesCTD.cpp">
       <Filter>src\etrading\Curves\CurveCheapestToDeliver</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeCurveGroupingJPY.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqCurvesGroupingJPY.cpp">
       <Filter>src\etrading\Curves\CurveConsistency\JPYCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestDebugMacros.cpp">
@@ -424,13 +424,13 @@
     <ClCompile Include="..\src\GTEST\src\TestLeakChecker.cpp">
       <Filter>src\etrading\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeMathEuropeanIRSwaption.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqMathEuropeanIRSwaption.cpp">
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeMathBlackScholes.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqMathBlackScholes.cpp">
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeMathNormalDistribution.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqMathNormalDistribution.cpp">
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondGenerator.cpp">
@@ -445,16 +445,16 @@
     <ClCompile Include="..\src\GTEST\src\TestIsRegularSwapSchedule.cpp">
       <Filter>src\etrading\Dates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestTradeEURAssetSwapSpread.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestTradeEURAssetSwapSpread.cpp">
       <Filter>src\etrading\Swaps\AssetSwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestTradeEUROISParRate.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestTradeEUROISParRate.cpp">
       <Filter>src\etrading\Swaps\OIS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestTradeEURSwapParRate.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestTradeEURSwapParRate.cpp">
       <Filter>src\etrading\Swaps\Swaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestTradeEURSwapStubRate.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestTradeEURSwapStubRate.cpp">
       <Filter>src\etrading\Swaps\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapStubImpactOnParRate.cpp">
@@ -502,7 +502,7 @@
     <ClCompile Include="..\src\GTEST\src\TestCurveStreaming.cpp">
       <Filter>src\etrading\Curves\CurveStreaming</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeUtilitityLVB.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqToolsLVB.cpp">
       <Filter>src\etrading\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondRepo.cpp">
@@ -589,10 +589,10 @@
     <ClCompile Include="..\src\GTEST\src\TestSimpsonsRuleIntegration.cpp">
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeMathVolatility.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqMathVolatility.cpp">
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeMathConvexity.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqMathConvexity.cpp">
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestIMMFuturesTickers.cpp">
@@ -616,7 +616,7 @@
     <ClCompile Include="..\src\GTEST\src\TestCurveResults.cpp">
       <Filter>src\etrading\Curves\CurveResults</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeDateECB.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqDatesECB.cpp">
       <Filter>src\etrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestVariantDataType.cpp">
@@ -643,10 +643,10 @@
     <ClCompile Include="..\src\GTEST\src\TestValuationSettings.cpp">
       <Filter>src\etrading\ValuationSettings</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdSerialFuture.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdSerialFuture.cpp">
       <Filter>src\etrading\Curves\CurveSTD</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdSerialFRA.cpp">
+    <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdSerialFRA.cpp">
       <Filter>src\etrading\Curves\CurveSTD</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapDelta_ARR.cpp">
@@ -750,22 +750,22 @@
     <ClInclude Include="..\src\GTEST\include\EnvironmentAttacker.h">
       <Filter>include\etrading\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GTEST\include\TryMeCurveAccessors.h">
+    <ClInclude Include="..\src\GTEST\include\TryAqCurvesAccessors.h">
       <Filter>include\etrading\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GTEST\include\TryMeCurveXccyBasis.h">
+    <ClInclude Include="..\src\GTEST\include\TryAqCurvesXccyBasis.h">
       <Filter>include\etrading\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GTEST\include\TryMeCurveFwdFxConst.h">
+    <ClInclude Include="..\src\GTEST\include\TryAqCurvesFwdFxConst.h">
       <Filter>include\etrading\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GTEST\include\TryMeCurveOis.h">
+    <ClInclude Include="..\src\GTEST\include\TryAqCurvesOis.h">
       <Filter>include\etrading\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GTEST\include\TryMeCurveStd.h">
+    <ClInclude Include="..\src\GTEST\include\TryAqCurvesStd.h">
       <Filter>include\etrading\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GTEST\include\TryMeCurveTenorBasis.h">
+    <ClInclude Include="..\src\GTEST\include\TryAqCurvesTenorBasis.h">
       <Filter>include\etrading\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\ResultsProcessor.h">
@@ -780,7 +780,7 @@
     <ClInclude Include="..\src\GTEST\include\CreateFixedBond.h">
       <Filter>include\etrading\Bonds</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GTEST\include\TryMeCurveCTD.h">
+    <ClInclude Include="..\src\GTEST\include\TryAqCurvesCTD.h">
       <Filter>include\etrading\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\BuildSwapTradeFromGenerator.h">

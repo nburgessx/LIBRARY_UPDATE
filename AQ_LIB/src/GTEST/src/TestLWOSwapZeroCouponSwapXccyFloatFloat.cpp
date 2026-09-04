@@ -1,8 +1,8 @@
 // Curves
-#include "TryMeCurveOis.h"
-#include "TryMeCurveStd.h"
-#include "TryMeCurveTenorBasis.h"
-#include "TryMeCurveXccyBasis.h"
+#include "TryAqCurvesOis.h"
+#include "TryAqCurvesStd.h"
+#include "TryAqCurvesTenorBasis.h"
+#include "TryAqCurvesXccyBasis.h"
 
 // Swap Creation and Pricing
 #include "tryMeLWOSwapCreation.h"

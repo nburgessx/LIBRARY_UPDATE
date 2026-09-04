@@ -1,7 +1,7 @@
 #include "Dependency.h"
 #include "InitializeGoogleTest.h"
 #include "ParameterValidation.h"
-#include "tryMeUtilitySetup.h"
+#include "tryAqToolsSetup.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
 
@@ -286,7 +286,7 @@ namespace google_test
 		CheckTestResultsAndRebaseOnRequest(calibratedRho, TEST_DIR, outputFileName_rho, tolerance);
 
 		// Flush the cache in preparation for a new set of curves
-		validation::tryMeUtilityClearEntityPool();
+		validation::tryAqToolsClearEntityPool();
 		
     }
 

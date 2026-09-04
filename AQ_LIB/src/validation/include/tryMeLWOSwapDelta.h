@@ -8,7 +8,7 @@ using etrading::LabelValueBlock;
 
 namespace validation
 {
-    /* @brief			Validation interface for the meSwapDeltaLadder method. This method calculates a Delta Ladder for a vector of swaps
+    /* @brief			Validation interface for the aqSwapsDeltaLadder method. This method calculates a Delta Ladder for a vector of swaps
 	*  @param [out]		headers						Headers of the delta report
     *  @param [out]		pillarNames					The final list of pillar names
     *  @param [out]		deltas						All the deltas
@@ -37,7 +37,7 @@ namespace validation
 								   const std::string& riskCutOffTenor,
                                    const DoubleVector& xccyFXSpotRates );
 
-   /* @brief			Validation interface for the meSwapDeltaLadder method. This method calculates a Delta Ladder for a vector of swaps
+   /* @brief			Validation interface for the aqSwapsDeltaLadder method. This method calculates a Delta Ladder for a vector of swaps
     *                   This version presents the delta buckets for each curve in separate columns. Each consecutive pairs of columns
 	*                   (pillarName, delta) are aligned horizontally.
 	*  @param [out]		headers						Headers of the delta report
@@ -69,7 +69,7 @@ namespace validation
                                                const DoubleVector& xccyFXSpotRates );
 
 
-    /* @brief			validation interface for the meSwapDelta method. This method calculates a Flat-Shift Delta for a vector of swaps
+    /* @brief			validation interface for the aqSwapsDelta method. This method calculates a Flat-Shift Delta for a vector of swaps
 	*  @param [out]		positionIDs					The vector of positions for which the flat-shift delta is calculated
     *  @param [out]		deltas						The delta value for each SwapLeg
     *  @param [in]		swapNames					A vector of strings representing the LWO Swap names

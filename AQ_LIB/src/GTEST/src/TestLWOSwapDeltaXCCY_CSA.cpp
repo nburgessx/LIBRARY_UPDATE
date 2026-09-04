@@ -1,9 +1,9 @@
 // Curves
-#include "TryMeCurveOis.h"
-#include "TryMeCurveStd.h"
-#include "TryMeCurveTenorBasis.h"
-#include "TryMeCurveXccyBasis.h"
-#include "TryMeCurveFwdFxConst.h"
+#include "TryAqCurvesOis.h"
+#include "TryAqCurvesStd.h"
+#include "TryAqCurvesTenorBasis.h"
+#include "TryAqCurvesXccyBasis.h"
+#include "TryAqCurvesFwdFxConst.h"
 
 // Swap Creation and Pricing
 #include "tryMeLWOSwapCreation.h"
@@ -110,76 +110,76 @@ namespace google_test
     void buildCurves_USDCSA()
 	{        
 		// Set up USD curves
-		setUpMeOISCurve( USDYC_OIS );
-		setUpMeSTDCurve( USDYC_STD );
+		setUpAqOISCurve( USDYC_OIS );
+		setUpAqSTDCurve( USDYC_STD );
 
 		// Set up EUR XCCY curve
-		setUpMeOISCurve( EURYC_OIS );
-		setUpMeSTDCurve( EURYC_STD );
-		setUpMeTenorBasisCurve( EURYC_3M6M );
-		setUpMeXccyBasisCurve( EURYC_XCCY );
+		setUpAqOISCurve( EURYC_OIS );
+		setUpAqSTDCurve( EURYC_STD );
+		setUpAqTenorBasisCurve( EURYC_3M6M );
+		setUpAqXccyBasisCurve( EURYC_XCCY );
     }
 
     void buildCurves_EURCSA()
 	{
 		// Set up USD curves
-		setUpMeOISCurve( USDYC_OIS );
-		setUpMeSTDCurve( USDYC_STD );
+		setUpAqOISCurve( USDYC_OIS );
+		setUpAqSTDCurve( USDYC_STD );
 
 		// Set up EUR XCCY curve
-		setUpMeOISCurve( EURYC_OIS );
-		setUpMeSTDCurve( EURYC_STD );
-		setUpMeTenorBasisCurve( EURYC_3M6M );
-		setUpMeXccyBasisCurve( EURYC_XCCY );
+		setUpAqOISCurve( EURYC_OIS );
+		setUpAqSTDCurve( EURYC_STD );
+		setUpAqTenorBasisCurve( EURYC_3M6M );
+		setUpAqXccyBasisCurve( EURYC_XCCY );
 
 		// Set up FXFWDCONST curves
-		setUpMeFwdFxConstCurveCurve( USDYC_FXFWDEUR );  // USD discounting with EUR CSA
+		setUpAqFwdFxConstCurveCurve( USDYC_FXFWDEUR );  // USD discounting with EUR CSA
 	}
 
 	void buildCurves_JPYCSA()
 	{
 		// Set up USD curves
-		setUpMeOISCurve( USDYC_OIS );
-		setUpMeSTDCurve( USDYC_STD );
+		setUpAqOISCurve( USDYC_OIS );
+		setUpAqSTDCurve( USDYC_STD );
 
 		// Set up EUR XCCY curve
-		setUpMeOISCurve( EURYC_OIS );
-		setUpMeSTDCurve( EURYC_STD );
-		setUpMeTenorBasisCurve( EURYC_3M6M );
-		setUpMeXccyBasisCurve( EURYC_XCCY );
+		setUpAqOISCurve( EURYC_OIS );
+		setUpAqSTDCurve( EURYC_STD );
+		setUpAqTenorBasisCurve( EURYC_3M6M );
+		setUpAqXccyBasisCurve( EURYC_XCCY );
 
 		// Set up JPY XCCY curve
-		setUpMeOISCurve( JPYYC_OIS );
-		setUpMeSTDCurve( JPYYC_JSCC_STD );
-		setUpMeSTDCurve( JPYYC_LCH_6M );
-		setUpMeTenorBasisCurve( JPYYC_LCH_3M );
-		setUpMeXccyBasisCurve( JPYYC_XCCY );
+		setUpAqOISCurve( JPYYC_OIS );
+		setUpAqSTDCurve( JPYYC_JSCC_STD );
+		setUpAqSTDCurve( JPYYC_LCH_6M );
+		setUpAqTenorBasisCurve( JPYYC_LCH_3M );
+		setUpAqXccyBasisCurve( JPYYC_XCCY );
 
 		// Set up FXFWDCONST curves
-		setUpMeFwdFxConstCurveCurve( EURYC_FXFWDJPY );  // EUR discounting with JPY CSA
-		setUpMeFwdFxConstCurveCurve( USDYC_FXFWDJPY );  // USD discounting with JPY CSA
+		setUpAqFwdFxConstCurveCurve( EURYC_FXFWDJPY );  // EUR discounting with JPY CSA
+		setUpAqFwdFxConstCurveCurve( USDYC_FXFWDJPY );  // USD discounting with JPY CSA
 	}
 
 	void buildCurves_GBPCSA()
 	{
 		// Set up USD curves
-		setUpMeOISCurve( USDYC_OIS );
-		setUpMeSTDCurve( USDYC_STD );
+		setUpAqOISCurve( USDYC_OIS );
+		setUpAqSTDCurve( USDYC_STD );
 
 		// Set up EUR XCCY curve
-		setUpMeOISCurve( EURYC_OIS );
-		setUpMeSTDCurve( EURYC_STD );
-		setUpMeTenorBasisCurve( EURYC_3M6M );
-		setUpMeXccyBasisCurve( EURYC_XCCY );
+		setUpAqOISCurve( EURYC_OIS );
+		setUpAqSTDCurve( EURYC_STD );
+		setUpAqTenorBasisCurve( EURYC_3M6M );
+		setUpAqXccyBasisCurve( EURYC_XCCY );
 
 		// Set up GBP XCCY curve
-		setUpMeOISCurve( GBPYC_OIS );
-		setUpMeSTDCurve( GBPYC_STD );
-		setUpMeXccyBasisCurve( GBPYC_XCCY );
+		setUpAqOISCurve( GBPYC_OIS );
+		setUpAqSTDCurve( GBPYC_STD );
+		setUpAqXccyBasisCurve( GBPYC_XCCY );
 
 		// Set up FXFWDCONST curves
-		setUpMeFwdFxConstCurveCurve( EURYC_FXFWDGBP );  // EUR discounting with GBP CSA
-		setUpMeFwdFxConstCurveCurve( USDYC_FXFWDGBP );  // USD discounting with GBP CSA
+		setUpAqFwdFxConstCurveCurve( EURYC_FXFWDGBP );  // EUR discounting with GBP CSA
+		setUpAqFwdFxConstCurveCurve( USDYC_FXFWDGBP );  // USD discounting with GBP CSA
 	}
 
 	void calcDV01AndCompareToReference( const char* csaSuffix )

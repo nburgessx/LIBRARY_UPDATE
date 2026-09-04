@@ -1,8 +1,8 @@
 // Curves
-#include "TryMeCurveOis.h"
-#include "TryMeCurveStd.h"
-#include "TryMeCurveTenorBasis.h"
-#include "TryMeCurveXccyBasis.h"
+#include "TryAqCurvesOis.h"
+#include "TryAqCurvesStd.h"
+#include "TryAqCurvesTenorBasis.h"
+#include "TryAqCurvesXccyBasis.h"
 
 // Swap Creation and Pricing
 #include "tryMeLWOSwapCreation.h"
@@ -516,7 +516,7 @@ namespace google_test
     TEST_F( TestLWOSwapDelta, RISK_FlatShiftDeltaXCCY_RebuildEURTenorBasis )
     {
 		// 0. Rebuild the EUR TenorBasis
-		TryMeCurveTenorBasis tenorBasis( EURYC_3M6M );
+		TryAqCurvesTenorBasis tenorBasis( EURYC_3M6M );
 
 		// 1. Load the Input Files
 				

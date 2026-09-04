@@ -7,7 +7,7 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 
 #include "tryMeLWOCurveCreateOIS.h"
-#include "tryMeCurveDiscountFactor.h"
+#include "tryAqCurvesDiscountFactor.h"
 
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"

@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryMeUtilitySetup.h"
+#include "tryAqToolsSetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
 #include "ResultsProcessor.h"
@@ -24,7 +24,7 @@
 #include "tryMeLWOSwapCreation.h"
 #include "tryMeLWOSwapPricing.h"
 
-#include "tryMeDate.h"
+#include "tryAqDates.h"
 
 
 using etrading::ReadDataFile;
@@ -414,7 +414,7 @@ namespace
 			const AQLString businessDayAdj;
 			const AQLString calendar;
 			const AQLString rolLConvention;
-			toDate = validation::tryMeDateFromTenor( toDate, tenor, businessDayAdj, calendar, rolLConvention );
+			toDate = validation::tryAqDatesFromTenor( toDate, tenor, businessDayAdj, calendar, rolLConvention );
 
 			const double survivalProbability = validation::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate, asOfDate );
 			ASSERT_TRUE( survivalProbability < prevSurvivalProbability ) << "#ERROR: survivalProbability should be monotonically decreasing when extrapolating";

@@ -5,7 +5,7 @@
 
 namespace validation
 {
-    /* @brief			validation method for meCurveDiscountFactorsFromYearFractions
+    /* @brief			validation method for aqCurvesDiscountFactorsFromYearFractions
     *  @param [in]		lwoCurveName	Curve Name
     *  @param [in]		yearFractions	An array of yearFractions by year count
     *  @param [in]		dayCount	    The daycount fraction used to generate the yearFraction
@@ -27,7 +27,7 @@ namespace validation
             const std::string& businessDayAdj  = "NO_CHANGE",
             const std::string& calendar = "" );
 
-    /* @brief			validation method for meCurveDiscountFactors
+    /* @brief			validation method for aqCurvesDiscountFactors
     *  @param [in]		lwoCurveName	Curve Name
     *  @param [in]		paymentDates			A single or an array of payment Dates in YYYYMMDD formate
     *  @return			A array of discount factors
@@ -36,7 +36,7 @@ namespace validation
             const std::vector<boost::gregorian::date>& paymentDates );
 
 
-    /* @brief			validation method for meCurveDiscountFactorsForwardStarting
+    /* @brief			validation method for aqCurvesDiscountFactorsForwardStarting
     *  @param [in]		lwoCurveName	LWO Curve Name
     *  @param [in]		fromDates		A single array of dates in YYYYMMDD formate
     *  @param [in]		toDates			An array of dates in YYYYMMDD formate
@@ -46,7 +46,7 @@ namespace validation
             const std::vector<boost::gregorian::date>& fromDates,
             const std::vector<boost::gregorian::date>& toDates );
 
-    /* @brief			validation method for meCurveDiscountFactorsForwardStartingFromYearFractions
+    /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromYearFractions
     *  @param [in]		lwoCurveName	LWO Curve Name
     *  @param [in]		fromDates			An array of from-dates in YYYYMMDD formate
     *  @param [in]		yearFractions		An array of year fraction yearFractions
@@ -58,7 +58,7 @@ namespace validation
             const DoubleVector& yearFractions,
             const AQLString& dayCount );
 
-    /* @brief			validation method for meCurveDiscountFactorsForwardStartingFromTenor
+    /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromTenor
     *  @param [in]		lwoCurveName	    LWO Curve Name
     *  @param [in]		fromDates		    An array of from-dates in YYYYMMDD formate
     *  @param [in]		tenor			    A tenor string

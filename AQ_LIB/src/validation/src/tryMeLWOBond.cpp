@@ -1672,11 +1672,11 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief			validation interface for the meUtilityBondAverageYield method, calculate the yield by averaging the underlying bonds' yields
+	/* @brief			validation interface for the aqToolsBondAverageYield method, calculate the yield by averaging the underlying bonds' yields
 	*  @param [in]		underlyingBondYields	Bond future's underlying bond yields
 	*  @return			Aussie bond future notional bond's yield
 	*/
-	double tryMeUtilityBondAverageYield(const std::vector<double>& underlyingBondYields)
+	double tryAqToolsBondAverageYield(const std::vector<double>& underlyingBondYields)
 	{
 		VALID_EXCEPTION_START
 
@@ -1693,11 +1693,11 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief			validation interface for the meUtilityBondYieldFromFuturePrice method, calculate the yield from futurePrice
+	/* @brief			validation interface for the aqToolsBondYieldFromFuturePrice method, calculate the yield from futurePrice
 	*  @param [in]		futurePrice		Bond future price
 	*  @return			Aussie bond future notional bond's yield
 	*/
-	double tryMeUtilityBondYieldFromFuturePrice(const double& futurePrice)
+	double tryAqToolsBondYieldFromFuturePrice(const double& futurePrice)
 	{
 		VALID_EXCEPTION_START
 

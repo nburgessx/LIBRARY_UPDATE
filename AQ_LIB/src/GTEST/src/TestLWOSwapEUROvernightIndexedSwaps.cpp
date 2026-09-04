@@ -6,9 +6,9 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
-#include "TryMeCurveOis.h"
-#include "TryMeCurveStd.h"
-#include "TryMeCurveTenorBasis.h"
+#include "TryAqCurvesOis.h"
+#include "TryAqCurvesStd.h"
+#include "TryAqCurvesTenorBasis.h"
 
 
 using etrading::ReadDataFile;

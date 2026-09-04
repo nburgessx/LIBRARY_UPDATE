@@ -8,7 +8,7 @@
 #include "YieldCurveUtil.h"
 #include "AQLDateScheduleHelpers.h"
 #include "InitializeETrading.h"
-#include "tryMeUtilitySetup.h"
+#include "tryAqToolsSetup.h"
 #include "tryMirGetForwardRate.h"
 #include "ResultsProcessor.h"
 #include <sstream>

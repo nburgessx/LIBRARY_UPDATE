@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryMeUtilitySetup.h"
+#include "tryAqToolsSetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
 #include "ResultsProcessor.h"
@@ -265,7 +265,7 @@ namespace google_test
 	// 		testEngineCurveForwardRates("6M", ccy, testIndex);
     // 
 	// 		// Flush the cache in preparation for a new set of curves
-	// 		validation::tryMeUtilityClearEntityPool();
+	// 		validation::tryAqToolsClearEntityPool();
 	// 		curveGenerators.clear();
 	// 		marketDataHandles.clear();
 	// 	}
@@ -316,7 +316,7 @@ namespace google_test
 	//		testEngineCurveForwardRates("12M", ccy, testIndex);
 
 	//		// Flush the cache in preparation for a new set of curves
-	//		validation::tryMeUtilityClearEntityPool();
+	//		validation::tryAqToolsClearEntityPool();
 	//		curveGenerators.clear();
 	//		marketDataHandles.clear();
 	//	}

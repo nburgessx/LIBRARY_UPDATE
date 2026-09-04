@@ -9,7 +9,7 @@
 #include "GetGoogleTestFolder.h"
 #include "ResultsProcessor.h"
 #include "tryMeLWO.h"
-#include "tryMeCurveResults.h"
+#include "tryAqCurvesResults.h"
 
 namespace
 {
@@ -159,7 +159,7 @@ namespace google_test
 
 		// Create Curve Group
 		const std::vector<std::string> USDcurves = { curveUSDOIS, curveUSD3M };
-		const std::string curveGroupUSD	= validation::tryMeCurveGroupCreate( "USDCurves", USDcurves );
+		const std::string curveGroupUSD	= validation::tryAqCurvesGroupCreate( "USDCurves", USDcurves );
 
 		StandardStringMatrix rawData = { { curveGroupUSD } };
 		StandardStringMatrix expectedResult = { { "CURVECOLLECTION", "USDYC" } };
@@ -184,7 +184,7 @@ namespace google_test
 
 		// Create Curve Group
 		const std::vector<std::string> USDcurves = { curveUSDOIS, curveUSD3M };
-		const std::string curveGroupUSD	= validation::tryMeCurveGroupCreate( "USDCurves", USDcurves );
+		const std::string curveGroupUSD	= validation::tryAqCurvesGroupCreate( "USDCurves", USDcurves );
 
 		StandardStringMatrix rawData = { { "CURVECOLLECTION", curveGroupUSD } };
 		StandardStringMatrix expectedResult = { { "CURVECOLLECTION", "USDYC" } };
@@ -209,7 +209,7 @@ namespace google_test
 
 		// Create Curve Group
 		const std::vector<std::string> USDcurves = { curveUSDOIS, curveUSD3M };
-		const std::string curveGroupUSD	= validation::tryMeCurveGroupCreate( "USDCurves", USDcurves );
+		const std::string curveGroupUSD	= validation::tryAqCurvesGroupCreate( "USDCurves", USDcurves );
 
 		StandardStringMatrix rawData = { { curveGroupUSD, "" } };
 		StandardStringMatrix expectedResult = { { "CURVECOLLECTION", "USDYC" } };
@@ -234,7 +234,7 @@ namespace google_test
 
 		// Create Curve Group
 		const std::vector<std::string> USDcurves = { curveUSDOIS, curveUSD3M };
-		const std::string curveGroupUSD	= validation::tryMeCurveGroupCreate( "USDCurves", USDcurves );
+		const std::string curveGroupUSD	= validation::tryAqCurvesGroupCreate( "USDCurves", USDcurves );
 
 		// Single Column Input is for Curve Objects from the Same Curve Collection Only
 		StandardStringMatrix rawData = { { curveGroupUSD },
@@ -267,8 +267,8 @@ namespace google_test
 		const std::vector<std::string> USDcurves = { curveUSDOIS, curveUSD3M };
 		const std::vector<std::string> EURcurves = { curveEUROIS, curveEUR3M };
 		
-		const std::string curveGroupUSD	= validation::tryMeCurveGroupCreate( "USDCurves", USDcurves );
-		const std::string curveGroupEUR	= validation::tryMeCurveGroupCreate( "EURCurves", EURcurves );
+		const std::string curveGroupUSD	= validation::tryAqCurvesGroupCreate( "USDCurves", USDcurves );
+		const std::string curveGroupEUR	= validation::tryAqCurvesGroupCreate( "EURCurves", EURcurves );
 		
 		StandardStringMatrix rawData = { { "Leg1:Fixed", curveGroupUSD },
 										 { "Leg2:Float", curveGroupEUR },

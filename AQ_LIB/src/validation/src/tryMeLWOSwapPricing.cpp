@@ -22,7 +22,7 @@
 #include "CreditBasketModel.h"
 #include "AQOUtilities.h"
 #include "ExceptionMacros.h"
-#include "tryMeCurveDiscountFactor.h"
+#include "tryAqCurvesDiscountFactor.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "AQLDateScheduleHelpers.h"
 #include "SettingsValidation.h"

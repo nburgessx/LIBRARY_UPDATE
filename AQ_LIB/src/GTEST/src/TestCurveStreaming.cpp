@@ -17,7 +17,7 @@
 #include "GetGoogleTestFolder.h"
 #include "ResultsProcessor.h"
 #include "tryMeLWO.h"
-#include "tryMeCurveDiscountFactor.h"
+#include "tryAqCurvesDiscountFactor.h"
 #include "CurveStreaming.h"
 #include "CurveResultsContainer.h"
 #include "CoreEnumerations.h"
@@ -54,7 +54,7 @@ namespace google_test
 
         // Actual Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
-        std::vector<double> actualDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
+        std::vector<double> actualDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
 
         // Compare Results with Stored Snapshot Results - Allow Rebasing
         const double tolerance = 1e-6;
@@ -70,7 +70,7 @@ namespace google_test
 
         // Original Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
 
         // Overwrite Discount Factors - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> newPaymentDates = {
@@ -115,7 +115,7 @@ namespace google_test
 
         // Original Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
 
         // Overwrite Discount Factors - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> newPaymentDates = {
@@ -208,7 +208,7 @@ namespace google_test
 
         // Original Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
 
         // Set Discount Factors to One
         etrading::setCurveDiscountFactorsToOne( "USDYC", "USDOIS" );
@@ -234,7 +234,7 @@ namespace google_test
         const std::string loadUSD6ML        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Discount Factors - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> newPaymentDates = {
@@ -278,7 +278,7 @@ namespace google_test
         const std::string loadUSD6ML        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Discount Factors - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> newPaymentDates = {
@@ -370,7 +370,7 @@ namespace google_test
         const std::string loadUSD6ML        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Set Discount Factors to One
         etrading::setCurveDiscountFactorsToOne( "USDYC", "USD3ML" );
@@ -396,7 +396,7 @@ namespace google_test
         const std::string loadUSD6ML        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> fixingDates = {
@@ -440,7 +440,7 @@ namespace google_test
         const std::string loadUSD6ML        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> fixingDates = {
@@ -484,7 +484,7 @@ namespace google_test
         const std::string loadUSD6ML        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> fixingDates = {
@@ -528,7 +528,7 @@ namespace google_test
         const std::string loadUSD6ML        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
          // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> fixingDates = {
@@ -633,7 +633,7 @@ namespace google_test
 
         // Original Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> fixingDates = {
@@ -677,7 +677,7 @@ namespace google_test
 
         // Original Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> fixingDates = {
@@ -720,7 +720,7 @@ namespace google_test
         const std::string loadUSD6ML        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> fixingDates = {
@@ -763,7 +763,7 @@ namespace google_test
         const std::string loadUSD6ML        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
-        const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD6ML" ).discountFactors_;
+        const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD6ML" ).discountFactors_;
 
          // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
         const std::vector<AQLDate> fixingDates = {

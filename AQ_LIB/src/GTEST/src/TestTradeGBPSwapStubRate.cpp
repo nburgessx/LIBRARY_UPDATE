@@ -3,10 +3,10 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
-#include "TryMeCurveOis.h"
-#include "TryMeCurveStd.h"
-#include "TryMeCurveTenorBasis.h"
-#include "tryMeProductSwapStubRate.h"
+#include "TryAqCurvesOis.h"
+#include "TryAqCurvesStd.h"
+#include "TryAqCurvesTenorBasis.h"
+#include "tryAqSwapStubRate.h"
 
 #include "tryMeLWO.h"
 #include "AQOUtilities.h"
@@ -57,7 +57,7 @@ namespace google_test
 			DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
 			AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
-			double stubRate = validation::tryMeProductSwapStubRate(swapLVB, curveIndices, curveTenors, tenorCurveFixings, true);
+			double stubRate = validation::tryAqSwapStubRate(swapLVB, curveIndices, curveTenors, tenorCurveFixings, true);
 
 			CheckTestResultsAndRebaseOnRequest(stubRate, TEST_DIR, fileStubRateOutput, tolerance);
 

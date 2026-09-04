@@ -54,7 +54,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief			validation interface for the meProductSwapSchedule method
+	/* @brief			validation interface for the aqSwapSchedule method
 	*  @param [in]		swapName		        Swap name
 	*  @param [in]		showBespokeProperties   True to show bespoke schedule properties, default to false
 	*  @param [in]		showColumnHeaders		True to show column headers, default to true
@@ -213,13 +213,13 @@ namespace validation
 	}
 
 
-	/* @brief			validation interface for the meUtilitySwapScheduleTemplate method
+	/* @brief			validation interface for the aqToolsSwapScheduleTemplate method
 	*  @param [in]		swapScheduleLVB		A label value block defining the swap schedule
 	*  @param [in]		validateKeys	True to validate the all keys provided are valid. Default to True
 	*  @param [in]	    columnList          Column header names to show specified columns. Default to empty list showing all columns.
 	*  @return			A matrix of floating leg/fixing leg schedules
 	*/
-	AnyTypeMatrix tryMeUtilitySwapScheduleTemplate(bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys, const std::vector<std::string>& columnList)
+	AnyTypeMatrix tryAqToolsSwapScheduleTemplate(bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys, const std::vector<std::string>& columnList)
 	{
 		VALID_EXCEPTION_START
 

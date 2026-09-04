@@ -2616,7 +2616,7 @@ namespace etrading
 			tradePV = oisFloatLegPV - liborFloatLegPV;
 
 			// Log Calibration Results: LIBOR-OIS
-			// This feature is disabled by default and can be enabled using 'meUtilityRecord'
+			// This feature is disabled by default and can be enabled using 'aqToolsRecord'
 			// CREATE_LOGFILE( oisFixedLegMaturity, longTermConvEnum, tradePV, oisFloatLegPV, liborFloatLegPV, oisFixedLegStartDates, oisFixedLegEndDates, oisFixedLegAccrualYearFractions, oisFixedLegDiscountFactors, oisFixedLegCalendar, oisDayCount, liborOisParSpread, liborParRate, spotterm, oisFixedLegAnnuity )
 			// LOGFILE_ADD_COMMENT("OIS CURVE CALIBRATION: LIBOR-OIS TRADE SUMMARY")
 
@@ -2636,7 +2636,7 @@ namespace etrading
 			tradePV = oisFloatLegPV - oisFixedLegPV;
 
 			// Log Calibration Results: OIS OUTRIGHTS
-			// This feature is disabled by default and can be enabled using 'meUtilityRecord'
+			// This feature is disabled by default and can be enabled using 'aqToolsRecord'
 			// CREATE_LOGFILE( oisFixedLegMaturity, longTermConvEnum, tradePV, oisFloatLegPV, oisFixedLegPV, oisFixedLegStartDates, oisFixedLegEndDates, oisFixedLegAccrualYearFractions, oisFixedLegDiscountFactors, oisFixedLegCalendar, oisDayCount, oisParRate, spotterm, oisFixedLegAnnuity )
 			// LOGFILE_ADD_COMMENT("OIS CURVE CALIBRATION: OUTRIGHT-OIS TRADE SUMMARY")
 		}

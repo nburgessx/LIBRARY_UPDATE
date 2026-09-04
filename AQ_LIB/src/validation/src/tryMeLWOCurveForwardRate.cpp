@@ -1,6 +1,6 @@
 #include "tryMeLWOCurveForwardRate.h"
-#include "tryMeCurveForwardRate.h" // needed for the utility functions
-#include "tryMeDate.h"
+#include "tryAqCurvesForwardRate.h" // needed for the utility functions
+#include "tryAqDates.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"

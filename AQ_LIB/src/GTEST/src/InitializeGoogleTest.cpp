@@ -6,7 +6,7 @@
 #include "AQLDefinitions.h"
 #include "AQLLinearRatesVolatilityManager.h"
 #include "EnvironmentUtilities.h"
-#include "tryMeUtilitySetup.h"
+#include "tryAqToolsSetup.h"
 #include "AQLCoreLockControl.h"
 
 // Include Visual Leak Detector in debug builds
@@ -76,7 +76,7 @@ namespace google_test
 		common::AQLCoreLockControl::enableThreadLocks( false );
 
         // Initialize the LWO Configuration Files
-        AQLString loadLWOConfigStatus = validation::tryMeUtilityLoadConfigurationFiles();
+        AQLString loadLWOConfigStatus = validation::tryAqToolsLoadConfigurationFiles();
     }
 
     InitializeGoogleTest::~InitializeGoogleTest()

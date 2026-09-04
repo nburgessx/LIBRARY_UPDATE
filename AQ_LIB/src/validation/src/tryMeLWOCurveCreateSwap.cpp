@@ -32,7 +32,7 @@
 #include "AQLCoreComponentManager.h"
 #include "AQLCurvePricingObject.h"
 #include "AQLPriceDataInterpolation.h"
-#include "tryMeCurveForwardRate.h"
+#include "tryAqCurvesForwardRate.h"
 #include "EntityPoolUtilities.h"
 #include "CurveResultsContainer.h"
 

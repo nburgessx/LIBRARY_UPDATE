@@ -430,17 +430,17 @@ namespace validation
 	*/
 	std::string tryMeLWOBondCreateAUDNotionalBond(const std::string& bondObjectName, const AQLDate& settleDate, const std::string& maturityDate, const std::string& couponRate, const std::string& payReceive, const std::string& calendar, const std::string& frequency, const std::string& dayCount, const std::string& bondQuoteConv);
 
-	/* @brief			validation interface for the meUtilityBondAverageYield method, calculate the average of underlying bonds' yields
+	/* @brief			validation interface for the aqToolsBondAverageYield method, calculate the average of underlying bonds' yields
 	*  @param [in]		underlyingBondYields	Bond future's underlying bond yields
 	*  @return			Aussie bond future notional bond's yield
 	*/
-	double tryMeUtilityBondAverageYield(const std::vector<double>& underlyingBondYields);
+	double tryAqToolsBondAverageYield(const std::vector<double>& underlyingBondYields);
 
-	/* @brief			validation interface for the meUtilityBondYieldFromFuturePrice method, calculate the 1 - futurePrice/100
+	/* @brief			validation interface for the aqToolsBondYieldFromFuturePrice method, calculate the 1 - futurePrice/100
 	*  @param [in]		futurePrice		Bond future price
 	*  @return			Aussie bond future notional bond's yield
 	*/
-	double tryMeUtilityBondYieldFromFuturePrice(const double& futurePrice);
+	double tryAqToolsBondYieldFromFuturePrice(const double& futurePrice);
 
 
 	/* @brief	validation interface for the meLWOBondFRNPriceFromDiscountMargin method

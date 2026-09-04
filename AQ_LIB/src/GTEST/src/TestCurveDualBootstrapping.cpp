@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryMeUtilitySetup.h"
+#include "tryAqToolsSetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
 #include "ResultsProcessor.h"
@@ -20,7 +20,7 @@
 #include "tryMeLWOCurveDualBootstrap.h"
 
 // Forward Rates Table
-#include "tryMeCurveForwardRate.h"
+#include "tryAqCurvesForwardRate.h"
 
 using etrading::ReadDataFile;
 
@@ -61,7 +61,7 @@ namespace google_test
 		const ReadDataFile::Load inputFile(oisForwardRateInputFile);
 		const DateVector fromDateVector = inputFile["fromDates"];
 		const DateVector toDateVector = inputFile["toDates"];
-		const DoubleArray results = validation::tryMeCurveForwardRatesFromForwardDates(fromDateVector,
+		const DoubleArray results = validation::tryAqCurvesForwardRatesFromForwardDates(fromDateVector,
 			toDateVector,
 			inputFile["curveCollection"],
 			inputFile["curveIndex"],
@@ -108,7 +108,7 @@ namespace google_test
 
 			//----------------------------------------------------------------------------------------
 			// Flush the cache in preparation for a new set of curves
-			validation::tryMeUtilityClearEntityPool();
+			validation::tryAqToolsClearEntityPool();
 		}
 	}
 

@@ -31,7 +31,7 @@
 
 // Curve Results
 #include "CurveResultsContainer.h"
-#include "tryMeCurveResults.h"
+#include "tryAqCurvesResults.h"
 #include "CurveUtilities.h"						// Contains Legcacy Curve Discount Factor and Forward Rate Methods
 #include "AQLCurveForwardRateHelpers.h"			// Also contains Legcacy Curve Discount Factor and Forward Rate Methods
 #include "ParameterValidation.h"				// Contains etrading::getDataInstance() method
@@ -44,7 +44,7 @@
 #include "AQLLinearSplineInterpolation.h"
 
 // Forward Rate Math Methods
-#include "tryMeMathForwardRate.h"
+#include "tryAqMathForwardRate.h"
 
 
 // Define Test Folder Path(s)
@@ -95,7 +95,7 @@ namespace google_test
 		const etrading::StateVariableEnum stateVariable				= etrading::STATE_VARIABLE_DF;
 		
 		// 3. Extract the Curve Results: Matrix with 2 Columns - PaymentDatesAsTerms and DiscountFactors
-        const etrading::VariantMatrix curveResults = validation::tryMeCurveResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
+        const etrading::VariantMatrix curveResults = validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
 		
 		// 4. Extract Curve Payment Dates and Discount Factors from the Curve Results Table
 		ASSERT_GT( curveResults.size(), size_t(0) );		// we expect more than 1 row of data
@@ -111,10 +111,10 @@ namespace google_test
         }
 
 		// 5. Imply the Forward Rates from the Curve Results Table
-		const std::vector< double> expectedForwardRates = validation::tryMeCurveResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
+		const std::vector< double> expectedForwardRates = validation::tryAqCurvesResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
 
 		// 6. Get the Forward Rates from the Curve Interpolation Class, using isFwdInter = false (undesirable legacy feature)
-		const std::vector< double > actualForwardRates = validation::tryMeMathForwardRates( curveDates, asOfDate, curveCollection, curveIndex, false, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );
+		const std::vector< double > actualForwardRates = validation::tryAqMathForwardRates( curveDates, asOfDate, curveCollection, curveIndex, false, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );
 
 		// 7. Test the Results Match
 		ASSERT_EQ( expectedForwardRates.size(), actualForwardRates.size() );
@@ -150,7 +150,7 @@ namespace google_test
 		const etrading::StateVariableEnum stateVariable				= etrading::STATE_VARIABLE_DF;
 		
 		// 3. Extract the Curve Results: Matrix with 2 Columns - PaymentDatesAsTerms and DiscountFactors
-        const etrading::VariantMatrix curveResults = validation::tryMeCurveResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
+        const etrading::VariantMatrix curveResults = validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
 		
 		// 4. Extract Curve Payment Dates and Discount Factors from the Curve Results Table
 		ASSERT_GT( curveResults.size(), size_t(0) );		// we expect more than 1 row of data
@@ -166,10 +166,10 @@ namespace google_test
         }
 
 		// 5. Imply the Forward Rates from the Curve Results Table
-		const std::vector< double> expectedForwardRates = validation::tryMeCurveResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
+		const std::vector< double> expectedForwardRates = validation::tryAqCurvesResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
 
 		// 6. Get the Forward Rates from the Curve Interpolation Class using isFwdInter = false
-		const std::vector< double > actualForwardRates = validation::tryMeMathForwardRates( curveDates, asOfDate, curveCollection, curveIndex, false, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );
+		const std::vector< double > actualForwardRates = validation::tryAqMathForwardRates( curveDates, asOfDate, curveCollection, curveIndex, false, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );
 
 		// 7. Test the Results Match
 		ASSERT_EQ( expectedForwardRates.size(), actualForwardRates.size() );
@@ -205,7 +205,7 @@ namespace google_test
 		const etrading::StateVariableEnum stateVariable				= etrading::STATE_VARIABLE_DF;
 		
 		// 3. Extract the Curve Results: Matrix with 2 Columns - PaymentDatesAsTerms and DiscountFactors
-        const etrading::VariantMatrix curveResults = validation::tryMeCurveResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
+        const etrading::VariantMatrix curveResults = validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
 		
 		// 4. Extract Curve Payment Dates and Discount Factors from the Curve Results Table
 		ASSERT_GT( curveResults.size(), size_t(0) );		// we expect more than 1 row of data
@@ -221,10 +221,10 @@ namespace google_test
         }
 
 		// 5. Imply the Forward Rates from the Curve Results Table
-		const std::vector< double> expectedForwardRates = validation::tryMeCurveResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
+		const std::vector< double> expectedForwardRates = validation::tryAqCurvesResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
 
 		// 6. Get the Forward Rates from the Curve Interpolation Class - using isFwdInter = false
-		const std::vector< double > actualForwardRates = validation::tryMeMathForwardRates( curveDates, asOfDate, curveCollection, curveIndex, false, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );
+		const std::vector< double > actualForwardRates = validation::tryAqMathForwardRates( curveDates, asOfDate, curveCollection, curveIndex, false, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );
 
 		// 7. Test the Results Match
 		ASSERT_EQ( expectedForwardRates.size(), actualForwardRates.size() );
@@ -260,7 +260,7 @@ namespace google_test
 	// 	const etrading::StateVariableEnum stateVariable				= etrading::STATE_VARIABLE_DF;
 	// 	
 	// 	// 3. Extract the Curve Results: Matrix with 2 Columns - PaymentDatesAsTerms and DiscountFactors
-    //     const etrading::VariantMatrix curveResults = validation::tryMeCurveResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
+    //     const etrading::VariantMatrix curveResults = validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
 	// 	
 	// 	// 4. Extract Curve Payment Dates and Discount Factors from the Curve Results Table
 	// 	ASSERT_GT( curveResults.size(), size_t(0) );		// we expect more than 1 row of data
@@ -276,10 +276,10 @@ namespace google_test
     //     }
 	// 
 	// 	// 5. Imply the Forward Rates from the Curve Results Table
-	// 	const std::vector< double> expectedForwardRates = validation::tryMeCurveResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
+	// 	const std::vector< double> expectedForwardRates = validation::tryAqCurvesResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
 	// 
 	// 	// 6. Get the Forward Rates from the Curve Interpolation Class
-	// 	const std::vector< double > actualForwardRates = validation::tryMeMathForwardRates( curveDates, asOfDate, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );
+	// 	const std::vector< double > actualForwardRates = validation::tryAqMathForwardRates( curveDates, asOfDate, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );
 	// 
 	// 	// 7. Test the Results Match
 	// 	ASSERT_EQ( expectedForwardRates.size(), actualForwardRates.size() );

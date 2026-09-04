@@ -101,7 +101,7 @@ namespace etrading
 		const std::string& fixingTableName);
 
 
-	/* @brief			validation method for meCurveDiscountFactors
+	/* @brief			validation method for aqCurvesDiscountFactors
 	*                   NOTE: Payment dates have already been adjusted for business days and holidays
 	*                   so we do not apply the same adjustments again. Hence we do not accept
 	*                   a businessDayAdjustment or Calendar as input to this function.
@@ -149,7 +149,7 @@ namespace etrading
 		const AQLString& curveCollection,
 		const AQLString& curveIndex);
 
-	/* @brief			validation method for meCurveDiscountFactors
+	/* @brief			validation method for aqCurvesDiscountFactors
 	*  @param [in]		toDates			A single or an array of to-date in YYYYMMDD formate
 	*  @param [in]		curveCollection	Curve set ID
 	*  @param [in]		curveIndex		Index of the curve set. Default to OIS

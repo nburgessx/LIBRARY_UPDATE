@@ -7,7 +7,7 @@
 #include "ResultsProcessor.h"
 #include "CurveValidation.h"
 #include "tryMeLWO.h"
-#include "tryMeCurveDiscountFactor.h"
+#include "tryAqCurvesDiscountFactor.h"
 
 // Define Test Folder Path
 // *** The Google Test DataInstance folder is defined within etrading project, GoogleTest Folder, GetGoogleTestFolder.h ***
@@ -46,7 +46,7 @@ namespace google_test
 
         // Calculate Actual Discount Factors
         const ReadDataFile::Load inputFile( inputsBRL );
-        std::vector<double> discountFactorResults = validation::tryMeCurveDiscountFactorsFromTenors( inputFile["tenors"],
+        std::vector<double> discountFactorResults = validation::tryAqCurvesDiscountFactorsFromTenors( inputFile["tenors"],
                                                                                                          inputFile["businessDayAdj"],
                                                                                                          inputFile["calendar"], 
                                                                                                          inputFile["curveCollection"],
@@ -66,7 +66,7 @@ namespace google_test
 
         // Calculate Actual Discount Factors
         const ReadDataFile::Load inputFile( inputsCNH );
-        std::vector<double> discountFactorResults = validation::tryMeCurveDiscountFactorsFromTenors( inputFile["tenors"],
+        std::vector<double> discountFactorResults = validation::tryAqCurvesDiscountFactorsFromTenors( inputFile["tenors"],
                                                                                                          inputFile["businessDayAdj"],
                                                                                                          inputFile["calendar"], 
                                                                                                          inputFile["curveCollection"],

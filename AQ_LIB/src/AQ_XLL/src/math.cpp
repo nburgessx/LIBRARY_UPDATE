@@ -2,8 +2,8 @@
 
 // include
 #include "CoreEnumerations.h"
-#include "tryMeMathNormalDistribution.h"
-#include "tryMeMathBlackScholes.h"
+#include "tryAqMathNormalDistribution.h"
+#include "tryAqMathBlackScholes.h"
 
 
 // Black-Scholes Price Method
@@ -23,7 +23,7 @@ XLO_FUNC_START(aqMathBlackScholesPrice(
 
     CallOrPutEnum cp = etrading::toCallOrPutEnum(aq_xll::toNarrowString(callOrPut));
 
-    double result = validation::tryMeMathBlackScholesPrice(
+    double result = validation::tryAqMathBlackScholesPrice(
         cp,
         spot.get<double>(),
         strike.get<double>(),

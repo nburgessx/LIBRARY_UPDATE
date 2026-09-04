@@ -87,7 +87,7 @@ namespace validation
     }
 
 
-    /* @brief validation interface for meFXForwardsFromDiscountCurves
+    /* @brief validation interface for aqFXForwardsFromDiscountCurves
 	 * @param [in] objectName           The objectName of the FxCurve
      * @param [in] settleDatesOrTenors  Settlement dates or tenors
      * @param [in] baseCurveCollection  Base currency curve collection
@@ -119,7 +119,7 @@ namespace validation
 
     }
 
-	/* @brief validation interface for meFXForwards
+	/* @brief validation interface for aqFXForwards
 	 * @param [in] objectName           The objectName of the FxCurve
      * @param [in] settleDatesOrTenors  Settlement dates or tenors
 	 * @param [in] showColumnHeaders	True to show column headers, default to true

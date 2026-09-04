@@ -4,7 +4,7 @@
 // Test Includes
 #include "InitializeGoogleTest.h"
 #include "CurveResultsContainer.h"
-#include "tryMeCurveResults.h"
+#include "tryAqCurvesResults.h"
 #include "CurveUtilities.h"						// Contains Legcacy Curve Discount Factor and Forward Rate Methods
 #include "AQLCurveForwardRateHelpers.h"			// Also contains Legcacy Curve Discount Factor and Forward Rate Methods
 #include "ParameterValidation.h"				// Contains etrading::getDataInstance() method
@@ -44,7 +44,7 @@ namespace google_test
         public:
 
             // Test data has been taken from the example workbook "meCurveResults.xlsx"
-            // This file can be found in folder ... %AlgoQuantLib%/resources/examples/AlgoQuantLib_EXAMPLES/Curve/meCurveResults.xlsx"
+            // This file can be found in folder ... %AlgoQuantLib%/resources/examples/AlgoQuantLib_EXAMPLES/Curve/aqCurvesResults.xlsx"
             virtual void SetUp()
             {
                 curveType_          = "OIS";            // OIS_CURVETYPE
@@ -233,7 +233,7 @@ namespace google_test
         AQLStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
         
         // Update Discount Factors within Curve Results
-        EXPECT_NO_THROW( validation::tryMeCurveResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable ) );
+        EXPECT_NO_THROW( validation::tryAqCurvesResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable ) );
     }
 
 
@@ -247,10 +247,10 @@ namespace google_test
         AQLStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
         
         // Update Discount Factors within Curve Results
-        validation::tryMeCurveResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable );
+        validation::tryAqCurvesResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable );
 
         // Display the results
-        etrading::VariantMatrix resultsMatrix = validation::tryMeCurveResultsDiscountFactorsDisplayAll( curveCollection_, curveIndex_ );
+        etrading::VariantMatrix resultsMatrix = validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection_, curveIndex_ );
 
         // Validate Result Dimensions
         ASSERT_EQ( resultsMatrix.size(), paymentDatesExpected_.size() );
@@ -281,10 +281,10 @@ namespace google_test
         AQLStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
         
         // Update Discount Factors within Curve Results
-        validation::tryMeCurveResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable );
+        validation::tryAqCurvesResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable );
 
         // Display the results
-        etrading::VectorDouble discountFactorResults = validation::tryMeCurveResultsDiscountFactorsDisplay( curveCollection_, curveIndex_, paymentDatesExpected_ );
+        etrading::VectorDouble discountFactorResults = validation::tryAqCurvesResultsDiscountFactorsDisplay( curveCollection_, curveIndex_, paymentDatesExpected_ );
 
         // Validate Result Dimensions
         ASSERT_EQ( discountFactorResults.size(), paymentDatesExpected_.size() );
@@ -308,10 +308,10 @@ namespace google_test
         AQLStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
         
         // Update Discount Factors within Curve Results
-        EXPECT_NO_THROW( validation::tryMeCurveResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable ) );
+        EXPECT_NO_THROW( validation::tryAqCurvesResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable ) );
 
         // Delete Discount Factors within Curve Results
-        EXPECT_NO_THROW( validation::tryMeCurveResultsDelete( curveCollection_, curveIndex_ ) );
+        EXPECT_NO_THROW( validation::tryAqCurvesResultsDelete( curveCollection_, curveIndex_ ) );
     }
 
 
@@ -325,10 +325,10 @@ namespace google_test
         AQLStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
         
         // Update Discount Factors within Curve Results
-        EXPECT_NO_THROW( validation::tryMeCurveResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable ) );
+        EXPECT_NO_THROW( validation::tryAqCurvesResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable ) );
 
         // Delete All Discount Factors within Curve Results
-        EXPECT_NO_THROW( validation::tryMeCurveResultsDeleteAll() );
+        EXPECT_NO_THROW( validation::tryAqCurvesResultsDeleteAll() );
     }
 
 
@@ -336,10 +336,10 @@ namespace google_test
     TEST_F( TestCurveResults, UNIT_DiscountFactors_ThrowIfObjectDoesNotExist )
     {
         // Expect display function to throw if no results to display
-        EXPECT_ANY_THROW( validation::tryMeCurveResultsDiscountFactorsDisplayAll( curveCollection_, curveIndex_ ) );
+        EXPECT_ANY_THROW( validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection_, curveIndex_ ) );
         
         // Expect get discount factors function to throw if no results to display
-        EXPECT_ANY_THROW( validation::tryMeCurveResultsDiscountFactorsDisplay( curveCollection_, curveIndex_,  paymentDatesExpected_ ) );
+        EXPECT_ANY_THROW( validation::tryAqCurvesResultsDiscountFactorsDisplay( curveCollection_, curveIndex_,  paymentDatesExpected_ ) );
     }
 
 
@@ -355,10 +355,10 @@ namespace google_test
         // 1. Create DFs and Test Results
         // ================================================
         // Update Discount Factors within Curve Results
-        EXPECT_NO_THROW( validation::tryMeCurveResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable ) );
+        EXPECT_NO_THROW( validation::tryAqCurvesResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable ) );
         
         // Display the results
-        etrading::VariantMatrix resultsMatrix = validation::tryMeCurveResultsDiscountFactorsDisplayAll( curveCollection_, curveIndex_ );
+        etrading::VariantMatrix resultsMatrix = validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection_, curveIndex_ );
 
         // Validate Result Dimensions
         ASSERT_EQ( resultsMatrix.size(), paymentDatesExpected_.size() );
@@ -380,15 +380,15 @@ namespace google_test
         // 2. Delete DFs
         // ================================================
         // Delete Discount Factors within Curve Results
-        EXPECT_NO_THROW( validation::tryMeCurveResultsDelete( curveCollection_, curveIndex_ ) );
+        EXPECT_NO_THROW( validation::tryAqCurvesResultsDelete( curveCollection_, curveIndex_ ) );
 
         // 3. Check DFs are Deleted
         // ================================================
         // Expect display function to throw if no results to display
-        EXPECT_ANY_THROW( validation::tryMeCurveResultsDiscountFactorsDisplayAll( curveCollection_, curveIndex_ ) );
+        EXPECT_ANY_THROW( validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection_, curveIndex_ ) );
         
         // Expect get discount factors function to throw if no results to display
-        EXPECT_ANY_THROW( validation::tryMeCurveResultsDiscountFactorsDisplay( curveCollection_, curveIndex_,  paymentDatesExpected_ ) );
+        EXPECT_ANY_THROW( validation::tryAqCurvesResultsDiscountFactorsDisplay( curveCollection_, curveIndex_,  paymentDatesExpected_ ) );
     }
 
 
