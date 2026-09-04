@@ -132,7 +132,7 @@ namespace google_test
         LabelValueBlock LVB( laStringMatrix );
 
         // *** The LVB is an unordered map so the string matrix from the LVB may be in a different order to the original string matrix ***
-        AQLStringMatrix actualStringMatrix = LVB.toLAStringMatrix();
+        AQLStringMatrix actualStringMatrix = LVB.toAQLStringMatrix();
 
         // String Matrix Dimensions must be the same
         ASSERT_EQ( actualStringMatrix.size(), laStringMatrix.size() );
@@ -634,7 +634,7 @@ namespace google_test
 
         // Test LVB Constructor
         LabelValueBlock LVB( expectedMatrix );
-        AQLStringMatrix actualMatrix = LVB.toLAStringMatrix();
+        AQLStringMatrix actualMatrix = LVB.toAQLStringMatrix();
 
         ASSERT_GT( actualMatrix.size(), size_t(0) );
         ASSERT_EQ( expectedMatrix.size(), actualMatrix.size() );
@@ -684,7 +684,7 @@ namespace google_test
         
         // Test LVB Constructor
         LabelValueBlock LVB( key, value );
-        AQLStringMatrix actualMatrix = LVB.toLAStringMatrix();
+        AQLStringMatrix actualMatrix = LVB.toAQLStringMatrix();
 
         ASSERT_GT( actualMatrix.size(), size_t(0) );
         ASSERT_EQ( expectedMatrix.size(), actualMatrix.size() );
@@ -737,7 +737,7 @@ namespace google_test
         
         // Test LVB Constructor
         LabelValueBlock LVB( keys, values );
-        AQLStringMatrix actualMatrix = LVB.toLAStringMatrix();
+        AQLStringMatrix actualMatrix = LVB.toAQLStringMatrix();
 
         ASSERT_GT( actualMatrix.size(), size_t(0) );
         ASSERT_EQ( expectedMatrix.size(), actualMatrix.size() );

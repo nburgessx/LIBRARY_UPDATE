@@ -656,7 +656,7 @@ namespace etrading
 
 		const AQLDate spotDate = getDateFromTenorWithFxConvention(curveAsOfDate, resetLag, calendar, businessDayAdjustment, rollDayInput);
 
-		auto fxSpotMatrix = xccyCurveObject->getCurveMarketDataObj()->toLAStringMatrix(toString(FXSPOT_MARKETDATA));
+		auto fxSpotMatrix = xccyCurveObject->getCurveMarketDataObj()->toAQLStringMatrix(toString(FXSPOT_MARKETDATA));
 
 		const int marketDataRateColumn = CurveMarketData::findMarketDataRateColumnNumber_ForAllInstrumentTypes(FXSPOT_MARKETDATA);
 

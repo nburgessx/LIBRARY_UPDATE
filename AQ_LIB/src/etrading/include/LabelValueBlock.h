@@ -43,7 +43,7 @@ namespace etrading
         static LabelValueBlock createLabelValueBlock( const std::string& key, const std::string& value, const bool& makeAllKeysUppercase = true );
 
         // Convert LVB to a Matrix Type
-        AQLStringMatrix          toLAStringMatrix() const;
+        AQLStringMatrix          toAQLStringMatrix() const;
         StandardStringMatrix    toStandardStringMatrix() const;
         AnyTypeMatrix           toAnyTypeMatrix() const;
         VariantMatrix           toVariantMatrix() const;

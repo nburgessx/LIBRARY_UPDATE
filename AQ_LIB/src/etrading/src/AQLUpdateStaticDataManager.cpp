@@ -3893,7 +3893,7 @@ namespace etrading
 	    //======================================================
 	    // Get currency
         AQ_REQUIRE( curveDataCollection.size() > 0, "Unable to set-up Global Engine Curves - No Curve Data has been provided" )
-	    AQLStringMatrix tmpInfo = curveDataCollection[0]->curveConvLVB_.toLAStringMatrix(); // Conventions are stored as LVBs
+	    AQLStringMatrix tmpInfo = curveDataCollection[0]->curveConvLVB_.toAQLStringMatrix(); // Conventions are stored as LVBs
 	    upper(tmpInfo);
 	    AQLString currency;
 	    AQLObjectHolder objHolder = objPool.getObject(curveCollectionID, ENCHKTYPE_NOCHECK);
@@ -3972,7 +3972,7 @@ namespace etrading
 	    for (unsigned int i = 0; i < curveDataCollection.size(); ++i)
 	    {
 		    etrading::CurveTypeEnum curveType = curveDataCollection[i]->getCurveType();
-		    AQLStringMatrix curveConv = curveDataCollection[i]->curveConvLVB_.toLAStringMatrix(); // Conventions as LVBs;
+		    AQLStringMatrix curveConv = curveDataCollection[i]->curveConvLVB_.toAQLStringMatrix(); // Conventions as LVBs;
 		    AQLString curveName = curveDataCollection[i]->curveName_;
 		    AQLString curveIndex = curveDataCollection[i]->curveIndex_;
 
@@ -3992,7 +3992,7 @@ namespace etrading
 			    generateCurveName.toUpper();
 
 			    // Set as-of date from OIS curve
-			    AQLStringMatrix tmpInfo = curveData.curveConvLVB_.toLAStringMatrix(); // Curve Conventions are LVBs
+			    AQLStringMatrix tmpInfo = curveData.curveConvLVB_.toAQLStringMatrix(); // Curve Conventions are LVBs
 			    upper(tmpInfo);
 			    AQLDate asofdate = stringToDate(chgrow(tmpInfo, CURVEINPUT_ASOFDATE, 1));
 			    AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
@@ -4004,13 +4004,13 @@ namespace etrading
 										             curveIndex,
 										             marketName,
 										             generateCurveName,
-										             curveData.curveConvLVB_.toLAStringMatrix(),    // Conventions as LVBs
+										             curveData.curveConvLVB_.toAQLStringMatrix(),    // Conventions as LVBs
 										             curveData.oisRates_,
-										             curveData.oisConvLVB_.toLAStringMatrix(),      // Conventions as LVBs
+										             curveData.oisConvLVB_.toAQLStringMatrix(),      // Conventions as LVBs
 										             curveData.histRates_,
 										             curveData.loBasisRates_,
-										             curveData.loBasisConvLVB_.toLAStringMatrix(),  // Conventions as LVBs
-										             curveData.swapConvLVB_.toLAStringMatrix() );   // Conventions as LVBs
+										             curveData.loBasisConvLVB_.toAQLStringMatrix(),  // Conventions as LVBs
+										             curveData.swapConvLVB_.toAQLStringMatrix() );   // Conventions as LVBs
 			
 			    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_OISCURVENAME + staticDataSuffix);
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_OISCURVENAME + staticDataSuffix, generateCurveName);
@@ -4037,18 +4037,18 @@ namespace etrading
 											          curveIndex,
 											          marketName,
 											          generateCurveName,
-											          curveData.curveConvLVB_.toLAStringMatrix(),           // Conventions as LVBs
-											          curveData.moneyMarketConvLVB_.toLAStringMatrix(),     // Conventions as LVBs
+											          curveData.curveConvLVB_.toAQLStringMatrix(),           // Conventions as LVBs
+											          curveData.moneyMarketConvLVB_.toAQLStringMatrix(),     // Conventions as LVBs
 											          curveData.liborRates_,
-											          curveData.liborConvLVB_.toLAStringMatrix(),           // Conventions as LVBs
+											          curveData.liborConvLVB_.toAQLStringMatrix(),           // Conventions as LVBs
 											          curveData.swapRates_,
-											          curveData.swapConvLVB_.toLAStringMatrix(),            // Conventions as LVBs
+											          curveData.swapConvLVB_.toAQLStringMatrix(),            // Conventions as LVBs
 											          curveData.fra3mRates_,
 											          curveData.fra3mRates_,
 											          curveData.fra3mRates_,
 											          curveData.futureRates_,
-											          curveData.futureConvLVB_.toLAStringMatrix(),          // Conventions as LVBs
-											          curveData.basisAdjConvLVB_.toLAStringMatrix(),        // Conventions as LVBs
+											          curveData.futureConvLVB_.toAQLStringMatrix(),          // Conventions as LVBs
+											          curveData.basisAdjConvLVB_.toAQLStringMatrix(),        // Conventions as LVBs
 											          curveData.basisAdjRates_);
 
 			    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_SWAPCURVENAME + staticDataSuffix);
@@ -4074,15 +4074,15 @@ namespace etrading
 												            curveIndex,
 												            tmpCurrency,
 												            curveData.basisRates_,
-												            curveData.basisConvLVB_.toLAStringMatrix(),         // Conventions as LVBs
+												            curveData.basisConvLVB_.toAQLStringMatrix(),         // Conventions as LVBs
 												            curveData.fxFwdRates_,
-												            curveData.fxFwdConvLVB_.toLAStringMatrix(),         // Conventions as LVBs
+												            curveData.fxFwdConvLVB_.toAQLStringMatrix(),         // Conventions as LVBs
 												            curveData.spotFxRates_,
-												            curveData.curveConvLVB_.toLAStringMatrix(),         // Conventions as LVBs
-												            curveData.moneyMarketConvLVB_.toLAStringMatrix(),   // Conventions as LVBs
-												            curveData.fraConvLVB_.toLAStringMatrix(),           // Conventions as LVBs
-												            curveData.fraConvLVB_.toLAStringMatrix(),           // Conventions as LVBs
-												            curveData.liborConvLVB_.toLAStringMatrix(),         // Conventions as LVBs
+												            curveData.curveConvLVB_.toAQLStringMatrix(),         // Conventions as LVBs
+												            curveData.moneyMarketConvLVB_.toAQLStringMatrix(),   // Conventions as LVBs
+												            curveData.fraConvLVB_.toAQLStringMatrix(),           // Conventions as LVBs
+												            curveData.fraConvLVB_.toAQLStringMatrix(),           // Conventions as LVBs
+												            curveData.liborConvLVB_.toAQLStringMatrix(),         // Conventions as LVBs
 												            curveData.liborRates_);
 
 			    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_SWAPCURVENAME + staticDataSuffix);

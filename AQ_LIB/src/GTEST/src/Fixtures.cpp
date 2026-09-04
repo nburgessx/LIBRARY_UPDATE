@@ -15,16 +15,16 @@ namespace google_test
     //
     // SetUp Test Fixture
     //
-    class LADateTest : public testing::Test
+    class AQLDateTest : public testing::Test
     {
     protected:
 
-        LADateTest()
+        AQLDateTest()
         {
             date_ = AQLDate( "20150827" );
         };
 
-        virtual ~LADateTest()       {};
+        virtual ~AQLDateTest()       {};
         virtual void SetUp()        {};     // Setup gets invoked immediately before a test starts
         virtual void TearDown()     {};     // TearDown gets invoked immediately after a test finishes
 
@@ -41,7 +41,7 @@ namespace google_test
     // Call Test Fixture
     //
 
-    TEST_F( LADateTest, UNIT_CheckDate )
+    TEST_F( AQLDateTest, UNIT_CheckDate )
     {
         EXPECT_EQ( AQLDate( "20150827" ), date() );
     }

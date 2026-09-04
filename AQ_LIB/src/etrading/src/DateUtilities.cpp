@@ -505,7 +505,7 @@ namespace etrading
                 // ALTERNATIVE: UNTIL THE ABOVE IS FIXED
                 const bool includeLast = true;
 				AQLString dayCount("ACT/365");
-                double yearFraction = AQLDateScheduleHelpers::getTerm( toLADateFromGregorianDate( fromDate ), toLADateFromGregorianDate( toDate ), dayCount, includeLast );
+                double yearFraction = AQLDateScheduleHelpers::getTerm( toAQLDateFromGregorianDate( fromDate ), toAQLDateFromGregorianDate( toDate ), dayCount, includeLast );
 
                 return yearFraction;
 
@@ -638,7 +638,7 @@ namespace etrading
                                                    % now.time_of_day().seconds() ).str();
     };
 
-    AQLDate toLADateFromGregorianDate( const boost::gregorian::date& gregorian_date )
+    AQLDate toAQLDateFromGregorianDate( const boost::gregorian::date& gregorian_date )
     {
         AQLDate laDate;
 		laDate.setYear( gregorian_date.year() );
@@ -649,16 +649,16 @@ namespace etrading
         return laDate;
     };
 
-    std::vector<AQLDate> toLADatesFromGregorianDates( const std::vector<boost::gregorian::date>& gregorian_dates )
+    std::vector<AQLDate> toAQLDatesFromGregorianDates( const std::vector<boost::gregorian::date>& gregorian_dates )
     {
-        std::vector<AQLDate> LADates;
+        std::vector<AQLDate> AQLDates;
         std::for_each( gregorian_dates.cbegin(), gregorian_dates.cend(),
-                       [&LADates]( const boost::gregorian::date & gDate )
+                       [&AQLDates]( const boost::gregorian::date & gDate )
         {
-            LADates.emplace_back( toLADateFromGregorianDate( gDate ) );
+            AQLDates.emplace_back( toAQLDateFromGregorianDate( gDate ) );
         }
                      );
-        return LADates;
+        return AQLDates;
     };
 
     // returns a date string "YYYYMMDD" from a boost::gregorian::date
@@ -753,10 +753,10 @@ namespace etrading
     // Converts a std::string to an AQLDate using boost regular expression logic.
     // *** VERY IMPORTANT *** Please do not change the order of the DATE_REGEX list. If adding new types add to the end of the list, this is
     // becuase the "toGregorianDateFromREGEX" method in DateUtilities.cpp operates on the specific position of elements REGEX expression list.
-    AQLDate toLADateFromREGEX( const std::string& inString )
+    AQLDate toAQLDateFromREGEX( const std::string& inString )
     {
         boost::gregorian::date gregorianDate = toGregorianDateFromREGEX( inString );
-        AQLDate laDate = toLADateFromGregorianDate( gregorianDate );
+        AQLDate laDate = toAQLDateFromGregorianDate( gregorianDate );
         return laDate;
     }
 

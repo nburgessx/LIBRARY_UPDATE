@@ -675,7 +675,7 @@ namespace etrading
         }
         catch ( const std::out_of_range& )
         {
-            throw Exception( "range error in ReadTestData array: " + toLAString( i ) );
+            throw Exception( "range error in ReadTestData array: " + toAQLString( i ) );
         }
     }
 
@@ -712,7 +712,7 @@ namespace etrading
         catch ( const std::out_of_range& )
         {
             throw Exception( "invalid access to ReadTestData table, i: "
-                             + toLAString( i ) + ", col: " + col );
+                             + toAQLString( i ) + ", col: " + col );
         }
     }
 
@@ -725,7 +725,7 @@ namespace etrading
         catch ( const std::out_of_range& )
         {
             throw Exception( "invalid access to ReadTestData table, key: " + key
-                             + ", j: " + toLAString( j ) );
+                             + ", j: " + toAQLString( j ) );
         }
     }
 
@@ -737,8 +737,8 @@ namespace etrading
         }
         catch ( const std::out_of_range& )
         {
-            throw Exception( "invalid access to ReadTestData table, i: " + toLAString( i )
-                             + ", j: " + toLAString( j ) );
+            throw Exception( "invalid access to ReadTestData table, i: " + toAQLString( i )
+                             + ", j: " + toAQLString( j ) );
         }
     }
 

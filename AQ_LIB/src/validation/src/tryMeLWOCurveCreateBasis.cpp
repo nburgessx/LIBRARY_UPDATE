@@ -237,7 +237,7 @@ namespace validation
         
         // Get the Fixing Dates
         const auto& lwoFixingDates = lwoCurve.getDates();
-        auto fixingDatesAsMlibDates = etrading::toLADatesFromGregorianDates( lwoFixingDates );
+        auto fixingDatesAsMlibDates = etrading::toAQLDatesFromGregorianDates( lwoFixingDates );
         
         // Get the Forward Rates from the Object Pool Curve Engine
         auto massiveFwdRatesVector

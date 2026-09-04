@@ -29,7 +29,7 @@ namespace etrading
 
 	// Template to convert enums to AQLString calling using the underlying toString (std::string) methods
     template<class T>
-    AQLString toLAString( const T enumValue )
+    AQLString toAQLString( const T enumValue )
     {
         return toString(enumValue).c_str();
     }

@@ -137,7 +137,7 @@ namespace etrading
     }
     
     // Converts a VariantMatrix to AQLStringMatrix, note transposes by default to match the default JSON schema convention
-    AQLStringMatrix toLAStringMatrixFromVariantMatrix( const VariantMatrix & variantMatrix, const bool & transpose )
+    AQLStringMatrix toAQLStringMatrixFromVariantMatrix( const VariantMatrix & variantMatrix, const bool & transpose )
     {
         AQ_REQUIRE( !variantMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
         AQ_REQUIRE( !variantMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
@@ -697,7 +697,7 @@ namespace etrading
 		// Intel compiler requires help deciding which conversion to use.
 		// Convert via (const boost::gregorian::date &)
         auto gregorianDate = static_cast< boost::gregorian::date >( (const boost::gregorian::date &) *this );
-        AQLDate mlibDate = toLADateFromGregorianDate( gregorianDate );
+        AQLDate mlibDate = toAQLDateFromGregorianDate( gregorianDate );
         return mlibDate;
     }
 

@@ -1597,20 +1597,20 @@ namespace etrading
 		etrading::AQLUpdateStaticDataManager::loadStaticDataOISCurve( getDataInstance(),
 																	 curveDescription_->curveCollection().c_str(),
 																	 curveDescription_->objectPoolLookupTable().c_str(),
-																	 arrCurveData_->curveConvLVB_.toLAStringMatrix(),      // Use LVB for Convention Data Lookups
+																	 arrCurveData_->curveConvLVB_.toAQLStringMatrix(),      // Use LVB for Convention Data Lookups
 																	 arrCurveData_->oisRates_,
-																	 arrCurveData_->oisConvLVB_.toLAStringMatrix(),        // Use LVB for Convention Data Lookups
+																	 arrCurveData_->oisConvLVB_.toAQLStringMatrix(),        // Use LVB for Convention Data Lookups
 																	 curveDescription_->curveIndexList().c_str(),
 																	 arrCurveData_->histRates_,
 																	 arrCurveData_->loBasisRates_,
-																	 arrCurveData_->loBasisConvLVB_.toLAStringMatrix(),    // Use LVB for Convention Data Lookups
+																	 arrCurveData_->loBasisConvLVB_.toAQLStringMatrix(),    // Use LVB for Convention Data Lookups
 																	 arrCurveData_->swapRates_,
-																	 arrCurveData_->swapConvLVB_.toLAStringMatrix() );
+																	 arrCurveData_->swapConvLVB_.toAQLStringMatrix() );
 		// 2. Calibrate ARR Curve
 		AQLUpdateStaticDataManager::calibrateOISCurve( getDataInstance(),
 													  curveDescription_->curveCollection().c_str(),
 													  curveDescription_->objectPoolLookupTable().c_str(),
-													  arrCurveData_->curveConvLVB_.toLAStringMatrix() );
+													  arrCurveData_->curveConvLVB_.toAQLStringMatrix() );
     }
 
 
@@ -1625,20 +1625,20 @@ namespace etrading
 		etrading::AQLUpdateStaticDataManager::loadStaticDataOISCurve( getDataInstance(),
 																	 curveDescription_->curveCollection().c_str(),
 																	 curveDescription_->objectPoolLookupTable().c_str(),
-																	 oisCurveData_->curveConvLVB_.toLAStringMatrix(),      // Use LVB for Convention Data Lookups
+																	 oisCurveData_->curveConvLVB_.toAQLStringMatrix(),      // Use LVB for Convention Data Lookups
 																	 oisCurveData_->oisRates_,
-																	 oisCurveData_->oisConvLVB_.toLAStringMatrix(),        // Use LVB for Convention Data Lookups
+																	 oisCurveData_->oisConvLVB_.toAQLStringMatrix(),        // Use LVB for Convention Data Lookups
 																	 curveDescription_->curveIndexList().c_str(),
 																	 oisCurveData_->histRates_,
 																	 oisCurveData_->loBasisRates_,
-																	 oisCurveData_->loBasisConvLVB_.toLAStringMatrix(),    // Use LVB for Convention Data Lookups
+																	 oisCurveData_->loBasisConvLVB_.toAQLStringMatrix(),    // Use LVB for Convention Data Lookups
 																	 oisCurveData_->swapRates_,
-																	 oisCurveData_->swapConvLVB_.toLAStringMatrix() );
+																	 oisCurveData_->swapConvLVB_.toAQLStringMatrix() );
 		// 2. Calibrate OIS Curve
 		AQLUpdateStaticDataManager::calibrateOISCurve( getDataInstance(),
 													  curveDescription_->curveCollection().c_str(),
 													  curveDescription_->objectPoolLookupTable().c_str(),
-													  oisCurveData_->curveConvLVB_.toLAStringMatrix() );
+													  oisCurveData_->curveConvLVB_.toAQLStringMatrix() );
 	}
 	
 
@@ -1653,18 +1653,18 @@ namespace etrading
         AQLUpdateStaticDataManager::loadStaticDataSwapCurve( etrading::getDataInstance(),
 															curveDescription_->curveCollection().c_str(),
 															curveDescription_->objectPoolLookupTable().c_str(),
-															swapCurveData_->curveConvLVB_.toLAStringMatrix(),        // Use LVB for Convention Data Lookups
-															swapCurveData_->moneyMarketConvLVB_.toLAStringMatrix(),  // Use LVB for Convention Data Lookups
+															swapCurveData_->curveConvLVB_.toAQLStringMatrix(),        // Use LVB for Convention Data Lookups
+															swapCurveData_->moneyMarketConvLVB_.toAQLStringMatrix(),  // Use LVB for Convention Data Lookups
 															swapCurveData_->liborRates_,
-															swapCurveData_->liborConvLVB_.toLAStringMatrix(),        // Use LVB for Convention Data Lookups
+															swapCurveData_->liborConvLVB_.toAQLStringMatrix(),        // Use LVB for Convention Data Lookups
 															swapCurveData_->swapRates_,
-															swapCurveData_->swapConvLVB_.toLAStringMatrix(),         // Use LVB for Convention Data Lookups
+															swapCurveData_->swapConvLVB_.toAQLStringMatrix(),         // Use LVB for Convention Data Lookups
 															swapCurveData_->fra3mRates_,
 															swapCurveData_->fra6mRates_,
-															swapCurveData_->fraConvLVB_.toLAStringMatrix(),          // Use LVB for Convention Data Lookups
+															swapCurveData_->fraConvLVB_.toAQLStringMatrix(),          // Use LVB for Convention Data Lookups
 															swapCurveData_->futureRates_,
-															swapCurveData_->futureConvLVB_.toLAStringMatrix(),       // Use LVB for Convention Data Lookups
-															swapCurveData_->basisAdjConvLVB_.toLAStringMatrix(),     // Use LVB for Convention Data Lookups
+															swapCurveData_->futureConvLVB_.toAQLStringMatrix(),       // Use LVB for Convention Data Lookups
+															swapCurveData_->basisAdjConvLVB_.toAQLStringMatrix(),     // Use LVB for Convention Data Lookups
 															swapCurveData_->basisAdjRates_,
 															curveDescription_->curveIndexList().c_str(),
 															"" ); // curveName_DF2
@@ -1672,7 +1672,7 @@ namespace etrading
 		AQLUpdateStaticDataManager::calibrateSwapCurve( etrading::getDataInstance(),
 													   curveDescription_->curveCollection().c_str(),
 													   curveDescription_->objectPoolLookupTable().c_str(),
-													   swapCurveData_->curveConvLVB_.toLAStringMatrix() );
+													   swapCurveData_->curveConvLVB_.toAQLStringMatrix() );
 	}
 
     // Method to Calibrate a Tenor Basis Curve
@@ -1687,22 +1687,22 @@ namespace etrading
 															 curveDescription_->curveCollection().c_str(),
 															 curveDescription_->objectPoolLookupTable().c_str(),
 															 tenorBasisCurveData_->basisRates_,
-															 tenorBasisCurveData_->basisConvLVB_.toLAStringMatrix(),         // Use LVB for Convention Data Lookups
+															 tenorBasisCurveData_->basisConvLVB_.toAQLStringMatrix(),         // Use LVB for Convention Data Lookups
 															 tenorBasisCurveData_->fxFwdRates_,
-															 tenorBasisCurveData_->fxFwdConvLVB_.toLAStringMatrix(),         // Use LVB for Convention Data Lookups
+															 tenorBasisCurveData_->fxFwdConvLVB_.toAQLStringMatrix(),         // Use LVB for Convention Data Lookups
 															 tenorBasisCurveData_->spotFxRates_,
-															 tenorBasisCurveData_->curveConvLVB_.toLAStringMatrix(),         // Use LVB for Convention Data Lookups
-															 tenorBasisCurveData_->moneyMarketConvLVB_.toLAStringMatrix(),   // Use LVB for Convention Data Lookups
+															 tenorBasisCurveData_->curveConvLVB_.toAQLStringMatrix(),         // Use LVB for Convention Data Lookups
+															 tenorBasisCurveData_->moneyMarketConvLVB_.toAQLStringMatrix(),   // Use LVB for Convention Data Lookups
 															 curveDescription_->curveIndexList().c_str(),
-															 tenorBasisCurveData_->fraConvLVB_.toLAStringMatrix(),           // Use LVB for Convention Data Lookups
+															 tenorBasisCurveData_->fraConvLVB_.toAQLStringMatrix(),           // Use LVB for Convention Data Lookups
 															 tenorBasisCurveData_->fraRates_,
-															 tenorBasisCurveData_->liborConvLVB_.toLAStringMatrix(),         // Use LVB for Convention Data Lookups
+															 tenorBasisCurveData_->liborConvLVB_.toAQLStringMatrix(),         // Use LVB for Convention Data Lookups
 															 tenorBasisCurveData_->liborRates_ );
 		// 2. Calibrate Curve
 		AQLUpdateStaticDataManager::calibrateBasisCurve( etrading::getDataInstance(),
 														curveDescription_->curveCollection().c_str(),
 														curveDescription_->objectPoolLookupTable().c_str(),
-														tenorBasisCurveData_->curveConvLVB_.toLAStringMatrix() );
+														tenorBasisCurveData_->curveConvLVB_.toAQLStringMatrix() );
     }
 
     // Method to Calibrate a Xccy Basis Curve to calculate USD CSA discount factors
@@ -1717,20 +1717,20 @@ namespace etrading
 															 curveDescription_->curveCollection().c_str(), // domestic curve
 															 curveDescription_->objectPoolLookupTable().c_str(),
 															 xccyBasisCurveData_->basisRates_,
-															 xccyBasisCurveData_->basisConvLVB_.toLAStringMatrix(),          // Use LVB for Convention Data Lookups
+															 xccyBasisCurveData_->basisConvLVB_.toAQLStringMatrix(),          // Use LVB for Convention Data Lookups
 															 xccyBasisCurveData_->fxFwdRates_,
-															 xccyBasisCurveData_->fxFwdConvLVB_.toLAStringMatrix(),          // Use LVB for Convention Data Lookups
+															 xccyBasisCurveData_->fxFwdConvLVB_.toAQLStringMatrix(),          // Use LVB for Convention Data Lookups
 															 xccyBasisCurveData_->spotFxRates_,
-															 xccyBasisCurveData_->curveConvLVB_.toLAStringMatrix(),          // Use LVB for Convention Data Lookups
-															 xccyBasisCurveData_->moneyMarketConvLVB_.toLAStringMatrix(),    // Use LVB for Convention Data Lookups
+															 xccyBasisCurveData_->curveConvLVB_.toAQLStringMatrix(),          // Use LVB for Convention Data Lookups
+															 xccyBasisCurveData_->moneyMarketConvLVB_.toAQLStringMatrix(),    // Use LVB for Convention Data Lookups
 															 curveDescription_->curveIndexList().c_str(),
-															 xccyBasisCurveData_->fraConvLVB_.toLAStringMatrix(),            // Use LVB for Convention Data Lookups
+															 xccyBasisCurveData_->fraConvLVB_.toAQLStringMatrix(),            // Use LVB for Convention Data Lookups
 															 xccyBasisCurveData_->fraRates_ );
 		// 2. Calibrate Curve
         AQLUpdateStaticDataManager::calibrateBasisCurve( etrading::getDataInstance(),
 													    curveDescription_->curveCollection().c_str(), // domestic curve
 													    curveDescription_->objectPoolLookupTable().c_str(),
-													    xccyBasisCurveData_->curveConvLVB_.toLAStringMatrix() );
+													    xccyBasisCurveData_->curveConvLVB_.toAQLStringMatrix() );
 	}
 
     // Method to Calibrate a Forward FX Constant Curve to calculate Non-USD CSA discount factors
@@ -1744,14 +1744,14 @@ namespace etrading
 		AQLUpdateStaticDataManager::loadStaticDataFwdFXConstantCurve( etrading::getDataInstance(),
 														             curveDescription_->curveCollection().c_str(), // domestic curve
 														             curveDescription_->objectPoolLookupTable().c_str(),
-														             fxFwdConstantCurveData_->fwdfxconstConvLVB_.toLAStringMatrix(),     // Use LVB for Convention Data Lookups
-														             fxFwdConstantCurveData_->curveConvLVB_.toLAStringMatrix(),          // Use LVB for Convention Data Lookups
+														             fxFwdConstantCurveData_->fwdfxconstConvLVB_.toAQLStringMatrix(),     // Use LVB for Convention Data Lookups
+														             fxFwdConstantCurveData_->curveConvLVB_.toAQLStringMatrix(),          // Use LVB for Convention Data Lookups
 														             curveDescription_->curveIndexList().c_str() );
 		// 2. Calibrate Curve
 		AQLUpdateStaticDataManager::calibrateFwdFXConstantCurve( etrading::getDataInstance(),
 														        curveDescription_->curveCollection().c_str(), // domestic curve
 														        curveDescription_->objectPoolLookupTable().c_str(),
-														        fxFwdConstantCurveData_->curveConvLVB_.toLAStringMatrix() );         // Use LVB for Convention Data Lookups
+														        fxFwdConstantCurveData_->curveConvLVB_.toAQLStringMatrix() );         // Use LVB for Convention Data Lookups
     }
 
 

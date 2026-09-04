@@ -504,7 +504,7 @@ namespace etrading
         AQ_REQUIRE( marketDataTypeFound, "Unable to update market data, since marketDataType ' " +  marketDataType + "' not found in the market data object" )
         variantMarketDataLocalCache_[marketDataType] = transpose( marketData );
 
-        stringMarketDataLocalCache_[marketDataType] = transpose( toLAStringMatrixFromVariantMatrix( marketData ) );
+        stringMarketDataLocalCache_[marketDataType] = transpose( toAQLStringMatrixFromVariantMatrix( marketData ) );
     }
 
     /* @brief Clear the local market data cache(s) */
@@ -641,7 +641,7 @@ namespace etrading
 	* @param [in]   trimBlankRows   Whether to remove blank rows from the end of the AQLStringMatrix
 	* @param [out]  A AQLStringMatrix containing the LabelValue block
 	*/
-	AQLStringMatrix CurveMarketData::toLAStringMatrix( const std::string& marketDataKey, const bool trimBlankRows ) const
+	AQLStringMatrix CurveMarketData::toAQLStringMatrix( const std::string& marketDataKey, const bool trimBlankRows ) const
 	{		
 		AQLStringMatrix stringMatrix;
 		auto iter = stringMarketDataLocalCache_.find(marketDataKey);
@@ -667,7 +667,7 @@ namespace etrading
 	StandardStringMatrix CurveMarketData::toStandardStringMatrix( const std::string& marketDataKey, const bool trimBlankRows ) const
     {
         // Reuse the above toLAStringMtrix() method
-        const AQLStringMatrix laStringMatrix = toLAStringMatrix( marketDataKey, trimBlankRows );
+        const AQLStringMatrix laStringMatrix = toAQLStringMatrix( marketDataKey, trimBlankRows );
         const StandardStringMatrix standardStringMatrix( convertToStandardStringMatrix( laStringMatrix ) );
 		return standardStringMatrix;
     }
@@ -680,7 +680,7 @@ namespace etrading
 	LabelValueBlock CurveMarketData::toLabelValueBlock( const std::string& marketDataKey, const bool trimBlankRows ) const
     {
         // Reuse the above toLAStringMtrix() method
-        const AQLStringMatrix laStringMatrix = toLAStringMatrix( marketDataKey, trimBlankRows );
+        const AQLStringMatrix laStringMatrix = toAQLStringMatrix( marketDataKey, trimBlankRows );
         const LabelValueBlock LVB( laStringMatrix );
 		return LVB;
     }
@@ -722,7 +722,7 @@ namespace etrading
 	*/
 	std::vector<std::string> CurveMarketData::getKeysInTable( const std::string& marketDataKey )
 	{
-		AQLStringMatrix s = toLAStringMatrix( marketDataKey );
+		AQLStringMatrix s = toAQLStringMatrix( marketDataKey );
 
 		std::vector<std::string> keys;
 		for(size_t i = 0; i < s.size(); ++i)

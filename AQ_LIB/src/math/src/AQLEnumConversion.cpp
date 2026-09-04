@@ -13,7 +13,7 @@
 
 namespace etrading
 {
-	DayCount toLADaycount( const DayCountEnum & daycountEnum )
+	DayCount toAQLDaycount( const DayCountEnum & daycountEnum )
 	{
         switch( daycountEnum )
         {
@@ -60,7 +60,7 @@ namespace etrading
 	}
 
 	
-	RateConvention toLARateConvention( const CompoundingFrequencyEnum & compoundFrequencyEnum )
+	RateConvention toAQLRateConvention( const CompoundingFrequencyEnum & compoundFrequencyEnum )
 	{
 		switch( compoundFrequencyEnum )
         {

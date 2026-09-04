@@ -58,10 +58,10 @@ namespace etrading
     std::string getCurrentTime();
 
     // converts a boost::gregorianDate to AQLDate
-    AQLDate toLADateFromGregorianDate( const boost::gregorian::date& gregorian_date );
+    AQLDate toAQLDateFromGregorianDate( const boost::gregorian::date& gregorian_date );
     
-    // converts a vector of boost::gregorianDates to a vector of LADates
-	std::vector<AQLDate> toLADatesFromGregorianDates( const std::vector<boost::gregorian::date>& gregorian_dates );
+    // converts a vector of boost::gregorianDates to a vector of AQLDates
+	std::vector<AQLDate> toAQLDatesFromGregorianDates( const std::vector<boost::gregorian::date>& gregorian_dates );
 
     // returns a date string "YYYYMMDD" from a gregorian::date
     std::string toYYYYMMDDFromGregorianDate( const boost::gregorian::date& gregorian_date ) ;
@@ -86,7 +86,7 @@ namespace etrading
     // Converts a std::string to an AQLDate using boost regular expression logic.
     // *** VERY IMPORTANT *** Please do not change the order of the DATE_REGEX list. If adding new types add to the end of the list, this is
     // becuase the "toGregorianDateFromREGEX" method in DateUtilities.cpp operates on the specific position of elements REGEX expression list.
-    AQLDate toLADateFromREGEX( const std::string& inString );
+    AQLDate toAQLDateFromREGEX( const std::string& inString );
 
 	// returns an Excel date from a boost::gregorian::date 
     const int toExcelDateFromGregorianDate( const boost::gregorian::date& gregorian_date );

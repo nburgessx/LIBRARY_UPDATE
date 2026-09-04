@@ -48,8 +48,8 @@ namespace validation
                 AQLString curveCollection    = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
                 AQLString curveIndex         = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
 
-                // Cast the boost gregorian dates into LADates
-                std::vector< AQLDate > fromDatesFormatted = etrading::toLADatesFromGregorianDates( fromDates );
+                // Cast the boost gregorian dates into AQLDates
+                std::vector< AQLDate > fromDatesFormatted = etrading::toAQLDatesFromGregorianDates( fromDates );
         
                 // Calculate the forward rate
                 forwardRateResults = etrading::getCurveForwardRatesFromYearFraction( fromDatesFormatted,
@@ -107,9 +107,9 @@ namespace validation
                 AQLString curveCollection    = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
                 AQLString curveIndex         = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
 
-                // Cast the boost gregorian dates into LADates
-                std::vector< AQLDate > fromDatesFormatted    = etrading::toLADatesFromGregorianDates( fromDates );
-                std::vector< AQLDate > toDatesFormatted      = etrading::toLADatesFromGregorianDates( toDates );
+                // Cast the boost gregorian dates into AQLDates
+                std::vector< AQLDate > fromDatesFormatted    = etrading::toAQLDatesFromGregorianDates( fromDates );
+                std::vector< AQLDate > toDatesFormatted      = etrading::toAQLDatesFromGregorianDates( toDates );
         
                 // Calculate the forward rate
                 forwardRateResults = etrading::getCurveForwardRatesFromForwardDates( fromDatesFormatted,
@@ -168,8 +168,8 @@ namespace validation
                 AQLString curveCollection    = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
                 AQLString curveIndex         = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
 
-                // Cast the boost gregorian dates into LADates
-                std::vector< AQLDate > fixingDatesFormatted    = etrading::toLADatesFromGregorianDates( fixingDates );
+                // Cast the boost gregorian dates into AQLDates
+                std::vector< AQLDate > fixingDatesFormatted    = etrading::toAQLDatesFromGregorianDates( fixingDates );
                 
                 // Calculate the forward rates
                 forwardRateResults = etrading::getCurveForwardRates( fixingDatesFormatted, curveCollection, curveIndex );

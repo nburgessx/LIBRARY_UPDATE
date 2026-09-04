@@ -3602,7 +3602,7 @@ getTenorPoint(AQLString str)
 AQLDate
 AQLMathSwaptionVolUtility::getLADate(AQLString date)
 {
-    return LAStringToDate(date);
+    return AQLStringToDate(date);
 	//AQLDate ret;
 	//int slushCheck = date.findString("/");
 	//if(slushCheck==-1)

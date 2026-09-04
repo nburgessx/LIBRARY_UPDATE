@@ -75,7 +75,7 @@ AQLPriceCMSMLATMTarget AQLPriceCMSSpreadUtility::WarmUpMLPrice(AQLDataInstance* 
     // Other inputs
     AQLString ccy = AQLFunctionUtilities::findElement(pricingConfig, "Currency");
     AQLString colCcy = ccy;
-    AQLDate valDate = LAStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    AQLDate valDate = AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
 
     // Curves
     CurveInfo discCurveInfo = AQLPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
@@ -121,7 +121,7 @@ void AQLPriceCMSSpreadUtility::WarmUpCMSSpread(AQLDataInstance* dataInstance, co
     AQLString colCcy = ccy;
     ReplicationConfig repConfig = GetReplicationConfig(pricingConfig);
     double shift = AQLFunctionUtilities::findElement(pricingConfig, "Shift").getDoubleValue();
-    AQLDate valDate = LAStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    AQLDate valDate = AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
 
     // Curves
     CurveInfo discCurveInfo = AQLPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
@@ -140,7 +140,7 @@ double AQLPriceCMSSpreadUtility::CMSSpreadSLATM(AQLDataInstance* dataInstance, c
     SwapRateInfo rate1, rate2;
     WarmUpCMSSpread(dataInstance, tenor1, tenor2, expiryTerm, pricingConfig, legScheduler, cmsScheduler, rate1, rate2);
 
-    AQLDate valDate = LAStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    AQLDate valDate = AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
     CashFlowTiming cf = AQLMathScheduleUtility::CashFlowSchedule(valDate, expiryTerm, legScheduler, cmsScheduler);
     cf.accrual = 0.0;
 
@@ -162,7 +162,7 @@ double AQLPriceCMSSpreadUtility::CMSSpreadSLPrice(AQLDataInstance* dataInstance,
     // Other inputs
     AQLString ccy = AQLFunctionUtilities::findElement(pricingConfig, "Currency");
     AQLString colCcy = ccy;
-    AQLDate valDate = LAStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    AQLDate valDate = AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
 
     // Curves
     CurveInfo discCurveInfo = AQLPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);

@@ -831,7 +831,7 @@ namespace etrading
         // Forward Rates are saved and indexed by an ACT/365 yearFraction
         const bool includeLast = true;
 		AQLString dayCount("ACT/365");
-        const double yearFractionForFixingDate = AQLDateScheduleHelpers::getTerm( toLADateFromGregorianDate( asOfDate ), toLADateFromGregorianDate( unadjustedFixingDate ), dayCount, includeLast );
+        const double yearFractionForFixingDate = AQLDateScheduleHelpers::getTerm( toAQLDateFromGregorianDate( asOfDate ), toAQLDateFromGregorianDate( unadjustedFixingDate ), dayCount, includeLast );
 
         return calculateForwardRate( yearFractionForFixingDate );
     };

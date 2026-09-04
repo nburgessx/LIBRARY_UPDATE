@@ -146,7 +146,7 @@ namespace etrading
 		constructPropertyIndexFromCurveGenerator( baseCurveGenerator, propertyIndex, mergedProperties );
 
 		// Update property values using the modifiedValuesLVB
-		const AQLStringMatrix& modifiedValues = modifiedValuesLVB.toLAStringMatrix();
+		const AQLStringMatrix& modifiedValues = modifiedValuesLVB.toAQLStringMatrix();
 		BOOST_FOREACH( auto rowData, modifiedValues )
 		{
 			const AQLString& key      = rowData[0];
@@ -420,7 +420,7 @@ namespace etrading
 	* @param [in]   trimBlankRows Whether to remove blank rows from the end of the AQLStringMatrix
 	* @param [out]  A AQLStringMatrix containing the LabelValue block
 	*/
-	AQLStringMatrix CurveGenerator::toLAStringMatrix( const std::string& propertyKey, const bool trimBlankRows ) const
+	AQLStringMatrix CurveGenerator::toAQLStringMatrix( const std::string& propertyKey, const bool trimBlankRows ) const
 	{
 		AQLStringMatrix stringMatrix;
 		auto iter = stringMatrixByKey_.find(propertyKey);
@@ -445,7 +445,7 @@ namespace etrading
 	 */
 	StandardStringMatrix CurveGenerator::toStandardStringMatrix( const std::string& propertyKey, const bool trimBlankRows ) const
     {
-        const AQLStringMatrix laStringMatrix =  toLAStringMatrix( propertyKey, trimBlankRows );
+        const AQLStringMatrix laStringMatrix =  toAQLStringMatrix( propertyKey, trimBlankRows );
         const StandardStringMatrix standardStringMatrix = convertToStandardStringMatrix( laStringMatrix );
         return standardStringMatrix;
     }
@@ -457,7 +457,7 @@ namespace etrading
 	 */
 	LabelValueBlock CurveGenerator::toLabelValueBlock( const std::string& propertyKey, const bool trimBlankRows ) const
     {
-        const AQLStringMatrix laStringMatrix =  toLAStringMatrix( propertyKey, trimBlankRows );
+        const AQLStringMatrix laStringMatrix =  toAQLStringMatrix( propertyKey, trimBlankRows );
         const LabelValueBlock LVB( laStringMatrix );
         return LVB;
     }

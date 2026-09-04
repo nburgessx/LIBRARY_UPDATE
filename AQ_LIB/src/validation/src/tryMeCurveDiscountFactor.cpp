@@ -129,7 +129,7 @@ namespace validation
         auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
 
         // Convert Year Fractions to ACT/365 ones
-        AQLDate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
+        AQLDate curveAsOfDate = etrading::toAQLDateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
         etrading::convertToYearFractionsACT365( curveAsOfDate, const_cast< DoubleVector& >( yearFractions ), dayCount );
 
         if( lwoCurve )
@@ -523,7 +523,7 @@ namespace validation
 
 
         // Convert Year Fractions to ACT/365 ones
-        AQLDate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
+        AQLDate curveAsOfDate = etrading::toAQLDateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
         etrading::convertToYearFractionsACT365( curveAsOfDate, const_cast< DoubleVector& >( yearFractions ), dayCount );
 
         if( lwoCurve )

@@ -31,7 +31,7 @@ namespace
 	AQLDate getSwapEffectiveDateFromCurve( etrading::CurveGeneratorPtr curveGenerator, AQLDate asOfDate  )
 	{
 		// Fetch the Swap Conventions block from the Curve Generator
-		AQLStringMatrix swapConventions = curveGenerator->toLAStringMatrix(  etrading::GENERATOR_COMPONENTS::KEY_SWAPS );
+		AQLStringMatrix swapConventions = curveGenerator->toAQLStringMatrix(  etrading::GENERATOR_COMPONENTS::KEY_SWAPS );
 
 		// Iterate through the Swap Conventions looking for specific keys of interest
 		AQLString resetLag;
@@ -132,7 +132,7 @@ namespace etrading
 		LabelValueBlock curveCollections( pricingCurveCollection, StandardString("") );
 
 		// Get all of the calibration swap maturity dates
-		AQLStringMatrix swapTenorsAndRates  = lwoHedgeCurveMarketData->toLAStringMatrix( GENERATOR_COMPONENTS::KEY_SWAPS );
+		AQLStringMatrix swapTenorsAndRates  = lwoHedgeCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_SWAPS );
 		const size_t numSwaps = swapTenorsAndRates.size();
 
 		// Iterate over all of the calibration swaps and calculate a par-rate for each swap using the pricing curve

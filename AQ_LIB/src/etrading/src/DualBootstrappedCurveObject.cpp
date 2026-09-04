@@ -165,25 +165,25 @@ namespace etrading
 												                      curveIndex_ois.c_str(),
 												                      curveIndex_swap.c_str(),
 												                      engineParams_,
-												                      curveData_ois.curveConvLVB_.toLAStringMatrix(),       // Conventions as LVB 
+												                      curveData_ois.curveConvLVB_.toAQLStringMatrix(),       // Conventions as LVB 
 												                      curveData_ois.oisRates_, 
-												                      curveData_ois.oisConvLVB_.toLAStringMatrix(),         // Conventions as LVB
+												                      curveData_ois.oisConvLVB_.toAQLStringMatrix(),         // Conventions as LVB
 												                      curveData_ois.histRates_,
 												                      curveData_ois.loBasisRates_, 
-												                      curveData_ois.loBasisConvLVB_.toLAStringMatrix(),       // Conventions as LVB
-												                      curveData_ois.swapConvLVB_.toLAStringMatrix(),          // Conventions as LVB
-												                      curveData_swap.curveConvLVB_.toLAStringMatrix(),        // Conventions as LVB 
-												                      curveData_swap.moneyMarketConvLVB_.toLAStringMatrix(),  // Conventions as LVB
+												                      curveData_ois.loBasisConvLVB_.toAQLStringMatrix(),       // Conventions as LVB
+												                      curveData_ois.swapConvLVB_.toAQLStringMatrix(),          // Conventions as LVB
+												                      curveData_swap.curveConvLVB_.toAQLStringMatrix(),        // Conventions as LVB 
+												                      curveData_swap.moneyMarketConvLVB_.toAQLStringMatrix(),  // Conventions as LVB
 												                      curveData_swap.liborRates_, 
-												                      curveData_swap.liborConvLVB_.toLAStringMatrix(),        // Conventions as LVB
+												                      curveData_swap.liborConvLVB_.toAQLStringMatrix(),        // Conventions as LVB
 												                      curveData_swap.swapRates_, 
-												                      curveData_swap.swapConvLVB_.toLAStringMatrix(),         // Conventions as LVB
+												                      curveData_swap.swapConvLVB_.toAQLStringMatrix(),         // Conventions as LVB
 												                      curveData_swap.fra3mRates_,
 												                      curveData_swap.fra6mRates_,
-												                      curveData_swap.fraConvLVB_.toLAStringMatrix(),          // Conventions as LVB
+												                      curveData_swap.fraConvLVB_.toAQLStringMatrix(),          // Conventions as LVB
 												                      curveData_swap.futureRates_, 
-												                      curveData_swap.futureConvLVB_.toLAStringMatrix(),       // Conventions as LVB
-												                      curveData_swap.basisAdjConvLVB_.toLAStringMatrix(),     // Conventions as LVB
+												                      curveData_swap.futureConvLVB_.toAQLStringMatrix(),       // Conventions as LVB
+												                      curveData_swap.basisAdjConvLVB_.toAQLStringMatrix(),     // Conventions as LVB
 												                      curveData_swap.basisAdjRates_	);
 	}
 

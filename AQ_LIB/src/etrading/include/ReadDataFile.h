@@ -222,7 +222,7 @@ namespace etrading
     private:
         // replace lexical_cast for AQLString
         template<typename T>
-        static AQLString toLAString( const T& t );
+        static AQLString toAQLString( const T& t );
 
         // pimpl pointer
         std::shared_ptr<DataInstance> data_;
@@ -320,7 +320,7 @@ etrading::ReadDataFile::operator std::vector<std::vector<T> >() const
 }
 
 template<class T>
-inline AQLString etrading::ReadDataFile::toLAString( const T& t )
+inline AQLString etrading::ReadDataFile::toAQLString( const T& t )
 {
     const std::string s = boost::lexical_cast<std::string>( t );
     return AQLString( s.c_str() );

@@ -137,7 +137,7 @@ namespace etrading
 		 * @param [in]   trimBlankRows   Whether to remove blank rows from the end of the AQLStringMatrix
 	     * @param [out]  A AQLStringMatrix containing the LabelValue block
 		 */
-		AQLStringMatrix toLAStringMatrix( const std::string& marketDataKey, const bool trimBlankRows = true ) const;
+		AQLStringMatrix toAQLStringMatrix( const std::string& marketDataKey, const bool trimBlankRows = true ) const;
 		
         /* @brief Returns a StandardStringMatrix containing the marketData information for the specified marketDataKey
 		 * @param [in]   marketDataKey   The property to be displayed

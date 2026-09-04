@@ -148,7 +148,7 @@ double YearFraction(AQLPriceDataDayCount daycount, AQLDate valDate, AQLDate date
 
 double ModelTime(AQLDate valDate, AQLDate targetDate);
 
-AQLDate LAStringToDate(AQLString date);
+AQLDate AQLStringToDate(AQLString date);
 
 AQLString FrequencyToTerm(AQLString frequency);
 

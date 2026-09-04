@@ -86,7 +86,7 @@ namespace etrading
 						if (couldBeDate( inDate.c_str() ))
 						{
 							auto gregDate = toGregorianDateFromREGEX( inDate.c_str() );
-							outDate = toLADateFromGregorianDate( gregDate );
+							outDate = toAQLDateFromGregorianDate( gregDate );
 							return outDate;
 						}
 					}

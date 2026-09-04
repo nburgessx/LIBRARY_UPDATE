@@ -24,25 +24,25 @@ namespace google_test
         // Date Format 1: Excel Integer 43686 = 09-Aug-2019
         std::string dateFormat1 = "43686";
         AQLDate expectedDate1( "20190809" );
-        AQLDate actualDate1 = etrading::toLADateFromREGEX( dateFormat1 );
+        AQLDate actualDate1 = etrading::toAQLDateFromREGEX( dateFormat1 );
         EXPECT_EQ( expectedDate1, actualDate1 );
 
         // Date Format 2: YYYYMMDD
         std::string dateFormat2 = "20190809";
         AQLDate expectedDate2( "20190809" );
-        AQLDate actualDate2 = etrading::toLADateFromREGEX( dateFormat2 );
+        AQLDate actualDate2 = etrading::toAQLDateFromREGEX( dateFormat2 );
         EXPECT_EQ( expectedDate2, actualDate2 );
 
         // Date Format 3: YYYY-MM-DD
         std::string dateFormat3 = "2019-08-09";
         AQLDate expectedDate3( "20190809" );
-        AQLDate actualDate3 = etrading::toLADateFromREGEX( dateFormat3 );
+        AQLDate actualDate3 = etrading::toAQLDateFromREGEX( dateFormat3 );
         EXPECT_EQ( expectedDate3, actualDate3 );
 
         // Date Format 4: DD-MM-YYYY
         std::string dateFormat4 = "09-08-2019";
         AQLDate expectedDate4( "20190809" );
-        AQLDate actualDate4 = etrading::toLADateFromREGEX( dateFormat4 );
+        AQLDate actualDate4 = etrading::toAQLDateFromREGEX( dateFormat4 );
         EXPECT_EQ( expectedDate4, actualDate4 );
     }
 
@@ -78,7 +78,7 @@ namespace google_test
         // 09-Aug-2019
         boost::gregorian::date gregorianDate( 2019, 8, 9 );
         AQLDate expectedDate("20190809");
-        AQLDate actualDate = etrading::toLADateFromGregorianDate( gregorianDate );
+        AQLDate actualDate = etrading::toAQLDateFromGregorianDate( gregorianDate );
         EXPECT_EQ( expectedDate, actualDate );
     }
 

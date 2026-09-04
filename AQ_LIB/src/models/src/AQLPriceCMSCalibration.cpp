@@ -20,7 +20,7 @@ AQLString AQLPriceCMSCalibration::Calibrate(AQLDataInstance* dataInstance, AQLSt
                                      const DoubleMatrix& quotes)
 {
     // Calibration config
-    AQLDate valDate = LAStringToDate(AQLFunctionUtilities::findElement(calibrationConfig, "AsOfDate"));
+    AQLDate valDate = AQLStringToDate(AQLFunctionUtilities::findElement(calibrationConfig, "AsOfDate"));
     AQLString ccy = AQLFunctionUtilities::findElement(calibrationConfig, "Currency");
     AQLString colCcy = ccy;
     AQLString convID = AQLFunctionUtilities::findElement(calibrationConfig, "ConventionID");

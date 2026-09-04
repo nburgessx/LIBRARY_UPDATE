@@ -311,7 +311,7 @@ namespace etrading
     */
     void CreateDataFile::write( const AQLString& name, const LabelValueBlock& value )
     {
-        AQLStringMatrix m = value.toLAStringMatrix();
+        AQLStringMatrix m = value.toAQLStringMatrix();
         write( name, m );
     }
 

@@ -16,6 +16,6 @@
 
 namespace etrading
 {
-	DayCount toLADaycount( const DayCountEnum & daycountEnum );
-	RateConvention toLARateConvention( const CompoundingFrequencyEnum & compoundFrequencyEnum );
+	DayCount toAQLDaycount( const DayCountEnum & daycountEnum );
+	RateConvention toAQLRateConvention( const CompoundingFrequencyEnum & compoundFrequencyEnum );
 }

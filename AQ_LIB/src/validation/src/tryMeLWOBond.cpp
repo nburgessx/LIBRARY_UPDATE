@@ -811,7 +811,7 @@ namespace validation
 
         auto settleDates = boost::assign::list_of(settleDate);
 
-        AQLStringMatrix oisParRateMatrix = marketObject->toLAStringMatrix( toString(etrading::OIS_MARKETDATA) );
+        AQLStringMatrix oisParRateMatrix = marketObject->toAQLStringMatrix( toString(etrading::OIS_MARKETDATA) );
 
         auto bond = etrading::getBond( bondObjectName );
 

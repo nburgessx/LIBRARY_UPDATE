@@ -119,7 +119,7 @@ namespace etrading
         const AQLStringMatrix appendMatrix( 1, inputVector );
 
         // Call Native Constructor/Initializer using Combined Matrix
-        AQLStringMatrix combinedStringMatrix = combineLAStringMatrices( originalLVB.toLAStringMatrix(), appendMatrix );
+        AQLStringMatrix combinedStringMatrix = combineLAStringMatrices( originalLVB.toAQLStringMatrix(), appendMatrix );
         initializefromLAStringMatrix( combinedStringMatrix, makeAllKeysUppercase );
     }
     
@@ -141,7 +141,7 @@ namespace etrading
         }
 
         // Call Native Constructor/Initializer using Combined Matrix
-        AQLStringMatrix combinedStringMatrix = combineLAStringMatrices( originalLVB.toLAStringMatrix(), appendMatrix );
+        AQLStringMatrix combinedStringMatrix = combineLAStringMatrices( originalLVB.toAQLStringMatrix(), appendMatrix );
         initializefromLAStringMatrix( combinedStringMatrix, makeAllKeysUppercase );
     }
     
@@ -211,7 +211,7 @@ namespace etrading
     }
 
 	// Convert a LabelValueBlock to a AQLStringMatrix
-    AQLStringMatrix LabelValueBlock::toLAStringMatrix() const
+    AQLStringMatrix LabelValueBlock::toAQLStringMatrix() const
     {
         return laStringMatrix_;
 

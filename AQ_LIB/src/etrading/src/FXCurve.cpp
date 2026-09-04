@@ -145,7 +145,7 @@ namespace etrading
         const size_t bidDataColumn = useFXForwardBidAsk ? 0 : 2;
         const size_t askDataColumn = useFXForwardBidAsk ? 1 : 2;
 
-		AQLStringMatrix spotFxRateMatrix = curveMarketData_->toLAStringMatrix( marketDataKey );
+		AQLStringMatrix spotFxRateMatrix = curveMarketData_->toAQLStringMatrix( marketDataKey );
 		
         for (unsigned int i = 0; i < spotFxRateMatrix.size(); ++i)
 	    {
@@ -181,7 +181,7 @@ namespace etrading
         const size_t bidDataColumn = 1;
         const size_t askDataColumn = useFXForwardBidAsk ? 2 : 1;
 
-        AQLStringMatrix fwdFxRateMatrix = curveMarketData_->toLAStringMatrix( marketDataKey );
+        AQLStringMatrix fwdFxRateMatrix = curveMarketData_->toAQLStringMatrix( marketDataKey );
 
         std::map<std::string, std::vector<FxFwd>> fwdFxRateMap;
 

@@ -150,7 +150,7 @@ namespace google_test
         };
 
         // Call Underlying Function without transposing
-        const AQLStringMatrix actualMatrix = etrading::toLAStringMatrixFromVariantMatrix( variantMatrix, false ); // false = don't transpose
+        const AQLStringMatrix actualMatrix = etrading::toAQLStringMatrixFromVariantMatrix( variantMatrix, false ); // false = don't transpose
 
         // Dimension Check - Assume Rectangular Matrix i.e. not jagged
         ASSERT_EQ( actualMatrix.size(), expectedMatrix.size() );
@@ -182,7 +182,7 @@ namespace google_test
         };
 
         // Call Underlying Function applying transpose
-        const AQLStringMatrix actualMatrix = etrading::toLAStringMatrixFromVariantMatrix( variantMatrix, true ); // true = apply transpose
+        const AQLStringMatrix actualMatrix = etrading::toAQLStringMatrixFromVariantMatrix( variantMatrix, true ); // true = apply transpose
 
         // Dimension Check - Assume Rectangular Matrix i.e. not jagged
         ASSERT_EQ( actualMatrix.size(), expectedMatrix.size() );

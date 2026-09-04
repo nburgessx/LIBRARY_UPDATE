@@ -28,7 +28,7 @@
 #include "AQLMathInterpolationUtilities.h"
 #include "AQLCompoundingFunc.h"
 #include "AQLMathDateUtilities.h"
-#include "AQLEnumConversion.h"				// include toLADaycount and toLARateConvention
+#include "AQLEnumConversion.h"				// include toAQLDaycount and toAQLRateConvention
 
 namespace etrading
 {
@@ -2882,7 +2882,7 @@ namespace etrading
 		// --------------------------------------------------------------------------------------------------------------------------
 
 		// LA Rate Convention Method for Year Fraction Calculation
-		const AQLPriceDataConvention legacyConventionObject( toLADaycount(accrualDaycount), toLARateConvention(compoundFrequency) );
+		const AQLPriceDataConvention legacyConventionObject( toAQLDaycount(accrualDaycount), toAQLRateConvention(compoundFrequency) );
 		
 		const double curveInstrumentFromDateInTermFormat	= legacyConventionObject.getTerm( asOfDate, fixingStartDate );
 		const double curveInstrumentToDateInTermFormat		= legacyConventionObject.getTerm( asOfDate, fixingEndDate );
@@ -2958,7 +2958,7 @@ namespace etrading
 		if ( fixingStartDate == fixingEndDate ) return 1.0; // No conversion to make, return 1.0
 
 		// LA Rate Convention Method for Year Fraction Calculation
-		const AQLPriceDataConvention legacyConventionObject( toLADaycount(accrualDaycount), toLARateConvention(compoundFrequency) );
+		const AQLPriceDataConvention legacyConventionObject( toAQLDaycount(accrualDaycount), toAQLRateConvention(compoundFrequency) );
 		
 		const double curveInstrumentFromDateInTermFormat	= legacyConventionObject.getTerm( asOfDate, fixingStartDate );
 		const double curveInstrumentToDateInTermFormat		= legacyConventionObject.getTerm( asOfDate, fixingEndDate );

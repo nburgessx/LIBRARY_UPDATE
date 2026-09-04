@@ -1004,7 +1004,7 @@ double ModelTime(AQLDate valDate, AQLDate targetDate)
 	return YearFraction(dayCount, valDate, targetDate);
 }
 
-AQLDate LAStringToDate(AQLString date)
+AQLDate AQLStringToDate(AQLString date)
 {
 	AQLDate ret;
 	int slushCheck = date.findString("/");

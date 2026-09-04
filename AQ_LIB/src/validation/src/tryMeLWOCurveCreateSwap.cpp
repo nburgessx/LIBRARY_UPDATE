@@ -300,8 +300,8 @@ namespace validation
         massiveYearFractionVector.reserve( numberOfdaysBetween );
         AQLPriceDataDayCount dc_act365( ACT_365 ); // ACT_365
 
-        auto spotDate = etrading::toLADateFromGregorianDate( asOfDate );
-        auto finalDate = etrading::toLADateFromGregorianDate( endDate );
+        auto spotDate = etrading::toAQLDateFromGregorianDate( asOfDate );
+        auto finalDate = etrading::toAQLDateFromGregorianDate( endDate );
         auto iterDate = spotDate;
 
         while( iterDate <= finalDate )

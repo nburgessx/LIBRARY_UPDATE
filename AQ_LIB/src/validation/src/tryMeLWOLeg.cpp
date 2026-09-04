@@ -213,7 +213,7 @@ namespace validation
 		}
 
 		auto leg = etrading::getLeg(legObjectName);
-		auto ret = leg->getInputParameters().toLAStringMatrix();
+		auto ret = leg->getInputParameters().toAQLStringMatrix();
 		
 		if (CreateDataFile::recordEnabled()) 
 		{

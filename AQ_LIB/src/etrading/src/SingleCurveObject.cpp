@@ -356,12 +356,12 @@ namespace etrading
 													 std::string& marketDataAsOfDate )
 	{
 		// Check for matching IdentityParams from the CurveGenerator and CurveMarketData
-		const LabelValueBlock curvePropertiesLVB        = lwoCurveGenerator_->toLAStringMatrix( GENERATOR_COMPONENTS::KEY_CURVEPROPERTIES );
+		const LabelValueBlock curvePropertiesLVB        = lwoCurveGenerator_->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_CURVEPROPERTIES );
 		const std::string configCurrency                = curvePropertiesLVB.getCompulsoryValue( "Currency" );
 		configCurveType                                 = curvePropertiesLVB.getCompulsoryValue( "CurveType" );
 		configFrequency                                 = curvePropertiesLVB.getCompulsoryValue( "CurveIndexFrequency" );
 		
-		const LabelValueBlock marketDataPropertiesLVB   = lwoCurveMarketData_->toLAStringMatrix( GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES );
+		const LabelValueBlock marketDataPropertiesLVB   = lwoCurveMarketData_->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES );
 		const std::string marketDataCurrency            = marketDataPropertiesLVB.getCompulsoryValue( "Currency" );
 		const std::string marketDataCurveType           = marketDataPropertiesLVB.getCompulsoryValue( "CurveType" );
 		const std::string marketDataFrequency           = marketDataPropertiesLVB.getCompulsoryValue( "CurveIndexFrequency" );
