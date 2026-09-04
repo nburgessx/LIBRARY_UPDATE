@@ -20,7 +20,7 @@ namespace google_test
 
     /* static */ bool InitializeGoogleTest::doReinit_ = true;
 
-    /* static */ bool InitializeGoogleTest::setMLibReinit( bool onOff )
+    /* static */ bool InitializeGoogleTest::setAqReinit( bool onOff )
     {
         const bool prev = doReinit_;
         doReinit_ = onOff;

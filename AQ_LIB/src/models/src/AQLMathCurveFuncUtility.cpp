@@ -2916,7 +2916,7 @@ std::tuple<std::vector<double>,std::vector<double>> AQLMathCurveFuncUtility::get
 	//yc.setInterpolation(inter);
 	//yc.getDayCount().setDayCount(dc);
 //	yc.setCurveType(curveType);
-	const AQLInterpolationBase& mlibInterpolation = yc.getDFInterpolation();  // &curveType
-	return mlibInterpolation.getXY();
+	const AQLInterpolationBase& aqInterpolation = yc.getDFInterpolation();  // &curveType
+	return aqInterpolation.getXY();
 };
 

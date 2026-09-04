@@ -70,8 +70,8 @@ namespace etrading
 
     const bool isBusinessDay( const boost::gregorian::date& d, const AQLMathCalendar& cal )
     {
-        AQLDate mlibDate( toYYYYMMDDFromGregorianDate( d ).c_str() );
-        return !( cal.isHoliday( mlibDate ) );
+        AQLDate aqDate( toYYYYMMDDFromGregorianDate( d ).c_str() );
+        return !( cal.isHoliday( aqDate ) );
     }
 
     std::vector<boost::gregorian::date>
@@ -600,7 +600,7 @@ namespace etrading
                                                                 % now.time_of_day().seconds() ).str();
     };
 
-    AQLDate getCurrentMLibDate()
+    AQLDate getCurrentAqDate()
     {
         boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
         

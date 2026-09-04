@@ -168,7 +168,7 @@ AQLCalibrationParametersFXVannaVolga::createCalibrationInfo(AQLObjectPool &objPo
 		lterm.toLower();
 
 		//hishida vannavolga warning this must be changed in all of sources
-		//AQLString tmpdate = AQLMarketData::convertToMLibTerm(strTerms[i]);
+		//AQLString tmpdate = AQLMarketData::aqlConvertToTerm(strTerms[i]);
 		AQLString tmpdate = strTerms[i];
 		matuterms[i] = AQLMathDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);
 		deliveryterms[i] = AQLMathDateCalculations::getDate(matuterms[i],spotlagday,sr,&cal,true);

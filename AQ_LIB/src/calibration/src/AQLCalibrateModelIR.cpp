@@ -630,7 +630,7 @@ AQLCalibrateModelIR::loadYieldCurveDataAndCalibrate(const AQLString &currency, A
 				// set slidingrule
 				mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(slidingBStr);
 				// set term
-				mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::convertToMLibTerm(term));
+				mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::aqlConvertToTerm(term));
 				// set rate
 				mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(basis / 10000.0));
 				// set base basis info
@@ -2637,7 +2637,7 @@ AQLCalibrateModelIR::setUpBasisCurveData(AQLDataInstance &dataInstance, AQLStrin
 				mktData->add(IR_CALIBRATION_DATA_ISPRICECCY, new AQLDataBool(fwd_isPriceCcy));
 				mktData->add(IR_CALIBRATION_DATA_ISDOMESTICCURRENCY, new AQLDataBool(fwd_isPriceCcy)); // alias for isPriceCcy
 			}
-			mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::convertToMLibTerm(fwd_term));
+			mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::aqlConvertToTerm(fwd_term));
 			mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(fwd_slidingStr);
 			mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(fwd_calStr);
 			mktData->add(IR_CALIBRATION_DATA_SPOTLAG, new AQLDataInt(fwd_resetLag));
@@ -2660,7 +2660,7 @@ AQLCalibrateModelIR::setUpBasisCurveData(AQLDataInstance &dataInstance, AQLStrin
 			AQLString term = basisDataMtx[j - fwdFXSize][0].toUpper();
 			double basis = basisDataMtx[j - fwdFXSize][1].getDoubleValue();
 			// set term
-			mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::convertToMLibTerm(term));
+			mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::aqlConvertToTerm(term));
 			// set rate
 			mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(basis / 10000.0));
 			// is eom roll
@@ -2976,7 +2976,7 @@ AQLCalibrateModelIR::setUp36BasisDummyData(AQLDataInstance &dataInstance, AQLStr
 		// set data type
 		mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_BASIS);
 		// set term
-		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::convertToMLibTerm(term));
+		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::aqlConvertToTerm(term));
 		// set rate
 		mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(basis / 10000.0));
 	}
@@ -3206,7 +3206,7 @@ AQLCalibrateModelIR::setUpGenCurveData(AQLDataInstance &dataInstance, AQLString 
 		// set eomroll
 		mktData->add(IR_CALIBRATION_DATA_ISEOMROLL, new AQLDataBool(isEOMRollL));
 		// set term
-		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::convertToMLibTerm(term));
+		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::aqlConvertToTerm(term));
 		//grid use
 		if (liborUseGrid.size() != 0 && find(liborUseGrid.begin(), liborUseGrid.end(), term) == liborUseGrid.end())
 		{
@@ -3964,7 +3964,7 @@ AQLCalibrateModelIR::setUpGenCurveData(AQLDataInstance &dataInstance, AQLString 
 		}
 
 		// set term
-		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::convertToMLibTerm(term));
+		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::aqlConvertToTerm(term));
 		// set rate
 		mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate / 100.0));
 		// time inter
@@ -4253,7 +4253,7 @@ AQLCalibrateModelIR::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLStri
 		// set first market
 		mktData->add(IR_CALIBRATION_DATA_FIRSTRATE, new AQLDataString()).convertFromString(firstRate);
 		// set term
-		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::convertToMLibTerm(term));
+		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::aqlConvertToTerm(term));
 		// set rate
 		mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate / 100.0));
 		// iseomroll
@@ -4403,7 +4403,7 @@ AQLCalibrateModelIR::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLStri
 		// set first market
 		mktData->add(IR_CALIBRATION_DATA_FIRSTRATE, new AQLDataString()).convertFromString(firstRate);
 		// set term
-		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::convertToMLibTerm(term));
+		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::aqlConvertToTerm(term));
 		// set rate
 		mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate / 100.0));
 		// iseomroll

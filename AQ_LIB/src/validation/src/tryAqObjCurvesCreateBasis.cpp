@@ -237,11 +237,11 @@ namespace validation
         
         // Get the Fixing Dates
         const auto& aqObjFixingDates = aqObjCurve.getDates();
-        auto fixingDatesAsMlibDates = etrading::toAQLDatesFromGregorianDates( aqObjFixingDates );
+        auto fixingDatesAsAqDates = etrading::toAQLDatesFromGregorianDates( aqObjFixingDates );
         
         // Get the Forward Rates from the Object Pool Curve Engine
         auto massiveFwdRatesVector
-            = etrading::getCurveForwardRates( fixingDatesAsMlibDates, curveCollection, curveIndexCopy ); // Note we use curveIndexCopy, which is actually the staticDataTable
+            = etrading::getCurveForwardRates( fixingDatesAsAqDates, curveCollection, curveIndexCopy ); // Note we use curveIndexCopy, which is actually the staticDataTable
 
         // Set the AQObj Curve; dates, discountFactors and forwardRates ... done twice to resolve a date consistency issue
         aqObjCurve.setData( aqObjCurve.getDates(), aqObjCurve.getDiscountFactors(), massiveFwdRatesVector );

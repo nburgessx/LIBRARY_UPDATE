@@ -140,7 +140,7 @@ public:
 #endif
 	//==============================================
 	// convert to M-lib use term
-	static AQLString convertToMLibTerm(const AQLString &term);
+	static AQLString aqlConvertToTerm(const AQLString &term);
 	//==============================================
 	// search market grid pos correspond to AlgoQuantLib term
 	static bool searchMarketGridPos(const AQLStringVector &marketGrid, const AQLString &term, unsigned int &pos);
@@ -280,7 +280,7 @@ public:
 			}
 			else
 			{
-				t_lterm = AQLMarketData::convertToMLibTerm(t_lterm);
+				t_lterm = AQLMarketData::aqlConvertToTerm(t_lterm);
 			}
 			// fra
 			if (t_lterm.findString("X") != -1) t_lterm = AQLPriceYieldGenerator::changeFRATermFormat(t_lterm);
@@ -309,7 +309,7 @@ public:
 			}
 			else
 			{
-				t_rterm = AQLMarketData::convertToMLibTerm(t_rterm);
+				t_rterm = AQLMarketData::aqlConvertToTerm(t_rterm);
 			}
 			// fra
 			if (t_rterm.findString("X") != -1) t_rterm = AQLPriceYieldGenerator::changeFRATermFormat(t_rterm);

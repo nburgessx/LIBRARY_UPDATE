@@ -2,7 +2,7 @@
 
 /*
  * @brief			Methods that assist in library initialization
- *					It was ported over from InitializeMLibVanilla.h/.cpp.
+ *					It was ported over from InitializeVanilla.h/.cpp.
  * @Created:		14 November 2016
  * @Author:			
  * @Department:		ISD Front Office Development

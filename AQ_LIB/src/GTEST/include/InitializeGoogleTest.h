@@ -42,7 +42,7 @@ namespace google_test
         // default is on;
         // return previous setting;
         // note: not thread-safe
-        static bool setMLibReinit( bool onOff );
+        static bool setAqReinit( bool onOff );
 
 		// Enable / disable leak checking. Default is off;
 		static void enableLeakCheck(bool onOff );

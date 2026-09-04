@@ -46,7 +46,7 @@ namespace etrading
     std::string getCurrentDateTime();
 
     // returns the current date as an AlgoQuantLib AQLDate
-    AQLDate getCurrentMLibDate();
+    AQLDate getCurrentAqDate();
 
     // returns the current decade
     unsigned int getCurrentDecade();

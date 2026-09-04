@@ -2238,7 +2238,7 @@ namespace etrading
 				// set eomroll
 				mktData->add(IR_CALIBRATION_DATA_ISEOMROLL, new AQLDataBool(isEOMRollL));
 				// set term
-				mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::convertToMLibTerm(term));
+				mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::aqlConvertToTerm(term));
 				//grid use
 				if (liborUseGrid.size() != 0 && find(liborUseGrid.begin(), liborUseGrid.end(), term) == liborUseGrid.end())
 				{

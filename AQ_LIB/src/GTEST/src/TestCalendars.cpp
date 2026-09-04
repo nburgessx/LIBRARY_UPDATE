@@ -109,7 +109,7 @@ namespace google_test
 
 	TEST(Calendars, UNIT_Expiry_Test)
 	{
-		const AQLDate currentDate = etrading::getCurrentMLibDate();
+		const AQLDate currentDate = etrading::getCurrentAqDate();
 		
 		const AQLDate lastCalendarUpdate = loadCalendarConfig( fileName_AQ_CalendarConfig );
 

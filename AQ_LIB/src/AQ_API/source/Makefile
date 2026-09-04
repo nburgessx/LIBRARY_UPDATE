@@ -113,7 +113,7 @@ java_api:
 	mkdir -p $(JAVA_RESOURCE_CONFIG)
 	mkdir -p $(JAVA_GENERATED_FILES)
 	rm -f swig*wrap.*
-	$(SWIG_HOME)/bin/swig -v -c++ -outdir $(JAVA_GENERATED_FILES) -o swig_Java_wrap.cxx -package com.mizuho.mlib -java swig_JAVA.i
+	$(SWIG_HOME)/bin/swig -v -c++ -outdir $(JAVA_GENERATED_FILES) -o swig_Java_wrap.cxx -package com.algoquantlib -java swig_JAVA.i
 	rsync -av --exclude=".*" $(SRC_AQ_CONFIG)/* $(JAVA_RESOURCE_CONFIG)
 
 ## Create shared library	

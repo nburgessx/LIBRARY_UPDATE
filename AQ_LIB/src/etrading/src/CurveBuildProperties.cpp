@@ -28,13 +28,13 @@ namespace etrading
           oisCompoundingMethod_( ins.oisCompoundingMethod_ ),
           floatRateCompoundingFreq_( ins.floatRateCompoundingFreq_ ),
           paymentDayAdjustment_( ins.paymentDayAdjustment_ ),
-          //mlibPaymentCalendar_( ins.mlibPaymentCalendar_ ),
+          //aqPaymentCalendar_( ins.aqPaymentCalendar_ ),
           //paymentCalendar_( ins.paymentCalendar_ ),
           accrualDayAdjustment_( ins.accrualDayAdjustment_ ),
-          //mlibAccrualCalendar_( ins.mlibAccrualCalendar_ ),
+          //aqAccrualCalendar_( ins.aqAccrualCalendar_ ),
           //accrualCalendar_( ins.accrualCalendar_ ),
           fixingDayAdjustment_( ins.fixingDayAdjustment_ ),
-          //mlibFixingCalendar_( ins.mlibFixingCalendar_ ),
+          //aqFixingCalendar_( ins.aqFixingCalendar_ ),
           //fixingCalendar_( ins.fixingCalendar_ ),
           interpolationParameters_( ins.interpolationParameters_ ),
           onlyAllowLookup_( ins.onlyAllowLookup_ )
@@ -48,9 +48,9 @@ namespace etrading
         :	extrapolationTypeEnum_( etrading::CONSTANT_EXTRAPOLATION ),
 			IsAQObject(objectName, etrading::CURVE_BUILD_PROPERTIES ),
           HasConstInstance<CurveTypeEnum>( etrading::OIS_CURVETYPE ),
-          mlibPaymentCalendar_( nullptr ),
-          mlibAccrualCalendar_( nullptr ),
-          mlibFixingCalendar_( nullptr ),
+          aqPaymentCalendar_( nullptr ),
+          aqAccrualCalendar_( nullptr ),
+          aqFixingCalendar_( nullptr ),
           interpolationParameters_( ),
           onlyAllowLookup_( false )
     {};
@@ -69,13 +69,13 @@ namespace etrading
           floatRateCompoundingFreq_( ins.floatRateCompoundingFreq_ ),
           //curveTypeEnum_( ins.getCurveTypeEnum() ),
           paymentDayAdjustment_( ins.paymentDayAdjustment_ ),
-          //mlibPaymentCalendar_( ins.mlibPaymentCalendar_ ),
+          //aqPaymentCalendar_( ins.aqPaymentCalendar_ ),
           //paymentCalendar_( ins.paymentCalendar_ ),
           accrualDayAdjustment_( ins.accrualDayAdjustment_ ),
-          //mlibAccrualCalendar_( ins.mlibAccrualCalendar_ ),
+          //aqAccrualCalendar_( ins.aqAccrualCalendar_ ),
           //accrualCalendar_( ins.accrualCalendar_ ),
           fixingDayAdjustment_( ins.fixingDayAdjustment_ ),
-          //mlibFixingCalendar_( ins.mlibFixingCalendar_ ),
+          //aqFixingCalendar_( ins.aqFixingCalendar_ ),
           //fixingCalendar_( ins.fixingCalendar_ ),
           interpolationParameters_( ins.interpolationParameters_ ),
           onlyAllowLookup_( ins.onlyAllowLookup_ )
@@ -112,13 +112,13 @@ namespace etrading
 		  IsAQObject(objectName, etrading::CURVE_BUILD_PROPERTIES),
           HasConstInstance<CurveTypeEnum>( curveTypeEnum ),
           paymentDayAdjustment_( businessDayAdjustment ),
-          mlibPaymentCalendar_( nullptr ),
+          aqPaymentCalendar_( nullptr ),
           paymentCalendar_( calendar ),
           accrualDayAdjustment_( businessDayAdjustment ),
-          mlibAccrualCalendar_( nullptr ),
+          aqAccrualCalendar_( nullptr ),
           accrualCalendar_( calendar ),
           fixingDayAdjustment_( businessDayAdjustment ),
-          mlibFixingCalendar_( nullptr ),
+          aqFixingCalendar_( nullptr ),
           fixingCalendar_( calendar ),
           interpolationParameters_( interpolationParameters ),
           onlyAllowLookup_( onlyAllowLookup )
@@ -177,7 +177,7 @@ namespace etrading
     {
         if( !isConsistent() )
         {
-            // mlibCalendar_.reset();
+            // aqCalendar_.reset();
             throw ETradingException( ( boost::format( "Inconsistency between curve of type (%s) and float rate compounding method (%s) and float rate tenor (%s) or interpolationMethod (%s) and supplied interpolation data" )
                                        % toString( getCurveTypeEnum() ).c_str()
                                        % toString( oisCompoundingMethod_ ).c_str()
@@ -213,19 +213,19 @@ namespace etrading
             useFirstHolidayCity = calendar.substr( 0, position );
 
             paymentCalendar_ = trim_to_upper( useFirstHolidayCity.c_str() );
-            mlibPaymentCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
+            aqPaymentCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
         }
         else
         //-----------------------------------------------------------------------------
         {
             paymentCalendar_ = trim_to_upper( calendar.c_str() );
-            mlibPaymentCalendar_ = &AQLMathCalendarSet::getCalendar( paymentCalendar_.c_str() );
+            aqPaymentCalendar_ = &AQLMathCalendarSet::getCalendar( paymentCalendar_.c_str() );
         }
     };
 
-    const AQLMathCalendar* CurveBuildProperties::getMlibPaymentCalendar() const
+    const AQLMathCalendar* CurveBuildProperties::getAqPaymentCalendar() const
     {
-        return mlibPaymentCalendar_;
+        return aqPaymentCalendar_;
     };
 
     const std::string CurveBuildProperties::getPaymentDayCalendar() const
@@ -250,19 +250,19 @@ namespace etrading
             useFirstHolidayCity = calendar.substr( 0, position );
 
             accrualCalendar_ = trim_to_upper( useFirstHolidayCity.c_str() );
-            mlibAccrualCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
+            aqAccrualCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
         }
         else
         //-----------------------------------------------------------------------------
         {
             accrualCalendar_ = trim_to_upper( calendar.c_str() );
-            mlibAccrualCalendar_ = &AQLMathCalendarSet::getCalendar( accrualCalendar_.c_str() );
+            aqAccrualCalendar_ = &AQLMathCalendarSet::getCalendar( accrualCalendar_.c_str() );
         }
     }
 
-    const AQLMathCalendar* CurveBuildProperties::getMlibAccrualCalendar() const
+    const AQLMathCalendar* CurveBuildProperties::getAqAccrualCalendar() const
     {
-        return mlibAccrualCalendar_;
+        return aqAccrualCalendar_;
     };
 
     const std::string CurveBuildProperties::getAccrualDayCalendar() const
@@ -287,19 +287,19 @@ namespace etrading
             useFirstHolidayCity = calendar.substr( 0, position );
 
             fixingCalendar_ = trim_to_upper( useFirstHolidayCity.c_str() );
-            mlibFixingCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
+            aqFixingCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
         }
         else
         //-----------------------------------------------------------------------------
         {
             fixingCalendar_ = trim_to_upper( calendar.c_str() );
-            mlibFixingCalendar_ = &AQLMathCalendarSet::getCalendar( fixingCalendar_.c_str() );
+            aqFixingCalendar_ = &AQLMathCalendarSet::getCalendar( fixingCalendar_.c_str() );
         }
     }
 
-    const AQLMathCalendar* CurveBuildProperties::getMlibFixingCalendar() const
+    const AQLMathCalendar* CurveBuildProperties::getAqFixingCalendar() const
     {
-        return mlibFixingCalendar_;
+        return aqFixingCalendar_;
     };
 
     const std::string CurveBuildProperties::getFixingDayCalendar() const

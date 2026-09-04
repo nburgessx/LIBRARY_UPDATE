@@ -189,11 +189,11 @@ namespace etrading
         /*
         if(curveBuildProps_ && dates.size() > 0)
         {
-        	const auto mlibCalendar = curveBuildProps_->getMlibFixingCalendar();
-        	if(mlibCalendar != nullptr)
+        	const auto aqCalendar = curveBuildProps_->getAqFixingCalendar();
+        	if(aqCalendar != nullptr)
         	{
         		auto non_bus_day = std::find_if(dates.cbegin(), dates.cend(),
-        															[&mlibCalendar](const boost::gregorian::date& dateToCheck) {  return !isBusinessDay(dateToCheck, *mlibCalendar); } );
+        															[&aqCalendar](const boost::gregorian::date& dateToCheck) {  return !isBusinessDay(dateToCheck, *aqCalendar); } );
         		if(non_bus_day != dates.cend())
         		{
         			throw ETradingException( ( boost::format( "A supplied fixing date (%s) falls on a non-businessday according to the calendar %s" )
@@ -590,11 +590,11 @@ namespace etrading
         const std::string& calendar ) const
     {
         // boost::gregorian::date date = curveBuildProps_.get()->asOfDate_;
-        auto ptrMlibCalendar = getCalendar( trim_to_upper( calendar.c_str() ) );
-        if( ptrMlibCalendar )
+        auto ptrAqCalendar = getCalendar( trim_to_upper( calendar.c_str() ) );
+        if( ptrAqCalendar )
         {
             const boost::gregorian::date asOfDate = curveBuildProps_.get()->asOfDate_;
-            boost::gregorian::date fromDate = dayAdjust( futurePaymentDate, dayAdjustment, *ptrMlibCalendar );
+            boost::gregorian::date fromDate = dayAdjust( futurePaymentDate, dayAdjustment, *ptrAqCalendar );
             double yearFractionForFromDate = getYearFractionFromDayCount( etrading::ACT_ACT_DAYCOUNT, asOfDate, fromDate );
             double dfFromDate = calculateDiscountFactor( yearFractionForFromDate );
             double yearFractionForToDate = yearFractionForFromDate + yearFraction;
@@ -630,11 +630,11 @@ namespace etrading
     double AQObjCurve::calculateDiscountFactor( const boost::gregorian::date& valuationDate, const boost::gregorian::date& paymentDate,
             const BusinessDayAdjustmentEnum dayAdjustment, const std::string& calendar ) const
     {
-        auto ptrMlibCalendar = getCalendar( trim_to_upper( calendar.c_str() ) );
-        if( ptrMlibCalendar )
+        auto ptrAqCalendar = getCalendar( trim_to_upper( calendar.c_str() ) );
+        if( ptrAqCalendar )
         {
-            auto fromDate = dayAdjust( valuationDate, dayAdjustment, *ptrMlibCalendar );
-            auto toDate = dayAdjust( paymentDate, dayAdjustment, *ptrMlibCalendar );
+            auto fromDate = dayAdjust( valuationDate, dayAdjustment, *ptrAqCalendar );
+            auto toDate = dayAdjust( paymentDate, dayAdjustment, *ptrAqCalendar );
             return calculateDiscountFactor( fromDate, toDate );
         }
         else
@@ -656,10 +656,10 @@ namespace etrading
 
         if( dayAdjustment != NO_CHANGE )
         {
-            auto ptrMlibCalendar = getCalendar( trim_to_upper( calendar.c_str() ) );
-            if( ptrMlibCalendar )
+            auto ptrAqCalendar = getCalendar( trim_to_upper( calendar.c_str() ) );
+            if( ptrAqCalendar )
             {
-                date = dayAdjust( date, dayAdjustment, *ptrMlibCalendar );
+                date = dayAdjust( date, dayAdjustment, *ptrAqCalendar );
                 return calculateDiscountFactor( date );
             }
             else
@@ -939,15 +939,15 @@ namespace etrading
 
         if( adjType == AQObjCurve::ACCRUAL_BUSINESSDAYADJUSTMENT )
         {
-            return std::make_pair( curveBuildProps_->accrualDayAdjustment_, curveBuildProps_->getMlibAccrualCalendar() ) ;
+            return std::make_pair( curveBuildProps_->accrualDayAdjustment_, curveBuildProps_->getAqAccrualCalendar() ) ;
         }
         if( adjType == AQObjCurve::PAYMENT_BUSINESSDAYADJUSTMENT )
         {
-            return std::make_pair( curveBuildProps_->paymentDayAdjustment_, curveBuildProps_->getMlibPaymentCalendar() ) ;
+            return std::make_pair( curveBuildProps_->paymentDayAdjustment_, curveBuildProps_->getAqPaymentCalendar() ) ;
         }
         if( adjType == AQObjCurve::FIXING_BUSINESSDAYADJUSTMENT )
         {
-            return std::make_pair( curveBuildProps_->fixingDayAdjustment_, curveBuildProps_->getMlibFixingCalendar() ) ;
+            return std::make_pair( curveBuildProps_->fixingDayAdjustment_, curveBuildProps_->getAqFixingCalendar() ) ;
         }
 
         throw ETradingException( ( boost::format( "AQObjCurve::getBusinessDayAdjust(adjType) - Unable to retrieve BusinessDayAdjustmentType (%i)" ) % adjType ).str() );
@@ -981,15 +981,15 @@ namespace etrading
         {
             if( calendarName == curveBuildProps_->getAccrualDayCalendar() )
             {
-                return curveBuildProps_->getMlibAccrualCalendar();
+                return curveBuildProps_->getAqAccrualCalendar();
             }
             if( calendarName == curveBuildProps_->getFixingDayCalendar() )
             {
-                return curveBuildProps_->getMlibFixingCalendar();
+                return curveBuildProps_->getAqFixingCalendar();
             }
             if( calendarName == curveBuildProps_->getPaymentDayCalendar() )
             {
-                return curveBuildProps_->getMlibPaymentCalendar();
+                return curveBuildProps_->getAqPaymentCalendar();
             }
         }
         return &AQLMathCalendarSet::getCalendar( calendarName.c_str() );

@@ -17,5 +17,5 @@ The supported STL types are
 
 Find an appropriate file/folder that adequately categorizes the function you are about to add 
 (e.g. include/Date/tryDateFunctions.h and src/Date/tryDateFunctions.cpp). 
-If none exists, create the folder and/or file. keep the same function signature as in swig_mlib 
+If none exists, create the folder and/or file. keep the same function signature as in the swig_*.i interface 
 except add \''try\'' as a prefix to the function. Implement the function with validation of arguments.

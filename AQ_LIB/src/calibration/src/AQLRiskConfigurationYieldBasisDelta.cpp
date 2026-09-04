@@ -301,7 +301,7 @@ AQLRiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const AQLString
 	unsigned int j = 0;
 	for (unsigned int i = 0; i < gridSize; ++i)
 	{
-		paramGrid[i] = AQLMarketData::convertToMLibTerm(grid[i]);
+		paramGrid[i] = AQLMarketData::aqlConvertToTerm(grid[i]);
 		//for bucket grid
 		if (BucketTerm[0] == "NONE" ||BucketTerm[0] == AQ_NO_DATA)
 		{

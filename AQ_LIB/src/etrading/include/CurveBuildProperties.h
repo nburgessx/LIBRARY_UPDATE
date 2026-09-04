@@ -79,15 +79,15 @@ namespace etrading
 
         void setFixingDayCalendar( const std::string& calendar );
         const std::string getFixingDayCalendar() const;
-        const AQLMathCalendar* getMlibFixingCalendar() const;
+        const AQLMathCalendar* getAqFixingCalendar() const;
 
         void setAccrualDayCalendar( const std::string& calendar );
         const std::string getAccrualDayCalendar() const;
-        const AQLMathCalendar* getMlibAccrualCalendar() const;
+        const AQLMathCalendar* getAqAccrualCalendar() const;
 
         void setPaymentDayCalendar( const std::string& calendar );
         const std::string getPaymentDayCalendar() const;
-        const AQLMathCalendar* getMlibPaymentCalendar() const;
+        const AQLMathCalendar* getAqPaymentCalendar() const;
 
         const ExtrapolationTypeEnum getExtrapolationTypeEnum() const;
 
@@ -118,9 +118,9 @@ namespace etrading
         std::string paymentCalendar_;
 
         // observation pointer so never delete it
-        const AQLMathCalendar* mlibFixingCalendar_;
-        const AQLMathCalendar* mlibAccrualCalendar_;
-        const AQLMathCalendar* mlibPaymentCalendar_;
+        const AQLMathCalendar* aqFixingCalendar_;
+        const AQLMathCalendar* aqAccrualCalendar_;
+        const AQLMathCalendar* aqPaymentCalendar_;
 
         const bool isConsistent() const;
         void assertConsistent() const;

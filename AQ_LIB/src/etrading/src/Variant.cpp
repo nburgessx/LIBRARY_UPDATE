@@ -697,15 +697,15 @@ namespace etrading
 		// Intel compiler requires help deciding which conversion to use.
 		// Convert via (const boost::gregorian::date &)
         auto gregorianDate = static_cast< boost::gregorian::date >( (const boost::gregorian::date &) *this );
-        AQLDate mlibDate = toAQLDateFromGregorianDate( gregorianDate );
-        return mlibDate;
+        AQLDate aqDate = toAQLDateFromGregorianDate( gregorianDate );
+        return aqDate;
     }
 
     Variant::operator AQLString() const
     {
         auto stdString = this->toString();
-        AQLString mlibString = AQLString( stdString.c_str() );
-        return mlibString;
+        AQLString aqString = AQLString( stdString.c_str() );
+        return aqString;
     }
    
 

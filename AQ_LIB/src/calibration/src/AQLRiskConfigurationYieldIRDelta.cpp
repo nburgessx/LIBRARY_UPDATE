@@ -382,7 +382,7 @@ AQLRiskConfigurationYieldIRDelta::createMarketBumpYieldEntity(const AQLString &c
 	bool updateFlg = false;
 	for (unsigned int i = 0; i < paramGrid.size(); ++i)
 	{
-		AQLString term = AQLMarketData::convertToMLibTerm(paramGrid[i]);
+		AQLString term = AQLMarketData::aqlConvertToTerm(paramGrid[i]);
 		term.toUpper();
 
 		// check shift group id

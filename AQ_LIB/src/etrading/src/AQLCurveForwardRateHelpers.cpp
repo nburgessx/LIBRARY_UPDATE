@@ -2817,8 +2817,8 @@ namespace etrading
     std::tuple<std::vector<double>,std::vector<double>> AQLCurveForwardRateHelpers::getXY(AQLDataInstance* dataInstance, const AQLString& curveCollection)
     {
 	    AQLCurvePricingObject& yc = AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveCollection);  // curveid = curveCollection
-	    const AQLInterpolationBase& mlibInterpolation = yc.getDFInterpolation();  // &curveType
-	    return mlibInterpolation.getXY();
+	    const AQLInterpolationBase& aqInterpolation = yc.getDFInterpolation();  // &curveType
+	    return aqInterpolation.getXY();
     };
 
 }

@@ -149,7 +149,7 @@ AQLCalibrationParametersFXStrangleSolver::createCalibrationInfo(AQLObjectPool &o
 		lterm.toLower();
 
 		//hishida vannavolga warning this must be changed in all of sources
-		//AQLString tmpdate = AQLMarketData::convertToMLibTerm(strTerms[i]);
+		//AQLString tmpdate = AQLMarketData::aqlConvertToTerm(strTerms[i]);
 //		AQLString tmpdate = strTerms[i];
 //		terms[i] = AQLMathDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);
 //		deliveryterms[i] = AQLMathDateCalculations::getDate(terms[i],spotlagday,sr,&cal,true);

@@ -1211,7 +1211,7 @@ AQLRiskConfiguration::setUpValuableEntityInfo(const AQLString &ccy, AQLObjectPoo
 			AQLStringVector changeGridTerm;
 			for (unsigned int i = 0;i < tmpgridTerm.size();++i)
 			{
-				changeGridTerm.push_back(AQLMarketData::convertToMLibTerm(tmpgridTerm[i]));
+				changeGridTerm.push_back(AQLMarketData::aqlConvertToTerm(tmpgridTerm[i]));
 			}
 
 			for (unsigned int i = 0;i < BucketGridTerm.size();++i)
@@ -1297,7 +1297,7 @@ AQLRiskConfiguration::setUpValuableEntityInfo(const AQLString &ccy, AQLObjectPoo
 		//	AQLStringVector changeGridTerm;
 		//	for (unsigned int i = 0;i < tmpgridTerm.size();++i)
 		//	{
-		//		changeGridTerm.push_back(AQLMarketData::convertToMLibTerm(tmpgridTerm[i]));
+		//		changeGridTerm.push_back(AQLMarketData::aqlConvertToTerm(tmpgridTerm[i]));
 		//	}
 
 		//	for (unsigned int i = 0;i < BucketGridTerm.size();++i)
@@ -1447,7 +1447,7 @@ AQLRiskConfiguration::setUpValuableEntityInfo(const AQLString &ccy, AQLObjectPoo
 				if (chk.size()>1)
 					gridTerm[i] = chk[1]; //AMT_10Y then 10Y
 
-				tmpchangeGridTerm.push_back(AQLMarketData::convertToMLibTerm(gridTerm[i]));
+				tmpchangeGridTerm.push_back(AQLMarketData::aqlConvertToTerm(gridTerm[i]));
 			}
 			if (gridTerm.size() != 0)
 			{
@@ -2808,7 +2808,7 @@ AQLRiskConfiguration::createIRBaseScenarioEntity(const AQLString &ccy, AQLDataIn
 	// convert grid for M-Lib
 	for (unsigned int i = 0; i < gridSize; ++i)
 	{
-		grid[i] = AQLMarketData::convertToMLibTerm(grid[i]);
+		grid[i] = AQLMarketData::aqlConvertToTerm(grid[i]);
 	}
 
 	// set param
@@ -2916,7 +2916,7 @@ AQLRiskConfiguration::createBasisBaseScenarioEntity(const AQLString &ccy, AQLDat
 	// convert grid for M-Lib
 	for (unsigned int i = 0; i < gridSize; ++i)
 	{
-		grid[i] = AQLMarketData::convertToMLibTerm(grid[i]);
+		grid[i] = AQLMarketData::aqlConvertToTerm(grid[i]);
 	}
 
 	// set param

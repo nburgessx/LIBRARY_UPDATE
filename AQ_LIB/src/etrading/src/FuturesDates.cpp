@@ -46,7 +46,7 @@ namespace etrading
             AQLString futuresYear = futuresTicker.subString( 1, 1 ); // Get the second character from the futuresTicker
             year = etrading::StringToNumber< unsigned int >( futuresYear.getCString() );
 
-            AQLDate currentDate = etrading::getCurrentMLibDate();
+            AQLDate currentDate = etrading::getCurrentAqDate();
             unsigned int currentDecade = etrading::getCurrentDecade();
 
             // Get the contract year, if the year is in the past roll forwards 1 decade

@@ -14,7 +14,7 @@ namespace google_test
 {
 	TEST(ECB_Calendars, UNIT_ECB_Calendar_Expiry_Test)
 	{
-		const AQLDate currentDate = etrading::getCurrentMLibDate();
+		const AQLDate currentDate = etrading::getCurrentAqDate();
 		AQLDate thirdMeetingDate;
 		AQLDate forthMeetingDate;
 		AQLDate fifthMeetingDate;

@@ -1848,7 +1848,7 @@ AQLMarketData::isCorUse(const AQLString &model)
 	
 */
 AQLString  
-AQLMarketData::convertToMLibTerm(const AQLString &term)
+AQLMarketData::aqlConvertToTerm(const AQLString &term)
 {
 	// convert term
 	if (term == "SN")

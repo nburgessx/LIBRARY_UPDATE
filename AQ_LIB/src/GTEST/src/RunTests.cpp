@@ -49,7 +49,7 @@ void parse_command_line( int argc, char* argv[] )
 
     if ( vm.count( "reinit" ) )
     {
-        google_test::InitializeGoogleTest::setMLibReinit( true );
+        google_test::InitializeGoogleTest::setAqReinit( true );
     }
 
     if ( vm.count( "rebase" ) )

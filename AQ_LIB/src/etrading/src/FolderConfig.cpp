@@ -27,8 +27,8 @@ namespace
     // This resolves against the "AQ" environment variable, which SetEnvironmentVariables.bat sets
     // to the library root; the config data lives at $(AQ)/resources/config.
     //
-    // NOTE: this previously read the legacy "MLIBQ" variable with a "/resource/config" (singular)
-    // suffix -- the .APPLES layout. On a machine where MLIBQ was still set, the library silently
+    // NOTE: this previously read the legacy "AQ" variable with a "/resource/config" (singular)
+    // suffix -- the .APPLES layout. On a machine where AQ was still set, the library silently
     // loaded its calendars and properties from the read-only .APPLES reference tree.
     // the library calendar and property files are kept. There should be no final backslash on the property path.
 	//

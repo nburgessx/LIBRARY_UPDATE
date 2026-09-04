@@ -15,9 +15,9 @@ namespace etrading
           paymentDateBusinessDayAdjustment_( businessDayAdjustment ),
           paymentDateCalendar_( trim_to_upper( dateCalendar.c_str() ) )
     {
-        mlibFixingDateCalendar_ = &AQLMathCalendarSet::getCalendar( fixingDateCalendar_.c_str() );
-        mlibAccrualEndDateDateCalendar_ = &AQLMathCalendarSet::getCalendar( accrualEndDateDateCalendar_.c_str() );
-        mlibPaymentDateCalendar_ = &AQLMathCalendarSet::getCalendar( paymentDateCalendar_.c_str() );
+        aqFixingDateCalendar_ = &AQLMathCalendarSet::getCalendar( fixingDateCalendar_.c_str() );
+        aqAccrualEndDateDateCalendar_ = &AQLMathCalendarSet::getCalendar( accrualEndDateDateCalendar_.c_str() );
+        aqPaymentDateCalendar_ = &AQLMathCalendarSet::getCalendar( paymentDateCalendar_.c_str() );
     };
 
     AQObjCurveDayAdjustment::AQObjCurveDayAdjustment( const BusinessDayAdjustmentEnum fixingDateBusinessDayAdjustment,
@@ -33,9 +33,9 @@ namespace etrading
            paymentDateBusinessDayAdjustment_( paymentDateBusinessDayAdjustment ),
            paymentDateCalendar_( trim_to_upper( paymentDateCalendar.c_str() ) )
     {
-        mlibFixingDateCalendar_ = &AQLMathCalendarSet::getCalendar( fixingDateCalendar_.c_str() );
-        mlibAccrualEndDateDateCalendar_ = &AQLMathCalendarSet::getCalendar( accrualEndDateDateCalendar_.c_str() );
-        mlibPaymentDateCalendar_ = &AQLMathCalendarSet::getCalendar( paymentDateCalendar_.c_str() );
+        aqFixingDateCalendar_ = &AQLMathCalendarSet::getCalendar( fixingDateCalendar_.c_str() );
+        aqAccrualEndDateDateCalendar_ = &AQLMathCalendarSet::getCalendar( accrualEndDateDateCalendar_.c_str() );
+        aqPaymentDateCalendar_ = &AQLMathCalendarSet::getCalendar( paymentDateCalendar_.c_str() );
     };
 
 }
