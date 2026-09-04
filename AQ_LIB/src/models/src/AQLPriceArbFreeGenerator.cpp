@@ -1,4 +1,5 @@
 /*! 
+	@file
     @brief Class declaration to Generate ArbitrageFreeCurve.
 
 */

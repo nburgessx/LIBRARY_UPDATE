@@ -1,3 +1,6 @@
+/*!
+    @file AQLMathCorrelationLMMDiscAngle.cpp
+*/
 
 #include "AQLMathCorrelationLMMDiscAngle.h"
 #include "AQLMathCorrelationFuncLMM.h"

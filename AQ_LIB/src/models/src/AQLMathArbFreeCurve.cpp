@@ -1,4 +1,5 @@
 /*!  
+	@file	
     @brief Source code for class to represent ArbitrageFreeCurve.
 */
 

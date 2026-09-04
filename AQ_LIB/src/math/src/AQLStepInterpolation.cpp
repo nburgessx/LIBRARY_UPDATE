@@ -1,5 +1,6 @@
 // AQLStepInterpolation.cpp
 
+/* @file
     @brief Source code of class for interpolation with step function representing left- and right-continuous functions
 */
 
