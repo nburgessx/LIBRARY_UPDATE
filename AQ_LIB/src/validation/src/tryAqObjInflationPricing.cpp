@@ -1,4 +1,4 @@
-#include "tryAqObjCurvesInflationPricing.h"
+#include "tryAqObjInflationPricing.h"
 
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
@@ -22,7 +22,7 @@ namespace validation
 	 * @param [in] infoBlocks        A vector of containing the label-value blocks of properties
 	 * @param [out]                  The objectName
 	 */
-	std::string tryAqObjCurvesInflationCurveCreate( const std::string& objectName,
+	std::string tryAqObjInflationCurveCreate( const std::string& objectName,
 											  const std::vector<std::string>& dataBlockNames,
 											  const etrading::JSONInfoBlockTuples& infoBlocks )
 	{
@@ -39,8 +39,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled())
 		{
-			CreateDataFile file(decorateFilename("tryAqObjCurvesInflationCurveCreate_inputs", objectName.c_str()));
-			file.write("generatorFunction", "tryAqObjCurvesInflationCurveCreate");
+			CreateDataFile file(decorateFilename("tryAqObjInflationCurveCreate_inputs", objectName.c_str()));
+			file.write("generatorFunction", "tryAqObjInflationCurveCreate");
 			file.write("objectName", objectName);
 
 			// Write out each propertyName and corresponding block of property config data
@@ -88,7 +88,7 @@ namespace validation
 	 * @param[in] inflationCurveName	Inflation Curve object name
 	 * @param[out]						A matrix containing node dates and calibrated index levels.
 	 */
-	AnyTypeMatrix tryAqObjCurvesInflationCurveCalibrationParameters( const std::string& inflationCurveName )
+	AnyTypeMatrix tryAqObjInflationCurveCalibrationParameters( const std::string& inflationCurveName )
 	{
 		VALID_EXCEPTION_START
 
@@ -104,7 +104,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief	validation interface for the aqObjCurvesInflationZCSwapPVFromIndex method.
+	/* @brief	validation interface for the aqObjInflationZCSwapPVFromIndex method.
 	*			Calculates the PV of the specified Zero Coupon Inflation Swap.
 	*			This function requires the user to provide the inflation fixing level at the start and end of the trade,
 	*			taking into account the correct lag.
@@ -116,7 +116,7 @@ namespace validation
 	* @param[in]	legName					If specified, calculate the PV of the single swap leg
 	* @returns	The calculated PV value
 	*/
-	double tryAqObjCurvesInflationZCSwapPVFromIndex( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double baseIndex, const double resetIndex, const std::string& legName )
+	double tryAqObjInflationZCSwapPVFromIndex( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double baseIndex, const double resetIndex, const std::string& legName )
 	{
 		VALID_EXCEPTION_START
 
@@ -138,7 +138,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief	validation interface for the aqObjCurvesInflationZCSwapPV method.
+	/* @brief	validation interface for the aqObjInflationZCSwapPV method.
 	*			Calculates the PV of the specified Zero Coupon Inflation Swap.
 	*			This function takes an inflation curve as input.
 	*
@@ -148,7 +148,7 @@ namespace validation
 	* @param[in]	legName					If specified, calculate the PV of the single swap leg
 	* @returns	The calculated PV value
 	*/
-	double tryAqObjCurvesInflationZCSwapPV( const std::string& swapName, const std::string& inflationCurveName, const LabelValueBlock& valuationSettingsLVB, const std::string& legName )
+	double tryAqObjInflationZCSwapPV( const std::string& swapName, const std::string& inflationCurveName, const LabelValueBlock& valuationSettingsLVB, const std::string& legName )
 	{
 		VALID_EXCEPTION_START
 
@@ -173,7 +173,7 @@ namespace validation
 	}
 
 
-	/* @brief	validation interface for the aqObjCurvesInflationZCSwapParRateFromIndex method.
+	/* @brief	validation interface for the aqObjInflationZCSwapParRateFromIndex method.
 	*			Calculates the par rate of the Zero Coupon Inflation Swap
 	*			i.e. the coupon rate of the fixed leg which causes the swap to PV to zero.
 	*			This simple calculation requires the user to specify the inflation fixings at start and end of the trade
@@ -184,7 +184,7 @@ namespace validation
 	* @param[in]	resetIndex				The inflation level at the maturity of the swap
 	* @returns	The calculated break-even par-rate value
 	*/
-	double tryAqObjCurvesInflationZCSwapParRateFromIndex( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double baseIndex, const double resetIndex )
+	double tryAqObjInflationZCSwapParRateFromIndex( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double baseIndex, const double resetIndex )
 	{
 		VALID_EXCEPTION_START
 
@@ -206,7 +206,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief	validation interface for the aqObjCurvesInflationZCSwapParRate method.
+	/* @brief	validation interface for the aqObjInflationZCSwapParRate method.
 	*			Calculates the Break-even par rate of the specified Zero Coupon Inflation Swap.
 	*			This function takes an inflation curve as input
 	*
@@ -215,7 +215,7 @@ namespace validation
 	* @param[in]	valuationSettingsLVB	Contains the curveCollection, used for discounting cashflows
 	* @returns	The calculated break-even par-rate value
 	*/
-	double tryAqObjCurvesInflationZCSwapParRate( const std::string& swapName, const std::string& inflationCurveName, const LabelValueBlock& valuationSettingsLVB )
+	double tryAqObjInflationZCSwapParRate( const std::string& swapName, const std::string& inflationCurveName, const LabelValueBlock& valuationSettingsLVB )
 	{
 		VALID_EXCEPTION_START
 
@@ -239,7 +239,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief	validation interface for the aqObjCurvesInflationCPI method.
+	/* @brief	validation interface for the aqObjInflationCPI method.
 	*			Obtains the CPI level from the suuplied inflation curve for the specified date, taking into account the specified lag
 	*
 	* @param[in]	inflationCurveName		Inflation Curve object name
@@ -248,7 +248,7 @@ namespace validation
 	* @param[in]	lag						Adjust the specified date backwards by this lag tenor
 	* @returns	The calculated CPI level
 	*/
-	double tryAqObjCurvesInflationCPI( const std::string& inflationCurveName, const AQLDate& date, const std::string& inflationResetType, const std::string& lag )
+	double tryAqObjInflationCPI( const std::string& inflationCurveName, const AQLDate& date, const std::string& inflationResetType, const std::string& lag )
 	{
 		VALID_EXCEPTION_START
 

@@ -8,21 +8,21 @@ using etrading::LabelValueBlock;
 namespace validation
 {
 
-	/* @brief			validation interface for the aqObjOptionsBondOptionCreate method
+	/* @brief			validation interface for the aqObjBondOptionCreate method
 	*  @param [in]		objectName					BondOption object name
 	*  @param [in]		optionLVB					Option Label Value Block
 	*  @param [in]		validateKeys				True to validate the all keys provided are valid. Default to True
 	*  @return			BondOption object Handle
 	*/
-	std::string tryAqObjOptionsBondOptionCreate(const std::string& objectName, const LabelValueBlock& optionLVB, const bool& validateKeys = true);
+	std::string tryAqObjBondOptionCreate(const std::string& objectName, const LabelValueBlock& optionLVB, const bool& validateKeys = true);
 
-    /* @brief			validation interface for the aqObjOptionsBondOptionDisplay method, which displays the INPUT parameters of the cached option
+    /* @brief			validation interface for the aqObjBondOptionDisplay method, which displays the INPUT parameters of the cached option
 	*  @param [in]		objectName		BondOption object name
 	*  @return			Display of the swaption input parameters
 	*/
-	AnyTypeMatrix tryAqObjOptionsBondOptionDisplay( const std::string& objectName );
+	AnyTypeMatrix tryAqObjBondOptionDisplay( const std::string& objectName );
 
-	/* @brief			validation interface for the aqObjOptionsBondOptionPV method, which calculates the PV of the cached bond option
+	/* @brief			validation interface for the aqObjBondOptionPV method, which calculates the PV of the cached bond option
 	*  @param [in]		objectName			BondOption object name
 	*  @param [in]		valuationSettings	A LabelValueBlock containing valuation settings such as Bond's valuation date, discountCurve's curveCollection
 	*  @param [in]		bondPrice			Bond Spot price at settlement date
@@ -32,10 +32,10 @@ namespace validation
 	*  @param [in]		discountDayCount	Day count for the discounting
 	*  @return			The Bond Option PV
 	*/
-	double tryAqObjOptionsBondOptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount);
+	double tryAqObjBondOptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount);
 
 
-	/* @brief			validation interface for the aqObjOptionsBondFutureOptionPV method, which calculates the PV of the cached bond future option
+	/* @brief			validation interface for the aqObjBondFutureOptionPV method, which calculates the PV of the cached bond future option
 	*  @param [in]		objectName			BondOption object name
 	*  @param [in]		valuationSettings	A LabelValueBlock containing valuation settings such as Bond's valuation date, discountCurve's curveCollection
 	*  @param [in]		bondFuturePrice		Bond forward price at option expiry date
@@ -43,9 +43,9 @@ namespace validation
 	*  @param [in]		discountDayCount	Day count for the discounting
 	*  @return			The Bond Option PV
 	*/
-	double tryAqObjOptionsBondFutureOptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount);
+	double tryAqObjBondFutureOptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount);
 
-	/* @brief			validation interface for the aqObjOptionsBondFutureOptionGreeks method, to calculate Numerical greeks
+	/* @brief			validation interface for the aqObjBondFutureOptionGreeks method, to calculate Numerical greeks
 	*  @param [in]		greekType			Greek type: Analytical or Numerical
 	*  @param [in]		objectName			BondOption object name
 	*  @param [in]		valuationSettings	A LabelValueBlock containing valuation settings such as Bond's valuation date, discountCurve's curveCollection
@@ -60,9 +60,9 @@ namespace validation
 	*  @param [in]		showColumnHeaders	showColumnHeaders
 	*  @return			Bond option Greeks' display
 	*/
-	AnyTypeMatrix tryAqObjOptionsBondFutureOptionGreeks(const std::string& greekType, const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders = true);
+	AnyTypeMatrix tryAqObjBondFutureOptionGreeks(const std::string& greekType, const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders = true);
 
-	/* @brief			validation interface for the aqObjOptionsBondOptionGreeks method, to calculate Numerical greeks
+	/* @brief			validation interface for the aqObjBondOptionGreeks method, to calculate Numerical greeks
 	*  @param [in]		greekType			Greek type: Analytical or Numerical
 	*  @param [in]		objectName			BondOption object name
 	*  @param [in]		valuationSettings	A LabelValueBlock containing valuation settings such as Bond's valuation date, discountCurve's curveCollection
@@ -79,7 +79,7 @@ namespace validation
 	*  @param [in]		showColumnHeaders	showColumnHeaders
 	*  @return			Bond option Greeks' display
 	*/
-	AnyTypeMatrix tryAqObjOptionsBondOptionGreeks(const std::string& greekType, const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondSpotPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders = true);
+	AnyTypeMatrix tryAqObjBondOptionGreeks(const std::string& greekType, const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondSpotPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders = true);
 
 }
 

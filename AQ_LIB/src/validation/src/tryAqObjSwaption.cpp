@@ -1,4 +1,4 @@
-#include "tryAqObjOptionsSwaption.h"
+#include "tryAqObjSwaption.h"
 #include "SwaptionPricer.h"
 #include "SwaptionTrade.h"
 #include "CreateDataFile.h"
@@ -17,13 +17,13 @@ using etrading::decorateFilename;
 namespace validation
 {
 
-	/* @brief			validation interface for the aqObjOptionsSwaptionCreate method
+	/* @brief			validation interface for the aqObjSwaptionCreate method
 	*  @param [in]		objectName		Swaption object name
 	*  @param [in]		tradeLVB		CapFloor Label Value Block
 	*  @param [in]		validateKeys	True to validate the all keys provided are valid. Default to True
 	*  @return			Swaption object Handle
 	*/
-	std::string tryAqObjOptionsSwaptionCreate(const std::string& objectName, const LabelValueBlock& tradeLVB, const bool& validateKeys)
+	std::string tryAqObjSwaptionCreate(const std::string& objectName, const LabelValueBlock& tradeLVB, const bool& validateKeys)
 	{
 		VALID_EXCEPTION_START
 
@@ -43,11 +43,11 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-    /* @brief			validation interface for the aqObjOptionsSwaptionDisplay method, which displays the INPUT parameters of the cached option
+    /* @brief			validation interface for the aqObjSwaptionDisplay method, which displays the INPUT parameters of the cached option
 	*  @param [in]		objectName		Swaption object name
 	*  @return			Display of the swaption input parameters
 	*/
-	AnyTypeMatrix tryAqObjOptionsSwaptionDisplay(const std::string& objectName)
+	AnyTypeMatrix tryAqObjSwaptionDisplay(const std::string& objectName)
 	{
 		VALID_EXCEPTION_START
 
@@ -63,12 +63,12 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief			validation interface for the aqObjOptionsSwaptionPV method, which calculates the PV of the cached swaption
+	/* @brief			validation interface for the aqObjSwaptionPV method, which calculates the PV of the cached swaption
 	*  @param [in]		objectName			Swaption object name
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption PV
 	*/
-	double tryAqObjOptionsSwaptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
+	double tryAqObjSwaptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
 	{
 		VALID_EXCEPTION_START
 
@@ -88,13 +88,13 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-    /* @brief			validation interface for the aqObjOptionsSwaptionImplivedVol method
+    /* @brief			validation interface for the aqObjSwaptionImpliedVol method
 	*  @param [in]		objectName			Swaption object name
     *  @param [in]		price			    Swaption price
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption implied vol
 	*/
-	double tryAqObjOptionsSwaptionImpliedVol(const std::string& objectName, const double & price, const AQLStringMatrix& valuationSettingsLVB )
+	double tryAqObjSwaptionImpliedVol(const std::string& objectName, const double & price, const AQLStringMatrix& valuationSettingsLVB )
     {
         VALID_EXCEPTION_START
 
@@ -114,12 +114,12 @@ namespace validation
 		VALID_EXCEPTION_END
     }
 
-    /* @brief			validation interface for the aqObjOptionsSwaptionDelta
+    /* @brief			validation interface for the aqObjSwaptionDelta
 	*  @param [in]		objectName			Swaption object name
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Delta
 	*/
-	double tryAqObjOptionsSwaptionDelta(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
+	double tryAqObjSwaptionDelta(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
     {
         VALID_EXCEPTION_START
 
@@ -139,12 +139,12 @@ namespace validation
 		VALID_EXCEPTION_END
     }
 
-    /* @brief			validation interface for the aqObjOptionsSwaptionGamma
+    /* @brief			validation interface for the aqObjSwaptionGamma
 	*  @param [in]		objectName			Swaption object name
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Gamma
 	*/
-	double tryAqObjOptionsSwaptionGamma(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
+	double tryAqObjSwaptionGamma(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
     {
         VALID_EXCEPTION_START
 
@@ -164,12 +164,12 @@ namespace validation
 		VALID_EXCEPTION_END
     }
 
-    /* @brief			validation interface for the aqObjOptionsSwaptionVega
+    /* @brief			validation interface for the aqObjSwaptionVega
 	*  @param [in]		objectName			Swaption object name
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Vega
 	*/
-	double tryAqObjOptionsSwaptionVega(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
+	double tryAqObjSwaptionVega(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
     {
         VALID_EXCEPTION_START
 
@@ -189,12 +189,12 @@ namespace validation
 		VALID_EXCEPTION_END
     }
 
-    /* @brief			validation interface for the aqObjOptionsSwaptionTheta
+    /* @brief			validation interface for the aqObjSwaptionTheta
 	*  @param [in]		objectName			Swaption object name
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Theta
 	*/
-	double tryAqObjOptionsSwaptionTheta(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
+	double tryAqObjSwaptionTheta(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
     {
         VALID_EXCEPTION_START
 

@@ -13,7 +13,7 @@
 #include "CreateFixedBond.h"
 
 #include "tryAqObjects.h"
-#include "tryAqObjSwapsAssetSwap.h"
+#include "tryAqObjAssetSwap.h"
 #include "tryAqObjBonds.h"
 
 #include "CreateDataFile.h"

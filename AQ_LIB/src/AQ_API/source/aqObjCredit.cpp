@@ -244,7 +244,7 @@ double aqObjCreditDefaultSwapParSpread( const std::string& swapName, const std::
     AQ_API_END
 }
 
-/* @brief validation interface for the aqObjSwapsTotalReturnPV method.
+/* @brief validation interface for the aqObjTotalReturnSwapPV method.
 *   Calculates the PV of the specified Total Return Swap.
 *
 * @param[in]	swapName			The name of the total return swap object
@@ -253,7 +253,7 @@ double aqObjCreditDefaultSwapParSpread( const std::string& swapName, const std::
 * @param[in]	fixingTableNames	Fixing table object names
 * @returns	The calculated PV value
 */
-double aqObjSwapsTotalReturnPV( const std::string& swapName, const std::string& creditModelName,  const std::string& legName, const SWIG_STRINGMATRIX & fixingTableNames )
+double aqObjTotalReturnSwapPV( const std::string& swapName, const std::string& creditModelName,  const std::string& legName, const SWIG_STRINGMATRIX & fixingTableNames )
 {
     AQ_API_START
 
@@ -262,7 +262,7 @@ double aqObjSwapsTotalReturnPV( const std::string& swapName, const std::string& 
 	swig::buildStringMatrix( fixingTableLVB, fixingTableNames );
 
     // Call the Function
-    double result = validation::tryAqObjSwapsTotalReturnPV( swapName, creditModelName, legName, fixingTableLVB );
+    double result = validation::tryAqObjTotalReturnSwapPV( swapName, creditModelName, legName, fixingTableLVB );
         
     // Marshall Output(s)
     return result;
@@ -271,9 +271,9 @@ double aqObjSwapsTotalReturnPV( const std::string& swapName, const std::string& 
 }
 
 // Optional Argument Method
-double aqObjSwapsTotalReturnPV( const std::string& swapName, const std::string& creditModelName, const std::string& legName )
+double aqObjTotalReturnSwapPV( const std::string& swapName, const std::string& creditModelName, const std::string& legName )
 {
-    return aqObjSwapsTotalReturnPV( swapName, creditModelName, legName, SWIG_STRINGMATRIX() ); // Fixing Tables = Null
+    return aqObjTotalReturnSwapPV( swapName, creditModelName, legName, SWIG_STRINGMATRIX() ); // Fixing Tables = Null
 }
 
 /* @brief Calculates the par rate of the specified Total Return Swap's premium leg.
@@ -283,7 +283,7 @@ double aqObjSwapsTotalReturnPV( const std::string& swapName, const std::string& 
 * @param[in]	fixingTableNames		Fixing table object names
 * @returns	The par rate of the TRS premium leg
 */
-double aqObjSwapsTotalReturnParRate( const std::string& swapName, const std::string& creditModelName, const SWIG_STRINGMATRIX & fixingTableNames )
+double aqObjTotalReturnSwapParRate( const std::string& swapName, const std::string& creditModelName, const SWIG_STRINGMATRIX & fixingTableNames )
 {
     AQ_API_START
 
@@ -292,7 +292,7 @@ double aqObjSwapsTotalReturnParRate( const std::string& swapName, const std::str
 	swig::buildStringMatrix( fixingTableLVB, fixingTableNames );
 
     // Call the Function
-    double result = validation::tryAqObjSwapsTotalReturnParRate( swapName, creditModelName, fixingTableLVB );
+    double result = validation::tryAqObjTotalReturnSwapParRate( swapName, creditModelName, fixingTableLVB );
         
     // Marshall Output(s)
     return result;
@@ -301,9 +301,9 @@ double aqObjSwapsTotalReturnParRate( const std::string& swapName, const std::str
 }
 
 // Optional Argument Method
-double aqObjSwapsTotalReturnParRate( const std::string& swapName, const std::string& creditModelName )
+double aqObjTotalReturnSwapParRate( const std::string& swapName, const std::string& creditModelName )
 {
-    return aqObjSwapsTotalReturnParRate( swapName, creditModelName, SWIG_STRINGMATRIX() ); // Fixing Tables = Null
+    return aqObjTotalReturnSwapParRate( swapName, creditModelName, SWIG_STRINGMATRIX() ); // Fixing Tables = Null
 }
 
 /* @brief Calculates the par spread of the specified Total Return Swap's float leg.
@@ -313,7 +313,7 @@ double aqObjSwapsTotalReturnParRate( const std::string& swapName, const std::str
 * @param[in]	fixingTableNames		Fixing table object names
 * @returns	The par spread of the TRS float leg
 */
-double aqObjSwapsTotalReturnParSpread( const std::string& swapName, const std::string& creditModelName, const SWIG_STRINGMATRIX & fixingTableNames )
+double aqObjTotalReturnSwapParSpread( const std::string& swapName, const std::string& creditModelName, const SWIG_STRINGMATRIX & fixingTableNames )
 {
     AQ_API_START
 
@@ -322,7 +322,7 @@ double aqObjSwapsTotalReturnParSpread( const std::string& swapName, const std::s
 	swig::buildStringMatrix( fixingTableLVB, fixingTableNames );
 
     // Call the Function
-    double result = validation::tryAqObjSwapsTotalReturnParSpread( swapName, creditModelName, fixingTableLVB );
+    double result = validation::tryAqObjTotalReturnSwapParSpread( swapName, creditModelName, fixingTableLVB );
         
     // Marshall Output(s)
     return result;
@@ -331,12 +331,12 @@ double aqObjSwapsTotalReturnParSpread( const std::string& swapName, const std::s
 }
 
 // Optional Argument Method
-double aqObjSwapsTotalReturnParSpread( const std::string& swapName, const std::string& creditModelName )
+double aqObjTotalReturnSwapParSpread( const std::string& swapName, const std::string& creditModelName )
 {
-    return aqObjSwapsTotalReturnParSpread( swapName, creditModelName, SWIG_STRINGMATRIX() ); // Fixing Tables = Null
+    return aqObjTotalReturnSwapParSpread( swapName, creditModelName, SWIG_STRINGMATRIX() ); // Fixing Tables = Null
 }
 
-/* @brief validation interface for the aqObjSwapsTotalReturnPV method.
+/* @brief validation interface for the aqObjTotalReturnSwapPV method.
 *   Calculates the annity of the specified Total Return Swap leg
 *
 * @param[in]	swapName			The name of the total return swap object
@@ -344,14 +344,14 @@ double aqObjSwapsTotalReturnParSpread( const std::string& swapName, const std::s
 * @param[in]	legName			    Mandatory, calculate the annuity of this leg.
 * @returns	The calculated annuity value
 */
-double aqObjSwapsTotalReturnAnnuity( const std::string& swapName, const std::string& creditModelName, const std::string& legName )
+double aqObjTotalReturnSwapAnnuity( const std::string& swapName, const std::string& creditModelName, const std::string& legName )
 {
     AQ_API_START
 
     // Marshall Input(s)
         
     // Call the Function
-    double result = validation::tryAqObjSwapsTotalReturnAnnuity( swapName, creditModelName, legName );
+    double result = validation::tryAqObjTotalReturnSwapAnnuity( swapName, creditModelName, legName );
         
     // Marshall Output(s)
     return result;

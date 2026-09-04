@@ -99,7 +99,7 @@ namespace google_test
 			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 			buildEngineCurves(ccy, prefix, "EURYC", curveGeneratorNames);
 
-			// Load inputs to aqObjSwapsDDeltaLadder
+			// Load inputs to aqObjSwapsDeltaLadder
 			AQLString deltaLadderInputDir = TEST_DIR;
 			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
@@ -171,7 +171,7 @@ namespace google_test
 	// 		AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 	// 		buildEngineCurves(ccy, prefix, "USDYC", curveGeneratorNames);
 	// 
-	// 		// Load inputs to aqObjSwapsDDeltaLadder
+	// 		// Load inputs to aqObjSwapsDeltaLadder
 	// 		AQLString deltaLadderInputDir = TEST_DIR;
 	// 		deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 	// 		const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);

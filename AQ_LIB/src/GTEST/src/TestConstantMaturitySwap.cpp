@@ -62,12 +62,12 @@ namespace
 	const char GEN_CONSTANT_MATURITY_SWAP[]		= TEST_DIR "USD_CMS_tryAqObjSwapsCreateFromGenerator_inputs.csv" ;
 
 	// API methods
-	const char CMS_CALCULATE_PV[]				= TEST_DIR "tryAqObjSwapsConstantMaturitySwapPVUsingConvexityAdjustment_inputs.csv";
-	const char CMS_CALCULATE_PAR_RATE[]			= TEST_DIR "tryAqObjSwapsConstantMaturitySwapParRateUsingConvexityAdjustment_inputs.csv";
+	const char CMS_CALCULATE_PV[]				= TEST_DIR "tryAqObjConstantMaturitySwapPVUsingConvexityAdjustment_inputs.csv";
+	const char CMS_CALCULATE_PAR_RATE[]			= TEST_DIR "tryAqObjConstantMaturitySwapParRateUsingConvexityAdjustment_inputs.csv";
 
 	// Snapshot results
-	const char CMS_EXPECTED_PV[]				= TEST_DIR "tryAqObjSwapsConstantMaturitySwapPVUsingConvexityAdjustment_outputs.csv";
-	const char CMS_EXPECTED_PAR_RATE[]			= TEST_DIR "tryAqObjSwapsConstantMaturitySwapParRateUsingConvexityAdjustment_outputs.csv";
+	const char CMS_EXPECTED_PV[]				= TEST_DIR "tryAqObjConstantMaturitySwapPVUsingConvexityAdjustment_outputs.csv";
+	const char CMS_EXPECTED_PAR_RATE[]			= TEST_DIR "tryAqObjConstantMaturitySwapParRateUsingConvexityAdjustment_outputs.csv";
 
 	
 	/* @brief			Builds Generator curve by invoking the tryAqObjCurvesCalibration() API.
@@ -134,7 +134,7 @@ namespace google_test
 		const double convexityAdjustment	= PVFileObj[ "convexityAdjustment" ];
 		std::string legName					= PVFileObj[ "legName"];
 
-		const double calculatedPV = validation::tryAqObjSwapsConstantMaturitySwapPVUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment, legName.c_str() );
+		const double calculatedPV = validation::tryAqObjConstantMaturitySwapPVUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		const double pvTolerance = 10.0;  // Notional of 1MM. We can afford a slightly wider tolerance which allows 64bit test to pass.
@@ -156,7 +156,7 @@ namespace google_test
 		AQLStringMatrix curveCollections		= parRateFileObj[ "curveCollections" ];
 		const double convexityAdjustment	= parRateFileObj[ "convexityAdjustment" ];
 
-		const double calculatedParRate = validation::tryAqObjSwapsConstantMaturitySwapParRateUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment );
+		const double calculatedParRate = validation::tryAqObjConstantMaturitySwapParRateUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedParRate, TEST_DIR, CMS_EXPECTED_PAR_RATE, tolerance );

@@ -151,7 +151,7 @@
     <ClCompile Include="..\src\validation\src\tryAqObjects.cpp">
       <Filter>src\etrading\AQObj\Infrastructure</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryAqObjSwapsAssetSwap.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjAssetSwap.cpp">
       <Filter>src\etrading\AQObj\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesCalibrate.cpp">
@@ -235,13 +235,13 @@
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesDisplay.cpp">
       <Filter>src\etrading\AQObj\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryAqObjOptionsBondOption.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjBondOption.cpp">
       <Filter>src\etrading\AQObj\Options</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryAqObjOptionsCapFloor.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjCapFloor.cpp">
       <Filter>src\etrading\AQObj\Options</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryAqObjOptionsSwaption.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjSwaption.cpp">
       <Filter>src\etrading\AQObj\Options</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjBonds.cpp">
@@ -295,7 +295,7 @@
     <ClCompile Include="..\src\validation\src\tryAqMathForwardRate.cpp">
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryAqObjCurvesInflationPricing.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjInflationPricing.cpp">
       <Filter>src\etrading\Inflation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -507,7 +507,7 @@
     <ClInclude Include="..\src\validation\include\tryAqObjects.h">
       <Filter>include\etrading\AQObj\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryAqObjSwapsAssetSwap.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjAssetSwap.h">
       <Filter>include\etrading\AQObj\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjSwapsLeg.h">
@@ -537,13 +537,13 @@
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesDisplay.h">
       <Filter>include\etrading\AQObj\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryAqObjOptionsBondOption.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjBondOption.h">
       <Filter>include\etrading\AQObj\Options</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryAqObjOptionsCapFloor.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjCapFloor.h">
       <Filter>include\etrading\AQObj\Options</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryAqObjOptionsSwaption.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjSwaption.h">
       <Filter>include\etrading\AQObj\Options</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqBondsCurves.h">
@@ -594,7 +594,7 @@
     <ClInclude Include="..\src\validation\include\tryAqMathForwardRate.h">
       <Filter>include\etrading\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryAqObjCurvesInflationPricing.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjInflationPricing.h">
       <Filter>include\etrading\Inflation</Filter>
     </ClInclude>
   </ItemGroup>

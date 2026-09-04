@@ -87,7 +87,7 @@ double aqObjCreditDefaultSwapCS01( const std::string& swapName, const std::strin
 */
 double aqObjCreditDefaultSwapParSpread( const std::string& swapName, const std::string& creditModelName, const std::string& premiumLegName, const std::string& protectionLegName );
 
-/* @brief validation interface for the aqObjSwapsTotalReturnPV method.
+/* @brief validation interface for the aqObjTotalReturnSwapPV method.
 *   Calculates the PV of the specified Total Return Swap.
 *
 * @param[in]	swapName			The name of the total return swap object
@@ -96,10 +96,10 @@ double aqObjCreditDefaultSwapParSpread( const std::string& swapName, const std::
 * @param[in]	fixingTableNames	Fixing table object names
 * @returns	The calculated PV value
 */
-double aqObjSwapsTotalReturnPV( const std::string& swapName, const std::string& creditModelName, const std::string& legName, const SWIG_STRINGMATRIX & fixingTableNames );
+double aqObjTotalReturnSwapPV( const std::string& swapName, const std::string& creditModelName, const std::string& legName, const SWIG_STRINGMATRIX & fixingTableNames );
 
 // Optional Argument Method
-double aqObjSwapsTotalReturnPV( const std::string& swapName, const std::string& creditModelName, const std::string& legName );
+double aqObjTotalReturnSwapPV( const std::string& swapName, const std::string& creditModelName, const std::string& legName );
 
 /* @brief Calculates the par rate of the specified Total Return Swap's premium leg.
 *
@@ -108,10 +108,10 @@ double aqObjSwapsTotalReturnPV( const std::string& swapName, const std::string& 
 * @param[in]	fixingTableNames		Fixing table object names
 * @returns	The par rate of the TRS premium leg
 */
-double aqObjSwapsTotalReturnParRate( const std::string& swapName, const std::string& creditModelName, const SWIG_STRINGMATRIX & fixingTableNames );
+double aqObjTotalReturnSwapParRate( const std::string& swapName, const std::string& creditModelName, const SWIG_STRINGMATRIX & fixingTableNames );
 
 // Optional Argument Method
-double aqObjSwapsTotalReturnParRate( const std::string& swapName, const std::string& creditModelName );
+double aqObjTotalReturnSwapParRate( const std::string& swapName, const std::string& creditModelName );
 
 /* @brief Calculates the par spread of the specified Total Return Swap's float leg.
 *
@@ -120,12 +120,12 @@ double aqObjSwapsTotalReturnParRate( const std::string& swapName, const std::str
 * @param[in]	fixingTableNames		Fixing table object names
 * @returns	The par spread of the TRS float leg
 */
-double aqObjSwapsTotalReturnParSpread( const std::string& swapName, const std::string& creditModelName, const SWIG_STRINGMATRIX & fixingTableNames );
+double aqObjTotalReturnSwapParSpread( const std::string& swapName, const std::string& creditModelName, const SWIG_STRINGMATRIX & fixingTableNames );
 
 // Optional Argument Method
-double aqObjSwapsTotalReturnParSpread( const std::string& swapName, const std::string& creditModelName );
+double aqObjTotalReturnSwapParSpread( const std::string& swapName, const std::string& creditModelName );
 
-/* @brief validation interface for the aqObjSwapsTotalReturnPV method.
+/* @brief validation interface for the aqObjTotalReturnSwapPV method.
 *   Calculates the annity of the specified Total Return Swap leg
 *
 * @param[in]	swapName			The name of the total return swap object
@@ -133,4 +133,4 @@ double aqObjSwapsTotalReturnParSpread( const std::string& swapName, const std::s
 * @param[in]	legName			    Mandatory, calculate the annuity of this leg.
 * @returns	The calculated annuity value
 */
-double aqObjSwapsTotalReturnAnnuity( const std::string& swapName, const std::string& creditModelName, const std::string& legName );
+double aqObjTotalReturnSwapAnnuity( const std::string& swapName, const std::string& creditModelName, const std::string& legName );

@@ -166,7 +166,7 @@ namespace validation
 											const std::vector<std::string>& columnList);
 
 	
-	/*	@brief		validation interface for the aqObjFXSpotToAsofDate method
+	/*	@brief		validation interface for the aqObjFXSpotToAsOfDate method
 	*	@param [in]	fxSpot					FX rate on FX Spot Date
 	*	@param [in]	fxSpotDate				FX Spot Date
 	*	@param [in]	baseCurveCollection		baseCurveCollection
@@ -177,7 +177,7 @@ namespace validation
 	*/
 	double tryAqObjFXSpotToAsOfDate(const double fxSpot, const AQLDate& fxSpotDate, const std::string& baseCurveCollection, const std::string& baseDiscountCurveIndex, const std::string& termCurveCollection, const std::string& termDiscountCurveIndex);
 
-	/*	@brief		validation interface for the aqObjFXAsofDateToSpot method
+	/*	@brief		validation interface for the aqObjFXAsOfDateToSpot method
 	*	@param [in]	fxAsOfDateRate			FX rate on As of Date
 	*	@param [in]	fxSpotDate				FX Spot Date
 	*	@param [in]	baseCurveCollection		baseCurveCollection

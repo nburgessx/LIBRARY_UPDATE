@@ -13,7 +13,7 @@
 #include "CreateFixedBond.h"
 
 #include "tryAqObjects.h"
-#include "tryAqObjSwapsAssetSwap.h"
+#include "tryAqObjAssetSwap.h"
 #include "tryAqObjBonds.h"
 
 #include "CreateDataFile.h"
@@ -46,8 +46,8 @@ namespace
     const std::string fileName_Bond_AUD	= TEST_DIR + "AU000XCLWAR9.JSON";
 	const std::string fileName_AssetSwap_AUD	= TEST_DIR + "AU000XCLWAR9_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_AUD = TEST_DIR + "AU000XCLWAR9_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_AUD = TEST_DIR + "AU000XCLWAR9_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_AUD = TEST_DIR + "AU000XCLWAR9_ASSET_SWAP_tryAqObjAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_AUD = TEST_DIR + "AU000XCLWAR9_ASSET_SWAP_tryAqObjAssetSwapSpread_outputs";
 
 	const std::string zSpreadInputFile_AUD = TEST_DIR + "AU000XCLWAR9_tryAqObjBondsZSpread_inputs";
 	const std::string zSpreadOutputFile_AUD = TEST_DIR + "AU000XCLWAR9_tryAqObjBondsZSpread_outputs";
@@ -56,8 +56,8 @@ namespace
 	const std::string fileName_Bond_USD = TEST_DIR + "US912810QT88.JSON";
 	const std::string fileName_AssetSwap_USD = TEST_DIR + "US912810QT88_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_USD = TEST_DIR + "US912810QT88_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_USD = TEST_DIR + "US912810QT88_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_USD = TEST_DIR + "US912810QT88_ASSET_SWAP_tryAqObjAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_USD = TEST_DIR + "US912810QT88_ASSET_SWAP_tryAqObjAssetSwapSpread_outputs";
 
 	const std::string zSpreadInputFile_USD = TEST_DIR + "US912810QT88_tryAqObjBondsZSpread_inputs";
 	const std::string zSpreadOutputFile_USD = TEST_DIR + "US912810QT88_tryAqObjBondsZSpread_outputs";
@@ -66,8 +66,8 @@ namespace
 	const std::string fileName_Bond_German = TEST_DIR + "DE0001135424.JSON";
 	const std::string fileName_AssetSwap_German = TEST_DIR + "DE0001135424_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_German = TEST_DIR + "DE0001135424_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_German = TEST_DIR + "DE0001135424_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_German = TEST_DIR + "DE0001135424_ASSET_SWAP_tryAqObjAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_German = TEST_DIR + "DE0001135424_ASSET_SWAP_tryAqObjAssetSwapSpread_outputs";
 
 	const std::string zSpreadInputFile_German = TEST_DIR + "DE0001135424_tryAqObjBondsZSpread_inputs";
 	const std::string zSpreadOutputFile_German = TEST_DIR + "DE0001135424_tryAqObjBondsZSpread_outputs";
@@ -76,8 +76,8 @@ namespace
 	const std::string fileName_Bond_Dutch = TEST_DIR + "NL0012818504.JSON";
 	const std::string fileName_AssetSwap_Dutch = TEST_DIR + "NL0012818504_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_Dutch = TEST_DIR + "NL0012818504_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_Dutch = TEST_DIR + "NL0012818504_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_Dutch = TEST_DIR + "NL0012818504_ASSET_SWAP_tryAqObjAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_Dutch = TEST_DIR + "NL0012818504_ASSET_SWAP_tryAqObjAssetSwapSpread_outputs";
 
 	const std::string zSpreadInputFile_Dutch = TEST_DIR + "NL0012818504_tryAqObjBondsZSpread_inputs";
 	const std::string zSpreadOutputFile_Dutch = TEST_DIR + "NL0012818504_tryAqObjBondsZSpread_outputs";
@@ -86,8 +86,8 @@ namespace
 	const std::string fileName_Bond_French = TEST_DIR + "FR0013154028.JSON";
 	const std::string fileName_AssetSwap_French = TEST_DIR + "FR0013154028_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_French = TEST_DIR + "FR0013154028_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_French = TEST_DIR + "FR0013154028_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_French = TEST_DIR + "FR0013154028_ASSET_SWAP_tryAqObjAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_French = TEST_DIR + "FR0013154028_ASSET_SWAP_tryAqObjAssetSwapSpread_outputs";
 
 	const std::string zSpreadInputFile_French = TEST_DIR + "FR0013154028_tryAqObjBondsZSpread_inputs";
 	const std::string zSpreadOutputFile_French = TEST_DIR + "FR0013154028_tryAqObjBondsZSpread_outputs";
@@ -96,8 +96,8 @@ namespace
 	const std::string fileName_Bond_Italian = TEST_DIR + "IT0005240830.JSON";
 	const std::string fileName_AssetSwap_Italian = TEST_DIR + "IT0005240830_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_Italian = TEST_DIR + "IT0005240830_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_Italian = TEST_DIR + "IT0005240830_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_Italian = TEST_DIR + "IT0005240830_ASSET_SWAP_tryAqObjAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_Italian = TEST_DIR + "IT0005240830_ASSET_SWAP_tryAqObjAssetSwapSpread_outputs";
 
 	const std::string zSpreadInputFile_Italian = TEST_DIR + "IT0005240830_tryAqObjBondsZSpread_inputs";
 	const std::string zSpreadOutputFile_Italian = TEST_DIR + "IT0005240830_tryAqObjBondsZSpread_outputs";
@@ -107,8 +107,8 @@ namespace
 	const std::string fileName_Bond_JGB = TEST_DIR + "JP1200491106.JSON";
 	const std::string fileName_AssetSwap_JGB = TEST_DIR + "JP1200491106_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_JGB = TEST_DIR + "JP1200491106_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_JGB = TEST_DIR + "JP1200491106_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_JGB = TEST_DIR + "JP1200491106_ASSET_SWAP_tryAqObjAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_JGB = TEST_DIR + "JP1200491106_ASSET_SWAP_tryAqObjAssetSwapSpread_outputs";
 
 	const std::string zSpreadInputFile_JGB = TEST_DIR + "JP1200491106_tryAqObjBondsZSpread_inputs";
 	const std::string zSpreadOutputFile_JGB = TEST_DIR + "JP1200491106_tryAqObjBondsZSpread_outputs";
@@ -144,7 +144,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
-		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_AUD.c_str(), getBondSpreadTolerance());
@@ -195,7 +195,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
-		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_USD.c_str(), getBondSpreadTolerance());
 
@@ -247,7 +247,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
-		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_German.c_str(), getBondSpreadTolerance());
 
@@ -299,7 +299,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
-		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_Dutch.c_str(), getBondSpreadTolerance());
 
@@ -351,7 +351,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
-		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_French.c_str(), getBondSpreadTolerance());
 
@@ -403,7 +403,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
-		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_Italian.c_str(), getBondSpreadTolerance());
 
@@ -454,7 +454,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
-		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_JGB.c_str(), getBondSpreadTolerance());
 

@@ -11,7 +11,7 @@ namespace validation
 
     std::vector<std::string> tryAqObjSwapsLVBKeys();
 
-	/* @brief			validation interface for the aqObjSwapsCreateFromMutipleLegs method
+	/* @brief			validation interface for the aqObjSwapsCreateFromMultipleLegs method
 	*  @param [in]		swapName		Swap name to be cached
 	*  @param [in]		legObjectNames	Cached leg object names
 	*  @param [in]		swapPropertiesLVB	Swap level properties

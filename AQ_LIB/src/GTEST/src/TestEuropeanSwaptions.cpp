@@ -19,7 +19,7 @@
 #include "AQLCoreTemplateType.h"                 // AQLStringVector and AQLStringMatrix TypeDefs
 #include "tryAqObjects.h"                       // Curve, Trade and Volatility Object Loading
 #include "EuropeanIRSwaption.h"             // Swaption Mathematics
-#include "tryAqObjOptionsSwaption.h"               // Swaption Pricing
+#include "tryAqObjSwaption.h"               // Swaption Pricing
 #include "tryAqObjSwapsPricing.h"            // Swap Pricing
 
 
@@ -100,7 +100,7 @@ namespace google_test
         AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolNormal_ );
         
         // Price the European Swaption
-        const double swaptionPV = validation::tryAqObjOptionsSwaptionPV( loadTradeSwaption_, valuationSettings );
+        const double swaptionPV = validation::tryAqObjSwaptionPV( loadTradeSwaption_, valuationSettings );
         const double expectedPV = 10991.51;
 
         const double tolerancePV = 1.0;
@@ -114,7 +114,7 @@ namespace google_test
         AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
         
         // Price the European Swaption
-        const double swaptionPV = validation::tryAqObjOptionsSwaptionPV( loadTradeSwaption_, valuationSettings );
+        const double swaptionPV = validation::tryAqObjSwaptionPV( loadTradeSwaption_, valuationSettings );
         const double expectedPV = 12165.57;
 
         const double tolerancePV = 1.0;
@@ -128,7 +128,7 @@ namespace google_test
         AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
         
         // Price the European Swaption
-        const double swaptionPV = validation::tryAqObjOptionsSwaptionPV( loadTradeSwaptionWithFee_, valuationSettings );
+        const double swaptionPV = validation::tryAqObjSwaptionPV( loadTradeSwaptionWithFee_, valuationSettings );
         const double expectedPV = -987834.42;
 
         const double tolerancePV = 1.0;
@@ -142,7 +142,7 @@ namespace google_test
         AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
         
         // Price the European Swaption
-        const double swaptionPV = validation::tryAqObjOptionsSwaptionPV( loadTradeSwaptionCashParYield_, valuationSettings );
+        const double swaptionPV = validation::tryAqObjSwaptionPV( loadTradeSwaptionCashParYield_, valuationSettings );
         const double expectedPV = 12065.96;
 
         const double tolerancePV = 1.0;
@@ -156,7 +156,7 @@ namespace google_test
         AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolShiftedLogNormal_ );
         
         // Price the European Swaption
-        const double swaptionPV = validation::tryAqObjOptionsSwaptionPV( loadTradeNegativeRates_, valuationSettings );
+        const double swaptionPV = validation::tryAqObjSwaptionPV( loadTradeNegativeRates_, valuationSettings );
         const double expectedPV = 156327.77;
 
         const double tolerancePV = 1.0;
@@ -170,8 +170,8 @@ namespace google_test
         AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolShiftedLogNormal_ );
         
         // Price the European Swaptions and the Underlying Swap
-        const double longPayerSwaption          = validation::tryAqObjOptionsSwaptionPV( loadTradePayerSwaption_, valuationSettings );
-        const double shortReceiverSwaption      = validation::tryAqObjOptionsSwaptionPV( loadTradeReceiverSwaption_, valuationSettings );
+        const double longPayerSwaption          = validation::tryAqObjSwaptionPV( loadTradePayerSwaption_, valuationSettings );
+        const double shortReceiverSwaption      = validation::tryAqObjSwaptionPV( loadTradeReceiverSwaption_, valuationSettings );
         const double receiverSwap               = validation::tryAqObjSwapsPV( loadTradeReceiverSwap_, valuationSettings );
         
         const double tolerancePV = 0.1;

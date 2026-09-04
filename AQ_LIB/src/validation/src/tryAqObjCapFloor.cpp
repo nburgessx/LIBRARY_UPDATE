@@ -1,4 +1,4 @@
-#include "tryAqObjOptionsCapFloor.h"
+#include "tryAqObjCapFloor.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "ObjectUtilities.h"
@@ -16,13 +16,13 @@ using etrading::decorateFilename;
 namespace validation
 {
 
-	/* @brief			validation interface for the aqObjOptionsCapFloorCreate method
+	/* @brief			validation interface for the aqObjCapFloorCreate method
 	*  @param [in]		objectName	    CapFloor object name
 	*  @param [in]		tradeLVB			    CapFloor Label Value Block
 	*  @param [in]		validateKeys	    True to validate the all keys provided are valid. Default to True
 	*  @return			CapFloor Handle
 	*/
-	std::string tryAqObjOptionsCapFloorCreate(const std::string& objectName, const LabelValueBlock& tradeLVB, const bool& validateKeys)
+	std::string tryAqObjCapFloorCreate(const std::string& objectName, const LabelValueBlock& tradeLVB, const bool& validateKeys)
 	{
 		VALID_EXCEPTION_START
 
@@ -42,11 +42,11 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief			validation interface for the aqObjOptionsCapFloorDisplay method
+	/* @brief			validation interface for the aqObjCapFloorDisplay method
 	*  @param [in]		objectName		CapFloor object name
 	*  @return			CapFloor Input Parameters
 	*/
-	AnyTypeMatrix tryAqObjOptionsCapFloorDisplay(const std::string& objectName)
+	AnyTypeMatrix tryAqObjCapFloorDisplay(const std::string& objectName)
 	{
 		VALID_EXCEPTION_START
 
@@ -71,7 +71,7 @@ namespace validation
 	*  @return			columnList      Column header names to show specified columns. Default to empty list showing all columns.
 	*  @return			CapFloor cashflow display
 	*/
-	AnyTypeMatrix tryAqObjOptionsCapFloorDisplayCashflows(const std::string& objectName, const std::string& volObjectName, const std::string& curveCollection, const std::string& fixingTableName, const bool& showColumnHeaders, const std::vector<std::string>& columnList)
+	AnyTypeMatrix tryAqObjCapFloorDisplayCashflows(const std::string& objectName, const std::string& volObjectName, const std::string& curveCollection, const std::string& fixingTableName, const bool& showColumnHeaders, const std::vector<std::string>& columnList)
 	{
 		VALID_EXCEPTION_START
 
@@ -96,14 +96,14 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief			validation interface for the aqObjOptionsCapFloorPV method
+	/* @brief			validation interface for the aqObjCapFloorPV method
 	*  @param [in]		objectName		Cap Floor object name
 	*  @param [in]		volObjectName	Volatility object name
 	*  @param [in]		curveCollection Curve collection
 	*  @param [in]		fixingTableName	    Fixing table object name
 	*  @return			CapFloor PV
 	*/
-	double tryAqObjOptionsCapFloorPV(const std::string& objectName, const std::string& volObjectName, const std::string& curveCollection, const std::string& fixingTableName)
+	double tryAqObjCapFloorPV(const std::string& objectName, const std::string& volObjectName, const std::string& curveCollection, const std::string& fixingTableName)
 	{
 		VALID_EXCEPTION_START
 
@@ -128,7 +128,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief			validation interface for the aqObjOptionsCapFloorGreeksAnalytical method, to calculate Analytical greeks
+	/* @brief			validation interface for the aqObjCapFloorGreeksAnalytical method, to calculate Analytical greeks
 	*  @param [in]		objectName		Cap Floor object name
 	*  @param [in]		volObjectName	Volatility object name
 	*  @param [in]		curveCollection Curve collection
@@ -136,7 +136,7 @@ namespace validation
 	*  @param [in]		showColumnHeaders	showColumnHeaders
 	*  @return			CapFloor Greeks' display
 	*/
-	AnyTypeMatrix tryAqObjOptionsCapFloorGreeksAnalytical(const std::string& objectName, const std::string& volObjectName, const std::string& curveCollection, const std::string& fixingTableName, const bool& showColumnHeaders)
+	AnyTypeMatrix tryAqObjCapFloorGreeksAnalytical(const std::string& objectName, const std::string& volObjectName, const std::string& curveCollection, const std::string& fixingTableName, const bool& showColumnHeaders)
 	{
 		VALID_EXCEPTION_START
 
@@ -162,7 +162,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief			validation interface for the aqObjOptionsCapFloorGreeks method, to calculate Numerical greeks
+	/* @brief			validation interface for the aqObjCapFloorGreeks method, to calculate Numerical greeks
 	*  @param [in]		objectName		Cap Floor object name
 	*  @param [in]		volObjectName	Volatility object name
 	*  @param [in]		curveCollection Curve collection
@@ -174,7 +174,7 @@ namespace validation
 	*  @param [in]		showColumnHeaders	showColumnHeaders
 	*  @return			CapFloor Greeks' display
 	*/
-	AnyTypeMatrix tryAqObjOptionsCapFloorGreeks(const std::string& objectName, const std::string& volObjectName, const std::string& curveCollection, 
+	AnyTypeMatrix tryAqObjCapFloorGreeks(const std::string& objectName, const std::string& volObjectName, const std::string& curveCollection, 
 												const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, 
 												const std::string& fixingTableName, const bool& showColumnHeaders)
 	{
@@ -211,7 +211,7 @@ namespace validation
 	*  @return			columnList      Column header names to show specified columns. Default to empty list showing all columns.
 	*  @return			CapFloor cashflow display
 	*/
-	AnyTypeMatrix tryAqObjOptionsCapFloorDisplayCashflowsFromRates(const std::string& objectName, const std::string& volObjectName, const DoubleMatrix& rateData, const bool& showColumnHeaders, const std::vector<std::string>& columnList)
+	AnyTypeMatrix tryAqObjCapFloorDisplayCashflowsFromRates(const std::string& objectName, const std::string& volObjectName, const DoubleMatrix& rateData, const bool& showColumnHeaders, const std::vector<std::string>& columnList)
 	{
 		VALID_EXCEPTION_START
 
@@ -239,14 +239,14 @@ namespace validation
 	}
 
 
-	/* @brief			validation interface for the aqObjOptionsCapFloorGreeksAnalyticalFromRates method
+	/* @brief			validation interface for the aqObjCapFloorGreeksAnalyticalFromRates method
 	*  @param [in]		objectName		Cap Floor object name
 	*  @param [in]		volObjectName	Volatility object name
 	*  @param [in]		rateData		External discountFactors and liborRates
 	*  @param [in]		showColumnHeaders	showColumnHeaders
 	*  @return			CapFloor Greeks' display
 	*/
-	AnyTypeMatrix tryAqObjOptionsCapFloorGreeksAnalyticalFromRates(const std::string& objectName, const std::string& volObjectName, const DoubleMatrix& rateData, const bool& showColumnHeaders)
+	AnyTypeMatrix tryAqObjCapFloorGreeksAnalyticalFromRates(const std::string& objectName, const std::string& volObjectName, const DoubleMatrix& rateData, const bool& showColumnHeaders)
 	{
 		VALID_EXCEPTION_START
 
@@ -274,7 +274,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief			validation interface for the aqObjOptionsCapFloorGreeksFromRates method
+	/* @brief			validation interface for the aqObjCapFloorGreeksFromRates method
 	*  @param [in]		objectName		Cap Floor object name
 	*  @param [in]		volObjectName	Volatility object name
 	*  @param [in]		rateData		External discountFactors and liborRates
@@ -285,7 +285,7 @@ namespace validation
 	*  @param [in]		showColumnHeaders	showColumnHeaders
 	*  @return			CapFloor Greeks' display
 	*/
-	AnyTypeMatrix tryAqObjOptionsCapFloorGreeksFromRates(const std::string& objectName, const std::string& volObjectName, const DoubleMatrix& rateData,
+	AnyTypeMatrix tryAqObjCapFloorGreeksFromRates(const std::string& objectName, const std::string& volObjectName, const DoubleMatrix& rateData,
 														const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, 
 														const bool& showColumnHeaders)
 	{
@@ -315,13 +315,13 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief			validation interface for the aqObjOptionsCapFloorPVFromRate method
+	/* @brief			validation interface for the aqObjCapFloorPVFromRate method
 	*  @param [in]		objectName		Cap Floor object name
 	*  @param [in]		volObjectName	Volatility object name
 	*  @param [in]		rateData		External discountFactors and liborRates
 	*  @return			CapFloor PV
 	*/
-	double tryAqObjOptionsCapFloorPVFromRates(const std::string& objectName, const std::string& volObjectName, const DoubleMatrix& rateData)
+	double tryAqObjCapFloorPVFromRates(const std::string& objectName, const std::string& volObjectName, const DoubleMatrix& rateData)
 	{
 		VALID_EXCEPTION_START
 

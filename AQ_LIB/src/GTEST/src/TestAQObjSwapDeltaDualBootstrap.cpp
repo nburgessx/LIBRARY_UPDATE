@@ -87,7 +87,7 @@ namespace google_test
 			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 			buildDualBootstrapCurves(ccy, prefix, "EUR_SWAP_3M", "EUR_OIS", "EURYC");
 
-			// Load inputs to aqObjSwapsDDeltaLadder
+			// Load inputs to aqObjSwapsDeltaLadder
 			AQLString deltaLadderInputDir = TEST_DIR;
 			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
@@ -154,7 +154,7 @@ namespace google_test
 			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 			buildDualBootstrapCurves(ccy, prefix, "USD_SWAP_3M", "USD_OIS", "USDYC");
 
-			// Load inputs to aqObjSwapsDDeltaLadder
+			// Load inputs to aqObjSwapsDeltaLadder
 			AQLString deltaLadderInputDir = TEST_DIR;
 			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
