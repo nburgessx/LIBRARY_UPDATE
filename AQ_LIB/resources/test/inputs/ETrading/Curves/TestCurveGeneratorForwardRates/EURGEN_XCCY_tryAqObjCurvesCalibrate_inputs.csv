@@ -1,8 +1,8 @@
 generatorFunction,tryMeLWOCurveCalibrate
 
-lwoCurveGeneratorName,EUR_XCCY
+aqObjCurveGeneratorName,EUR_XCCY
 
-lwoCurveMarketDataName,EUR_XCCY_MKTDATA@41
+aqObjCurveMarketDataName,EUR_XCCY_MKTDATA@41
 
 domesticCurveCollection,EURGEN
 

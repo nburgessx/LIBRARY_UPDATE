@@ -262,9 +262,11 @@ with "Unable to load calendar - nyb/tgt/lnb/tkb".
 
 Fixed by correcting the suffix in both places:
   FolderConfig.cpp        /resource/config/  -> /resources/config/   (7 sites)
-  AQLCurveProperties.cpp  \calendar.csv      -> esources\config\Calendar.csv (+2)
+  AQLCurveProperties.cpp  \calendar.csv      -> 
+esources\config\Calendar.csv (+2)
 
-Behaviour-preserving: AQ_LIBesources\config holds every file .APPLES had and
+Behaviour-preserving: AQ_LIB
+esources\config holds every file .APPLES had and
 its Calendar.csv is byte-identical. **AQ_LIB no longer depends on .APPLES at
 runtime, and MLIBQ can be unset.**
 
@@ -278,6 +280,34 @@ flush out any other hidden dependency on `.APPLES` or `.ALGO_QUANT_LIB`.
 map could not reach. Map drafted, 0 collisions. The anchoring protects the 4,260
 `Libor`-family tokens (`threeMLibor`, `sixMLibor`, `6mlibor`, `mLiborRateMap`) --
 a case-insensitive `mlib` sweep would destroy them, the same trap as `me` in `name`.
+
+---
+
+## !! Recorded-fixture keys are stringified C++ parameter names !!
+
+`RecordMacros.h` expands `WRITE_PARAMETER(P)` to `file.write("P", P)`. The first
+column of every `*_inputs.csv` is therefore **literally the C++ parameter
+identifier as spelled when the fixture was recorded**. Renaming a validation
+function's parameter breaks the read path *silently*: the build stays green and
+the test fails at run time with
+
+    ReadDataFile::Load: unknown key: <newName>
+
+This bit us with `lwoCurveGeneratorName` / `lwoCurveMarketDataName`, which
+survived TWO renames (`lwo`->`aqo` in step 7c, `aqo`->`aqObj` in step 8B)
+because every batch renamed code and fixture FILE NAMES but never fixture
+CONTENT. 70 keys in 35 files, failing 16 Credit / CMS / DiscountFactorsWithSpread
+tests. Fixed by rewriting the keys to the current parameter names.
+
+**Guard added: `rebrand/tools/fixture_key_check.py`** -- run it after any rename
+that touches validation parameters; exit 1 if a fixture key carries a legacy
+prefix. Currently 0.
+
+It also reports, as advisory, **5,070 `generatorFunction` rows naming 133 legacy
+functions** (`tryMeLWOBondCreate`, `tryMirSetUpOISCurve`, ...). That field is
+provenance, not read by the loader, so it breaks nothing -- but it is legacy
+branding inside shipped test data and belongs to the Phase 6 resources sweep.
+The phase-3 maps already hold the translations.
 
 ---
 
@@ -304,5 +334,6 @@ a case-insensitive `mlib` sweep would destroy them, the same trap as `me` in `na
 - `rebrand/phase3_Bsimple_MAP.csv`, `phase3_BLWO_mapB.csv` — the approved `me→aq` maps (committed).
 - `rebrand/phase3_step8_MAP.csv` — the approved step-8 map, 774 rows (committed).
 - `rebrand/phase3_step9_MAP.csv` — the approved step-9 map, 113 rows (committed).
+- `rebrand/tools/fixture_key_check.py` — fixture keys vs current parameter names.
 - `rebrand/tools/api_pair_check.py` — `aq*` must route through `validation`; emits `docs/api_map.csv`.
   Run with `--write` to refresh the map; exit 1 makes it usable as a CI gate.

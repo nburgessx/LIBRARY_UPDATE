@@ -1,8 +1,8 @@
 generatorFunction,tryMeLWOCurveCalibrate
 
-lwoCurveGeneratorName,JPY_TIBOR_BASIS_6M
+aqObjCurveGeneratorName,JPY_TIBOR_BASIS_6M
 
-lwoCurveMarketDataName,JPY_TIBOR_6M_BASIS_MKTDATA@50
+aqObjCurveMarketDataName,JPY_TIBOR_6M_BASIS_MKTDATA@50
 
 domesticCurveCollection,JPYGEN
 

@@ -2,9 +2,9 @@ generatorFunction,tryMeLWOCurveCalibrate
 
 objectName,USD_OIS_CURVE@2
 
-lwoCurveGeneratorName,USD_OIS
+aqObjCurveGeneratorName,USD_OIS
 
-lwoCurveMarketDataName,USD_OIS_CURVE_MARKETDATA@1
+aqObjCurveMarketDataName,USD_OIS_CURVE_MARKETDATA@1
 
 domesticCurveCollection,USDYC
 

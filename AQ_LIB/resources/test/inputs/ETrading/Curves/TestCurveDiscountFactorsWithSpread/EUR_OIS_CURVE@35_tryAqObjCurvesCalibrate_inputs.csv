@@ -2,9 +2,9 @@ generatorFunction,tryMeLWOCurveCalibrate
 
 objectName,EUR_OIS_CURVE@35
 
-lwoCurveGeneratorName,EUR_OIS
+aqObjCurveGeneratorName,EUR_OIS
 
-lwoCurveMarketDataName,EUR_OIS_CURVE_MARKETDATA@34
+aqObjCurveMarketDataName,EUR_OIS_CURVE_MARKETDATA@34
 
 domesticCurveCollection,EURYC
 

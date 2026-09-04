@@ -2,9 +2,9 @@ generatorFunction,tryMeLWOCurveCalibrate
 
 objectName,USD3ML_USDYC@6
 
-lwoCurveGeneratorName,USD_SWAP_3M
+aqObjCurveGeneratorName,USD_SWAP_3M
 
-lwoCurveMarketDataName,MARKET_DATA_USD3ML_USDYC@3
+aqObjCurveMarketDataName,MARKET_DATA_USD3ML_USDYC@3
 
 domesticCurveCollection,USDYC
 

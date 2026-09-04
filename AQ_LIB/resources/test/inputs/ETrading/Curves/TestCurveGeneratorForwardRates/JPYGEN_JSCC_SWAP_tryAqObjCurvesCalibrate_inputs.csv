@@ -1,8 +1,8 @@
 generatorFunction,tryMeLWOCurveCalibrate
 
-lwoCurveGeneratorName,JPY_JSCC_SWAP_6M
+aqObjCurveGeneratorName,JPY_JSCC_SWAP_6M
 
-lwoCurveMarketDataName,JPY_JSCC_SWAP_MKTDATA@44
+aqObjCurveMarketDataName,JPY_JSCC_SWAP_MKTDATA@44
 
 domesticCurveCollection,JPYGEN
 

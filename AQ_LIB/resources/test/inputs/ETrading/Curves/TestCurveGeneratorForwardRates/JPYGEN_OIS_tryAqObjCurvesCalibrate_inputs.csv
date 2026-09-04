@@ -1,8 +1,8 @@
 generatorFunction,tryMeLWOCurveCalibrate
 
-lwoCurveGeneratorName,JPY_OIS
+aqObjCurveGeneratorName,JPY_OIS
 
-lwoCurveMarketDataName,JPYGEN_OIS_MKTDATA@42
+aqObjCurveMarketDataName,JPYGEN_OIS_MKTDATA@42
 
 domesticCurveCollection,JPYGEN
 

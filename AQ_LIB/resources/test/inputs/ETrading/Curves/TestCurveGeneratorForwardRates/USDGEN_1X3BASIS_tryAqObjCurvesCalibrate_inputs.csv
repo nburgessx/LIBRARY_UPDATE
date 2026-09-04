@@ -1,8 +1,8 @@
 generatorFunction,tryMeLWOCurveCalibrate
 
-lwoCurveGeneratorName,USD_BASIS_1X3
+aqObjCurveGeneratorName,USD_BASIS_1X3
 
-lwoCurveMarketDataName,USD_1X3BASIS_MKTDATA@39
+aqObjCurveMarketDataName,USD_1X3BASIS_MKTDATA@39
 
 domesticCurveCollection,USDGEN
 

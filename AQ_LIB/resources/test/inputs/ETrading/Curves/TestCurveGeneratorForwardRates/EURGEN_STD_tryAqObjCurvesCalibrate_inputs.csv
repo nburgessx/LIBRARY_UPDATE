@@ -1,8 +1,8 @@
 generatorFunction,tryMeLWOCurveCalibrate
 
-lwoCurveGeneratorName,EUR_SWAP_6M
+aqObjCurveGeneratorName,EUR_SWAP_6M
 
-lwoCurveMarketDataName,EUR_STD_MKTDATA@34
+aqObjCurveMarketDataName,EUR_STD_MKTDATA@34
 
 domesticCurveCollection,EURGEN
 

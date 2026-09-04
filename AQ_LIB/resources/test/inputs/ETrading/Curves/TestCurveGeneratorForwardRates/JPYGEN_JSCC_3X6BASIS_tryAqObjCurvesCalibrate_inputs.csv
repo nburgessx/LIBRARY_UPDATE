@@ -1,8 +1,8 @@
 generatorFunction,tryMeLWOCurveCalibrate
 
-lwoCurveGeneratorName,JPY_JSCC_BASIS_3X6
+aqObjCurveGeneratorName,JPY_JSCC_BASIS_3X6
 
-lwoCurveMarketDataName,JPY_JSCC_3X6BASIS_MKTDATA@44
+aqObjCurveMarketDataName,JPY_JSCC_3X6BASIS_MKTDATA@44
 
 domesticCurveCollection,JPYGEN
 
