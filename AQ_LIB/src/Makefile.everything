@@ -10,7 +10,7 @@ SUBDIRS =  math/src
 
 SUBDIRS += models/src calibration/src
 SUBDIRS += etrading/src validation_api/src GTEST/src
-SUBDIRS += MLIB_CLIENT_API/source
+SUBDIRS += AQ_API/source
 
 TESTNINJAFOLDER = ../resource/utilities/Apps/TestNinjaPython
 TESTNINJA       = TestNinja.py

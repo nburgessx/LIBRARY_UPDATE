@@ -138,7 +138,7 @@ namespace google_test
         double my_df2 = ptrToCurveOutput->calculateDiscountFactor( "3M" );
 
         const std::string readWriteFileName = ( boost::format( "%s/resource/test/inputs/ETrading/AQObjects/AQObjCurve/%s.json" )
-                                                % etrading::getEnvironmentVariable( "MLIBQ" ).c_str() % ptrToCurveOutput->getName().c_str() ).str();
+                                                % etrading::getEnvironmentVariable( "AQ" ).c_str() % ptrToCurveOutput->getName().c_str() ).str();
 
         // I want to serialize an object to a file (local or pointing to an object in the cache)
         ptrToCurveOutput->serialize( etrading::serialize::JSON, etrading::serialize::FILE, readWriteFileName );

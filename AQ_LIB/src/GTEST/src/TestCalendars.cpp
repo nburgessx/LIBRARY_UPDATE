@@ -12,8 +12,8 @@
 
 namespace google_test
 {
-	const std::string fileName_MLIB_Calendar		= "Calendar.csv";
-	const std::string fileName_MLIB_CalendarConfig	= "Calendar.conf";
+	const std::string fileName_AQ_Calendar		= "Calendar.csv";
+	const std::string fileName_AQ_CalendarConfig	= "Calendar.conf";
 
 	const std::string warningTenor					= "6M";
 	const std::string errorTenor					= "12M";
@@ -111,10 +111,10 @@ namespace google_test
 	{
 		const AQLDate currentDate = etrading::getCurrentMLibDate();
 		
-		const AQLDate lastCalendarUpdate = loadCalendarConfig( fileName_MLIB_CalendarConfig );
+		const AQLDate lastCalendarUpdate = loadCalendarConfig( fileName_AQ_CalendarConfig );
 
-		const std::string resolvedCalendarFile     = resolveFilename(fileName_MLIB_Calendar);
-		const std::string resolvedCalendarConfFile = resolveFilename(fileName_MLIB_CalendarConfig);
+		const std::string resolvedCalendarFile     = resolveFilename(fileName_AQ_Calendar);
+		const std::string resolvedCalendarConfFile = resolveFilename(fileName_AQ_CalendarConfig);
 
 		// Calculate the date beyond which the calendars are considered so old we issue an error
 		const std::string dummyBusinessDayAdjust;

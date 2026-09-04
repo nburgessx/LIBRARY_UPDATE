@@ -581,7 +581,7 @@ AQLMatrix:: svDecomp(AQLMatrix& u, AQLMatrix& w, AQLMatrix& v) const
     // decide which SVD is used, M-Lib or Q-Lib.
     {
         char *svdmode = getenv("SVDMODE");
-        if(svdmode != NULL && strcmp(svdmode, "MLIBQ") == 0){
+        if(svdmode != NULL && strcmp(svdmode, "AQ") == 0){
             printf("!!!M-Lib SVD is used.\n");
             is_qlib_used = 0;
         }

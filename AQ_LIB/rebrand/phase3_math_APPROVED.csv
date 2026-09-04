@@ -13,7 +13,7 @@ MDCSVFileLoader_h,AQLCSVFileLoader_h,2,B_acronym,macro
 MDBASE,AQLBASE,2,B_acronym,macro
 MDFile_h,AQLFile_h,2,A_convention,macro
 MDCSVFILELOADER,AQLCSVFILELOADER,2,B_acronym,macro
-MLIB_2D_MATRIX_CHECK,AQ_2D_MATRIX_CHECK,?,extra,cross-cut
+AQ_2D_MATRIX_CHECK,AQ_2D_MATRIX_CHECK,?,extra,cross-cut
 ME_BUILD_EUR_CURVE,AQL_BUILD_EUR_CURVE,?,extra,cross-cut
 ME_BUILD_JPY_CURVE,AQL_BUILD_JPY_CURVE,?,extra,cross-cut
 ME_BUILD_USD_CURVE,AQL_BUILD_USD_CURVE,?,extra,cross-cut

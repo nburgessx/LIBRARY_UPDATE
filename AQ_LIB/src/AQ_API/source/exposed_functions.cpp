@@ -43,8 +43,8 @@
 //
 
 
-// boost::mutex g_initialization_mutex; // not real thread safety (cfr. inititializeMLIB comments)
-std::string setUpMLIB(const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath)
+// boost::mutex g_initialization_mutex; // not real thread safety (cfr. inititializeAQL comments)
+std::string setUpAQL(const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath)
 {
     // Disable OMP Threading by Default for the Server APIs
     etrading::OMPThreadManager::getInstance().setIsOMPEnabled( false );
@@ -53,7 +53,7 @@ std::string setUpMLIB(const std::string& irPropsFullFilePath, const std::string&
 	
 	try
 	{
-		statusMsg = validation::trySetupMLIB( irPropsFullFilePath, calendarFullFilePath );
+		statusMsg = validation::trySetupAQL( irPropsFullFilePath, calendarFullFilePath );
 	}
 	catch (AQLCoreError e)
 	{
@@ -66,31 +66,31 @@ std::string setUpMLIB(const std::string& irPropsFullFilePath, const std::string&
 }
 
 //
-// Alternative Name(s) for the setUpMLIB function
+// Alternative Name(s) for the setUpAQL function
 //
 
-std::string setupMLIB( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath )
+std::string setupAQL( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath )
 {
-    return setUpMLIB( irPropsFullFilePath, calendarFullFilePath );
+    return setUpAQL( irPropsFullFilePath, calendarFullFilePath );
 }
 
-std::string initMLIB( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath )
+std::string initAQL( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath )
 {
-    return setUpMLIB( irPropsFullFilePath, calendarFullFilePath );
+    return setUpAQL( irPropsFullFilePath, calendarFullFilePath );
 }
 
 // Support for null default arguments
-std::string setUpMLIB() { return setUpMLIB( "","" ); }
-std::string setupMLIB() { return setUpMLIB( "","" ); }
-std::string initMLIB()  { return setUpMLIB( "","" ); }
+std::string setUpAQL() { return setUpAQL( "","" ); }
+std::string setupAQL() { return setUpAQL( "","" ); }
+std::string initAQL()  { return setUpAQL( "","" ); }
 
 
 // Terminate AlgoQuantLib - Should be called before termination AlgoQuantLib anaytics by the client
 // --------------------------------------------------------------------------------
 
-std::string tearDownMLIB()
+std::string tearDownAQL()
 {
-	return validation::tryTearDownMLIB();
+	return validation::tryTearDownAQL();
 }
 
 

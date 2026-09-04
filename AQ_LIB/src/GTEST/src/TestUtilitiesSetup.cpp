@@ -9,32 +9,32 @@
 
 
 
-TEST( TestUtilitiesSetupMLIB, UNIT_SetupAQ_and_TearDownAQ_CheckForSuccess )
+TEST( TestUtilitiesSetupAQL, UNIT_SetupAQ_and_TearDownAQ_CheckForSuccess )
 {
     // Check funtion does not fail
     // Parameters: ir.properties filepath, calendar filepath and central bank calendar filepath respectively
-    EXPECT_NO_THROW( validation::trySetupMLIB( "", "", "" ));
-    EXPECT_NO_THROW( validation::tryTearDownMLIB() );
+    EXPECT_NO_THROW( validation::trySetupAQL( "", "", "" ));
+    EXPECT_NO_THROW( validation::tryTearDownAQL() );
 }
 
 
-TEST( TestUtilitiesSetupMLIB, UNIT_SetupAQ_and_TearDownAQ_CheckForInvalidPathInputs )
+TEST( TestUtilitiesSetupAQL, UNIT_SetupAQ_and_TearDownAQ_CheckForInvalidPathInputs )
 {
     // Check funtion correctly fails
     // Parameters: ir.properties filepath, calendar filepath and central bank calendar filepath respectively
-    EXPECT_ANY_THROW( validation::trySetupMLIB( "invalid ir.properties filepath", "", "" ));
-    EXPECT_NO_THROW( validation::tryTearDownMLIB() );
+    EXPECT_ANY_THROW( validation::trySetupAQL( "invalid ir.properties filepath", "", "" ));
+    EXPECT_NO_THROW( validation::tryTearDownAQL() );
 
-    EXPECT_ANY_THROW( validation::trySetupMLIB( "", "invalid calendar filepath", "" ));
-    EXPECT_NO_THROW( validation::tryTearDownMLIB() );
+    EXPECT_ANY_THROW( validation::trySetupAQL( "", "invalid calendar filepath", "" ));
+    EXPECT_NO_THROW( validation::tryTearDownAQL() );
 
-    EXPECT_ANY_THROW( validation::trySetupMLIB( "", "", "Invalid central bank calendar filepath" ));
-    EXPECT_NO_THROW( validation::tryTearDownMLIB() );
+    EXPECT_ANY_THROW( validation::trySetupAQL( "", "", "Invalid central bank calendar filepath" ));
+    EXPECT_NO_THROW( validation::tryTearDownAQL() );
 
     // Check function correctly passes
     // Parameters: ir.properties filepath, calendar filepath and central bank calendar filepath respectively
-    EXPECT_NO_THROW( validation::trySetupMLIB( "", "", "" ));
-    EXPECT_NO_THROW( validation::tryTearDownMLIB() );
+    EXPECT_NO_THROW( validation::trySetupAQL( "", "", "" ));
+    EXPECT_NO_THROW( validation::tryTearDownAQL() );
 }
 
 TEST( TestParallelModeUsingOMP, UNIT_ParallelModeUsingOMP_EnableAndStatus_Methods )

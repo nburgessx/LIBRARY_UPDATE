@@ -122,7 +122,7 @@ namespace google_test
     }
 
 
-    // Test theMLIB_IS_LESS_THAN_OR_EQUAL Exception Macro
+    // Test the AQ_IS_LESS_THAN_OR_EQUAL Exception Macro
     TEST( TestExceptionMacros, UNIT_TestMacro_AQ_IS_LESS_THAN_OR_EQUAL )
     {
         EXPECT_TRUE( AQ_IS_LESS_THAN_OR_EQUAL( 10.000000000000000000000001, 10 ) );

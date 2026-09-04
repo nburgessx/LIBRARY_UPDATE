@@ -7,12 +7,12 @@ namespace validation
  	 /* @brief	Set-up AlgoQuantLib - Not to be used with Excel
      *  @return	A notification string
      */
-	const std::string trySetupMLIB( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath, const std::string& centralBankCalendarFullFilePath = "" );
+	const std::string trySetupAQL( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath, const std::string& centralBankCalendarFullFilePath = "" );
 
 	/* @brief	Tear-down AlgoQuantLib - Not to be used with Excel
      *  @return	A notification string
      */
-	const std::string tryTearDownMLIB();
+	const std::string tryTearDownAQL();
 
     /* @brief	Clear the object pool
      *  @return	A notification string

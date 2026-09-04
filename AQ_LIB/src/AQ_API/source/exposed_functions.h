@@ -16,21 +16,21 @@
 // -------------------------------------------------------------------
 //
 
-std::string setUpMLIB( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath );
+std::string setUpAQL( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath );
 
-// Alternative Name(s) for the setUpMLIB function
-std::string setupMLIB( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath );
-std::string initMLIB( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath );
+// Alternative Name(s) for the setUpAQL function
+std::string setupAQL( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath );
+std::string initAQL( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath );
 
 // Support for null default arguments
-std::string setUpMLIB();
-std::string setupMLIB();
-std::string initMLIB();
+std::string setUpAQL();
+std::string setupAQL();
+std::string initAQL();
 
 
 // Terminate AlgoQuantLib - Should be called before termination AlgoQuantLib anaytics by the client
 // ---------------------------------------------------------------------------------
-std::string tearDownMLIB();
+std::string tearDownAQL();
 
 
 //

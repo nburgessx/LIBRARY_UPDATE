@@ -67,7 +67,7 @@ namespace etrading
 	*/
 	void SyntheticExcessSpread::setThreshold( const double& threshold, const size_t activePeriod )
 	{
-		// We define all periods (including activePeriod) to be zero based in MLIB.		
+		// We define all periods (including activePeriod) to be zero based in AQ.		
 		AQ_REQUIRE( activePeriod < periods_, "Specified activePeriod is larger than the SyntheticExcessSpread period size" );
 
 		for ( size_t period = 0; period < periods_; period++ )

@@ -39,7 +39,7 @@ CFLAGS += $(DEBUG)
 
 OUTPUT = $(TOPDIR)/lib
 
-## MLIB library dependencies
+## AQ library dependencies
 LIBS += -lvalidation_api -letrading -lcalibration -lmodels -lmath
 
 ## Boost Library dependencies
@@ -66,7 +66,7 @@ LIBS += -fopenmp
 SWIG_HOME=$(THIRD_PARTY)/swig-4.0.0
 
 RESOURCE_CONFIG=resource/config
-SRC_MLIB_CONFIG=../../../$(RESOURCE_CONFIG)
+SRC_AQ_CONFIG=../../../$(RESOURCE_CONFIG)
 
 APIS = python_api python_shared java_api java_shared csharp_api csharp_shared r_api r_shared
 
@@ -80,7 +80,7 @@ all:
 PYTHON_API=$(OUTPUT)/Python
 PYTHON_RESOURCE_CONFIG=$(PYTHON_API)/$(RESOURCE_CONFIG)
 PYTHON_GENERATED_FILES=$(PYTHON_API)/GeneratedFiles
-PYTHON_LIB_SO = _MLIB_CLIENT_API.so
+PYTHON_LIB_SO = _AQ_API.so
 
 
 ReleasePython: python_api python_shared
@@ -90,7 +90,7 @@ python_api:
 	mkdir -p $(PYTHON_GENERATED_FILES)
 	rm -f swig*wrap.*
 	$(SWIG_HOME)/bin/swig -v -c++ -outdir $(PYTHON_GENERATED_FILES) -o swig_Python3_wrap.cxx -python -py3 swig_Python.i
-	rsync -av --exclude=".*" $(SRC_MLIB_CONFIG)/* $(PYTHON_RESOURCE_CONFIG)
+	rsync -av --exclude=".*" $(SRC_AQ_CONFIG)/* $(PYTHON_RESOURCE_CONFIG)
 	cp $(PYTHON_GENERATED_FILES)/*.py $(PYTHON_API)
 
 ## Create shared library
@@ -104,7 +104,7 @@ swig_Python3_wrap.o: swig_Python3_wrap.cxx
 JAVA_API=$(OUTPUT)/Java
 JAVA_RESOURCE_CONFIG=$(JAVA_API)/$(RESOURCE_CONFIG)
 JAVA_GENERATED_FILES=$(JAVA_API)/GeneratedFiles
-JAVA_LIB_SO = libMLIB_CLIENT_API.so
+JAVA_LIB_SO = libAQ_API.so
 
 
 ReleaseJava: java_api java_shared
@@ -114,7 +114,7 @@ java_api:
 	mkdir -p $(JAVA_GENERATED_FILES)
 	rm -f swig*wrap.*
 	$(SWIG_HOME)/bin/swig -v -c++ -outdir $(JAVA_GENERATED_FILES) -o swig_Java_wrap.cxx -package com.mizuho.mlib -java swig_JAVA.i
-	rsync -av --exclude=".*" $(SRC_MLIB_CONFIG)/* $(JAVA_RESOURCE_CONFIG)
+	rsync -av --exclude=".*" $(SRC_AQ_CONFIG)/* $(JAVA_RESOURCE_CONFIG)
 
 ## Create shared library	
 java_shared: $(OBJS) swig_Java_wrap.o
@@ -128,7 +128,7 @@ swig_Java_wrap.o: swig_Java_wrap.cxx
 R_API=$(OUTPUT)/R
 R_RESOURCE_CONFIG=$(R_API)/$(RESOURCE_CONFIG)
 R_GENERATED_FILES=$(R_API)/GeneratedFiles
-R_LIB_SO = MLIB_CLIENT_API.so
+R_LIB_SO = AQ_API.so
 
 ReleaseR: r_api r_shared
 
@@ -139,7 +139,7 @@ r_api:
 	rm -f swig*wrap.*
 	rm -f *.o  # ...because we need to rebuild all cpp files with different flags for R
 	$(SWIG_HOME)/bin/swig -v -c++ -outdir $(R_GENERATED_FILES) -o swig_R_wrap.cxx -r swig_R.i
-	rsync -av --exclude=".*" $(SRC_MLIB_CONFIG)/* $(R_RESOURCE_CONFIG)
+	rsync -av --exclude=".*" $(SRC_AQ_CONFIG)/* $(R_RESOURCE_CONFIG)
 	cp $(R_GENERATED_FILES)/*.R $(R_API)
 
 ## Create shared library
@@ -155,7 +155,7 @@ swig_R_wrap.o: swig_R_wrap.cxx
 CSHARP_API=$(OUTPUT)/CSharp
 CSHARP_RESOURCE_CONFIG=$(CSHARP_API)/$(RESOURCE_CONFIG)
 CSHARP_GENERATED_FILES=$(CSHARP_API)/GeneratedFiles
-CSHARP_LIB_SO = libMLIB_CLIENT_API.so
+CSHARP_LIB_SO = libAQ_API.so
 
 
 ReleaseCSharp: csharp_api csharp_shared
@@ -165,7 +165,7 @@ csharp_api:
 	mkdir -p $(CSHARP_GENERATED_FILES)
 	rm -f swig*wrap.*
 	$(SWIG_HOME)/bin/swig -v -c++ -outdir $(CSHARP_GENERATED_FILES) -o swig_CSharp_wrap.cxx -csharp swig_CSharp.i
-	rsync -av --exclude=".*" $(SRC_MLIB_CONFIG)/* $(CSHARP_RESOURCE_CONFIG)
+	rsync -av --exclude=".*" $(SRC_AQ_CONFIG)/* $(CSHARP_RESOURCE_CONFIG)
 
 ## Create shared library	
 csharp_shared: $(OBJS) swig_CSharp_wrap.o

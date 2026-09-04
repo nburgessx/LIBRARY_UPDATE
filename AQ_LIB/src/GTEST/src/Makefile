@@ -33,7 +33,7 @@ CFLAGS += $(DEBUG)
 
 OUTPUT = $(TOPDIR)/lib
 
-## MLIB library dependencies
+## AQ library dependencies
 LIBS += -lvalidation_api -letrading -lmodels -lmath
 
 ## QuantLib: Resolve any further dependencies from etrading

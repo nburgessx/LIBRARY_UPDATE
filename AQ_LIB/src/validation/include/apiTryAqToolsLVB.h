@@ -1,7 +1,7 @@
 // apiTryAqToolsLVB.h
 
 /*
- * @brief			validation interface for MLIB Client API Label Value Block methods
+ * @brief			validation interface for AQ Client API Label Value Block methods
  * @Created:		27 June 2016
  * @Author:			Nicholas Burgess
  * @Department:		Quant Research & Analytics

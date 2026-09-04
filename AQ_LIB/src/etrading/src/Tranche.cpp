@@ -208,7 +208,7 @@ namespace etrading
 		const int intervalMonths = valuationDate.intervalMonths( finalPaymentDate );
 		const int intervalYears  = valuationDate.intervalYears( finalPaymentDate );
 		const int monthsToFinalPaymentDate = intervalYears * 12 + intervalMonths;
-		const double yearFractionToFinalPaymentDate = monthsToFinalPaymentDate / 12.0; // TODO: We do this to match MGEN. However we have better yearFraction functions in MLIB.
+		const double yearFractionToFinalPaymentDate = monthsToFinalPaymentDate / 12.0; // TODO: We do this to match MGEN. However we have better yearFraction functions in AQ.
 
 		for ( size_t iPeriod = 0; iPeriod < callPeriod; iPeriod++ )
 		{
@@ -219,7 +219,7 @@ namespace etrading
 			const int intervalMonthsToPayDate = valuationDate.intervalMonths( payDate );
 			const int intervalYearsToPayDate  = valuationDate.intervalYears( payDate );
 			const int monthsToPaymentDate = intervalYearsToPayDate * 12 + intervalMonthsToPayDate;
-			const double yearFraction = monthsToPaymentDate / 12.0;		// TODO: We do this to match MGEN. However we have better yearFraction functions in MLIB.
+			const double yearFraction = monthsToPaymentDate / 12.0;		// TODO: We do this to match MGEN. However we have better yearFraction functions in AQ.
 
 			const double totalCouponAmount = coupon_[ iPeriod ] + principalPayment_[ iPeriod ];
 			const double simpleDiscountFactor = 1.0 / ( std::pow( 1.0 + interestRate, yearFraction ) );

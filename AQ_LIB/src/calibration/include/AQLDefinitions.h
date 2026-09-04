@@ -29,7 +29,7 @@ typedef EntityHolderVec::const_iterator CEntityHolItr;
 #define ARG_KEY_MAINTRADE "-maintrade"
 #define ARG_KEY_FILENUM "-filenum"
 #define ARG_KEY_MARKETID "-marketid"
-#define ARG_KEY_MLIBID "-mlibid"
+#define ARG_KEY_AQLID "-aqlid"
 #define ARG_KEY_PROPERTIESID "-propertiesid"
 #define ARG_KEY_APPMAT "-appmat"
 #define ARG_KEY_OFFICIALRISK "-officialrisk"

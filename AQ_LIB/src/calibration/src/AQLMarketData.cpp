@@ -474,9 +474,9 @@ AQLMarketData::getNumFileName(const AQLString &fileName, FileID fileid)
 	{
 		num = AQLCoreDataService::getContext(ARG_KEY_MARKETID);
 	}
-	else if (fileid == MLIBID)
+	else if (fileid == AQLID)
 	{
-		num = AQLCoreDataService::getContext(ARG_KEY_MLIBID);
+		num = AQLCoreDataService::getContext(ARG_KEY_AQLID);
 	}
 	else if (fileid == PROPERTIESID)
 	{

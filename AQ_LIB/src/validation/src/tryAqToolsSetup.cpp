@@ -32,7 +32,7 @@ namespace validation
 	/* @brief	Set up AlgoQuantLib - Not to be used with Excel
      *  @return	A notification string
      */
-	const std::string trySetupMLIB(const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath, const std::string& centralBankCalendarFullFilePath)
+	const std::string trySetupAQL(const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath, const std::string& centralBankCalendarFullFilePath)
 	{
 		
 		// TODO: Move the mutexes down to the AlgoQuantLib singleton on the Object pool 
@@ -40,7 +40,7 @@ namespace validation
 		// boost::lock_guard<boost::mutex> lock(g_initialization_mutex);
 		
 		// This function has it's own thread guard to ensure single threaded
-		tryTearDownMLIB();
+		tryTearDownAQL();
 
 		VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
 
@@ -114,7 +114,7 @@ namespace validation
 	/* @brief	Tear-down AlgoQuantLib - Not to be used with Excel
      *  @return	A notification string
      */
-	const std::string tryTearDownMLIB()
+	const std::string tryTearDownAQL()
 	{
 		VALID_EXCEPTION_START
 

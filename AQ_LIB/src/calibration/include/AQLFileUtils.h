@@ -30,7 +30,7 @@ enum FileID
 {
 	FILENUM,		   
     MARKETID,		   
-    MLIBID,		    
+    AQLID,		    
     PROPERTIESID
 };
 

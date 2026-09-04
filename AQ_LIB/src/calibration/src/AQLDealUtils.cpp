@@ -562,7 +562,7 @@ AQLDealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 
 	if (isPropSource)
 	{
-		const AQLString fileName = AQLMarketData::getNumFileName(calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_TARGETVOLGRID_FILE + "." + underlying), MLIBID);
+		const AQLString fileName = AQLMarketData::getNumFileName(calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_TARGETVOLGRID_FILE + "." + underlying), AQLID);
 		AQLFileAccessor file(fileName);
 		AQLStringMatrix dataMtx;
 		file.readAllData(MARKET_DATA_DELIMITER, dataMtx);

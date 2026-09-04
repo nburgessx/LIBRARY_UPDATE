@@ -76,7 +76,7 @@ namespace google_test
         EXPECT_TRUE( env.hasObject( "StandAlone_2", EXAMPLE_STAND_ALONE ) );
 
         const std::string readWriteFileName = ( boost::format( "%s/resource/test/inputs/ETrading/AQObjects/ExampleObjects/%s.json" )
-                                                % etrading::getEnvironmentVariable( "MLIBQ" ).c_str() % sa2.getRefToName().c_str() ).str();
+                                                % etrading::getEnvironmentVariable( "AQ" ).c_str() % sa2.getRefToName().c_str() ).str();
 
         sa2.serialize( etrading::serialize::JSON, etrading::serialize::FILE, readWriteFileName );
         EXPECT_TRUE( fileExists( readWriteFileName ) );

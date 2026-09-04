@@ -4696,7 +4696,7 @@ double CurveCalibration::calcAverageRate(DoubleVector& startTerms,
 
 		/* We make use of the geometric effective-rate shortcut:
 		 * The product of daily returns may be replaced by the ratio of start / end return.
-		 * See "MLIB Yield Curves in a Nutshell" document for the explicit OIS effective rate
+		 * See "AQ Yield Curves in a Nutshell" document for the explicit OIS effective rate
 		*/
 
 		double val = 1.0;

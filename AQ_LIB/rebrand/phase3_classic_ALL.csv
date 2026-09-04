@@ -312,7 +312,7 @@ math,ME_BUILD_GBPEUR_FWD_CURVE,AQL_BUILD_GBPEUR_FWD_CURVE,?,extra,cross-cut
 math,ME_BUILD_GBP_CURVE,AQL_BUILD_GBP_CURVE,?,extra,cross-cut
 math,ME_BUILD_JPY_CURVE,AQL_BUILD_JPY_CURVE,?,extra,cross-cut
 math,ME_BUILD_USD_CURVE,AQL_BUILD_USD_CURVE,?,extra,cross-cut
-math,MLIB_2D_MATRIX_CHECK,AQ_2D_MATRIX_CHECK,?,extra,cross-cut
+math,AQ_2D_MATRIX_CHECK,AQ_2D_MATRIX_CHECK,?,extra,cross-cut
 models,MVReplication,AQLReplication,36,A_convention,class
 models,MVSABRSwaptionCalculator,AQLSABRSwaptionCalculator,17,B_acronym,class
 models,MVReplicationIntegrand,AQLReplicationIntegrand,9,A_convention,class

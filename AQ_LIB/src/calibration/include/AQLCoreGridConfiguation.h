@@ -81,7 +81,7 @@
 // [CAUTION] The below defines must be synchronized with AQLDefinitions 
 #define IRG_ARG_KEY_FILENUM          "-filenum"
 #define IRG_ARG_KEY_MARKETID         "-marketid"
-#define IRG_ARG_KEY_MLIBID           "-mlibid"
+#define IRG_ARG_KEY_AQLID           "-aqlid"
 #define IRG_ARG_KEY_PROPERTIESID     "-propertiesid"
 
 #define IRG_ARG_KEY_BASESCENARIONUM  "-basescenarionum"

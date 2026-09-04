@@ -105,7 +105,7 @@ AQLDataInstanceConfigurationPV::setUp(void)
 	AQLString maxFileName = staticData.getStaticData(KEY_DEAL_MAXTERM_FILE);
 	if (maxFileName != AQ_NO_DATA)
 	{
-		maxFileName = AQLMarketData::getNumFileName(maxFileName, MLIBID);
+		maxFileName = AQLMarketData::getNumFileName(maxFileName, AQLID);
 		AQLFileAccessor file(maxFileName);
 		AQLStringMatrix dataMtx;
 		file.readAllData(MARKET_DATA_DELIMITER, dataMtx);
@@ -531,7 +531,7 @@ AQLDataInstanceConfigurationPV::loadEntities(AQLDataInstance &dataInstance) cons
 	//}
 
 	AQLStringMatrix tradeMatrix;
-	AQLFileAccessor tradeFile(AQLMarketData::getNumFileName(fileName, MLIBID));
+	AQLFileAccessor tradeFile(AQLMarketData::getNumFileName(fileName, AQLID));
 	tradeFile.readAllData(',',tradeMatrix);
     insertContext(tradeMatrix, dataInstance);
 	unsigned int row = 0, col;
@@ -751,7 +751,7 @@ AQLDataInstanceConfigurationPV::loadCSV(AQLDataInstance &dataInstance) const
 	AQLString calc = AQLCoreDataService::getContext(ARG_KEY_CALC).toUpper();
 
 	AQLStringMatrix tradeMatrix;
-	AQLFileAccessor tradeFile(AQLMarketData::getNumFileName(fileName, MLIBID));
+	AQLFileAccessor tradeFile(AQLMarketData::getNumFileName(fileName, AQLID));
 	tradeFile.readAllData(',',tradeMatrix);
     insertContext(tradeMatrix, dataInstance);
 	unsigned int row = 0, col;

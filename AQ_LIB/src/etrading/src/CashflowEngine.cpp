@@ -326,7 +326,7 @@ namespace etrading
 		// # back stub
 
 		/*
-			First use MLIB's date schedule logic to create a monthly schedule. Store the key dates
+			First use AQ's date schedule logic to create a monthly schedule. Store the key dates
 			of this monthly schedule in the CashflowEngine as vectors of dates.
 		 */
 		std::string monthlyFrequency = toString( MONTHLY_FREQUENCY );
@@ -464,7 +464,7 @@ namespace etrading
 				
 				const size_t resetPeriod = std::distance( resetDates_.begin(), resetDateIter );
 
-				// We define 'period' in MLIB as counting from 0. In MGEN/R 'period' is defined to count up from 1.
+				// We define 'period' in AQ as counting from 0. In MGEN/R 'period' is defined to count up from 1.
 				// const int resetPeriod = ( period + 1 ) / currentTrancheDefintion.couponFrequency_ - 1;
 
 				currentTrancheMonthlyScheduleData.couponYearFraction_[ period ]	= currentTrancheCouponScheduleData.couponYearFraction_[ payCouponPeriodIdx ];
