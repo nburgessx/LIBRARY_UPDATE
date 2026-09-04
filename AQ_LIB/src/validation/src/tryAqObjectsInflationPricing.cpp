@@ -39,8 +39,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled())
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOInflationCurveCreate_inputs", objectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOInflationCurveCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsInflationCurveCreate_inputs", objectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsInflationCurveCreate");
 			file.write("objectName", objectName);
 
 			// Write out each propertyName and corresponding block of property config data

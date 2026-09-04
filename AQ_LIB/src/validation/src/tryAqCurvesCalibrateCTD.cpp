@@ -40,8 +40,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveCalibrateCTD_inputs", curveCollection, curveName ) );
-            file.write( "generatorFunction", "tryMeCurveCalibrateCTD" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesCalibrateCTD_inputs", curveCollection, curveName ) );
+            file.write( "generatorFunction", "tryAqCurvesCalibrateCTD" );
             file.write( "curveCollection", curveCollection );
             file.write( "staticDataTable", curveName );
             file.write( "curveIndex", curveIndex );
@@ -68,7 +68,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveCalibrateCTD_outputs", curveCollection, curveName ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesCalibrateCTD_outputs", curveCollection, curveName ) );
             file.write( "output", ret );
         }
 

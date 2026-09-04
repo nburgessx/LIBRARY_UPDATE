@@ -34,14 +34,14 @@ namespace
 	//
     // test call input and reference files
     //
-    extern const char Contiguous_ForwardRatesInputs[]				= TEST_DIR "Contiguous_EURYC_EUR6ML_tryMeCurveForwardRatesFromForwardDates_inputs.csv";
-    extern const char Contiguous_ForwardRatesOutputs[]				= TEST_DIR "Contiguous_EURYC_EUR6ML_tryMeCurveForwardRatesFromForwardDates_outputs.csv";
+    extern const char Contiguous_ForwardRatesInputs[]				= TEST_DIR "Contiguous_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
+    extern const char Contiguous_ForwardRatesOutputs[]				= TEST_DIR "Contiguous_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
 
-	extern const char SerialRate_ForwardRatesInputs[]				= TEST_DIR "SerialRate_EURYC_EUR6ML_tryMeCurveForwardRatesFromForwardDates_inputs.csv";
-	extern const char SerialRate_ForwardRatesOutputs[]				= TEST_DIR "SerialRate_EURYC_EUR6ML_tryMeCurveForwardRatesFromForwardDates_outputs.csv";
+	extern const char SerialRate_ForwardRatesInputs[]				= TEST_DIR "SerialRate_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
+	extern const char SerialRate_ForwardRatesOutputs[]				= TEST_DIR "SerialRate_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
 
-	extern const char SerialDF_ForwardRatesInputs[]					= TEST_DIR "SerialDF_EURYC_EUR6ML_tryMeCurveForwardRatesFromForwardDates_inputs.csv";
-	extern const char SerialDF_ForwardRatesOutputs[]				= TEST_DIR "SerialDF_EURYC_EUR6ML_tryMeCurveForwardRatesFromForwardDates_outputs.csv";
+	extern const char SerialDF_ForwardRatesInputs[]					= TEST_DIR "SerialDF_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
+	extern const char SerialDF_ForwardRatesOutputs[]				= TEST_DIR "SerialDF_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
 
 	// curve input files
 	//

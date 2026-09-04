@@ -79,8 +79,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactorsFromYearFractions_inputs", curveCollection, curveIndex ) );
-            file.write( "generatorFunction", "tryMeCurveDiscountFactorsFromYearFractions" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactorsFromYearFractions_inputs", curveCollection, curveIndex ) );
+            file.write( "generatorFunction", "tryAqCurvesDiscountFactorsFromYearFractions" );
             file.write( "yearFractions",		yearFractions );
             file.write( "dayCount",          dayCount );
             file.write( "curveCollection",	curveCollection );
@@ -92,7 +92,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactorsFromYearFractions_outputs", curveCollection, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactorsFromYearFractions_outputs", curveCollection, curveIndex ) );
             file.write( "output", ret );
         }
 
@@ -110,8 +110,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryMeLWOCurveDiscountFactorsFromYearFractions_inputs_" ) + lwoCurveName ).c_str()  );
-            file.write( "generatorFunction", "tryMeLWOCurveDiscountFactorsFromYearFractions" );
+            CreateDataFile file( std::string( std::string( "tryAqObjectsCurveDiscountFactorsFromYearFractions_inputs_" ) + lwoCurveName ).c_str()  );
+            file.write( "generatorFunction", "tryAqObjectsCurveDiscountFactorsFromYearFractions" );
             file.write( "yearFractions",		yearFractions );
             file.write( "dayCount",          dayCount );
             file.write( "lwoCurveName",	    lwoCurveName );
@@ -143,7 +143,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryMeLWOCurveDiscountFactorsFromYearFractions_outputs_" ) + lwoCurveName ).c_str() );
+            CreateDataFile file( std::string( std::string( "tryAqObjectsCurveDiscountFactorsFromYearFractions_outputs_" ) + lwoCurveName ).c_str() );
             file.write( "output", ret );
         }
 
@@ -173,8 +173,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactorsFromTenors_inputs", curveCollection, curveIndex ) );
-            file.write( "generatorFunction", "tryMeCurveDiscountFactorsFromTenors" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactorsFromTenors_inputs", curveCollection, curveIndex ) );
+            file.write( "generatorFunction", "tryAqCurvesDiscountFactorsFromTenors" );
             file.write( "tenors",			tenors );
             file.write( "businessDayAdj",	businessDayAdj );
             file.write( "calendar",			calendar );
@@ -202,7 +202,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactorsFromTenors_outputs", curveCollection, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactorsFromTenors_outputs", curveCollection, curveIndex ) );
             file.write( "output", ret );
         }
 
@@ -229,8 +229,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryMeLWOCurveDiscountFactorsFromTenors_inputs_" ) + lwoCurveName ).c_str()  );
-            file.write( "generatorFunction", "tryMeLWOCurveDiscountFactorsFromTenors" );
+            CreateDataFile file( std::string( std::string( "tryAqObjectsCurveDiscountFactorsFromTenors_inputs_" ) + lwoCurveName ).c_str()  );
+            file.write( "generatorFunction", "tryAqObjectsCurveDiscountFactorsFromTenors" );
             file.write( "tenors",			tenors );
             file.write( "businessDayAdj",	businessDayAdj );
             file.write( "calendar",			calendar );
@@ -264,7 +264,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryMeLWOCurveDiscountFactorsFromTenors_outputs_" ) + lwoCurveName ).c_str()  );
+            CreateDataFile file( std::string( std::string( "tryAqObjectsCurveDiscountFactorsFromTenors_outputs_" ) + lwoCurveName ).c_str()  );
             file.write( "output", ret );
         }
 
@@ -293,8 +293,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactorsForwardStarting_inputs", curveCollection, curveIndex ) );
-            file.write( "generatorFunction", "tryMeCurveDiscountFactorsForwardStarting" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactorsForwardStarting_inputs", curveCollection, curveIndex ) );
+            file.write( "generatorFunction", "tryAqCurvesDiscountFactorsForwardStarting" );
             file.write( "fromDates",			fromDates );
             file.write( "toDates",			toDates );
             file.write( "curveCollection",	curveCollection );
@@ -346,7 +346,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactorsForwardStarting_outputs", curveCollection, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactorsForwardStarting_outputs", curveCollection, curveIndex ) );
             file.write( "output", ret );
         }
 
@@ -366,8 +366,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeLWOCurveDiscountFactorsForwardStarting_inputs_" ) + lwoCurveName ).c_str() );
-            file.write( "generatorFunction", "tryMeLWOCurveDiscountFactorsForwardStarting" );
+            CreateDataFile file( ( std::string( "tryAqObjectsCurveDiscountFactorsForwardStarting_inputs_" ) + lwoCurveName ).c_str() );
+            file.write( "generatorFunction", "tryAqObjectsCurveDiscountFactorsForwardStarting" );
             file.write( "fromDates",			fromDates );
             file.write( "toDates",			toDates );
             file.write( "businessDayAdj",	businessDayAdj );
@@ -426,7 +426,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeLWOCurveDiscountFactorsForwardStarting_outputs_" ) + lwoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjectsCurveDiscountFactorsForwardStarting_outputs_" ) + lwoCurveName ).c_str() );
             file.write( "output", ret );
         }
 
@@ -456,8 +456,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactorsForwardStartingFromYearFractions_inputs", curveCollection, curveIndex ) );
-            file.write( "generatorFunction", "tryMeCurveDiscountFactorsForwardStartingFromYearFractions" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactorsForwardStartingFromYearFractions_inputs", curveCollection, curveIndex ) );
+            file.write( "generatorFunction", "tryAqCurvesDiscountFactorsForwardStartingFromYearFractions" );
             file.write( "fromDates",			fromDates );
             file.write( "yearFractions",		yearFractions );
             file.write( "dayCount",          dayCount );
@@ -469,7 +469,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactorsForwardStartingFromYearFractions_outputs", curveCollection, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactorsForwardStartingFromYearFractions_outputs", curveCollection, curveIndex ) );
             file.write( "output", ret );
         }
 
@@ -495,8 +495,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeLWOCurveDiscountFactorsForwardStartingFromYearFractions_inputs_" ) + lwoCurveName ).c_str() );
-            file.write( "generatorFunction", "tryMeLWOCurveDiscountFactorsForwardStartingFromYearFractions" );
+            CreateDataFile file( ( std::string( "tryAqObjectsCurveDiscountFactorsForwardStartingFromYearFractions_inputs_" ) + lwoCurveName ).c_str() );
+            file.write( "generatorFunction", "tryAqObjectsCurveDiscountFactorsForwardStartingFromYearFractions" );
             file.write( "fromDates",			fromDates );
             file.write( "yearFractions",		yearFractions );
             file.write( "dayCount",          dayCount );
@@ -543,7 +543,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeCurveDiscountFactorsForwardStartingFromYearFractions_outputs_" ) + lwoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqCurvesDiscountFactorsForwardStartingFromYearFractions_outputs_" ) + lwoCurveName ).c_str() );
             file.write( "output", ret );
         }
 
@@ -574,8 +574,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactorsForwardStartingFromTenor_inputs", curveCollection, curveIndex ) );
-            file.write( "generatorFunction", "tryMeCurveDiscountFactorsForwardStartingFromTenor" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactorsForwardStartingFromTenor_inputs", curveCollection, curveIndex ) );
+            file.write( "generatorFunction", "tryAqCurvesDiscountFactorsForwardStartingFromTenor" );
             file.write( "fromDates",			fromDates );
             file.write( "tenor",				tenor );
             file.write( "curveCollection",	curveCollection );
@@ -603,7 +603,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactorsForwardStartingFromTenor_outputs", curveCollection, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactorsForwardStartingFromTenor_outputs", curveCollection, curveIndex ) );
             file.write( "output", ret );
         }
 
@@ -632,8 +632,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeLWOCurveDiscountFactorsForwardStartingFromTenor_inputs_" ) + lwoCurveName ).c_str() );
-            file.write( "generatorFunction", "tryMeLWOCurveDiscountFactorsForwardStartingFromTenor" );
+            CreateDataFile file( ( std::string( "tryAqObjectsCurveDiscountFactorsForwardStartingFromTenor_inputs_" ) + lwoCurveName ).c_str() );
+            file.write( "generatorFunction", "tryAqObjectsCurveDiscountFactorsForwardStartingFromTenor" );
             file.write( "fromDates",			fromDates );
             file.write( "tenor",				tenors );
             file.write( "businessDayAdj",	businessDayAdj );
@@ -673,7 +673,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeLWOCurveDiscountFactorsForwardStartingFromTenor_outputs_" ) + lwoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjectsCurveDiscountFactorsForwardStartingFromTenor_outputs_" ) + lwoCurveName ).c_str() );
             file.write( "output", ret );
         }
 
@@ -701,8 +701,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactors_inputs", curveCollectionFromHandle, curveIndex ) );
-            file.write( "generatorFunction", "tryMeCurveDiscountFactors" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactors_inputs", curveCollectionFromHandle, curveIndex ) );
+            file.write( "generatorFunction", "tryAqCurvesDiscountFactors" );
             file.write( "toDates",			toDates );
             file.write( "curveCollection",	curveCollectionFromHandle );
             file.write( "curveIndex",		curveIndex );
@@ -729,7 +729,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactors_outputs", curveCollectionFromHandle, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactors_outputs", curveCollectionFromHandle, curveIndex ) );
             file.write( "output", ret );
         }
 
@@ -847,7 +847,7 @@ namespace validation
         // Record Outputs and return the results
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDiscountFactorsDisplay_outputs", curveCollection, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDiscountFactorsDisplay_outputs", curveCollection, curveIndex ) );
             file.write( "output",               results.discountFactors_    );
             file.write( "curveCollection",      curveCollection             );
             file.write( "curveIndex",           curveIndex                  );

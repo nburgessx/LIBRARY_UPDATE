@@ -22,7 +22,7 @@ namespace validation
 		// Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDelete", curveCollection, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDelete", curveCollection, curveIndex ) );
             file.write( "curveCollection",	curveCollection );
             file.write( "curveIndex",		curveIndex );
         }

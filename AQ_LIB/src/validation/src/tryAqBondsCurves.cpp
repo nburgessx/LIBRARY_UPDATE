@@ -239,8 +239,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeBondCurveCreate_inputs", objectName.c_str()));
-			file.write("generatorFunction", "tryMeBondCurveCreate");
+			CreateDataFile file(decorateFilename("tryAqBondsCurveCreate_inputs", objectName.c_str()));
+			file.write("generatorFunction", "tryAqBondsCurveCreate");
 			file.write("objectName", objectName);
 
 			// Write out each propertyName and corresponding block of property config data
@@ -280,7 +280,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeBondCurveCreate_outputs", objectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqBondsCurveCreate_outputs", objectName.c_str()));
 			file.write("output", objectName);
 		}
 

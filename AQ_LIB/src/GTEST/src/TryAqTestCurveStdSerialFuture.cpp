@@ -33,35 +33,35 @@ namespace
     //
     // curve input files
     //
-    extern const char Contiguous_USDYC_OIS[]					= TEST_DIR "Contiguous_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char Contiguous_USDYC_STD[]					= TEST_DIR "Contiguous_STD_tryMeCurveCalibrateSwap_inputs.csv";
+    extern const char Contiguous_USDYC_OIS[]					= TEST_DIR "Contiguous_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char Contiguous_USDYC_STD[]					= TEST_DIR "Contiguous_STD_tryAqCurvesCalibrateSwap_inputs.csv";
 
-	extern const char SerialRate_USDYC_OIS[]					= TEST_DIR "SerialRate_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-	extern const char SerialRate_USDYC_STD[]					= TEST_DIR "SerialRate_STD_tryMeCurveCalibrateSwap_inputs.csv";
+	extern const char SerialRate_USDYC_OIS[]					= TEST_DIR "SerialRate_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+	extern const char SerialRate_USDYC_STD[]					= TEST_DIR "SerialRate_STD_tryAqCurvesCalibrateSwap_inputs.csv";
 	
-	extern const char SerialDF_USDYC_OIS[]						= TEST_DIR "SerialDF_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-	extern const char SerialDF_USDYC_STD[]						= TEST_DIR "SerialDF_STD_tryMeCurveCalibrateSwap_inputs.csv";
+	extern const char SerialDF_USDYC_OIS[]						= TEST_DIR "SerialDF_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+	extern const char SerialDF_USDYC_STD[]						= TEST_DIR "SerialDF_STD_tryAqCurvesCalibrateSwap_inputs.csv";
 	
 	//
     // test call input and reference files
     //
-    extern const char Contiguous_ForwardRatesInputs[]				= TEST_DIR "Contiguous_USD3M_tryMeCurveForwardRatesFromForwardDates_inputs.csv";
-    extern const char Contiguous_ForwardRatesOutputs[]				= TEST_DIR "Contiguous_USD3M_tryMeCurveForwardRatesFromForwardDates_outputs.csv";
+    extern const char Contiguous_ForwardRatesInputs[]				= TEST_DIR "Contiguous_USD3M_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
+    extern const char Contiguous_ForwardRatesOutputs[]				= TEST_DIR "Contiguous_USD3M_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
 
-	extern const char SerialRate_ForwardRatesInputs[]				= TEST_DIR "SerialRate_USD3M_tryMeCurveForwardRatesFromForwardDates_inputs.csv";
-	extern const char SerialRate_ForwardRatesOutputs[]				= TEST_DIR "SerialRate_USD3M_tryMeCurveForwardRatesFromForwardDates_outputs.csv";
+	extern const char SerialRate_ForwardRatesInputs[]				= TEST_DIR "SerialRate_USD3M_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
+	extern const char SerialRate_ForwardRatesOutputs[]				= TEST_DIR "SerialRate_USD3M_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
 
-	extern const char SerialDF_ForwardRatesInputs[]					= TEST_DIR "SerialDF_USD3M_tryMeCurveForwardRatesFromForwardDates_inputs.csv";
-	extern const char SerialDF_ForwardRatesOutputs[]				= TEST_DIR "SerialDF_USD3M_tryMeCurveForwardRatesFromForwardDates_outputs.csv";
+	extern const char SerialDF_ForwardRatesInputs[]					= TEST_DIR "SerialDF_USD3M_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
+	extern const char SerialDF_ForwardRatesOutputs[]				= TEST_DIR "SerialDF_USD3M_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
 
-	extern const char Contiguous_SwapParRateInputs[]				= TEST_DIR "Contiguous_tryMeLWOSwapParRate_inputs.csv";
-	extern const char Contiguous_SwapParRateOutputs[]				= TEST_DIR "Contiguous_tryMeLWOSwapParRate_outputs.csv";
+	extern const char Contiguous_SwapParRateInputs[]				= TEST_DIR "Contiguous_tryAqObjectsSwapParRate_inputs.csv";
+	extern const char Contiguous_SwapParRateOutputs[]				= TEST_DIR "Contiguous_tryAqObjectsSwapParRate_outputs.csv";
 
-	extern const char SerialRate_SwapParRateInputs[]				= TEST_DIR "SerialRate_tryMeLWOSwapParRate_inputs.csv";
-	extern const char SerialRate_SwapParRateOutputs[]				= TEST_DIR "SerialRate_tryMeLWOSwapParRate_outputs.csv";
+	extern const char SerialRate_SwapParRateInputs[]				= TEST_DIR "SerialRate_tryAqObjectsSwapParRate_inputs.csv";
+	extern const char SerialRate_SwapParRateOutputs[]				= TEST_DIR "SerialRate_tryAqObjectsSwapParRate_outputs.csv";
 
-	extern const char SerialDF_SwapParRateInputs[]					= TEST_DIR "SerialDF_tryMeLWOSwapParRate_inputs.csv";
-	extern const char SerialDF_SwapParRateOutputs[]					= TEST_DIR "SerialDF_tryMeLWOSwapParRate_outputs.csv";
+	extern const char SerialDF_SwapParRateInputs[]					= TEST_DIR "SerialDF_tryAqObjectsSwapParRate_inputs.csv";
+	extern const char SerialDF_SwapParRateOutputs[]					= TEST_DIR "SerialDF_tryAqObjectsSwapParRate_outputs.csv";
 
 	// Test Files
 	//const std::string SwapInput = etrading::getGoogleTestFolder() + "ETrading/Curves/TestCurveStdSerialFuture/EDJ0_COMDTY_SWAP.JSON";

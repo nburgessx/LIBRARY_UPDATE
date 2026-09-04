@@ -45,19 +45,19 @@ namespace
 	// -------------------------------------------------------------
 
 	// Curves objects saved with aqObjectsSave
-	const char EUR_OIS_MARKET_DATA[]			= TEST_DIR "EUR_OIS_CURVE_MARKETDATA@34_tryMeLWOCurveMarketDataCreate_inputs.csv";
-	const char EUR_OIS_CURVE[]					= TEST_DIR "EUR_OIS_CURVE@35_tryMeLWOCurveCalibrate_inputs.csv";
+	const char EUR_OIS_MARKET_DATA[]			= TEST_DIR "EUR_OIS_CURVE_MARKETDATA@34_tryAqObjectsCurveMarketDataCreate_inputs.csv";
+	const char EUR_OIS_CURVE[]					= TEST_DIR "EUR_OIS_CURVE@35_tryAqObjectsCurveCalibrate_inputs.csv";
 
-	const char EUR_STD_MARKET_DATA[]			= TEST_DIR "EUR_SWAP_3M_CURVE_MARKETDATA@19_tryMeLWOCurveMarketDataCreate_inputs.csv";
-	const char EUR_STD_CURVE[]				    = TEST_DIR "EUR_SWAP_3M_CURVE@20_tryMeLWOCurveCalibrate_inputs.csv";
+	const char EUR_STD_MARKET_DATA[]			= TEST_DIR "EUR_SWAP_3M_CURVE_MARKETDATA@19_tryAqObjectsCurveMarketDataCreate_inputs.csv";
+	const char EUR_STD_CURVE[]				    = TEST_DIR "EUR_SWAP_3M_CURVE@20_tryAqObjectsCurveCalibrate_inputs.csv";
 
-	const char DISCOUNT_FACTORS_NO_SPREAD_INPUT[]	= TEST_DIR "tryMeLWOCurveDiscountFactorsWithSpread_0bp_inputs.csv";
-	const char DISCOUNT_FACTORS_NO_SPREAD_OUTPUT[]	= TEST_DIR "tryMeLWOCurveDiscountFactorsWithSpread_0bp_outputs.csv";
+	const char DISCOUNT_FACTORS_NO_SPREAD_INPUT[]	= TEST_DIR "tryAqObjectsCurveDiscountFactorsWithSpread_0bp_inputs.csv";
+	const char DISCOUNT_FACTORS_NO_SPREAD_OUTPUT[]	= TEST_DIR "tryAqObjectsCurveDiscountFactorsWithSpread_0bp_outputs.csv";
 
-	const char DISCOUNT_FACTORS_1BP_INPUT[]		= TEST_DIR "tryMeLWOCurveDiscountFactorsWithSpread_1bp_inputs.csv";
-	const char DISCOUNT_FACTORS_1BP_OUTPUT[]	= TEST_DIR "tryMeLWOCurveDiscountFactorsWithSpread_1bp_outputs.csv";
+	const char DISCOUNT_FACTORS_1BP_INPUT[]		= TEST_DIR "tryAqObjectsCurveDiscountFactorsWithSpread_1bp_inputs.csv";
+	const char DISCOUNT_FACTORS_1BP_OUTPUT[]	= TEST_DIR "tryAqObjectsCurveDiscountFactorsWithSpread_1bp_outputs.csv";
 
-	const char EUR_STD_FIXING_TABLE[]			= TEST_DIR "EUR3M_FIXINGS@74_tryMeLWOFixingTableCreate_inputs.csv";
+	const char EUR_STD_FIXING_TABLE[]			= TEST_DIR "EUR3M_FIXINGS@74_tryAqObjectsFixingTableCreate_inputs.csv";
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 	

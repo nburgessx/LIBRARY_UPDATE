@@ -26,14 +26,14 @@ const double tolerance = 1e-8;
 
 namespace
 {
-	extern const char GBP_OIS[] = TEST_DIR "GBPLIVE_OIS_tryMeCurveCalibrateOIS_inputs";
+	extern const char GBP_OIS[] = TEST_DIR "GBPLIVE_OIS_tryAqCurvesCalibrateOIS_inputs";
 	extern const char GBP_1M[] = "";
-	extern const char GBP_3M[] = TEST_DIR "GBPLIVE_STD_tryMeCurveCalibrateSwap_inputs";
+	extern const char GBP_3M[] = TEST_DIR "GBPLIVE_STD_tryAqCurvesCalibrateSwap_inputs";
 	extern const char GBP_6M[] = "";
 	extern const char GBP_12M[] = "";
 
-	extern const char fileStubRateInput[] = TEST_DIR "tryMeProductSwapStubRate_inputs";
-	extern const char fileStubRateOutput[] = TEST_DIR "tryMeProductSwapStubRate_outputs";
+	extern const char fileStubRateInput[] = TEST_DIR "tryAqSwapStubRate_inputs";
+	extern const char fileStubRateOutput[] = TEST_DIR "tryAqSwapStubRate_outputs";
 
 	const std::string googleTestFolder = etrading::getGoogleTestFolder();
 	const std::string FixingTableObject = googleTestFolder + TEST_DIR + "GBPFIX_3M.JSON";

@@ -31,32 +31,32 @@ namespace
 	const std::string bondObject_input1 = TEST_DIR + "DE0001102424.JSON";
 	const std::string bondObject_input2 = TEST_DIR + "DE0001102440.JSON";
 
-	const std::string forwardPrice_input = TEST_DIR + "DE0001102424_tryMeLWOBondForwardPrice_inputs";
-	const std::string forwardPrice_output = TEST_DIR + "DE0001102424_tryMeLWOBondForwardPrice_outputs";
+	const std::string forwardPrice_input = TEST_DIR + "DE0001102424_tryAqObjectsBondForwardPrice_inputs";
+	const std::string forwardPrice_output = TEST_DIR + "DE0001102424_tryAqObjectsBondForwardPrice_outputs";
 
-	const std::string repoRateFromForwardPrice_input = TEST_DIR + "DE0001102424_tryMeLWOBondRepoRate_inputs";
-	const std::string repoRateFromForwardPrice_output = TEST_DIR + "DE0001102424_tryMeLWOBondRepoRate_outputs";
+	const std::string repoRateFromForwardPrice_input = TEST_DIR + "DE0001102424_tryAqObjectsBondRepoRate_inputs";
+	const std::string repoRateFromForwardPrice_output = TEST_DIR + "DE0001102424_tryAqObjectsBondRepoRate_outputs";
 
-	const std::string futurePrice_input = TEST_DIR + "DE0001102424_tryMeLWOBondFuturePrice_inputs";
-	const std::string futurePrice_output = TEST_DIR + "DE0001102424_tryMeLWOBondFuturePrice_outputs";
+	const std::string futurePrice_input = TEST_DIR + "DE0001102424_tryAqObjectsBondFuturePrice_inputs";
+	const std::string futurePrice_output = TEST_DIR + "DE0001102424_tryAqObjectsBondFuturePrice_outputs";
 
-	const std::string impliedRate_input = TEST_DIR + "DE0001102424_tryMeLWOBondRepoRateFromFuture_inputs";
-	const std::string impliedRate_output = TEST_DIR + "DE0001102424_tryMeLWOBondRepoRateFromFuture_outputs";
+	const std::string impliedRate_input = TEST_DIR + "DE0001102424_tryAqObjectsBondRepoRateFromFuture_inputs";
+	const std::string impliedRate_output = TEST_DIR + "DE0001102424_tryAqObjectsBondRepoRateFromFuture_outputs";
 
-	const std::string conversionFactor_input = TEST_DIR + "DE0001102424_tryMeLWOBondConversionFactor_inputs";
-	const std::string conversionFactor_output = TEST_DIR + "DE0001102424_tryMeLWOBondConversionFactor_outputs";
+	const std::string conversionFactor_input = TEST_DIR + "DE0001102424_tryAqObjectsBondConversionFactor_inputs";
+	const std::string conversionFactor_output = TEST_DIR + "DE0001102424_tryAqObjectsBondConversionFactor_outputs";
 
-	const std::string grossBasis_input = TEST_DIR + "DE0001102424_tryMeLWOBondGrossBasis_inputs";
-	const std::string grossBasis_output = TEST_DIR + "DE0001102424_tryMeLWOBondGrossBasis_outputs";
+	const std::string grossBasis_input = TEST_DIR + "DE0001102424_tryAqObjectsBondGrossBasis_inputs";
+	const std::string grossBasis_output = TEST_DIR + "DE0001102424_tryAqObjectsBondGrossBasis_outputs";
 
-	const std::string netBasis_input = TEST_DIR + "DE0001102424_tryMeLWOBondNetBasis_inputs";
-	const std::string netBasis_output = TEST_DIR + "DE0001102424_tryMeLWOBondNetBasis_outputs";
+	const std::string netBasis_input = TEST_DIR + "DE0001102424_tryAqObjectsBondNetBasis_inputs";
+	const std::string netBasis_output = TEST_DIR + "DE0001102424_tryAqObjectsBondNetBasis_outputs";
 
-	const std::string cheapestToDeliver_input = TEST_DIR + "tryMeLWOBondCheapestToDeliver_inputs";
-	const std::string cheapestToDeliver_output = TEST_DIR + "tryMeLWOBondCheapestToDeliver_outputs";
+	const std::string cheapestToDeliver_input = TEST_DIR + "tryAqObjectsBondCheapestToDeliver_inputs";
+	const std::string cheapestToDeliver_output = TEST_DIR + "tryAqObjectsBondCheapestToDeliver_outputs";
 
-	const std::string cheapestToDeliverByNetBasis_input = TEST_DIR + "tryMeLWOBondCheapestToDeliverByNetBasis_inputs";
-	const std::string cheapestToDeliverByNetBasis_output = TEST_DIR + "tryMeLWOBondCheapestToDeliverByNetBasis_inputs_outputs";
+	const std::string cheapestToDeliverByNetBasis_input = TEST_DIR + "tryAqObjectsBondCheapestToDeliverByNetBasis_inputs";
+	const std::string cheapestToDeliverByNetBasis_output = TEST_DIR + "tryAqObjectsBondCheapestToDeliverByNetBasis_inputs_outputs";
 
 }
 

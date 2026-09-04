@@ -101,8 +101,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeLWOCurveCalibrateSwap_inputs", curveCollection, staticDataTable ) );
-            file.write( "generatorFunction", "tryMeCurveCalibrateSwap" );
+            CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateSwap_inputs", curveCollection, staticDataTable ) );
+            file.write( "generatorFunction", "tryAqCurvesCalibrateSwap" );
             file.write( "lwoCurveName", lwoCurveName.c_str()  );
             file.write( "curveCollection", curveCollection );
             file.write( "staticDataTable", staticDataTable );
@@ -361,7 +361,7 @@ namespace validation
             AQLString ret = curveNameForLWOCurve.c_str();
             if ( CreateDataFile::recordEnabled() )
             {
-                CreateDataFile file( decorateCurvename( "tryMeLWOCurveCalibrateSwap_outputs", curveCollection, staticDataTable ) );
+                CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateSwap_outputs", curveCollection, staticDataTable ) );
                 file.write( "output", ret );
             }
             return ret;

@@ -29,7 +29,7 @@ namespace validation
 		// Record results
 		if (CreateDataFile::recordEnabled())
 		{
-			CreateDataFile file(decorateFilename("tryMeOutPutSABRGrid_outputs"));
+			CreateDataFile file(decorateFilename("tryAqVolsSABRGrid_outputs"));
 			file.write("Row count", row);
 			file.write("Column count", column);
 			file.write("Data", ret);

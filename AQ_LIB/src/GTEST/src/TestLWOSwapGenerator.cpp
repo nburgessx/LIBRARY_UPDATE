@@ -23,7 +23,7 @@ namespace google_test
     std::string createSwapFromGenerator( std::string tradePrefix )
     {
         // FilePath
-        const std::string filePath = TEST_DIR + tradePrefix + "_tryMeLWOSwapCreateFromGenerator_inputs.csv";
+        const std::string filePath = TEST_DIR + tradePrefix + "_tryAqObjectsSwapCreateFromGenerator_inputs.csv";
         
         // Load File
         const ReadDataFile::Load inputFile( filePath.c_str() );
@@ -50,7 +50,7 @@ namespace google_test
     std::string createSwapFromGeneratorRepeat2( std::string tradePrefix )
     {
         // FilePath
-        const std::string filePath = TEST_DIR + tradePrefix + "_tryMeLWOSwapCreateFromGenerator_inputs.csv";
+        const std::string filePath = TEST_DIR + tradePrefix + "_tryAqObjectsSwapCreateFromGenerator_inputs.csv";
         
         // Load File
         const ReadDataFile::Load inputFile( filePath.c_str() );

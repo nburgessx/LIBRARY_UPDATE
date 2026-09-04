@@ -329,7 +329,7 @@ namespace validation
         
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapDisplayCashflows_outputs", swapName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapDisplayCashflows_outputs", swapName.c_str()));
 			for (size_t i = 0; i < ret.size(); ++i)
 			{
 				file.write("output", ret[i]);
@@ -814,8 +814,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCreditModelCreate_inputs", objectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOCreditModelCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsCreditModelCreate_inputs", objectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsCreditModelCreate");
 			file.write("objectName", objectName);
 
 			// Write out each propertyName and corresponding block of property config data
@@ -855,7 +855,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCreditModelCreate_outputs", objectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsCreditModelCreate_outputs", objectName.c_str()));
 			file.write("output", objectName);
 		}
 
@@ -1006,7 +1006,7 @@ namespace validation
 	    
 		if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeLWOCreditModelImpliedSurvivalDate_outputs" );
+            CreateDataFile file( "tryAqObjectsCreditModelImpliedSurvivalDate_outputs" );
             file.write( "output", survivalDate );
         }
         return survivalDate;
@@ -1399,8 +1399,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCreditBasketModelCreate_inputs", objectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOCreditBasketModelCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsCreditBasketModelCreate_inputs", objectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsCreditBasketModelCreate");
 			file.write("objectName", objectName);
 
 			// Write out each propertyName and corresponding block of property config data
@@ -1440,7 +1440,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCreditBasketModelCreate_outputs", objectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsCreditBasketModelCreate_outputs", objectName.c_str()));
 			file.write("output", objectName);
 		}
 

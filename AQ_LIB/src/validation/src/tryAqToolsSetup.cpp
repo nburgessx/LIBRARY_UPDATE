@@ -159,10 +159,10 @@ namespace validation
         VALID_EXCEPTION_END
     }
 
-    /* @brief			validation interface for the meUtilityClearLWOCache function, to clear the object pool and all the objects in the LWO Cache
+    /* @brief			validation interface for the aqObjectsClearCache function, to clear the object pool and all the objects in the LWO Cache
     *  @return			A notification string
     */
-    AQLString tryMeUtilityClearLWOCache()
+    AQLString tryAqObjectsClearCache()
     {
         // IMPORTANT: Use no thread guard because the nested try functions will invalidate the thread guard reference count
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD

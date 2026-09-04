@@ -39,25 +39,25 @@ namespace
     //
     // curve input files
     //
-    extern const char EURYC_OIS[]					= TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]					= TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_OIS[]					= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]					= TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
 	extern const char EURYC_OIS_2[]					= TEST_DIR "OIS_2.csv";
 	extern const char EURYC_STD_2[]					= TEST_DIR "STD_2.csv";
 
     //
     // test call input and reference files
     //
-    extern const char curveDisplayInputs[]				= TEST_DIR "EURYC_STD_tryMeCurveDisplay_inputs.csv";
-    extern const char curveDisplayOutputs[]				= TEST_DIR "EURYC_STD_tryMeCurveDisplay_outputs.csv";
-	extern const char curveDisplayOutputs_2[]			= TEST_DIR "meCurveDisplay_outputs_2.csv";
+    extern const char curveDisplayInputs[]				= TEST_DIR "EURYC_STD_tryAqCurvesDisplay_inputs.csv";
+    extern const char curveDisplayOutputs[]				= TEST_DIR "EURYC_STD_tryAqCurvesDisplay_outputs.csv";
+	extern const char curveDisplayOutputs_2[]			= TEST_DIR "aqCurvesDisplay_outputs_2.csv";
 
-    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "EURYC_STD_tryMeCurveDiscountFactorsFromYearFractions_inputs.csv";
-    extern const char CheckDiscountFactorsOutputs[]		= TEST_DIR "EURYC_STD_tryMeCurveDiscountFactorsFromYearFractions_outputs.csv";
-	extern const char CheckDiscountFactorsOutputs_2[]	= TEST_DIR "meCurveDiscountFactorsFromYearFractions_outputs_2.csv";
+    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "EURYC_STD_tryAqCurvesDiscountFactorsFromYearFractions_inputs.csv";
+    extern const char CheckDiscountFactorsOutputs[]		= TEST_DIR "EURYC_STD_tryAqCurvesDiscountFactorsFromYearFractions_outputs.csv";
+	extern const char CheckDiscountFactorsOutputs_2[]	= TEST_DIR "aqCurvesDiscountFactorsFromYearFractions_outputs_2.csv";
 
-    extern const char CheckForwardRatesInputs[]			= TEST_DIR "EURYC_STD_tryMeCurveForwardRatesFromYearFraction_inputs.csv";
-    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "EURYC_STD_tryMeCurveForwardRatesFromYearFraction_outputs.csv";
-	extern const char CheckForwardRatesOutputs_2[]		= TEST_DIR "meTryForwardRatesFromYearFraction_outputs_2.csv";
+    extern const char CheckForwardRatesInputs[]			= TEST_DIR "EURYC_STD_tryAqCurvesForwardRatesFromYearFraction_inputs.csv";
+    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "EURYC_STD_tryAqCurvesForwardRatesFromYearFraction_outputs.csv";
+	extern const char CheckForwardRatesOutputs_2[]		= TEST_DIR "tryAqForwardRatesFromYearFraction_outputs_2.csv";
 }
 
 namespace google_test

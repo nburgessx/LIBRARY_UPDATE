@@ -27,7 +27,7 @@ namespace validation
     {
         if( infoBlocks.size() <= 0 )
         {
-			throw AQLCoreInvalidData( "#Error: No Grid Information provided to tryMeLWOMultiGridCreate", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: No Grid Information provided to tryAqObjectsMultiGridCreate", __FILE__, __LINE__ );
         }
 
         if( gridNames.size() != infoBlocks.size() )

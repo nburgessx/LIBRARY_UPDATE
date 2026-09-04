@@ -26,8 +26,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeCurveFrequency_inputs" );
-            file.write( "generatorFunction", "tryMeCurveFrequency" );
+            CreateDataFile file( "tryAqCurvesFrequency_inputs" );
+            file.write( "generatorFunction", "tryAqCurvesFrequency" );
             file.write( "curveCollection", curveCollection );
             file.write( "curveIndex", curveIndex );
         }
@@ -36,7 +36,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeCurveFrequency_outputs" );
+            CreateDataFile file( "tryAqCurvesFrequency_outputs" );
             file.write( "output", curveFrequency );
         }
 

@@ -60,8 +60,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveCalibrateSwap_inputs", curveCollection, staticDataTable ) );
-            file.write( "generatorFunction", "tryMeCurveCalibrateSwap" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesCalibrateSwap_inputs", curveCollection, staticDataTable ) );
+            file.write( "generatorFunction", "tryAqCurvesCalibrateSwap" );
             file.write( "curveCollection", curveCollection );
             file.write( "staticDataTable", staticDataTable );
             file.write( "curveIndex", curveIndex );
@@ -177,7 +177,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveCalibrateSwap_outputs", curveCollection, staticDataTable ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesCalibrateSwap_outputs", curveCollection, staticDataTable ) );
             file.write( "output", ret );
         }
 

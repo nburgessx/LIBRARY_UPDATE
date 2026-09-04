@@ -57,8 +57,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeProductSwapPV_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryMeProductSwapPV" );
+            CreateDataFile file( decorateFilename( "tryAqSwapPV_inputs", curveCollection ) );
+            file.write( "generatorFunction", "tryAqSwapPV" );
             file.write( "swapLVB", swapLVB );
         }
 
@@ -159,7 +159,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeProductSwapPV_outputs", curveCollection ) );
+            CreateDataFile file( decorateFilename( "tryAqSwapPV_outputs", curveCollection ) );
             file.write( "output", ret );
         }
 

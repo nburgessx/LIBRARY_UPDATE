@@ -48,44 +48,44 @@ namespace
     const double yieldTolerance = 1e-10;
 
     // Test Bond Input File(s)
-    extern const char createBondInputFile1[]         ="ETrading/Bonds/USTreasuries1/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile2[]         ="ETrading/Bonds/USTreasuries2/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile3[]         ="ETrading/Bonds/USTreasuries3/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile4[]         ="ETrading/Bonds/USTreasuries4/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile5[]         ="ETrading/Bonds/USTreasuries5/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile6[]         ="ETrading/Bonds/USTreasuries6/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile7[]         ="ETrading/Bonds/USTreasuries7/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile8[]         ="ETrading/Bonds/USTreasuries8/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile9[]         ="ETrading/Bonds/USTreasuries9/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile10[]        ="ETrading/Bonds/USTreasuries10/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile11[]        ="ETrading/Bonds/USTreasuries11/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile12[]        ="ETrading/Bonds/USTreasuries12/tryMeLWOBondCreate_inputs";
+    extern const char createBondInputFile1[]         ="ETrading/Bonds/USTreasuries1/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile2[]         ="ETrading/Bonds/USTreasuries2/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile3[]         ="ETrading/Bonds/USTreasuries3/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile4[]         ="ETrading/Bonds/USTreasuries4/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile5[]         ="ETrading/Bonds/USTreasuries5/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile6[]         ="ETrading/Bonds/USTreasuries6/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile7[]         ="ETrading/Bonds/USTreasuries7/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile8[]         ="ETrading/Bonds/USTreasuries8/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile9[]         ="ETrading/Bonds/USTreasuries9/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile10[]        ="ETrading/Bonds/USTreasuries10/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile11[]        ="ETrading/Bonds/USTreasuries11/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile12[]        ="ETrading/Bonds/USTreasuries12/tryAqObjectsBondCreate_inputs";
 
-    extern const char priceBondInputFile1[]          ="ETrading/Bonds/USTreasuries1/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile2[]          ="ETrading/Bonds/USTreasuries2/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile3[]          ="ETrading/Bonds/USTreasuries3/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile4[]          ="ETrading/Bonds/USTreasuries4/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile5[]          ="ETrading/Bonds/USTreasuries5/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile6[]          ="ETrading/Bonds/USTreasuries6/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile7[]          ="ETrading/Bonds/USTreasuries7/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile8[]          ="ETrading/Bonds/USTreasuries8/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile9[]          ="ETrading/Bonds/USTreasuries9/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile10[]         ="ETrading/Bonds/USTreasuries10/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile11[]         ="ETrading/Bonds/USTreasuries11/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile12[]         ="ETrading/Bonds/USTreasuries12/tryMeLWOBondCleanPrice_inputs";
+    extern const char priceBondInputFile1[]          ="ETrading/Bonds/USTreasuries1/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile2[]          ="ETrading/Bonds/USTreasuries2/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile3[]          ="ETrading/Bonds/USTreasuries3/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile4[]          ="ETrading/Bonds/USTreasuries4/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile5[]          ="ETrading/Bonds/USTreasuries5/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile6[]          ="ETrading/Bonds/USTreasuries6/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile7[]          ="ETrading/Bonds/USTreasuries7/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile8[]          ="ETrading/Bonds/USTreasuries8/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile9[]          ="ETrading/Bonds/USTreasuries9/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile10[]         ="ETrading/Bonds/USTreasuries10/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile11[]         ="ETrading/Bonds/USTreasuries11/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile12[]         ="ETrading/Bonds/USTreasuries12/tryAqObjectsBondCleanPrice_inputs";
 
-    extern const char priceBondOutputFile1[]         ="ETrading/Bonds/USTreasuries1/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile2[]         ="ETrading/Bonds/USTreasuries2/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile3[]         ="ETrading/Bonds/USTreasuries3/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile4[]         ="ETrading/Bonds/USTreasuries4/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile5[]         ="ETrading/Bonds/USTreasuries5/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile6[]         ="ETrading/Bonds/USTreasuries6/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile7[]         ="ETrading/Bonds/USTreasuries7/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile8[]         ="ETrading/Bonds/USTreasuries8/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile9[]         ="ETrading/Bonds/USTreasuries9/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile10[]        ="ETrading/Bonds/USTreasuries10/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile11[]        ="ETrading/Bonds/USTreasuries11/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile12[]        ="ETrading/Bonds/USTreasuries12/tryMeLWOBondCleanPrice_outputs";
+    extern const char priceBondOutputFile1[]         ="ETrading/Bonds/USTreasuries1/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile2[]         ="ETrading/Bonds/USTreasuries2/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile3[]         ="ETrading/Bonds/USTreasuries3/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile4[]         ="ETrading/Bonds/USTreasuries4/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile5[]         ="ETrading/Bonds/USTreasuries5/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile6[]         ="ETrading/Bonds/USTreasuries6/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile7[]         ="ETrading/Bonds/USTreasuries7/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile8[]         ="ETrading/Bonds/USTreasuries8/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile9[]         ="ETrading/Bonds/USTreasuries9/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile10[]        ="ETrading/Bonds/USTreasuries10/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile11[]        ="ETrading/Bonds/USTreasuries11/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile12[]        ="ETrading/Bonds/USTreasuries12/tryAqObjectsBondCleanPrice_outputs";
 }
 
 namespace google_test

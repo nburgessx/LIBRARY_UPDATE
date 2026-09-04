@@ -34,11 +34,11 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char inputs[]		    = TEST_DIR "tryMeSwapDelta_inputs.csv";
-    extern const char raw_outputs_32[]	= "tryMeSwapDelta_outputs.csv";
-    extern const char raw_outputs_64[]	= "tryMeSwapDelta_outputs_64bit.csv";
-    extern const char outputs_32[]		= TEST_DIR "tryMeSwapDelta_outputs.csv";
-    extern const char outputs_64[]		= TEST_DIR "tryMeSwapDelta_outputs_64bit.csv";
+    extern const char inputs[]		    = TEST_DIR "tryAqSwapsDelta_inputs.csv";
+    extern const char raw_outputs_32[]	= "tryAqSwapsDelta_outputs.csv";
+    extern const char raw_outputs_64[]	= "tryAqSwapsDelta_outputs_64bit.csv";
+    extern const char outputs_32[]		= TEST_DIR "tryAqSwapsDelta_outputs.csv";
+    extern const char outputs_64[]		= TEST_DIR "tryAqSwapsDelta_outputs_64bit.csv";
 
 
     const int TRADE_COUNT = 4;

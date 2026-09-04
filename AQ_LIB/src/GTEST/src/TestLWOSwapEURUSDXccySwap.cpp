@@ -36,24 +36,24 @@ namespace
     // curve input files
     //
     
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryMeCurveCalibrateBasis_inputs.csv";
-    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryMeCurveCalibrateBasis_inputs.csv";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
 
     //
     // test call input and reference files
     //
     
-    extern const char xccySwapInputs[]	        = TEST_DIR "XCCY1@182_tryMeLWOSwapCreate_inputs";
-    extern const char priceInputs[]		        = TEST_DIR "XCCY1@182_tryMeLWOSwapPV_inputs";
-    extern const char priceOutputs[]		    = TEST_DIR "XCCY1@182_tryMeLWOSwapPV_outputs";
-    extern const char priceOutputs64[]		    = TEST_DIR "XCCY1@182_tryMeLWOSwapPV_outputs64_";
-    extern const char parSpreadInputs[]	        = TEST_DIR "XCCY1@182_tryMeLWOSwapParSpread_inputs";
-    extern const char parSpreadOutputs[]	    = TEST_DIR "XCCY1@182_tryMeLWOSwapParSpread_outputs";
-    extern const char parSpreadOutputs64[]	    = TEST_DIR "XCCY1@182_tryMeLWOSwapParSpread_outputs64_";
+    extern const char xccySwapInputs[]	        = TEST_DIR "XCCY1@182_tryAqObjectsSwapCreate_inputs";
+    extern const char priceInputs[]		        = TEST_DIR "XCCY1@182_tryAqObjectsSwapPV_inputs";
+    extern const char priceOutputs[]		    = TEST_DIR "XCCY1@182_tryAqObjectsSwapPV_outputs";
+    extern const char priceOutputs64[]		    = TEST_DIR "XCCY1@182_tryAqObjectsSwapPV_outputs64_";
+    extern const char parSpreadInputs[]	        = TEST_DIR "XCCY1@182_tryAqObjectsSwapParSpread_inputs";
+    extern const char parSpreadOutputs[]	    = TEST_DIR "XCCY1@182_tryAqObjectsSwapParSpread_outputs";
+    extern const char parSpreadOutputs64[]	    = TEST_DIR "XCCY1@182_tryAqObjectsSwapParSpread_outputs64_";
 
 
 }

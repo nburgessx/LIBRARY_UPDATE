@@ -45,8 +45,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCurveGeneratorCreate_inputs", objectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOCurveGeneratorCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsCurveGeneratorCreate_inputs", objectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsCurveGeneratorCreate");
 			file.write("objectName", objectName);
 
 			// Write out each propertyName and corresponding block of property config data
@@ -87,7 +87,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCurveGeneratorCreate_outputs", objectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsCurveGeneratorCreate_outputs", objectName.c_str()));
 			file.write("output", objectName);
 		}
 

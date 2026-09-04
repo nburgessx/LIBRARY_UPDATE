@@ -64,8 +64,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled())
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSabrMarketDataCreate_inputs", objectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOSabrMarketDataCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsSabrMarketDataCreate_inputs", objectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsSabrMarketDataCreate");
 			file.write("objectName", objectName);
 
 			// Write out each propertyName and corresponding block of property config data
@@ -93,7 +93,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled())
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSabrMarketDataCreate_outputs", objectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSabrMarketDataCreate_outputs", objectName.c_str()));
 			file.write("output", objectName);
 		}
 
@@ -122,8 +122,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled())
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSabrModelCalibrate_inputs", objectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOSabrModelCalibrate");
+			CreateDataFile file(decorateFilename("tryAqObjectsSabrModelCalibrate_inputs", objectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsSabrModelCalibrate");
 			file.write("objectName", objectName);
 
 			// Write out each propertyName and corresponding block of property config data
@@ -153,7 +153,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled())
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSabrModelCalibrate_outputs", objectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSabrModelCalibrate_outputs", objectName.c_str()));
 			file.write("output", objectName);
 		}
 

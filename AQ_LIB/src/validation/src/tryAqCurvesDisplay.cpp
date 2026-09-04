@@ -28,8 +28,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDisplay_inputs", curveCollection, curveIndex ) );
-            file.write( "generatorFunction", "tryMeCurveDisplay" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDisplay_inputs", curveCollection, curveIndex ) );
+            file.write( "generatorFunction", "tryAqCurvesDisplay" );
             file.write( "curveCollection", curveCollection );
             file.write( "curveIndex", curveIndex );
         }
@@ -43,7 +43,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDisplay_outputs", curveCollection, curIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDisplay_outputs", curveCollection, curIndex ) );
             file.write( "output", ret );
         }
 

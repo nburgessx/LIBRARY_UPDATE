@@ -26,9 +26,9 @@ namespace
     const double yieldTolerance = 1e-10;
 
     // Test Bond Input File(s)
-    extern const char createBondInputFile[]         ="ETrading/Bonds/GermanBunds/tryMeLWOBondCreate_inputs";
-    extern const char priceBondInputFile[]          ="ETrading/Bonds/GermanBunds/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondOutputFile[]         ="ETrading/Bonds/GermanBunds/tryMeLWOBondCleanPrice_outputs";
+    extern const char createBondInputFile[]         ="ETrading/Bonds/GermanBunds/tryAqObjectsBondCreate_inputs";
+    extern const char priceBondInputFile[]          ="ETrading/Bonds/GermanBunds/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondOutputFile[]         ="ETrading/Bonds/GermanBunds/tryAqObjectsBondCleanPrice_outputs";
 }
 
 namespace google_test

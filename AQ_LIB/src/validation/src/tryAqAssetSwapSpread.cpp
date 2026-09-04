@@ -92,8 +92,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeProductAssetSwapSpread_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryMeProductAssetSwapSpread" );
+            CreateDataFile file( decorateFilename( "tryAqAssetSwapSpread_inputs", curveCollection ) );
+            file.write( "generatorFunction", "tryAqAssetSwapSpread" );
             file.write( "bondPrice", bondPrice );
             file.write( "assetSwapLVB", assetSwapLVB );
             file.write( "validateKeys", validateKeys );
@@ -180,7 +180,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file1( decorateFilename( "tryMeProductAssetSwapSpread_outputs", curveCollection ) );
+            CreateDataFile file1( decorateFilename( "tryAqAssetSwapSpread_outputs", curveCollection ) );
             file1.write( "output", ret );
         }
 

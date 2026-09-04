@@ -39,15 +39,15 @@ namespace
 	extern const char DIR_SABR_INPUTS_1[]				= TEST_DIR "1_USD_SABR_inputs.csv";
 
 	extern const char DIR_USD_SABR_CALIBRATION_INPUTS_1[]	= TEST_DIR "1_USD_SABR_Calibration_inputs.csv";
-	extern const char DIR_USD_SABR_CONVENTION_INPUTS_1[]	= TEST_DIR "1_USD_tryMeSABRSetupConvention_inputs.csv";
-	extern const char DIR_USD_SABR_ALPHA_INPUTS_1[]			= TEST_DIR "1_USD_tryMeSABRSetupParameter_Alpha_inputs.csv";
-	extern const char DIR_USD_SABR_BETA_INPUTS_1[]			= TEST_DIR "1_USD_tryMeSABRSetupParameter_Beta_inputs.csv";
-	extern const char DIR_USD_SABR_NU_INPUTS_1[]			= TEST_DIR "1_USD_tryMeSABRSetupParameter_Nu_inputs.csv";
-	extern const char DIR_USD_SABR_RHO_INPUTS_1[]			= TEST_DIR "1_USD_tryMeSABRSetupParameter_Rho_inputs.csv";
-	extern const char DIR_USD_SABR_FORWARDS_INPUTS_1[]		= TEST_DIR "1_USD_tryMeSABRSetupParameter_Forwards_inputs.csv";
-	extern const char DIR_USD_SABR_ANNUITY_INPUTS_1[]		= TEST_DIR "1_USD_tryMeSABRSetupParameter_Annuity_inputs.csv";
+	extern const char DIR_USD_SABR_CONVENTION_INPUTS_1[]	= TEST_DIR "1_USD_tryAqVolsSABRSetupConvention_inputs.csv";
+	extern const char DIR_USD_SABR_ALPHA_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Alpha_inputs.csv";
+	extern const char DIR_USD_SABR_BETA_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Beta_inputs.csv";
+	extern const char DIR_USD_SABR_NU_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Nu_inputs.csv";
+	extern const char DIR_USD_SABR_RHO_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Rho_inputs.csv";
+	extern const char DIR_USD_SABR_FORWARDS_INPUTS_1[]		= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Forwards_inputs.csv";
+	extern const char DIR_USD_SABR_ANNUITY_INPUTS_1[]		= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Annuity_inputs.csv";
 
-	extern const vector<string> DIR_USD_SABR_VOL_INPUTS_1 = { TEST_DIR "1_USD_tryMeSABRSetupSwaptionVol_5delta_inputs.csv", TEST_DIR "1_USD_tryMeSABRSetupSwaptionVol_10delta_inputs.csv", TEST_DIR "1_USD_tryMeSABRSetupSwaptionVol_20delta_inputs.csv", TEST_DIR "1_USD_tryMeSABRSetupSwaptionVol_30delta_inputs.csv", TEST_DIR "1_USD_tryMeSABRSetupSwaptionVol_40delta_inputs.csv", TEST_DIR "1_USD_tryMeSABRSetupSwaptionVol_60delta_inputs.csv", TEST_DIR "1_USD_tryMeSABRSetupSwaptionVol_70delta_inputs.csv", TEST_DIR "1_USD_tryMeSABRSetupSwaptionVol_80delta_inputs.csv", TEST_DIR "1_USD_tryMeSABRSetupSwaptionVol_90delta_inputs.csv", TEST_DIR "1_USD_tryMeSABRSetupSwaptionVol_95delta_inputs.csv", TEST_DIR "1_USD_tryMeSABRSetupSwaptionVol_ATM_inputs.csv" };
+	extern const vector<string> DIR_USD_SABR_VOL_INPUTS_1 = { TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_5delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_10delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_20delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_30delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_40delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_60delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_70delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_80delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_90delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_95delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_ATM_inputs.csv" };
 	
 	// Output files
 	extern const char DIR_ALPHA_OUTPUT_32BIT[] = TEST_DIR "1_USD_SABR_Calibrated_ALPHA_ouputs_32bit.csv";

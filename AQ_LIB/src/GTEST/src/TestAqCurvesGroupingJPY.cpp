@@ -13,7 +13,7 @@
 
 using etrading::ReadDataFile;
 
-#define TEST_DIR "ETrading/Curves/TestMeCurveGroupingJPY/"
+#define TEST_DIR "ETrading/Curves/TestAqCurvesGroupingJPY/"
 
 namespace
 {

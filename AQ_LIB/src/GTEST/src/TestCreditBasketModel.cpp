@@ -44,15 +44,15 @@ namespace
 	// -------------------------------------------------------------
 
 	// Curve market data files for use with CurveGenerators
-	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@6_tryMeLWOCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@6_tryAqObjectsCurveMarketDataCreate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Curves built from generator and market data
-	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryMeLWOCurveCalibrate_inputs.csv";
+	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryAqObjectsCurveCalibrate_inputs.csv";
 
 	// Build Credit Basket Model
-	const char CREDIT_BASKET_MODEL[]			= TEST_DIR "CREDITBASKETMODEL1@14_tryMeLWOCreditBasketModelCreate_inputs.csv";
+	const char CREDIT_BASKET_MODEL[]			= TEST_DIR "CREDITBASKETMODEL1@14_tryAqObjectsCreditBasketModelCreate_inputs.csv";
 
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;

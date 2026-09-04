@@ -40,24 +40,24 @@ namespace
     //
     // curve input files
     //
-    extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char JPYYC_STD[]					= TEST_DIR "JPYYC_STD_tryMeCurveCalibrateSwap_inputs";
-    extern const char JPYYC_3M6M[]					= TEST_DIR "JPYYC_3M6M_tryMeCurveCalibrateBasis_inputs";
+    extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char JPYYC_STD[]					= TEST_DIR "JPYYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char JPYYC_3M6M[]					= TEST_DIR "JPYYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char curveDisplayInputs[]				= TEST_DIR "JPYYC_3M6M_tryMeCurveDisplay_inputs.csv";
-    extern const char curveDisplayOutputs_32bit[]		= TEST_DIR "JPYYC_3M6M_tryMeCurveDisplay_outputs_32bit.csv";
-	extern const char curveDisplayOutputs_64bit[]		= TEST_DIR "JPYYC_3M6M_tryMeCurveDisplay_outputs_64bit.csv";
+    extern const char curveDisplayInputs[]				= TEST_DIR "JPYYC_3M6M_tryAqCurvesDisplay_inputs.csv";
+    extern const char curveDisplayOutputs_32bit[]		= TEST_DIR "JPYYC_3M6M_tryAqCurvesDisplay_outputs_32bit.csv";
+	extern const char curveDisplayOutputs_64bit[]		= TEST_DIR "JPYYC_3M6M_tryAqCurvesDisplay_outputs_64bit.csv";
 
-    extern const char CheckDiscountFactorsInputs[]				= TEST_DIR "JPYYC_3M6M_tryMeCurveDiscountFactorsFromYearFractions_inputs";
-    extern const char CheckDiscountFactorsOutputs_32bit[]		= TEST_DIR "JPYYC_3M6M_tryMeCurveDiscountFactorsFromYearFractions_outputs_32bit";
-	extern const char CheckDiscountFactorsOutputs_64bit[]		= TEST_DIR "JPYYC_3M6M_tryMeCurveDiscountFactorsFromYearFractions_outputs_64bit";
+    extern const char CheckDiscountFactorsInputs[]				= TEST_DIR "JPYYC_3M6M_tryAqCurvesDiscountFactorsFromYearFractions_inputs";
+    extern const char CheckDiscountFactorsOutputs_32bit[]		= TEST_DIR "JPYYC_3M6M_tryAqCurvesDiscountFactorsFromYearFractions_outputs_32bit";
+	extern const char CheckDiscountFactorsOutputs_64bit[]		= TEST_DIR "JPYYC_3M6M_tryAqCurvesDiscountFactorsFromYearFractions_outputs_64bit";
 
-    extern const char CheckForwardRatesInputs[]				= TEST_DIR "JPYYC_3M6M_tryMeCurveForwardRatesFromYearFraction_inputs";
-    extern const char CheckForwardRatesOutputs_32bit[]		= TEST_DIR "JPYYC_3M6M_tryMeCurveForwardRatesFromYearFraction_outputs_32bit";
-	extern const char CheckForwardRatesOutputs_64bit[]		= TEST_DIR "JPYYC_3M6M_tryMeCurveForwardRatesFromYearFraction_outputs_64bit";
+    extern const char CheckForwardRatesInputs[]				= TEST_DIR "JPYYC_3M6M_tryAqCurvesForwardRatesFromYearFraction_inputs";
+    extern const char CheckForwardRatesOutputs_32bit[]		= TEST_DIR "JPYYC_3M6M_tryAqCurvesForwardRatesFromYearFraction_outputs_32bit";
+	extern const char CheckForwardRatesOutputs_64bit[]		= TEST_DIR "JPYYC_3M6M_tryAqCurvesForwardRatesFromYearFraction_outputs_64bit";
 }
 
 namespace google_test

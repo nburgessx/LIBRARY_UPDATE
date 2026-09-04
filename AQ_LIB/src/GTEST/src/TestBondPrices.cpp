@@ -20,29 +20,29 @@ using etrading::CreateDataFile;
 namespace
 {
     // Test Bond Input File(s)
-    extern const std::string bondInputsFile1            = TEST_DIR "tryMeLWOBondCreate_inputs.csv";
-	extern const std::string bondInputsFileParallel     = TEST_DIR "tryMeLWOBondCreate_inputs_parallel.csv";
+    extern const std::string bondInputsFile1            = TEST_DIR "tryAqObjectsBondCreate_inputs.csv";
+	extern const std::string bondInputsFileParallel     = TEST_DIR "tryAqObjectsBondCreate_inputs_parallel.csv";
     
-    extern const std::string dirtyPriceInputs           = TEST_DIR "tryMeLWOBondDirtyPrice_inputs.csv";
-    extern const std::string dirtyPriceOutputs          = TEST_DIR "tryMeLWOBondDirtyPrice_outputs.csv";
+    extern const std::string dirtyPriceInputs           = TEST_DIR "tryAqObjectsBondDirtyPrice_inputs.csv";
+    extern const std::string dirtyPriceOutputs          = TEST_DIR "tryAqObjectsBondDirtyPrice_outputs.csv";
     
-    extern const std::string accruedInterestInputs      = TEST_DIR "tryMeLWOBondAccruedInterest_inputs.csv";
-    extern const std::string accruedInterestOutputs     = TEST_DIR "tryMeLWOBondAccruedInterest_outputs.csv";
+    extern const std::string accruedInterestInputs      = TEST_DIR "tryAqObjectsBondAccruedInterest_inputs.csv";
+    extern const std::string accruedInterestOutputs     = TEST_DIR "tryAqObjectsBondAccruedInterest_outputs.csv";
     
-    extern const std::string cleanPriceInputs           = TEST_DIR "tryMeLWOBondCleanPrice_inputs.csv";
-    extern const std::string cleanPriceOutputs          = TEST_DIR "tryMeLWOBondCleanPrice_outputs.csv";
+    extern const std::string cleanPriceInputs           = TEST_DIR "tryAqObjectsBondCleanPrice_inputs.csv";
+    extern const std::string cleanPriceOutputs          = TEST_DIR "tryAqObjectsBondCleanPrice_outputs.csv";
 
-    extern const std::string yieldInputs                = TEST_DIR "tryMeLWOBondYield_inputs.csv";
-    extern const std::string yieldOutputs               = TEST_DIR "tryMeLWOBondYield_outputs.csv";
+    extern const std::string yieldInputs                = TEST_DIR "tryAqObjectsBondYield_inputs.csv";
+    extern const std::string yieldOutputs               = TEST_DIR "tryAqObjectsBondYield_outputs.csv";
 
-	extern const std::string yieldInputsParallel        = TEST_DIR "tryMeLWOBondYield_inputs_parallel.csv";
-    extern const std::string yieldOutputsParallel       = TEST_DIR "tryMeLWOBondYield_outputs_parallel.csv";
+	extern const std::string yieldInputsParallel        = TEST_DIR "tryAqObjectsBondYield_inputs_parallel.csv";
+    extern const std::string yieldOutputsParallel       = TEST_DIR "tryAqObjectsBondYield_outputs_parallel.csv";
 
-	extern const std::string dv01Inputs                 = TEST_DIR "tryMeLWOBondDV01_inputs.csv";
-    extern const std::string dv01Outputs                = TEST_DIR "tryMeLWOBondDV01_outputs.csv";
+	extern const std::string dv01Inputs                 = TEST_DIR "tryAqObjectsBondDV01_inputs.csv";
+    extern const std::string dv01Outputs                = TEST_DIR "tryAqObjectsBondDV01_outputs.csv";
 
-	extern const std::string modifiedDurationInputs     = TEST_DIR "tryMeLWOBondModifiedDuration_inputs.csv";
-    extern const std::string modifiedDurationOutputs    = TEST_DIR "tryMeLWOBondModifiedDuration_outputs.csv";
+	extern const std::string modifiedDurationInputs     = TEST_DIR "tryAqObjectsBondModifiedDuration_inputs.csv";
+    extern const std::string modifiedDurationOutputs    = TEST_DIR "tryAqObjectsBondModifiedDuration_outputs.csv";
 }
 
 namespace google_test
@@ -64,7 +64,7 @@ namespace google_test
     class TestBondPrices : public TestBondFactory {};
 
 
-    TEST_F( TestBondPrices, UNIT_tryMeLWOBondDirtyPrice )
+    TEST_F( TestBondPrices, UNIT_tryAqObjectsBondDirtyPrice )
     {
         try
         {
@@ -107,7 +107,7 @@ namespace google_test
     }
 
 
-    TEST_F( TestBondPrices, UNIT_tryMeLWOBondCleanPrice )
+    TEST_F( TestBondPrices, UNIT_tryAqObjectsBondCleanPrice )
     {
         try
         {
@@ -149,7 +149,7 @@ namespace google_test
         }
     }
 
-    TEST_F( TestBondPrices, UNIT_tryMeLWOBondAccruedInterest )
+    TEST_F( TestBondPrices, UNIT_tryAqObjectsBondAccruedInterest )
     {
         try
         {
@@ -190,7 +190,7 @@ namespace google_test
         }
     }
 
-    TEST_F( TestBondPrices, UNIT_tryMeLWOBondYield )
+    TEST_F( TestBondPrices, UNIT_tryAqObjectsBondYield )
     {
         try
         {
@@ -284,17 +284,17 @@ namespace google_test
         }
 	}
 
-	TEST_F( TestBondPrices, SNAPSHOT_tryMeLWOBondYield_Sequential )
+	TEST_F( TestBondPrices, SNAPSHOT_tryAqObjectsBondYield_Sequential )
     {
 		runYieldTest( false /* run sequentially */ );
 	}
 
-    TEST_F( TestBondPrices, SNAPSHOT_tryMeLWOBondYield_Parallel )
+    TEST_F( TestBondPrices, SNAPSHOT_tryAqObjectsBondYield_Parallel )
     {
 		runYieldTest( true /* run in parallel */ );
     }
 
-	TEST_F( TestBondPrices, UNIT_tryMeLWOBondDV01Numerical )
+	TEST_F( TestBondPrices, UNIT_tryAqObjectsBondDV01Numerical )
     {
         try
         {
@@ -338,7 +338,7 @@ namespace google_test
         }
     }
 
-	TEST_F( TestBondPrices, UNIT_tryMeLWOBondDV01 )
+	TEST_F( TestBondPrices, UNIT_tryAqObjectsBondDV01 )
     {
         try
         {
@@ -380,7 +380,7 @@ namespace google_test
         }
     }
 
-		TEST_F( TestBondPrices, UNIT_tryMeLWOBondModifiedDuration )
+		TEST_F( TestBondPrices, UNIT_tryAqObjectsBondModifiedDuration )
     {
         try
         {

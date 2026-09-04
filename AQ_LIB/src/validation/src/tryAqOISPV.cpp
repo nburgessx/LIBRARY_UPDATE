@@ -58,8 +58,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeProductOISPV_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryMeProductOISPV" );
+            CreateDataFile file( decorateFilename( "tryAqOISPV_inputs", curveCollection ) );
+            file.write( "generatorFunction", "tryAqOISPV" );
             file.write( "oisLVB", oisLVB );
         }
 
@@ -148,7 +148,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeProductOISPV_outputs", curveCollection ) );
+            CreateDataFile file( decorateFilename( "tryAqOISPV_outputs", curveCollection ) );
             file.write( "output", ret, 12 );
         }
 

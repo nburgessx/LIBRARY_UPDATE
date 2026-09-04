@@ -20,14 +20,14 @@ namespace
     extern const char fileNameBRLUSDOIS[]   = TEST_DIR_BRL "USD_OIS_CURVE.JSON";
     extern const char fileNameBRLUSD3ML[]   = TEST_DIR_BRL "USD_SWAP_3M_CURVE.JSON";
     extern const char fileNameBRLXCCY[]     = TEST_DIR_BRL "BRL_XCCYBASIS_CURVE.JSON";
-    extern const char inputsBRL[]           = TEST_DIR_BRL "BRLYC_BRLDF_tryMeCurveDiscountFactorsFromTenors_inputs.csv";
-    extern const char outputsBRL[]          = TEST_DIR_BRL "BRLYC_BRLDF_tryMeCurveDiscountFactorsFromTenors_outputs.csv";
+    extern const char inputsBRL[]           = TEST_DIR_BRL "BRLYC_BRLDF_tryAqCurvesDiscountFactorsFromTenors_inputs.csv";
+    extern const char outputsBRL[]          = TEST_DIR_BRL "BRLYC_BRLDF_tryAqCurvesDiscountFactorsFromTenors_outputs.csv";
 
     extern const char fileNameCNHUSDOIS[]   = TEST_DIR_CNH "USD_OIS_CURVE.JSON";
     extern const char fileNameCNHUSD3ML[]   = TEST_DIR_CNH "USD_SWAP_3M_CURVE.JSON";
     extern const char fileNameCNHXCCY[]     = TEST_DIR_CNH "CNH_XCCYBASIS_CURVE.JSON";
-    extern const char inputsCNH[]           = TEST_DIR_CNH "CNHYC_CNHDF_tryMeCurveDiscountFactorsFromTenors_inputs.csv";
-    extern const char outputsCNH[]          = TEST_DIR_CNH "CNHYC_CNHDF_tryMeCurveDiscountFactorsFromTenors_outputs.csv";
+    extern const char inputsCNH[]           = TEST_DIR_CNH "CNHYC_CNHDF_tryAqCurvesDiscountFactorsFromTenors_inputs.csv";
+    extern const char outputsCNH[]          = TEST_DIR_CNH "CNHYC_CNHDF_tryAqCurvesDiscountFactorsFromTenors_outputs.csv";
 }
 
 namespace google_test

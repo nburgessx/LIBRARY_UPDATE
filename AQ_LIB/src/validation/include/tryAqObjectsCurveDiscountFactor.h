@@ -15,7 +15,7 @@ namespace validation
             const DoubleVector& yearFractions,
             const AQLString& dayCount );
 
-    /* @brief			validation method for meCurveLWODiscountFactorsFromTenors
+    /* @brief			validation method for aqCurvesLWODiscountFactorsFromTenors
     *  @param [in]		lwoCurveName	Curve Name
     *  @param [in]		tenors			An array of tenor strings
     *  @param [in]		businessDayAdj	Rule that decides if end date should roll forward or backward etc, ie, MF. Default to 'NO_CHANGE'.

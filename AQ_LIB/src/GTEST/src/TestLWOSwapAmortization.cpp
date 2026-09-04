@@ -32,10 +32,10 @@ namespace
     //
     // curve input files
     //
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
     extern const char EURYC_1M[]			    = "";
     extern const char EURYC_3M[]			    = "";
-    extern const char EURYC_6M[]			    = TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs";
+    extern const char EURYC_6M[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
     extern const char EURYC_12M[]			    = "";
 
 
@@ -43,19 +43,19 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char swapInputs[]	= TEST_DIR "EURSWAP@6_tryMeLWOSwapCreate_inputs";
+    extern const char swapInputs[]	= TEST_DIR "EURSWAP@6_tryAqObjectsSwapCreate_inputs";
 
-    extern const char pvInputs[]	        = TEST_DIR "EURSWAP@6_tryMeLWOSwapPV_inputs";
-    extern const char pvOutputs[]	    = TEST_DIR "EURSWAP@6_tryMeLWOSwapPV_outputs";
-    extern const char pvOutputs64[]	    = TEST_DIR "EURSWAP@6_tryMeLWOSwapPV_outputs64_";
+    extern const char pvInputs[]	        = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV_inputs";
+    extern const char pvOutputs[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV_outputs";
+    extern const char pvOutputs64[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV_outputs64_";
 
-    extern const char parRateInputs[]	        = TEST_DIR "EURSWAP@6_tryMeLWOSwapParRate_inputs";
-    extern const char parRateOutputs[]	    = TEST_DIR "EURSWAP@6_tryMeLWOSwapParRate_outputs";
-    extern const char parRateOutputs64[]	    = TEST_DIR "EURSWAP@6_tryMeLWOSwapParRate_outputs_outputs64_";
+    extern const char parRateInputs[]	        = TEST_DIR "EURSWAP@6_tryAqObjectsSwapParRate_inputs";
+    extern const char parRateOutputs[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapParRate_outputs";
+    extern const char parRateOutputs64[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapParRate_outputs_outputs64_";
 
-    extern const char pv01Inputs[]	        = TEST_DIR "EURSWAP@6_tryMeLWOSwapPV01_inputs";
-    extern const char pv01Outputs[]	    = TEST_DIR "EURSWAP@6_tryMeLWOSwapPV01_outputs";
-    extern const char pv01Outputs64[]	    = TEST_DIR "EURSWAP@6_tryMeLWOSwapPV01_outputs_outputs64_";
+    extern const char pv01Inputs[]	        = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV01_inputs";
+    extern const char pv01Outputs[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV01_outputs";
+    extern const char pv01Outputs64[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV01_outputs_outputs64_";
 
 }
 

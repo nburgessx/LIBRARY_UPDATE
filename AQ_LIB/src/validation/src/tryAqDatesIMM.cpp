@@ -32,8 +32,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateIMMFromMonth_inputs" );
-            file.write( "generatorFunction", "tryMeDateIMMFromMonth" );
+            CreateDataFile file( "tryAqDatesIMMFromMonth_inputs" );
+            file.write( "generatorFunction", "tryAqDatesIMMFromMonth" );
             file.write( "year",				year );
             file.write( "month",				month );
             file.write( "calendar",			calendar );
@@ -48,7 +48,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateIMMFromMonth_outputs" );
+            CreateDataFile file( "tryAqDatesIMMFromMonth_outputs" );
             file.write( "output", ret );
         }
 
@@ -75,8 +75,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateNthIMM_inputs" );
-            file.write( "generatorFunction", "tryMeDateNthIMM" );
+            CreateDataFile file( "tryAqDatesNthIMM_inputs" );
+            file.write( "generatorFunction", "tryAqDatesNthIMM" );
             file.write( "year",				year );
             file.write( "nth",				nth );
             file.write( "calendar",			calendar );
@@ -90,7 +90,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateNthIMM_outputs" );
+            CreateDataFile file( "tryAqDatesNthIMM_outputs" );
             file.write( "output", ret );
         }
 
@@ -117,8 +117,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateNthIMMFromStartDate_inputs" );
-            file.write( "generatorFunction", "tryMeDateNthIMMFromStartDate" );
+            CreateDataFile file( "tryAqDatesNthIMMFromStartDate_inputs" );
+            file.write( "generatorFunction", "tryAqDatesNthIMMFromStartDate" );
             file.write( "startDate",				startDate );
             file.write( "nth",				    nth );
             file.write( "calendar",				calendar );
@@ -132,7 +132,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateNthIMMFromStartDate_outputs" );
+            CreateDataFile file( "tryAqDatesNthIMMFromStartDate_outputs" );
             file.write( "output", ret );
         }
 

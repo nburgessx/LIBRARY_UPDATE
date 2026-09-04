@@ -22,7 +22,7 @@ namespace validation
     /* @brief	Clear the object pool and the LWO Cache
      *  @return	A notification string
      */
-    AQLString tryMeUtilityClearLWOCache();
+    AQLString tryAqObjectsClearCache();
 
 
     /* @brief			validation interface for the aqToolsLoadCalendarFile function

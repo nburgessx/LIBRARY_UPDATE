@@ -22,8 +22,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveGetInterpolationJoinDate", curveCollection, curveIndex) );
-            file.write( "generatorFunction", "tryMeCurveGetInterpolationJoinDate" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesGetInterpolationJoinDate", curveCollection, curveIndex) );
+            file.write( "generatorFunction", "tryAqCurvesGetInterpolationJoinDate" );
             file.write( "curveCollection", curveCollection );
             file.write( "curveIndex", curveIndex );
 			file.write( "interpolation", interpolation );
@@ -41,7 +41,7 @@ namespace validation
 
 		if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveGetInterpolationJoinDate", curveCollection, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesGetInterpolationJoinDate", curveCollection, curveIndex ) );
             file.write( "output", joinDate );
         }
 

@@ -46,30 +46,30 @@ namespace
 	// -------------------------------------------------------------
 
 	// Curve market data files for use with CurveGenerators
-	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@553_tryMeLWOCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@553_tryAqObjectsCurveMarketDataCreate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Curves built from generator and market data
-	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryMeLWOCurveCalibrate_inputs.csv";
+	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryAqObjectsCurveCalibrate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Build Credit Default Swap
 
-	const char GEN_CREDIT_DEFAULT_SWAP[]		= TEST_DIR "TEST_CDS@1_tryMeLWOSwapCreateFromGenerator_inputs.csv" ;
+	const char GEN_CREDIT_DEFAULT_SWAP[]		= TEST_DIR "TEST_CDS@1_tryAqObjectsSwapCreateFromGenerator_inputs.csv" ;
 
 	// API methods
-	const char CDS_CALCULATE_PV[]				= TEST_DIR "tryMeLWOCreditDefaultSwapPVFromHazardRate_inputs.csv";
-	const char CDS_CALCULATE_RISKY_ANNUITY[]	= TEST_DIR "tryMeLWOCreditDefaultSwapAnnuityFromHazardRate_inputs.csv";
-	const char CDS_CALCULATE_PAR_SPREAD[]		= TEST_DIR "tryMeLWOCreditDefaultSwapParSpreadFromHazardRate_inputs.csv";
-	const char CDS_CALCULATE_HAZARD_RATE[]		= TEST_DIR "tryMeLWOCreditDefaultSwapHazardRateFromParSpread_inputs.csv";
+	const char CDS_CALCULATE_PV[]				= TEST_DIR "tryAqObjectsCreditDefaultSwapPVFromHazardRate_inputs.csv";
+	const char CDS_CALCULATE_RISKY_ANNUITY[]	= TEST_DIR "tryAqObjectsCreditDefaultSwapAnnuityFromHazardRate_inputs.csv";
+	const char CDS_CALCULATE_PAR_SPREAD[]		= TEST_DIR "tryAqObjectsCreditDefaultSwapParSpreadFromHazardRate_inputs.csv";
+	const char CDS_CALCULATE_HAZARD_RATE[]		= TEST_DIR "tryAqObjectsCreditDefaultSwapHazardRateFromParSpread_inputs.csv";
 
 	// Snapshot results
-	const char CDS_EXPECTED_PV[]				= TEST_DIR "tryMeLWOCreditDefaultSwapPVFromHazardRate_outputs.csv";
-	const char CDS_EXPECTED_RISKY_ANNUITY[]		= TEST_DIR "tryMeLWOCreditDefaultSwapAnnuityFromHazardRate_outputs.csv";
-	const char CDS_EXPECTED_PAR_SPREAD[]		= TEST_DIR "tryMeLWOCreditDefaultSwapParSpreadFromHazardRate_outputs.csv";
-	const char CDS_EXPECTED_HAZARD_RATE[]		= TEST_DIR "tryMeLWOCreditDefaultSwapHazardRateFromParSpread_outputs.csv";
+	const char CDS_EXPECTED_PV[]				= TEST_DIR "tryAqObjectsCreditDefaultSwapPVFromHazardRate_outputs.csv";
+	const char CDS_EXPECTED_RISKY_ANNUITY[]		= TEST_DIR "tryAqObjectsCreditDefaultSwapAnnuityFromHazardRate_outputs.csv";
+	const char CDS_EXPECTED_PAR_SPREAD[]		= TEST_DIR "tryAqObjectsCreditDefaultSwapParSpreadFromHazardRate_outputs.csv";
+	const char CDS_EXPECTED_HAZARD_RATE[]		= TEST_DIR "tryAqObjectsCreditDefaultSwapHazardRateFromParSpread_outputs.csv";
 
 	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions

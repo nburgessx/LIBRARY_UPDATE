@@ -45,8 +45,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCurveMarketDataCreate_inputs", objectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOCurveMarketDataCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsCurveMarketDataCreate_inputs", objectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsCurveMarketDataCreate");
 			file.write("objectName", objectName);
 
 			// Write out each marketDataType and correspondiong block of market data
@@ -85,7 +85,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCurveMarketDataCreate_outputs", objectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsCurveMarketDataCreate_outputs", objectName.c_str()));
 			file.write("output", objectName);
 		}
 

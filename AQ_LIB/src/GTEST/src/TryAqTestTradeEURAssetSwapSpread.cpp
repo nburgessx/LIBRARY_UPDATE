@@ -36,14 +36,14 @@ namespace
     //
     // curve input files
     //
-    extern const char EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char EURYC_STD[]			= TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs";
+    extern const char EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char EURYC_STD[]			= TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char getAssetSwapSpreadInputs[]	= TEST_DIR "EURYC_tryMeProductAssetSwapSpread_inputs";
-    extern const char getAssetSwapSpreadResults[]	= TEST_DIR "EURYC_tryMeProductAssetSwapSpread_outputs";
+    extern const char getAssetSwapSpreadInputs[]	= TEST_DIR "EURYC_tryAqAssetSwapSpread_inputs";
+    extern const char getAssetSwapSpreadResults[]	= TEST_DIR "EURYC_tryAqAssetSwapSpread_outputs";
 }
 
 namespace google_test

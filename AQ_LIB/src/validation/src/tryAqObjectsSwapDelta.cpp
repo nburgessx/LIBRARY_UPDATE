@@ -180,7 +180,7 @@ namespace validation
         // Record results
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeLWOSwapDeltaLadder_outputs") );
+            CreateDataFile file( decorateFilename( "tryAqObjectsSwapDeltaLadder_outputs") );
 			
 			file.write( "headers", headers );
 
@@ -392,7 +392,7 @@ namespace validation
         // Record results
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeLWOSwapDeltaLadderHorizontal_outputs") );
+            CreateDataFile file( decorateFilename( "tryAqObjectsSwapDeltaLadderHorizontal_outputs") );
 
 			file.write( "headers", headers );
 
@@ -489,7 +489,7 @@ namespace validation
         // Record results
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeLWOSwapDelta_outputs") );
+            CreateDataFile file( decorateFilename( "tryAqObjectsSwapDelta_outputs") );
             
 			for ( size_t i = 0; i < positionIDs.size(); ++i )
 			{

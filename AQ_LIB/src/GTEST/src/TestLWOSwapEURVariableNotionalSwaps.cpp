@@ -39,18 +39,18 @@ namespace
     //
     // curve input files
     //
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char EURYC_1M[]			    = TEST_DIR "EURYC_1M3M_tryMeCurveCalibrateBasis_inputs";
-    extern const char EURYC_3M[]			    = TEST_DIR "EURYC_3M6M_tryMeCurveCalibrateBasis_inputs";
-    extern const char EURYC_6M[]			    = TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs";
-    extern const char EURYC_12M[]			    = TEST_DIR "EURYC_6M12MBasis_tryMeCurveCalibrateBasis_inputs";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char EURYC_1M[]			    = TEST_DIR "EURYC_1M3M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char EURYC_3M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char EURYC_6M[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char EURYC_12M[]			    = TEST_DIR "EURYC_6M12MBasis_tryAqCurvesCalibrateBasis_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char fixedSchedulePath[]	    = TEST_DIR "EUR_FIXEDSCHEDULE"; // Test files require a suffix. Format :=  EUR_FIXEDSCHEDULE + '_tryMeLWOScheduleCreateBespoke_inputs/outputs' + Index
-    extern const char floatSchedulePath[]       = TEST_DIR "EUR_FLOATSCHEDULE"; // Test files require a suffix. Format :=  EUR_FLOATSCHEDULE + '_tryMeLWOScheduleCreateBespoke_inputs/outputs' + Index
-    extern const char vnsPath[]                 = TEST_DIR "EUR_VNS";           // Test files require a suffix. Format :=  EUR_VNS + '_tryMeLWOSwapCreateFromSchedule_inputs/outputs' + Index
+    extern const char fixedSchedulePath[]	    = TEST_DIR "EUR_FIXEDSCHEDULE"; // Test files require a suffix. Format :=  EUR_FIXEDSCHEDULE + '_tryAqObjectsScheduleCreateBespoke_inputs/outputs' + Index
+    extern const char floatSchedulePath[]       = TEST_DIR "EUR_FLOATSCHEDULE"; // Test files require a suffix. Format :=  EUR_FLOATSCHEDULE + '_tryAqObjectsScheduleCreateBespoke_inputs/outputs' + Index
+    extern const char vnsPath[]                 = TEST_DIR "EUR_VNS";           // Test files require a suffix. Format :=  EUR_VNS + '_tryAqObjectsSwapCreateFromSchedule_inputs/outputs' + Index
 }
 
 namespace google_test
@@ -73,8 +73,8 @@ namespace google_test
         try
         {
             // Load the input files : i.e. the fixed and floating schedules
-            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryMeLWOScheduleCreateBespoke_inputs.csv" );
-            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryMeLWOScheduleCreateBespoke_inputs.csv" );
+            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_inputs.csv" );
+            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_inputs.csv" );
             
             const ReadDataFile::Load fixedScheduleInputFile( fixedScheduleInputFilePath );
             const ReadDataFile::Load floatScheduleInputFile( floatScheduleInputFilePath );
@@ -93,8 +93,8 @@ namespace google_test
 	        std::string     floatScheduleResult     = validation::tryAqObjectsScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
 
             // Load the Saved Schedules
-            AQLString fixedScheduleOutputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryMeLWOScheduleCreateBespoke_outputs.csv" );
-            AQLString floatScheduleOutputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryMeLWOScheduleCreateBespoke_outputs.csv" );
+            AQLString fixedScheduleOutputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_outputs.csv" );
+            AQLString floatScheduleOutputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_outputs.csv" );
                 
             const ReadDataFile::Load fixedScheduleOutputFile( fixedScheduleOutputFilePath );
             const ReadDataFile::Load floatScheduleOutputFile( floatScheduleOutputFilePath );
@@ -125,8 +125,8 @@ namespace google_test
         try
         {
             // 1. Load the fixed and float Schedules
-            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryMeLWOScheduleCreateBespoke_inputs.csv" );
-            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryMeLWOScheduleCreateBespoke_inputs.csv" );
+            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_inputs.csv" );
+            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_inputs.csv" );
                 
             const ReadDataFile::Load fixedScheduleInputFile( fixedScheduleInputFilePath );
             const ReadDataFile::Load floatScheduleInputFile( floatScheduleInputFilePath );
@@ -146,7 +146,7 @@ namespace google_test
 
 
             // 2. Load the Variable Notional Swap, which requires the fixed and float schedules to be loaded first
-            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryMeLWOSwapCreateFromSchedule_inputs.csv" );
+            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjectsSwapCreateFromSchedule_inputs.csv" );
             const ReadDataFile::Load vnsInputFile( vnsInputFilePath );
                 
             // Recreate the Variable Notional Swap
@@ -168,7 +168,7 @@ namespace google_test
 
 
             // 3. Load the Expected Result
-            AQLString vnsOutputFilePath = etrading::decorateFilename( vnsPath, "", "tryMeLWOSwapCreateFromSchedule_outputs.csv" );
+            AQLString vnsOutputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjectsSwapCreateFromSchedule_outputs.csv" );
             const ReadDataFile::Load vnsOutputFile( vnsOutputFilePath );
 
             // Get the expected result
@@ -196,8 +196,8 @@ namespace google_test
         try
         {
             // 1. Load the fixed and float Schedules
-            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryMeLWOScheduleCreateBespoke_inputs.csv" );
-            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryMeLWOScheduleCreateBespoke_inputs.csv" );
+            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_inputs.csv" );
+            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_inputs.csv" );
                 
             const ReadDataFile::Load fixedScheduleInputFile( fixedScheduleInputFilePath );
             const ReadDataFile::Load floatScheduleInputFile( floatScheduleInputFilePath );
@@ -217,7 +217,7 @@ namespace google_test
 
 
             // 2. Load the Variable Notional Swap, which requires the fixed and float schedules to be loaded first
-            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryMeLWOSwapCreateFromSchedule_inputs.csv" );
+            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjectsSwapCreateFromSchedule_inputs.csv" );
             const ReadDataFile::Load vnsInputFile( vnsInputFilePath );
                 
             // Recreate the Variable Notional Swap
@@ -238,7 +238,7 @@ namespace google_test
 
 
             // 3. Get the Swap PV
-            AQLString vnsPVInputFilePath = etrading::decorateFilename( vnsPath, "", "tryMeLWOSwapPV_inputs.csv" );
+            AQLString vnsPVInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjectsSwapPV_inputs.csv" );
             const ReadDataFile::Load vnsPVInputFile( vnsPVInputFilePath );
 
             // Get the PV Parameters
@@ -253,9 +253,9 @@ namespace google_test
             // 4. Load the Expected Result and Compare
             const double tolerance = 0.01;  // Notional of trades is 10MM
 			#if defined(GTEST32)
-            CheckTestResultsAndRebaseOnRequest( vnsPVResult, TEST_DIR, vnsPath, "_tryMeLWOSwapPV_outputs_32bit", tolerance );
+            CheckTestResultsAndRebaseOnRequest( vnsPVResult, TEST_DIR, vnsPath, "_tryAqObjectsSwapPV_outputs_32bit", tolerance );
 			#else
-			CheckTestResultsAndRebaseOnRequest( vnsPVResult, TEST_DIR, vnsPath, "_tryMeLWOSwapPV_outputs_64bit", tolerance );
+			CheckTestResultsAndRebaseOnRequest( vnsPVResult, TEST_DIR, vnsPath, "_tryAqObjectsSwapPV_outputs_64bit", tolerance );
 			#endif
         }
         catch( const AQLCoreError& m )
@@ -277,8 +277,8 @@ namespace google_test
         try
         {
             // 1. Load the fixed and float Schedules
-            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryMeLWOScheduleCreateBespoke_inputs.csv" );
-            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryMeLWOScheduleCreateBespoke_inputs.csv" );
+            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_inputs.csv" );
+            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_inputs.csv" );
                 
             const ReadDataFile::Load fixedScheduleInputFile( fixedScheduleInputFilePath );
             const ReadDataFile::Load floatScheduleInputFile( floatScheduleInputFilePath );
@@ -298,7 +298,7 @@ namespace google_test
 
 
             // 2. Load the Variable Notional Swap, which requires the fixed and float schedules to be loaded first
-            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryMeLWOSwapCreateFromSchedule_inputs.csv" );
+            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjectsSwapCreateFromSchedule_inputs.csv" );
             const ReadDataFile::Load vnsInputFile( vnsInputFilePath );
                 
             // Recreate the Variable Notional Swap
@@ -320,7 +320,7 @@ namespace google_test
 
 
             // 3. Get the Swap Par Rate
-            AQLString vnsParRateInputFilePath = etrading::decorateFilename( vnsPath, "", "tryMeLWOSwapParRate_inputs.csv" );
+            AQLString vnsParRateInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjectsSwapParRate_inputs.csv" );
             const ReadDataFile::Load vnsParRateInputFile( vnsParRateInputFilePath );
 
             // Get the PV Parameters
@@ -334,7 +334,7 @@ namespace google_test
 
             // 4. Load the Expected Result and Compare
             const double tolerance = 1e-008;
-            CheckTestResultsAndRebaseOnRequest( vnsParRateResult, TEST_DIR, vnsPath, "_tryMeLWOSwapParRate_outputs", tolerance );
+            CheckTestResultsAndRebaseOnRequest( vnsParRateResult, TEST_DIR, vnsPath, "_tryAqObjectsSwapParRate_outputs", tolerance );
         }
         catch( const AQLCoreError& m )
         {
@@ -355,8 +355,8 @@ namespace google_test
         try
         {
             // 1. Load the fixed and float Schedules
-            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryMeLWOScheduleCreateBespoke_inputs.csv" );
-            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryMeLWOScheduleCreateBespoke_inputs.csv" );
+            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_inputs.csv" );
+            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjectsScheduleCreateBespoke_inputs.csv" );
                 
             const ReadDataFile::Load fixedScheduleInputFile( fixedScheduleInputFilePath );
             const ReadDataFile::Load floatScheduleInputFile( floatScheduleInputFilePath );
@@ -376,7 +376,7 @@ namespace google_test
 
 
             // 2. Load the Variable Notional Swap, which requires the fixed and float schedules to be loaded first
-            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryMeLWOSwapCreateFromSchedule_inputs.csv" );
+            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjectsSwapCreateFromSchedule_inputs.csv" );
             const ReadDataFile::Load vnsInputFile( vnsInputFilePath );
                 
             // Recreate the Variable Notional Swap
@@ -398,7 +398,7 @@ namespace google_test
 
 
             // 3. Get the Swap PV01
-            AQLString vnsPV01InputFilePath = etrading::decorateFilename( vnsPath, "", "tryMeLWOSwapPV01_inputs.csv" );
+            AQLString vnsPV01InputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjectsSwapPV01_inputs.csv" );
             const ReadDataFile::Load vnsPV01InputFile( vnsPV01InputFilePath );
 
             // Get the PV Parameters
@@ -412,7 +412,7 @@ namespace google_test
 
             // 4. Load the Expected Result and Compare
             const double tolerance = 1e-008;
-            CheckTestResultsAndRebaseOnRequest( vnsPV01Result, TEST_DIR, vnsPath, "_tryMeLWOSwapPV01_outputs", tolerance );
+            CheckTestResultsAndRebaseOnRequest( vnsPV01Result, TEST_DIR, vnsPath, "_tryAqObjectsSwapPV01_outputs", tolerance );
         }
         catch( const AQLCoreError& m )
         {

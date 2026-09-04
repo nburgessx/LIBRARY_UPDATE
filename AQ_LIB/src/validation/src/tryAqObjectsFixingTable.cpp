@@ -34,8 +34,8 @@ namespace validation
         // Recording of inputs for playback
 		if (etrading::CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOFixingTableCreate_inputs", tableName.c_str()));
-			file.write("generatorFunction", "tryMeLWOFixingTableCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsFixingTableCreate_inputs", tableName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsFixingTableCreate");
 			file.write("tableName", tableName);
 			file.write("currency", currencyString);
 			file.write("curveTenor", curveTenorString);
@@ -61,7 +61,7 @@ namespace validation
         {
             if ( CreateDataFile::recordEnabled() )
             {
-				CreateDataFile file(decorateFilename("tryMeLWOFixingTableCreate_outputs", tableName.c_str()));
+				CreateDataFile file(decorateFilename("tryAqObjectsFixingTableCreate_outputs", tableName.c_str()));
 				file.write("output", tableName);
             }
             return tableName.c_str();
@@ -71,7 +71,7 @@ namespace validation
             std::string errString =  ( boost::format( "Unable to create LWO Fixing Table named %s" ) % tableName.c_str() ).str();
             if ( CreateDataFile::recordEnabled() )
             {
-				CreateDataFile file( decorateFilename( "tryMeLWOFixingTableCreate_outputs", tableName.c_str() ) );
+				CreateDataFile file( decorateFilename( "tryAqObjectsFixingTableCreate_outputs", tableName.c_str() ) );
                 file.write( "output", errString.c_str() );
             }
             AQ_THROW( errString );
@@ -126,8 +126,8 @@ namespace validation
         // Recording of inputs for playback
 		if (etrading::CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOFixingTableDisplay_inputs", tableName.c_str()));
-			file.write("generatorFunction", "tryMeLWOFixingTableDisplay");
+			CreateDataFile file(decorateFilename("tryAqObjectsFixingTableDisplay_inputs", tableName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsFixingTableDisplay");
 			file.write("tableName", tableName);
 		}
         
@@ -142,7 +142,7 @@ namespace validation
 
 			if ( CreateDataFile::recordEnabled() )
             {
-		        CreateDataFile file( decorateFilename("tryMeLWOFixingTableDisplay_outputs", tableName.c_str() ) );
+		        CreateDataFile file( decorateFilename("tryAqObjectsFixingTableDisplay_outputs", tableName.c_str() ) );
 				
                 // Note Need to know Schema to get display values
                 file.write( "currency", fixingTableMatrix[1][0] );
@@ -162,7 +162,7 @@ namespace validation
             std::string errString =  ( boost::format( "Fixing table %s does not exist" ) % tableName.c_str() ).str();
             if ( CreateDataFile::recordEnabled() )
             {
-				CreateDataFile file( decorateFilename( "tryMeLWOFixingTableDisplaye_outputs", tableName.c_str() ) );
+				CreateDataFile file( decorateFilename( "tryAqObjectsFixingTableDisplaye_outputs", tableName.c_str() ) );
                 file.write( "output", errString.c_str() );
             }
             AQ_THROW( errString );
@@ -179,8 +179,8 @@ namespace validation
         // Recording of inputs for playback
 		if (etrading::CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOFixingTableValue_inputs", tableName.c_str() ) );
-			file.write("generatorFunction", "tryMeLWOFixingTableValue");
+			CreateDataFile file(decorateFilename("tryAqObjectsFixingTableValue_inputs", tableName.c_str() ) );
+			file.write("generatorFunction", "tryAqObjectsFixingTableValue");
 			file.write("tableName", tableName);
             file.write("fixingDate", fixingDate);
 		}
@@ -196,7 +196,7 @@ namespace validation
 
             if ( CreateDataFile::recordEnabled() )
             {
-				CreateDataFile file( decorateFilename("tryMeLWOFixingTableValue_outputs", tableName.c_str() ) );
+				CreateDataFile file( decorateFilename("tryAqObjectsFixingTableValue_outputs", tableName.c_str() ) );
                 file.write( "output", fixingValue );
             }
             return fixingValue;
@@ -259,8 +259,8 @@ namespace validation
         // Recording of inputs for playback
 		if (etrading::CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOFixingTableValues_inputs", tableName.c_str() ) );
-			file.write("generatorFunction", "tryMeLWOFixingTableValues");
+			CreateDataFile file(decorateFilename("tryAqObjectsFixingTableValues_inputs", tableName.c_str() ) );
+			file.write("generatorFunction", "tryAqObjectsFixingTableValues");
 			file.write("tableName", tableName);
             file.write("currency", fixingTableCurrency);
             file.write("curveTenor", fixingTableCurveTenor);
@@ -278,7 +278,7 @@ namespace validation
 
             if ( CreateDataFile::recordEnabled() )
             {
-				CreateDataFile file( decorateFilename("tryMeLWOFixingTableValues_outputs", tableName.c_str() ) );
+				CreateDataFile file( decorateFilename("tryAqObjectsFixingTableValues_outputs", tableName.c_str() ) );
                 file.write( "output", fixingValues );
             }
             return fixingValues;

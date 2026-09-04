@@ -17,16 +17,16 @@ using etrading::CreateDataFile;
 namespace
 {
     // Test Bond Input File(s)
-    extern const char bondInputsFile[]          = TEST_DIR "tryMeLWOBondCreateFromGenerator_inputs.csv";
-    extern const char cleanPriceInputs[]        = TEST_DIR "tryMeLWOBondCleanPrice_inputs.csv";
-    extern const char cleanPriceOutputs[]       = TEST_DIR "tryMeLWOBondCleanPrice_outputs.csv";
+    extern const char bondInputsFile[]          = TEST_DIR "tryAqObjectsBondCreateFromGenerator_inputs.csv";
+    extern const char cleanPriceInputs[]        = TEST_DIR "tryAqObjectsBondCleanPrice_inputs.csv";
+    extern const char cleanPriceOutputs[]       = TEST_DIR "tryAqObjectsBondCleanPrice_outputs.csv";
 }
 
 namespace google_test
 {
 	DECLARE_TEST_FIXTURE(TestBondGenerator);
 
-    TEST_F( TestBondGenerator, SNAPSHOT_tryMeLWOBondCreateFromGenerator )
+    TEST_F( TestBondGenerator, SNAPSHOT_tryAqObjectsBondCreateFromGenerator )
     {
         try
         {
@@ -75,7 +75,7 @@ namespace google_test
         }
     }
 
-    TEST_F( TestBondGenerator, UNIT_tryMeLWOBondCreateFromGenerator_US_Treasury_PriceAndRiskResults )
+    TEST_F( TestBondGenerator, UNIT_tryAqObjectsBondCreateFromGenerator_US_Treasury_PriceAndRiskResults )
     {
         const std::string bondObjectName	  = "US_TREASURY_2.25_31-DEC-2023";
 		const std::string bondGeneratorName   = "US_TREASURY_TYPE1";
@@ -152,7 +152,7 @@ namespace google_test
     }
 
 
-    TEST_F( TestBondGenerator, UNIT_tryMeLWOBondCreateFromGenerator_GermanBund_PriceAndRiskResults )
+    TEST_F( TestBondGenerator, UNIT_tryAqObjectsBondCreateFromGenerator_GermanBund_PriceAndRiskResults )
     {
         const std::string bondObjectName	  = "BUNDESREPUBLIK_2.00_15AUG2023";
 		const std::string bondGeneratorName   = "GERMAN_BUND_TYPE60";
@@ -228,7 +228,7 @@ namespace google_test
 
     }
 
-    TEST_F( TestBondGenerator, UNIT_tryMeLWOBondCreateFromGenerator_JapaneseJGB_PriceAndRiskResults )
+    TEST_F( TestBondGenerator, UNIT_tryAqObjectsBondCreateFromGenerator_JapaneseJGB_PriceAndRiskResults )
     {
         const std::string bondObjectName	  = "JAPAN_JGB_2.20_20JUN2024";
 		const std::string bondGeneratorName   = "JAPAN_JGB_TYPE51";
@@ -304,7 +304,7 @@ namespace google_test
 
     }
 
-    TEST_F( TestBondGenerator, UNIT_tryMeLWOBondCreateFromGenerator_FrenchOAT_PriceAndRiskResults )
+    TEST_F( TestBondGenerator, UNIT_tryAqObjectsBondCreateFromGenerator_FrenchOAT_PriceAndRiskResults )
     {
         const std::string bondObjectName	  = "FRENCH_OAT_1.750_25MAY2023";
 		const std::string bondGeneratorName   = "FRENCH_OAT_TYPE89";
@@ -380,7 +380,7 @@ namespace google_test
 
     }
 
-    TEST_F( TestBondGenerator, UNIT_tryMeLWOBondCreateFromGenerator_ItalianBTPS_PriceAndRiskResults )
+    TEST_F( TestBondGenerator, UNIT_tryAqObjectsBondCreateFromGenerator_ItalianBTPS_PriceAndRiskResults )
     {
         const std::string bondObjectName	  = "ITALIAN_BTPS_8.5_22JUN2023";
 		const std::string bondGeneratorName   = "ITALIAN_BTPS_TYPE523";

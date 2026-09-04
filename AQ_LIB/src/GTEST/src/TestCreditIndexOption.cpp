@@ -59,20 +59,20 @@ namespace
 	const std::string GEN_CREDIT_DEFAULT_SWAP_5Y		= TEST_DIR + "EUR_CDS_GENERATOR@62.JSON" ;
 
 	// API methods
-	const std::string CDS_INDEX_CALCULATE_FORWARD_SPREAD = TEST_DIR + "tryMeLWOCreditIndexSpread_inputs.csv";
-	const std::string CDS_INDEX_OPTION_PV				 = TEST_DIR + "tryMeLWOCreditIndexOptionPV_inputs.csv";
-	const std::string CDS_INDEX_OPTION_IMPLIED_VOL		 = TEST_DIR + "tryMeLWOCreditIndexOptionImpliedVol_inputs.csv";
-	const std::string CDS_INDEX_OPTION_VEGA				 = TEST_DIR + "tryMeLWOCreditIndexOptionVega_inputs.csv";
-	const std::string CDS_INDEX_OPTION_CS01				 = TEST_DIR + "tryMeLWOCreditIndexOptionCS01_inputs.csv";
-	const std::string CDS_INDEX_OPTION_THETA			 = TEST_DIR + "tryMeLWOCreditIndexOptionTheta_inputs.csv";
+	const std::string CDS_INDEX_CALCULATE_FORWARD_SPREAD = TEST_DIR + "tryAqObjectsCreditIndexSpread_inputs.csv";
+	const std::string CDS_INDEX_OPTION_PV				 = TEST_DIR + "tryAqObjectsCreditIndexOptionPV_inputs.csv";
+	const std::string CDS_INDEX_OPTION_IMPLIED_VOL		 = TEST_DIR + "tryAqObjectsCreditIndexOptionImpliedVol_inputs.csv";
+	const std::string CDS_INDEX_OPTION_VEGA				 = TEST_DIR + "tryAqObjectsCreditIndexOptionVega_inputs.csv";
+	const std::string CDS_INDEX_OPTION_CS01				 = TEST_DIR + "tryAqObjectsCreditIndexOptionCS01_inputs.csv";
+	const std::string CDS_INDEX_OPTION_THETA			 = TEST_DIR + "tryAqObjectsCreditIndexOptionTheta_inputs.csv";
 
 	// Snapshot results
-	const std::string EXPECTED_CDS_INDEX_CALCULATE_FORWARD_SPREAD	= TEST_DIR + "tryMeLWOCreditIndexSpread_outputs.csv";
-	const std::string EXPECTED_CDS_INDEX_OPTION_PV					= TEST_DIR + "tryMeLWOCreditIndexOptionPV_outputs.csv";
-	const std::string EXPECTED_CDS_INDEX_OPTION_IMPLIED_VOL			= TEST_DIR + "tryMeLWOCreditIndexOptionImpliedVol_outputs.csv";
-	const std::string EXPECTED_CDS_INDEX_OPTION_VEGA				= TEST_DIR + "tryMeLWOCreditIndexOptionVega_outputs.csv";
-	const std::string EXPECTED_CDS_INDEX_OPTION_CS01				= TEST_DIR + "tryMeLWOCreditIndexOptionCS01_outputs.csv";
-	const std::string EXPECTED_CDS_INDEX_OPTION_THETA				= TEST_DIR + "tryMeLWOCreditIndexOptionTheta_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_CALCULATE_FORWARD_SPREAD	= TEST_DIR + "tryAqObjectsCreditIndexSpread_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_OPTION_PV					= TEST_DIR + "tryAqObjectsCreditIndexOptionPV_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_OPTION_IMPLIED_VOL			= TEST_DIR + "tryAqObjectsCreditIndexOptionImpliedVol_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_OPTION_VEGA				= TEST_DIR + "tryAqObjectsCreditIndexOptionVega_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_OPTION_CS01				= TEST_DIR + "tryAqObjectsCreditIndexOptionCS01_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_OPTION_THETA				= TEST_DIR + "tryAqObjectsCreditIndexOptionTheta_outputs.csv";
 
 
 	void buildCurveAndCreditObjects()

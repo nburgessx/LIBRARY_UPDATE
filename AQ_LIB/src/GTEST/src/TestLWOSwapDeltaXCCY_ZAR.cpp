@@ -64,18 +64,18 @@ namespace
 	const std::string fileName_ZAR_XCCY_5Y				= TEST_DIR + "ZAR_XCCY_SWAP@22.JSON";
 
 	// Par rate input prefix
-	const std::string fileName_ZAR_IRS_parRate			= TEST_DIR + "tryMeLWOSwapParRate_";
+	const std::string fileName_ZAR_IRS_parRate			= TEST_DIR + "tryAqObjectsSwapParRate_";
 
 	// DV01 Inputs
-	const std::string fileName_IRS_DV01_Inputs			= TEST_DIR + "tryMeLWOSwap_IRS_DV01_inputs.csv";
-	const std::string fileName_XCCY_DV01_Inputs			= TEST_DIR + "tryMeLWOSwap_XCCY_DV01_inputs.csv";
+	const std::string fileName_IRS_DV01_Inputs			= TEST_DIR + "tryAqObjectsSwap_IRS_DV01_inputs.csv";
+	const std::string fileName_XCCY_DV01_Inputs			= TEST_DIR + "tryAqObjectsSwap_XCCY_DV01_inputs.csv";
 
 	// DV01 Outputs
-	const std::string fileName_IRS_DV01_Outputs_32		= TEST_DIR + "tryMeLWOSwap_IRS_DV01_outputs_32.csv";
-	const std::string fileName_IRS_DV01_Outputs_64		= TEST_DIR + "tryMeLWOSwap_IRS_DV01_outputs_64.csv";
+	const std::string fileName_IRS_DV01_Outputs_32		= TEST_DIR + "tryAqObjectsSwap_IRS_DV01_outputs_32.csv";
+	const std::string fileName_IRS_DV01_Outputs_64		= TEST_DIR + "tryAqObjectsSwap_IRS_DV01_outputs_64.csv";
 
-	const std::string fileName_XCCY_DV01_Outputs_32		= TEST_DIR + "tryMeLWOSwap_XCCY_DV01_outputs_32.csv";
-	const std::string fileName_XCCY_DV01_Outputs_64		= TEST_DIR + "tryMeLWOSwap_XCCY_DV01_outputs_64.csv";
+	const std::string fileName_XCCY_DV01_Outputs_32		= TEST_DIR + "tryAqObjectsSwap_XCCY_DV01_outputs_32.csv";
+	const std::string fileName_XCCY_DV01_Outputs_64		= TEST_DIR + "tryAqObjectsSwap_XCCY_DV01_outputs_64.csv";
 
 	// Helper function
 

@@ -27,17 +27,17 @@ namespace
 	 * This test builds 138 Floating Rate Notes from input file, and computes the price from discount margin for each bond.
 	 * Rather than list out all bond filenames individually, we load then using the following regular expression pattern:
 	 * The file pattern is:
-	 * pathname / ( bondObjectName ) _tryMeLWOBondCreateFromGenerator_inputs.csv
+	 * pathname / ( bondObjectName ) _tryAqObjectsBondCreateFromGenerator_inputs.csv
 	*/
-    extern const std::string frnCreateInputFilePattern  = ".+_tryMeLWOBondCreateFromGenerator_inputs.csv";
+    extern const std::string frnCreateInputFilePattern  = ".+_tryAqObjectsBondCreateFromGenerator_inputs.csv";
 	
 	/*
 	 * The bond price input and output filenames are contructed from  ( bondObjectName ) and the following suffixes:
 	 */
-    extern const std::string frnPriceFromDiscountMarginInputFileSuffix    = "_tryMeLWOBondPriceFromDiscountMargin_inputs.csv";
-    extern const std::string frnPriceFromDiscountMarginOutputFileSuffix   = "_tryMeLWOBondPriceFromDiscountMargin_outputs.csv";
+    extern const std::string frnPriceFromDiscountMarginInputFileSuffix    = "_tryAqObjectsBondPriceFromDiscountMargin_inputs.csv";
+    extern const std::string frnPriceFromDiscountMarginOutputFileSuffix   = "_tryAqObjectsBondPriceFromDiscountMargin_outputs.csv";
    
-    extern const std::string frnPriceFromYieldInputFileSuffix             = "_tryMeLWOBondFRNPriceFromYield_inputs.csv";
+    extern const std::string frnPriceFromYieldInputFileSuffix             = "_tryAqObjectsBondFRNPriceFromYield_inputs.csv";
 
 
 	/*
@@ -112,7 +112,7 @@ namespace google_test
     
 	DECLARE_TEST_FIXTURE(TestBondFRN_Type21);
 
-    TEST_F( TestBondFRN_Type21, SNAPSHOT_tryMeLWOBondFRNPriceFromDiscountMargin )
+    TEST_F( TestBondFRN_Type21, SNAPSHOT_tryAqObjectsBondFRNPriceFromDiscountMargin )
     {
 		const double tolerance = 1.0e-8;
 
@@ -146,7 +146,7 @@ namespace google_test
 	}
 
 
-	TEST_F( TestBondFRN_Type21, SNAPSHOT_tryMeLWOBondFRNPriceFromYield )
+	TEST_F( TestBondFRN_Type21, SNAPSHOT_tryAqObjectsBondFRNPriceFromYield )
 	{
 		const double tolerance = 1.0e-8;
 
@@ -181,7 +181,7 @@ namespace google_test
 
 	}
 
-	TEST_F( TestBondFRN_Type21, CONSISTENCY_tryMeLWOBondFRNYieldRoundTrip )
+	TEST_F( TestBondFRN_Type21, CONSISTENCY_tryAqObjectsBondFRNYieldRoundTrip )
 	{
 		const double tolerance = 1.0e-8;
 				
@@ -217,7 +217,7 @@ namespace google_test
 		}
 	}
 
-	TEST_F( TestBondFRN_Type21, CONSISTENCY_tryMeLWOBondFRNDiscountMarginRoundTrip )
+	TEST_F( TestBondFRN_Type21, CONSISTENCY_tryAqObjectsBondFRNDiscountMarginRoundTrip )
 	{
 		const double tolerance = 1.0e-8;
 				

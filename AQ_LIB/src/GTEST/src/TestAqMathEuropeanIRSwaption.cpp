@@ -252,7 +252,7 @@ TEST( TestAqMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity_WithLongEndStub 
 }
 
 
-TEST( TestAqMathEuropeanIRSwaption, UNIT_TestMeMathEuropeanIRSwaptionPrice_LogNormalVol )
+TEST( TestAqMathEuropeanIRSwaption, UNIT_TestAqMathEuropeanIRSwaptionPrice_LogNormalVol )
 {
     const double priceTestPrecision = 1e-6;
 
@@ -304,7 +304,7 @@ TEST( TestAqMathEuropeanIRSwaption, UNIT_TestMeMathEuropeanIRSwaptionPrice_LogNo
 }
 
 
-TEST( TestAqMathEuropeanIRSwaption, UNIT_TestMeMathEuropeanIRSwaptionPrice_NormalVol )
+TEST( TestAqMathEuropeanIRSwaption, UNIT_TestAqMathEuropeanIRSwaptionPrice_NormalVol )
 {
     const double priceTestPrecision = 1e-6;
 

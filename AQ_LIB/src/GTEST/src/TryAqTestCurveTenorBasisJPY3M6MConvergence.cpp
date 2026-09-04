@@ -43,14 +43,14 @@ namespace
     //
     // curve input files
     //
-    extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char JPYYC_STD[]					= TEST_DIR "JPYYC_STD_tryMeCurveCalibrateSwap_inputs";
-    extern const char JPYYC_3M6M[]					= TEST_DIR "JPYYC_3M6M_tryMeCurveCalibrateBasis_inputs";
+    extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char JPYYC_STD[]					= TEST_DIR "JPYYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char JPYYC_3M6M[]					= TEST_DIR "JPYYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char curveOutputs[]				= TEST_DIR "JPYYC_3M6M_tryMeCurveCalibrateBasis_outputs";
+    extern const char curveOutputs[]				= TEST_DIR "JPYYC_3M6M_tryAqCurvesCalibrateBasis_outputs";
 
 }
 

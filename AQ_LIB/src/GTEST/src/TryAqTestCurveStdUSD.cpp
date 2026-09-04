@@ -39,20 +39,20 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]					= TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]					= TEST_DIR "USDYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
+    extern const char USDYC_OIS[]					= TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]					= TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
 
     //
     // test call input and reference files
     //
-    extern const char curveDisplayInputs[]				= TEST_DIR "USDYC_STD_tryMeCurveDisplay_inputs.csv";
-    extern const char curveDisplayOutputs[]				= TEST_DIR "USDYC_STD_tryMeCurveDisplay_outputs.csv";
+    extern const char curveDisplayInputs[]				= TEST_DIR "USDYC_STD_tryAqCurvesDisplay_inputs.csv";
+    extern const char curveDisplayOutputs[]				= TEST_DIR "USDYC_STD_tryAqCurvesDisplay_outputs.csv";
 
-    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "USDYC_STD_tryMeCurveDiscountFactorsFromYearFractions_inputs.csv";
-    extern const char CheckDiscountFactorsOutputs[]	= TEST_DIR "USDYC_STD_tryMeCurveDiscountFactorsFromYearFractions_outputs.csv";
+    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "USDYC_STD_tryAqCurvesDiscountFactorsFromYearFractions_inputs.csv";
+    extern const char CheckDiscountFactorsOutputs[]	= TEST_DIR "USDYC_STD_tryAqCurvesDiscountFactorsFromYearFractions_outputs.csv";
 
-    extern const char CheckForwardRatesInputs[]			= TEST_DIR "USDYC_STD_tryMeCurveForwardRatesFromYearFraction_inputs.csv";
-    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "USDYC_STD_tryMeCurveForwardRatesFromYearFraction_outputs.csv";
+    extern const char CheckForwardRatesInputs[]			= TEST_DIR "USDYC_STD_tryAqCurvesForwardRatesFromYearFraction_inputs.csv";
+    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "USDYC_STD_tryAqCurvesForwardRatesFromYearFraction_outputs.csv";
 }
 
 namespace google_test

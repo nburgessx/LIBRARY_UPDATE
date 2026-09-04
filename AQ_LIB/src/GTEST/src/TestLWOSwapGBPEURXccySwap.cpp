@@ -37,26 +37,26 @@ namespace
     // curve input files
     //
     
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryMeCurveCalibrateBasis_inputs.csv";
-    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryMeCurveCalibrateBasis_inputs.csv";
-    extern const char GBPYC_OIS[]			    = TEST_DIR "GBPYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char GBPYC_STD[]			    = TEST_DIR "GBPYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char GBPYC_3M6M[]			    = TEST_DIR "GBPYC_3M6M_tryMeCurveCalibrateBasis_inputs.csv";
-    extern const char GBPYC_XCCY[]			    = TEST_DIR "GBPYC_XCCY_tryMeCurveCalibrateBasis_inputs.csv";
-    extern const char GBPYC_FWDEUR[]		    = TEST_DIR "GBPYC_FWDEUR_tryMeCurveCalibrateFXForwards_inputs.csv";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char GBPYC_OIS[]			    = TEST_DIR "GBPYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char GBPYC_STD[]			    = TEST_DIR "GBPYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char GBPYC_3M6M[]			    = TEST_DIR "GBPYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char GBPYC_XCCY[]			    = TEST_DIR "GBPYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char GBPYC_FWDEUR[]		    = TEST_DIR "GBPYC_FWDEUR_tryAqCurvesCalibrateFXForwards_inputs.csv";
 
     //
     // test call input and reference files
     //
     
-    extern const char xccySwapInputs[]	        = TEST_DIR "XCCY3@2_tryMeLWOSwapCreate_inputs";
-    extern const char parSpreadInputs[]	        = TEST_DIR "XCCY3@2_tryMeLWOSwapParSpread_inputs";
-    extern const char parSpreadOutputs[]	    = TEST_DIR "XCCY3@2_tryMeLWOSwapParSpread_outputs";
-    extern const char parSpreadOutputs64[]	    = TEST_DIR "XCCY3@2_tryMeLWOSwapParSpread_outputs64_";
+    extern const char xccySwapInputs[]	        = TEST_DIR "XCCY3@2_tryAqObjectsSwapCreate_inputs";
+    extern const char parSpreadInputs[]	        = TEST_DIR "XCCY3@2_tryAqObjectsSwapParSpread_inputs";
+    extern const char parSpreadOutputs[]	    = TEST_DIR "XCCY3@2_tryAqObjectsSwapParSpread_outputs";
+    extern const char parSpreadOutputs64[]	    = TEST_DIR "XCCY3@2_tryAqObjectsSwapParSpread_outputs64_";
 
 
 }

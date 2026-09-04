@@ -27,8 +27,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOScheduleCreate_inputs", scheduleName.c_str()));
-			file.write("generatorFunction", "tryMeLWOScheduleCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsScheduleCreate_inputs", scheduleName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsScheduleCreate");
 			file.write("scheduleName", scheduleName);
 			file.write("swapScheduleLVB", swapScheduleLVB);
 			file.write("validateKeys", validateKeys);
@@ -45,7 +45,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOScheduleCreate_outputs", scheduleName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsScheduleCreate_outputs", scheduleName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -94,8 +94,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOScheduleCreateBespoke_inputs", scheduleName.c_str()));
-			file.write("generatorFunction", "tryMeLWOScheduleCreateBespoke");
+			CreateDataFile file(decorateFilename("tryAqObjectsScheduleCreateBespoke_inputs", scheduleName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsScheduleCreateBespoke");
 			file.write("scheduleName", scheduleName);
 			file.write("bespokeScheduleProperties", bespokeScheduleProperties);
 			file.write("bespokeScheduleLVB", bespokeScheduleLVB);
@@ -112,7 +112,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOScheduleCreateBespoke_outputs", scheduleName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsScheduleCreateBespoke_outputs", scheduleName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -135,8 +135,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled())
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOScheduleCreateBespokeFromCashflows_inputs", scheduleObjectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOScheduleCreateBespokeFromCashflows");
+			CreateDataFile file(decorateFilename("tryAqObjectsScheduleCreateBespokeFromCashflows_inputs", scheduleObjectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsScheduleCreateBespokeFromCashflows");
 			file.write("scheduleObjectName", scheduleObjectName);
 			file.write("bespokeScheduleProperties", bespokeScheduleProperties);
 			file.write("bespokeCashflowsLVB", bespokeCashflowsLVB);
@@ -156,7 +156,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled())
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOScheduleCreateBespokeFromCashflows_outputs", scheduleObjectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsScheduleCreateBespokeFromCashflows_outputs", scheduleObjectName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -178,8 +178,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOFeeScheduleCreate_inputs", scheduleName.c_str()));
-			file.write("generatorFunction", "tryMeLWOFeeScheduleCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsFeeScheduleCreate_inputs", scheduleName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsFeeScheduleCreate");
 			file.write("scheduleName", scheduleName);
 			file.write("feeScheduleLVB", feeScheduleLVB);
 			file.write("validateKeys", validateKeys);
@@ -203,7 +203,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOFeeScheduleCreate_outputs", scheduleName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsFeeScheduleCreate_outputs", scheduleName.c_str()));
 			file.write("output", ret);
 		}
 

@@ -88,7 +88,7 @@ TEST( TestUtilitiesData, UNIT_VariantCompartorTests )
 }
 
 
-TEST( TestUtilitiesData, UNIT_meUtilityAppendByRow )
+TEST( TestUtilitiesData, UNIT_aqToolsAppendByRow )
 {
     // Input Matrix 1
     etrading::VariantVector rowVector1;
@@ -141,7 +141,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityAppendByRow )
 }
 
 
-TEST( TestUtilitiesData, UNIT_meUtilityAppendByColumn )
+TEST( TestUtilitiesData, UNIT_aqToolsAppendByColumn )
 {
     // Input Matrix 1
     etrading::VariantVector rowVector1;
@@ -204,7 +204,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityAppendByColumn )
 }
 
 
-TEST( TestUtilitiesData, UNIT_meUtilityDataFilterByRow )
+TEST( TestUtilitiesData, UNIT_aqToolsDataFilterByRow )
 {
     // Input Vector
     etrading::VariantVector input;
@@ -250,7 +250,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityDataFilterByRow )
 }
 
 
-TEST( TestUtilitiesData, UNIT_meUtilityDataFilterByColumn )
+TEST( TestUtilitiesData, UNIT_aqToolsDataFilterByColumn )
 {
     // Input Vector
     etrading::VariantVector input;
@@ -305,7 +305,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityDataFilterByColumn )
 }
 
 
-TEST( TestUtilitiesData, UNIT_meUtilityCleanByRow )
+TEST( TestUtilitiesData, UNIT_aqToolsCleanByRow )
 {
     // Input Matrix
     etrading::VariantVector rowVector1;
@@ -395,7 +395,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityCleanByRow )
 }
 
 
-TEST( TestUtilitiesData, UNIT_meUtilityCleanByColumn )
+TEST( TestUtilitiesData, UNIT_aqToolsCleanByColumn )
 {
     // Input Matrix
     etrading::VariantVector rowVector;

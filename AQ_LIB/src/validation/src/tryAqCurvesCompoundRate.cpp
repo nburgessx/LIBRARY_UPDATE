@@ -57,8 +57,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeCurveCompoundRate_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryMeCurveCompoundRate" );
+            CreateDataFile file( decorateFilename( "tryAqCurvesCompoundRate_inputs", curveCollection ) );
+            file.write( "generatorFunction", "tryAqCurvesCompoundRate" );
             file.write( "startDates", startDates );
             file.write( "endDates", endDates );
             file.write( "curveCollection", curveCollection );
@@ -147,7 +147,7 @@ namespace validation
         if ( CreateDataFile::recordEnabled() )
         {
 
-            CreateDataFile file( decorateFilename( "tryMeCurveCompoundRate_outputs", curveCollection ) );
+            CreateDataFile file( decorateFilename( "tryAqCurvesCompoundRate_outputs", curveCollection ) );
             file.write( "output", ret );
         }
 
@@ -264,8 +264,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeCurveCompoundRateWithFixingTable_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryMeCurveCompoundRateWithFixingTable" );
+            CreateDataFile file( decorateFilename( "tryAqCurvesCompoundRateWithFixingTable_inputs", curveCollection ) );
+            file.write( "generatorFunction", "tryAqCurvesCompoundRateWithFixingTable" );
             file.write( "startDates", startDates );
             file.write( "endDates", endDates );
             file.write( "curveCollection", curveCollection );
@@ -312,7 +312,7 @@ namespace validation
         if ( CreateDataFile::recordEnabled() )
         {
 
-            CreateDataFile file( decorateFilename( "tryMeCurveCompoundRateWithFixingTable_outputs", curveCollection ) );
+            CreateDataFile file( decorateFilename( "tryAqCurvesCompoundRateWithFixingTable_outputs", curveCollection ) );
             file.write( "output", ret );
         }
 

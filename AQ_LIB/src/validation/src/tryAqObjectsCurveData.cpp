@@ -24,8 +24,8 @@ namespace validation
         // Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCurveDataDisplay_inputs", mdcName.c_str()));
-			file.write("generatorFunction", "tryMeLWOCurveDataDisplay");
+			CreateDataFile file(decorateFilename("tryAqObjectsCurveDataDisplay_inputs", mdcName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsCurveDataDisplay");
 			file.write("mdcName", mdcName);
 		}
 
@@ -33,7 +33,7 @@ namespace validation
     
         if ( CreateDataFile::recordEnabled() )
         {
-			CreateDataFile file(decorateFilename("tryMeLWOCurveDataDisplay_outputs", mdcName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsCurveDataDisplay_outputs", mdcName.c_str()));
 			file.write("output", mdcName);
         }
 
@@ -64,8 +64,8 @@ namespace validation
         // Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCurveDataCreate_inputs", mdcName.c_str()));
-			file.write("generatorFunction", "tryMeLWOCurveDataCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsCurveDataCreate_inputs", mdcName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsCurveDataCreate");
 			file.write("mdcName", mdcName);
 			file.write("currency", currency);
 			file.write("tenorString", tenorString);
@@ -181,7 +181,7 @@ namespace validation
         {
             if ( CreateDataFile::recordEnabled() )
             {
-				CreateDataFile file(decorateFilename("tryMeLWOCurveDataCreate_outputs", mdcName.c_str()));
+				CreateDataFile file(decorateFilename("tryAqObjectsCurveDataCreate_outputs", mdcName.c_str()));
 				file.write("output", mdcName);
             }
             return mdcName.c_str();
@@ -191,7 +191,7 @@ namespace validation
             std::string errString =  ( boost::format( "Unable to create AQOCurveData named %s" ) % mdcName.c_str() ).str();
             if ( CreateDataFile::recordEnabled() )
             {
-				CreateDataFile file( decorateFilename( "tryMeLWOCurveDataCreate_outputs", mdcName.c_str() ) );
+				CreateDataFile file( decorateFilename( "tryAqObjectsCurveDataCreate_outputs", mdcName.c_str() ) );
                 file.write( "output", errString.c_str() );
             }
             AQ_THROW( errString );

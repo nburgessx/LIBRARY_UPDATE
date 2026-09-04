@@ -47,49 +47,49 @@ namespace
 	// -------------------------------------------------------------
 
 	// Curve market data files for use with CurveGenerators
-	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@6_tryMeLWOCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@6_tryAqObjectsCurveMarketDataCreate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Curves built from generator and market data
-	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryMeLWOCurveCalibrate_inputs.csv";
+	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryAqObjectsCurveCalibrate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Build Credit Model
-	const char GEN_USD_CREDIT_MODEL[]			        = TEST_DIR "CREDITMODEL1@2_tryMeLWOCreditModelCreate_inputs.csv";
-	const char VIEW_CREDIT_MODEL_CALIBRATION[]	        = TEST_DIR "tryMeLWOCreditModelCalibrationParameters_inputs.csv";
+	const char GEN_USD_CREDIT_MODEL[]			        = TEST_DIR "CREDITMODEL1@2_tryAqObjectsCreditModelCreate_inputs.csv";
+	const char VIEW_CREDIT_MODEL_CALIBRATION[]	        = TEST_DIR "tryAqObjectsCreditModelCalibrationParameters_inputs.csv";
 
 	// Build Credit Default Swap
-	const char GEN_CREDIT_DEFAULT_SWAP_5Y[]		        = TEST_DIR "USD_CDS_IMM_tryMeLWOSwapCreateFromGenerator_5Y_inputs.csv" ;
+	const char GEN_CREDIT_DEFAULT_SWAP_5Y[]		        = TEST_DIR "USD_CDS_IMM_tryAqObjectsSwapCreateFromGenerator_5Y_inputs.csv" ;
 
 	// API methods
-	const char CDS_CALCULATE_PV[]				        = TEST_DIR "tryMeLWOCreditDefaultSwapPV_inputs.csv";
-	const char CDS_CALCULATE_PV_BY_INTEGRATION[]        = TEST_DIR "tryMeLWOCreditDefaultSwapPVByIntegration_inputs.csv";
-	const char CDS_CALCULATE_PV_BY_MONTE_CARLO_MT[]     = TEST_DIR "tryMeLWOCreditDefaultSwapPVByMonteCarlo_inputs_MT.csv";
-    const char CDS_CALCULATE_PV_BY_MONTE_CARLO_SOBOL[]  = TEST_DIR "tryMeLWOCreditDefaultSwapPVByMonteCarlo_inputs_SOBOL.csv";
-	const char CDS_CALCULATE_RISKY_ANNUITY[]	        = TEST_DIR "tryMeLWOCreditDefaultSwapRiskyAnnuity_inputs.csv";
-	const char CDS_CALCULATE_CS01[]				        = TEST_DIR "tryMeLWOCreditDefaultSwapCS01_inputs.csv";
-	const char CDS_CALCULATE_HAZARD_RATE[]		        = TEST_DIR "tryMeLWOCreditModelHazardRate_inputs.csv";
-	const char CDS_CALCULATE_SURVIVAL_PROB[]	        = TEST_DIR "tryMeLWOCreditModelSurvivalProbability_inputs.csv";
-	const char CDS_CALCULATE_DEFAULT_PROB[]		        = TEST_DIR "tryMeLWOCreditModelDefaultProbability_inputs.csv";
+	const char CDS_CALCULATE_PV[]				        = TEST_DIR "tryAqObjectsCreditDefaultSwapPV_inputs.csv";
+	const char CDS_CALCULATE_PV_BY_INTEGRATION[]        = TEST_DIR "tryAqObjectsCreditDefaultSwapPVByIntegration_inputs.csv";
+	const char CDS_CALCULATE_PV_BY_MONTE_CARLO_MT[]     = TEST_DIR "tryAqObjectsCreditDefaultSwapPVByMonteCarlo_inputs_MT.csv";
+    const char CDS_CALCULATE_PV_BY_MONTE_CARLO_SOBOL[]  = TEST_DIR "tryAqObjectsCreditDefaultSwapPVByMonteCarlo_inputs_SOBOL.csv";
+	const char CDS_CALCULATE_RISKY_ANNUITY[]	        = TEST_DIR "tryAqObjectsCreditDefaultSwapRiskyAnnuity_inputs.csv";
+	const char CDS_CALCULATE_CS01[]				        = TEST_DIR "tryAqObjectsCreditDefaultSwapCS01_inputs.csv";
+	const char CDS_CALCULATE_HAZARD_RATE[]		        = TEST_DIR "tryAqObjectsCreditModelHazardRate_inputs.csv";
+	const char CDS_CALCULATE_SURVIVAL_PROB[]	        = TEST_DIR "tryAqObjectsCreditModelSurvivalProbability_inputs.csv";
+	const char CDS_CALCULATE_DEFAULT_PROB[]		        = TEST_DIR "tryAqObjectsCreditModelDefaultProbability_inputs.csv";
 
-	const char CDS_REPRICE_PREFIX[]				        = TEST_DIR "USD_CDS_IMM_tryMeLWOSwapCreateFromGenerator_Reprice_inputs_";
+	const char CDS_REPRICE_PREFIX[]				        = TEST_DIR "USD_CDS_IMM_tryAqObjectsSwapCreateFromGenerator_Reprice_inputs_";
 
-	//const char CDS_CALCULATE_HAZARD_RATE[]		    = TEST_DIR "tryMeLWOCreditDefaultSwapHazardRateFromParSpread_inputs.csv";
+	//const char CDS_CALCULATE_HAZARD_RATE[]		    = TEST_DIR "tryAqObjectsCreditDefaultSwapHazardRateFromParSpread_inputs.csv";
 
 	// Snapshot results
-	const char CREDITMODEL_EXPECTED_CALIBRATION[]       = TEST_DIR "tryMeLWOCreditModelCalibrationParameters_outputs.csv";
+	const char CREDITMODEL_EXPECTED_CALIBRATION[]       = TEST_DIR "tryAqObjectsCreditModelCalibrationParameters_outputs.csv";
 
-	const char CDS_EXPECTED_PV[]				                = TEST_DIR "tryMeLWOCreditDefaultSwapPV_outputs.csv";
-	const char CDS_EXPECTED_PV_BY_INTEGRATION[]	                = TEST_DIR "tryMeLWOCreditDefaultSwapPVIntegration_outputs.csv";
-	const char CDS_EXPECTED_PV_BY_MONTECARLO_MERSENNE_TWISTER[]	= TEST_DIR "tryMeLWOCreditDefaultSwapPVMonteCarlo_outputs.csv";
-	const char CDS_EXPECTED_PV_BY_MONTECARLO_SOBOL[]			= TEST_DIR "tryMeLWOCreditDefaultSwapPVMonteCarloSobol_outputs.csv";
-	const char CDS_EXPECTED_RISKY_ANNUITY[]		                = TEST_DIR "tryMeLWOCreditDefaultSwapRiskyAnnuity_outputs.csv";
-	const char CDS_EXPECTED_CS01[]				                = TEST_DIR "tryMeLWOCreditDefaultSwapCS01_outputs.csv";
+	const char CDS_EXPECTED_PV[]				                = TEST_DIR "tryAqObjectsCreditDefaultSwapPV_outputs.csv";
+	const char CDS_EXPECTED_PV_BY_INTEGRATION[]	                = TEST_DIR "tryAqObjectsCreditDefaultSwapPVIntegration_outputs.csv";
+	const char CDS_EXPECTED_PV_BY_MONTECARLO_MERSENNE_TWISTER[]	= TEST_DIR "tryAqObjectsCreditDefaultSwapPVMonteCarlo_outputs.csv";
+	const char CDS_EXPECTED_PV_BY_MONTECARLO_SOBOL[]			= TEST_DIR "tryAqObjectsCreditDefaultSwapPVMonteCarloSobol_outputs.csv";
+	const char CDS_EXPECTED_RISKY_ANNUITY[]		                = TEST_DIR "tryAqObjectsCreditDefaultSwapRiskyAnnuity_outputs.csv";
+	const char CDS_EXPECTED_CS01[]				                = TEST_DIR "tryAqObjectsCreditDefaultSwapCS01_outputs.csv";
 
 
-	// const char CDS_EXPECTED_HAZARD_RATE[]		= TEST_DIR "tryMeLWOCreditDefaultSwapHazardRateFromParSpread_outputs.csv";
+	// const char CDS_EXPECTED_HAZARD_RATE[]		= TEST_DIR "tryAqObjectsCreditDefaultSwapHazardRateFromParSpread_outputs.csv";
 
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;

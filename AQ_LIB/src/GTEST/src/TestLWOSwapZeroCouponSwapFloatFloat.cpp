@@ -32,19 +32,19 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
     extern const char USDYC_1M[]			    = "";
-    extern const char USDYC_6M[]			    = TEST_DIR "USDYC_3M6M_tryMeCurveCalibrateBasis_inputs.csv";
+    extern const char USDYC_6M[]			    = TEST_DIR "USDYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
     extern const char USDYC_12M[]			    = "";
 
     //
     // test call input and reference files
     //
-    extern const char zeroCouponSwapInputs[]	= TEST_DIR "FLOATFLOATZEROCOUPONSWAP@2_tryMeLWOSwapCreate_inputs";
-    extern const char parSpreadInputs[]	        = TEST_DIR "FLOATFLOATZEROCOUPONSWAP@2_tryMeLWOSwapParSpread_inputs";
-    extern const char parSpreadOutputs[]	    = TEST_DIR "FLOATFLOATZEROCOUPONSWAP@2_tryMeLWOSwapParSpread_outputs";
-    extern const char parSpreadOutputs64[]	    = TEST_DIR "FLOATFLOATZEROCOUPONSWAP@2_tryMeLWOSwapParSpread_outputs64_";
+    extern const char zeroCouponSwapInputs[]	= TEST_DIR "FLOATFLOATZEROCOUPONSWAP@2_tryAqObjectsSwapCreate_inputs";
+    extern const char parSpreadInputs[]	        = TEST_DIR "FLOATFLOATZEROCOUPONSWAP@2_tryAqObjectsSwapParSpread_inputs";
+    extern const char parSpreadOutputs[]	    = TEST_DIR "FLOATFLOATZEROCOUPONSWAP@2_tryAqObjectsSwapParSpread_outputs";
+    extern const char parSpreadOutputs64[]	    = TEST_DIR "FLOATFLOATZEROCOUPONSWAP@2_tryAqObjectsSwapParSpread_outputs64_";
 
 }
 

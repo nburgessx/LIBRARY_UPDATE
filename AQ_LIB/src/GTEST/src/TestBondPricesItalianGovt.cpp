@@ -34,23 +34,23 @@ namespace
     const double yieldTolerance = 1e-10;
 
     // Test Bond Input File(s)
-    extern const char createBondInputFile1[]         ="ETrading/Bonds/ItalianType1/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile2[]         ="ETrading/Bonds/ItalianType523ZeroCoupon1/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile3[]         ="ETrading/Bonds/ItalianType523ZeroCoupon2/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile4[]         ="ETrading/Bonds/ItalianType523Fixed/tryMeLWOBondCreate_inputs";
-    extern const char createBondInputFile5[]         ="ETrading/Bonds/ItalianType527Type529/tryMeLWOBondCreate_inputs";
+    extern const char createBondInputFile1[]         ="ETrading/Bonds/ItalianType1/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile2[]         ="ETrading/Bonds/ItalianType523ZeroCoupon1/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile3[]         ="ETrading/Bonds/ItalianType523ZeroCoupon2/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile4[]         ="ETrading/Bonds/ItalianType523Fixed/tryAqObjectsBondCreate_inputs";
+    extern const char createBondInputFile5[]         ="ETrading/Bonds/ItalianType527Type529/tryAqObjectsBondCreate_inputs";
 
-    extern const char priceBondInputFile1[]          ="ETrading/Bonds/ItalianType1/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile2[]          ="ETrading/Bonds/ItalianType523ZeroCoupon1/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile3[]          ="ETrading/Bonds/ItalianType523ZeroCoupon2/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile4[]          ="ETrading/Bonds/ItalianType523Fixed/tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondInputFile5[]          ="ETrading/Bonds/ItalianType527Type529/tryMeLWOBondCleanPrice_inputs";
+    extern const char priceBondInputFile1[]          ="ETrading/Bonds/ItalianType1/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile2[]          ="ETrading/Bonds/ItalianType523ZeroCoupon1/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile3[]          ="ETrading/Bonds/ItalianType523ZeroCoupon2/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile4[]          ="ETrading/Bonds/ItalianType523Fixed/tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondInputFile5[]          ="ETrading/Bonds/ItalianType527Type529/tryAqObjectsBondCleanPrice_inputs";
 
-    extern const char priceBondOutputFile1[]         ="ETrading/Bonds/ItalianType1/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile2[]         ="ETrading/Bonds/ItalianType523ZeroCoupon1/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile3[]         ="ETrading/Bonds/ItalianType523ZeroCoupon2/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile4[]         ="ETrading/Bonds/ItalianType523Fixed/tryMeLWOBondCleanPrice_outputs";
-    extern const char priceBondOutputFile5[]         ="ETrading/Bonds/ItalianType527Type529/tryMeLWOBondCleanPrice_outputs";
+    extern const char priceBondOutputFile1[]         ="ETrading/Bonds/ItalianType1/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile2[]         ="ETrading/Bonds/ItalianType523ZeroCoupon1/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile3[]         ="ETrading/Bonds/ItalianType523ZeroCoupon2/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile4[]         ="ETrading/Bonds/ItalianType523Fixed/tryAqObjectsBondCleanPrice_outputs";
+    extern const char priceBondOutputFile5[]         ="ETrading/Bonds/ItalianType527Type529/tryAqObjectsBondCleanPrice_outputs";
 }
 
 namespace google_test

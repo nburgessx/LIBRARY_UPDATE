@@ -20,16 +20,16 @@ namespace
     const double tolerance = 1e-8;
 
     // curve input file
-    extern const char CurveOisInputs[]					= TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
+    extern const char CurveOisInputs[]					= TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
 
     //
     // test call input and reference files
     //
-    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "USDYC_OIS_tryMeCurveDiscountFactorsFromYearFractions_inputs.csv";
-    extern const char CheckDiscountFactorsOutputs[]	= TEST_DIR "USDYC_OIS_tryMeCurveDiscountFactorsFromYearFractions_outputs.csv";
+    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "USDYC_OIS_tryAqCurvesDiscountFactorsFromYearFractions_inputs.csv";
+    extern const char CheckDiscountFactorsOutputs[]	= TEST_DIR "USDYC_OIS_tryAqCurvesDiscountFactorsFromYearFractions_outputs.csv";
 
-    extern const char CheckForwardRatesInputs[]			= TEST_DIR "USDYC_OIS_tryMeCurveForwardRates_inputs.csv";
-    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "USDYC_OIS_tryMeCurveForwardRates_outputs.csv";
+    extern const char CheckForwardRatesInputs[]			= TEST_DIR "USDYC_OIS_tryAqCurvesForwardRates_inputs.csv";
+    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "USDYC_OIS_tryAqCurvesForwardRates_outputs.csv";
 }
 
 namespace google_test

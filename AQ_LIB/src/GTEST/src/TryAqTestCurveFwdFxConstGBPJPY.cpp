@@ -35,24 +35,24 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			= TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char USDYC_STD[]			= TEST_DIR "USDYC_STD_tryMeCurveCalibrateSwap_inputs";
-    extern const char GBPYC_OIS[]			= TEST_DIR "GBPYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char GBPYC_STD[]			= TEST_DIR "GBPYC_STD_tryMeCurveCalibrateSwap_inputs";
-    extern const char GBPYC_3M6M[]			= TEST_DIR "GBPYC_3M6M_tryMeCurveCalibrateBasis_inputs";
-    extern const char GBPYC_XCCY[]			= TEST_DIR "GBPYC_XCCY_tryMeCurveCalibrateBasis_inputs";
-    extern const char JPYYC_OIS[]			= TEST_DIR "JPYYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char JPYYC_STD[]			= TEST_DIR "JPYYC_STD_tryMeCurveCalibrateSwap_inputs";
-    extern const char JPYYC_3M6M[]			= TEST_DIR "JPYYC_3M6M_tryMeCurveCalibrateBasis_inputs";
-    extern const char JPYYC_XCCY[]			= TEST_DIR "JPYYC_XCCY_tryMeCurveCalibrateBasis_inputs";
-    extern const char GBPYC_FWDJPY[]		= TEST_DIR "GBPYC_FWDJPY_tryMeCurveCalibrateFXForwards_inputs";
+    extern const char USDYC_OIS[]			= TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char USDYC_STD[]			= TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char GBPYC_OIS[]			= TEST_DIR "GBPYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char GBPYC_STD[]			= TEST_DIR "GBPYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char GBPYC_3M6M[]			= TEST_DIR "GBPYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char GBPYC_XCCY[]			= TEST_DIR "GBPYC_XCCY_tryAqCurvesCalibrateBasis_inputs";
+    extern const char JPYYC_OIS[]			= TEST_DIR "JPYYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char JPYYC_STD[]			= TEST_DIR "JPYYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char JPYYC_3M6M[]			= TEST_DIR "JPYYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char JPYYC_XCCY[]			= TEST_DIR "JPYYC_XCCY_tryAqCurvesCalibrateBasis_inputs";
+    extern const char GBPYC_FWDJPY[]		= TEST_DIR "GBPYC_FWDJPY_tryAqCurvesCalibrateFXForwards_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char curveDisplayInputs[]				= TEST_DIR "GBPYC_GBPDF_JPYCSA_tryMeCurveDisplay_inputs";
-    extern const char curveDisplayOutputs_32bit[]		= TEST_DIR "GBPYC_GBPDF_JPYCSA_tryMeCurveDisplay_outputs_32bit";
-	extern const char curveDisplayOutputs_64bit[]		= TEST_DIR "GBPYC_GBPDF_JPYCSA_tryMeCurveDisplay_outputs_64bit";
+    extern const char curveDisplayInputs[]				= TEST_DIR "GBPYC_GBPDF_JPYCSA_tryAqCurvesDisplay_inputs";
+    extern const char curveDisplayOutputs_32bit[]		= TEST_DIR "GBPYC_GBPDF_JPYCSA_tryAqCurvesDisplay_outputs_32bit";
+	extern const char curveDisplayOutputs_64bit[]		= TEST_DIR "GBPYC_GBPDF_JPYCSA_tryAqCurvesDisplay_outputs_64bit";
 }
 
 

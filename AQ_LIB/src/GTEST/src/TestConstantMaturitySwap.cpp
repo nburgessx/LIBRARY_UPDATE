@@ -45,29 +45,29 @@ namespace
 	// -------------------------------------------------------------
 
 	// Curve market data files for use with CurveGenerators
-	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USDYC_OIS_CURVE_MARKETDATA@1_tryMeLWOCurveMarketDataCreate_inputs.csv";
-	const char GEN_USD_STD_MARKETDATA[]			= TEST_DIR "USDYC_STD_3M_CURVE_MARKETDATA@3_tryMeLWOCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USDYC_OIS_CURVE_MARKETDATA@1_tryAqObjectsCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_STD_MARKETDATA[]			= TEST_DIR "USDYC_STD_3M_CURVE_MARKETDATA@3_tryAqObjectsCurveMarketDataCreate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Curves built from generator and market data
-	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USDYC_OIS_tryMeLWOCurveCalibrate_inputs.csv";
-	const char GEN_USD_STD_CURVE[]				= TEST_DIR "USDYC_STD_tryMeLWOCurveCalibrate_inputs.csv";
+	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USDYC_OIS_tryAqObjectsCurveCalibrate_inputs.csv";
+	const char GEN_USD_STD_CURVE[]				= TEST_DIR "USDYC_STD_tryAqObjectsCurveCalibrate_inputs.csv";
 
 
 	// -------------------------------------------------------------
 
 	// Build Constant Maturity Swap
 
-	const char GEN_CONSTANT_MATURITY_SWAP[]		= TEST_DIR "USD_CMS_tryMeLWOSwapCreateFromGenerator_inputs.csv" ;
+	const char GEN_CONSTANT_MATURITY_SWAP[]		= TEST_DIR "USD_CMS_tryAqObjectsSwapCreateFromGenerator_inputs.csv" ;
 
 	// API methods
-	const char CMS_CALCULATE_PV[]				= TEST_DIR "tryMeLWOConstantMaturitySwapPVUsingConvexityAdjustment_inputs.csv";
-	const char CMS_CALCULATE_PAR_RATE[]			= TEST_DIR "tryMeLWOConstantMaturitySwapParRateUsingConvexityAdjustment_inputs.csv";
+	const char CMS_CALCULATE_PV[]				= TEST_DIR "tryAqObjectsConstantMaturitySwapPVUsingConvexityAdjustment_inputs.csv";
+	const char CMS_CALCULATE_PAR_RATE[]			= TEST_DIR "tryAqObjectsConstantMaturitySwapParRateUsingConvexityAdjustment_inputs.csv";
 
 	// Snapshot results
-	const char CMS_EXPECTED_PV[]				= TEST_DIR "tryMeLWOConstantMaturitySwapPVUsingConvexityAdjustment_outputs.csv";
-	const char CMS_EXPECTED_PAR_RATE[]			= TEST_DIR "tryMeLWOConstantMaturitySwapParRateUsingConvexityAdjustment_outputs.csv";
+	const char CMS_EXPECTED_PV[]				= TEST_DIR "tryAqObjectsConstantMaturitySwapPVUsingConvexityAdjustment_outputs.csv";
+	const char CMS_EXPECTED_PAR_RATE[]			= TEST_DIR "tryAqObjectsConstantMaturitySwapParRateUsingConvexityAdjustment_outputs.csv";
 
 	
 	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.

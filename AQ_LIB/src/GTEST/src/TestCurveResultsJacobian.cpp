@@ -17,17 +17,17 @@ const std::string TEST_FOLDER_NO_BUMP				= "ETrading/Curves/TestCurveResultsJaco
 const std::string TEST_FOLDER_BUMPED				= "ETrading/Curves/TestCurveResultsJacobian/Bumped/";
 
 // Test Files: Function Inputs / Outputs
-const std::string discountFactorDelta_USDOIS_inputs		= TEST_FOLDER + "tryMeCurveResultsJacobianDiscountFactorDelta_USDOIS_inputs.csv";
-const std::string discountFactorDelta_USD6ML_inputs		= TEST_FOLDER + "tryMeCurveResultsJacobianDiscountFactorDelta_USD6ML_inputs.csv";
-const std::string discountFactorDelta_USD3ML_inputs		= TEST_FOLDER + "tryMeCurveResultsJacobianDiscountFactorDelta_USD3ML_inputs.csv";
+const std::string discountFactorDelta_USDOIS_inputs		= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USDOIS_inputs.csv";
+const std::string discountFactorDelta_USD6ML_inputs		= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD6ML_inputs.csv";
+const std::string discountFactorDelta_USD3ML_inputs		= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD3ML_inputs.csv";
 
-const std::string discountFactorDelta_USDOIS_outputs_X86	= TEST_FOLDER + "tryMeCurveResultsJacobianDiscountFactorDelta_USDOIS_outputs_X86.csv";
-const std::string discountFactorDelta_USD3ML_outputs_X86	= TEST_FOLDER + "tryMeCurveResultsJacobianDiscountFactorDelta_USD3ML_outputs_X86.csv";
-const std::string discountFactorDelta_USD6ML_outputs_X86	= TEST_FOLDER + "tryMeCurveResultsJacobianDiscountFactorDelta_USD6ML_outputs_X86.csv";
+const std::string discountFactorDelta_USDOIS_outputs_X86	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USDOIS_outputs_X86.csv";
+const std::string discountFactorDelta_USD3ML_outputs_X86	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD3ML_outputs_X86.csv";
+const std::string discountFactorDelta_USD6ML_outputs_X86	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD6ML_outputs_X86.csv";
 
-const std::string discountFactorDelta_USDOIS_outputs_X64	= TEST_FOLDER + "tryMeCurveResultsJacobianDiscountFactorDelta_USDOIS_outputs_X64.csv";
-const std::string discountFactorDelta_USD3ML_outputs_X64	= TEST_FOLDER + "tryMeCurveResultsJacobianDiscountFactorDelta_USD3ML_outputs_X64.csv";
-const std::string discountFactorDelta_USD6ML_outputs_X64	= TEST_FOLDER + "tryMeCurveResultsJacobianDiscountFactorDelta_USD6ML_outputs_X64.csv";
+const std::string discountFactorDelta_USDOIS_outputs_X64	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USDOIS_outputs_X64.csv";
+const std::string discountFactorDelta_USD3ML_outputs_X64	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD3ML_outputs_X64.csv";
+const std::string discountFactorDelta_USD6ML_outputs_X64	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD6ML_outputs_X64.csv";
 
 // Test Files: USD CURVES NO BUMP
 const std::string fileNameUSDOIS_CurveGenerator			= TEST_FOLDER_CURVE_GENERATORS + "USD_OIS_WITH_RISK.JSON";

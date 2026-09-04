@@ -41,56 +41,56 @@ namespace
     //
     // curve input files
     //
-    extern const char pricing_USDYC_OIS_marketData[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@4_tryMeLWOCurveMarketDataCreate_inputs.csv";
-    extern const char pricing_USDYC_STD_marketData[]			= TEST_DIR "MARKET_DATA_USD3ML_USDYC@3_tryMeLWOCurveMarketDataCreate_inputs.csv";
-	extern const char hedge_USDYC_HEDGE_STD_marketData[]		= TEST_DIR "MARKET_DATA_USD3ML_USDYC_HEDGE@7_tryMeLWOCurveMarketDataCreate_inputs.csv";
+    extern const char pricing_USDYC_OIS_marketData[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@4_tryAqObjectsCurveMarketDataCreate_inputs.csv";
+    extern const char pricing_USDYC_STD_marketData[]			= TEST_DIR "MARKET_DATA_USD3ML_USDYC@3_tryAqObjectsCurveMarketDataCreate_inputs.csv";
+	extern const char hedge_USDYC_HEDGE_STD_marketData[]		= TEST_DIR "MARKET_DATA_USD3ML_USDYC_HEDGE@7_tryAqObjectsCurveMarketDataCreate_inputs.csv";
 
 	// pricing curve build
-	extern const char calibrate_pricing_USDYC_OIS[]				= TEST_DIR "tryMeLWOCurveCalibrate_USDOIS_inputs.csv";
-	extern const char calibrate_pricing_USDYC_STD[]				= TEST_DIR "tryMeLWOCurveCalibrate_USD3ML_inputs.csv";
+	extern const char calibrate_pricing_USDYC_OIS[]				= TEST_DIR "tryAqObjectsCurveCalibrate_USDOIS_inputs.csv";
+	extern const char calibrate_pricing_USDYC_STD[]				= TEST_DIR "tryAqObjectsCurveCalibrate_USD3ML_inputs.csv";
 
 	// Hedge curve
-	extern const char curve_generator_modify_interpolation[]	= TEST_DIR "tryMeLWOCurveGeneratorModify_inputs.csv";
-	extern const char calibrate_hedge_curve_inputs[]			= TEST_DIR "tryMeLWOCurveCalibrateHedge_inputs.csv";
+	extern const char curve_generator_modify_interpolation[]	= TEST_DIR "tryAqObjectsCurveGeneratorModify_inputs.csv";
+	extern const char calibrate_hedge_curve_inputs[]			= TEST_DIR "tryAqObjectsCurveCalibrateHedge_inputs.csv";
 
     // Trades
-	extern const char irs_spot_4Y_SwapInputs[]			= TEST_DIR "USD_3ML_spot_4Y_tryMeLWOSwapCreateFromGenerator_inputs.csv";
-	extern const char irs_3Yfwdstart_4Y_SwapInputs[]	= TEST_DIR "USD_3ML_3Yfwdst_4Y_tryMeLWOSwapCreateFromGenerator_inputs.csv";
-	extern const char irs_3Y9Mfwdstart_3M_SwapInputs[]	= TEST_DIR "USD_3ML_3Y9MFwdSt_3M_tryMeLWOSwapCreateFromGenerator_inputs.csv";
+	extern const char irs_spot_4Y_SwapInputs[]			= TEST_DIR "USD_3ML_spot_4Y_tryAqObjectsSwapCreateFromGenerator_inputs.csv";
+	extern const char irs_3Yfwdstart_4Y_SwapInputs[]	= TEST_DIR "USD_3ML_3Yfwdst_4Y_tryAqObjectsSwapCreateFromGenerator_inputs.csv";
+	extern const char irs_3Y9Mfwdstart_3M_SwapInputs[]	= TEST_DIR "USD_3ML_3Y9MFwdSt_3M_tryAqObjectsSwapCreateFromGenerator_inputs.csv";
 
-	//extern const char fixingTableInputs[]				= TEST_DIR "FIXING@1_tryMeLWOFixingTableCreate_inputs.csv";
+	//extern const char fixingTableInputs[]				= TEST_DIR "FIXING@1_tryAqObjectsFixingTableCreate_inputs.csv";
 
 
 	// Delta Ladder Inputs
-	extern const char deltaLadder_spot_4Y_swap_pricingCurveCollection_input[]		= TEST_DIR "tryMeLWOSwapDeltaLadderHorizontally_pricingCurveCollection_inputs.csv";
-	extern const char deltaLadder_spot_4Y_swap_hedgeCurveCollection_input[]			= TEST_DIR "tryMeLWOSwapDeltaLadderHorizontally_hedgeCurveCollection_inputs.csv";
-	extern const char deltaLadder_3Yfwdst_4Y_swap_hedgeCurveCollection_input[]		= TEST_DIR "tryMeLWOSwapDeltaLadderHorizontally_3Yfwdst_4Y_hedgeCurveCollection_inputs.csv";
-	extern const char deltaLadder_3Y9Mfwdst_3M_swap_hedgeCurveCollection_input[]	= TEST_DIR "tryMeLWOSwapDeltaLadderHorizontally_3Y9Mfwdst_3M_hedgeCurveCollection_inputs.csv";
+	extern const char deltaLadder_spot_4Y_swap_pricingCurveCollection_input[]		= TEST_DIR "tryAqObjectsSwapDeltaLadderHorizontally_pricingCurveCollection_inputs.csv";
+	extern const char deltaLadder_spot_4Y_swap_hedgeCurveCollection_input[]			= TEST_DIR "tryAqObjectsSwapDeltaLadderHorizontally_hedgeCurveCollection_inputs.csv";
+	extern const char deltaLadder_3Yfwdst_4Y_swap_hedgeCurveCollection_input[]		= TEST_DIR "tryAqObjectsSwapDeltaLadderHorizontally_3Yfwdst_4Y_hedgeCurveCollection_inputs.csv";
+	extern const char deltaLadder_3Y9Mfwdst_3M_swap_hedgeCurveCollection_input[]	= TEST_DIR "tryAqObjectsSwapDeltaLadderHorizontally_3Y9Mfwdst_3M_hedgeCurveCollection_inputs.csv";
 
 	// Baseline results
-	extern const char raw_delta_ladder_outputs_spot_4Y_pricingCurveCollection_32[]	= "tryMeLWOSwapDeltaLadder_spot_4Y_pricingCurveCollection_outputs.csv";
-	extern const char raw_delta_ladder_outputs_spot_4Y_pricingCurveCollection_64[]	= "tryMeLWOSwapDeltaLadder_spot_4Y_pricingCurveCollection_outputs_64bit.csv"; 
-	extern const char delta_ladder_outputs_spot_4Y_pricingCurveCollection_32[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_spot_4Y_pricingCurveCollection_outputs.csv";
-	extern const char delta_ladder_outputs_spot_4Y_pricingCurveCollection_64[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_spot_4Y_pricingCurveCollection_outputs_64bit.csv";
+	extern const char raw_delta_ladder_outputs_spot_4Y_pricingCurveCollection_32[]	= "tryAqObjectsSwapDeltaLadder_spot_4Y_pricingCurveCollection_outputs.csv";
+	extern const char raw_delta_ladder_outputs_spot_4Y_pricingCurveCollection_64[]	= "tryAqObjectsSwapDeltaLadder_spot_4Y_pricingCurveCollection_outputs_64bit.csv"; 
+	extern const char delta_ladder_outputs_spot_4Y_pricingCurveCollection_32[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_spot_4Y_pricingCurveCollection_outputs.csv";
+	extern const char delta_ladder_outputs_spot_4Y_pricingCurveCollection_64[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_spot_4Y_pricingCurveCollection_outputs_64bit.csv";
 
-	extern const char raw_delta_ladder_outputs_spot_4Y_hedgeCurveCollection_32[]	= "tryMeLWOSwapDeltaLadder_spot_4Y_hedgeCurveCollection_outputs.csv";
-	extern const char raw_delta_ladder_outputs_spot_4Y_hedgeCurveCollection_64[]	= "tryMeLWOSwapDeltaLadder_spot_4Y_hedgeCurveCollection_outputs_64bit.csv"; 
-	extern const char delta_ladder_outputs_spot_4Y_hedgeCurveCollection_32[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_spot_4Y_hedgeCurveCollection_outputs.csv";
-	extern const char delta_ladder_outputs_spot_4Y_hedgeCurveCollection_64[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_spot_4Y_hedgeCurveCollection_outputs_64bit.csv";
+	extern const char raw_delta_ladder_outputs_spot_4Y_hedgeCurveCollection_32[]	= "tryAqObjectsSwapDeltaLadder_spot_4Y_hedgeCurveCollection_outputs.csv";
+	extern const char raw_delta_ladder_outputs_spot_4Y_hedgeCurveCollection_64[]	= "tryAqObjectsSwapDeltaLadder_spot_4Y_hedgeCurveCollection_outputs_64bit.csv"; 
+	extern const char delta_ladder_outputs_spot_4Y_hedgeCurveCollection_32[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_spot_4Y_hedgeCurveCollection_outputs.csv";
+	extern const char delta_ladder_outputs_spot_4Y_hedgeCurveCollection_64[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_spot_4Y_hedgeCurveCollection_outputs_64bit.csv";
 
-	extern const char raw_delta_ladder_outputs_3Yfwdst_4Y_hedgeCurveCollection_32[]	= "tryMeLWOSwapDeltaLadder_3Yfwdst_4Y_hedgeCurveCollection_outputs.csv";
-	extern const char raw_delta_ladder_outputs_3Yfwdst_4Y_hedgeCurveCollection_64[]	= "tryMeLWOSwapDeltaLadder_3Yfwdst_4Y_hedgeCurveCollection_outputs_64bit.csv"; 
-	extern const char delta_ladder_outputs_3Yfwdst_4Y_hedgeCurveCollection_32[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_3Yfwdst_4Y_hedgeCurveCollection_outputs.csv";
-	extern const char delta_ladder_outputs_3Yfwdst_4Y_hedgeCurveCollection_64[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_3Yfwdst_4Y_hedgeCurveCollection_outputs_64bit.csv";
+	extern const char raw_delta_ladder_outputs_3Yfwdst_4Y_hedgeCurveCollection_32[]	= "tryAqObjectsSwapDeltaLadder_3Yfwdst_4Y_hedgeCurveCollection_outputs.csv";
+	extern const char raw_delta_ladder_outputs_3Yfwdst_4Y_hedgeCurveCollection_64[]	= "tryAqObjectsSwapDeltaLadder_3Yfwdst_4Y_hedgeCurveCollection_outputs_64bit.csv"; 
+	extern const char delta_ladder_outputs_3Yfwdst_4Y_hedgeCurveCollection_32[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_3Yfwdst_4Y_hedgeCurveCollection_outputs.csv";
+	extern const char delta_ladder_outputs_3Yfwdst_4Y_hedgeCurveCollection_64[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_3Yfwdst_4Y_hedgeCurveCollection_outputs_64bit.csv";
 
-	extern const char raw_delta_ladder_outputs_3Y9Mfwdst_3M_hedgeCurveCollection_32[]	= "tryMeLWOSwapDeltaLadder_3Y9Mfwdst_3M_hedgeCurveCollection_outputs.csv";
-	extern const char raw_delta_ladder_outputs_3Y9Mfwdst_3M_hedgeCurveCollection_64[]	= "tryMeLWOSwapDeltaLadder_3Y9Mfwdst_3M_hedgeCurveCollection_outputs_64bit.csv"; 
-	extern const char delta_ladder_outputs_3Y9Mfwdst_3M_hedgeCurveCollection_32[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_3Y9Mfwdst_3M_hedgeCurveCollection_outputs.csv";
-	extern const char delta_ladder_outputs_3Y9Mfwdst_3M_hedgeCurveCollection_64[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_3Y9Mfwdst_3M_hedgeCurveCollection_outputs_64bit.csv";
+	extern const char raw_delta_ladder_outputs_3Y9Mfwdst_3M_hedgeCurveCollection_32[]	= "tryAqObjectsSwapDeltaLadder_3Y9Mfwdst_3M_hedgeCurveCollection_outputs.csv";
+	extern const char raw_delta_ladder_outputs_3Y9Mfwdst_3M_hedgeCurveCollection_64[]	= "tryAqObjectsSwapDeltaLadder_3Y9Mfwdst_3M_hedgeCurveCollection_outputs_64bit.csv"; 
+	extern const char delta_ladder_outputs_3Y9Mfwdst_3M_hedgeCurveCollection_32[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_3Y9Mfwdst_3M_hedgeCurveCollection_outputs.csv";
+	extern const char delta_ladder_outputs_3Y9Mfwdst_3M_hedgeCurveCollection_64[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_3Y9Mfwdst_3M_hedgeCurveCollection_outputs_64bit.csv";
 
 	// 3Y6M_6M  i.e. single cashflow
 
-	extern const char deltaLadder_spot_4Y_Inputs[]			= TEST_DIR "tryMeLWOSwapDeltaLadder_spot_4Y_inputs.csv";
+	extern const char deltaLadder_spot_4Y_Inputs[]			= TEST_DIR "tryAqObjectsSwapDeltaLadder_spot_4Y_inputs.csv";
 
 	std::string helperCreateSwapFromSwapGenerator(const std::string& swapGeneratorName, const char* swapInputs)
 	{

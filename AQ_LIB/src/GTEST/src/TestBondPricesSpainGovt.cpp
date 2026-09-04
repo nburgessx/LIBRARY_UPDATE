@@ -28,10 +28,10 @@ namespace
 
 	const std::string bondFile = TEST_DIR + "BOND";
 
-	const std::string priceFunctionInput     = "tryMeLWOBondPrice_inputs";
-    const std::string priceFunctionOutput    = "tryMeLWOBondPrice_outputs";
-	const std::string yieldFunctionInput	 = "tryMeLWOBondYield_inputs";
-	const std::string yieldfunctionOuput	 = "tryMeLWOBondYield_outputs";
+	const std::string priceFunctionInput     = "tryAqObjectsBondPrice_inputs";
+    const std::string priceFunctionOutput    = "tryAqObjectsBondPrice_outputs";
+	const std::string yieldFunctionInput	 = "tryAqObjectsBondYield_inputs";
+	const std::string yieldfunctionOuput	 = "tryAqObjectsBondYield_outputs";
 
 }
 

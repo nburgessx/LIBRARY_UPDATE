@@ -24,8 +24,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateCentralBank_inputs" );
-            file.write( "generatorFunction", "tryMeDateCentralBank" );
+            CreateDataFile file( "tryAqDatesCentralBank_inputs" );
+            file.write( "generatorFunction", "tryAqDatesCentralBank" );
             file.write( "centralBankId", centralBankId );
             file.write( "date", date );
             file.write( "strictlyAfter", strictlyAfter );
@@ -35,7 +35,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateCentralBank_outputs" );
+            CreateDataFile file( "tryAqDatesCentralBank_outputs" );
             file.write( "output", ret );
         }
 
@@ -57,8 +57,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateECB_inputs" );
-            file.write( "generatorFunction", "tryMeDateECB" );
+            CreateDataFile file( "tryAqDatesECB_inputs" );
+            file.write( "generatorFunction", "tryAqDatesECB" );
             file.write( "date", date );
             file.write( "strictlyAfter", strictlyAfter );
         }
@@ -67,7 +67,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateECB_outputs" );
+            CreateDataFile file( "tryAqDatesECB_outputs" );
             file.write( "output", ret );
         }
 
@@ -87,8 +87,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateECBSwapStart_inputs" );
-            file.write( "generatorFunction", "tryMeDateECBSwapStart" );
+            CreateDataFile file( "tryAqDatesECBSwapStart_inputs" );
+            file.write( "generatorFunction", "tryAqDatesECBSwapStart" );
             file.write( "date", date );
         }
 
@@ -100,7 +100,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateECBSwapStart_outputs" );
+            CreateDataFile file( "tryAqDatesECBSwapStart_outputs" );
             file.write( "output", ret );
         }
 
@@ -121,8 +121,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateECBSwapEnd_inputs" );
-            file.write( "generatorFunction", "tryMeDateECBSwapEnd" );
+            CreateDataFile file( "tryAqDatesECBSwapEnd_inputs" );
+            file.write( "generatorFunction", "tryAqDatesECBSwapEnd" );
             file.write( "date", date );
         }
 
@@ -140,7 +140,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateECBSwapEnd_outputs" );
+            CreateDataFile file( "tryAqDatesECBSwapEnd_outputs" );
             file.write( "output", ret );
         }
 

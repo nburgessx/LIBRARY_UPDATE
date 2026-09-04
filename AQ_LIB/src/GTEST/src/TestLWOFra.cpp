@@ -31,25 +31,25 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs";
     extern const char USDYC_1M[]			    = "";
-    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryMeCurveCalibrateSwap_inputs";
-    extern const char USDYC_6M[]			    = TEST_DIR "USDYC_3M6M_tryMeCurveCalibrateBasis_inputs";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char USDYC_6M[]			    = TEST_DIR "USDYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
     extern const char USDYC_12M[]			    = "";
 
     //
     // test call input and reference files
     //
-    extern const char fraInput1[]	= TEST_DIR "FRA_USD@1_tryMeLWOLegCreate_inputs";
-	extern const char pvInputs1[] = TEST_DIR "FRA_USD@1_tryMeLWOLegPV_inputs";
-	extern const char pvOutputs1[] = TEST_DIR "FRA_USD@1_tryMeLWOLegPV_outputs";
-	extern const char pvOutputs1_64[] = TEST_DIR "FRA_USD@1_tryMeLWOLegPV_outputs64_";
+    extern const char fraInput1[]	= TEST_DIR "FRA_USD@1_tryAqObjectsLegCreate_inputs";
+	extern const char pvInputs1[] = TEST_DIR "FRA_USD@1_tryAqObjectsLegPV_inputs";
+	extern const char pvOutputs1[] = TEST_DIR "FRA_USD@1_tryAqObjectsLegPV_outputs";
+	extern const char pvOutputs1_64[] = TEST_DIR "FRA_USD@1_tryAqObjectsLegPV_outputs64_";
 
 
-	extern const char fraInput2[] = TEST_DIR "FRA_USD_STUB@2_tryMeLWOLegCreate_inputs";
-	extern const char pvInputs2[] = TEST_DIR "FRA_USD_STUB@2_tryMeLWOLegPV_inputs";
-	extern const char pvOutputs2[] = TEST_DIR "FRA_USD_STUB@2_tryMeLWOLegPV_outputs";
-	extern const char pvOutputs2_64[] = TEST_DIR "FRA_USD_STUB@2_tryMeLWOLegPV_outputs64_";
+	extern const char fraInput2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjectsLegCreate_inputs";
+	extern const char pvInputs2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjectsLegPV_inputs";
+	extern const char pvOutputs2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjectsLegPV_outputs";
+	extern const char pvOutputs2_64[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjectsLegPV_outputs64_";
 
 }
 

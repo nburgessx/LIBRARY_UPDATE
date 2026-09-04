@@ -35,49 +35,49 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]					= TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]					= TEST_DIR "USDYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
+    extern const char USDYC_OIS[]					= TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]					= TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
 
-    extern const char EURYC_OIS[]					= TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]					= TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char EURYC_3M6M[]					= TEST_DIR "EURYC_3M6M_tryMeCurveCalibrateBasis_inputs.csv";
-    extern const char EURYC_XCCY[]					= TEST_DIR "EURYC_XCCY_tryMeCurveCalibrateBasis_inputs.csv";
+    extern const char EURYC_OIS[]					= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]					= TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char EURYC_3M6M[]					= TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char EURYC_XCCY[]					= TEST_DIR "EURYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
 
-	extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char JPYYC_JSCC_STD[]				= TEST_DIR "JPYYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char JPYYC_LCH_6M[]				= TEST_DIR "JPYYC_LCH6M_tryMeCurveCalibrateBasis_inputs.csv";
-	extern const char JPYYC_LCH_3M[]				= TEST_DIR "JPYYC_LCH3M_tryMeCurveCalibrateBasis_inputs.csv";
-    extern const char JPYYC_XCCY[]					= TEST_DIR "JPYYC_XCCY_tryMeCurveCalibrateBasis_inputs.csv";
+	extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char JPYYC_JSCC_STD[]				= TEST_DIR "JPYYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char JPYYC_LCH_6M[]				= TEST_DIR "JPYYC_LCH6M_tryAqCurvesCalibrateBasis_inputs.csv";
+	extern const char JPYYC_LCH_3M[]				= TEST_DIR "JPYYC_LCH3M_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char JPYYC_XCCY[]					= TEST_DIR "JPYYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
 
     //
     // test call input and reference files
     //
-	extern const char xccySwapInputs1_Swap1[]		= TEST_DIR "XCCY1@4_tryMeLWOSwapCreate_inputs_1.csv";
-	extern const char xccySwapInputs1_Swap2[]		= TEST_DIR "XCCY2@1_tryMeLWOSwapCreate_inputs_1.csv";
+	extern const char xccySwapInputs1_Swap1[]		= TEST_DIR "XCCY1@4_tryAqObjectsSwapCreate_inputs_1.csv";
+	extern const char xccySwapInputs1_Swap2[]		= TEST_DIR "XCCY2@1_tryAqObjectsSwapCreate_inputs_1.csv";
 
-	extern const char xccySwapInputs2_Swap1[]		= TEST_DIR "XCCY1@4_tryMeLWOSwapCreate_inputs_2.csv";
-	extern const char xccySwapInputs2_Swap2[]		= TEST_DIR "XCCY2@1_tryMeLWOSwapCreate_inputs_2.csv";
+	extern const char xccySwapInputs2_Swap1[]		= TEST_DIR "XCCY1@4_tryAqObjectsSwapCreate_inputs_2.csv";
+	extern const char xccySwapInputs2_Swap2[]		= TEST_DIR "XCCY2@1_tryAqObjectsSwapCreate_inputs_2.csv";
 
-	extern const char raw_delta_ladder_outputs1_32[]	= "tryMeLWOSwapDeltaLadder_outputs_1.csv";
-	extern const char raw_delta_ladder_outputs1_64[]	= "tryMeLWOSwapDeltaLadder_outputs_1_64bit.csv";
+	extern const char raw_delta_ladder_outputs1_32[]	= "tryAqObjectsSwapDeltaLadder_outputs_1.csv";
+	extern const char raw_delta_ladder_outputs1_64[]	= "tryAqObjectsSwapDeltaLadder_outputs_1_64bit.csv";
 
-	extern const char raw_delta_ladder_outputs2_32[]	= "tryMeLWOSwapDeltaLadder_outputs_2.csv";
-	extern const char raw_delta_ladder_outputs2_64[]	= "tryMeLWOSwapDeltaLadder_outputs_2_64bit.csv";
+	extern const char raw_delta_ladder_outputs2_32[]	= "tryAqObjectsSwapDeltaLadder_outputs_2.csv";
+	extern const char raw_delta_ladder_outputs2_64[]	= "tryAqObjectsSwapDeltaLadder_outputs_2_64bit.csv";
 
-	extern const char raw_delta_ladder_outputs3_32[]	= "tryMeLWOSwapDeltaLadder_outputs_3.csv";
-	extern const char raw_delta_ladder_outputs3_64[]	= "tryMeLWOSwapDeltaLadder_outputs_3_64bit.csv";
+	extern const char raw_delta_ladder_outputs3_32[]	= "tryAqObjectsSwapDeltaLadder_outputs_3.csv";
+	extern const char raw_delta_ladder_outputs3_64[]	= "tryAqObjectsSwapDeltaLadder_outputs_3_64bit.csv";
 
-	extern const char delta_ladder_outputs1_32[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_outputs_1.csv";
-	extern const char delta_ladder_outputs1_64[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_outputs_1_64bit.csv";
+	extern const char delta_ladder_outputs1_32[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_outputs_1.csv";
+	extern const char delta_ladder_outputs1_64[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_outputs_1_64bit.csv";
 
-	extern const char delta_ladder_outputs2_32[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_outputs_2.csv";
-	extern const char delta_ladder_outputs2_64[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_outputs_2_64bit.csv";
+	extern const char delta_ladder_outputs2_32[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_outputs_2.csv";
+	extern const char delta_ladder_outputs2_64[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_outputs_2_64bit.csv";
 
-	extern const char delta_ladder_outputs3_32[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_outputs_3.csv";
-	extern const char delta_ladder_outputs3_64[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_outputs_3_64bit.csv";
+	extern const char delta_ladder_outputs3_32[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_outputs_3.csv";
+	extern const char delta_ladder_outputs3_64[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_outputs_3_64bit.csv";
 
-	extern const char deltaLadderInputs[]			= TEST_DIR "tryMeLWOSwapDeltaLadder_inputs.csv";  // ValuationCCY is USD 
-    extern const char deltaLadderInputs1[]			= TEST_DIR "tryMeLWOSwapDeltaLadder_inputs_1.csv";  // ValuationCCY is USD 
+	extern const char deltaLadderInputs[]			= TEST_DIR "tryAqObjectsSwapDeltaLadder_inputs.csv";  // ValuationCCY is USD 
+    extern const char deltaLadderInputs1[]			= TEST_DIR "tryAqObjectsSwapDeltaLadder_inputs_1.csv";  // ValuationCCY is USD 
 
 
 	std::string helperCreateSwapFromSwapGenerator(const char* swapGeneratorInputs, const char* swapInputs)

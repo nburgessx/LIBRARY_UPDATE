@@ -52,10 +52,10 @@ namespace etrading
             functionList[ AQLString( "tryMirSetUpBasisSwapCurve" ) ]       = etrading::replayCurveBasis;
             functionList[ AQLString( "tryMirSetUpFwdFXConstantCurve" ) ]   = etrading::replayCurveFwdFX;
 
-            functionList[ AQLString( "tryMeCurveCalibrateOIS" ) ]          = etrading::replayCurveOIS;
-            functionList[ AQLString( "tryMeCurveCalibrateSwap" ) ]            = etrading::replayCurveSTD;
-            functionList[ AQLString( "tryMeCurveCalibrateBasis" ) ]			= etrading::replayCurveBasis;
-            functionList[ AQLString( "tryMeCurveCalibrateFXForwards" ) ]		= etrading::replayCurveFwdFX;
+            functionList[ AQLString( "tryAqCurvesCalibrateOIS" ) ]          = etrading::replayCurveOIS;
+            functionList[ AQLString( "tryAqCurvesCalibrateSwap" ) ]            = etrading::replayCurveSTD;
+            functionList[ AQLString( "tryAqCurvesCalibrateBasis" ) ]			= etrading::replayCurveBasis;
+            functionList[ AQLString( "tryAqCurvesCalibrateFXForwards" ) ]		= etrading::replayCurveFwdFX;
             // -------------------------------------------------------------------------
 
             // Throw an Error if the function is not found

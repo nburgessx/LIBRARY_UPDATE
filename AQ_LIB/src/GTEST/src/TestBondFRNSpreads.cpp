@@ -14,7 +14,7 @@
 
 #include "tryAqObjects.h"
 #include "tryAqObjectsAssetSwap.h"
-//#include "tryMeLWOBond.h"
+//#include "tryAqObjectsBond.h"
 
 #include "CreateDataFile.h"
 #include "TestHelperUtilities.h"
@@ -42,66 +42,66 @@ namespace
     const std::string fileName_Bond_EUR_Floater	= TEST_DIR + "XS1781813511.JSON";
 	const std::string fileName_AssetSwap_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryMeLWOAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryMeLWOAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapSpread_outputs";
 
-	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryMeLWOAssetSwapFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryMeLWOAssetSwapFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_outputs";
 
-	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryMeLWOAssetSwapSpreadFromFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryMeLWOAssetSwapSpreadFromFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_outputs";
 
 	// --- EUR Floater PaymentDate UnAdjusted---
 	const std::string fileName_Bond_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793.JSON";
 	const std::string fileName_AssetSwap_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryMeLWOAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryMeLWOAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapSpread_outputs";
 
-	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryMeLWOAssetSwapFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryMeLWOAssetSwapFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_outputs";
 
-	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryMeLWOAssetSwapSpreadFromFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryMeLWOAssetSwapSpreadFromFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_outputs";
 
 	// --- EUR Floater PaymentDate UnAdjusted ACTACT---
 	const std::string fileName_Bond_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724.JSON";
 	const std::string fileName_AssetSwap_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryMeLWOAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryMeLWOAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapSpread_outputs";
 
-	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryMeLWOAssetSwapFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryMeLWOAssetSwapFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_outputs";
 
-	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryMeLWOAssetSwapSpreadFromFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryMeLWOAssetSwapSpreadFromFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_outputs";
 
 	// --- GBP Floater ---
 	const std::string fileName_Bond_GBP_Floater = TEST_DIR + "XS1082839553.JSON";
 	const std::string fileName_AssetSwap_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryMeLWOAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryMeLWOAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapSpread_outputs";
 
-	const std::string assetSwapSpreadFixedEqvCouponInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryMeLWOAssetSwapFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFixedEqvCouponOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryMeLWOAssetSwapFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFixedEqvCouponInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFixedEqvCouponOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_outputs";
 
-	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryMeLWOAssetSwapSpreadFromFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryMeLWOAssetSwapSpreadFromFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_outputs";
 
 	// --- USD Floater ---
 	const std::string fileName_Bond_USD_Floater = TEST_DIR + "US30231GAE26.JSON";
 	const std::string fileName_AssetSwap_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryMeLWOAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryMeLWOAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapSpread_outputs";
 
-	const std::string assetSwapSpreadFixedEqvCouponInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryMeLWOAssetSwapFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFixedEqvCouponOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryMeLWOAssetSwapFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFixedEqvCouponInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFixedEqvCouponOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_outputs";
 
-	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryMeLWOAssetSwapSpreadFromFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryMeLWOAssetSwapSpreadFromFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_outputs";
 
 }
 

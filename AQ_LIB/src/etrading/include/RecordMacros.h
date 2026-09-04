@@ -29,8 +29,8 @@ namespace
 //      // RECORDING INPUTS
 //	    if (CreateDataFile::recordEnabled()) 
 //	    {
-//	  	    CreateDataFile file(decorateFilename("tryMeLWOXccySwapSpread_inputs", swapName.c_str()));
-//	  	    file.write("generatorFunction", "tryMeLWOXccySwapSpread");
+//	  	    CreateDataFile file(decorateFilename("tryAqObjectsXccySwapSpread_inputs", swapName.c_str()));
+//	  	    file.write("generatorFunction", "tryAqObjectsXccySwapSpread");
 //	  	    file.write("swapName", swapName);
 //	  	    file.write("curveCollections", curveCollections);
 //	  	    file.write("fixingTableNames", fixingTableNames);
@@ -47,7 +47,7 @@ namespace
 //      // RECORDING OUTPUTS
 //      if (CreateDataFile::recordEnabled()) 
 //	    {
-//	    	CreateDataFile file(decorateFilename("tryMeLWOXccySwapSpread_outputs", swapName.c_str()));
+//	    	CreateDataFile file(decorateFilename("tryAqObjectsXccySwapSpread_outputs", swapName.c_str()));
 //	    	file.write("output", resultValue );
 //	    }
 //

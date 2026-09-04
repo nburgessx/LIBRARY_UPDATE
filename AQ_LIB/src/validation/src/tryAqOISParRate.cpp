@@ -54,8 +54,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeProductOISParRate_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryMeProductOISParRate" );
+            CreateDataFile file( decorateFilename( "tryAqOISParRate_inputs", curveCollection ) );
+            file.write( "generatorFunction", "tryAqOISParRate" );
             file.write( "oisLVB", oisLVB );
         }
 
@@ -132,7 +132,7 @@ namespace validation
                      floatLegRollDayString );
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeProductOISParRate_outputs", curveCollection ) );
+            CreateDataFile file( decorateFilename( "tryAqOISParRate_outputs", curveCollection ) );
             file.write( "output", ret, 12 );
         }
 

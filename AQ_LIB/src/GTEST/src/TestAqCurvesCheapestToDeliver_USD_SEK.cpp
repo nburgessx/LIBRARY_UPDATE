@@ -14,7 +14,7 @@
 
 using etrading::ReadDataFile;
 
-#define TEST_DIR "ETrading/Curves/TestMeCurveCheapestToDeliver_USD_SEK/"
+#define TEST_DIR "ETrading/Curves/TestAqCurvesCheapestToDeliver_USD_SEK/"
 
 namespace
 {

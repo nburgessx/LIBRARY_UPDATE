@@ -35,8 +35,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOLegCreate_inputs", legObjectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOLegCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsLegCreate_inputs", legObjectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsLegCreate");
 			file.write("legObjectName", legObjectName);
 			file.write("legLVB", legLVB);
 			file.write("validateKeys", validateKeys);
@@ -51,7 +51,7 @@ namespace validation
         std::string ret = legObjectName;
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOLegCreate_outputs", legObjectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsLegCreate_outputs", legObjectName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -76,8 +76,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOFeeLegCreate_inputs", legObjectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOFeeLegCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsFeeLegCreate_inputs", legObjectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsFeeLegCreate");
 			file.write("legObjectName", legObjectName);
 			file.write("feeProperties", feeProperties);
 			file.write("feeScheduleLVB", feeScheduleLVB);
@@ -103,7 +103,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOFeeLegCreate_outputs", legObjectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsFeeLegCreate_outputs", legObjectName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -129,8 +129,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOLegCreateFromSchedule_inputs", legObjectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOLegCreateFromSchedule");
+			CreateDataFile file(decorateFilename("tryAqObjectsLegCreateFromSchedule_inputs", legObjectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsLegCreateFromSchedule");
 			file.write("legObjectName", legObjectName);
 			file.write("scheduleName", scheduleName);
 			file.write("legLVB", legLVB);
@@ -150,7 +150,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOLegCreateFromSchedule_outputs", legObjectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsLegCreateFromSchedule_outputs", legObjectName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -172,8 +172,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOLegPV_inputs", legObjectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOLegPV");
+			CreateDataFile file(decorateFilename("tryAqObjectsLegPV_inputs", legObjectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsLegPV");
 			file.write("legObjectName", legObjectName);
 			file.write("valuationSettingsLVB", valuationSettingsLVB);
 			file.write("fixingTableName", fixingTableName);
@@ -187,7 +187,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOLegPV_outputs", legObjectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsLegPV_outputs", legObjectName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -207,8 +207,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOLegDisplay_inputs", legObjectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOLegDisplay");
+			CreateDataFile file(decorateFilename("tryAqObjectsLegDisplay_inputs", legObjectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsLegDisplay");
 			file.write("legObjectName", legObjectName);
 		}
 
@@ -217,7 +217,7 @@ namespace validation
 		
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOLegDisplay_outputs", legObjectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsLegDisplay_outputs", legObjectName.c_str()));
 			file.write("output", ret);
 		}
 

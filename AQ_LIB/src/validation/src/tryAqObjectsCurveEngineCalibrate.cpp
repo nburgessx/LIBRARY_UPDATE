@@ -51,8 +51,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled())
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCurveEngineCalibrate_inputs", engineObjectName.c_str()));
-			file.write("generatorFunction", "tryMeLWOCurveEngineCalibrate");
+			CreateDataFile file(decorateFilename("tryAqObjectsCurveEngineCalibrate_inputs", engineObjectName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsCurveEngineCalibrate");
 			file.write("objectName", engineObjectName);
 
 			// Write out each marketDataType and correspondiong block of market data

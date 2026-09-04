@@ -32,7 +32,7 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
     extern const char USDYC_STD[]			    = "";
     extern const char USDYC_1M[]			    = "";
     extern const char USDYC_6M[]			    = "";
@@ -41,10 +41,10 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char zeroCouponSwapInputs[]	= TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryMeLWOSwapCreate_inputs";
-    extern const char pvInputs[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryMeLWOSwapPV_inputs";
-    extern const char pvOutputs[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryMeLWOSwapPV_outputs";
-    extern const char pvOutputs64[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryMeLWOSwapPV_outputs64_";
+    extern const char zeroCouponSwapInputs[]	= TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjectsSwapCreate_inputs";
+    extern const char pvInputs[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjectsSwapPV_inputs";
+    extern const char pvOutputs[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjectsSwapPV_outputs";
+    extern const char pvOutputs64[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjectsSwapPV_outputs64_";
 
 }
 

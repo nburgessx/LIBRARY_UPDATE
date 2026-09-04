@@ -95,8 +95,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeLWOCurveCalibrateOIS_inputs", curveCollection, staticDataTable ) );
-            file.write( "generatorFunction", "tryMeCurveCalibrateOIS" );
+            CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateOIS_inputs", curveCollection, staticDataTable ) );
+            file.write( "generatorFunction", "tryAqCurvesCalibrateOIS" );
             file.write( "lwoCurveName", lwoCurveName.c_str() );
             file.write( "curveCollection", curveCollection );
             file.write( "staticDataTable", staticDataTable );
@@ -303,7 +303,7 @@ namespace validation
             // auto test = 	ptrToCurve->calculateDiscountFactor(1.546);
             if ( CreateDataFile::recordEnabled() )
             {
-                CreateDataFile file( decorateCurvename( "tryMeLWOCurveCalibrateOIS_outputs", curveCollection, staticDataTable ) );
+                CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateOIS_outputs", curveCollection, staticDataTable ) );
                 file.write( "output", lwoCurveName );
             }
             return lwoCurveName.c_str();
@@ -313,7 +313,7 @@ namespace validation
             std::string errString =  ( boost::format( "Unable to create AQOCurve named %s" ) % lwoCurveName.c_str() ).str();
             if ( CreateDataFile::recordEnabled() )
             {
-                CreateDataFile file( decorateCurvename( "tryMeLWOCurveCalibrateOIS_outputs", curveCollection, staticDataTable ) );
+                CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateOIS_outputs", curveCollection, staticDataTable ) );
                 file.write( "output", errString.c_str() );
             }
             AQ_THROW( errString );

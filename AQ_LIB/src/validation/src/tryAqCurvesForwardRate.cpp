@@ -41,8 +41,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveForwardRatesFromYearFraction_inputs", curveCollection, curveIndex ) );
-            file.write( "generatorFunction",    "tryMeCurveForwardRatesFromYearFraction" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesForwardRatesFromYearFraction_inputs", curveCollection, curveIndex ) );
+            file.write( "generatorFunction",    "tryAqCurvesForwardRatesFromYearFraction" );
             file.write( "fromDates",			fromDates );
             file.write( "yearFraction",		    yearFraction );
             file.write( "dayCount",			    dayCount );
@@ -58,7 +58,7 @@ namespace validation
         // Record the outputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveForwardRatesFromYearFraction_outputs", curveCollection, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesForwardRatesFromYearFraction_outputs", curveCollection, curveIndex ) );
             file.write( "output", result );
         }
 
@@ -90,8 +90,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveForwardRatesFromForwardDates_inputs", curveCollection, curveIndex ) );
-            file.write( "generatorFunction",    "tryMeCurveForwardRatesFromForwardRates" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesForwardRatesFromForwardDates_inputs", curveCollection, curveIndex ) );
+            file.write( "generatorFunction",    "tryAqCurvesForwardRatesFromForwardRates" );
             file.write( "fromDates",			fromDates );
             file.write( "toDates",			    toDates );
             file.write( "curveCollection",	    curveCollection );
@@ -106,7 +106,7 @@ namespace validation
         // Record the outputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveForwardRatesFromForwardDates_outputs", curveCollection, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesForwardRatesFromForwardDates_outputs", curveCollection, curveIndex ) );
             file.write( "output", results );
         }
 
@@ -141,8 +141,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveForwardRatesFromForwardDates_inputs", curveCollectionFromHandle, curveIndex ) );
-            file.write( "generatorFunction",    "tryMeCurveForwardRatesFromForwardRates" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesForwardRatesFromForwardDates_inputs", curveCollectionFromHandle, curveIndex ) );
+            file.write( "generatorFunction",    "tryAqCurvesForwardRatesFromForwardRates" );
             file.write( "fromDates",			fromDates );
             file.write( "toDates",			    toDates );
             file.write( "curveCollection",	    curveCollectionOrHandle );
@@ -157,7 +157,7 @@ namespace validation
         // Record the outputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveForwardRatesFromForwardDates_outputs", curveCollectionFromHandle, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesForwardRatesFromForwardDates_outputs", curveCollectionFromHandle, curveIndex ) );
             file.write( "output", results );
         }
 
@@ -189,8 +189,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveForwardRates_inputs", curveCollectionFromHandle, curveIndex ) );
-            file.write( "generatorFunction", "tryMeCurveForwardRates" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesForwardRates_inputs", curveCollectionFromHandle, curveIndex ) );
+            file.write( "generatorFunction", "tryAqCurvesForwardRates" );
             file.write( "fixingDates",		fixingDates );
             file.write( "curveCollection",	curveCollectionFromHandle );
             file.write( "curveIndex",		curveIndex );
@@ -204,7 +204,7 @@ namespace validation
         // Record outputs for testing
 		if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveForwardRates_outputs", curveCollectionFromHandle, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesForwardRates_outputs", curveCollectionFromHandle, curveIndex ) );
             file.write( "output", result );
         }
 

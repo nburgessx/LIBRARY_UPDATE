@@ -32,7 +32,7 @@ namespace validation
 
         if( rangeData.size() <= 0 )
         {
-            throw AQLCoreInvalidData( "Empty data table was supplied to tryMeLWOGridCreate", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Empty data table was supplied to tryAqObjectsGridCreate", __FILE__, __LINE__ );
         }
 
         if( columnNames.size() != rangeData.size() )

@@ -32,16 +32,16 @@ namespace
     //
     // Curve input files.
     //
-    extern const char DIR_EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs";
+    extern const char DIR_EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char getParRateInputs[]     = TEST_DIR "EURYC_tryMeProductOISParRate_inputs";
-    extern const char getParRateOutputs[]	 = TEST_DIR "EURYC_tryMeProductOISParRate_outputs";
+    extern const char getParRateInputs[]     = TEST_DIR "EURYC_tryAqOISParRate_inputs";
+    extern const char getParRateOutputs[]	 = TEST_DIR "EURYC_tryAqOISParRate_outputs";
 
-    extern const char getPVInputs[]			 = TEST_DIR "EURYC_tryMeProductOISPV_inputs";
-    extern const char getPVOutputs[]		 = TEST_DIR "EURYC_tryMeProductOISPV_outputs";
+    extern const char getPVInputs[]			 = TEST_DIR "EURYC_tryAqOISPV_inputs";
+    extern const char getPVOutputs[]		 = TEST_DIR "EURYC_tryAqOISPV_outputs";
 }
 
 

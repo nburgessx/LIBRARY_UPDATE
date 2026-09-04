@@ -38,8 +38,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveZeroRatesFromYearFractions_inputs", curveCollection, curveIndex ) );
-            file.write( "generatorFunction", "tryMeCurveZeroRatesFromYearFractions" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesZeroRatesFromYearFractions_inputs", curveCollection, curveIndex ) );
+            file.write( "generatorFunction", "tryAqCurvesZeroRatesFromYearFractions" );
             file.write( "yearFractions", yearFractions );
             file.write( "curveCollection", curveCollection );
             file.write( "curveIndex", curveIndex );
@@ -52,7 +52,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveZeroRatesFromYearFractions_outputs", curveCollection, curveIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesZeroRatesFromYearFractions_outputs", curveCollection, curveIndex ) );
             file.write( "output", arr );
         }
 
@@ -86,8 +86,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveZeroRatesFromTenors_inputs", curveCollection, curveIndex ) );
-            file.write( "generatorFunction", "tryMeCurveZeroRatesFromTenors" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesZeroRatesFromTenors_inputs", curveCollection, curveIndex ) );
+            file.write( "generatorFunction", "tryAqCurvesZeroRatesFromTenors" );
             file.write( "tenors", tenors );
             file.write( "curveCollection", curveCollection );
             file.write( "curveIndex", curveIndex );
@@ -120,7 +120,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveZeroRatesFromTenors_outputs", curveCollection, curIndex ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesZeroRatesFromTenors_outputs", curveCollection, curIndex ) );
             file.write( "output", arr );
         }
 

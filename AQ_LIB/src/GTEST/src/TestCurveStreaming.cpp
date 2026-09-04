@@ -32,8 +32,8 @@ const std::string fileNameUSDOIS = TEST_FOLDER + "USD_OIS_CURVE.JSON";
 const std::string fileNameUSD3ML = TEST_FOLDER + "USD_SWAP_3M_CURVE.JSON";
 const std::string fileNameUSD6ML = TEST_FOLDER + "USD_BASIS_6M_CURVE.JSON";
 
-const std::string inputsRawDiscountFactors = TEST_FOLDER + "tryMeCurveDiscountFactorsDisplay_inputs.csv";
-const std::string outputsRawDiscountFactors = TEST_FOLDER + "tryMeCurveDiscountFactorsDisplay_outputs.csv";
+const std::string inputsRawDiscountFactors = TEST_FOLDER + "tryAqCurvesDiscountFactorsDisplay_inputs.csv";
+const std::string outputsRawDiscountFactors = TEST_FOLDER + "tryAqCurvesDiscountFactorsDisplay_outputs.csv";
 
 using etrading::ReadDataFile;
     

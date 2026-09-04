@@ -21,45 +21,45 @@ using etrading::CreateDataFile;
 namespace
 {
     // Test Bond Input File(s)
-    const std::string nelsonSiegelCalibrate				= TEST_DIR "tryMeBondCurveNelsonSiegelCalibrate_inputs.csv";
-	const std::string svenssonCalibrate					= TEST_DIR "tryMeBondCurveSvenssonCalibrate_inputs.csv";
-	const std::string polynomialCalibrate				= TEST_DIR "tryMeBondCurvePolynomialCalibrate_inputs.csv";
+    const std::string nelsonSiegelCalibrate				= TEST_DIR "tryAqBondsCurveNelsonSiegelCalibrate_inputs.csv";
+	const std::string svenssonCalibrate					= TEST_DIR "tryAqBondsCurveSvenssonCalibrate_inputs.csv";
+	const std::string polynomialCalibrate				= TEST_DIR "tryAqBondsCurvePolynomialCalibrate_inputs.csv";
 	
-	const std::string nelsonSiegelBondYield				= TEST_DIR "tryMeBondCurveNelsonSiegelYield_inputs.csv";
-    const std::string svenssonBondYield					= TEST_DIR "tryMeBondCurveSvenssonYield_inputs.csv";
-    const std::string polynomialBondYield				= TEST_DIR "tryMeBondCurvePolynomialYield_inputs.csv";
+	const std::string nelsonSiegelBondYield				= TEST_DIR "tryAqBondsCurveNelsonSiegelYield_inputs.csv";
+    const std::string svenssonBondYield					= TEST_DIR "tryAqBondsCurveSvenssonYield_inputs.csv";
+    const std::string polynomialBondYield				= TEST_DIR "tryAqBondsCurvePolynomialYield_inputs.csv";
 
-	const std::string nelsonSiegelCalibrate_outputs_32	= TEST_DIR "tryMeBondCurveNelsonSiegelCalibrate_outputs_32bit.csv";
-	const std::string svenssonCalibrate_outputs_32		= TEST_DIR "tryMeBondCurveSvenssonCalibrate_outputs_32bit.csv";
-	const std::string polynomialCalibrate_outputs_32	= TEST_DIR "tryMeBondCurvePolynomialCalibrate_outputs_32bit.csv";
+	const std::string nelsonSiegelCalibrate_outputs_32	= TEST_DIR "tryAqBondsCurveNelsonSiegelCalibrate_outputs_32bit.csv";
+	const std::string svenssonCalibrate_outputs_32		= TEST_DIR "tryAqBondsCurveSvenssonCalibrate_outputs_32bit.csv";
+	const std::string polynomialCalibrate_outputs_32	= TEST_DIR "tryAqBondsCurvePolynomialCalibrate_outputs_32bit.csv";
 
-	const std::string nelsonSiegelCalibrate_outputs_64	= TEST_DIR "tryMeBondCurveNelsonSiegelCalibrate_outputs_64bit.csv";
-	const std::string svenssonCalibrate_outputs_64		= TEST_DIR "tryMeBondCurveSvenssonCalibrate_outputs_64bit.csv";
-	const std::string polynomialCalibrate_outputs_64	= TEST_DIR "tryMeBondCurvePolynomialCalibrate_outputs_64bit.csv";
+	const std::string nelsonSiegelCalibrate_outputs_64	= TEST_DIR "tryAqBondsCurveNelsonSiegelCalibrate_outputs_64bit.csv";
+	const std::string svenssonCalibrate_outputs_64		= TEST_DIR "tryAqBondsCurveSvenssonCalibrate_outputs_64bit.csv";
+	const std::string polynomialCalibrate_outputs_64	= TEST_DIR "tryAqBondsCurvePolynomialCalibrate_outputs_64bit.csv";
 
-	const std::string nelsonSiegelBondYield_outputs		= TEST_DIR "tryMeBondCurveNelsonSiegelYield_outputs.csv";
-    const std::string svenssonBondYield_outputs			= TEST_DIR "tryMeBondCurveSvenssonYield_outputs.csv";
-	const std::string polynomialBondYield_outputs		= TEST_DIR "tryMeBondCurvePolynomialYield_outputs.csv";
+	const std::string nelsonSiegelBondYield_outputs		= TEST_DIR "tryAqBondsCurveNelsonSiegelYield_outputs.csv";
+    const std::string svenssonBondYield_outputs			= TEST_DIR "tryAqBondsCurveSvenssonYield_outputs.csv";
+	const std::string polynomialBondYield_outputs		= TEST_DIR "tryAqBondsCurvePolynomialYield_outputs.csv";
 
 	// Bootstrapped bond curve
-	const std::string createBondCurve					= TEST_DIR "USTREASURIES1@127_tryMeBondCurveCreate_inputs.csv";
-	const std::string bondCurveDisplay_inputs			= TEST_DIR "tryMeBondCurveDisplay_inputs.csv";
-	const std::string bondCurveDisplay_outputs			= TEST_DIR "tryMeBondCurveDisplay_outputs.csv";
+	const std::string createBondCurve					= TEST_DIR "USTREASURIES1@127_tryAqBondsCurveCreate_inputs.csv";
+	const std::string bondCurveDisplay_inputs			= TEST_DIR "tryAqBondsCurveDisplay_inputs.csv";
+	const std::string bondCurveDisplay_outputs			= TEST_DIR "tryAqBondsCurveDisplay_outputs.csv";
 
 	// Corporate bond curve as a spread to government treasury benchmark bond curve
-	const std::string corporateSpreadBondCurve			= TEST_DIR "USD_CORP_CURVE@128_tryMeBondCurveCreate_inputs.csv";
+	const std::string corporateSpreadBondCurve			= TEST_DIR "USD_CORP_CURVE@128_tryAqBondsCurveCreate_inputs.csv";
 
 	 /*
 	 * This test builds 15 US Treasuries from input file, and uses these bonds to calibrate a bond curve.
 	 * Rather than list out all bond filenames individually, we load then using the following regular expression pattern:
 	 * The file pattern is:
-	 * pathname / ( bondObjectName ) _tryMeLWOBondCreateFromGenerator_inputs.csv
+	 * pathname / ( bondObjectName ) _tryAqObjectsBondCreateFromGenerator_inputs.csv
 	*/
-    const std::string treasuryCreateInputFilePattern    = ".+_tryMeLWOBondCreateFromGenerator_inputs.csv";
+    const std::string treasuryCreateInputFilePattern    = ".+_tryAqObjectsBondCreateFromGenerator_inputs.csv";
 
-	const std::string treasuryPriceFromYieldPattern     = ".+_tryMeLWOBondPrice_inputs.csv";
+	const std::string treasuryPriceFromYieldPattern     = ".+_tryAqObjectsBondPrice_inputs.csv";
 
-	const std::string treasuryPriceFromBondCurveSuffix  =  "_tryMeLWOBondPriceFromBondCurve_inputs.csv";
+	const std::string treasuryPriceFromBondCurveSuffix  =  "_tryAqObjectsBondPriceFromBondCurve_inputs.csv";
 
 
 	/*
@@ -309,7 +309,7 @@ namespace google_test
 
 	//----------------------------------------------------------------------------------------
 
-    TEST_F( TestBondCurves, SNAPSHOT_tryMeBondCurveNelsonSiegelCalibrate )
+    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurveNelsonSiegelCalibrate )
     {
 
         // Load the Nelson-Siegel Calibration inputs
@@ -359,7 +359,7 @@ namespace google_test
 
 
 
-    TEST_F( TestBondCurves, SNAPSHOT_tryMeBondCurveSvenssonCalibrate )
+    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurveSvenssonCalibrate )
     {
         // Load the Nelson-Siegel Calibration inputs
         const ReadDataFile::Load svenssonCalibrationInputFile( svenssonCalibrate.c_str() );
@@ -414,7 +414,7 @@ namespace google_test
         CheckTestResultsAndRebaseOnRequest( actualCalibration, TEST_DIR, outputFileName, tolerance );
     }
 
-	TEST_F( TestBondCurves, SNAPSHOT_tryMeBondCurvePolynomialCalibrate )
+	TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurvePolynomialCalibrate )
     {
 
         // Load the Polynomial Calibration inputs
@@ -454,7 +454,7 @@ namespace google_test
     }
 
 
-    TEST_F( TestBondCurves, SNAPSHOT_tryMeBondCurveNelsonSiegelYield )
+    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurveNelsonSiegelYield )
     {
         // Load the Nelson-Siegel Bond Yield inputs
         const ReadDataFile::Load nsBondYieldInputFile( nelsonSiegelBondYield.c_str() );
@@ -477,7 +477,7 @@ namespace google_test
 
     }
 
-    TEST_F( TestBondCurves, SNAPSHOT_tryMeBondCurveSvenssonYield )
+    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurveSvenssonYield )
     {
         // Load the Nelson-Siegel Bond Yield inputs
         const ReadDataFile::Load svenssonBondYieldInputFile( svenssonBondYield.c_str() );
@@ -502,7 +502,7 @@ namespace google_test
 
     }
 
-	TEST_F( TestBondCurves, SNAPSHOT_tryMeBondCurvePolynomialYield )
+	TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurvePolynomialYield )
     {
         // Load the Nelson-Siegel Bond Yield inputs
         const ReadDataFile::Load polynomialBondYieldInputFile( polynomialBondYield.c_str() );
@@ -522,7 +522,7 @@ namespace google_test
     }
 
 	// Build a bond-curve from individual bond quotes and check the calibrated yields agree with a recorded snapshot.
-    TEST_F( TestBondCurves, SNAPSHOT_tryMeBondCurveBuildAndDisplay )
+    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurveBuildAndDisplay )
     {
 		// Build the calibration bonds and the bond curve
 		buildBondsForCalibrationAndBondCurve();

@@ -1060,7 +1060,7 @@ namespace validation
 		// Perform initial basic sanity checks
         if ( infoBlocks.size() == 0 )
         {
-			throw AQLCoreInvalidData( "#Error: No Property grid data provided to tryMeLWOBondGeneratorCreate", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: No Property grid data provided to tryAqObjectsBondGeneratorCreate", __FILE__, __LINE__ );
         }
 
         if ( propertyNames.size() != infoBlocks.size() )
@@ -1073,8 +1073,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file( decorateFilename( "tryMeLWOBondGeneratorCreate_inputs", objectName.c_str() ));
-			file.write( "generatorFunction", "tryMeLWOBondGeneratorCreate" );
+			CreateDataFile file( decorateFilename( "tryAqObjectsBondGeneratorCreate_inputs", objectName.c_str() ));
+			file.write( "generatorFunction", "tryAqObjectsBondGeneratorCreate" );
 			file.write( "objectName", objectName );
 
 			// Write out each propertyName and corresponding block of property config data
@@ -1119,7 +1119,7 @@ namespace validation
 
 		if ( CreateDataFile::recordEnabled() )
 		{
-			CreateDataFile file( decorateFilename( "tryMeLWOBondGeneratorCreate_outputs", objectName.c_str() ));
+			CreateDataFile file( decorateFilename( "tryAqObjectsBondGeneratorCreate_outputs", objectName.c_str() ));
 			file.write( "output", objectName );
 		}
 				

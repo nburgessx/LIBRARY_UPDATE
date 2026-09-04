@@ -42,42 +42,42 @@ namespace
 	const std::string fileName_EUR_1ML = TEST_DIR + "EUR_BASIS_1M_CURVE.JSON";
 	const std::string fileName_EUR_3ML = TEST_DIR + "EUR_SWAP_3M_CURVE.JSON";
 
-	const std::string bespokeScheduleCreationInput_Fixed = TEST_DIR + "FIXED_SCHEDULE_STRUCTURED_tryMeLWOScheduleCreateBespokeFromCashflows_inputs";
-	const std::string bespokeScheduleCreationInput_Float = TEST_DIR + "FLOAT_SCHEDULE_STRUCTURED_tryMeLWOScheduleCreateBespokeFromCashflows_inputs";
+	const std::string bespokeScheduleCreationInput_Fixed = TEST_DIR + "FIXED_SCHEDULE_STRUCTURED_tryAqObjectsScheduleCreateBespokeFromCashflows_inputs";
+	const std::string bespokeScheduleCreationInput_Float = TEST_DIR + "FLOAT_SCHEDULE_STRUCTURED_tryAqObjectsScheduleCreateBespokeFromCashflows_inputs";
 
-	const std::string legCreationInput_Fixed = TEST_DIR + "FIXED_LEG_STRUCTURED_tryMeLWOLegCreateFromSchedule_inputs";
-	const std::string legCreationInput_Float = TEST_DIR + "FLOAT_LEG_STRUCTURED_tryMeLWOLegCreateFromSchedule_inputs";
+	const std::string legCreationInput_Fixed = TEST_DIR + "FIXED_LEG_STRUCTURED_tryAqObjectsLegCreateFromSchedule_inputs";
+	const std::string legCreationInput_Float = TEST_DIR + "FLOAT_LEG_STRUCTURED_tryAqObjectsLegCreateFromSchedule_inputs";
 
-	const std::string swapCreationInput = TEST_DIR + "VNS_SWAP_STRUCTURED_tryMeLWOSwapCreateFromLegs_inputs";
+	const std::string swapCreationInput = TEST_DIR + "VNS_SWAP_STRUCTURED_tryAqObjectsSwapCreateFromLegs_inputs";
 
 	const std::string pvInput = TEST_DIR + "validationUtilitySwapPV_inputs";
 	const std::string pvOutput = TEST_DIR + "validationUtilitySwapPV_outputs";
 
-	const std::string parRateInput = TEST_DIR + "tryMeLWOSwapParRate_inputs";
-	const std::string parRateOutput = TEST_DIR + "tryMeLWOSwapParRate_outputs";
+	const std::string parRateInput = TEST_DIR + "tryAqObjectsSwapParRate_inputs";
+	const std::string parRateOutput = TEST_DIR + "tryAqObjectsSwapParRate_outputs";
 
-	const std::string pv01Input = TEST_DIR + "tryMeLWOSwapPV01_inputs";
-	const std::string pv01Output = TEST_DIR + "tryMeLWOSwapPV01_outputs";
+	const std::string pv01Input = TEST_DIR + "tryAqObjectsSwapPV01_inputs";
+	const std::string pv01Output = TEST_DIR + "tryAqObjectsSwapPV01_outputs";
 
-	const std::string dv01Input = TEST_DIR + "tryMeLWOSwapDelta_inputs";
+	const std::string dv01Input = TEST_DIR + "tryAqObjectsSwapDelta_inputs";
 
 	//With Fee Leg:
 
 	const std::string TEST_WITH_FEE_DIR = TEST_DIR + "WithFeeLeg/";
 
-	const std::string feeCreationInput = TEST_WITH_FEE_DIR + "FEE1_tryMeLWOFeeLegCreate_inputs";
+	const std::string feeCreationInput = TEST_WITH_FEE_DIR + "FEE1_tryAqObjectsFeeLegCreate_inputs";
 
 	const std::string pvInput_withFee = TEST_WITH_FEE_DIR + "validationUtilitySwapPV_inputs";
 	const std::string pvOutput_withFee = TEST_WITH_FEE_DIR + "validationUtilitySwapPV_outputs";
 
-	const std::string parRateInput_withFee = TEST_WITH_FEE_DIR + "tryMeLWOSwapParRate_inputs";
-	const std::string parRateOutput_withFee = TEST_WITH_FEE_DIR + "tryMeLWOSwapParRate_outputs";
+	const std::string parRateInput_withFee = TEST_WITH_FEE_DIR + "tryAqObjectsSwapParRate_inputs";
+	const std::string parRateOutput_withFee = TEST_WITH_FEE_DIR + "tryAqObjectsSwapParRate_outputs";
 
-	const std::string pv01Input_withFee = TEST_WITH_FEE_DIR + "tryMeLWOSwapPV01_inputs";
-	const std::string pv01Output_withFee = TEST_WITH_FEE_DIR + "tryMeLWOSwapPV01_outputs";
+	const std::string pv01Input_withFee = TEST_WITH_FEE_DIR + "tryAqObjectsSwapPV01_inputs";
+	const std::string pv01Output_withFee = TEST_WITH_FEE_DIR + "tryAqObjectsSwapPV01_outputs";
 
-	const std::string dv01Input_withFee = TEST_WITH_FEE_DIR + "tryMeLWOSwapDelta_inputs";
-	const std::string dv01Output_withFee = TEST_WITH_FEE_DIR + "tryMeLWOSwapDelta_outputs";
+	const std::string dv01Input_withFee = TEST_WITH_FEE_DIR + "tryAqObjectsSwapDelta_inputs";
+	const std::string dv01Output_withFee = TEST_WITH_FEE_DIR + "tryAqObjectsSwapDelta_outputs";
 
 	void loadCurves()
 	{

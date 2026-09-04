@@ -44,57 +44,57 @@ namespace
 	// -------------------------------------------------------------
 
 	// Curve market data files for use with CurveGenerators
-	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USDYC_OIS_CURVE_MARKETDATA@5_tryMeLWOCurveMarketDataCreate_inputs.csv";
-	const char GEN_USD_STD_MARKETDATA[]			= TEST_DIR "USDYC_STD_3M_CURVE_MARKETDATA@4_tryMeLWOCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USDYC_OIS_CURVE_MARKETDATA@5_tryAqObjectsCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_STD_MARKETDATA[]			= TEST_DIR "USDYC_STD_3M_CURVE_MARKETDATA@4_tryAqObjectsCurveMarketDataCreate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Curves built from generator and market data
-	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USDYC_OIS_tryMeLWOCurveCalibrate_inputs.csv";
-	const char GEN_USD_STD_CURVE[]				= TEST_DIR "USDYC_STD_tryMeLWOCurveCalibrate_inputs.csv";
+	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USDYC_OIS_tryAqObjectsCurveCalibrate_inputs.csv";
+	const char GEN_USD_STD_CURVE[]				= TEST_DIR "USDYC_STD_tryAqObjectsCurveCalibrate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Build Credit Model
-	const char GEN_USD_CREDIT_MODEL[]			= TEST_DIR "CREDITMODEL1@16_tryMeLWOCreditModelCreate_inputs.csv";
+	const char GEN_USD_CREDIT_MODEL[]			= TEST_DIR "CREDITMODEL1@16_tryAqObjectsCreditModelCreate_inputs.csv";
 
 	// Build the swap generator
-	const char GEN_TOTAL_RETURN_SWAPGENERATOR[]	= TEST_DIR "USD_TRS_3ML@1_tryMeLWOSwapGeneratorCreate_inputs.csv";
+	const char GEN_TOTAL_RETURN_SWAPGENERATOR[]	= TEST_DIR "USD_TRS_3ML@1_tryAqObjectsSwapGeneratorCreate_inputs.csv";
 
-	const char GEN_TOTAL_RETURN_SWAPGENERATOR_PAY_ON_SURVIVAL[]	= TEST_DIR "USD_TRS_3ML@16_tryMeLWOSwapGeneratorCreate_PayOnSurvival_inputs.csv";
+	const char GEN_TOTAL_RETURN_SWAPGENERATOR_PAY_ON_SURVIVAL[]	= TEST_DIR "USD_TRS_3ML@16_tryAqObjectsSwapGeneratorCreate_PayOnSurvival_inputs.csv";
 
 	// Build Total Return Swap
-	const char GEN_TOTAL_RETURN_SWAP[]			= TEST_DIR "USD_TRS_3ML@1_tryMeLWOSwapCreateFromGenerator_inputs.csv" ;
+	const char GEN_TOTAL_RETURN_SWAP[]			= TEST_DIR "USD_TRS_3ML@1_tryAqObjectsSwapCreateFromGenerator_inputs.csv" ;
 
-	const char GEN_TOTAL_RETURN_SWAP_PAY_ON_SURVIVAL[]	= TEST_DIR "USD_TRS_3ML@17_tryMeLWOSwapCreateFromGenerator_PayOnSurvival_inputs.csv" ;
+	const char GEN_TOTAL_RETURN_SWAP_PAY_ON_SURVIVAL[]	= TEST_DIR "USD_TRS_3ML@17_tryAqObjectsSwapCreateFromGenerator_PayOnSurvival_inputs.csv" ;
 
 
 	// API methods
-	const char TRS_CALCULATE_ALL_PV[]			= TEST_DIR "tryMeLWOTotalReturnSwapPV_ALL_inputs.csv";
-	const char TRS_CALCULATE_PREMIUM_PV[]		= TEST_DIR "tryMeLWOTotalReturnSwapPV_Premium_inputs.csv";
-	const char TRS_CALCULATE_FLOAT_PV[]			= TEST_DIR "tryMeLWOTotalReturnSwapPV_Float_inputs.csv";
+	const char TRS_CALCULATE_ALL_PV[]			= TEST_DIR "tryAqObjectsTotalReturnSwapPV_ALL_inputs.csv";
+	const char TRS_CALCULATE_PREMIUM_PV[]		= TEST_DIR "tryAqObjectsTotalReturnSwapPV_Premium_inputs.csv";
+	const char TRS_CALCULATE_FLOAT_PV[]			= TEST_DIR "tryAqObjectsTotalReturnSwapPV_Float_inputs.csv";
 
-	const char TRS_CALCULATE_PAR_RATE[]			= TEST_DIR "tryMeLWOTotalReturnSwapParRate_inputs.csv";
-	const char TRS_CALCULATE_PAR_SPREAD[]		= TEST_DIR "tryMeLWOTotalReturnSwapParSpread_inputs.csv";
+	const char TRS_CALCULATE_PAR_RATE[]			= TEST_DIR "tryAqObjectsTotalReturnSwapParRate_inputs.csv";
+	const char TRS_CALCULATE_PAR_SPREAD[]		= TEST_DIR "tryAqObjectsTotalReturnSwapParSpread_inputs.csv";
 
-	const char TRS_DISPLAY_CASHFLOWS[]			= TEST_DIR "tryMeLWOSwapDisplayCashflows_inputs.csv";
+	const char TRS_DISPLAY_CASHFLOWS[]			= TEST_DIR "tryAqObjectsSwapDisplayCashflows_inputs.csv";
 
-	const char TRS_CALCULATE_PREMIUM_ANNUITY[]	= TEST_DIR "tryMeLWOTotalReturnSwapAnnuity_Premium_inputs.csv";
+	const char TRS_CALCULATE_PREMIUM_ANNUITY[]	= TEST_DIR "tryAqObjectsTotalReturnSwapAnnuity_Premium_inputs.csv";
 
 	// Snapshot results
-	const char TRS_EXPECTED_ALL_PV[]			= TEST_DIR "tryMeLWOTotalReturnSwapPV_ALL_outputs.csv";
-	const char TRS_EXPECTED_PREMIUM_PV[]		= TEST_DIR "tryMeLWOTotalReturnSwapPV_Premium_outputs.csv";
-	const char TRS_EXPECTED_FLOAT_PV[]			= TEST_DIR "tryMeLWOTotalReturnSwapPV_Float_outputs.csv";
+	const char TRS_EXPECTED_ALL_PV[]			= TEST_DIR "tryAqObjectsTotalReturnSwapPV_ALL_outputs.csv";
+	const char TRS_EXPECTED_PREMIUM_PV[]		= TEST_DIR "tryAqObjectsTotalReturnSwapPV_Premium_outputs.csv";
+	const char TRS_EXPECTED_FLOAT_PV[]			= TEST_DIR "tryAqObjectsTotalReturnSwapPV_Float_outputs.csv";
 
-	const char TRS_EXPECTED_PAY_ON_SURVIVAL_ALL_PV[]	= TEST_DIR "tryMeLWOTotalReturnSwapPV_PayOnSurvival_ALL_outputs.csv";
-	const char TRS_EXPECTED_PAY_ON_SURVIVAL_FLOAT_PV[]	= TEST_DIR "tryMeLWOTotalReturnSwapPV_PayOnSurvival_Float_outputs.csv";
+	const char TRS_EXPECTED_PAY_ON_SURVIVAL_ALL_PV[]	= TEST_DIR "tryAqObjectsTotalReturnSwapPV_PayOnSurvival_ALL_outputs.csv";
+	const char TRS_EXPECTED_PAY_ON_SURVIVAL_FLOAT_PV[]	= TEST_DIR "tryAqObjectsTotalReturnSwapPV_PayOnSurvival_Float_outputs.csv";
 
-	const char TRS_EXPECTED_PAR_RATE[]			= TEST_DIR "tryMeLWOTotalReturnSwapParRate_outputs.csv";
-	const char TRS_EXPECTED_PAR_SPREAD[]		= TEST_DIR "tryMeLWOTotalReturnSwapParSpread_outputs.csv";
+	const char TRS_EXPECTED_PAR_RATE[]			= TEST_DIR "tryAqObjectsTotalReturnSwapParRate_outputs.csv";
+	const char TRS_EXPECTED_PAR_SPREAD[]		= TEST_DIR "tryAqObjectsTotalReturnSwapParSpread_outputs.csv";
 
-	const char TRS_EXPECTED_PREMIUM_ANNUITY[]	= TEST_DIR "tryMeLWOTotalReturnSwapAnnuity_Premium_outputs.csv";
-	const char TRS_EXPECTED_FLOAT_PAYALWAYS_ANNUITY[] = TEST_DIR "tryMeLWOTotalReturnSwapAnnuity_Float_PayAlways_outputs.csv";
-	const char TRS_EXPECTED_FLOAT_PAYONSURVIVAL_ANNUITY[] = TEST_DIR "tryMeLWOTotalReturnSwapAnnuity_Float_PayOnSurvival_outputs.csv";
+	const char TRS_EXPECTED_PREMIUM_ANNUITY[]	= TEST_DIR "tryAqObjectsTotalReturnSwapAnnuity_Premium_outputs.csv";
+	const char TRS_EXPECTED_FLOAT_PAYALWAYS_ANNUITY[] = TEST_DIR "tryAqObjectsTotalReturnSwapAnnuity_Float_PayAlways_outputs.csv";
+	const char TRS_EXPECTED_FLOAT_PAYONSURVIVAL_ANNUITY[] = TEST_DIR "tryAqObjectsTotalReturnSwapAnnuity_Float_PayOnSurvival_outputs.csv";
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 

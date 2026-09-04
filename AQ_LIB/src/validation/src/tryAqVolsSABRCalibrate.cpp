@@ -41,8 +41,8 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled())
 		{
-			CreateDataFile file("tryMeCalibrateSABRMatrix");
-			file.write("generatorFunction", "tryMeSABRCalibrate");
+			CreateDataFile file("tryAqVolsCalibrateSABRMatrix");
+			file.write("generatorFunction", "tryAqVolsSABRCalibrate");
 			file.write("approxMethod", approxMethod);
 			file.write("calibFlag", calibFlag);
 			file.write("calibMethod", calibMethod);

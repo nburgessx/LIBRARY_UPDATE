@@ -82,7 +82,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOCurveDualBootstrap_outputs", objectName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsCurveDualBootstrap_outputs", objectName.c_str()));
 			file.write("output", (boost::format("OIS: \"%s\" Swap: \"%s\"") % curveIndex_ois % curveIndex_swap).str().c_str());
 		}
 

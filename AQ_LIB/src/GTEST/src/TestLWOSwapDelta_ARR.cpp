@@ -41,15 +41,15 @@ namespace
 	const std::string fileName_USD_OIS_SWAP_5Y			= TEST_DIR + "USD_OIS_SWAP_5Y@19.JSON";
 
 	// Risk Inputs
-	const std::string fileName_deltaLadder_SOFR_Inputs	= TEST_DIR + "tryMeLWOSwapDeltaLadder_SOFR_inputs.csv";
-	const std::string fileName_deltaLadder_OIS_Inputs	= TEST_DIR + "tryMeLWOSwapDeltaLadder_OIS_inputs.csv";
+	const std::string fileName_deltaLadder_SOFR_Inputs	= TEST_DIR + "tryAqObjectsSwapDeltaLadder_SOFR_inputs.csv";
+	const std::string fileName_deltaLadder_OIS_Inputs	= TEST_DIR + "tryAqObjectsSwapDeltaLadder_OIS_inputs.csv";
 
 	// Risk Outputs
-	const std::string fileName_raw_delta_ladder_SOFR_outputs_32	= TEST_DIR + "tryMeLWOSwapDeltaLadder_SOFR_outputs_32.csv";
-	const std::string fileName_raw_delta_ladder_SOFR_outputs_64 = TEST_DIR + "tryMeLWOSwapDeltaLadder_SOFR_outputs_64.csv";
+	const std::string fileName_raw_delta_ladder_SOFR_outputs_32	= TEST_DIR + "tryAqObjectsSwapDeltaLadder_SOFR_outputs_32.csv";
+	const std::string fileName_raw_delta_ladder_SOFR_outputs_64 = TEST_DIR + "tryAqObjectsSwapDeltaLadder_SOFR_outputs_64.csv";
 
-	const std::string fileName_raw_delta_ladder_OIS_outputs_32	= TEST_DIR + "tryMeLWOSwapDeltaLadder_OIS_outputs_32.csv";
-	const std::string fileName_raw_delta_ladder_OIS_outputs_64  = TEST_DIR + "tryMeLWOSwapDeltaLadder_OIS_outputs_64.csv";
+	const std::string fileName_raw_delta_ladder_OIS_outputs_32	= TEST_DIR + "tryAqObjectsSwapDeltaLadder_OIS_outputs_32.csv";
+	const std::string fileName_raw_delta_ladder_OIS_outputs_64  = TEST_DIR + "tryAqObjectsSwapDeltaLadder_OIS_outputs_64.csv";
 
 	// Helper function
 

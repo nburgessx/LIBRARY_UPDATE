@@ -33,8 +33,8 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
     extern const char USDYC_1M[]			    = "";
     extern const char USDYC_6M[]			    = "";
     extern const char USDYC_12M[]			    = "";
@@ -42,10 +42,10 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char zeroCouponSwapInputs[]	= TEST_DIR "FIXEDFLOATZEROCOUPONSWAP@1_tryMeLWOSwapCreate_inputs";
-    extern const char parRateInputs[]	        = TEST_DIR "FIXEDFLOATZEROCOUPONSWAP@1_tryMeLWOSwapParRate_inputs";
-    extern const char parRateOutputs[]	    = TEST_DIR "FIXEDFLOATZEROCOUPONSWAP@1_tryMeLWOSwapParRate_outputs";
-    extern const char parRateOutputs64[]	    = TEST_DIR "FIXEDFLOATZEROCOUPONSWAP@1_tryMeLWOSwapParRate_outputs64_";
+    extern const char zeroCouponSwapInputs[]	= TEST_DIR "FIXEDFLOATZEROCOUPONSWAP@1_tryAqObjectsSwapCreate_inputs";
+    extern const char parRateInputs[]	        = TEST_DIR "FIXEDFLOATZEROCOUPONSWAP@1_tryAqObjectsSwapParRate_inputs";
+    extern const char parRateOutputs[]	    = TEST_DIR "FIXEDFLOATZEROCOUPONSWAP@1_tryAqObjectsSwapParRate_outputs";
+    extern const char parRateOutputs64[]	    = TEST_DIR "FIXEDFLOATZEROCOUPONSWAP@1_tryAqObjectsSwapParRate_outputs64_";
 }
 
 namespace google_test

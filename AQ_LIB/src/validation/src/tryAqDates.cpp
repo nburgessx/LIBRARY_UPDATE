@@ -68,8 +68,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateFromTenor_inputs" );
-            file.write( "generatorFunction",    "tryMeDateFromTenor" );
+            CreateDataFile file( "tryAqDatesFromTenor_inputs" );
+            file.write( "generatorFunction",    "tryAqDatesFromTenor" );
             file.write( "startDates",		    startDates );
             file.write( "tenor",				tenor );
             file.write( "businessDayAdj",	    businessDayAdj );
@@ -86,7 +86,7 @@ namespace validation
         if ( CreateDataFile::recordEnabled() )
         {
 
-            CreateDataFile file( "tryMeDateFromTenor_outputs" );
+            CreateDataFile file( "tryAqDatesFromTenor_outputs" );
             file.write( "output", ret );
         }
 
@@ -181,8 +181,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateFromYearFraction_inputs" );
-            file.write( "generatorFunction", "tryMeDateFromYearFraction" );
+            CreateDataFile file( "tryAqDatesFromYearFraction_inputs" );
+            file.write( "generatorFunction", "tryAqDatesFromYearFraction" );
             file.write( "startDate",	    startDate );
             file.write( "yearFraction",		yearFraction );
             file.write( "dayCount",			dayCount );
@@ -203,7 +203,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateFromYearFraction_outputs" );
+            CreateDataFile file( "tryAqDatesFromYearFraction_outputs" );
             file.write( "output", ret );
         }
         return ret;
@@ -228,8 +228,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateYearFraction_inputs" );
-            file.write( "generatorFunction", "tryMeDateYearFraction" );
+            CreateDataFile file( "tryAqDatesYearFraction_inputs" );
+            file.write( "generatorFunction", "tryAqDatesYearFraction" );
             file.write( "fromDate", fromDate );
             file.write( "toDate", toDate );
             file.write( "dayCount", dayCount );
@@ -240,7 +240,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateYearFraction_outputs" );
+            CreateDataFile file( "tryAqDatesYearFraction_outputs" );
             file.write( "output", ret );
         }
 
@@ -265,8 +265,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateBusinessDays_inputs" );
-            file.write( "generatorFunction", "tryMeDateBusinessDays" );
+            CreateDataFile file( "tryAqDatesBusinessDays_inputs" );
+            file.write( "generatorFunction", "tryAqDatesBusinessDays" );
             file.write( "fromDate", fromDate );
             file.write( "toDate", toDate );
             file.write( "calendar", calendar );
@@ -288,7 +288,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateBusinessDays_outputs" );
+            CreateDataFile file( "tryAqDatesBusinessDays_outputs" );
             file.write( "output", ret );
         }
 
@@ -310,8 +310,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateIsWorkingDay_inputs" );
-            file.write( "generatorFunction", "tryMeDateIsWorkingDay" );
+            CreateDataFile file( "tryAqDatesIsWorkingDay_inputs" );
+            file.write( "generatorFunction", "tryAqDatesIsWorkingDay" );
             file.write( "date",             date );
             file.write( "holidayCentre",    holidayCentre );
         }
@@ -340,7 +340,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateIsWorkingDay_outputs" );
+            CreateDataFile file( "tryAqDatesIsWorkingDay_outputs" );
             file.write( "output", isWorkingDay );
         }
 
@@ -363,8 +363,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateIsHoliday_inputs" );
-            file.write( "generatorFunction", "tryMeDateIsHoliday" );
+            CreateDataFile file( "tryAqDatesIsHoliday_inputs" );
+            file.write( "generatorFunction", "tryAqDatesIsHoliday" );
             file.write( "date",             date );
             file.write( "holidayCentre",    holidayCentre );
         }
@@ -401,7 +401,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateIsHoliday_outputs" );
+            CreateDataFile file( "tryAqDatesIsHoliday_outputs" );
             file.write( "output", isHoliday );
         }
 
@@ -421,8 +421,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateIsWeekend_inputs" );
-            file.write( "generatorFunction", "tryMeDateIsWeekend" );
+            CreateDataFile file( "tryAqDatesIsWeekend_inputs" );
+            file.write( "generatorFunction", "tryAqDatesIsWeekend" );
             file.write( "date",             date );
         }
 
@@ -431,7 +431,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateIsWeekend_outputs" );
+            CreateDataFile file( "tryAqDatesIsWeekend_outputs" );
             file.write( "output", dateIsWeekend );
         }
 
@@ -451,8 +451,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateIsWeekday_inputs" );
-            file.write( "generatorFunction", "tryMeDateIsWeekday" );
+            CreateDataFile file( "tryAqDatesIsWeekday_inputs" );
+            file.write( "generatorFunction", "tryAqDatesIsWeekday" );
             file.write( "date",             date );
         }
 
@@ -461,7 +461,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateIsWeekday_outputs" );
+            CreateDataFile file( "tryAqDatesIsWeekday_outputs" );
             file.write( "output", dateIsWeekday );
         }
 
@@ -481,8 +481,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateFuturesContract_inputs" );
-            file.write( "generatorFunction", "tryMeDateFutureStart" );
+            CreateDataFile file( "tryAqDatesFuturesContract_inputs" );
+            file.write( "generatorFunction", "tryAqDatesFutureStart" );
             file.write( "futuresTicker", futuresTicker );
         }
 
@@ -491,7 +491,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeDateFuturesContract_outputs" );
+            CreateDataFile file( "tryAqDatesFuturesContract_outputs" );
             file.write( "output", futureStartDate );
         }
 

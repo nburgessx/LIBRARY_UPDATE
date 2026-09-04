@@ -52,8 +52,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveCalibrateOIS_inputs", curveCollection, staticDataTable ) );
-            file.write( "generatorFunction", "tryMeCurveCalibrateOIS" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesCalibrateOIS_inputs", curveCollection, staticDataTable ) );
+            file.write( "generatorFunction", "tryAqCurvesCalibrateOIS" );
             file.write( "curveCollection", curveCollection );
             file.write( "staticDataTable", staticDataTable );
             file.write( "curveIndex", curveIndex );
@@ -106,7 +106,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveCalibrateOIS_outputs", curveCollection, staticDataTable ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesCalibrateOIS_outputs", curveCollection, staticDataTable ) );
             file.write( "output", ret );
         }
 

@@ -34,10 +34,10 @@ namespace
     //
     // curve input files
     //
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
     extern const char EURYC_1M[]			    = "";
     extern const char EURYC_3M[]			    = "";
-    extern const char EURYC_6M[]			    = TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs";
+    extern const char EURYC_6M[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
     extern const char EURYC_12M[]			    = "";
 
 
@@ -45,14 +45,14 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char fixingTableInputs[]	= TEST_DIR "EUR6M_FIXINGS@191_tryMeLWOFixingTableCreate_inputs";
-    extern const char swapInputs1[]	= TEST_DIR "SWAP_1@189_tryMeLWOSwapCreate_inputs";
-    extern const char swapInputs2[]	= TEST_DIR "SWAP_2@7_tryMeLWOSwapCreate_inputs";
-    extern const char swapInputs3[]	= TEST_DIR "SWAP_3@7_tryMeLWOSwapCreate_inputs";
-    extern const char swapInputs4[]	= TEST_DIR "SWAP_4@7_tryMeLWOSwapCreate_inputs";
-    extern const char swapInputs5[]	= TEST_DIR "SWAP_5@7_tryMeLWOSwapCreate_inputs";
-    extern const char swapInputs6[]	= TEST_DIR "SWAP_6@7_tryMeLWOSwapCreate_inputs";
-    extern const char swapInputs7[]	= TEST_DIR "SWAP_7@7_tryMeLWOSwapCreate_inputs";
+    extern const char fixingTableInputs[]	= TEST_DIR "EUR6M_FIXINGS@191_tryAqObjectsFixingTableCreate_inputs";
+    extern const char swapInputs1[]	= TEST_DIR "SWAP_1@189_tryAqObjectsSwapCreate_inputs";
+    extern const char swapInputs2[]	= TEST_DIR "SWAP_2@7_tryAqObjectsSwapCreate_inputs";
+    extern const char swapInputs3[]	= TEST_DIR "SWAP_3@7_tryAqObjectsSwapCreate_inputs";
+    extern const char swapInputs4[]	= TEST_DIR "SWAP_4@7_tryAqObjectsSwapCreate_inputs";
+    extern const char swapInputs5[]	= TEST_DIR "SWAP_5@7_tryAqObjectsSwapCreate_inputs";
+    extern const char swapInputs6[]	= TEST_DIR "SWAP_6@7_tryAqObjectsSwapCreate_inputs";
+    extern const char swapInputs7[]	= TEST_DIR "SWAP_7@7_tryAqObjectsSwapCreate_inputs";
 
 	extern const char TestOutputs_6_32bit[] = TEST_DIR "TestOutput6_32bit";
 	extern const char TestOutputs_6_64bit[] = TEST_DIR "TestOutput6_64bit";

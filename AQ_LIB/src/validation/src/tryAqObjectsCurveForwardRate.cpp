@@ -27,8 +27,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeLWOCurveForwardRatesFromYearFraction_inputs_" ) + lwoCurveName ).c_str() ) ;
-            file.write( "generatorFunction",    "tryMeLWOCurveForwardRatesFromYearFraction" );
+            CreateDataFile file( ( std::string( "tryAqObjectsCurveForwardRatesFromYearFraction_inputs_" ) + lwoCurveName ).c_str() ) ;
+            file.write( "generatorFunction",    "tryAqObjectsCurveForwardRatesFromYearFraction" );
             file.write( "lwoCurveName",	        lwoCurveName );
             file.write( "fromDates",			fromDates );
             file.write( "yearFraction",		    yearFraction );
@@ -67,7 +67,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeLWOCurveForwardRatesFromYearFraction_outputs_" ) + lwoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjectsCurveForwardRatesFromYearFraction_outputs_" ) + lwoCurveName ).c_str() );
             file.write( "output", forwardRateResults );
         }
 
@@ -87,8 +87,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeLWOCurveForwardRatesFromForwardDates_inputs_" ) + lwoCurveName ).c_str() );
-            file.write( "generatorFunction",    "tryMeLWOCurveForwardRatesFromForwardDates" );
+            CreateDataFile file( ( std::string( "tryAqObjectsCurveForwardRatesFromForwardDates_inputs_" ) + lwoCurveName ).c_str() );
+            file.write( "generatorFunction",    "tryAqObjectsCurveForwardRatesFromForwardDates" );
             file.write( "lwoCurveName",	        lwoCurveName );
             file.write( "fromDates",			fromDates );
             file.write( "toDates",			    toDates );
@@ -126,7 +126,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeLWOCurveForwardRatesFromForwardDates_outputs_" ) + lwoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjectsCurveForwardRatesFromForwardDates_outputs_" ) + lwoCurveName ).c_str() );
             file.write( "output", forwardRateResults );
         }
 
@@ -149,8 +149,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeLWOCurveForwardRates_inputs_" ) + lwoCurveName ).c_str() );
-            file.write( "generatorFunction",     "tryMeLWOCurveForwardRates" );
+            CreateDataFile file( ( std::string( "tryAqObjectsCurveForwardRates_inputs_" ) + lwoCurveName ).c_str() );
+            file.write( "generatorFunction",     "tryAqObjectsCurveForwardRates" );
             file.write( "lwoCurveName",	        lwoCurveName );
             file.write( "fixingDates",			fixingDates );
         }
@@ -183,7 +183,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryMeLWOCurveForwardRatesFromForwardDates_outputs_" ) + lwoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjectsCurveForwardRatesFromForwardDates_outputs_" ) + lwoCurveName ).c_str() );
             file.write( "output", forwardRateResults );
         }
 

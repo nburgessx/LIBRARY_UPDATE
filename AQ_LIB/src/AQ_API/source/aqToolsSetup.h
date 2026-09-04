@@ -8,10 +8,10 @@
 std::string aqToolsClearEntityPool();
 
 
-/* @brief			swig interface for the meUtilityClearLWOCache method
+/* @brief			swig interface for the aqObjectsClearCache method
 *  @return	A string showing current version
 */
-std::string meUtilityClearLWOCache();
+std::string aqObjectsClearCache();
 
 /* @brief			swig interface for the aqToolsLoadCalendarFile method
 *  @param [in]		filepath		The full name of the calendar file

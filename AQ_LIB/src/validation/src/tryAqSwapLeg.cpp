@@ -69,8 +69,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeProductSwapLegPV_inputs", curveCollection));
-			file.write("generatorFunction", "tryMeProductSwapLegPV");
+			CreateDataFile file(decorateFilename("tryAqSwapLegPV_inputs", curveCollection));
+			file.write("generatorFunction", "tryAqSwapLegPV");
 			file.write("legLVB", legLVB);
 			file.write("validateKeys", validateKeys);
 		}
@@ -88,7 +88,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeProductSwapLegPV_outputs", curveCollection));
+			CreateDataFile file(decorateFilename("tryAqSwapLegPV_outputs", curveCollection));
 			file.write("output", ret);
 		}
 
@@ -112,8 +112,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeProductSwapLegAnnuity_inputs", curveCollection));
-			file.write("generatorFunction", "tryMeProductSwapLegAnnuity");
+			CreateDataFile file(decorateFilename("tryAqSwapLegAnnuity_inputs", curveCollection));
+			file.write("generatorFunction", "tryAqSwapLegAnnuity");
 			file.write("legLVB", legLVB);
 			file.write("validateKeys", validateKeys);
 		}
@@ -131,7 +131,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeProductSwapLegAnnuity_outputs", curveCollection));
+			CreateDataFile file(decorateFilename("tryAqSwapLegAnnuity_outputs", curveCollection));
 			file.write("output", ret);
 		}
 

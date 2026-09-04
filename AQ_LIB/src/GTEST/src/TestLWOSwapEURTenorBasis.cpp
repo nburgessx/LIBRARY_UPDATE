@@ -39,17 +39,17 @@ namespace
     //
     // curve input files
     //
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char EURYC_1M[]			    = TEST_DIR "EURYC_1M3M_tryMeCurveCalibrateBasis_inputs";
-    extern const char EURYC_3M[]			    = TEST_DIR "EURYC_3M6M_tryMeCurveCalibrateBasis_inputs";
-    extern const char EURYC_6M[]			    = TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs";
-    extern const char EURYC_12M[]			    = TEST_DIR "EURYC_6M12MBasis_tryMeCurveCalibrateBasis_inputs";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char EURYC_1M[]			    = TEST_DIR "EURYC_1M3M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char EURYC_3M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char EURYC_6M[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char EURYC_12M[]			    = TEST_DIR "EURYC_6M12MBasis_tryAqCurvesCalibrateBasis_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char tenorBasisSwapInputs[]	= TEST_DIR "EUR3X6_"; // Test files require a suffix. Format :=  Basename + Index + '_tryMeLWOSwapCreateFromLegLVBs_inputs'
-    extern const char tenorBasisSwapOutputs[]	= TEST_DIR "EUR3X6_"; // Test files require a suffix. Format :=  Basename + Index + '_tryMeLWOSwapCreateFromLegLVBs_outputs'
+    extern const char tenorBasisSwapInputs[]	= TEST_DIR "EUR3X6_"; // Test files require a suffix. Format :=  Basename + Index + '_tryAqObjectsSwapCreateFromLegLVBs_inputs'
+    extern const char tenorBasisSwapOutputs[]	= TEST_DIR "EUR3X6_"; // Test files require a suffix. Format :=  Basename + Index + '_tryAqObjectsSwapCreateFromLegLVBs_outputs'
 
 }
 
@@ -76,7 +76,7 @@ namespace google_test
             for ( i = 1; ; ++i )
             {
                 // Load the input file
-                AQLString inputFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                AQLString inputFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryAqObjectsSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load inputFile( inputFilename );
 
                 // Read the input file into the tryAqObjectsSwapCreateFromLegLVBs
@@ -87,7 +87,7 @@ namespace google_test
 	            std::string localResult         = validation::tryAqObjectsSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
 
                 // Load the output file and the result                   
-                AQLString outputFilename = CreateDataFile::makeFilename( tenorBasisSwapOutputs, "_tryMeLWOSwapCreateFromLegLVBs_outputs", i ); // Append the Index and Suffix to test file name
+                AQLString outputFilename = CreateDataFile::makeFilename( tenorBasisSwapOutputs, "_tryAqObjectsSwapCreateFromLegLVBs_outputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load outputFile( outputFilename );
                 
                 std::string outputFileResult = outputFile["output"];
@@ -121,7 +121,7 @@ namespace google_test
             for ( i = 1; ; ++i )
             {
                 // 1. Create the Swap
-                AQLString createSwapFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                AQLString createSwapFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryAqObjectsSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load createSwapFile( createSwapFilename );
 
                     // Read the input file into the tryAqObjectsSwapCreateFromLegLVBs
@@ -132,7 +132,7 @@ namespace google_test
 	                std::string localResult         = validation::tryAqObjectsSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
                 
                 // 2. Price the Swap
-                 AQLString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapPV_inputs", i ); // Append the Index and Suffix to test file name
+                 AQLString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryAqObjectsSwapPV_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load swapPVFile( SwapPVFilename );
 
                     // Read the input file into the tryAqObjectsSwapPV
@@ -143,9 +143,9 @@ namespace google_test
                 const double tolerance = 1e-02;  // Notional of test trades is 1MM
     
                 #if defined(GTEST32)
-                        CheckTestResultsAndRebaseOnRequest( localSwapPV, TEST_DIR, tenorBasisSwapOutputs, "_tryMeLWOSwapPV_outputsX86", tolerance, i ); // Append the Index and Suffix to test file name
+                        CheckTestResultsAndRebaseOnRequest( localSwapPV, TEST_DIR, tenorBasisSwapOutputs, "_tryAqObjectsSwapPV_outputsX86", tolerance, i ); // Append the Index and Suffix to test file name
                 #else
-                        CheckTestResultsAndRebaseOnRequest( localSwapPV, TEST_DIR, tenorBasisSwapOutputs, "_tryMeLWOSwapPV_outputsX64", tolerance, i ); // Append the Index and Suffix to test file name
+                        CheckTestResultsAndRebaseOnRequest( localSwapPV, TEST_DIR, tenorBasisSwapOutputs, "_tryAqObjectsSwapPV_outputsX64", tolerance, i ); // Append the Index and Suffix to test file name
                 #endif
                 
             }
@@ -175,7 +175,7 @@ namespace google_test
             for ( i = 1; ; ++i )
             {
                 // 1. Create the Swap
-                AQLString createSwapFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                AQLString createSwapFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryAqObjectsSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load createSwapFile( createSwapFilename );
 
                     // Read the input file into the tryAqObjectsSwapCreateFromLegLVBs
@@ -186,7 +186,7 @@ namespace google_test
 	                std::string localResult         = validation::tryAqObjectsSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
                 
                 // 2. Price the Swap
-                 AQLString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapSpread_inputs", i ); // Append the Index and Suffix to test file name
+                 AQLString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryAqObjectsSwapSpread_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load swapPVFile( SwapPVFilename );
 
                     // Read the input file into the tryAqObjectsSwapSpread
@@ -197,9 +197,9 @@ namespace google_test
                 const double tolerance = 1e-007;
 
                 #if defined(GTEST32)
-                        CheckTestResultsAndRebaseOnRequest( localBasisSpread, TEST_DIR, tenorBasisSwapOutputs, "_tryMeLWOSwapSpread_outputsX86", tolerance, i ); // Append the Index and Suffix to test file name
+                        CheckTestResultsAndRebaseOnRequest( localBasisSpread, TEST_DIR, tenorBasisSwapOutputs, "_tryAqObjectsSwapSpread_outputsX86", tolerance, i ); // Append the Index and Suffix to test file name
                 #else
-                        CheckTestResultsAndRebaseOnRequest( localBasisSpread, TEST_DIR, tenorBasisSwapOutputs, "_tryMeLWOSwapSpread_outputsX64", tolerance, i ); // Append the Index and Suffix to test file name
+                        CheckTestResultsAndRebaseOnRequest( localBasisSpread, TEST_DIR, tenorBasisSwapOutputs, "_tryAqObjectsSwapSpread_outputsX64", tolerance, i ); // Append the Index and Suffix to test file name
                 #endif
                 
             }

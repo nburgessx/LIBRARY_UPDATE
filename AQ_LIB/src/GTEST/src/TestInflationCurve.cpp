@@ -54,8 +54,8 @@ namespace
 
 
 	// API methods
-	const std::string api_ZC_INFLATIONSWAP_CREATE_TEMPLATE	= TEST_DIR + "GBP_SWAP1@79_tryMeLWOSwapCreateFromGenerator_inputs.csv"; // This template has no maturity date
-	const std::string api_ZC_INFLATIONSWAP_PAR_RATE			= TEST_DIR + "tryMeLWOInflationZCSwapParRate_inputs.csv";
+	const std::string api_ZC_INFLATIONSWAP_CREATE_TEMPLATE	= TEST_DIR + "GBP_SWAP1@79_tryAqObjectsSwapCreateFromGenerator_inputs.csv"; // This template has no maturity date
+	const std::string api_ZC_INFLATIONSWAP_PAR_RATE			= TEST_DIR + "tryAqObjectsInflationZCSwapParRate_inputs.csv";
 
 	// Utility functions
 	std::vector<AQLDate> calculateLaggedDates( const std::vector<AQLDate>& dates, const std::string& tenor )

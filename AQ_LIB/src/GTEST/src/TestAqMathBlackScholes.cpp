@@ -12,7 +12,7 @@ const double testPrecision = 1e-4;
 // Test Cases
 // ------------------------------
 
-TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesPrices_dCall_dSpot)
+TEST(TestAqMathBlackScholes, UNIT_TestAqMathBlackScholesPrices_dCall_dSpot)
 {
 	// Black-Scholes Base Case
 	const etrading::CallOrPutEnum callOrPut = etrading::CALL_OPTION;
@@ -59,7 +59,7 @@ TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesPrices_dCall_dSpot)
 }
 
 
-TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesPrices_Sequential)
+TEST(TestAqMathBlackScholes, UNIT_TestAqMathBlackScholesPrices_Sequential)
 {
 	// Black-Scholes Base Case
 	const size_t numberOfTests = 1000;
@@ -90,7 +90,7 @@ TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesPrices_Sequential)
 	}
 }
 
-TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesPrices_Parallel)
+TEST(TestAqMathBlackScholes, UNIT_TestAqMathBlackScholesPrices_Parallel)
 {
 	// Black-Scholes Base Case
 	const size_t numberOfTests = 1000;
@@ -121,7 +121,7 @@ TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesPrices_Parallel)
 	}
 }
 
-TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesPrices_dPut_dSpot)
+TEST(TestAqMathBlackScholes, UNIT_TestAqMathBlackScholesPrices_dPut_dSpot)
 {
 	// Black-Scholes Base Case
 	const etrading::CallOrPutEnum callOrPut = etrading::PUT_OPTION;
@@ -169,7 +169,7 @@ TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesPrices_dPut_dSpot)
 }
 
 
-TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesImpliedVol)
+TEST(TestAqMathBlackScholes, UNIT_TestAqMathBlackScholesImpliedVol)
 {
 	// Black-Scholes Base Case
 	const etrading::CallOrPutEnum call = etrading::CALL_OPTION;
@@ -198,7 +198,7 @@ TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesImpliedVol)
 }
 
 
-TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesImpliedVols_Sequential)
+TEST(TestAqMathBlackScholes, UNIT_TestAqMathBlackScholesImpliedVols_Sequential)
 {
 	// Black-Scholes Base Case
 	const double vol = 0.1;
@@ -237,7 +237,7 @@ TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesImpliedVols_Sequential)
 	}
 }
 
-TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesImpliedVols_Parallel)
+TEST(TestAqMathBlackScholes, UNIT_TestAqMathBlackScholesImpliedVols_Parallel)
 {
 	// Black-Scholes Base Case
 	const double vol = 0.1;
@@ -277,7 +277,7 @@ TEST(TestAqMathBlackScholes, UNIT_TestMeMathBlackScholesImpliedVols_Parallel)
 }
 
 // A quick sanity check of ATM greeks
-TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesATMGreeks_CompareAnalyticalVsNumericalAndAAD )
+TEST( TestAqMathBlackScholes, CONSISTENCY_TestAqMathBlackScholesATMGreeks_CompareAnalyticalVsNumericalAndAAD )
 {
 	// Black-Scholes Base Case
 	const etrading::CallOrPutEnum call = etrading::CALL_OPTION;
@@ -359,7 +359,7 @@ TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesATMGreeks_Compar
 	EXPECT_NEAR( analyticalGreeks.theta, aadGreeks.theta, testPrecision );
 }
 
-TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesDeltaSpot_CompareAnalyticalVsNumericalAndAAD )
+TEST( TestAqMathBlackScholes, CONSISTENCY_TestAqMathBlackScholesDeltaSpot_CompareAnalyticalVsNumericalAndAAD )
 {
 	// Black-Scholes Base Case
 	const etrading::CallOrPutEnum call = etrading::CALL_OPTION;
@@ -572,7 +572,7 @@ TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesDeltaSpot_Compar
 }
 
 
-TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesDeltaForward_CompareAnalyticalVsNumerical )
+TEST( TestAqMathBlackScholes, CONSISTENCY_TestAqMathBlackScholesDeltaForward_CompareAnalyticalVsNumerical )
 {
 	// Black-Scholes Base Case
 	const etrading::CallOrPutEnum call = etrading::CALL_OPTION;
@@ -716,7 +716,7 @@ TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesDeltaForward_Com
 }
 
 
-TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesGamma_CompareAnalyticalVsNumericalAndAAD )
+TEST( TestAqMathBlackScholes, CONSISTENCY_TestAqMathBlackScholesGamma_CompareAnalyticalVsNumericalAndAAD )
 {
 	// Black-Scholes Base Case
 	const etrading::CallOrPutEnum call = etrading::CALL_OPTION;
@@ -924,7 +924,7 @@ TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesGamma_CompareAna
 }
 
 
-TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesVega_CompareAnalyticalVsNumericalAndAAD )
+TEST( TestAqMathBlackScholes, CONSISTENCY_TestAqMathBlackScholesVega_CompareAnalyticalVsNumericalAndAAD )
 {
 	// Black-Scholes Base Case
 	const etrading::CallOrPutEnum call = etrading::CALL_OPTION;
@@ -1134,7 +1134,7 @@ TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesVega_CompareAnal
 }
 
 
-TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesTheta_CompareAnalyticalVsNumericalAndAAD )
+TEST( TestAqMathBlackScholes, CONSISTENCY_TestAqMathBlackScholesTheta_CompareAnalyticalVsNumericalAndAAD )
 {
 	// Black-Scholes Base Case
 	const etrading::CallOrPutEnum call = etrading::CALL_OPTION;
@@ -1343,7 +1343,7 @@ TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesTheta_CompareAna
 }
 
 
-TEST( TestAqMathBlackScholes, CONSISTENCY_TestMeMathBlackScholesRho_CompareAnalyticalVsNumericalAndAAD )
+TEST( TestAqMathBlackScholes, CONSISTENCY_TestAqMathBlackScholesRho_CompareAnalyticalVsNumericalAndAAD )
 {
 	// Black-Scholes Base Case
 	const etrading::CallOrPutEnum call = etrading::CALL_OPTION;

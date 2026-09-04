@@ -102,8 +102,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeUtilityPCA_inputs" );
-            file.write( "generatorFunction", "tryMeUtilityPCA" );
+            CreateDataFile file( "tryAqToolsPCA_inputs" );
+            file.write( "generatorFunction", "tryAqToolsPCA" );
             file.write( "key", key );
             file.write( "data", data );
             file.write( "useCorrelationMatrix", useCorrelationMatrix );
@@ -151,7 +151,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeUtilityPCA_outputs" );
+            CreateDataFile file( "tryAqToolsPCA_outputs" );
             file.write( "output", ret );
         }
 

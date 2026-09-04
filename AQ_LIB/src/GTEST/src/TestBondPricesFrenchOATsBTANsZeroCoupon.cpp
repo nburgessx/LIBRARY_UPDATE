@@ -28,13 +28,13 @@ namespace
     const double yieldTolerance = 1e-10;
 
     // Test Bond Input File(s)
-    extern const char createBondInputFile1[]         =TEST_DIR1 "tryMeLWOBondCreate_inputs";
-    extern const char priceBondInputFile1[]          =TEST_DIR1 "tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondOutputFile1[]         =TEST_DIR1 "tryMeLWOBondCleanPrice_outputs";
+    extern const char createBondInputFile1[]         =TEST_DIR1 "tryAqObjectsBondCreate_inputs";
+    extern const char priceBondInputFile1[]          =TEST_DIR1 "tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondOutputFile1[]         =TEST_DIR1 "tryAqObjectsBondCleanPrice_outputs";
 
-    extern const char createBondInputFile2[]         =TEST_DIR2 "tryMeLWOBondCreate_inputs";
-    extern const char priceBondInputFile2[]          =TEST_DIR2 "tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondOutputFile2[]         =TEST_DIR2 "tryMeLWOBondCleanPrice_outputs";
+    extern const char createBondInputFile2[]         =TEST_DIR2 "tryAqObjectsBondCreate_inputs";
+    extern const char priceBondInputFile2[]          =TEST_DIR2 "tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondOutputFile2[]         =TEST_DIR2 "tryAqObjectsBondCleanPrice_outputs";
 }
 
 namespace google_test

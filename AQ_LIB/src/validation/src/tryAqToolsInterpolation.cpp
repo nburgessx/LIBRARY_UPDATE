@@ -28,8 +28,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeUtilityInterpolation_inputs" );
-            file.write( "generatorFunction", "tryMeUtilityInterpolation" );
+            CreateDataFile file( "tryAqToolsInterpolation_inputs" );
+            file.write( "generatorFunction", "tryAqToolsInterpolation" );
             file.write( "xValues", xValues );
             file.write( "yValues", yValues );
             file.write( "xPoint",	xPoint );
@@ -41,7 +41,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( "tryMeUtilityInterpolation_outputs" );
+            CreateDataFile file( "tryAqToolsInterpolation_outputs" );
             file.write( "output", ret );
         }
 

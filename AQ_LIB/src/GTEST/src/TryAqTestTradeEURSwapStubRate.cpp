@@ -24,11 +24,11 @@ namespace
     //
     // Curve input files.
     //
-    extern const char Test1_DIR_EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char Test1_DIR_EURYC_1M[]			= TEST_DIR "EURYC_1M3M_tryMeCurveCalibrateBasis_inputs";
-    extern const char Test1_DIR_EURYC_3M[]			= TEST_DIR "EURYC_3M6M_tryMeCurveCalibrateBasis_inputs";
-    extern const char Test1_DIR_EURYC_6M[]			= TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs";
-    extern const char Test1_DIR_EURYC_12M[]			= TEST_DIR "EURYC_3M12MBasis_tryMeCurveCalibrateBasis_inputs";
+    extern const char Test1_DIR_EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char Test1_DIR_EURYC_1M[]			= TEST_DIR "EURYC_1M3M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char Test1_DIR_EURYC_3M[]			= TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char Test1_DIR_EURYC_6M[]			= TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char Test1_DIR_EURYC_12M[]			= TEST_DIR "EURYC_3M12MBasis_tryAqCurvesCalibrateBasis_inputs";
 
     extern const char Test2_DIR_EURYC_OIS[]			= TEST_DIR "OIS_inputs";
     extern const char Test2_DIR_EURYC_1M[]			= TEST_DIR "1M_inputs";
@@ -36,32 +36,32 @@ namespace
     extern const char Test2_DIR_EURYC_6M[]			= TEST_DIR "SwapCurve_inputs";
     extern const char Test2_DIR_EURYC_12M[]			= TEST_DIR "12M_inputs";
 
-    extern const char Test3_DIR_EURYC_OIS[]			= TEST_DIR "Test3_EURYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char Test3_DIR_EURYC_1M[]			= TEST_DIR "Test3_EURYC_1M3M_tryMeCurveCalibrateBasis_inputs";
-    extern const char Test3_DIR_EURYC_3M[]			= TEST_DIR "Test3_EURYC_3M6M_tryMeCurveCalibrateBasis_inputs";
-    extern const char Test3_DIR_EURYC_6M[]			= TEST_DIR "Test3_EURYC_STD_tryMeCurveCalibrateSwap_inputs";
-    extern const char Test3_DIR_EURYC_12M[]			= TEST_DIR "Test3_EURYC_6M12MBasis_tryMeCurveCalibrateBasis_inputs";
+    extern const char Test3_DIR_EURYC_OIS[]			= TEST_DIR "Test3_EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char Test3_DIR_EURYC_1M[]			= TEST_DIR "Test3_EURYC_1M3M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char Test3_DIR_EURYC_3M[]			= TEST_DIR "Test3_EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char Test3_DIR_EURYC_6M[]			= TEST_DIR "Test3_EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char Test3_DIR_EURYC_12M[]			= TEST_DIR "Test3_EURYC_6M12MBasis_tryAqCurvesCalibrateBasis_inputs";
 
-    extern const char Test4_DIR_EURYC_OIS[]			= TEST_DIR "Test4_EURYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char Test4_DIR_EURYC_1M[]			= TEST_DIR "Test4_EURYC_1M3M_tryMeCurveCalibrateBasis_inputs";
-    extern const char Test4_DIR_EURYC_3M[]			= TEST_DIR "Test4_EURYC_3M6M_tryMeCurveCalibrateBasis_inputs";
-    extern const char Test4_DIR_EURYC_6M[]			= TEST_DIR "Test4_EURYC_STD_tryMeCurveCalibrateSwap_inputs";
-    extern const char Test4_DIR_EURYC_12M[]			= TEST_DIR "Test4_EURYC_6M12MBasis_tryMeCurveCalibrateBasis_inputs";
+    extern const char Test4_DIR_EURYC_OIS[]			= TEST_DIR "Test4_EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char Test4_DIR_EURYC_1M[]			= TEST_DIR "Test4_EURYC_1M3M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char Test4_DIR_EURYC_3M[]			= TEST_DIR "Test4_EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char Test4_DIR_EURYC_6M[]			= TEST_DIR "Test4_EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char Test4_DIR_EURYC_12M[]			= TEST_DIR "Test4_EURYC_6M12MBasis_tryAqCurvesCalibrateBasis_inputs";
     
     //
     // test call input and reference files
     //
-    extern const char Test1_getStubRateInputs[]		= TEST_DIR "EURYC_tryMeProductSwapStubRate_inputs";
-    extern const char Test1_getStubRateOutputs[]	= TEST_DIR "EURYC_tryMeProductSwapStubRate_outputs";
+    extern const char Test1_getStubRateInputs[]		= TEST_DIR "EURYC_tryAqSwapStubRate_inputs";
+    extern const char Test1_getStubRateOutputs[]	= TEST_DIR "EURYC_tryAqSwapStubRate_outputs";
 
     extern const char Test2_getStubRateInputs[]		= TEST_DIR "Test2_MeProductSwapStubRate_inputs";
     extern const char Test2_getStubRateOutputs[]	= TEST_DIR "Test2_MeProductSwapStubRate_outputs";
 
-    extern const char Test3_getStubRateInputs[]		= TEST_DIR "Test3_EURYC_tryMeProductSwapStubRate_inputs";
-    extern const char Test3_getStubRateOutputs[]	= TEST_DIR "Test3_EURYC_tryMeProductSwapStubRate_outputs";
+    extern const char Test3_getStubRateInputs[]		= TEST_DIR "Test3_EURYC_tryAqSwapStubRate_inputs";
+    extern const char Test3_getStubRateOutputs[]	= TEST_DIR "Test3_EURYC_tryAqSwapStubRate_outputs";
 
-    extern const char Test4_getStubRateInputs[]		= TEST_DIR "Test4_EURYC_tryMeProductSwapStubRate_inputs";
-    extern const char Test4_getStubRateOutputs[]	= TEST_DIR "Test4_EURYC_tryMeProductSwapStubRate_outputs";
+    extern const char Test4_getStubRateInputs[]		= TEST_DIR "Test4_EURYC_tryAqSwapStubRate_inputs";
+    extern const char Test4_getStubRateOutputs[]	= TEST_DIR "Test4_EURYC_tryAqSwapStubRate_outputs";
 }
 
 

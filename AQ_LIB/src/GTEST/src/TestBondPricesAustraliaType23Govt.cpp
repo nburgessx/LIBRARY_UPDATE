@@ -28,17 +28,17 @@ namespace
     const double yieldTolerance = 1e-10;
 
     // Test Bond Input File(s)
-    extern const char createBondInputFile1[]         ="ETrading/Bonds/AustraliaType23Govt1/tryMeLWOBondCreateFromLVB_inputs";
-	extern const char priceBondInputFile1[]          ="ETrading/Bonds/AustraliaType23Govt1/tryMeLWOBondPrice_inputs";
-    extern const char priceBondOutputFile1[]         ="ETrading/Bonds/AustraliaType23Govt1/tryMeLWOBondPrice_outputs";
-	extern const char yieldBondInputFile1[]			 = "ETrading/Bonds/AustraliaType23Govt1/tryMeLWOBondYield_inputs";
-	extern const char yieldBondOutputFile1[]		 = "ETrading/Bonds/AustraliaType23Govt1/tryMeLWOBondYield_outputs";
+    extern const char createBondInputFile1[]         ="ETrading/Bonds/AustraliaType23Govt1/tryAqObjectsBondCreateFromLVB_inputs";
+	extern const char priceBondInputFile1[]          ="ETrading/Bonds/AustraliaType23Govt1/tryAqObjectsBondPrice_inputs";
+    extern const char priceBondOutputFile1[]         ="ETrading/Bonds/AustraliaType23Govt1/tryAqObjectsBondPrice_outputs";
+	extern const char yieldBondInputFile1[]			 = "ETrading/Bonds/AustraliaType23Govt1/tryAqObjectsBondYield_inputs";
+	extern const char yieldBondOutputFile1[]		 = "ETrading/Bonds/AustraliaType23Govt1/tryAqObjectsBondYield_outputs";
 
-	extern const char createBondInputFile2[]		= "ETrading/Bonds/AustraliaType23Govt2/tryMeLWOBondCreateFromLVB_inputs";
-	extern const char priceBondInputFile2[]			= "ETrading/Bonds/AustraliaType23Govt2/tryMeLWOBondPrice_inputs";
-	extern const char priceBondOutputFile2[]		= "ETrading/Bonds/AustraliaType23Govt2/tryMeLWOBondPrice_outputs";
-	extern const char yieldBondInputFile2[]			= "ETrading/Bonds/AustraliaType23Govt2/tryMeLWOBondYield_inputs";
-	extern const char yieldBondOutputFile2[]		= "ETrading/Bonds/AustraliaType23Govt2/tryMeLWOBondYield_outputs";
+	extern const char createBondInputFile2[]		= "ETrading/Bonds/AustraliaType23Govt2/tryAqObjectsBondCreateFromLVB_inputs";
+	extern const char priceBondInputFile2[]			= "ETrading/Bonds/AustraliaType23Govt2/tryAqObjectsBondPrice_inputs";
+	extern const char priceBondOutputFile2[]		= "ETrading/Bonds/AustraliaType23Govt2/tryAqObjectsBondPrice_outputs";
+	extern const char yieldBondInputFile2[]			= "ETrading/Bonds/AustraliaType23Govt2/tryAqObjectsBondYield_inputs";
+	extern const char yieldBondOutputFile2[]		= "ETrading/Bonds/AustraliaType23Govt2/tryAqObjectsBondYield_outputs";
 
 }
 

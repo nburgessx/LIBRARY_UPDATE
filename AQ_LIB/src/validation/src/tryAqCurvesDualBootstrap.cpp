@@ -84,8 +84,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDualBootstrap_inputs", curveCollection, curveName_db) );
-            file.write( "generatorFunction", "tryMeCurveDualBootstrap" );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDualBootstrap_inputs", curveCollection, curveName_db) );
+            file.write( "generatorFunction", "tryAqCurvesDualBootstrap" );
             file.write( "curveCollection", curveCollection );
             file.write( "curveName_db", curveName_db);
             file.write( "curveName_OIS", curveName_OIS);
@@ -242,7 +242,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateCurvename( "tryMeCurveDualBootstrap_outputs", curveCollection, curveName_db ) );
+            CreateDataFile file( decorateCurvename( "tryAqCurvesDualBootstrap_outputs", curveCollection, curveName_db ) );
             file.write( "output", ret );
         }
 

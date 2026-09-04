@@ -103,8 +103,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapCreateFromLegLVBs_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryMeLWOSwapCreateFromLegLVBs");
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapCreateFromLegLVBs_inputs", swapName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsSwapCreateFromLegLVBs");
 			file.write("swapName", swapName);
 			file.write("leg1LVB", leg1LVB);
 			file.write("leg2LVB", leg2LVB);
@@ -132,7 +132,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapCreateFromLegLVBs_outputs", swapName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapCreateFromLegLVBs_outputs", swapName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -158,8 +158,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapCreate_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryMeLWOSwapCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapCreate_inputs", swapName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsSwapCreate");
 			file.write("swapName", swapName);
 			file.write("swapLVB", swapLVB);
 			file.write("swapPropertiesLVB", swapPropertiesLVB);
@@ -198,7 +198,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapCreate_outputs", swapName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapCreate_outputs", swapName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -222,8 +222,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapCreateBackToBack_inputs", toSwapName.c_str()));
-			file.write("generatorFunction", "tryMeLWOSwapCreateBackToBack");
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapCreateBackToBack_inputs", toSwapName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsSwapCreateBackToBack");
 			file.write("fromSwapName", fromSwapName);
 			file.write("toSwapName", toSwapName);
 		}
@@ -238,7 +238,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapCreateBackToBack_outputs", toSwapName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapCreateBackToBack_outputs", toSwapName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -267,8 +267,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapCreateFromSchedule_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryMeLWOSwapCreateFromSchedule");
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapCreateFromSchedule_inputs", swapName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsSwapCreateFromSchedule");
 			file.write("swapName", swapName);
 			file.write("schedule1Name", schedule1Name);
 			file.write("schedule2Name", schedule2Name);
@@ -301,7 +301,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapCreateFromSchedule_outputs", swapName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapCreateFromSchedule_outputs", swapName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -322,8 +322,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapDisplay_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryMeLWOSwapDisplay");
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapDisplay_inputs", swapName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsSwapDisplay");
 			file.write("swapName", swapName);
 		}
 
@@ -335,7 +335,7 @@ namespace validation
 		
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapDisplay_outputs", swapName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapDisplay_outputs", swapName.c_str()));
 			for (size_t i = 0; i < ret.size(); ++i)
 			{
 				file.write("output", ret[i]);
@@ -360,8 +360,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapAddLeg_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryMeLWOSwapAddLeg");
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapAddLeg_inputs", swapName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsSwapAddLeg");
 			file.write("swapName", swapName);
 			file.write("legObjectName", legObjectName);
 		}
@@ -375,7 +375,7 @@ namespace validation
 
         if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapAddLeg_outputs", swapName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapAddLeg_outputs", swapName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -397,8 +397,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapAddFee_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryMeLWOSwapAddFee");
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapAddFee_inputs", swapName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsSwapAddFee");
 			file.write("swapName", swapName);
 			file.write("feeName", feeName);
 		}
@@ -417,7 +417,7 @@ namespace validation
 
         if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapAddFee_outputs", swapName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapAddFee_outputs", swapName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -441,8 +441,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapGeneratorCreate_inputs", swapGeneratorName.c_str()));
-			file.write("generatorFunction", "tryMeLWOSwapGeneratorCreate");
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapGeneratorCreate_inputs", swapGeneratorName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsSwapGeneratorCreate");
 			file.write("swapGeneratorName", swapGeneratorName);
 			file.write("swapGeneratorLVB", swapGeneratorLVB);
 			file.write("validateKeys", validateKeys);
@@ -469,7 +469,7 @@ namespace validation
 
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapGeneratorCreate_outputs", swapGeneratorName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapGeneratorCreate_outputs", swapGeneratorName.c_str()));
 			file.write("output", ret);
 		}
 
@@ -489,8 +489,8 @@ namespace validation
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapGeneratorDisplay_inputs", swapGeneratorName.c_str()));
-			file.write("generatorFunction", "tryMeLWOSwapGeneratorDisplay");
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapGeneratorDisplay_inputs", swapGeneratorName.c_str()));
+			file.write("generatorFunction", "tryAqObjectsSwapGeneratorDisplay");
 			file.write("swapGeneratorName", swapGeneratorName);
 		}
 
@@ -499,7 +499,7 @@ namespace validation
 		
 		if (CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryMeLWOSwapGeneratorDisplay_outputs", swapGeneratorName.c_str()));
+			CreateDataFile file(decorateFilename("tryAqObjectsSwapGeneratorDisplay_outputs", swapGeneratorName.c_str()));
 			file.write("output", ret);
 		}
 

@@ -63,8 +63,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeProductSwapDelta_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryMeProductSwapDelta" );
+            CreateDataFile file( decorateFilename( "tryAqSwapDelta_inputs", curveCollection ) );
+            file.write( "generatorFunction", "tryAqSwapDelta" );
 
             for ( size_t i = 0; i < dealInfo.size(); ++i )
             {
@@ -129,7 +129,7 @@ namespace validation
         // Record results
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( decorateFilename( "tryMeProductSwapDelta_outputs", curveCollection ) );
+            CreateDataFile file( decorateFilename( "tryAqSwapDelta_outputs", curveCollection ) );
             for ( size_t i = 0; i < pillarNames.size(); ++i )
             {
                 // 12 is the number of decimal points required

@@ -37,21 +37,21 @@ namespace
     //
     // curve input files
     //
-    extern const char EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs";
-    extern const char EURYC_STD[]			= TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs";
+    extern const char EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char EURYC_STD[]			= TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char getParRateInputs[]	= TEST_DIR "EURYC_tryMeProductSwapParRate_inputs";
-    extern const char getParRateResults[]	= TEST_DIR "EURYC_tryMeProductSwapParRate_outputs";
+    extern const char getParRateInputs[]	= TEST_DIR "EURYC_tryAqSwapParRate_inputs";
+    extern const char getParRateResults[]	= TEST_DIR "EURYC_tryAqSwapParRate_outputs";
     
 
-    extern const char getPVInputs[]			= TEST_DIR "EURYC_tryMeProductSwapPV_inputs";
+    extern const char getPVInputs[]			= TEST_DIR "EURYC_tryAqSwapPV_inputs";
 #ifdef GTEST32
-    extern const char getPVResults[]		= TEST_DIR "EURYC_tryMeProductSwapPV_x86_outputs";
+    extern const char getPVResults[]		= TEST_DIR "EURYC_tryAqSwapPV_x86_outputs";
 #else
-    extern const char getPVResults[]		= TEST_DIR "EURYC_tryMeProductSwapPV_x64_outputs";
+    extern const char getPVResults[]		= TEST_DIR "EURYC_tryAqSwapPV_x64_outputs";
 #endif
 
 

@@ -39,7 +39,7 @@ namespace
     //
     // curve input files
     //
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
     extern const char EURYC_1M[]			    = "";
     extern const char EURYC_3M[]			    = "";
     extern const char EURYC_6M[]			    = "";
@@ -48,12 +48,12 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char oisInputs[]	            = TEST_DIR "EUROIS"; // Test files require a suffix. Format :=  Basename + Index + '_tryMeLWOSwapCreateFromLegLVBs_inputs'
+    extern const char oisInputs[]	            = TEST_DIR "EUROIS"; // Test files require a suffix. Format :=  Basename + Index + '_tryAqObjectsSwapCreateFromLegLVBs_inputs'
 
 #if defined(GTEST32)
-    extern const char oisOutputs[]	    = TEST_DIR "x86_EUROIS"; // Test files require a suffix. Format :=  Basename + Index + '_tryMeLWOSwapCreateFromLegLVBs_outputs'
+    extern const char oisOutputs[]	    = TEST_DIR "x86_EUROIS"; // Test files require a suffix. Format :=  Basename + Index + '_tryAqObjectsSwapCreateFromLegLVBs_outputs'
 #else
-	extern const char oisOutputs[]	    = TEST_DIR "x64_EUROIS"; // Test files require a suffix. Format :=  Basename + Index + '_tryMeLWOSwapCreateFromLegLVBs_outputs'
+	extern const char oisOutputs[]	    = TEST_DIR "x64_EUROIS"; // Test files require a suffix. Format :=  Basename + Index + '_tryAqObjectsSwapCreateFromLegLVBs_outputs'
 #endif
 }
 
@@ -80,7 +80,7 @@ namespace google_test
             for ( i = 1; ; ++i )
             {
                 // Load the input file
-                AQLString inputFilename = CreateDataFile::makeFilename( oisInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                AQLString inputFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjectsSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load inputFile( inputFilename );
 
                 // Read the input file into the tryAqObjectsSwapCreateFromLegLVBs
@@ -91,7 +91,7 @@ namespace google_test
 	            std::string localResult         = validation::tryAqObjectsSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
 
                 // Load the output file and the result                   
-                AQLString outputFilename = CreateDataFile::makeFilename( oisInputs, "_tryMeLWOSwapCreateFromLegLVBs_outputs", i ); // Append the Index and Suffix to test file name
+                AQLString outputFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjectsSwapCreateFromLegLVBs_outputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load outputFile( outputFilename );
                 
                 std::string outputFileResult = outputFile["output"];
@@ -125,7 +125,7 @@ namespace google_test
             for ( i = 1; ; ++i )
             {
                 // 1. Create the Swap
-                AQLString createSwapFilename = CreateDataFile::makeFilename( oisInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                AQLString createSwapFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjectsSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load createSwapFile( createSwapFilename );
 
                     // Read the input file into the tryAqObjectsSwapCreateFromLegLVBs
@@ -136,7 +136,7 @@ namespace google_test
 	                std::string localResult         = validation::tryAqObjectsSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
                 
                 // 2. Price the Swap
-                 AQLString SwapPVFilename = CreateDataFile::makeFilename( oisInputs, "_tryMeLWOSwapPV_inputs", i ); // Append the Index and Suffix to test file name
+                 AQLString SwapPVFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjectsSwapPV_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load swapPVFile( SwapPVFilename );
 
                     // Read the input file into the tryAqObjectsSwapPV
@@ -146,7 +146,7 @@ namespace google_test
                 
                 // 3. Load the Tenor Basis Spread Results File and Compare against the Local Spread                   
                 const double tolerance = 1e-006;  // Notional of trades is 1MM
-                CheckTestResultsAndRebaseOnRequest( localSwapPV, TEST_DIR, oisOutputs, "_tryMeLWOSwapPV_outputs", tolerance, i ); // Append the Index and Suffix to test file name
+                CheckTestResultsAndRebaseOnRequest( localSwapPV, TEST_DIR, oisOutputs, "_tryAqObjectsSwapPV_outputs", tolerance, i ); // Append the Index and Suffix to test file name
             }
         }
         catch( const ReadDataFile::LoadError& )
@@ -174,7 +174,7 @@ namespace google_test
             for ( i = 1; ; ++i )
             {
                 // 1. Create the Swap
-                AQLString createSwapFilename = CreateDataFile::makeFilename( oisInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                AQLString createSwapFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjectsSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load createSwapFile( createSwapFilename );
 
                     // Read the input file into the tryAqObjectsSwapCreateFromLegLVBs
@@ -185,7 +185,7 @@ namespace google_test
 	                std::string localResult         = validation::tryAqObjectsSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
                 
                 // 2. Get the Swap Par Rate
-                 AQLString SwapParRateFilename = CreateDataFile::makeFilename( oisInputs, "_tryMeLWOSwapParRate_inputs", i ); // Append the Index and Suffix to test file name
+                 AQLString SwapParRateFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjectsSwapParRate_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load swapParRateFile( SwapParRateFilename );
 
                     // Read the input file into the tryAqObjectsSwapParRate
@@ -194,7 +194,7 @@ namespace google_test
                 
                 // 3. Load the Tenor Basis Spread Results File and Compare against the Local Spread                   
                 const double tolerance = 1e-008;
-                CheckTestResultsAndRebaseOnRequest( localSwapParRate, TEST_DIR, oisOutputs, "_tryMeLWOSwapParRate_outputs", tolerance, i ); // Append the Index and Suffix to test file name
+                CheckTestResultsAndRebaseOnRequest( localSwapParRate, TEST_DIR, oisOutputs, "_tryAqObjectsSwapParRate_outputs", tolerance, i ); // Append the Index and Suffix to test file name
             }
         }
         catch( const ReadDataFile::LoadError& )
@@ -222,7 +222,7 @@ namespace google_test
             for ( i = 1; ; ++i )
             {
                 // 1. Create the Swap
-                AQLString createSwapFilename = CreateDataFile::makeFilename( oisInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                AQLString createSwapFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjectsSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load createSwapFile( createSwapFilename );
 
                     // Read the input file into the tryAqObjectsSwapCreateFromLegLVBs
@@ -233,7 +233,7 @@ namespace google_test
 	                std::string localResult         = validation::tryAqObjectsSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
                 
                 // 2. Price the Swap
-                 AQLString SwapPV01Filename = CreateDataFile::makeFilename( oisInputs, "_tryMeLWOSwapPV01_inputs", i ); // Append the Index and Suffix to test file name
+                 AQLString SwapPV01Filename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjectsSwapPV01_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load swapPV01File( SwapPV01Filename );
 
                     // Read the input file into the tryAqObjectsSwapPV01
@@ -242,7 +242,7 @@ namespace google_test
                 
                 // 3. Load the Tenor Basis Spread Results File and Compare against the Local Spread                   
                 const double tolerance = 1e-008;
-                CheckTestResultsAndRebaseOnRequest( localSwapPV01, TEST_DIR, oisOutputs, "_tryMeLWOSwapPV01_outputs", tolerance, i ); // Append the Index and Suffix to test file name
+                CheckTestResultsAndRebaseOnRequest( localSwapPV01, TEST_DIR, oisOutputs, "_tryAqObjectsSwapPV01_outputs", tolerance, i ); // Append the Index and Suffix to test file name
             }
         }
         catch( const ReadDataFile::LoadError& )

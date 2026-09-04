@@ -26,9 +26,9 @@ namespace
     const double yieldTolerance = 1e-10;
 
     // Test Bond Input File(s)
-    extern const char createBondInputFile[]         =TEST_DIR "tryMeLWOBondCreate_inputs";
-    extern const char priceBondInputFile[]          =TEST_DIR "tryMeLWOBondCleanPrice_inputs";
-    extern const char priceBondOutputFile[]         =TEST_DIR "tryMeLWOBondCleanPrice_outputs";
+    extern const char createBondInputFile[]         =TEST_DIR "tryAqObjectsBondCreate_inputs";
+    extern const char priceBondInputFile[]          =TEST_DIR "tryAqObjectsBondCleanPrice_inputs";
+    extern const char priceBondOutputFile[]         =TEST_DIR "tryAqObjectsBondCleanPrice_outputs";
 }
 
 namespace google_test

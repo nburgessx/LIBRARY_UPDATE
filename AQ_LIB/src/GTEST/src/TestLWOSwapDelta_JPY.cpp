@@ -41,24 +41,24 @@ namespace
 	//
     // curve input files
     //
-	const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    const char JPYYC_JSCC_STD[]				= TEST_DIR "JPYYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    const char JPYYC_LCH_6M[]				= TEST_DIR "JPYYC_LCH6M_tryMeCurveCalibrateSwap_inputs.csv";
+	const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    const char JPYYC_JSCC_STD[]				= TEST_DIR "JPYYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    const char JPYYC_LCH_6M[]				= TEST_DIR "JPYYC_LCH6M_tryAqCurvesCalibrateSwap_inputs.csv";
 	//
     // test call input and reference files
     //
 	int portfolioSize = 18;
 
-	const char swapInputFileSuffix[]		= "_JPY_6ML_LCH_tryMeLWOSwapCreateFromGenerator_inputs.csv";   
+	const char swapInputFileSuffix[]		= "_JPY_6ML_LCH_tryAqObjectsSwapCreateFromGenerator_inputs.csv";   
 
 	// DV01 tests
-	const char swapDV01Inputs[]				= TEST_DIR "tryMeLWOSwapDV01_inputs";  // set up the DV01 calculation
+	const char swapDV01Inputs[]				= TEST_DIR "tryAqObjectsSwapDV01_inputs";  // set up the DV01 calculation
 
 	// Reference DV01 outputs base filename. A currency csa suffix is appended by the test in order to get the actual filename
-	const char raw_dv01_outputs_32[]			= "tryMeLWOSwapDV01_outputs.csv";
-	const char raw_dv01_outputs_64[]			= "tryMeLWOSwapDV01_outputs_64bit.csv";
-	const char dv01_outputs_32[]				= TEST_DIR "tryMeLWOSwapDV01_outputs.csv";
-	const char dv01_outputs_64[]				= TEST_DIR "tryMeLWOSwapDV01_outputs_64bit.csv";
+	const char raw_dv01_outputs_32[]			= "tryAqObjectsSwapDV01_outputs.csv";
+	const char raw_dv01_outputs_64[]			= "tryAqObjectsSwapDV01_outputs_64bit.csv";
+	const char dv01_outputs_32[]				= TEST_DIR "tryAqObjectsSwapDV01_outputs.csv";
+	const char dv01_outputs_64[]				= TEST_DIR "tryAqObjectsSwapDV01_outputs_64bit.csv";
 }
 
 namespace google_test

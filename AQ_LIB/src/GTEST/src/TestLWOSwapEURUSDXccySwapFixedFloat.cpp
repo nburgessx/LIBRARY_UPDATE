@@ -33,31 +33,31 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryMeCurveCalibrateBasis_inputs.csv";
-    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryMeCurveCalibrateBasis_inputs.csv";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
 
     //
     // test call input and reference files
     //
-    extern const char fixedLegSpreadSwapInputs[]				= TEST_DIR "FIXEDLEGSPREAD@15_tryMeLWOSwapCreate_inputs";
-    extern const char fixedLegSpreadSwapParSpreadInputs[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryMeLWOSwapParSpread_inputs";
-    extern const char fixedLegSpreadSwapParSpreadOutputs[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryMeLWOSwapParSpread_outputs";
-    extern const char fixedLegSpreadSwapParSpreadOutputs64[]	= TEST_DIR "FIXEDLEGSPREAD@15_tryMeLWOSwapParSpread_outputs64_";
-    extern const char fixedLegSpreadSwapSpreadInputs[]	        = TEST_DIR "FIXEDLEGSPREAD@15_tryMeLWOSwapSpread_inputs";
-    extern const char fixedLegSpreadSwapSpreadOutputs[]			= TEST_DIR "FIXEDLEGSPREAD@15_tryMeLWOSwapSpread_outputs";
-    extern const char fixedLegSpreadSwapSpreadOutputs64[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryMeLWOSwapSpread_outputs64_";
+    extern const char fixedLegSpreadSwapInputs[]				= TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjectsSwapCreate_inputs";
+    extern const char fixedLegSpreadSwapParSpreadInputs[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjectsSwapParSpread_inputs";
+    extern const char fixedLegSpreadSwapParSpreadOutputs[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjectsSwapParSpread_outputs";
+    extern const char fixedLegSpreadSwapParSpreadOutputs64[]	= TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjectsSwapParSpread_outputs64_";
+    extern const char fixedLegSpreadSwapSpreadInputs[]	        = TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjectsSwapSpread_inputs";
+    extern const char fixedLegSpreadSwapSpreadOutputs[]			= TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjectsSwapSpread_outputs";
+    extern const char fixedLegSpreadSwapSpreadOutputs64[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjectsSwapSpread_outputs64_";
 
-    extern const char floatLegSpreadSwapInputs[]				= TEST_DIR "FLOATLEGSPREAD@15_tryMeLWOSwapCreate_inputs";
-    extern const char floatLegSpreadSwapParSpreadInputs[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryMeLWOSwapParSpread_inputs";
-    extern const char floatLegSpreadSwapParSpreadOutputs[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryMeLWOSwapParSpread_outputs";
-    extern const char floatLegSpreadSwapParSpreadOutputs64[]	= TEST_DIR "FLOATLEGSPREAD@15_tryMeLWOSwapParSpread_outputs64_";
-    extern const char floatLegSpreadSwapSpreadInputs[]	        = TEST_DIR "FLOATLEGSPREAD@15_tryMeLWOSwapSpread_inputs";
-    extern const char floatLegSpreadSwapSpreadOutputs[]			= TEST_DIR "FLOATLEGSPREAD@15_tryMeLWOSwapSpread_outputs";
-    extern const char floatLegSpreadSwapSpreadOutputs64[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryMeLWOSwapSpread_outputs64_";
+    extern const char floatLegSpreadSwapInputs[]				= TEST_DIR "FLOATLEGSPREAD@15_tryAqObjectsSwapCreate_inputs";
+    extern const char floatLegSpreadSwapParSpreadInputs[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryAqObjectsSwapParSpread_inputs";
+    extern const char floatLegSpreadSwapParSpreadOutputs[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryAqObjectsSwapParSpread_outputs";
+    extern const char floatLegSpreadSwapParSpreadOutputs64[]	= TEST_DIR "FLOATLEGSPREAD@15_tryAqObjectsSwapParSpread_outputs64_";
+    extern const char floatLegSpreadSwapSpreadInputs[]	        = TEST_DIR "FLOATLEGSPREAD@15_tryAqObjectsSwapSpread_inputs";
+    extern const char floatLegSpreadSwapSpreadOutputs[]			= TEST_DIR "FLOATLEGSPREAD@15_tryAqObjectsSwapSpread_outputs";
+    extern const char floatLegSpreadSwapSpreadOutputs64[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryAqObjectsSwapSpread_outputs64_";
 
 }
 

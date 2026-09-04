@@ -38,56 +38,56 @@ namespace
 	//
     // curve input files
     //
-    extern const char USDYC_OIS[]					= TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]					= TEST_DIR "USDYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
+    extern const char USDYC_OIS[]					= TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]					= TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
 
-    extern const char EURYC_OIS[]					= TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]					= TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char EURYC_3M6M[]					= TEST_DIR "EURYC_3M6M_tryMeCurveCalibrateBasis_inputs.csv";
-    extern const char EURYC_XCCY[]					= TEST_DIR "EURYC_XCCY_tryMeCurveCalibrateBasis_inputs.csv";
+    extern const char EURYC_OIS[]					= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]					= TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char EURYC_3M6M[]					= TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char EURYC_XCCY[]					= TEST_DIR "EURYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
 
-    extern const char GBPYC_OIS[]					= TEST_DIR "GBPYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char GBPYC_STD[]					= TEST_DIR "GBPYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char GBPYC_XCCY[]					= TEST_DIR "GBPYC_XCCY_tryMeCurveCalibrateBasis_inputs.csv";
+    extern const char GBPYC_OIS[]					= TEST_DIR "GBPYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char GBPYC_STD[]					= TEST_DIR "GBPYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char GBPYC_XCCY[]					= TEST_DIR "GBPYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
 
-	extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
-    extern const char JPYYC_JSCC_STD[]				= TEST_DIR "JPYYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
-    extern const char JPYYC_LCH_6M[]				= TEST_DIR "JPYYC_LCH6M_tryMeCurveCalibrateSwap_inputs.csv";
-	extern const char JPYYC_LCH_3M[]				= TEST_DIR "JPYYC_LCH3M_tryMeCurveCalibrateBasis_inputs.csv";
-    extern const char JPYYC_XCCY[]					= TEST_DIR "JPYYC_XCCY_tryMeCurveCalibrateBasis_inputs.csv";
+	extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char JPYYC_JSCC_STD[]				= TEST_DIR "JPYYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char JPYYC_LCH_6M[]				= TEST_DIR "JPYYC_LCH6M_tryAqCurvesCalibrateSwap_inputs.csv";
+	extern const char JPYYC_LCH_3M[]				= TEST_DIR "JPYYC_LCH3M_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char JPYYC_XCCY[]					= TEST_DIR "JPYYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
 
-	extern const char EURYC_FXFWDGBP[]				= TEST_DIR "EURYC_FWDGBP_tryMeCurveCalibrateFXForwards_inputs.csv";
-	extern const char EURYC_FXFWDJPY[]				= TEST_DIR "EURYC_FWDJPY_tryMeCurveCalibrateFXForwards_inputs.csv";
+	extern const char EURYC_FXFWDGBP[]				= TEST_DIR "EURYC_FWDGBP_tryAqCurvesCalibrateFXForwards_inputs.csv";
+	extern const char EURYC_FXFWDJPY[]				= TEST_DIR "EURYC_FWDJPY_tryAqCurvesCalibrateFXForwards_inputs.csv";
 
-	extern const char USDYC_FXFWDGBP[]				= TEST_DIR "USDYC_FWDGBPCSA_tryMeCurveCalibrateFXForwards_inputs.csv";
-	extern const char USDYC_FXFWDEUR[]				= TEST_DIR "USDYC_FWDEURCSA_tryMeCurveCalibrateFXForwards_inputs.csv";
-	extern const char USDYC_FXFWDJPY[]				= TEST_DIR "USDYC_FWDJPYCSA_tryMeCurveCalibrateFXForwards_inputs.csv";
+	extern const char USDYC_FXFWDGBP[]				= TEST_DIR "USDYC_FWDGBPCSA_tryAqCurvesCalibrateFXForwards_inputs.csv";
+	extern const char USDYC_FXFWDEUR[]				= TEST_DIR "USDYC_FWDEURCSA_tryAqCurvesCalibrateFXForwards_inputs.csv";
+	extern const char USDYC_FXFWDJPY[]				= TEST_DIR "USDYC_FWDJPYCSA_tryAqCurvesCalibrateFXForwards_inputs.csv";
 
 	//
     // test call input and reference files
     //
-	extern const char xccySwap_USDCSA[]				= TEST_DIR "XCCY_tryMeLWOSwapCreate_USDCSA_inputs.csv";    // EUR / USD XCCY swap, USD CSA i.e. regular XCCY swap
-	extern const char xccySwap_GBPCSA[]				= TEST_DIR "XCCY_tryMeLWOSwapCreate_GBPCSA_inputs.csv";    // EUR / USD XCCY swap, GBP CSA
-	extern const char xccySwap_EURCSA[]				= TEST_DIR "XCCY_tryMeLWOSwapCreate_EURCSA_inputs.csv";    // EUR / USD XCCY swap, EUR CSA
-	extern const char xccySwap_JPYCSA[]				= TEST_DIR "XCCY_tryMeLWOSwapCreate_JPYCSA_inputs.csv";    // EUR / USD XCCY swap, JPY CSA
+	extern const char xccySwap_USDCSA[]				= TEST_DIR "XCCY_tryAqObjectsSwapCreate_USDCSA_inputs.csv";    // EUR / USD XCCY swap, USD CSA i.e. regular XCCY swap
+	extern const char xccySwap_GBPCSA[]				= TEST_DIR "XCCY_tryAqObjectsSwapCreate_GBPCSA_inputs.csv";    // EUR / USD XCCY swap, GBP CSA
+	extern const char xccySwap_EURCSA[]				= TEST_DIR "XCCY_tryAqObjectsSwapCreate_EURCSA_inputs.csv";    // EUR / USD XCCY swap, EUR CSA
+	extern const char xccySwap_JPYCSA[]				= TEST_DIR "XCCY_tryAqObjectsSwapCreate_JPYCSA_inputs.csv";    // EUR / USD XCCY swap, JPY CSA
 
 	// DV01 tests
-	extern const char swapDV01Inputs[]				= TEST_DIR "tryMeLWOSwapDV01_inputs_";  // set up the DV01 calculation
+	extern const char swapDV01Inputs[]				= TEST_DIR "tryAqObjectsSwapDV01_inputs_";  // set up the DV01 calculation
 
 	// Reference DV01 outputs base filename. A currency csa suffix is appended by the test in order to get the actual filename
-	extern const char raw_dv01_outputs_32[]			= "tryMeLWOSwapDV01_outputs_";
-	extern const char raw_dv01_outputs_64[]			= "tryMeLWOSwapDV01_outputs_64bit_";
-	extern const char dv01_outputs_32[]				= TEST_DIR "tryMeLWOSwapDV01_outputs_";
-	extern const char dv01_outputs_64[]				= TEST_DIR "tryMeLWOSwapDV01_outputs_64bit_";
+	extern const char raw_dv01_outputs_32[]			= "tryAqObjectsSwapDV01_outputs_";
+	extern const char raw_dv01_outputs_64[]			= "tryAqObjectsSwapDV01_outputs_64bit_";
+	extern const char dv01_outputs_32[]				= TEST_DIR "tryAqObjectsSwapDV01_outputs_";
+	extern const char dv01_outputs_64[]				= TEST_DIR "tryAqObjectsSwapDV01_outputs_64bit_";
 
 	// DeltaLadder tests
-	extern const char deltaLadderInputs[]			= TEST_DIR "tryMeLWOSwapDeltaLadder_inputs_";  // set up the DeltaLadder calculation
+	extern const char deltaLadderInputs[]			= TEST_DIR "tryAqObjectsSwapDeltaLadder_inputs_";  // set up the DeltaLadder calculation
 
 	// References DeltaLadder outputs base filename. A currency csa suffix is appended by the test in order to get the actual filename
-	extern const char raw_delta_ladder_outputs_32[]	= "tryMeLWOSwapDeltaLadder_outputs_";
-	extern const char raw_delta_ladder_outputs_64[]	= "tryMeLWOSwapDeltaLadder_outputs_64bit_";
-	extern const char delta_ladder_outputs_32[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_outputs_";
-	extern const char delta_ladder_outputs_64[]		= TEST_DIR "tryMeLWOSwapDeltaLadder_outputs_64bit_";
+	extern const char raw_delta_ladder_outputs_32[]	= "tryAqObjectsSwapDeltaLadder_outputs_";
+	extern const char raw_delta_ladder_outputs_64[]	= "tryAqObjectsSwapDeltaLadder_outputs_64bit_";
+	extern const char delta_ladder_outputs_32[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_outputs_";
+	extern const char delta_ladder_outputs_64[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_outputs_64bit_";
 
 	std::string createSwapFromDataFile( const char* swapInputs )
 	{
