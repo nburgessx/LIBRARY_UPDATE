@@ -263,12 +263,25 @@ Editions cut **across** categories, so the gate is category-level.
 in every binding: type `aqDates` and the date functions surface together.
 
 **Canonical category list — LOCKED (13):** `Dates`, `Curves` (rates yield-curve
-framework only — *not* bond/credit curves), `Vols`, `Rates`, `Swaps`, `Bonds`
-(incl. bond-curve fitting), `Credit` (incl. hazard/survival curves), `Options`,
-`Math` (low-level building blocks for own-calculation / result replication),
-`Models` (may be sparse initially), `Generators`, `Objects`, `Tools`. **No**
+framework only — *not* bond/credit curves), `FX`, `Vols`, `Rates`, `Swaps`,
+`Bonds` (incl. bond-curve fitting), `Credit` (incl. hazard/survival curves),
+`Options`, `Math` (low-level building blocks for own-calculation / result
+replication), `Models` (may be sparse initially), `Generators`, `Tools`. **No**
 `Products` category. Use these 13, identically in `validation` / `AQ_XLL` /
 `AQ_API` / `GTEST`. Detail: `MIGRATION_PLAN.md` §2.2.
+
+`Objects` is **no longer a category** — the handle API is distinguished by the
+`aqObj` *prefix* instead, so the same product categories serve both surfaces:
+
+| Form | Meaning | Example |
+|---|---|---|
+| `aq<Category><Function>` | stateless — data in, value out | `aqSwapsParRate` |
+| `aqObj<Category><Function>` | handle API — object handle in | `aqObjSwapsParRate` |
+| `aqObj<Lifecycle>` | handle lifecycle, no category word | `aqObjLoad`, `aqObjSave`, `aqObjClearCache` |
+
+`FX` is its own category (not folded into `Curves`): FX forwards and FX swaps are
+derived from discount / xccy curves, but `FX` is what a user reaches for, and
+discoverability wins over taxonomy here.
 
 ### 5.2 Two orthogonal groupings — do not conflate
 
@@ -298,8 +311,8 @@ framework only — *not* bond/credit curves), `Vols`, `Rates`, `Swaps`, `Bonds`
 | `LA`, `LB` ("Legacy Analytics" type/object prefixes) | **`AQL`** ("AQ Legacy") — marks legacy-to-deprecate, greppable vs new `AQ*` |
 | `MA`, `MB` (type/object prefixes) | `AQ` — confirm per project (`math` had zero real ones) |
 | `MLIB_*` macros | `AQ_*` |
-| LWO (light-weight objects) — **C++ classes** | **`AQObj`** prefix: `AQObjCurve`, `AQObjUtilities`, `AQObjCurveDayAdjustment`, `AQOHandleEnums`; free predicate `isLWOObject → isAQObject`. (Not `Obj` — `AQObj` is brand-consistent and distinctive.) |
-| LWO — **public function names** (`meLWO…`) | take the **category** prefix, not `AQObj`: lifecycle ops → `aqObjects…`; handle-based pricing/creation → `aq<AssetCategory>…` (`aqSwapsPv`, `aqCurvesMarketDataDisplay`, …). Trading in a handle is an impl detail, not a category. |
+| LWO (light-weight objects) — **C++ classes** | **`AQObj`** prefix: `AQObjCurve`, `AQObjUtilities`, `AQObjCurveDayAdjustment`, `AQObjHandleEnums`; screaming-snake macros take `AQOBJ_` (`AQOBJ_KEY`); free predicate `isLWOObject → isAQObject`. Matches the public `aqObj` prefix. |
+| LWO — **public function names** (`meLWO…`) | `aqObj` + the **same** category as the stateless twin: `aqObjSwapsPV`, `aqObjCurvesMarketDataDisplay`. Lifecycle ops drop the category: `aqObjLoad`, `aqObjSave`, `aqObjClearCache`. The prefix — not a separate `Objects` category — is what separates the two surfaces. |
 | `mir*` (whole stack: `AQ_API\mir*` 58 files, `validation\tryMir*` ~35, `LAXL.cpp` 156 fns) | **delete wholesale** — self-contained, no inbound `aq`/`me` deps (0.5 call-graph) |
 | `msc*`, `LoanCalculations`, `SupervisoryRules`, `CashflowClient` + securitisation cluster | **delete — client-specific**; keep only what `Credit` genuinely needs (0.6 removal map) |
 | project `AQ_BINDINGS` | **`AQ_API`** (agreed) — update `.vcxproj`/`.filters`/`.user`, `.sln`, folder, SWIG `.i`, the 8 `generate*`/`deploy*` batch files, and the pre/post-build `<Command>` lines |
@@ -334,7 +347,9 @@ codebase in ways that compile.
   sign-off, rename from the approved list.**
 - Reviewable batches — one project or category at a time. Build between each.
 - Never rename inside string literals, third-party headers, or `.APPLES`.
-- `LWO` → `AQObj`; predicate stays `isAQObject()`; never write `AQOObject`.
+- `LWO` → `AQObj`; predicate stays `isAQObject()`. Never write `AQObjbject` —
+  when renaming `AQO`→`AQObj`, exclude tokens that already contain `AQObject`
+  (`AQObjects`, `IsAQObject`, `isAQObject`).
 
 ### 5.6 Renaming Excel functions — clean break
 

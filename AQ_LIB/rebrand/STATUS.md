@@ -134,6 +134,57 @@ Folder the `validation` `tryAq*` wrappers by category (`src/validation/Curves/`,
 
 ---
 
+## Step 8 — public API naming scheme (done, 2026-09-04)
+
+The handle API and the stateless API are two surfaces over the same products.
+Excel cannot overload, so they need distinct names. The interim `aqObjects*`
+scheme forced the object API into its own `Objects` category; step 8 replaces
+that with an `aqObj` **prefix**, so both surfaces share one category list.
+
+| Form | Meaning | Example |
+|---|---|---|
+| `aq<Category><Function>` | stateless — data in, value out | `aqSwapsParRate` |
+| `aqObj<Category><Function>` | handle API — handle in | `aqObjSwapsParRate` |
+| `aqObj<Lifecycle>` | lifecycle, no category word | `aqObjLoad`, `aqObjClearCache` |
+| `AQObj*` / `AQOBJ_*` | internal C++ classes / macros | `AQObjCurve`, `AQOBJ_KEY` |
+
+- **8A** `7fd00c7c` — 774 renames (`aqObjects*`→`aqObj<Category>*`,
+  `tryAqObjects*`→`tryAqObj<Category>*`, `aqSwap*`→`aqSwaps*`). 108 src files and
+  7,300 fixture files moved in the same commit as their path-strings.
+- **8B** `30fc5505` — internal `AQO`→`AQObj` (140 tokens, 40 src files, 1,107
+  resource paths, 64 VS filter labels).
+- **8C** — docs + `docs/api_map.csv` + `rebrand/tools/api_pair_check.py`.
+
+**Category list changed: `Objects` dropped, `FX` added — still 13.** `FX` is its
+own category (Nicholas, this session), *not* folded into `Curves`.
+
+### Two exclusions that must survive any future AQO/AQObj pass
+`AQObjects` (fixture path segment), `IsAQObject`, `isAQObject` — these already
+contain `AQObject`; renaming `AQO`→`AQObj` inside them yields `AQObjbject(s)`.
+
+### Open, from the api_pair_check advisory
+Five public functions whose wrapper name has drifted from `tryAq<same name>`.
+All five *do* route through `validation` (the 4.1 contract holds) — this is
+cosmetic naming only, deferred:
+```
+aqCurvesResultsDisplayDiscountFactors          -> tryAqCurvesResultsDiscountFactorsDisplayAll
+aqObjCreditModelRiskyDiscountFactor            -> tryAqObjCreditModelRiskyDiscountFactors
+aqObjCurvesMarketDataCreateUsingMultipleBlocks -> tryAqObjCurvesMarketDataCreate
+aqObjSwapsUSDSpotDate                          -> tryAqCurvesUSDSpotDate   (also: a Swaps
+                                                  function living in aqDates.cpp)
+aqToolsLVBAppendAndCreate                      -> tryAqToolsLVBAdd
+```
+354 validation wrappers still have no public `aq*` function. That is the Phase 4
+port backlog, not a defect.
+
+### ACTION REQUIRED outside AQ_LIB
+`REPO\CLAUDE.md` (repo-wide, **read-only to Claude**) still documents the old
+scheme in its §5.1 and §6: the 13-category list containing `Objects`, and
+`LWO → AQO` / `isLWOObject → isAQObject`. Nicholas needs to update it by hand,
+or grant write access, or it will keep contradicting `AQ_LIB\CLAUDE.md`.
+
+---
+
 ## Known noise / not-bugs
 - **`src/AQ_API/source/swig_*_wrap.{cpp,cxx}`** — SWIG-generated. Still contain old `me*`/`mir*` names
   in HEAD (regenerated in Phase 5, not in the core build). They also keep re-appearing as phantom
@@ -151,5 +202,10 @@ Folder the `validation` `tryAq*` wrappers by category (`src/validation/Curves/`,
 - `rebrand/tools/prefix_census.py` — legacy-prefix census per project.
 - `rebrand/tools/run_batch.py` — approved-list batch runner (git mv + \b-anchored replace + string-literal report + verify gate). `FILE_PREFIX` handles `LWO→AQObj`.
 - Scratch scripts used this run (not committed) are in the session scratchpad:
-  `map_bsimple.py`, `map_blwo.py`, `run_bsimple.py`, `run_blwo.py`, `bfixtures.py`.
+  `map_bsimple.py`, `map_blwo.py`, `run_bsimple.py`, `run_blwo.py`, `bfixtures.py`,
+  `step6b_delete.py`, `step6b_vcxproj.py`, `step7b_prose.py`, `step7c.py`,
+  `step8_map.py`, `step8a.py`, `step8b.py`.
 - `rebrand/phase3_Bsimple_MAP.csv`, `phase3_BLWO_mapB.csv` — the approved `me→aq` maps (committed).
+- `rebrand/phase3_step8_MAP.csv` — the approved step-8 map, 774 rows (committed).
+- `rebrand/tools/api_pair_check.py` — `aq*` must route through `validation`; emits `docs/api_map.csv`.
+  Run with `--write` to refresh the map; exit 1 makes it usable as a CI gate.

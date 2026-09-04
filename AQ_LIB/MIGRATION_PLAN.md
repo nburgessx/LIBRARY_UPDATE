@@ -41,7 +41,7 @@ Status legend: ☐ not started · ◐ in progress · ☑ done
 | D12 | **Q4 — holiday-centre join is `+` only** (Nicholas, this session). Reason: clean break (D9), fresh clients, no legacy user sheets to protect; the only `:`-form data that ships is the ~103 generator JSON, which we migrate ourselves; and `:` is heavily overloaded (`DATA_COLL_DEL`, curve-name lists in the same generator files). The `splitCalendarCentres()` helper is written so accepting `:` again is a **one-line toggle** if field feedback ever demands it — but it ships `+`-only. Migrate the 103 JSON calendar fields to `+`. |
 | D13 | **Q5 — Linux / CMake build is in scope**, lower priority (late phase). **End-state gate: not one file anywhere in the tree — source, Makefiles, `make.*`, CMake, `.sln`/`.vcxproj`, scripts, resources, examples, docs — may contain a legacy client name or an old prefix.** Many `resources\` and `examples\` items will be rewritten or removed for the final version. |
 | D14 | **Q6 — category taxonomy locked (13).** See §2.2 / `CLAUDE.md` §5.1. |
-| D15 | **LWO → `AQObj`** for the C++ object-framework **classes** (`AQObjCurve`, `AQObjUtilities`, …); free predicate `isLWOObject → isAQObject` (**not** `isAQOObject` — no double-O anywhere; use `AQObj` or `AQObject`). Public **function** names carrying `LWO` do **not** get an `AQObj` prefix — they take the **category** prefix (`aqObjects*` for lifecycle ops, `aq<AssetCategory>*` for handle-based pricing/creation). See Phase 3.2. |
+| D15 | **LWO → `AQObj`** for the C++ object-framework **classes** (`AQObjCurve`, `AQObjUtilities`, …); screaming-snake macros take `AQOBJ_`; free predicate `isLWOObject → isAQObject`. Public **function** names carrying `LWO` become **`aqObj` + the same category as their stateless twin** (`aqObjSwapsPV`, `aqObjCurvesDisplay`); lifecycle ops drop the category (`aqObjLoad`, `aqObjSave`). Superseded the earlier `aqObjects*` / `Objects`-category scheme — see Phase 3.2 and step 8. |
 | D17 | **`LA` → `AQL`** (not `AQ`). `LA` = "Legacy Analytics" — the whole `LA*` tree is legacy-to-deprecate; the `AQL` ("AQ Legacy") prefix keeps it visually distinct and greppable against new `AQ*` code. Applies to identifiers, files (`LAString.h → AQLString.h`), include-guard macros, error-string text. `MA`/`MB` → `AQ`, confirmed per project. `LAObject → AQLObject`, `LAMath → AQLMath`. |
 | D16 | **Navigation:** category names are a public-API concern and are **not** propagated into `etrading`/`math` file or class names (those stay domain-oriented). The bridge is the `validation` layer: every wrapper is `tryAq<Category><Function>`, foldered by category (Phase 3.5), plus a live `docs\api_map.csv` (Phase 3.6). Judged acceptable — see §"Navigation" note below §2.5. |
 
@@ -242,7 +242,7 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
   | `Math` | **low-level building blocks** — distributions, interpolation, root-finding, matrix ops — for users doing their own calculations or replicating results | `aqMathNormalCdf` |
   | `Models` | term-structure / stochastic models (Hull-White, LMM, Piterbarg, SABR-as-model), model calibration sets, model-based / exotic / CMS-spread pricing, analytic (Jacobian) risk. May be sparse initially. | `aqModelsHullWhiteCalibrate` |
   | `Generators` | list / describe / validate the JSON instrument & model static-data templates; build instruments from a generator + a few overrides | `aqGeneratorsList` |
-  | `Objects` | AQObj handle framework — create / copy / modify / delete / clear / list | `aqObjectsDelete` |
+  | `FX` | FX forwards and FX swaps derived from discount / xccy curves | `aqFXForwards` |
   | `Tools` | echo, build stamp, edition report, diagnostics, memory dump, CSV load | `aqToolsBuildTime` |
 
   **Decisions folded in:** `Curves` = rates yield-curve framework only, bond-curve
@@ -342,25 +342,28 @@ baseline-diff between **every** batch.
 - ☐ **3.2 `LWO → AQObj`** (D4, D15). Two distinct things:
   - **C++ object-framework classes** get the `AQObj` prefix (AlgoQuant Object):
     `LWOCurve → AQObjCurve`, `LWOCurveDayAdjustment → AQObjCurveDayAdjustment`,
-    `LWOUtilities → AQObjUtilities`, `HandleEnums → AQOHandleEnums`,
+    `LWOUtilities → AQObjUtilities`, `HandleEnums → AQObjHandleEnums`,
     `IsLWOObject.{h,cpp}` → `AQObjectPredicates.{h,cpp}` with the free function
     `isLWOObject() → isAQObject()`. Folded into the `etrading` batch. Handle
     behaviour (counter, cell-hash, recalc suffix) byte-for-byte unchanged.
-    **Never `AQOObject` (double-O)** — use `AQObj` or `AQObject`. Note the legacy
+    **Never `AQObjbject`** — when renaming `AQO`→`AQObj`, exclude tokens that
+    already contain `AQObject` (`AQObjects`, `IsAQObject`, `isAQObject`). Note the legacy
     `math` class `LAObject` becomes `AQLObject` (distinct from the framework's
     `AQObject` / `AQObj*`), so no clash.
-  - **Public function names carrying `LWO`** do **not** become `aqAQO…`. They
-    take the **category** prefix by what they do:
+  - **Public function names carrying `LWO`** take the **`aqObj` prefix plus the
+    same category as their stateless twin** — the prefix, not a separate
+    `Objects` category, is what separates the two surfaces:
     - object-lifecycle ops (`meLWOLoad/Save/Copy/Modify/Delete/Clear/List`) →
-      **`aqObjects…`** (`aqObjLoad`, `aqObjectsCopy`, …)
+      **`aqObj…`** with no category word (`aqObjLoad`, `aqObjCopy`, …)
     - handle-based pricing/creation (`meLWOSwapPV`, `meLWOSwapCreate`,
-      `meLWOCurveMarketDataDisplay`, `meLWOBondPrice`, …) → their **asset
-      category** (`aqSwapsPv`, `aqSwapsCreate`, `aqCurvesMarketDataDisplay`,
-      `aqBondsPrice`). Trading in a handle is an implementation detail, not a
-      category. The 0.7 inventory row for each `meLWO*` function records its
-      target category.
-  - `tryMeLWO*` validation wrappers follow the same rule: `tryAqObjects*` or
-    `tryAq<AssetCategory>*`.
+      `meLWOCurveMarketDataDisplay`, `meLWOBondPrice`, …) → **`aqObj` + asset
+      category** (`aqObjSwapsPV`, `aqObjSwapsCreate`,
+      `aqObjCurvesMarketDataDisplay`, `aqObjBondsPrice`).
+    This supersedes the interim `aqObjects*` scheme, which collided with the
+    stateless names it had to sit alongside — Excel cannot overload, so
+    `meLWOCurveDisplay` and `meCurveDisplay` both wanted `aqCurvesDisplay`.
+  - `tryMeLWO*` validation wrappers follow the same rule: `tryAqObj<Category>*`,
+    or `tryAqObj<Lifecycle>` for lifecycle ops.
 - ☐ **3.3** Function prefixes `me* → aq*` / `tryMe* → tryAq*` in `validation` and
   `AQ_API`, plus SWIG `.i`. This is the **clean break** (D9): no `me*` spelling
   survives anywhere, no forwarding aliases. Collect the removed public names into
