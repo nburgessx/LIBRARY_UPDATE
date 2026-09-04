@@ -23,11 +23,19 @@ pairs = [(r["old"], r["new"]) for r in csv.DictReader(open(approved, encoding="u
 rmap = dict(pairs)
 
 # --- 1. git mv files ---
+# ordered longest-prefix-first so LWO wins over LB/LA
+FILE_PREFIX = [("LWO", "AQO"), ("LA", "AQL"), ("LB", "AQL")]
+def new_base(base):
+    for old, new in FILE_PREFIX:
+        if base[:len(old)] == old:
+            return new + base[len(old):]
+    return None
+
 renamed = []   # (old_basename, new_basename)
 for p in subprocess.check_output(["git", "ls-files", "src/%s" % proj], text=True).splitlines():
     base = p.rsplit("/", 1)[-1]
-    if base[:2] == "LA":
-        nb = "AQL" + base[2:]
+    nb = new_base(base)
+    if nb:
         subprocess.check_call(["git", "mv", p, p.rsplit("/", 1)[0] + "/" + nb])
         renamed.append((base, nb))
 print("git mv: %d files" % len(renamed))
@@ -46,10 +54,10 @@ if missing_stems:
 # (e.g. Payoff vs PayOff on case-insensitive Windows). Any LA*.<ext> token in a
 # project file whose stem case-insensitively matches a renamed file gets its own
 # map entry so the plain word-boundary replace fixes it.
-new_stem_ci = {b.rsplit(".", 1)[0].lower(): "AQL" + b.rsplit(".", 1)[0][2:]
-               for b, _ in renamed}
+new_stem_ci = {b.rsplit(".", 1)[0].lower(): nb.rsplit(".", 1)[0]
+               for b, nb in renamed}
 for pf in glob.glob("projects/*.vcxproj") + glob.glob("projects/*.vcxproj.filters"):
-    for tok in re.findall(r"\b(LA[A-Za-z0-9_]+)\.(?:h|hpp|cpp|cxx)\b",
+    for tok in re.findall(r"\b((?:LWO|LA|LB)[A-Za-z0-9_]+)\.(?:h|hpp|cpp|cxx)\b",
                           open(pf, encoding="utf-8", errors="replace").read()):
         if tok not in rmap and tok.lower() in new_stem_ci:
             rmap[tok] = new_stem_ci[tok.lower()]   # normalise to git's stored casing
@@ -110,7 +118,7 @@ badinc = set()
 for f in glob.glob("src/**/*.cpp", recursive=True) + glob.glob("src/**/*.h", recursive=True):
     if f.endswith(("_wrap.cpp", "_wrap.cxx")):
         continue
-    for m in re.finditer(r'#include\s+"(AQL[A-Za-z0-9_]+\.h)"', open(f, encoding="utf-8", errors="replace").read()):
+    for m in re.finditer(r'#include\s+"((?:AQL|AQO)[A-Za-z0-9_]+\.h)"', open(f, encoding="utf-8", errors="replace").read()):
         if m.group(1).lower() not in hdrs_ci:
             badinc.add(m.group(1))
 badvcx = []
@@ -120,11 +128,11 @@ for vp in glob.glob("projects/*.vcxproj"):
         disk = os.path.join("projects", r.replace("\\", "/"))
         if not os.path.exists(disk):   # NTFS is case-insensitive; this is a real miss
             badvcx.append((os.path.basename(vp), r))
-art = subprocess.run(["grep", "-rlE", r"AQAQL|AQLAQL|\bAQLL[A-Z]", "src"], capture_output=True, text=True).stdout.split()
+art = subprocess.run(["grep", "-rlE", r"AQAQ[LO]|AQ[LO]AQ[LO]|\bAQLL[A-Z]|AQOObject", "src"], capture_output=True, text=True).stdout.split()
 print()
-print("VERIFY broken AQL*.h includes :", sorted(badinc) or "NONE")
-print("VERIFY missing vcxproj refs   :", badvcx or "NONE")
-print("VERIFY AQAQL/AQLL artifacts   :", art or "NONE")
+print("VERIFY broken AQL*/AQO*.h includes :", sorted(badinc) or "NONE")
+print("VERIFY missing vcxproj refs        :", badvcx or "NONE")
+print("VERIFY AQAQ*/AQLL/AQOObject arts   :", art or "NONE")
 if badinc or badvcx or art:
     sys.exit(4)
 print("\nOK")
