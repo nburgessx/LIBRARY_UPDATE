@@ -235,6 +235,52 @@ The 5 wrapper-name-drift advisories from `api_pair_check.py`. All route through
 
 ---
 
+## Step 10 — MLIB removal (10a done, 2026-09-04)
+
+`f9460bb8` (rename) + `23a83f3b` (the config-path fix it exposed). Build + GTest green.
+
+  MLIBQ env var  -> AQ        setUpMLIB    -> setUpAQL      MLIBID  -> AQLID
+  MLIB (prose)   -> AQ        trySetupMLIB -> trySetupAQL   -mlibid -> -aqlid
+  MLIB_CLIENT_API -> AQ_API (Linux makefiles)
+  deleted projects/BondUtilities.dll (prebuilt binary, unreferenced, wrong folder)
+
+All three setUp aliases were kept and renamed, not collapsed -- Nicholas: they
+are legacy methods marked for deprecation, not a new public surface.
+
+### !! The library was loading its config from the READ-ONLY .APPLES tree !!
+The single most important finding of this session. `MLIBQ` was still set on the
+dev machine to `REPO\.APPLES\Apple`, and `FolderConfig` looked up
+`toPath("MLIBQ", "/resource/config/...")` -- **`resource` singular, the .APPLES
+layout**. So AQ_LIB, and the whole GoogleTest suite, silently read `Calendar.csv`,
+`CBSchedule.csv`, `ir.properties` and `irsvr_excel.conf` out of the old client
+tree. Every green test run before `23a83f3b` was reading config from `.APPLES`.
+
+Switching the variable to `AQ` without correcting the suffix pointed the lookups
+at `$(AQ)/resource/config`, which does not exist (AQ_LIB uses `resources`), so
+every tier fell through, the calendar set loaded empty, and most tests failed
+with "Unable to load calendar - nyb/tgt/lnb/tkb".
+
+Fixed by correcting the suffix in both places:
+  FolderConfig.cpp        /resource/config/  -> /resources/config/   (7 sites)
+  AQLCurveProperties.cpp  \calendar.csv      -> esources\config\Calendar.csv (+2)
+
+Behaviour-preserving: AQ_LIBesources\config holds every file .APPLES had and
+its Calendar.csv is byte-identical. **AQ_LIB no longer depends on .APPLES at
+runtime, and MLIBQ can be unset.**
+
+**Lesson for the remaining phases:** a passing test suite did not prove the tree
+was self-contained. Before the clean-repo cut (Phase 7), build and run the tests
+on a machine with no legacy environment variables set, from a clean checkout, to
+flush out any other hidden dependency on `.APPLES` or `.ALGO_QUANT_LIB`.
+
+### Step 10b -- pending sign-off
+~133 mixed-case `Mlib`/`MLib`/`mlib` identifiers in 31 files that the upper-case
+map could not reach. Map drafted, 0 collisions. The anchoring protects the 4,260
+`Libor`-family tokens (`threeMLibor`, `sixMLibor`, `6mlibor`, `mLiborRateMap`) --
+a case-insensitive `mlib` sweep would destroy them, the same trap as `me` in `name`.
+
+---
+
 ## Known noise / not-bugs
 - **`src/AQ_API/source/swig_*_wrap.{cpp,cxx}`** — SWIG-generated. Still contain old `me*`/`mir*` names
   in HEAD (regenerated in Phase 5, not in the core build). They also keep re-appearing as phantom
