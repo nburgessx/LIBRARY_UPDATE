@@ -177,11 +177,15 @@ aqToolsLVBAppendAndCreate                      -> tryAqToolsLVBAdd
 354 validation wrappers still have no public `aq*` function. That is the Phase 4
 port backlog, not a defect.
 
-### ACTION REQUIRED outside AQ_LIB
-`REPO\CLAUDE.md` (repo-wide, **read-only to Claude**) still documents the old
-scheme in its §5.1 and §6: the 13-category list containing `Objects`, and
-`LWO → AQO` / `isLWOObject → isAQObject`. Nicholas needs to update it by hand,
-or grant write access, or it will keep contradicting `AQ_LIB\CLAUDE.md`.
+### Repo-wide CLAUDE.md — synced
+`REPO\CLAUDE.md` (one level above `LIBRARY_UPDATE`, outside the git repo) was
+updated by hand once Nicholas granted write access: the category list (`Objects`
+dropped, `FX` added), the `aq`/`aqObj` table, the `LWO -> AQObj` rows, the
+`AQObjbject` exclusion rule, the architecture diagram, and a rewritten section
+2.1 that now points here as the live running record instead of claiming the
+code-level rebrand has not started. It is **not** version-controlled -- a
+pre-edit copy is in the session scratchpad only, so treat further edits to it
+with care.
 
 ---
 
