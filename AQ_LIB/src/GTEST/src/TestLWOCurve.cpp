@@ -137,7 +137,7 @@ namespace google_test
         ptrToCurveOutput->setCurveBuildStaticDataObject( newConventionUsed );
         double my_df2 = ptrToCurveOutput->calculateDiscountFactor( "3M" );
 
-        const std::string readWriteFileName = ( boost::format( "%s/resource/test/inputs/ETrading/AQObjects/AQOCurve/%s.json" )
+        const std::string readWriteFileName = ( boost::format( "%s/resource/test/inputs/ETrading/LWObjects/LWOCurve/%s.json" )
                                                 % etrading::getEnvironmentVariable( "MLIBQ" ).c_str() % ptrToCurveOutput->getName().c_str() ).str();
 
         // I want to serialize an object to a file (local or pointing to an object in the cache)

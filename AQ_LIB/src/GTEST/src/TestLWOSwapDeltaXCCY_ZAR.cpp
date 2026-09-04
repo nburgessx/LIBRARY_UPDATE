@@ -31,7 +31,7 @@ namespace
     const double tolerance = 10; // Notional of test trades is 1MM and delta by bumping is inherently noisy
 
 	// Test Input File(s) 
-	const std::string TEST_DIR = "ETrading/AQObjects/TestLWOSwapDelta_ZAR/";
+	const std::string TEST_DIR = "ETrading/LWObjects/TestLWOSwapDelta_ZAR/";
 
     //
     // curve input files

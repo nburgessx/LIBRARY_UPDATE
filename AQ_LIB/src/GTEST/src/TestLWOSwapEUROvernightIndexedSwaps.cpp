@@ -27,7 +27,7 @@ using google_test::Dependency4;
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;
 
-#define TEST_DIR "ETrading/AQObjects/TestLWOSwapOvernightIndexedSwaps/"
+#define TEST_DIR "ETrading/LWObjects/TestLWOSwapOvernightIndexedSwaps/"
 
 namespace
 {

@@ -80,6 +80,10 @@ def fix_inc(m):
     pre, path, fn, post = m.groups()
     return pre + path + ci_file.get(fn.lower(), fn) + post
 
+new_toks = set(rmap.values())
+strlit = re.compile(r'"(?:[^"\\]|\\.)*"')
+in_string = []   # (file, lineno, text) - replacements that landed inside a "..." literal
+
 pending, total = {}, 0
 for fp in targets:
     if not os.path.exists(fp):
@@ -98,6 +102,14 @@ for fp in targets:
             data = b"\xef\xbb\xbf" + data
         pending[fp] = data
         total += n
+        # flag renamed tokens now sitting inside a string literal (not an #include)
+        if not fp.startswith("projects/"):
+            for i, ln in enumerate(nt.splitlines(), 1):
+                if ln.lstrip().startswith("#include"):
+                    continue
+                for lit in strlit.findall(ln):
+                    if any(re.search(r"\b" + re.escape(k) + r"\b", lit) for k in new_toks):
+                        in_string.append((fp, i, ln.strip()[:140]))
 
 failed = []
 for fp, data in pending.items():
@@ -110,6 +122,12 @@ for fp, data in pending.items():
 if failed:
     print("LOCKED: " + ", ".join(failed[:8])); sys.exit(3)
 print("content: %d files, %d identifier replacements (+ vcxproj filename fixups)" % (len(pending), total))
+if in_string:
+    print("\n!! %d renamed tokens landed INSIDE string literals - REVIEW (may be paths / serialization keys):" % len(in_string))
+    for fp, i, ln in in_string[:60]:
+        print("   %s:%d  %s" % (fp, i, ln))
+    if len(in_string) > 60:
+        print("   ... +%d more" % (len(in_string) - 60))
 
 # --- 4. verify ---
 tracked = subprocess.check_output(["git", "ls-files", "src"], text=True).splitlines()

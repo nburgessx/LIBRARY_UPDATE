@@ -11,8 +11,8 @@
 
 // Define Test Folder Path
 // *** The Google Test DataInstance folder is defined within etrading project, GoogleTest Folder, GetGoogleTestFolder.h ***
-#define TEST_DIR_BRL "ETrading/AQObjects/TestLWOCurveCalibrate/BRL/"
-#define TEST_DIR_CNH "ETrading/AQObjects/TestLWOCurveCalibrate/CNH/"
+#define TEST_DIR_BRL "ETrading/LWObjects/TestLWOCurveCalibrate/BRL/"
+#define TEST_DIR_CNH "ETrading/LWObjects/TestLWOCurveCalibrate/CNH/"
 using etrading::ReadDataFile;
 
 namespace

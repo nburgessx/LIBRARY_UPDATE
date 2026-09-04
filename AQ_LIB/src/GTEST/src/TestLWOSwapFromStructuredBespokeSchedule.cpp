@@ -33,7 +33,7 @@ namespace
 	const double tolerance = 1e-6;
 
 
-	const std::string TEST_DIR = "ETrading/AQObjects/TestLWOSwapFromStructuredBespokeSchedule/";
+	const std::string TEST_DIR = "ETrading/LWObjects/TestLWOSwapFromStructuredBespokeSchedule/";
 
     //
     // curve input files

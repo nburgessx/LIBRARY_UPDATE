@@ -34,7 +34,7 @@ namespace
     const double tolerance = 1e-8;
 
 	// Define the Test Input Folder Here
-	const std::string TEST_DIR =		  "ETrading/AQObjects/TestLWOCreditIndexOption/";
+	const std::string TEST_DIR =		  "ETrading/LWObjects/TestLWOCreditIndexOption/";
 
     //
     // curve input files

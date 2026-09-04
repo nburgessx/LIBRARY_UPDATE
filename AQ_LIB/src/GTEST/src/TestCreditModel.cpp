@@ -30,7 +30,7 @@
 using etrading::ReadDataFile;
 
 // Define the Test Input Folder Here
-#define TEST_DIR			  "ETrading/AQObjects/TestLWOCreditModel/"
+#define TEST_DIR			  "ETrading/LWObjects/TestLWOCreditModel/"
 
 
 namespace
