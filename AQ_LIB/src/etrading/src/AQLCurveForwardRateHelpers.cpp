@@ -1,6 +1,5 @@
 //
 // AQLCurveForwardRateHelpers.cpp
-// *** This file used to be called "LAMathCurveFuncUti1ity.cpp" ***
 //
 
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)

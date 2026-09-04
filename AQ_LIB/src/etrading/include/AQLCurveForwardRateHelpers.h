@@ -1,6 +1,5 @@
 //
 // AQLCurveForwardRateHelpers.h
-// *** This file used to be called "LAMathCurveFuncUti1ity.h" ***
 //
 #pragma once
 

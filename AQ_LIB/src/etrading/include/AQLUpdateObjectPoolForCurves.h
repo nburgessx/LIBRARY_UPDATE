@@ -1,6 +1,5 @@
 //
 // AQLUpdateObjectPoolForCurves.h
-// This file used to be called CalibratorIR.h and before that AQLCalibrateModelIR.h
 //
 #pragma once
 

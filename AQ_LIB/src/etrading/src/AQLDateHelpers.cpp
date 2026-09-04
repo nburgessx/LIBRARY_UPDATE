@@ -1,6 +1,5 @@
 //
 // AQLDateHelpers.cpp
-// *** This file used to be called "LAMathDateCalcUti1ity.cpp" ***
 //
 
 #ifdef __GNUG__

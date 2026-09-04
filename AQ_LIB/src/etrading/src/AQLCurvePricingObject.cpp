@@ -1,6 +1,5 @@
 //
 //  AQLCurvePricingObject.cpp
-// This file used to be called LAMathYiel1Curve.cpp
 
 /*
 			Following dataValues are registered automatically to data master<BR>

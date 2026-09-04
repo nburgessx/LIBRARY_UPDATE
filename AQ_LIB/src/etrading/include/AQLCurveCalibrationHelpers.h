@@ -1,6 +1,5 @@
 //
 // AQLCurveCalibrationHelpers.h  
-// *** This file used to be called "LAMathCurveGenerateFuncUti1ity.h" ***
 //
 #pragma once
 

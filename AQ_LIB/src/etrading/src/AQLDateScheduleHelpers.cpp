@@ -1,6 +1,5 @@
 //
 // AQLDateScheduleHelpers.cpp
-// *** This file used to be called "LAMathDateFuncUti1ity.cpp" ***
 
 #ifdef __GNUG__
 #pragma implementation

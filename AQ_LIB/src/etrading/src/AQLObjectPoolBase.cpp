@@ -1,6 +1,5 @@
 //
 // AQLObjectPoolBase.cpp
-// This file used to be called Calibrator.cpp and before that AQLCalibrateModel.cpp
 //
 
 #ifdef __GNUG__

@@ -1,6 +1,5 @@
 //
 //  AQLCurvePricingObject.h
-// This file used to be called LAMathYie1dCurve.h
 #pragma once
 
 #ifdef __GNUG__

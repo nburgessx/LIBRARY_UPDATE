@@ -1,6 +1,5 @@
 //
 // AQLUpdateCurveObject.cpp
-// This file used to be called CalibratorIR.cpp and before that AQLCalibrateModelIR.cpp
 //
 #ifdef __GNUG__
 #pragma implementation

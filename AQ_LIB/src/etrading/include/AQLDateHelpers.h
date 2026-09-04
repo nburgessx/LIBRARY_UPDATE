@@ -1,6 +1,5 @@
 //
 // AQLDateHelpers.h
-// *** This file used to be called "LAMathDateCalcUti1ity.h" ***
 #pragma once
 
 #ifdef __GNUG__

@@ -1,6 +1,5 @@
 //
 //  CurveCalibration.h
-//  This file used to be called YieldGenerator.h and before that AQLPriceYieldGenerator.h
 //
 #pragma once
 

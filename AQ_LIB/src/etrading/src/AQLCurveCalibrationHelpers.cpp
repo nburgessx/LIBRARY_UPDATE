@@ -1,6 +1,5 @@
 //
 // AQLCurveCalibrationHelpers.cpp 
-// *** This file used to be called "LAMathCurveGenerateFuncUti1ity.cpp" ***
 //
 
 #ifdef __GNUG__

@@ -1,6 +1,5 @@
 ﻿//
 //  CurveCalibration.cpp
-//  This file used to be called YieldGenerator.cpp and before that AQLPriceYieldGenerator.cpp
 //
 #ifdef __GNUG__
 #pragma implementation

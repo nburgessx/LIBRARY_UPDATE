@@ -1,6 +1,5 @@
 //
 // AQLObjectPoolBase.h
-// This file used to be called Calibrator.h and before that AQLCalibrateModel.h
 //
 #pragma once
 
