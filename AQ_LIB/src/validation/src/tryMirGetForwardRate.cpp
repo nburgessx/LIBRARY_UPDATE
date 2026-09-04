@@ -1,5 +1,5 @@
 #include "tryMirGetForwardRate.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -79,7 +79,7 @@ namespace validation
         AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
         AQLString curveNm( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
-        DoubleArray ret = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fromDateVec, term, dataInstance, curveId, freq, dayC, sRule, calendar, interp, curveNm, isFwdInterp );
+        DoubleArray ret = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fromDateVec, term, dataInstance, curveId, freq, dayC, sRule, calendar, interp, curveNm, isFwdInterp );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -161,7 +161,7 @@ namespace validation
         AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
         AQLString curveNm( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
-        DoubleArray ret = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fromDates, toDates, dataInstance, curveId, freq, dayC, sRule, cal, interp, curveName, isFwdInterp, useFwdData );
+        DoubleArray ret = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fromDates, toDates, dataInstance, curveId, freq, dayC, sRule, cal, interp, curveName, isFwdInterp, useFwdData );
 
         if ( CreateDataFile::recordEnabled() )
         {

@@ -2,7 +2,7 @@
 
 #include "tryMeCurveCalibrateBasis.h"
 
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
@@ -101,7 +101,7 @@ namespace validation
 
         AQLStringMatrix moneyConv = AQLStringMatrix( 0 );
 
-        etrading::LAUpdateStaticDataManager::setUpBasisCurve( etrading::getDataInstance(),
+        etrading::AQLUpdateStaticDataManager::setUpBasisCurve( etrading::getDataInstance(),
                                                               curveCollection,
                                                               staticDataTable,
                                                               basisRates,

@@ -21,7 +21,7 @@ namespace etrading
 	//    #include "InitializeETrading.h"
 	// 
 	//    InitializeETrading& instance_ = instance();
-	//    const DoubleArray res = etrading::LACurveCalibrationHelpers::outPutCurveFromYieldData( instance_.getDataInstance(), curveId, marketName );
+	//    const DoubleArray res = etrading::AQLCurveCalibrationHelpers::outPutCurveFromYieldData( instance_.getDataInstance(), curveId, marketName );
 	// 
 	class InitializeETrading
 	{

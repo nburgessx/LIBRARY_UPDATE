@@ -1,5 +1,5 @@
 #include "AQLString.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "InitializeETrading.h"
 #include "meCurveDisplay.h"
 #include "tryMeCurveDisplay.h"

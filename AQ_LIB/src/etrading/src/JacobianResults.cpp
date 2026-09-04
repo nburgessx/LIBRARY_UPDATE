@@ -11,9 +11,9 @@
 #include "JacobianResults.h"
 #include "ExceptionMacros.h"
 #include "CurveValidation.h"			        // Convert Dates to Terms and vice versa
-#include "LADateScheduleHelpers.h"              // Convert Strings to Dates and vice versa
+#include "AQLDateScheduleHelpers.h"              // Convert Strings to Dates and vice versa
 #include "CurveUtilities.h"				        // DateFromTenor methods
-#include "LACurvePricingObject.h"	            // Methods to get the curve daycount conventions
+#include "AQLCurvePricingObject.h"	            // Methods to get the curve daycount conventions
 #include "AQLEnumConversion.h"		            // Methods to convert enum values to legacy enums
 #include "DataUtilities.h"                      // Methods to cast numbers to strings
 #include <numeric>                              // For std::accumulate
@@ -433,7 +433,7 @@ namespace etrading
         for ( size_t row = 1; row < inputMatrix.size(); ++row )
         {
             // Column 1: Risk Dates - Cast String to Date
-            riskDates.push_back( etrading::LADateScheduleHelpers::getLADate( inputMatrix[row][0] ) );
+            riskDates.push_back( etrading::AQLDateScheduleHelpers::getLADate( inputMatrix[row][0] ) );
             
             // Column 2: Risk Values - Cast from String to Double
             char * pFirstNonNumber;
@@ -489,7 +489,7 @@ namespace etrading
             }
 
             // Column 1: Risk Dates - Cast String to Date
-            riskDates.push_back( etrading::LADateScheduleHelpers::getLADate( inputMatrix[row][0] ) );
+            riskDates.push_back( etrading::AQLDateScheduleHelpers::getLADate( inputMatrix[row][0] ) );
             
             // Column 2 Onwards: Risk Values - Cast from String to Double
             DoubleVector thisJacobianRowWithoutHeader( inputMatrix[row].size() - 1 );

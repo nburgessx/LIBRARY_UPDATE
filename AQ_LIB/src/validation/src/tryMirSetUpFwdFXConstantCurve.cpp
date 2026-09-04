@@ -1,6 +1,6 @@
 #include "tryMirSetUpFwdFXConstantCurve.h"
 
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
@@ -58,7 +58,7 @@ namespace validation
             AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
-        etrading::LAUpdateStaticDataManager::setUpFwdFXConstantCurve( dataInstance, curveID, marketName, fwdFXConstantConv, generalProps, curveNames );
+        etrading::AQLUpdateStaticDataManager::setUpFwdFXConstantCurve( dataInstance, curveID, marketName, fwdFXConstantConv, generalProps, curveNames );
 
         //Throw exception if the curve has not been built.
         etrading::checkIfCurveExists( dataInstance, curveID );

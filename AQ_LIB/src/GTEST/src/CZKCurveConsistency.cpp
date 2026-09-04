@@ -60,7 +60,7 @@ namespace google_test
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::OIS_MARKETDATA,    // Calibration Instrument: OIS Outright Swaps
                                       // Calibration Tenors  
 									  {"1W", "2W", "1M", "2M", "3M", "6M", "9M"},                                 
-                                       curveObjectCZKOIS_,                               // LWOCurveName
+                                       curveObjectCZKOIS_,                               // AQOCurveName
                                        "CZKYC",                                          // CurveCollection
                                        "20200903",                                       // Swap Effective Date
                                        "EM_CZK_OIS_UNDER_1Y",                            // Swap Generator
@@ -74,7 +74,7 @@ namespace google_test
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::OIS_MARKETDATA,    // Calibration Instrument: OIS Outright Swaps
                                       // Calibration Tenors 
 									  {"1Y", "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y", "25Y", "30Y", "40Y", "50Y"},
-                                       curveObjectCZKOIS_,                               // LWOCurveName
+                                       curveObjectCZKOIS_,                               // AQOCurveName
                                        "CZKYC",                                          // CurveCollection
                                        "20200903",                                       // Swap Effective Date
                                        "EM_CZK_OIS",                                     // Swap Generator
@@ -88,7 +88,7 @@ namespace google_test
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::SWAP_MARKETDATA,	// Calibration Instrument: OIS Outright Swaps
                                       // Calibration Tenors 
 									  {"2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y"},
-                                       curveObjectCZK6M_,                               // LWOCurveName
+                                       curveObjectCZK6M_,                               // AQOCurveName
                                        "CZKYC",                                         // CurveCollection
                                        "20200903",                                      // Swap Effective Date
                                        "EM_CZK_6M",                                     // Swap Generator
@@ -102,7 +102,7 @@ namespace google_test
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::BASIS_SWAP_MARKETDATA,	// Calibration Instrument: OIS Outright Swaps
                                       // Calibration Tenors 
 									  {"1Y", "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y"},
-                                       curveObjectCZK3M_,                               // LWOCurveName
+                                       curveObjectCZK3M_,                               // AQOCurveName
                                        "CZKYC",                                         // CurveCollection
                                        "20200903",                                      // Swap Effective Date
                                        "EM_CZK_3M",                                     // Swap Generator
@@ -116,7 +116,7 @@ namespace google_test
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::BASIS_SWAP_MARKETDATA,	// Calibration Instrument: OIS Outright Swaps
                                       // Calibration Tenors 
 									  {"1Y", "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y"},
-                                       curveObjectCZK1M_,                               // LWOCurveName
+                                       curveObjectCZK1M_,                               // AQOCurveName
                                        "CZKYC",                                         // CurveCollection
                                        "20200903",                                      // Swap Effective Date
                                        "EM_CZK_1M",                                     // Swap Generator
@@ -130,7 +130,7 @@ namespace google_test
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::BASIS_SWAP_MARKETDATA,	// Calibration Instrument: OIS Outright Swaps
                                       // Calibration Tenors 
 									  {"1Y", "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y"},
-                                       curveObjectCZK12M_,                               // LWOCurveName
+                                       curveObjectCZK12M_,                               // AQOCurveName
                                        "CZKYC",                                         // CurveCollection
                                        "20200903",                                      // Swap Effective Date
                                        "EM_CZK_12M",                                    // Swap Generator

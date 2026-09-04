@@ -1,5 +1,5 @@
 #include "tryMirSwapPV01.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -182,7 +182,7 @@ namespace validation
         AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
 
         // Get the Swap PV01
-        double ret = etrading::LACurveForwardRateHelpers::getSwapPV01( isFixedRatePayerSwap,
+        double ret = etrading::AQLCurveForwardRateHelpers::getSwapPV01( isFixedRatePayerSwap,
                                                                   notional,
                                                                   fixedAccrualDates,
                                                                   fixedPaymentDates,

@@ -2,11 +2,11 @@
 #include "CommonConstants.h"
 #include "CurveUtilities.h"
 #include "CurveValidation.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "CurveInstrumentPricing.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 
 namespace etrading
 {

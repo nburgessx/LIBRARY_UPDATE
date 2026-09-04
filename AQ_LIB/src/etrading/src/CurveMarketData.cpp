@@ -21,7 +21,7 @@ namespace etrading
 	CurveMarketData::CurveMarketData( const std::string& objectName,
 									  const std::vector<std::string>& marketDataKeys,
 									  const std::vector<TableInfo>& infoBlocks ) 
-					   : IsLWOObject(objectName, CURVE_MARKETDATA), 
+					   : IsAQObject(objectName, CURVE_MARKETDATA), 
 						 freeObject_(objectName),
 						 variantMarketDataLocalCache_(),
 						 stringMarketDataLocalCache_()
@@ -60,7 +60,7 @@ namespace etrading
 	 */
 	CurveMarketData::CurveMarketData( const std::string& objectName,
 									  const FreeObject& freeObject ) 
-						: IsLWOObject(objectName, CURVE_MARKETDATA), 
+						: IsAQObject(objectName, CURVE_MARKETDATA), 
 						  freeObject_(freeObject),
 						  variantMarketDataLocalCache_(),
 						  stringMarketDataLocalCache_()
@@ -70,7 +70,7 @@ namespace etrading
 	/* @brief Copy Constructor
 	 */
 	CurveMarketData::CurveMarketData(const CurveMarketData& rhs) 
-		  :	IsLWOObject(rhs.getRefToName(), CURVE_MARKETDATA), 
+		  :	IsAQObject(rhs.getRefToName(), CURVE_MARKETDATA), 
 			freeObject_(rhs.freeObject_),
 			variantMarketDataLocalCache_(rhs.variantMarketDataLocalCache_),
 			stringMarketDataLocalCache_(rhs.stringMarketDataLocalCache_)

@@ -37,11 +37,11 @@
 #include "Variant.h"
 #include "HasInstance.h"
 #include "TypeName.h"
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 
 namespace etrading
 {
-    class DataHolder : public IsLWOObject 
+    class DataHolder : public IsAQObject 
     {
     public:
         DataHolder( const etrading::CachedObjectEnum enumInput , const std::string& name);

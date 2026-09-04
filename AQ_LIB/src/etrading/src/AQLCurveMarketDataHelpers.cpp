@@ -1,9 +1,9 @@
 //
-//  LACurveMarketDataHelpers.cpp
+//  AQLCurveMarketDataHelpers.cpp
 //  This file was previous called YieldCurveMarketUti1s.cpp and before that AQLMarketData.cpp
 //
 
-#include "LACurveMarketDataHelpers.h"
+#include "AQLCurveMarketDataHelpers.h"
 #include "AQLDataReference.h"
 #include "AQLStaticData.h"
 #include "AQLLinearInterpolation.h"
@@ -18,7 +18,7 @@ using namespace std;
 /*!
 
 */
-LACurveMarketDataHelpers::LACurveMarketDataHelpers(void)
+AQLCurveMarketDataHelpers::AQLCurveMarketDataHelpers(void)
 {
 }
 
@@ -26,7 +26,7 @@ LACurveMarketDataHelpers::LACurveMarketDataHelpers(void)
 /*!
 
 */
-LACurveMarketDataHelpers::~LACurveMarketDataHelpers(void)
+AQLCurveMarketDataHelpers::~AQLCurveMarketDataHelpers(void)
 {
 }
 
@@ -41,7 +41,7 @@ LACurveMarketDataHelpers::~LACurveMarketDataHelpers(void)
 	@param[in] ccy
 */
 void 
-LACurveMarketDataHelpers::resetMarketDataUsingLibor(CurveCalibrationData &curve, const AQLString &ccy, const AQLString *pCurveType)
+AQLCurveMarketDataHelpers::resetMarketDataUsingLibor(CurveCalibrationData &curve, const AQLString &ccy, const AQLString *pCurveType)
 {
 	AQLString tmpCurrency = ccy;
 	tmpCurrency.toLower();
@@ -139,7 +139,7 @@ LACurveMarketDataHelpers::resetMarketDataUsingLibor(CurveCalibrationData &curve,
 			if (find(liborYTerm.begin(), liborYTerm.end(), searchTerm) == liborYTerm.end())
 			{
 				// calc date from spotDate
-				AQLDate date = etrading::LADateHelpers::getDate(spotDate, termStr, sliding, &cal, true);
+				AQLDate date = etrading::AQLDateHelpers::getDate(spotDate, termStr, sliding, &cal, true);
 					
 				double term     = dc.getTerm(asOfDate, date);
 				double df       = inter.value(term);
@@ -195,7 +195,7 @@ LACurveMarketDataHelpers::resetMarketDataUsingLibor(CurveCalibrationData &curve,
 
 	@param[out] ypro
 */
-void LACurveMarketDataHelpers::sortMarketData(CurveCalibrationData &ypro)
+void AQLCurveMarketDataHelpers::sortMarketData(CurveCalibrationData &ypro)
 {
 	AQLDataMultiReference &refMarketDatas = ypro.getMarketData();
 	const unsigned int dataSize =refMarketDatas.getSize();
@@ -300,7 +300,7 @@ void LACurveMarketDataHelpers::sortMarketData(CurveCalibrationData &ypro)
 	refMarketDatas.convertFromString(refStr);
 }
 
-void LACurveMarketDataHelpers::restoreSwapRateFromLibor(CurveCalibrationData &curve, const map<AQLString, double> &sRateMap, const AQLString &ccy, const AQLString *pCurveType)
+void AQLCurveMarketDataHelpers::restoreSwapRateFromLibor(CurveCalibrationData &curve, const map<AQLString, double> &sRateMap, const AQLString &ccy, const AQLString *pCurveType)
 {
 	AQLString suffix = "";
 	AQLString data_suffix = "";

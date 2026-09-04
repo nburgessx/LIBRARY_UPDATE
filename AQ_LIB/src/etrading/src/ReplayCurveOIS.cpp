@@ -2,7 +2,7 @@
 
 #include "ReplayCurveOIS.h"
 #include "ReadDataFile.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "InitializeETrading.h"
 
 namespace etrading
@@ -47,7 +47,7 @@ namespace etrading
         // 3. Build the OIS Curve
         // ----------------------
         const bool checkStaticDataLoaded = true;
-        LAUpdateStaticDataManager::setUpOISCurve( InitializeETrading::instance( checkStaticDataLoaded ).dataInstance(),
+        AQLUpdateStaticDataManager::setUpOISCurve( InitializeETrading::instance( checkStaticDataLoaded ).dataInstance(),
 												  curveID,
 												  marketName,
 												  generateProps,

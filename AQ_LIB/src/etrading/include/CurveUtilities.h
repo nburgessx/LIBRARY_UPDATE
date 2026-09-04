@@ -466,7 +466,7 @@ namespace etrading
 		                           const double& yearFraction,
 		                           const DayCountEnum& dayCount);
 
-	//This function is the same as etrading::LACurveForwardRateHelpers::compound() function, but making use of the fixing table
+	//This function is the same as etrading::AQLCurveForwardRateHelpers::compound() function, but making use of the fixing table
 	double compound(AQLDataInstance* dataInstance,
 					const AQLString& curveID,
 					const AQLString& forecastCurveName,

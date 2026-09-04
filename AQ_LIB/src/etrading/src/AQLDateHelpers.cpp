@@ -1,5 +1,5 @@
 //
-// LADateHelpers.cpp
+// AQLDateHelpers.cpp
 // *** This file used to be called "LAMathDateCalcUti1ity.cpp" ***
 //
 
@@ -10,8 +10,8 @@
 #endif
 
 // This Include
-#include "LADateHelpers.h"              // was called #include "LAMathDateCalcUti1ity.h"
-#include "LADateScheduleHelpers.h"      // was called #include "LAMathDateFuncUti1ity.h"
+#include "AQLDateHelpers.h"              // was called #include "LAMathDateCalcUti1ity.h"
+#include "AQLDateScheduleHelpers.h"      // was called #include "LAMathDateFuncUti1ity.h"
 
 // Internal Includes
 #include "AQLObject.h"
@@ -173,7 +173,7 @@ namespace etrading
 
 
     // Get date adjusted for holidays
-    AQLDate LADateHelpers::getAdjDate(const AQLPriceDataSlidingRule* busDayAdj, const AQLPriceDataCalendar* calendar, const AQLDate &date)
+    AQLDate AQLDateHelpers::getAdjDate(const AQLPriceDataSlidingRule* busDayAdj, const AQLPriceDataCalendar* calendar, const AQLDate &date)
     {
 	    if (busDayAdj != NULL && calendar != NULL)
 	    {
@@ -187,7 +187,7 @@ namespace etrading
 
 
     void
-    LADateHelpers::setDate(const int* rollDay, AQLDate &date, const RollConventionEnum rollConventionEnum)
+    AQLDateHelpers::setDate(const int* rollDay, AQLDate &date, const RollConventionEnum rollConventionEnum)
     {
 	    if ( rollConventionEnum == ROLLCONV_ENUM_NONE ||
 		     rollConventionEnum == ROLLCONV_ENUM_NORMAL ||
@@ -228,7 +228,7 @@ namespace etrading
 
         @return DateVector of grid points
     */
-    DateVector LADateHelpers::generateRegularSchedule( const AQLDate& start, 
+    DateVector AQLDateHelpers::generateRegularSchedule( const AQLDate& start, 
 													   const AQLDate& end,
 													   const AQLString& data_frequency,
 													   const bool inArrears,
@@ -498,7 +498,7 @@ namespace etrading
 	    @param[in] calendar			pointer of Calender
     */
     void							
-    LADateHelpers::generateSchedule( const AQLDate& unadjustedStart,
+    AQLDateHelpers::generateSchedule( const AQLDate& unadjustedStart,
 									 const AQLDate& unadjustedEnd,
 									 const AQLString& data_frequency,
 									 const bool inArrears,
@@ -600,7 +600,7 @@ namespace etrading
     */
 
     void
-    LADateHelpers::termStrtoYMDW(const AQLString& term, int& y, int& m, int& d, int& w)
+    AQLDateHelpers::termStrtoYMDW(const AQLString& term, int& y, int& m, int& d, int& w)
     {
 		// For backwards compatibility we maintain the old API, and forward to the enhanced function with a dummy calendar days output variable set to zero.
 		int c = 0;
@@ -609,7 +609,7 @@ namespace etrading
 
 	// ! Set term from string to integer - Enhanced version of the above which handles calendar days, c
 	void
-	LADateHelpers::termStrtoYMDWC(const AQLString& term, int& y, int& m, int& d, int& w, int& c)
+	AQLDateHelpers::termStrtoYMDWC(const AQLString& term, int& y, int& m, int& d, int& w, int& c)
 	{
 		int      pl_y, pl_m, pl_d, pl_w, pl_c;		//place of year, month, busday, week, caledarday
 		AQLString str = term;
@@ -727,13 +727,13 @@ namespace etrading
 	
     */
     AQLDate
-    LADateHelpers::getDate(const AQLDate& basedate, 
+    AQLDateHelpers::getDate(const AQLDate& basedate, 
                                  const AQLString& term, 
                                  bool rollForwards, 
                                  const AQLString* roll_conv)
     {
 	    int y, m, d, w;
-	    LADateHelpers::termStrtoYMDW(term, y, m, d, w);
+	    AQLDateHelpers::termStrtoYMDW(term, y, m, d, w);
 	    AQLDate date = basedate;
 	    if (!rollForwards)
 	    {
@@ -764,7 +764,7 @@ namespace etrading
 	    @param[in] rollForwards			true:after, false:before(bool)
 	    @param[in] roll_conv		roll convention
     */
-    AQLDate LADateHelpers::getDate(const AQLDate& basedate, 
+    AQLDate AQLDateHelpers::getDate(const AQLDate& basedate, 
                                   const AQLString& term, 
                                   const AQLPriceDataSlidingRule& busdayrule,
                                   const AQLPriceDataCalendar* pCal,
@@ -773,7 +773,7 @@ namespace etrading
     {
 		// These variables store the number of years, months, busdays, weeks, and calendardays represented by "term"
 	    int y, m, d, w, c;
-	    LADateHelpers::termStrtoYMDWC(term, y, m, d, w, c);
+	    AQLDateHelpers::termStrtoYMDWC(term, y, m, d, w, c);
 	    if (!rollForwards)
 	    {
 		    y = -y;
@@ -841,7 +841,7 @@ namespace etrading
 	    @return				date
     */
     AQLDate 
-    LADateHelpers::slideDate(const AQLDate& date, const AQLPriceDataSlidingRule& srule, const AQLPriceDataCalendar* pCal)
+    AQLDateHelpers::slideDate(const AQLDate& date, const AQLPriceDataSlidingRule& srule, const AQLPriceDataCalendar* pCal)
     {
 	    if (srule.getSlidingRule() != SLIDING_RULE_NO_CHANGE) 
 	    {
@@ -859,7 +859,7 @@ namespace etrading
 	    @return				date
     */
     AQLDate 
-    LADateHelpers::rollDate(const AQLDate& basedate, const AQLString* roll)
+    AQLDateHelpers::rollDate(const AQLDate& basedate, const AQLString* roll)
     {
 	    AQLDate date = basedate;
 	    const int day = date.dayOfMonth();
@@ -877,7 +877,7 @@ namespace etrading
 	    @param[in] m				month	
     */
     AQLDate
-    LADateHelpers::getIMMDate(const int& y, const int& m, bool isOddMonth)
+    AQLDateHelpers::getIMMDate(const int& y, const int& m, bool isOddMonth)
     {
 	    if ((m%3 && !isOddMonth) || m <= 0 || m>=13) 
             throw AQLCoreInvalidData("#Error: Invalid IMM Month: IMM Month must be 3, 6, 9  or 12", __FILE__, __LINE__);
@@ -933,7 +933,7 @@ namespace etrading
 	    @param[in] lag				lag
     */
     AQLDate 
-    LADateHelpers::getImmEndDate(const AQLDate& startDate, const AQLString& strTerm, int lag)
+    AQLDateHelpers::getImmEndDate(const AQLDate& startDate, const AQLString& strTerm, int lag)
     {
 	    AQLDate	endDate = getDate(startDate, strTerm, true);
 
@@ -994,7 +994,7 @@ namespace etrading
         @param[out]     returns the futures contract start date
     */
     AQLDate
-    LADateHelpers::getFuturesContractStartDate(const unsigned int& month, const unsigned int& year )
+    AQLDateHelpers::getFuturesContractStartDate(const unsigned int& month, const unsigned int& year )
     {
 	    if ( month > 12 ) 
         {
@@ -1052,7 +1052,7 @@ namespace etrading
 	    @param[in] futureTerm			term of future market(ex. EDV1,EDV2)
     */
     AQLDate
-    LADateHelpers::getIMMDateFromTerm(const AQLDate& baseDate, const AQLString& futureTerm)
+    AQLDateHelpers::getIMMDateFromTerm(const AQLDate& baseDate, const AQLString& futureTerm)
     {
 	    if (futureTerm.size() != 4) 
             throw AQLCoreInvalidData("#Error: Invalid Futures Contract Tenor - Futures contracts must have 4 characters", __FILE__, __LINE__);
@@ -1077,7 +1077,7 @@ namespace etrading
 	    @param[in] futureTerm			term of future market(ex. EDV1,EDV2)
     */
     DateVector
-    LADateHelpers::getFFDatesFromTerm(const AQLDate& baseDate, const AQLString& fedfundTerm)
+    AQLDateHelpers::getFFDatesFromTerm(const AQLDate& baseDate, const AQLString& fedfundTerm)
     {
 	    if (fedfundTerm.size() != 4) 
             throw AQLCoreInvalidData("#Error: Invalid FED Fund Contract Tenor - Contract tenor must be 4 characters", __FILE__, __LINE__);
@@ -1113,7 +1113,7 @@ namespace etrading
 	    @param[in] rollForwards				true:after, false:before(bool)
     */
     AQLDate
-    LADateHelpers::getFXSpotDate(const AQLString& keyFX,
+    AQLDateHelpers::getFXSpotDate(const AQLString& keyFX,
 								       const AQLDate& basedate,
 								       const AQLString& calStr,
 								       int spotlag,
@@ -1161,7 +1161,7 @@ namespace etrading
     }
 
     /* static */ bool
-    LADateHelpers::haveNextCBDate(
+    AQLDateHelpers::haveNextCBDate(
 	    const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter)
     {
 	    AQLDate ignore;
@@ -1169,7 +1169,7 @@ namespace etrading
     }
 
     /* static */ AQLDate
-    LADateHelpers::getNextCBDate(
+    AQLDateHelpers::getNextCBDate(
 	    const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter)
     {
 	    AQLDate result;
@@ -1188,7 +1188,7 @@ namespace etrading
     }
 
     /* static */ bool
-    LADateHelpers::getIfExistsNextCBDate(
+    AQLDateHelpers::getIfExistsNextCBDate(
 	    const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter, AQLDate& result)
     {
 	    typedef vector<AQLDate> Schedule;
@@ -1226,7 +1226,7 @@ namespace etrading
 	    @param[in] futureMonth			string of future market format(ex. V,Z,K)
     */
     unsigned int
-    LADateHelpers::changeFutureMonthFormat(const AQLString& futureMonth)
+    AQLDateHelpers::changeFutureMonthFormat(const AQLString& futureMonth)
     {
         if (futureMonth == F_FUTURE_MONTH)
         {
@@ -1292,7 +1292,7 @@ namespace etrading
 	
     */
     void
-    LADateHelpers::convertToDateGrid(const AQLDate &asofDate, const DoubleArray &terms, DateVector &dates)
+    AQLDateHelpers::convertToDateGrid(const AQLDate &asofDate, const DoubleArray &terms, DateVector &dates)
     {
 	    dates.clear();
 	
@@ -1302,7 +1302,7 @@ namespace etrading
 	    {
 		    const double term = terms[i];
 
-		    AQLDate date = LADateScheduleHelpers::getDateFromTerm( asofDate, term, dc_act365 );
+		    AQLDate date = AQLDateScheduleHelpers::getDateFromTerm( asofDate, term, dc_act365 );
 
 		    dates.push_back(date);
 	    }
@@ -1315,7 +1315,7 @@ namespace etrading
 
     // Return the frequency in months for comparing two frequencies, not for accurate calculations
 	// *** Duplicate method in AQLMathDateCalculations.cpp ***
-    double LADateHelpers::getPeriodFrequencyInMonths(const AQLString& freq)
+    double AQLDateHelpers::getPeriodFrequencyInMonths(const AQLString& freq)
     {
 	    double frequencyInMonths;
 
@@ -1345,7 +1345,7 @@ namespace etrading
 	    @return compounding times
     */
     int
-    LADateHelpers::calcCompoundingTimes(const AQLString& freq_rst, const AQLString& freq_pay)
+    AQLDateHelpers::calcCompoundingTimes(const AQLString& freq_rst, const AQLString& freq_pay)
     {
 	    int span_rst = getPeriodFrequencyInMonths(freq_rst);
 	    int	span_pay = getPeriodFrequencyInMonths(freq_pay); 
@@ -1356,7 +1356,7 @@ namespace etrading
     }
 
     /* static */
-    AQLDate LADateHelpers::getNextWeekdayDate(
+    AQLDate AQLDateHelpers::getNextWeekdayDate(
 	    AQLDayOfWeekEnum weekday, const AQLDate& baseDate, bool strictlyAfter)
     {
 	    AQLDate result(baseDate);
@@ -1384,17 +1384,17 @@ namespace etrading
 	// Static - Nth ECB Meeting Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the asOfDate
 	//
-	AQLDate LADateHelpers::getNthECBMeetingDate(const AQLDate& asOfDate, const int n, bool strictlyAfter)
+	AQLDate AQLDateHelpers::getNthECBMeetingDate(const AQLDate& asOfDate, const int n, bool strictlyAfter)
 	{
 		AQ_REQUIRE(n > 0, "ECB Meeting Date - Invalid Input: n must be larger than zero");
 		
 		// n=1 case, note strictlyAfter = false
-		AQLDate ecbMeetingDate = LADateHelpers::getNextECBDate(asOfDate, strictlyAfter);
+		AQLDate ecbMeetingDate = AQLDateHelpers::getNextECBDate(asOfDate, strictlyAfter);
 		
 		// n=2 onwards, note strictlyAfter = true
 		for (size_t i = 0; i < size_t(n-1); ++i) 
 		{
-			ecbMeetingDate = LADateHelpers::getNextECBDate(ecbMeetingDate, true);
+			ecbMeetingDate = AQLDateHelpers::getNextECBDate(ecbMeetingDate, true);
 		}
 
 		return ecbMeetingDate;
@@ -1404,17 +1404,17 @@ namespace etrading
 	// Static - Nth ECB Swap Start Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the asOfDate
 	//
-	AQLDate LADateHelpers::getNthECBSwapStartDate(const AQLDate& asOfDate, const int n, bool strictlyAfter)
+	AQLDate AQLDateHelpers::getNthECBSwapStartDate(const AQLDate& asOfDate, const int n, bool strictlyAfter)
 	{
 		AQLDate ecbMeetingDate = getNthECBMeetingDate(asOfDate,n,strictlyAfter);
-		return LADateHelpers::getECBStartDate(ecbMeetingDate); // Always Wednesday
+		return AQLDateHelpers::getECBStartDate(ecbMeetingDate); // Always Wednesday
 	}
 
 	//
 	// Static - Nth ECB Swap End Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the asOfDate
 	//
-	AQLDate LADateHelpers::getNthECBSwapEndDate(const AQLDate& asOfDate, const int n, bool strictlyAfter)
+	AQLDate AQLDateHelpers::getNthECBSwapEndDate(const AQLDate& asOfDate, const int n, bool strictlyAfter)
 	{
 		// Nth Swap End Date = (N+1)th Swap Start Date
 		AQLDate ecbSwapEndDate = getNthECBSwapStartDate(asOfDate, n + 1, strictlyAfter);
@@ -1426,7 +1426,7 @@ namespace etrading
 	// Static - Next ECB Meeting Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the inputDate
 	//
-	AQLDate LADateHelpers::getNextECBMeetingDate(const AQLDate& meetingDate)
+	AQLDate AQLDateHelpers::getNextECBMeetingDate(const AQLDate& meetingDate)
 	{
 		return getNextECBDate(meetingDate,true); // StrictlyAfter = true
 	}
@@ -1435,7 +1435,7 @@ namespace etrading
 	// Static - Next ECB Swap Start Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the inputDate
 	//
-	AQLDate LADateHelpers::getNextECBSwapStartDate(const AQLDate& swapStartDate)
+	AQLDate AQLDateHelpers::getNextECBSwapStartDate(const AQLDate& swapStartDate)
 	{
 		return getNthECBSwapStartDate(swapStartDate,1); // nth date = 1
 	}
@@ -1444,7 +1444,7 @@ namespace etrading
 	// Static - Next ECB Swap Start Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the inputDate
 	//
-	AQLDate LADateHelpers::getNextECBSwapEndDate(const AQLDate& swapEndDate)
+	AQLDate AQLDateHelpers::getNextECBSwapEndDate(const AQLDate& swapEndDate)
 	{
 		// getNthECBSwapEndDate takes asOfDate as input not SwapEndDate, hence we use n=0 (not n=1) with strictlyAfter = true
 		AQLDate ecbSwapEndDate = getNthECBSwapEndDate(swapEndDate, 0, true);

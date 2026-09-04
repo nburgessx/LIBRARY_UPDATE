@@ -8,7 +8,7 @@
 namespace etrading
 {
 
-	Option::Option(const std::string& objectName) : IsLWOObject(objectName, OPTION),
+	Option::Option(const std::string& objectName) : IsAQObject(objectName, OPTION),
 		inputParameters_(LabelValueBlock()),
 		callPut_(NONE_OPTION), 
 		scheduleParams_(),
@@ -16,7 +16,7 @@ namespace etrading
 	{}
 
 
-    Option::Option( const Option& rhs) : IsLWOObject(rhs.getRefToName(), OPTION), 
+    Option::Option( const Option& rhs) : IsAQObject(rhs.getRefToName(), OPTION), 
 		inputParameters_(rhs.inputParameters_),
 		callPut_(rhs.callPut_)
 	{

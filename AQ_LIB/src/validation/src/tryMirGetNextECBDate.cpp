@@ -1,5 +1,5 @@
 #include "tryMirGetNextECBDate.h"
-#include "LADateHelpers.h"
+#include "AQLDateHelpers.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 
@@ -28,7 +28,7 @@ namespace validation
             file.write( "strictlyAfter", strictlyAfter );
         }
 
-        AQLDate ret = etrading::LADateHelpers::getNextECBDate( baseDate, strictlyAfter );
+        AQLDate ret = etrading::AQLDateHelpers::getNextECBDate( baseDate, strictlyAfter );
 
         if ( CreateDataFile::recordEnabled() )
         {

@@ -7,7 +7,7 @@
 #include "tryMirGetDate.h"
 #include "tryMirGetParRate.h"
 #include "YieldCurveUtil.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "InitializeETrading.h"
 #include "tryMeUtilitySetup.h"
 #include <sstream>
@@ -172,8 +172,8 @@ namespace google_test
 			// Effective date
 			AQLString asofDateStr;
 			findValByKey(asofDateStr, generateProp, generatePropkeys, "AsOfDate");
-			AQLDate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
-			AQLDate effectiveDate = etrading::LADateScheduleHelpers::getDate( asofDate, spotLag, rollConvention, calendar );
+			AQLDate asofDate = etrading::AQLDateScheduleHelpers::getLADate(asofDateStr);
+			AQLDate effectiveDate = etrading::AQLDateScheduleHelpers::getDate( asofDate, spotLag, rollConvention, calendar );
 
 			// Curve collection and forecast curve
 			AQLString curveCollection = etrading::getCurveID( inputFile_STD );
@@ -201,7 +201,7 @@ namespace google_test
 				AQLString maturityTenor = *iterator;
                 char * pFirstNonNumber;
                 int amount = strtol(maturityTenor.subString(0, maturityTenor.size() - 1).getCString(), &pFirstNonNumber, 10); // base 10 numbers
-				AQLDate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
+				AQLDate maturity = etrading::AQLDateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
 				
                 const double calcParRate = validation::tryMirGetParRate4( etrading::InitializeETrading::instance().dataInstance(),
 																               effectiveDate.stringWithFormat( "YYYYMMDD" ),

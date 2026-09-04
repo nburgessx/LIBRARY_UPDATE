@@ -27,7 +27,7 @@ namespace etrading
 
     /*static*/ const std::string DataHolder::OBJECT_NAME_LABEL = "NAME";
 
-    DataHolder::DataHolder( const etrading::CachedObjectEnum enumInput , const std::string& name )  : IsLWOObject(name , enumInput)
+    DataHolder::DataHolder( const etrading::CachedObjectEnum enumInput , const std::string& name )  : IsAQObject(name , enumInput)
     {
         if( enumInput != FREE_OBJECT )
         {

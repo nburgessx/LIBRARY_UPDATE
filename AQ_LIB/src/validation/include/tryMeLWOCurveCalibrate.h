@@ -10,8 +10,8 @@ namespace validation
 {
 
     /* @brief Builds a curve using a CurveGenerator object and a CurveMarketData object
-	 * @param [in] lwoCurveGeneratorName     The name of the LWOCurveGenerator object to use
-	 * @param [in] lwoCurveMarketDataName    The name of the LWOCurveMarketData object to use
+	 * @param [in] lwoCurveGeneratorName     The name of the AQOCurveGenerator object to use
+	 * @param [in] lwoCurveMarketDataName    The name of the AQOCurveMarketData object to use
 	 * @param [in] domesticCurveCollection   The curveCollection this curve will be stored in ( The Target CurveCollection )
 	 * @param [in] foreignCurveCollection    The curveCollection containing foreign curve dependencies ( The Against CurveCollection )
 	 *                                       Allowed to be blank if this is a single CCY curve (OIS, STD, TenorBasis)

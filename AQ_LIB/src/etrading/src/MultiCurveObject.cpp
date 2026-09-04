@@ -1,8 +1,8 @@
 #include "MultiCurveObject.h"
 #include "ParameterValidation.h"
 #include "ObjectUtilities.h"
-#include "LAUpdateStaticDataManager.h"
-#include "LWOUtilities.h"
+#include "AQLUpdateStaticDataManager.h"
+#include "AQOUtilities.h"
 #include "CreateDataFile.h"
 #include "ExceptionMacros.h"
 #include "Variant.h"
@@ -208,7 +208,7 @@ namespace etrading
 			}
 		}
 
-		LAUpdateStaticDataManager::setUpGlobalEngineCurves(etrading::getDataInstance(),
+		AQLUpdateStaticDataManager::setUpGlobalEngineCurves(etrading::getDataInstance(),
 													   objectName_.c_str(),
 													   domesticCurveCollection_.c_str(),
 													   engineParams_,

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "LWOCurve.h"
+#include "AQOCurve.h"
 
 
 namespace etrading
@@ -69,7 +69,7 @@ namespace etrading
 				std::vector<std::string> ( * )( Environment& ),
 				bool ( * ) ( const std::string&, Environment& ),
 				const unsigned int ( * ) ( Environment& ),
-				std::shared_ptr<IsLWOObject> (*)  ( const std::string&, Environment& )> CachedObjectFunctionSet; 
+				std::shared_ptr<IsAQObject> (*)  ( const std::string&, Environment& )> CachedObjectFunctionSet; 
 
 
 		// has<T>, keys<T> and deleteObject<T> and accessObjectInterface<T> each associated with a CachedObjectEnum
@@ -83,16 +83,16 @@ namespace etrading
         bool eraseObject( const std::string& objectName, Environment& env );
 
         template<>
-        bool eraseObject<LWOCurve>( const std::string& objectName, Environment& env ); // needs to be in cpp else instantiation before Environment class defined
+        bool eraseObject<AQOCurve>( const std::string& objectName, Environment& env ); // needs to be in cpp else instantiation before Environment class defined
 
         template<typename T>
         const unsigned int eraseAllObjects( Environment& env );
 
         template<>
-        const unsigned int eraseAllObjects<LWOCurve>( Environment& env );
+        const unsigned int eraseAllObjects<AQOCurve>( Environment& env );
 
 	template<typename T>
-        std::shared_ptr<IsLWOObject> accessObjectInterface( const std::string& objectName,  Environment& env );
+        std::shared_ptr<IsAQObject> accessObjectInterface( const std::string& objectName,  Environment& env );
 
 
     }

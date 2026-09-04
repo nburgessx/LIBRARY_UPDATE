@@ -1,5 +1,5 @@
 //
-// LACurveCalibrationHelpers.h  
+// AQLCurveCalibrationHelpers.h  
 // *** This file used to be called "LAMathCurveGenerateFuncUti1ity.h" ***
 //
 #pragma once
@@ -14,7 +14,7 @@
 #include "AQLCoreTemplateType.h"
 #include "AQLDataInstance.h"
 #include "AQLString.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "AQLTime.h"
 #include "AQLPriceDataDayCount.h"
 
@@ -43,7 +43,7 @@ struct ForwardRateTable
 namespace etrading
 {
 
-    class LACurveCalibrationHelpers
+    class AQLCurveCalibrationHelpers
     {
 
         //curve
@@ -150,10 +150,10 @@ namespace etrading
         static void restoreSwapRateFromLibor(AQLMathYieldCurvePro &curve, const AQLString &ccy, const std::map<AQLString, double> &sRateMap, AQLStringMatrix sdata);
 
     private:
-        LACurveCalibrationHelpers(void);
-        ~LACurveCalibrationHelpers(void);
-        LACurveCalibrationHelpers(const LACurveCalibrationHelpers &rhs);
-        LACurveCalibrationHelpers &operator=(const LACurveCalibrationHelpers &rhs);
+        AQLCurveCalibrationHelpers(void);
+        ~AQLCurveCalibrationHelpers(void);
+        AQLCurveCalibrationHelpers(const AQLCurveCalibrationHelpers &rhs);
+        AQLCurveCalibrationHelpers &operator=(const AQLCurveCalibrationHelpers &rhs);
     };
 
 }

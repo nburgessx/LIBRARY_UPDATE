@@ -1,5 +1,5 @@
 //
-// LADateHelpers.h
+// AQLDateHelpers.h
 // *** This file used to be called "LAMathDateCalcUti1ity.h" ***
 #pragma once
 
@@ -20,7 +20,7 @@ class AQLPriceDataCalendar;
 
 namespace etrading
 {
-	class LADateHelpers
+	class AQLDateHelpers
     {
     public:
 		
@@ -169,17 +169,17 @@ namespace etrading
     // inline method implementation
     //
 
-    inline bool	LADateHelpers::haveNextECBDate(const AQLDate& baseDate, bool strictlyAfter)
+    inline bool	AQLDateHelpers::haveNextECBDate(const AQLDate& baseDate, bool strictlyAfter)
     {
         return haveNextCBDate("ECB", baseDate, strictlyAfter);
     }
 
-    inline AQLDate LADateHelpers::getNextECBDate(const AQLDate& baseDate, bool strictlyAfter)
+    inline AQLDate AQLDateHelpers::getNextECBDate(const AQLDate& baseDate, bool strictlyAfter)
     {
         return getNextCBDate("ECB", baseDate, strictlyAfter);
     }
 
-    inline AQLDate LADateHelpers::getECBStartDate(const AQLDate& ecbDate)
+    inline AQLDate AQLDateHelpers::getECBStartDate(const AQLDate& ecbDate)
     {
         return getNextWeekdayDate(WED, ecbDate, true);
     }

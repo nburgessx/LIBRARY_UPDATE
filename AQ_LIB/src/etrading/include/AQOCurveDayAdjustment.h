@@ -9,19 +9,19 @@
 
 /*
 This class brings togetther the fixing business day adjusment, the accrual day business adjustment and the payment day adjustment.
-At the moment the LWOCurve object does not use the accrual day business adjusment
+At the moment the AQOCurve object does not use the accrual day business adjusment
 */
 
 
 namespace etrading
 {
 
-    class LWOCurveDayAdjustment
+    class AQOCurveDayAdjustment
     {
     public:
-        LWOCurveDayAdjustment( const BusinessDayAdjustmentEnum businessDayAdjustment,
+        AQOCurveDayAdjustment( const BusinessDayAdjustmentEnum businessDayAdjustment,
                                const std::string& dateCalendar );
-        LWOCurveDayAdjustment( const BusinessDayAdjustmentEnum fixingDateBusinessDayAdjustment,
+        AQOCurveDayAdjustment( const BusinessDayAdjustmentEnum fixingDateBusinessDayAdjustment,
                                const std::string& fixingDateCalendar,
                                const BusinessDayAdjustmentEnum accrualEndDateDateBusinessDayAdjustment,
                                const std::string& accrualEndDateDateCalendar,

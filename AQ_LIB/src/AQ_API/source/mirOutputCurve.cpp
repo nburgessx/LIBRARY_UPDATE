@@ -2,7 +2,7 @@
 #include "mirOutputCurve.h"
 #include "AQLString.h"
 #include "tryMirOutputCurve.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 
 /* @brief			swig interface for mirOutputCurve
 *  @param [in]		curveId			ID of the curve set

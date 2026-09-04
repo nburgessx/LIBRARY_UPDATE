@@ -2,7 +2,7 @@
 
 #include "ReplayCurveBasis.h"
 #include "ReadDataFile.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "InitializeETrading.h"
 
 namespace etrading
@@ -57,7 +57,7 @@ namespace etrading
         // 3. Build the Basis Curve
         // ----------------------
         const bool checkStaticDataLoaded = true;
-        LAUpdateStaticDataManager::setUpBasisCurve( InitializeETrading::instance( checkStaticDataLoaded ).dataInstance(),
+        AQLUpdateStaticDataManager::setUpBasisCurve( InitializeETrading::instance( checkStaticDataLoaded ).dataInstance(),
                                            curveID,
                                            marketName,
                                            basisRates,

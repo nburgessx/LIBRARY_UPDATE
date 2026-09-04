@@ -2,7 +2,7 @@
 
 #include "AQLDate.h"
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "FreeObject.h"
 #include "Variant.h"
@@ -19,7 +19,7 @@ namespace etrading
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, VariantMatrix>  TableInfo;
 
 
-	class CreditBasketModel : public IsLWOObject
+	class CreditBasketModel : public IsAQObject
 	{
 	public:
 

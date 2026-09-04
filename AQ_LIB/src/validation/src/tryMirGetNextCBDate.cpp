@@ -1,5 +1,5 @@
 #include "tryMirGetNextCBDate.h"
-#include "LADateHelpers.h"
+#include "AQLDateHelpers.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 
@@ -30,7 +30,7 @@ namespace validation
             file.write( "strictlyAfter", strictlyAfter );
         }
 
-        AQLDate ret = etrading::LADateHelpers::getNextCBDate( centralBankId, baseDate, strictlyAfter );
+        AQLDate ret = etrading::AQLDateHelpers::getNextCBDate( centralBankId, baseDate, strictlyAfter );
 
         if ( CreateDataFile::recordEnabled() )
         {

@@ -1,5 +1,5 @@
 //
-// LAUpdateStaticDataManager.cpp
+// AQLUpdateStaticDataManager.cpp
 // This file was previously called YieldCurveFactory.cpp and before that AQLCurveSetup.cpp
 //
 
@@ -9,10 +9,10 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "LAUpdateStaticDataManager.h"
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LACurvePricingObject.h"
+#include "AQLUpdateStaticDataManager.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLCurvePricingObject.h"
 
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
@@ -33,7 +33,7 @@
 
 #include "FolderConfig.h"
 #include "CurveCalibrationData.h"
-#include "LAUpdateModelObject.h"
+#include "AQLUpdateModelObject.h"
 #include "CurveBuildDefaults.h"
 #include "CurveInstruments.h"
 #include "ParameterValidation.h"
@@ -52,7 +52,7 @@ namespace
 namespace etrading
 {
 	// ===================== LEGACY - ARBITRAGE FREE CURVE =====================================================================
-	void LAUpdateStaticDataManager::SetUpArbFreeCurve(AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::SetUpArbFreeCurve(AQLDataInstance* dataInstance,
 												      const AQLString& curveID,
 												      const AQLStringMatrix& generateProp, 
 												      const AQLStringMatrix& moneyConv,
@@ -542,7 +542,7 @@ namespace etrading
         // ============================== 2.  CURVE CALIBRATION ========================================================
         
 		
-		std::unique_ptr<LAObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
+		std::unique_ptr<AQLObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
 	    objectPoolManager->loadModelDataAndCalibrate(currency, *dataInstance, true, false);
         
 		
@@ -570,7 +570,7 @@ namespace etrading
 
 	
 	// ===================== LEGACY FLOATER CURVE ================================================================================================
-	void LAUpdateStaticDataManager::setUpFloater( AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::setUpFloater( AQLDataInstance* dataInstance,
 												  const AQLString& curveID,
 												  const AQLString& discountCurveName,
 												  const AQLString& forecastCurveName,
@@ -746,7 +746,7 @@ namespace etrading
         // ============================== 2. CURVE CALIBRATION ========================================================
 
 		
-		std::unique_ptr<LAObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
+		std::unique_ptr<AQLObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
 	    objectPoolManager->loadModelDataAndCalibrate(currency, *dataInstance, true, false);
 
 
@@ -775,7 +775,7 @@ namespace etrading
 
 
 	// ========================== OIS CURVE ===========================================================================================
-	void LAUpdateStaticDataManager::loadStaticDataOISCurve( AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::loadStaticDataOISCurve( AQLDataInstance* dataInstance,
 															const AQLString& curveID,
 															const AQLString& marketName,
 															const AQLStringMatrix& generateProp,
@@ -1211,7 +1211,7 @@ namespace etrading
 	}
 
 	// ========================== OIS CURVE ===========================================================================================
-	void LAUpdateStaticDataManager::calibrateOISCurve( AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::calibrateOISCurve( AQLDataInstance* dataInstance,
 													   const AQLString& curveID,
 													   const AQLString& marketName,
 													   const AQLStringMatrix& generateProp )
@@ -1222,7 +1222,7 @@ namespace etrading
 		LabelValueBlock curvePropertiesLVB( generateProp );
 		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 		
-		std::unique_ptr<LAObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves( currency) );
+		std::unique_ptr<AQLObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves( currency) );
 	    objectPoolManager->loadModelDataAndCalibrate( currency, *dataInstance, true, false, curveID, marketName );
 
 
@@ -1254,7 +1254,7 @@ namespace etrading
 	}
 
 	// ========================== OIS CURVE ===========================================================================================
-	void LAUpdateStaticDataManager::setUpOISCurve( AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::setUpOISCurve( AQLDataInstance* dataInstance,
 												   const AQLString& curveID,
                                                    const AQLString& marketName,
                                                    const AQLStringMatrix& generateProp, 
@@ -1277,7 +1277,7 @@ namespace etrading
 
 
 	// ============================== SWAP CURVE =======================================================================================
-	void LAUpdateStaticDataManager::loadStaticDataSwapCurve( AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::loadStaticDataSwapCurve( AQLDataInstance* dataInstance,
 															 const AQLString& curveID,
 															 const AQLString& marketName,
 															 const AQLStringMatrix& generateProp,
@@ -1836,7 +1836,7 @@ namespace etrading
 	}
 
 	// ============================== SWAP CURVE =======================================================================================
-	void LAUpdateStaticDataManager::calibrateSwapCurve( AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::calibrateSwapCurve( AQLDataInstance* dataInstance,
 														const AQLString& curveID,
 														const AQLString& marketName,
 														const AQLStringMatrix& generateProp )
@@ -1847,7 +1847,7 @@ namespace etrading
 		LabelValueBlock curvePropertiesLVB( generateProp );
 		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 		
-		std::unique_ptr<LAObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
+		std::unique_ptr<AQLObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
 	    objectPoolManager->loadModelDataAndCalibrate(currency, *dataInstance, true, false, curveID, marketName);
         
 		
@@ -1879,7 +1879,7 @@ namespace etrading
 
 
 	// ============================== SWAP CURVE =======================================================================================
-	void LAUpdateStaticDataManager::setUpSwapCurve(AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::setUpSwapCurve(AQLDataInstance* dataInstance,
 											        const AQLString& curveID,
 											        const AQLString& marketName,
 											        const AQLStringMatrix& generateProp, 
@@ -1910,7 +1910,7 @@ namespace etrading
 
 
 	// ============================== BASIS CURVE =======================================================================================
-	void LAUpdateStaticDataManager::loadStaticDataBasisCurve( AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::loadStaticDataBasisCurve( AQLDataInstance* dataInstance,
 															  const AQLString& curveID,
 															  const AQLString& marketName,
 															  const AQLStringMatrix& basisRates,
@@ -2399,7 +2399,7 @@ namespace etrading
 	
 
 	// ============================== BASIS CURVE =======================================================================================
-	void LAUpdateStaticDataManager::calibrateBasisCurve( AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::calibrateBasisCurve( AQLDataInstance* dataInstance,
 														 const AQLString& curveID,
 														 const AQLString& marketName,
 														 const AQLStringMatrix& generateProp )
@@ -2410,7 +2410,7 @@ namespace etrading
 		LabelValueBlock curvePropertiesLVB( generateProp );
 		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 
-		std::unique_ptr<LAObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
+		std::unique_ptr<AQLObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
 	    objectPoolManager->loadModelDataAndCalibrate(currency, *dataInstance, true, false, curveID, marketName );
         
 
@@ -2443,7 +2443,7 @@ namespace etrading
 
 
 	// ============================== BASIS CURVE =======================================================================================
-	void LAUpdateStaticDataManager::setUpBasisCurve( AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::setUpBasisCurve( AQLDataInstance* dataInstance,
 													 const AQLString& curveID, 
 													 const AQLString& marketName, 
 													 const AQLStringMatrix& basisRates, 
@@ -2470,7 +2470,7 @@ namespace etrading
 
 
 	// =============================== FX FORWARD CURVE ======================================================================================
-	void LAUpdateStaticDataManager::loadStaticDataFwdFXConstantCurve(AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::loadStaticDataFwdFXConstantCurve(AQLDataInstance* dataInstance,
 																	 const AQLString& curveID,
 																	 const AQLString& marketName,
 																	 const AQLStringMatrix& fwdfxconstConv,
@@ -2589,7 +2589,7 @@ namespace etrading
 
 	
 	// =============================== FX FORWARD CURVE ======================================================================================
-	void LAUpdateStaticDataManager::calibrateFwdFXConstantCurve( AQLDataInstance* dataInstance,
+	void AQLUpdateStaticDataManager::calibrateFwdFXConstantCurve( AQLDataInstance* dataInstance,
 														         const AQLString& curveID,
 														         const AQLString& marketName,
 														         const AQLStringMatrix& generateProp )
@@ -2600,7 +2600,7 @@ namespace etrading
 		LabelValueBlock curvePropertiesLVB( generateProp );
 		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 
-		LAUpdateCurveObject *entityPoolManager = new UpdateObjectPoolForSDEsAndCurves(currency);
+		AQLUpdateCurveObject *entityPoolManager = new UpdateObjectPoolForSDEsAndCurves(currency);
 	    entityPoolManager->loadFwdFXConstCurveDataAndCalibrate(currency, *dataInstance, curveID, marketName);
 	    delete entityPoolManager;
 
@@ -2633,7 +2633,7 @@ namespace etrading
 
 
 	// =============================== FX FORWARD CURVE ======================================================================================
-    void LAUpdateStaticDataManager::setUpFwdFXConstantCurve(AQLDataInstance* dataInstance,
+    void AQLUpdateStaticDataManager::setUpFwdFXConstantCurve(AQLDataInstance* dataInstance,
 													        const AQLString& curveID, 
 													        const AQLString& marketName, 
 													        const AQLStringMatrix& fwdfxconstConv,
@@ -2648,7 +2648,7 @@ namespace etrading
     }
 
 
-    void LAUpdateStaticDataManager::populateStaticDataManagerForSwapCurve(AQLStaticData &irStaticData,
+    void AQLUpdateStaticDataManager::populateStaticDataManagerForSwapCurve(AQLStaticData &irStaticData,
 									    const AQLString& useMarkets,
 									    const AQLString& currency,
 									    const AQLString& curveNames_swap,
@@ -3148,7 +3148,7 @@ namespace etrading
 	    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffix_prop_swap, CURVETYPE_SWAP);
     }
 
-    void LAUpdateStaticDataManager::populateStaticDataManagerForOISCurve(AQLStaticData &irStaticData,
+    void AQLUpdateStaticDataManager::populateStaticDataManagerForOISCurve(AQLStaticData &irStaticData,
 													    const AQLString& useMarkets,
 													    const AQLString& currency,
 													    const AQLString& curveNames_OIS,
@@ -3475,7 +3475,7 @@ namespace etrading
 
 
 	// =====================================================================================================================
-    void LAUpdateStaticDataManager::populateStaticDataManagerForTenorBasisCurve(AQLStaticData &irStaticData, 
+    void AQLUpdateStaticDataManager::populateStaticDataManagerForTenorBasisCurve(AQLStaticData &irStaticData, 
 																				const AQLString& curveName,
 																				const AQLString& curveNames,
 																				const AQLString& currency,
@@ -3880,7 +3880,7 @@ namespace etrading
     }
 
 
-    void LAUpdateStaticDataManager::setUpGlobalEngineCurves(AQLDataInstance* dataInstance,
+    void AQLUpdateStaticDataManager::setUpGlobalEngineCurves(AQLDataInstance* dataInstance,
 													        const AQLString& engineName,
 													        const AQLString& curveCollectionID,
 													        const AQLStringMatrix& commonParams,
@@ -4104,14 +4104,14 @@ namespace etrading
         //
         // ============================== CURVE CALIBRATION ========================================================
 
-	    std::unique_ptr<LAObjectPoolBase> objectPoolManager(new UpdateObjectPoolForSDEsAndCurves(currency));
+	    std::unique_ptr<AQLObjectPoolBase> objectPoolManager(new UpdateObjectPoolForSDEsAndCurves(currency));
 	    objectPoolManager->loadGlobalCurveDataAndCalibrate(currency, *dataInstance);
 
     }
 
 
 	// ============================ DUAL-BOOTSTRAP CURVE ==============================================================================
-    void LAUpdateStaticDataManager::setUpDualBootstrapCurve(AQLDataInstance* dataInstance,									 
+    void AQLUpdateStaticDataManager::setUpDualBootstrapCurve(AQLDataInstance* dataInstance,									 
 									                        const AQLString& curveID,
 									                        const AQLString& curveName_db,
 									                        const AQLString& curveName_OIS,
@@ -5054,7 +5054,7 @@ namespace etrading
         // ============================== CURVE CALIBRATION ========================================================
 
 
-        std::unique_ptr<LAObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
+        std::unique_ptr<AQLObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
 	    objectPoolManager->loadDualBootstrapCurveDataAndCalibrate(currency, *dataInstance);
         
 
@@ -5063,7 +5063,7 @@ namespace etrading
 
 
     // Set-up for irserver, create property file stream
-    void LAUpdateStaticDataManager::setUpForIRServer()
+    void AQLUpdateStaticDataManager::setUpForIRServer()
     {
 	    AQLCoreDataService::initialize();
 	    AQLCoreDataService::setContext(CONTEXT_KEY_ISPRICER, "TRUE");
@@ -5136,7 +5136,7 @@ namespace etrading
     }
 
     void 
-    LAUpdateStaticDataManager::
+    AQLUpdateStaticDataManager::
     setUpDefaultIRStaticData(AQLDataInstance& dataInstance)
     {
 	    const AQLString* filepath = etrading::FolderConfig::ir_prop_path();
@@ -5180,7 +5180,7 @@ namespace etrading
     }
 
     void 
-    LAUpdateStaticDataManager::
+    AQLUpdateStaticDataManager::
     setUpDefaultIRStaticData(AQLDataInstance& dataInstance, const AQLString& filepath)
     {
         etrading::FolderConfig::set_ir_prop_path(filepath);  // creates a copy so no need for a double copy
@@ -5188,7 +5188,7 @@ namespace etrading
     }
 
     void 
-    LAUpdateStaticDataManager::
+    AQLUpdateStaticDataManager::
     setUpDefaultCalibStaticData(AQLDataInstance& dataInstance)
     {
 	    const AQLString* filepath = etrading::FolderConfig::calib_prop_path();
@@ -5232,7 +5232,7 @@ namespace etrading
     }
 
     void 
-    LAUpdateStaticDataManager::
+    AQLUpdateStaticDataManager::
     setUpDefaultCalibStaticData(AQLDataInstance& dataInstance, AQLString filepath)
     {
         etrading::FolderConfig::set_calib_prop_path(filepath);
@@ -5245,7 +5245,7 @@ namespace etrading
 
     */
     void
-    LAUpdateStaticDataManager
+    AQLUpdateStaticDataManager
     ::resetService()
     {
 	    AQLCoreDataService::finalize();
@@ -5253,7 +5253,7 @@ namespace etrading
     }
 
     std::istringstream* 
-    LAUpdateStaticDataManager::createFutureStream(const AQLStringMatrix& future_rates, AQLString& usegrid_future)
+    AQLUpdateStaticDataManager::createFutureStream(const AQLStringMatrix& future_rates, AQLString& usegrid_future)
     {
         AQLString futureStream;
         size_t adjustDataMinimumColumns = 3;
@@ -5333,7 +5333,7 @@ namespace etrading
 
     */
     void
-    LAUpdateStaticDataManager::setStaticDataValue(AQLStaticData &staticData, const AQLString &key, const AQLString &val, const bool is_override)
+    AQLUpdateStaticDataManager::setStaticDataValue(AQLStaticData &staticData, const AQLString &key, const AQLString &val, const bool is_override)
     {
 	    if (is_override)
 	    {
@@ -5350,7 +5350,7 @@ namespace etrading
     }
 
     void
-    LAUpdateStaticDataManager::SetUpFundingSpread(AQLDataInstance* dataInstance, const AQLStringMatrix &fundingSpread)
+    AQLUpdateStaticDataManager::SetUpFundingSpread(AQLDataInstance* dataInstance, const AQLStringMatrix &fundingSpread)
     {
 	    // save in string stream
 	    AQLString stream;
@@ -5367,7 +5367,7 @@ namespace etrading
     }
 
     void
-    LAUpdateStaticDataManager::CalcMeanAndCovariance(const DoubleMatrix& data, DoubleArray& mean, DoubleMatrix& covar)
+    AQLUpdateStaticDataManager::CalcMeanAndCovariance(const DoubleMatrix& data, DoubleArray& mean, DoubleMatrix& covar)
     {
 	    size_t ValNum = data.size();
 	    size_t ObsNum = data[0].size();
@@ -5405,7 +5405,7 @@ namespace etrading
     }
 
     void
-    LAUpdateStaticDataManager::SetUpPCA(AQLDataInstance* dataInstance, const DoubleMatrix& corr, const size_t no_factors, const AQLString& id)
+    AQLUpdateStaticDataManager::SetUpPCA(AQLDataInstance* dataInstance, const DoubleMatrix& corr, const size_t no_factors, const AQLString& id)
     {
 
 	    AQLObjectPool& objPool = dataInstance->getObjectPool();
@@ -5442,7 +5442,7 @@ namespace etrading
     }
 
     DoubleMatrix
-    LAUpdateStaticDataManager::GetPCAResult(AQLDataInstance* dataInstance, const AQLString& type, const AQLString& id)
+    AQLUpdateStaticDataManager::GetPCAResult(AQLDataInstance* dataInstance, const AQLString& type, const AQLString& id)
     {
 	    AQLObjectPool& objPool = dataInstance->getObjectPool();
 	    AQLString name = PREFIX_COR + id;
@@ -5485,7 +5485,7 @@ namespace etrading
     *  @param [in]		curveConv			General curve properties such as asofdate, ccy, interp, etc
     *  @param [in]		collateralCurves	The group of collateral curves out of which the CTD curve is constructed
     */
-    void LAUpdateStaticDataManager::setUpCheapestToDeliverCurve(AQLDataInstance* dataInstance,
+    void AQLUpdateStaticDataManager::setUpCheapestToDeliverCurve(AQLDataInstance* dataInstance,
 												     const AQLString& curveCollection, 
 												     const AQLString& curveName, 
 												     const AQLString& curveIndexes, 
@@ -5593,7 +5593,7 @@ namespace etrading
 	    tmpCurveName.toUpper();
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET, tmpCurveName);	
 	
-	    LAUpdateCurveObject *entityPoolManager = new UpdateObjectPoolForSDEsAndCurves(currency);
+	    AQLUpdateCurveObject *entityPoolManager = new UpdateObjectPoolForSDEsAndCurves(currency);
 	    entityPoolManager->loadCheapestToDeliverCurveDataAndCalibrate(currency, *dataInstance);
 	    delete entityPoolManager;
 

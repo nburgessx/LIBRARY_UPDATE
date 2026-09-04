@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "FreeObject.h"
 #include "Variant.h"
@@ -13,7 +13,7 @@ namespace etrading
 {
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, VariantMatrix>  TableInfo;
 
-	class SabrModel : public IsLWOObject
+	class SabrModel : public IsAQObject
 	{
 	public:
 

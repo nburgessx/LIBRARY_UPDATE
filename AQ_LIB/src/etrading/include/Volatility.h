@@ -3,14 +3,14 @@
 #include <string>
 #include "LabelValueBlock.h"
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "ScheduleValidation.h"
 #include "CommonConstants.h"
 
 namespace etrading
 {
-	class Volatility : public IsLWOObject
+	class Volatility : public IsAQObject
     {
 	public:
 

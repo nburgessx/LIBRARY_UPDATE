@@ -1,5 +1,5 @@
 #include "tryMirGetTerm.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 
@@ -34,7 +34,7 @@ namespace validation
         }
 
 		AQLString dayCountCopy( dayCount );
-        double ret = etrading::LADateScheduleHelpers::getTerm( fromDate, toDate, dayCountCopy, includeLast );
+        double ret = etrading::AQLDateScheduleHelpers::getTerm( fromDate, toDate, dayCountCopy, includeLast );
 
         if ( CreateDataFile::recordEnabled() )
         {

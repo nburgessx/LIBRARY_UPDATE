@@ -2,22 +2,22 @@
 
 #include <string>
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 
 namespace etrading
 {
 
-    struct StandAlone : public IsLWOObject
+    struct StandAlone : public IsAQObject
     {
         StandAlone( const std::string& objectName );
         virtual const SchemaObject toSchemaObject() const;
         double d_;
     };
 
-    struct BaseObject : public IsLWOObject
+    struct BaseObject : public IsAQObject
     {
-        BaseObject( const std::string& objectName ) : IsLWOObject( objectName, EXAMPLE_BASE )
+        BaseObject( const std::string& objectName ) : IsAQObject( objectName, EXAMPLE_BASE )
         {};
         virtual const SchemaObject toSchemaObject() const
         {

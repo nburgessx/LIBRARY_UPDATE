@@ -119,7 +119,7 @@ public:
 	static void convertToDateGrid(const AQLDate &asofDate, const DoubleArray &terms, DateVector &dates);
 	
 	// Return the frequency in months for comparing two frequencies, not for accurate calculations
-	// *** Duplicate method in LADateHelpers.cpp ***
+	// *** Duplicate method in AQLDateHelpers.cpp ***
 	static double getPeriodFrequencyInMonths(const AQLString& freq);
 	
 	// calc compounding times

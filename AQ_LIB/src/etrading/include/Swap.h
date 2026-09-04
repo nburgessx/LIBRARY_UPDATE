@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "LegCollection.h"
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "CoreEnumerations.h"
 #include "ParameterValidation.h"
@@ -14,7 +14,7 @@
 namespace etrading
 {
 
-    class Swap : public IsLWOObject 
+    class Swap : public IsAQObject 
     {
 	public:
         Swap(const std::string& instanceName, const SwapTypeEnum swapType, const LabelValueBlock& swapPropertiesLVB);

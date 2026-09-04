@@ -23,7 +23,7 @@
 #include "TableDateDouble.h"
 #include "Variant.h"
 #include "DataSchema.h"
-#include "LWOCurve.h"
+#include "AQOCurve.h"
 #include "SerializeContainedData.h"
 #include "ExampleObjects.h"
 #include "Environment.h"
@@ -76,7 +76,7 @@ namespace etrading
     template<>
     struct to_cached_object_type<CURVE_DEPRECATED>
     {
-        typedef etrading::LWOCurve type;
+        typedef etrading::AQOCurve type;
     };
 
     template<>

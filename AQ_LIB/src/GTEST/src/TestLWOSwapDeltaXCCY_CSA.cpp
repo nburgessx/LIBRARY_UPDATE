@@ -27,7 +27,7 @@ using etrading::ReadDataFile;
 using etrading::CreateDataFile;
 
 // Define the Test Input Folder Here
-#define TEST_DIR "ETrading/LWObjects/TestLWOSwapDeltaXCCY_CSA/"
+#define TEST_DIR "ETrading/AQObjects/TestLWOSwapDeltaXCCY_CSA/"
 
 
 namespace

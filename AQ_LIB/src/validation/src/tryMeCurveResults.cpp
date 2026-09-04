@@ -15,7 +15,7 @@
 #include "StructuredExceptionHandler.h"     // Validation Start and End Macros for Structured Exception Management
 #include "DateUtilities.h"                  // Date helper methods and AQLStringMatrix to Date and Value vector helper
 #include "tryMeUtilityClean.h"              // trimming utility methods
-#include "LADateScheduleHelpers.h"          // Convert Strings to Dates and vice versa
+#include "AQLDateScheduleHelpers.h"          // Convert Strings to Dates and vice versa
 #include "LabelValueBlock.h"                // String Matrix Conversion Helpers to/from AQLStringMatrix
 #include "CoreEnumerations.h"
 #include "CurveGroup.h"

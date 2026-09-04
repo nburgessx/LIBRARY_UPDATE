@@ -27,7 +27,7 @@ using google_test::Dependency4;
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;
 
-#define TEST_DIR "ETrading/LWObjects/TestLWOSwapTenorBasis/"
+#define TEST_DIR "ETrading/AQObjects/TestLWOSwapTenorBasis/"
 
 namespace
 {

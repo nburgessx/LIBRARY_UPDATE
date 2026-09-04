@@ -2,7 +2,7 @@
 
 #include "ReplayCurveSTD.h"
 #include "ReadDataFile.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "InitializeETrading.h"
 
 namespace etrading
@@ -100,7 +100,7 @@ namespace etrading
         // 3. Build the STD Curve
         // ----------------------
         const bool checkStaticDataLoaded = true;
-        LAUpdateStaticDataManager::setUpSwapCurve( InitializeETrading::instance( checkStaticDataLoaded ).dataInstance(),
+        AQLUpdateStaticDataManager::setUpSwapCurve( InitializeETrading::instance( checkStaticDataLoaded ).dataInstance(),
                                           curveID,
                                           marketName,
                                           generalProps,

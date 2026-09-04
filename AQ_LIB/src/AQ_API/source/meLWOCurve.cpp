@@ -73,8 +73,8 @@ SWIG_STRINGMATRIX meLWOCurveMarketDataDisplayFromCurve(const std::string& curveO
 }
 
 /* @brief Builds a curve using a CurveGenerator object and a CurveMarketData object
-* @param [in] lwoCurveGeneratorName     The name of the LWOCurveGenerator object to use
-* @param [in] lwoCurveMarketDataName    The name of the LWOCurveMarketData object to use
+* @param [in] lwoCurveGeneratorName     The name of the AQOCurveGenerator object to use
+* @param [in] lwoCurveMarketDataName    The name of the AQOCurveMarketData object to use
 * @param [in] domesticCurveCollection   The curveCollection this curve will be stored in ( The Target CurveCollection )
 * @param [in] foreignCurveCollection    The curveCollection containing foreign curve dependencies ( The Against CurveCollection )
 *                                       Allowed to be blank if this is a single CCY curve (OIS, STD, TenorBasis)
@@ -120,7 +120,7 @@ std::string meLWOCurveCalibrate( const std::string& objectName,
 	}
 
 
-/* @brief Creates a LWOCurveMarketData object, containing all of the curve properties.
+/* @brief Creates a AQOCurveMarketData object, containing all of the curve properties.
 * @param [in] objectName	The name of the Market Data object
 * @param [in] key1			The name of datablock1 For example "MARKETDATAPROPERTIES"
 * @param [in] value1		The contents of datablock1 
@@ -194,7 +194,7 @@ std::string meLWOCurveMarketDataCreate( const std::string& objectName,
 
 }
 
-/* @brief Creates a LWOCurveMarketData object, containing all of the curve properties.
+/* @brief Creates a AQOCurveMarketData object, containing all of the curve properties.
 *			NOTE: This function not work correctly in R because R cannot cope with vectors of vectors.
 *			In particular the vector<SWIG_STRINGMATRIX> parameter is a problem in R.
 * @param [in] objectName	The name of the Market Data object

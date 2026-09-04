@@ -10,12 +10,12 @@
 #include "CurveResultsContainer.h"  // Curve Results and Discount Factor Methods
 #include "CurveValidation.h"
 #include "InitializeETrading.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LACurvePricingObject.h"
-#include "LADateHelpers.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLCurvePricingObject.h"
+#include "AQLDateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "ParameterValidation.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "CommonConstants.h"
 
 #include "AQLDefinitions.h"
@@ -250,7 +250,7 @@ namespace etrading
 																	  fixLag,
 																	  fixingAdvanceOrArrears );
 
-		scheduleFixingEndDates = LADateScheduleHelpers::getMultiDate( scheduleFixingStartDates, curveTenor, businessDayAdj, calendar, nullptr ); // rollconvention* = nullptr
+		scheduleFixingEndDates = AQLDateScheduleHelpers::getMultiDate( scheduleFixingStartDates, curveTenor, businessDayAdj, calendar, nullptr ); // rollconvention* = nullptr
 	}
 
 	/* @brief			Calculates the discount factors from a curve and a spread.
@@ -412,7 +412,7 @@ namespace etrading
 		else
 		{
 			// LEGACY: Get Discount Factors from the Object Pool
-			discountFactors = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates, getDataInstance(), curveCollection, getDiscountFactorDayCount(), bdAdj, cal, interp, isBasisFlagForDiscountFactor(), curveIndex );
+			discountFactors = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates, getDataInstance(), curveCollection, getDiscountFactorDayCount(), bdAdj, cal, interp, isBasisFlagForDiscountFactor(), curveIndex );
 		}
 
 		AQ_REQUIRE( discountFactors.size() == paymentDates.size(), "Discount Factor Results should be same size as Payment Dates." );
@@ -639,7 +639,7 @@ namespace etrading
 
 		CompoundingFrequencyEnum curveCompoundingfreq = getForwardRateCurveCompoundFrequency();
 
-		DoubleVector forwardRates = etrading::LACurveForwardRateHelpers::getMultiForwardRate(fromDates, yearFraction, getDataInstance(), curveCollection, toString(curveCompoundingfreq).c_str(), dayC, bdAdj, cal, interp, curIndex, isFwdInter, useFwdData);
+		DoubleVector forwardRates = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate(fromDates, yearFraction, getDataInstance(), curveCollection, toString(curveCompoundingfreq).c_str(), dayC, bdAdj, cal, interp, curIndex, isFwdInter, useFwdData);
 
 		return forwardRates;
     }
@@ -690,7 +690,7 @@ namespace etrading
         {
             // 2. Use Object Pool when isFwdInter = TRUE
             // LEGACY: Get Forward Rates from the Object Pool
-			forwardRates = LACurveForwardRateHelpers::getMultiForwardRate( fromDates, toDates, getDataInstance(), curveCollection, toString(curveCompoundingfreq).c_str(), dayC, bdAdj, cal, interp, curveIndex, isFwdInter, useFwdData );
+			forwardRates = AQLCurveForwardRateHelpers::getMultiForwardRate( fromDates, toDates, getDataInstance(), curveCollection, toString(curveCompoundingfreq).c_str(), dayC, bdAdj, cal, interp, curveIndex, isFwdInter, useFwdData );
         }
 
         return forwardRates;
@@ -925,7 +925,7 @@ namespace etrading
 		AQLString bdAdj = toString(businessDayAdj).c_str();
 		AQLString cal = getDefaultCalendarForEmptyString(calendar, curveCollection);
 
-		const DateVector toDates = LADateScheduleHelpers::getMultiDate(fixingDates, toString(crvFreqTenor).c_str(), bdAdj, cal, nullptr); // rollconvention* = nullptr
+		const DateVector toDates = AQLDateScheduleHelpers::getMultiDate(fixingDates, toString(crvFreqTenor).c_str(), bdAdj, cal, nullptr); // rollconvention* = nullptr
 		return toDates;
 	}
 
@@ -1015,7 +1015,7 @@ namespace etrading
 
 		AQLString freq( frequency );
 		AQLString busDayAdj( toString(businessDayAdjust).c_str() );
-		dateSchedule = LADateScheduleHelpers::generateSchedule(  firstDate,
+		dateSchedule = AQLDateScheduleHelpers::generateSchedule(  firstDate,
 														maturityDate,
 														freq,
 														busDayAdj,	// aka Sliding Rule
@@ -1273,7 +1273,7 @@ namespace etrading
                                    const AQLString & rollConvention )          // TODO: Convert to StandardString
     {
         const AQLString* rollConvPointer = ( rollConvention.size() == 0 ) ? nullptr : &rollConvention;
-        AQLDate result = LADateScheduleHelpers::getDateWithRollConv( startDate, tenor, businessDayAdj, calendar, rollConvPointer );
+        AQLDate result = AQLDateScheduleHelpers::getDateWithRollConv( startDate, tenor, businessDayAdj, calendar, rollConvPointer );
         return result;
     }
 
@@ -1306,7 +1306,7 @@ namespace etrading
 			tenorToUse = tenor + "D";
 		}
 
-        AQ_TRY( result = LADateScheduleHelpers::getMultiDate( startDates, tenorToUse, businessDayAdj, calendar, rollConvention.size() == 0 ? nullptr : &rollConvention ) , "Invalid Date/Tenor Input: Invalid Date, TenorString (no spaces), Calendar or BusinessDayAdj" );
+        AQ_TRY( result = AQLDateScheduleHelpers::getMultiDate( startDates, tenorToUse, businessDayAdj, calendar, rollConvention.size() == 0 ? nullptr : &rollConvention ) , "Invalid Date/Tenor Input: Invalid Date, TenorString (no spaces), Calendar or BusinessDayAdj" );
         return result;
     }
 
@@ -1336,10 +1336,10 @@ namespace etrading
 		// Note: The multi-date method takes curveAsOfDate as a vector and returns a vector
         
 		// 1.	Adjust the AsOfDate using the fixing lag and conventions
-		AQ_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,asOfDate), fixingLag, fixingBusDayAdj, fixingCalendar, nullptr /* rollConvenction */ )[0] , "Invalid Shifted Spot Date: Invalid Input - AsOfDate, FixingLag, FixingCalendar or FixingBusDayAdj" );
+		AQ_TRY( spotDate = AQLDateScheduleHelpers::getMultiDate( DateVector(1,asOfDate), fixingLag, fixingBusDayAdj, fixingCalendar, nullptr /* rollConvenction */ )[0] , "Invalid Shifted Spot Date: Invalid Input - AsOfDate, FixingLag, FixingCalendar or FixingBusDayAdj" );
         
 		// 2.	Adjust the Result from (1) using the payment lag and conventions
-		AQ_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,spotDate), paymentLag, paymentBusDayAdj, paymentCalendar, nullptr /* rollConvenction */ )[0] , "Invalid Shifted Spot Date: Invalid Input - PaymentLag, PaymentCalendar or PaymentBusDayAdj" );
+		AQ_TRY( spotDate = AQLDateScheduleHelpers::getMultiDate( DateVector(1,spotDate), paymentLag, paymentBusDayAdj, paymentCalendar, nullptr /* rollConvenction */ )[0] , "Invalid Shifted Spot Date: Invalid Input - PaymentLag, PaymentCalendar or PaymentBusDayAdj" );
 		return spotDate;
     }
 
@@ -1369,10 +1369,10 @@ namespace etrading
 		// Note: The multi-date method takes curveAsOfDate as a vector and returns a vector
         
 		// 1.	Adjust curveAsOfDate by spot Lag with fixing calendar
-		AQ_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,curveAsOfDate), spotLag, businessDayAdj, fixingCalendar, rollConvention.size() == 0 ? nullptr : &rollConvention )[0] , "Invalid Curve Spot Date: Invalid Input - CurveAsOfDate, SpotLag, FixingCalendar or BusinessDayAdj" );
+		AQ_TRY( spotDate = AQLDateScheduleHelpers::getMultiDate( DateVector(1,curveAsOfDate), spotLag, businessDayAdj, fixingCalendar, rollConvention.size() == 0 ? nullptr : &rollConvention )[0] , "Invalid Curve Spot Date: Invalid Input - CurveAsOfDate, SpotLag, FixingCalendar or BusinessDayAdj" );
         
 		// 2.	Move adjust the spot date for payment calendar holidays
-		AQ_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,spotDate), "0D", businessDayAdj, paymentCalendar, rollConvention.size() == 0 ? nullptr : &rollConvention )[0] , "Invalid Curve Spot Date: Invalid Input: PaymentCalendar" );
+		AQ_TRY( spotDate = AQLDateScheduleHelpers::getMultiDate( DateVector(1,spotDate), "0D", businessDayAdj, paymentCalendar, rollConvention.size() == 0 ? nullptr : &rollConvention )[0] , "Invalid Curve Spot Date: Invalid Input: PaymentCalendar" );
 		return spotDate;
     }
 
@@ -1388,14 +1388,14 @@ namespace etrading
     {
 		AQLDate startDateCopy( startDate );
         AQLString dayCountString( toString(dayCount).c_str() );
-        AQLDate ret = LADateScheduleHelpers::getDateFromTerm( startDateCopy, yearFraction, dayCountString );
+        AQLDate ret = AQLDateScheduleHelpers::getDateFromTerm( startDateCopy, yearFraction, dayCountString );
 
         return ret;
     }
 
 
 
-    //This function is the same as etrading::LACurveForwardRateHelpers::compound() function, but making use of the asOfDate and fixing table for past fixing dates
+    //This function is the same as etrading::AQLCurveForwardRateHelpers::compound() function, but making use of the asOfDate and fixing table for past fixing dates
     double compound(AQLDataInstance* dataInstance,
                     const AQLString& curveID,
                     const AQLString& forecastCurveName,
@@ -1425,11 +1425,11 @@ namespace etrading
         AQLString interpolation = interpolation_; interpolation.toUpper();
         AQLString compound_type_str = compound_type_; compound_type_str.toUpper();
     
-        etrading::LACurveForwardRateHelpers::COMPOUND_TYPE compound_type;
-        if(compound_type_str=="NORMAL")         compound_type = etrading::LACurveForwardRateHelpers::COMPOUND_NORMAL;
-        else if(compound_type_str=="FLAT")      compound_type = etrading::LACurveForwardRateHelpers::COMPOUND_FLAT;
-        else if(compound_type_str=="SIMPLE")    compound_type = etrading::LACurveForwardRateHelpers::COMPOUND_SIMPLE;
-        else if(compound_type_str=="AVERAGE")   compound_type = etrading::LACurveForwardRateHelpers::AVERAGE;
+        etrading::AQLCurveForwardRateHelpers::COMPOUND_TYPE compound_type;
+        if(compound_type_str=="NORMAL")         compound_type = etrading::AQLCurveForwardRateHelpers::COMPOUND_NORMAL;
+        else if(compound_type_str=="FLAT")      compound_type = etrading::AQLCurveForwardRateHelpers::COMPOUND_FLAT;
+        else if(compound_type_str=="SIMPLE")    compound_type = etrading::AQLCurveForwardRateHelpers::COMPOUND_SIMPLE;
+        else if(compound_type_str=="AVERAGE")   compound_type = etrading::AQLCurveForwardRateHelpers::AVERAGE;
         else
         {
             AQLString msg;
@@ -1460,7 +1460,7 @@ namespace etrading
 	    }
 
         // payment_dates: daily fixing dates from start_date(exclusive) till end_date(inclusive)
-        etrading::LADateHelpers::generateSchedule(start_date,
+        etrading::AQLDateHelpers::generateSchedule(start_date,
                                                  end_date,
                                                  frequency,
                                                  true, 
@@ -1554,7 +1554,7 @@ namespace etrading
             const AQLString freq = SIMPLE;
 
             // Getting the non-past rates from the curve 
-            nonPastRates = etrading::LACurveForwardRateHelpers::getMultiForwardRate(start_dates,
+            nonPastRates = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate(start_dates,
                                                                                end_dates,
                                                                                dataInstance,
                                                                                curveID,
@@ -1594,23 +1594,23 @@ namespace etrading
         std::shared_ptr<AQLCompoundMethod> method;
         switch(compound_type)
         {
-                case etrading::LACurveForwardRateHelpers::COMPOUND_NORMAL:
+                case etrading::AQLCurveForwardRateHelpers::COMPOUND_NORMAL:
                 {
                     method.reset(new AQLCompoundMethod7());
                     break;
                 }
-                case etrading::LACurveForwardRateHelpers::COMPOUND_FLAT:
+                case etrading::AQLCurveForwardRateHelpers::COMPOUND_FLAT:
                 {
                     method.reset(new AQLCompoundMethod8());
                     break;
                 }
-                case etrading::LACurveForwardRateHelpers::COMPOUND_SIMPLE:
+                case etrading::AQLCurveForwardRateHelpers::COMPOUND_SIMPLE:
                 {
                     method.reset(new AQLCompoundMethod9());
                     x.push_back(dc.getTerm(start_date, end_date));
                     break;
                 }
-                case etrading::LACurveForwardRateHelpers::AVERAGE:
+                case etrading::AQLCurveForwardRateHelpers::AVERAGE:
                 {
                     method.reset(new AQLCompoundMethod11());
                     break;
@@ -2141,8 +2141,8 @@ namespace etrading
         {
 			AQLDate startDateCopy( startDate );
 			AQLString dayCountCopy( dayCount );
-            const AQLDate endDate        = LADateScheduleHelpers::getDateFromTerm( startDateCopy, yearFractions[i], dayCountCopy );
-            yearFractions[i]            = LADateScheduleHelpers::getTerm( startDate, endDate, ACT365, includeLast );
+            const AQLDate endDate        = AQLDateScheduleHelpers::getDateFromTerm( startDateCopy, yearFractions[i], dayCountCopy );
+            yearFractions[i]            = AQLDateScheduleHelpers::getTerm( startDate, endDate, ACT365, includeLast );
         }
     }
 
@@ -2189,7 +2189,7 @@ namespace etrading
         else
         {
             // LEGACY: Get Discount Factors from the Object Pool
-            discountFactors = etrading::LACurveForwardRateHelpers::getMultiDF( fromDates, yearFractionsAct365, etrading::getDataInstance(), curveCollection, getDiscountFactorDayCount(), bdAdj, cal, interp, isBasisFlagForDiscountFactor(), curIndex );
+            discountFactors = etrading::AQLCurveForwardRateHelpers::getMultiDF( fromDates, yearFractionsAct365, etrading::getDataInstance(), curveCollection, getDiscountFactorDayCount(), bdAdj, cal, interp, isBasisFlagForDiscountFactor(), curIndex );
         }
 
         AQ_REQUIRE( discountFactors.size() > 0, "Discount Factor Results are Empty" )
@@ -2236,7 +2236,7 @@ namespace etrading
         else
         {
             // LEGACY: Get Discount Factors from the Object Pool
-            discountFactors = etrading::LACurveForwardRateHelpers::getMultiDF( yearFractionsAct365, etrading::getDataInstance(), curveCollection, getDiscountFactorDayCount(), interp, isBasisFlagForDiscountFactor(), curIndex );
+            discountFactors = etrading::AQLCurveForwardRateHelpers::getMultiDF( yearFractionsAct365, etrading::getDataInstance(), curveCollection, getDiscountFactorDayCount(), interp, isBasisFlagForDiscountFactor(), curIndex );
         }
 
         AQ_REQUIRE( discountFactors.size() > 0, "Discount Factor Results are Empty" )
@@ -2305,7 +2305,7 @@ namespace etrading
 		AQLString businessDayAdj;
         populateZeroRateConventions( curveCollection, curIndex, fwdInter, interp, dayC, freq, isFwdInter, businessDayAdj );
 
-        DoubleArray arr = etrading::LACurveForwardRateHelpers::getMultiZeroRate( yearFractions, etrading::getDataInstance(), curveCollection,
+        DoubleArray arr = etrading::AQLCurveForwardRateHelpers::getMultiZeroRate( yearFractions, etrading::getDataInstance(), curveCollection,
                           freq, dayC, interp, curIndex, isFwdInter );
 
         return arr;
@@ -2482,8 +2482,8 @@ namespace etrading
 		}
 
 		AQLString dayCount( "ACT/365" );
-		double T1 = LADateScheduleHelpers::getTerm(curveAsOfDate, futuresStartDate, dayCount, true); // includeLast = true
-		double T2 = LADateScheduleHelpers::getTerm(curveAsOfDate, futuresEndDate, dayCount, true); // includeLast = true
+		double T1 = AQLDateScheduleHelpers::getTerm(curveAsOfDate, futuresStartDate, dayCount, true); // includeLast = true
+		double T2 = AQLDateScheduleHelpers::getTerm(curveAsOfDate, futuresEndDate, dayCount, true); // includeLast = true
 
 		if (T1 > T2)
 		{
@@ -2810,7 +2810,7 @@ namespace etrading
 		// remove the last fixing so that the list only contains fixing start dates
 		fixingStartDates = { allFixingDates.begin(), allFixingDates.end() - 1 };
 
-		fixingEndDates = LADateScheduleHelpers::getMultiDate(fixingStartDates, getFrequencyTenor(curveFrequency), fixingBusinessDayAdj, fixingCalendar, rollConvention.size() == 0 ? nullptr : &rollConvention);
+		fixingEndDates = AQLDateScheduleHelpers::getMultiDate(fixingStartDates, getFrequencyTenor(curveFrequency), fixingBusinessDayAdj, fixingCalendar, rollConvention.size() == 0 ? nullptr : &rollConvention);
 
 		if (!isRegularSwap)
 		{

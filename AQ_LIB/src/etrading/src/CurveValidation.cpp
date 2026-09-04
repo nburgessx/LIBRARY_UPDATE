@@ -4,9 +4,9 @@
 #include "InitializeETrading.h"
 #include "ParameterValidation.h"
 #include "AQLDefinitions.h"
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LACurveCalibrationHelpers.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLCurveCalibrationHelpers.h"
 #include "AQLPriceDataCalendar.h"
 #include "CurveCalibrationData.h"
 #include "AQLMarketData.h"
@@ -902,7 +902,7 @@ namespace etrading
         // We const_cast the asOfDate because the underlying function incorrectly wants a non-const asOfDate and we can't touch it
         // Update: We now use ACT/365 instead of ACT/365_ISDA which causes leap year irregularities in the yield curve.
 		AQLString dayCount("ACT/365");
-        AQLDate paymentDate = LADateScheduleHelpers::getDateFromTerm( const_cast<AQLDate&>(asOfDate), term, dayCount );
+        AQLDate paymentDate = AQLDateScheduleHelpers::getDateFromTerm( const_cast<AQLDate&>(asOfDate), term, dayCount );
         return paymentDate;
     }
 

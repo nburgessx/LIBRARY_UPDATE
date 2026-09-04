@@ -1,11 +1,11 @@
 //
-// LAUpdateCurveObject.h
+// AQLUpdateCurveObject.h
 // This file used to be called CalibratorIR.h and before that AQLCalibrateModelIR.h
 //
 #pragma once
 
 #include "AQLString.h"
-#include "LAObjectPoolBase.h"
+#include "AQLObjectPoolBase.h"
 #include "AQLDefinitions.h"		// Required for CONTEXT_KEY_ASOFDATE key 
 #include "AQLCoreDataService.h"	// Required to import the
 #include <map>
@@ -26,28 +26,28 @@ class AQLObject;
 class AQLObjectPool;
 class AQLDataProcedure;
 
-//===================== Class Declare LAUpdateCurveObject ==================================
+//===================== Class Declare AQLUpdateCurveObject ==================================
 /*! 
     @brief IR SDE generator 
 	
 	this class is abstract
 
 */
-class LAUpdateCurveObject : public LAObjectPoolBase
+class AQLUpdateCurveObject : public AQLObjectPoolBase
 {
 public:
 	
 	// constructor
-	explicit LAUpdateCurveObject(const AQLString &baseCurrency);
+	explicit AQLUpdateCurveObject(const AQLString &baseCurrency);
 	
 	// destructor
-	virtual ~LAUpdateCurveObject(void);
+	virtual ~AQLUpdateCurveObject(void);
 	
 	// copy constructor
-	LAUpdateCurveObject(const LAUpdateCurveObject &rhs);
+	AQLUpdateCurveObject(const AQLUpdateCurveObject &rhs);
 	
 	// assignment operator
-	LAUpdateCurveObject &operator=(const LAUpdateCurveObject &rhs);
+	AQLUpdateCurveObject &operator=(const AQLUpdateCurveObject &rhs);
 	
 	// ********************************************************************************************************
 	// **************** HELPER METHODS FOR 'loadModelDataAndCalibrate' ROUTINE ********************************

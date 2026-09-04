@@ -2,7 +2,7 @@
 #include "InitializeETrading.h"			        // google_test::InitializeETrading
 #include "AQLDataInstance.h"
 #include "AQLCoreDataService.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "AQLDefinitions.h"
 #include "AQLLinearRatesVolatilityManager.h"
 #include "EnvironmentUtilities.h"

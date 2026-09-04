@@ -6,7 +6,7 @@
 
 namespace google_test
 {
-    // wrapper for LAUpdateStaticDataManager::setUpBasisCurve
+    // wrapper for AQLUpdateStaticDataManager::setUpBasisCurve
     class CurveTenorBasis
         : public virtual google_test::InitializeGoogleTest
         , public CurveAccessors

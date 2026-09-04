@@ -3,7 +3,7 @@
 #include <boost/date_time.hpp>
 #include "AQLCoreTemplateType.h"
 
-// Forward Declaration, for definition see "LACurveCalibrationHelpers.h" was "LACurveCalibrationHelpers.h" 
+// Forward Declaration, for definition see "AQLCurveCalibrationHelpers.h" was "AQLCurveCalibrationHelpers.h" 
 struct DiscountFactorTable;
 
 namespace validation

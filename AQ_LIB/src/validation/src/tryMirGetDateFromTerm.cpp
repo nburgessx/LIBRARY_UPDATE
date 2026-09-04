@@ -1,6 +1,6 @@
 #include "tryMirGetParRate.h"
 
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -41,7 +41,7 @@ namespace validation
 
 		AQLDate fromDateCopy( fromDate );
 		AQLString dayCountCopy( dayCount );
-        AQLDate mbReturnDate = etrading::LADateScheduleHelpers::getDateFromTerm( fromDateCopy, termY, dayCountCopy, includeLast );
+        AQLDate mbReturnDate = etrading::AQLDateScheduleHelpers::getDateFromTerm( fromDateCopy, termY, dayCountCopy, includeLast );
         AQLString ret = mbReturnDate.stringWithFormat( "YYYYMMDD" );
 
         if ( CreateDataFile::recordEnabled() )

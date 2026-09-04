@@ -1,7 +1,7 @@
 #pragma once
 
 //
-// @File: LWOCurve.h
+// @File: AQOCurve.h
 // @Description: This Class owns the outputs of a Curve object (discount factors, forward rates, settings)
 // in etrading::ContainedEnumType.
 // @Created: 27 Feb 2016
@@ -26,28 +26,28 @@
 #include "HasInstance.h"
 #include "InterpolationFactory.h"
 #include "HasVariantMatrixAccess.h"
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "CurveData.h"
 #include "HasCurveData.h"
 
 namespace etrading
 {
 
-    class LWOCurve
-        :	public IsLWOObject,
+    class AQOCurve
+        :	public IsAQObject,
             public HasCurveData,
             public HasVariantMatrixAccess
     {
 
     public:
 
-        LWOCurve( const std::string& objName );
+        AQOCurve( const std::string& objName );
 
-        LWOCurve( LWOCurve&& );
+        AQOCurve( AQOCurve&& );
 
-        LWOCurve( const LWOCurve& ); // Only doing this so we can copy from the cache (but do we really need to do that?)
+        AQOCurve( const AQOCurve& ); // Only doing this so we can copy from the cache (but do we really need to do that?)
 
-        virtual ~LWOCurve(); // virtual in case we want to make this a base
+        virtual ~AQOCurve(); // virtual in case we want to make this a base
 
         /*
         the dates are fixing dates
@@ -56,13 +56,13 @@ namespace etrading
         the curve build properties are properties used to build the curve
         the forward rates are the curve tenor forwards that correspond to the fixing dates in dates
         */
-        LWOCurve(	const std::string& objName,
+        AQOCurve(	const std::string& objName,
                     const std::vector<boost::gregorian::date>& dates,
                     const std::vector<double>& discountFactors,
                     const CurveBuildProperties& curveConvention,
                     const std::vector<double>& forwardRates = std::vector<double>( 0, std::numeric_limits<double>::quiet_NaN() ) );
 
-        LWOCurve(	const std::string& objName,
+        AQOCurve(	const std::string& objName,
                     const std::vector<double>& yearFractionsAsActAct,
                     const std::vector<double>& discountFactors,
                     const CurveBuildProperties& curveConvention );
@@ -70,13 +70,13 @@ namespace etrading
         // these CTOR exists because the day count converter in AlgoQuantLib is not consistent in reverse,
         // which means that we cannot convert year Fractions back to the dates they came from
         // hence they need to be supplied ....
-        LWOCurve(	const std::string& objName,
+        AQOCurve(	const std::string& objName,
                     const std::vector<boost::gregorian::date>& dates,
                     const std::vector<double>& yearFractionsAsActAct,
                     const std::vector<double>& discountFactors,
                     const CurveBuildProperties& curveConvention );
 
-        LWOCurve(	const std::string& objName,
+        AQOCurve(	const std::string& objName,
                     const std::vector<boost::gregorian::date>& dates,
                     const std::vector<double>& yearFractionsAsActAct,
                     const std::vector<double>& discountFactors,
@@ -267,7 +267,7 @@ namespace etrading
             PAYMENT_BUSINESSDAYADJUSTMENT
         };
 
-        boost::gregorian::date adjustFromAsOfDateUsingTenorString( const std::string& tenorString, const BusinessDayAdjustmentType adjType = LWOCurve::PAYMENT_BUSINESSDAYADJUSTMENT ) const;
+        boost::gregorian::date adjustFromAsOfDateUsingTenorString( const std::string& tenorString, const BusinessDayAdjustmentType adjType = AQOCurve::PAYMENT_BUSINESSDAYADJUSTMENT ) const;
 
         const std::pair<const BusinessDayAdjustmentEnum, const AQLMathCalendar*> getBusinessDayAdjust( const BusinessDayAdjustmentType ) const;
 

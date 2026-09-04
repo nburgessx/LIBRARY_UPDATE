@@ -19,7 +19,7 @@ namespace etrading
 	CurveGenerator::CurveGenerator( const std::string& objectName,
                                     const std::vector<std::string>& propertyKeys,
                                     const std::vector<TableInfo>& infoBlocks ) 
-						: IsLWOObject(objectName, CURVE_GENERATOR), 
+						: IsAQObject(objectName, CURVE_GENERATOR), 
 						  freeObject_(objectName),
 						  variantMatrixByKey_(),
 						  stringMatrixByKey_()
@@ -44,7 +44,7 @@ namespace etrading
 	 * @param[in] freeObject    A freeObject constructed from the serialized data
 	 */
 	CurveGenerator::CurveGenerator( const std::string& objectName, const FreeObject& freeObject ) 
-					: IsLWOObject(objectName, CURVE_GENERATOR), 
+					: IsAQObject(objectName, CURVE_GENERATOR), 
 					  freeObject_(freeObject),
 					  variantMatrixByKey_(),
 				      stringMatrixByKey_()
@@ -54,7 +54,7 @@ namespace etrading
 	/* @brief Copy Constructor
 	 */
 	CurveGenerator::CurveGenerator(const CurveGenerator& rhs) 
-		: IsLWOObject(rhs.getRefToName(), CURVE_GENERATOR), 
+		: IsAQObject(rhs.getRefToName(), CURVE_GENERATOR), 
 		  freeObject_(rhs.freeObject_),
 		  variantMatrixByKey_(rhs.variantMatrixByKey_),
 	      stringMatrixByKey_(rhs.stringMatrixByKey_)
@@ -74,7 +74,7 @@ namespace etrading
 	*  @param[in] modifiedValuesLVB		A LabelValueBlock containing key/value pairs to update. Each key is specified in the format: PROPERTYNAME:KEYNAME.
 	*/
 	CurveGenerator::CurveGenerator(const std::string& newObjectName, const CurveGenerator& baseCurveGenerator, const LabelValueBlock& modifiedValuesLVB) 
-		: IsLWOObject(newObjectName, CURVE_GENERATOR), 
+		: IsAQObject(newObjectName, CURVE_GENERATOR), 
 		  freeObject_(newObjectName),
 		  variantMatrixByKey_(),
 	      stringMatrixByKey_()

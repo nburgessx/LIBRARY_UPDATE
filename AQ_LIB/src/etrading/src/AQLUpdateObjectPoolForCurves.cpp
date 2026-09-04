@@ -1,5 +1,5 @@
 //
-// LAUpdateObjectPoolForCurves.cpp
+// AQLUpdateObjectPoolForCurves.cpp
 // This file used to be called CalibratorIR.cpp and before that AQLCalibrateModelIR.cpp
 //
 #ifdef __GNUG__
@@ -9,7 +9,7 @@
 #endif
 
 
-#include "LAUpdateObjectPoolForCurves.h"
+#include "AQLUpdateObjectPoolForCurves.h"
 #include <fstream>
 #include "AQLDataInstance.h"
 #include "AQLFunctionManager.h"
@@ -31,9 +31,9 @@
 #include "AQLMarketData.h"
 #include "AQLPriceArbFreeGenerator.h"
 #include "AQLFunctionUtilities.h"
-#include "LADateHelpers.h"
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLDateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "ParameterValidation.h"
 
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
@@ -48,7 +48,7 @@
 
 #include "BasisCurveCalibration.h"
 #include "CurveCalibration.h"
-#include "LACurveMarketDataHelpers.h"
+#include "AQLCurveMarketDataHelpers.h"
 #include "CurveInstruments.h"
 
 #include "ExceptionMacros.h"
@@ -79,8 +79,8 @@ using namespace std;
 /*!
 
 */
-LAUpdateObjectPoolForCurves::LAUpdateObjectPoolForCurves(const AQLString &baseCurrency)
-: LAObjectPoolBase(), mBaseCurrency(baseCurrency)
+AQLUpdateObjectPoolForCurves::AQLUpdateObjectPoolForCurves(const AQLString &baseCurrency)
+: AQLObjectPoolBase(), mBaseCurrency(baseCurrency)
 {
 }
 
@@ -88,7 +88,7 @@ LAUpdateObjectPoolForCurves::LAUpdateObjectPoolForCurves(const AQLString &baseCu
 /*!
 
 */
-LAUpdateObjectPoolForCurves::~LAUpdateObjectPoolForCurves(void)
+AQLUpdateObjectPoolForCurves::~AQLUpdateObjectPoolForCurves(void)
 {
 }
 
@@ -102,7 +102,7 @@ LAUpdateObjectPoolForCurves::~LAUpdateObjectPoolForCurves(void)
 	@param[out] sde
 */
 void
-LAUpdateObjectPoolForCurves::setInterpolationMethod(const AQLString &currency, AQLRatesSDEBase &sde) const
+AQLUpdateObjectPoolForCurves::setInterpolationMethod(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	(void)currency;
 	sde.setInterpolationMethod(new AQLRatesCurveLinearInterpolation());
@@ -119,7 +119,7 @@ LAUpdateObjectPoolForCurves::setInterpolationMethod(const AQLString &currency, A
 	@param[in] dataInstance
 */
 void
-LAUpdateObjectPoolForCurves::generateSDEMarketData(const AQLString &currency, AQLDataInstance &dataInstance, const bool isCurve, const bool isOthers) const
+AQLUpdateObjectPoolForCurves::generateSDEMarketData(const AQLString &currency, AQLDataInstance &dataInstance, const bool isCurve, const bool isOthers) const
 {
 	if (isCurve)
 	{
@@ -146,7 +146,7 @@ LAUpdateObjectPoolForCurves::generateSDEMarketData(const AQLString &currency, AQ
 	@param[in/out] dataInstance
 */
 void
-LAUpdateObjectPoolForCurves::generateInitialValueFwdFXConst(const AQLString &currency, AQLDataInstance &dataInstance) const
+AQLUpdateObjectPoolForCurves::generateInitialValueFwdFXConst(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	if (!isFwdFXConst(currency))
 		return;
@@ -337,7 +337,7 @@ LAUpdateObjectPoolForCurves::generateInitialValueFwdFXConst(const AQLString &cur
 
 	@param[in/out] dataInstance
 */
-void LAUpdateObjectPoolForCurves::generateInitialValueCheapestToDeliver(const AQLString &currency, AQLDataInstance &dataInstance) const
+void AQLUpdateObjectPoolForCurves::generateInitialValueCheapestToDeliver(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	AQLString ccy = currency; 
 	ccy.toLower();
@@ -514,7 +514,7 @@ void LAUpdateObjectPoolForCurves::generateInitialValueCheapestToDeliver(const AQ
 	@param[in] objPool
 */
 void
-LAUpdateObjectPoolForCurves::convertCurveName(const AQLString &propCurve, const AQLString &ccy, AQLString &curveCcy, AQLString &curveName, const bool isPricer, AQLObjectPool& objPool) const
+AQLUpdateObjectPoolForCurves::convertCurveName(const AQLString &propCurve, const AQLString &ccy, AQLString &curveCcy, AQLString &curveName, const bool isPricer, AQLObjectPool& objPool) const
 {
 	if (propCurve.findString(DUMMY) >= 0)
 	{
@@ -556,7 +556,7 @@ LAUpdateObjectPoolForCurves::convertCurveName(const AQLString &propCurve, const 
 	@return accessory
 */
 const AQLString
-LAUpdateObjectPoolForCurves::getAccFromFreq(const AQLString &freq_) const
+AQLUpdateObjectPoolForCurves::getAccFromFreq(const AQLString &freq_) const
 {
 	AQLString freq = freq_;
 	freq.toUpper();
@@ -594,7 +594,7 @@ LAUpdateObjectPoolForCurves::getAccFromFreq(const AQLString &freq_) const
 	@param[out] dataInstance
 */
 void
-LAUpdateObjectPoolForCurves::generateInitialValueDualBootstrap(const AQLString &currency, AQLDataInstance &dataInstance) const
+AQLUpdateObjectPoolForCurves::generateInitialValueDualBootstrap(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	if (mCurveGenCcyMap[currency]) return;
 
@@ -880,7 +880,7 @@ LAUpdateObjectPoolForCurves::generateInitialValueDualBootstrap(const AQLString &
 @param[in] currency  currency of the curve
 @param[out] dataInstance
 */
-void LAUpdateObjectPoolForCurves::generateInitialValueGlobalEngineCurves(const AQLString &currency, AQLDataInstance &dataInstance) const
+void AQLUpdateObjectPoolForCurves::generateInitialValueGlobalEngineCurves(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	if (mCurveGenCcyMap[currency]) return;
 
@@ -1117,7 +1117,7 @@ void LAUpdateObjectPoolForCurves::generateInitialValueGlobalEngineCurves(const A
 /*!
     @brief 
 */
-void LAUpdateObjectPoolForCurves::configureCurve(AQLStaticData *mpStaticData,
+void AQLUpdateObjectPoolForCurves::configureCurve(AQLStaticData *mpStaticData,
 							BasisCurveCalibration *basisCurveEngine,
 							AQLMathYieldCurve *yc,
 							AQLDataInstance &dataInstance,
@@ -1478,7 +1478,7 @@ void LAUpdateObjectPoolForCurves::configureCurve(AQLStaticData *mpStaticData,
 		map<AQLString, map<AQLString, double> >::const_iterator it = aud_origSwapRate.begin();
 		while (it != aud_origSwapRate.end())
 		{
-			LACurveMarketDataHelpers::restoreSwapRateFromL(*basisCurveEngine, it->second, currency, &(it->first));
+			AQLCurveMarketDataHelpers::restoreSwapRateFromL(*basisCurveEngine, it->second, currency, &(it->first));
 			++it;
 		}
 	}
@@ -1542,7 +1542,7 @@ void LAUpdateObjectPoolForCurves::configureCurve(AQLStaticData *mpStaticData,
 	@param[out] dataInstance
 */
 void
-LAUpdateObjectPoolForCurves::generateInitialValue(const AQLString &currency, AQLDataInstance &dataInstance) const
+AQLUpdateObjectPoolForCurves::generateInitialValue(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	if (mCurveGenCcyMap[currency]) return;
 
@@ -2282,7 +2282,7 @@ LAUpdateObjectPoolForCurves::generateInitialValue(const AQLString &currency, AQL
 		map<AQLString, map<AQLString, double> >::const_iterator it = aud_origSwapRate.begin();
 		while (it != aud_origSwapRate.end())
 		{
-			LACurveMarketDataHelpers::restoreSwapRateFromL(*basisCurveEngine, it->second, currency, &(it->first));
+			AQLCurveMarketDataHelpers::restoreSwapRateFromL(*basisCurveEngine, it->second, currency, &(it->first));
 			++it;
 		}
 	}
@@ -2349,7 +2349,7 @@ LAUpdateObjectPoolForCurves::generateInitialValue(const AQLString &currency, AQL
 	@param[out] yc
 */
 void
-LAUpdateObjectPoolForCurves::setUpCurveTypeDayCount(BasisCurveCalibration &basisCurveEngine, AQLMathYieldCurve &yc) const
+AQLUpdateObjectPoolForCurves::setUpCurveTypeDayCount(BasisCurveCalibration &basisCurveEngine, AQLMathYieldCurve &yc) const
 {
 	// set daycount
 	const map<AQLString, AQLString> &assignedCurveMktMap = basisCurveEngine.getAssignedCurveMktMap();
@@ -2375,7 +2375,7 @@ LAUpdateObjectPoolForCurves::setUpCurveTypeDayCount(BasisCurveCalibration &basis
 	@param[out] dataInstance
 */
 void
-LAUpdateObjectPoolForCurves::generateInitialValueArbfree(const AQLString &currency, AQLDataInstance &dataInstance) const
+AQLUpdateObjectPoolForCurves::generateInitialValueArbfree(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	AQLString tmpCurrency = currency;
 	tmpCurrency.toLower();
@@ -2938,7 +2938,7 @@ LAUpdateObjectPoolForCurves::generateInitialValueArbfree(const AQLString &curren
 	@param[in] dataInstance
 */
 void
-LAUpdateObjectPoolForCurves::generateCorrelation(const AQLString &currency, AQLDataInstance &dataInstance) const
+AQLUpdateObjectPoolForCurves::generateCorrelation(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	AQLString sdeName = getSDEAttrName(currency);
 	AQLString type = getCorTye(currency);
@@ -2984,7 +2984,7 @@ LAUpdateObjectPoolForCurves::generateCorrelation(const AQLString &currency, AQLD
 	@return AQLString
 */
 AQLString
-LAUpdateObjectPoolForCurves::getSDEAttrName(const AQLString &currency) const
+AQLUpdateObjectPoolForCurves::getSDEAttrName(const AQLString &currency) const
 {
 	AQLString key_ccy = currency;
 	return  mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
@@ -3000,7 +3000,7 @@ LAUpdateObjectPoolForCurves::getSDEAttrName(const AQLString &currency) const
 	@return AQLString
 */
 AQLString
-LAUpdateObjectPoolForCurves::getGridStaticData(const AQLString &key, const AQLString &curve, const AQLString &grid) const
+AQLUpdateObjectPoolForCurves::getGridStaticData(const AQLString &key, const AQLString &curve, const AQLString &grid) const
 {
 	return etrading::getGridStaticData(mpStaticData, key, curve, grid);
 }
@@ -3010,7 +3010,7 @@ LAUpdateObjectPoolForCurves::getGridStaticData(const AQLString &key, const AQLSt
     @brief fuction to set up generate configuration
 */
 void
-LAUpdateObjectPoolForCurves::setUpGenerateConfig
+AQLUpdateObjectPoolForCurves::setUpGenerateConfig
 (AQLDataInstance &dataInstance, const AQLDate &asOfDate, const AQLString &currency, AQLMathYieldCurve &yc, BasisCurveCalibration &basisCurveEngine,
  AQLObject &ycData, bool &isAudExtra, bool &isSwapTenorAdjust, bool &isSpotUse, bool isArbFree, const AQLString& suffix, const AQLString& epSuffix) const
 {
@@ -3354,7 +3354,7 @@ LAUpdateObjectPoolForCurves::setUpGenerateConfig
     @brief fuction to set up basis curve data
 */
 void
-LAUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &curveCurrency, 
+AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &curveCurrency, 
 									  const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse, BasisCurveCalibration &basisCurveEngine, const AQLString& currentCurveName, const AQLString* pMktCurrency) const
 {
 	AQLString mktCurrency = pMktCurrency ? *pMktCurrency : curveCurrency;
@@ -3913,7 +3913,7 @@ LAUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance, 
 			else 
 			{
 				// Use fixingSource to obtain an external yieldCurvePro
-				AQLString foreignYcProName = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + fixingSource;
+				AQLString foreignYcProName = etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + fixingSource;
 				foreignYcProName.toUpper();
 
 				BasisCurveCalibration* foreignYieldCurvePro = NULL;
@@ -4143,7 +4143,7 @@ LAUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance, 
 		fastRebuild = true;
 	}
 
-	const AQLDate date1Y = etrading::LADateHelpers::getDate(asOfDate, "1Y", true);
+	const AQLDate date1Y = etrading::AQLDateHelpers::getDate(asOfDate, "1Y", true);
 	double ndfSize = 0.0;
 	for (unsigned int j = 0; j < fwdFXSize + basisSize; ++j)
 	{
@@ -4202,7 +4202,7 @@ LAUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance, 
 			if (fCurve == FIXEDRATE && dCurve == FIXEDRATE)
 			{
 				AQLString ndfTerm = basisDataMtx[j][0].toUpper();
-				const AQLDate date = etrading::LADateHelpers::getDate(asOfDate, ndfTerm, true);
+				const AQLDate date = etrading::AQLDateHelpers::getDate(asOfDate, ndfTerm, true);
 				
 				if (date <= date1Y)
 				{
@@ -4506,7 +4506,7 @@ LAUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance, 
     @brief fuction to set up 36 basis curve dummy data
 */
 void
-LAUpdateObjectPoolForCurves::setUp36BasisDummyData(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &currency, 
+AQLUpdateObjectPoolForCurves::setUp36BasisDummyData(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &currency, 
 									    const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse, 
 										BasisCurveCalibration &basisCurveEngine) const
 {
@@ -4609,7 +4609,7 @@ LAUpdateObjectPoolForCurves::setUp36BasisDummyData(AQLDataInstance &dataInstance
     @brief fuction to set up base curve data
 */
 void 
-LAUpdateObjectPoolForCurves::setUpGenCurveData(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &currency, 
+AQLUpdateObjectPoolForCurves::setUpGenCurveData(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &currency, 
 									const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse,
 									bool isAudExtra, BasisCurveCalibration &basisCurveEngine, 
 									std::map<AQLString, std::map<AQLString, double> > &aud_origSwapRate, const AQLString& curveName) const
@@ -4912,12 +4912,12 @@ LAUpdateObjectPoolForCurves::setUpGenCurveData(AQLDataInstance &dataInstance, AQ
 			else if (futureDataMtx[i].size() == 3)
 			{
 				term = futureDataMtx[i][0].toUpper();
-				startDate = etrading::LADateHelpers::getIMMDateFromTerm(asOfDate, term);
-				startDate = etrading::LADateHelpers::getDate(startDate, "0d", slidingF, &calF, true);
-				endDate = etrading::LADateHelpers::getDate(startDate, "3M", slidingF, &calF, true);
+				startDate = etrading::AQLDateHelpers::getIMMDateFromTerm(asOfDate, term);
+				startDate = etrading::AQLDateHelpers::getDate(startDate, "0d", slidingF, &calF, true);
+				endDate = etrading::AQLDateHelpers::getDate(startDate, "3M", slidingF, &calF, true);
 				int mm = endDate.monthOfYear();
 				int yy = endDate.yearOfEra();
-				endDate = etrading::LADateHelpers::getIMMDate(yy, mm, true);
+				endDate = etrading::AQLDateHelpers::getIMMDate(yy, mm, true);
 				
 				futurePrice = futureDataMtx[i][1].getDoubleValue();
 				rate = 1.0 - futurePrice * 0.01;
@@ -5211,7 +5211,7 @@ LAUpdateObjectPoolForCurves::setUpGenCurveData(AQLDataInstance &dataInstance, AQ
 			proc.estimate(asOfDate);
 			
 			//reset market data as libor
-			LACurveMarketDataHelpers::resetMarketDataUseL(basisCurveEngine, currency, &marketName);
+			AQLCurveMarketDataHelpers::resetMarketDataUseL(basisCurveEngine, currency, &marketName);
 			resetFlg = false;
 			if (marketName != SWAP)
 			{
@@ -5430,7 +5430,7 @@ LAUpdateObjectPoolForCurves::setUpGenCurveData(AQLDataInstance &dataInstance, AQ
     @brief fuction to set up base curve data
 */
 void 
-LAUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &currency, 
+AQLUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &currency, 
 									const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse,
 									bool isAudExtra, BasisCurveCalibration &basisCurveEngine, 
 									std::map<AQLString, std::map<AQLString, double> > &aud_origSwapRate) const
@@ -5642,7 +5642,7 @@ LAUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance,
             // LongTermGenerate Methodolgy Defaults are managed within the in calcEffectiveOISRate method, see CurveCalibration.cpp
 			longTermGen = AQLString("NONE");
 		}
-		date_lt = etrading::LADateHelpers::getDate(asOfDate, longTerm, true);
+		date_lt = etrading::AQLDateHelpers::getDate(asOfDate, longTerm, true);
 		AQLString lobasisFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix);
 		AQLFileAccessor lobasisFile(AQLMarketData::getNumFileName(lobasisFileName));
 		lobasisFile.readAllData(MARKET_DATA_DELIMITER, lobasisDataMtx);
@@ -5725,7 +5725,7 @@ LAUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance,
 			for (size_t i = 0; i < lobasisDataMtx.size(); ++i)
 			{
 				AQLString term = lobasisDataMtx[i][0].toUpper();
-				const AQLDate date = etrading::LADateHelpers::getDate(asOfDate, term, true);
+				const AQLDate date = etrading::AQLDateHelpers::getDate(asOfDate, term, true);
 
 				if (date >= date_lt)
 				{
@@ -5956,7 +5956,7 @@ LAUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance,
 			}
 
 			// Skip tenors whose end date is below the 'longTermTenor'
-			const AQLDate date = etrading::LADateHelpers::getDate(asOfDate, term, true);
+			const AQLDate date = etrading::AQLDateHelpers::getDate(asOfDate, term, true);
 			if (date < date_lt)
 			{
 				continue;
@@ -6145,7 +6145,7 @@ LAUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance,
 		else //FF non startdate type
 		{
 			AQLString term = fedFundFutureDataMtx[i][0].toUpper();
-			DateVector ffdates = etrading::LADateHelpers::getFFDatesFromTerm(asOfDate,term);
+			DateVector ffdates = etrading::AQLDateHelpers::getFFDatesFromTerm(asOfDate,term);
 			if (ffdates.size() != 2)
                 throw AQLCoreInvalidData("#Error: FF Dates Data must contain 2 columns. FF dates error",__FILE__,__LINE__);
 
@@ -6257,7 +6257,7 @@ LAUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance,
 }
 
 void 
-LAUpdateObjectPoolForCurves::setUpFloater(const AQLString &currency, BasisCurveCalibration &basisCurveEngine, const AQLString &genFloaterName) const
+AQLUpdateObjectPoolForCurves::setUpFloater(const AQLString &currency, BasisCurveCalibration &basisCurveEngine, const AQLString &genFloaterName) const
 {
 	AQLStringVector markets = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_USEMAKETS).toToken(MULTI_STATIC_DATA_DELIMITER);
 	uppervec(markets);
@@ -6300,13 +6300,13 @@ LAUpdateObjectPoolForCurves::setUpFloater(const AQLString &currency, BasisCurveC
 }
 
 void
-LAUpdateObjectPoolForCurves::setUpCurveDataByReadFile( AQLDataInstance &dataInstance, const AQLDate& asOfDate, const AQLString& currency, 
+AQLUpdateObjectPoolForCurves::setUpCurveDataByReadFile( AQLDataInstance &dataInstance, const AQLDate& asOfDate, const AQLString& currency, 
 										    const AQLString& marketName, const AQLString& yieldDataName, BasisCurveCalibration &basisCurveEngine ) const
 {
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	AQLObjectHolder objHolder = objPool.getObject(yieldDataName, ENCHKTYPE_NOCHECK );
 	if (!objHolder.isDefined() )
-		throw AQLCoreInvalidData("yield Object is not set! LAUpdateObjectPoolForCurves::setUpCurveDataByReadFile", __FILE__, __LINE__ );
+		throw AQLCoreInvalidData("yield Object is not set! AQLUpdateObjectPoolForCurves::setUpCurveDataByReadFile", __FILE__, __LINE__ );
 	
 	AQLObject &eData = objHolder.get();
 
@@ -6400,7 +6400,7 @@ LAUpdateObjectPoolForCurves::setUpCurveDataByReadFile( AQLDataInstance &dataInst
 }
 
 void 
-LAUpdateObjectPoolForCurves::dataoutCurve(const AQLStringVector &curveNames, AQLObject &eData, const AQLString &yieldDataName) const
+AQLUpdateObjectPoolForCurves::dataoutCurve(const AQLStringVector &curveNames, AQLObject &eData, const AQLString &yieldDataName) const
 {
 	for(unsigned int i = 0; i < curveNames.size(); i++)
 	{
@@ -6499,22 +6499,22 @@ LAUpdateObjectPoolForCurves::dataoutCurve(const AQLStringVector &curveNames, AQL
 
 
 bool 
-LAUpdateObjectPoolForCurves::checkFrequency(const AQLString& freq, const AQLString& mktRateTerm) const
+AQLUpdateObjectPoolForCurves::checkFrequency(const AQLString& freq, const AQLString& mktRateTerm) const
 {
-	int span = etrading::LADateHelpers::getOnePeriodOfFrequency(freq);
+	int span = etrading::AQLDateHelpers::getOnePeriodOfFrequency(freq);
 
 	int y, m, d, w;
-    etrading::LADateHelpers::termStrtoYMDW(mktRateTerm, y, m, d, w);
+    etrading::AQLDateHelpers::termStrtoYMDW(mktRateTerm, y, m, d, w);
 	int moth_mkt_term = 12 * y + m;
 
 	return (moth_mkt_term % span) == 0;
 }
 
 ///// update for XLL Plus //////////////////////////
-#include "LAUpdateObjectPoolForCurvesAndModels.h"
+#include "AQLUpdateObjectPoolForCurvesAndModels.h"
 
 void
-LAUpdateObjectPoolForCurves::generateInitialValueForPricer(const AQLString &currency, AQLDataInstance &dataInstance) const
+AQLUpdateObjectPoolForCurves::generateInitialValueForPricer(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	AQLString tmpCurrency = currency;
 	tmpCurrency.toLower();
@@ -6620,7 +6620,7 @@ LAUpdateObjectPoolForCurves::generateInitialValueForPricer(const AQLString &curr
 }
 
 void 
-LAUpdateObjectPoolForCurves::setUpCurveDataByContext(BasisCurveCalibration &basisCurveEngine, AQLObject *eData, const AQLString& currency, const AQLString& marketName ) const
+AQLUpdateObjectPoolForCurves::setUpCurveDataByContext(BasisCurveCalibration &basisCurveEngine, AQLObject *eData, const AQLString& currency, const AQLString& marketName ) const
 {
 	AQLString prefix = currency;
 	prefix.toLower();

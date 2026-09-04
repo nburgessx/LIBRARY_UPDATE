@@ -300,7 +300,7 @@ namespace etrading
         }
     }
 
-	std::shared_ptr<IsLWOObject> Environment::accessObjectInterface( const std::string& objectName, const CachedObjectEnum objectType )
+	std::shared_ptr<IsAQObject> Environment::accessObjectInterface( const std::string& objectName, const CachedObjectEnum objectType )
 	{
         if(Environment::functionsForCachedObjectMap_.count(objectType) == 1)
         {
@@ -316,17 +316,17 @@ namespace etrading
 	// Template Specializations
 	// ------------------------
 
-    // specialization for LWOCurve, this delegates to 
-    // const unsigned int environment_implementation::eraseAllObjects<LWOCurve>( Environment& env )
+    // specialization for AQOCurve, this delegates to 
+    // const unsigned int environment_implementation::eraseAllObjects<AQOCurve>( Environment& env )
     // required because we need to clear the corresponding EntityPool Curve
     template <>
-    const unsigned int Environment::deleteAllObjects<LWOCurve>()
+    const unsigned int Environment::deleteAllObjects<AQOCurve>()
     {
         return deleteAllObjects(CURVE_DEPRECATED); // needs to call the deletion of the object pool ...
     };
 
 	template <>
-    const bool Environment::deleteObject<LWOCurve>( const std::string& objectName )
+    const bool Environment::deleteObject<AQOCurve>( const std::string& objectName )
     {
         return deleteObject(objectName, CURVE_DEPRECATED); // needs to call the deletion of the object pool ...
     };

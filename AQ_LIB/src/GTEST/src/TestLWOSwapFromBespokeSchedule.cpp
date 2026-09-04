@@ -34,7 +34,7 @@ namespace
 	const double deltaTolerance = 25.0;
 
 
-	const std::string TEST_DIR = "ETrading/LWObjects/TestLWOSwapFromBespokeSchedule/";
+	const std::string TEST_DIR = "ETrading/AQObjects/TestLWOSwapFromBespokeSchedule/";
 
     //
     // curve input files

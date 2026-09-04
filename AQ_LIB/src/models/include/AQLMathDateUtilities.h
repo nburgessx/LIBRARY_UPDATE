@@ -81,7 +81,7 @@ public:
                                         const AQLString *					rollConvention );
 
 	// Generate a Date Schedule with appropriate use of stubs
-	// Note that there is a duplicate method LADateScheduleHelpers::generateSchedule
+	// Note that there is a duplicate method AQLDateScheduleHelpers::generateSchedule
 	// Default Short/Long Start is determined by AQLMathDateUtilities::getStubDateAndType
 	static DateVector generateSchedule(const AQLDate&		unadjustedStart,
 									   const AQLDate&		unadjustedEnd,

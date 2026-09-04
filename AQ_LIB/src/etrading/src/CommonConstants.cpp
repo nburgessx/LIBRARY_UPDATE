@@ -2,9 +2,9 @@
 
 namespace etrading
 {
-	namespace LWO_KEY
+	namespace AQO_KEY
 	{
-		const std::string LWO_OBJECT_COUNTER_DELIMITER			= ":";
+		const std::string AQO_OBJECT_COUNTER_DELIMITER			= ":";
 	}
 
     namespace OBJECT_KEY
@@ -244,8 +244,8 @@ namespace etrading
 
     namespace BOND_KEY
     {
-        const std::string LWO_BOND_DESCRIPTION_LVB        = "BOND_DESCRIPTION_PARAMETERS";  // LWO SERIALIZATION LABEL FOR BOND DESCRIPTION LVB
-        const std::string LWO_BOND_SCHEDULE_LVB           = "BOND_SCHEDULE_PARAMETERS";     // LWO SERIALIZATION LABEL FOR BOND SCHEDULE LVB
+        const std::string AQO_BOND_DESCRIPTION_LVB        = "BOND_DESCRIPTION_PARAMETERS";  // LWO SERIALIZATION LABEL FOR BOND DESCRIPTION LVB
+        const std::string AQO_BOND_SCHEDULE_LVB           = "BOND_SCHEDULE_PARAMETERS";     // LWO SERIALIZATION LABEL FOR BOND SCHEDULE LVB
 
 
         const std::string BOND_DESCRIPTION                = "BONDDESCRIPTION";

@@ -1,6 +1,6 @@
 #include "tryMirGetDF.h"
 
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -114,7 +114,7 @@ namespace validation
         defaultingAndValidation1( interp, daycount, curveNm, isBasisFlag );
 
         // Get DF
-        DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( terms, dataInstance, curveID, daycount, interp, isBasisFlag, curveNm );
+        DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiDF( terms, dataInstance, curveID, daycount, interp, isBasisFlag, curveNm );
 
         if ( ret.size() == 0 )
         {
@@ -185,7 +185,7 @@ namespace validation
         AQLString cal( calendar );
         defaultingAndValidation2( interp, daycount, curveNm, slideRule, cal, isBasisFlag );
 
-        DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( terms, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
+        DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiDF( terms, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
 
         if ( ret.size() == 0 )
         {
@@ -283,7 +283,7 @@ namespace validation
         AQLString cal( calendar );
         defaultingAndValidation2( interp, daycount, curveNm, slideRule, cal, isBasisFlag );
 
-        DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( fromDateVec, toDates, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
+        DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiDF( fromDateVec, toDates, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
 
         if ( ret.size() == 0 )
         {
@@ -364,7 +364,7 @@ namespace validation
         AQLString cal( calendar );
         defaultingAndValidation2( interp, daycount, curveNm, slideRule, cal, isBasisFlag );
 
-        DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( fromDates, terms, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
+        DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiDF( fromDates, terms, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
 
         if ( ret.size() == 0 )
         {
@@ -437,7 +437,7 @@ namespace validation
         AQLString cal( calendar );
         defaultingAndValidation2( interp, daycount, curveNm, slideRule, cal, isBasisFlag );
 
-        DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( fromDates, term, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
+        DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiDF( fromDates, term, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
 
         if ( ret.size() == 0 )
         {

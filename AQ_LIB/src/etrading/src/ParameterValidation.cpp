@@ -4,14 +4,14 @@
 #include "AQLStaticData.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataInterpolation.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 
 #include "CommonConstants.h"
 #include "ContainerUtilities.h"
 #include "CurveValidation.h"        // getCurveAsOfDate
 #include "InitializeETrading.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 
 #include <cctype>
 #include <utility>
@@ -53,7 +53,7 @@ namespace etrading
     */
     bool isLastDayOfMonth( const AQLDate& date, const AQLString& cal )
     {
-        const AQLDate nextDay = LADateScheduleHelpers::getDate( date, "1d", "FOLLOWING", cal );
+        const AQLDate nextDay = AQLDateScheduleHelpers::getDate( date, "1d", "FOLLOWING", cal );
         return nextDay.monthOfYear() != date.monthOfYear();
     }
 
@@ -94,10 +94,10 @@ namespace etrading
 				}
                 try
                 {
-                    outDate =  LADateScheduleHelpers::getLADate( inDate );
+                    outDate =  AQLDateScheduleHelpers::getLADate( inDate );
                 
                     // Return Valid Dates only
-                    if ( LADateScheduleHelpers::isValidDate( outDate ) )
+                    if ( AQLDateScheduleHelpers::isValidDate( outDate ) )
                     {
                         return outDate;
                     }
@@ -115,7 +115,7 @@ namespace etrading
                     outDate = AQLDate( inDate.getCString(), "YYYYMMDD" );
 
                     // Return Valid Dates only
-                    if ( LADateScheduleHelpers::isValidDate( outDate ) )
+                    if ( AQLDateScheduleHelpers::isValidDate( outDate ) )
                     {
                         return outDate;
                     }
@@ -125,10 +125,10 @@ namespace etrading
                 // 2b) Try Excel Date Format
                 try
                 {
-                    outDate =  LADateScheduleHelpers::getLADate( inDate );
+                    outDate =  AQLDateScheduleHelpers::getLADate( inDate );
                 
                     // Return Valid Dates only
-                    if ( LADateScheduleHelpers::isValidDate( outDate ) )
+                    if ( AQLDateScheduleHelpers::isValidDate( outDate ) )
                     {
                         return outDate;
                     }
@@ -204,7 +204,7 @@ namespace etrading
             }
 
             // Check if Date is Valid and throw when Invalid
-            if( !LADateScheduleHelpers::isValidDate( outDate ) )
+            if( !AQLDateScheduleHelpers::isValidDate( outDate ) )
             {
                 if ( err.size() != 0 )
                 {
@@ -280,7 +280,7 @@ namespace etrading
         AQLString cal = calendar;
         if( calendar == AQLString( "" ) || calendar == nullptr )
         {
-            AQLPriceDataCalendar calAttr = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( getDataInstance(), curveCollection ).getCalendar();
+            AQLPriceDataCalendar calAttr = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID( getDataInstance(), curveCollection ).getCalendar();
             if ( !calAttr.isNull() )
             {
                 cal  = calAttr.convertToString();
@@ -430,14 +430,14 @@ namespace etrading
 		// Check if Maturity End Date is a Tenor or Date and Convert to a Date, if required
 		if (!isInputStrInDateFormat)
 		{
-			AQ_REQUIRE(LADateScheduleHelpers::isValidDate(startDate), "Invalid Date: Unable to convert tenor to a date");
+			AQ_REQUIRE(AQLDateScheduleHelpers::isValidDate(startDate), "Invalid Date: Unable to convert tenor to a date");
 
 			//endDateStr is a tenor
-			endDate = LADateScheduleHelpers::getDate(startDate, endDateStr, businessDayAdjustment, calendar); 
+			endDate = AQLDateScheduleHelpers::getDate(startDate, endDateStr, businessDayAdjustment, calendar); 
 
 		}
 
-		AQ_REQUIRE(LADateScheduleHelpers::isValidDate(endDate), "Invalid Date " + endDateStr)
+		AQ_REQUIRE(AQLDateScheduleHelpers::isValidDate(endDate), "Invalid Date " + endDateStr)
 		return endDate;
 	}
 

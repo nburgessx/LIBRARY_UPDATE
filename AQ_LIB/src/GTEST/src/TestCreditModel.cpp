@@ -14,7 +14,7 @@
 #include <boost/range/irange.hpp>
 
 #include "CurveOis.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 
 #include "tryMeLWOSwapPricing.h"
 #include "JSONInfoBlock.h"          // JSON InfoBlock Helpers
@@ -30,7 +30,7 @@
 using etrading::ReadDataFile;
 
 // Define the Test Input Folder Here
-#define TEST_DIR			  "ETrading/LWObjects/TestLWOCreditModel/"
+#define TEST_DIR			  "ETrading/AQObjects/TestLWOCreditModel/"
 
 
 namespace
@@ -347,7 +347,7 @@ namespace
 
 			// 2. Check consistency between calibration hazard rate and API hazard rate
 			AQLDate fromDate;
-			AQLDate toDate = etrading::LADateScheduleHelpers::getLADate( maturityDateAsInt );
+			AQLDate toDate = etrading::AQLDateScheduleHelpers::getLADate( maturityDateAsInt );
 			double apiHazardRate = validation::tryMeLWOCreditModelHazardRate( creditModelName, toDate );
 			ASSERT_NEAR( hazardRate, apiHazardRate, tolerance ) << "#Error: Mismatch in hazard rate";
 
@@ -360,7 +360,7 @@ namespace
 				// 4. Check consistency between calibration default probabability and API marginal default probability
 				double marginalDefaultProbability = defaultProbability - prevDefaultProbability;
 
-				fromDate = etrading::LADateScheduleHelpers::getLADate( prevMaturityDateAsInt );
+				fromDate = etrading::AQLDateScheduleHelpers::getLADate( prevMaturityDateAsInt );
 				double apiMarginalDefaultProbability = validation::tryMeLWOCreditModelDefaultProbability( creditModelName, toDate, fromDate );
 				ASSERT_NEAR( marginalDefaultProbability, apiMarginalDefaultProbability, tolerance ) << "#Error: Mismatch in marginal default probability";
 			}
@@ -396,7 +396,7 @@ namespace
 
 		// Check consistency between calibration survival probability and API survival probability at the final calibration point
 		const AQLDate asOfDate = validation::tryMeLWOCreditModelAsOfDate( creditModelName );
-		AQLDate toDate = etrading::LADateScheduleHelpers::getLADate( maturityDateAsInt );
+		AQLDate toDate = etrading::AQLDateScheduleHelpers::getLADate( maturityDateAsInt );
 		const double apiSurvivalProbability = validation::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate, asOfDate );
 		ASSERT_NEAR( survivalProbability, apiSurvivalProbability, tolerance ) << "#Error: Mismatch in survival probability";
 

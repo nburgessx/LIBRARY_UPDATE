@@ -9,7 +9,7 @@
  * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 #include "CurveEngine.h"
-#include "LAUpdateStaticDataManager.h"      // LA Curve Calibration
+#include "AQLUpdateStaticDataManager.h"      // LA Curve Calibration
 #include "ParameterValidation.h"            // etrading::getDataInstance()
 #include "CurveValidation.h"                // Get Curve Information e.g. AsOfDate, Interpolation et al.
 #include "CurveUtilities.h"                 // Curve Interpolation Join Date
@@ -1594,7 +1594,7 @@ namespace etrading
         AQ_REQUIRE( arrCurveData_ != nullptr, "ARR Curve Market Data is Missing" )
 
 		// 1. Curve Static ARR Data
-		etrading::LAUpdateStaticDataManager::loadStaticDataOISCurve( getDataInstance(),
+		etrading::AQLUpdateStaticDataManager::loadStaticDataOISCurve( getDataInstance(),
 																	 curveDescription_->curveCollection().c_str(),
 																	 curveDescription_->objectPoolLookupTable().c_str(),
 																	 arrCurveData_->curveConvLVB_.toLAStringMatrix(),      // Use LVB for Convention Data Lookups
@@ -1607,7 +1607,7 @@ namespace etrading
 																	 arrCurveData_->swapRates_,
 																	 arrCurveData_->swapConvLVB_.toLAStringMatrix() );
 		// 2. Calibrate ARR Curve
-		LAUpdateStaticDataManager::calibrateOISCurve( getDataInstance(),
+		AQLUpdateStaticDataManager::calibrateOISCurve( getDataInstance(),
 													  curveDescription_->curveCollection().c_str(),
 													  curveDescription_->objectPoolLookupTable().c_str(),
 													  arrCurveData_->curveConvLVB_.toLAStringMatrix() );
@@ -1622,7 +1622,7 @@ namespace etrading
         AQ_REQUIRE( oisCurveData_ != nullptr, "OIS Curve Market Data is Missing" )
 		
         // 1. Curve Static OIS Data
-		etrading::LAUpdateStaticDataManager::loadStaticDataOISCurve( getDataInstance(),
+		etrading::AQLUpdateStaticDataManager::loadStaticDataOISCurve( getDataInstance(),
 																	 curveDescription_->curveCollection().c_str(),
 																	 curveDescription_->objectPoolLookupTable().c_str(),
 																	 oisCurveData_->curveConvLVB_.toLAStringMatrix(),      // Use LVB for Convention Data Lookups
@@ -1635,7 +1635,7 @@ namespace etrading
 																	 oisCurveData_->swapRates_,
 																	 oisCurveData_->swapConvLVB_.toLAStringMatrix() );
 		// 2. Calibrate OIS Curve
-		LAUpdateStaticDataManager::calibrateOISCurve( getDataInstance(),
+		AQLUpdateStaticDataManager::calibrateOISCurve( getDataInstance(),
 													  curveDescription_->curveCollection().c_str(),
 													  curveDescription_->objectPoolLookupTable().c_str(),
 													  oisCurveData_->curveConvLVB_.toLAStringMatrix() );
@@ -1650,7 +1650,7 @@ namespace etrading
         AQ_REQUIRE( swapCurveData_ != nullptr, "Swap Curve Market Data is Missing" )
 
         // 1. Load Curve Static Data
-        LAUpdateStaticDataManager::loadStaticDataSwapCurve( etrading::getDataInstance(),
+        AQLUpdateStaticDataManager::loadStaticDataSwapCurve( etrading::getDataInstance(),
 															curveDescription_->curveCollection().c_str(),
 															curveDescription_->objectPoolLookupTable().c_str(),
 															swapCurveData_->curveConvLVB_.toLAStringMatrix(),        // Use LVB for Convention Data Lookups
@@ -1669,7 +1669,7 @@ namespace etrading
 															curveDescription_->curveIndexList().c_str(),
 															"" ); // curveName_DF2
 		// 2. Calibrate Curve
-		LAUpdateStaticDataManager::calibrateSwapCurve( etrading::getDataInstance(),
+		AQLUpdateStaticDataManager::calibrateSwapCurve( etrading::getDataInstance(),
 													   curveDescription_->curveCollection().c_str(),
 													   curveDescription_->objectPoolLookupTable().c_str(),
 													   swapCurveData_->curveConvLVB_.toLAStringMatrix() );
@@ -1683,7 +1683,7 @@ namespace etrading
         AQ_REQUIRE( tenorBasisCurveData_ != nullptr, "Tenor Basis Curve Market Data is Missing" )
 
         // 1. Load Curve Static Data
-        LAUpdateStaticDataManager::loadStaticDataBasisCurve( etrading::getDataInstance(),
+        AQLUpdateStaticDataManager::loadStaticDataBasisCurve( etrading::getDataInstance(),
 															 curveDescription_->curveCollection().c_str(),
 															 curveDescription_->objectPoolLookupTable().c_str(),
 															 tenorBasisCurveData_->basisRates_,
@@ -1699,7 +1699,7 @@ namespace etrading
 															 tenorBasisCurveData_->liborConvLVB_.toLAStringMatrix(),         // Use LVB for Convention Data Lookups
 															 tenorBasisCurveData_->liborRates_ );
 		// 2. Calibrate Curve
-		LAUpdateStaticDataManager::calibrateBasisCurve( etrading::getDataInstance(),
+		AQLUpdateStaticDataManager::calibrateBasisCurve( etrading::getDataInstance(),
 														curveDescription_->curveCollection().c_str(),
 														curveDescription_->objectPoolLookupTable().c_str(),
 														tenorBasisCurveData_->curveConvLVB_.toLAStringMatrix() );
@@ -1713,7 +1713,7 @@ namespace etrading
         AQ_REQUIRE( xccyBasisCurveData_ != nullptr, "Xccy Basis Curve Market Data is Missing" )
 
         // 1. Load Curve Static Data
-        LAUpdateStaticDataManager::loadStaticDataBasisCurve( etrading::getDataInstance(),
+        AQLUpdateStaticDataManager::loadStaticDataBasisCurve( etrading::getDataInstance(),
 															 curveDescription_->curveCollection().c_str(), // domestic curve
 															 curveDescription_->objectPoolLookupTable().c_str(),
 															 xccyBasisCurveData_->basisRates_,
@@ -1727,7 +1727,7 @@ namespace etrading
 															 xccyBasisCurveData_->fraConvLVB_.toLAStringMatrix(),            // Use LVB for Convention Data Lookups
 															 xccyBasisCurveData_->fraRates_ );
 		// 2. Calibrate Curve
-        LAUpdateStaticDataManager::calibrateBasisCurve( etrading::getDataInstance(),
+        AQLUpdateStaticDataManager::calibrateBasisCurve( etrading::getDataInstance(),
 													    curveDescription_->curveCollection().c_str(), // domestic curve
 													    curveDescription_->objectPoolLookupTable().c_str(),
 													    xccyBasisCurveData_->curveConvLVB_.toLAStringMatrix() );
@@ -1741,14 +1741,14 @@ namespace etrading
         AQ_REQUIRE( fxFwdConstantCurveData_ != nullptr, "FX Forward Constant Curve Market Data is Missing" )
 
 		// 1. Load Curve Static Data
-		LAUpdateStaticDataManager::loadStaticDataFwdFXConstantCurve( etrading::getDataInstance(),
+		AQLUpdateStaticDataManager::loadStaticDataFwdFXConstantCurve( etrading::getDataInstance(),
 														             curveDescription_->curveCollection().c_str(), // domestic curve
 														             curveDescription_->objectPoolLookupTable().c_str(),
 														             fxFwdConstantCurveData_->fwdfxconstConvLVB_.toLAStringMatrix(),     // Use LVB for Convention Data Lookups
 														             fxFwdConstantCurveData_->curveConvLVB_.toLAStringMatrix(),          // Use LVB for Convention Data Lookups
 														             curveDescription_->curveIndexList().c_str() );
 		// 2. Calibrate Curve
-		LAUpdateStaticDataManager::calibrateFwdFXConstantCurve( etrading::getDataInstance(),
+		AQLUpdateStaticDataManager::calibrateFwdFXConstantCurve( etrading::getDataInstance(),
 														        curveDescription_->curveCollection().c_str(), // domestic curve
 														        curveDescription_->objectPoolLookupTable().c_str(),
 														        fxFwdConstantCurveData_->curveConvLVB_.toLAStringMatrix() );         // Use LVB for Convention Data Lookups

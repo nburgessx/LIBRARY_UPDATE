@@ -85,14 +85,14 @@ namespace etrading
 	* @param[in] objectName    The name of this CurveObject instance
 	* @param[in] freeObject    A freeObject constructed from the serialized data
 	*/
-	CurveObject::CurveObject( const std::string& objectName) : IsLWOObject(objectName, CURVE)
+	CurveObject::CurveObject( const std::string& objectName) : IsAQObject(objectName, CURVE)
 	{
     }
 
 	/* @brief Copy Constructor
 	 */
 	CurveObject::CurveObject(const CurveObject& rhs) 
-		: IsLWOObject(rhs.getRefToName(), CURVE)
+		: IsAQObject(rhs.getRefToName(), CURVE)
 	{
 		// The copy constructor does not need to invoke CurveObject::calibrateCurve() :
 		// The curve will have already been built by the rhs object.

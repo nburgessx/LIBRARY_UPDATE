@@ -1,15 +1,15 @@
 #include "tryMeCurveCompoundRate.h"
 
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "ScheduleValidation.h"
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "StructuredExceptionHandler.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "CurveUtilities.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 
 namespace validation
 {
@@ -123,7 +123,7 @@ namespace validation
 
             bool isStartRoll = etrading::isStartRollAndPopulateStubDatesFromStubType( etrading::toStubTypeEnum(stubType.getCString()), firstOddDt, lastOddDt, startDt, endDt, frequency );
 
-            double result = etrading::LACurveForwardRateHelpers::compound( dataInstance,
+            double result = etrading::AQLCurveForwardRateHelpers::compound( dataInstance,
                                                                       curveCollection,
                                                                       forecastCurveIndex,
                                                                       startDt,

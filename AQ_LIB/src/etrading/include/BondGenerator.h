@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "FreeObject.h"
 #include "CoreEnumerations.h"
@@ -14,7 +14,7 @@ namespace etrading
 {
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, VariantMatrix>  TableInfo;
 
-	class BondGenerator : public IsLWOObject 
+	class BondGenerator : public IsAQObject 
 	{
 	public:
 		/* @brief Main Constructor

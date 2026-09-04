@@ -16,7 +16,7 @@
 #include "AQLString.h"
 #include "AQLAnalyticFormula.h"
 #include "AQLCoreDataService.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "AQLDefinitions.h"
 #include "AQLLinearRatesVolatilityManager.h"
 #include "LibSetUpETrading.h"

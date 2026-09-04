@@ -31,7 +31,7 @@
 #include "FileUtilities.h"
 #include "EnvironmentPool.h"
 #include "RuleInterface.h"
-#include "LWOCurve.h"
+#include "AQOCurve.h"
 #include "CurveBuildProperties.h"
 #include "ExposedInterface.h"
 #include "EnvironmentPool.h"

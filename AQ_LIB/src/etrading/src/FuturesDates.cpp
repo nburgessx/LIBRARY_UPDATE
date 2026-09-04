@@ -1,6 +1,6 @@
 // FuturesDates.cpp
 #include "FuturesDates.h"
-#include "LADateHelpers.h"
+#include "AQLDateHelpers.h"
 #include "TypeHelpers.h"
 #include "DateUtilities.h"
 #include "ExceptionMacros.h"
@@ -34,7 +34,7 @@ namespace etrading
 
         // Get the future's month from the ticker
         AQLString futuresContract = futuresTicker.subString( 0, 0 ).toUpper(); // Get the first character from the futuresTicker, note must be in uppercase
-        unsigned int month  = etrading::LADateHelpers::changeFutureMonthFormat( futuresContract );
+        unsigned int month  = etrading::AQLDateHelpers::changeFutureMonthFormat( futuresContract );
         
         // Get the future's year from the ticker
         unsigned int year   = 0;
@@ -52,12 +52,12 @@ namespace etrading
             // Get the contract year, if the year is in the past roll forwards 1 decade
             year += currentDecade;
             
-            futuresStartDate = etrading::LADateHelpers::getFuturesContractStartDate( month, year );
+            futuresStartDate = etrading::AQLDateHelpers::getFuturesContractStartDate( month, year );
             
             // Roll Contract Forward a decade if in the futures start date in the past and has expired
             if ( futuresStartDate < currentDate )
             {
-                futuresStartDate = etrading::LADateHelpers::getFuturesContractStartDate( month, year + 10 );
+                futuresStartDate = etrading::AQLDateHelpers::getFuturesContractStartDate( month, year + 10 );
             }
 
         }
@@ -71,7 +71,7 @@ namespace etrading
             
             unsigned int currentCentury = etrading::getCurrentCentury();
 
-            futuresStartDate = etrading::LADateHelpers::getFuturesContractStartDate( month, currentCentury + year );
+            futuresStartDate = etrading::AQLDateHelpers::getFuturesContractStartDate( month, currentCentury + year );
         }
         else if ( futuresTicker.size() == 5 )
         {
@@ -81,7 +81,7 @@ namespace etrading
             AQLString futuresYear = futuresTicker.subString( 1, 4 ); // Get characters 2-5 from the futuresTicker
             year = etrading::StringToNumber< unsigned int >( futuresYear.getCString() );
             
-            futuresStartDate = etrading::LADateHelpers::getFuturesContractStartDate( month, year );
+            futuresStartDate = etrading::AQLDateHelpers::getFuturesContractStartDate( month, year );
         }
         
         
@@ -172,14 +172,14 @@ namespace etrading
         MonthYear currentIMM = monthYearCurrentIMM( valuationDate );
 		AQLString calendarStr( calendar.c_str() );
 		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        AQLDate IMMDate = LADateScheduleHelpers::getIMMDate1( currentIMM.year_, currentIMM.month_, calendarStr , businessDayAdjustmentStr );
+        AQLDate IMMDate = AQLDateScheduleHelpers::getIMMDate1( currentIMM.year_, currentIMM.month_, calendarStr , businessDayAdjustmentStr );
         
         // Roll Backwards when the current IMM is in the future and manage the IMM that rolls on the valuation date
         if ( (IMMDate > valuationDate) || ( IMMDate == valuationDate && !includeToday) )
         {
             // Use Previous IMM, since the current IMM is in the future
             monthYearRollIMMBackwards( currentIMM, 3 );
-            IMMDate = LADateScheduleHelpers::getIMMDate1( currentIMM.year_, currentIMM.month_, calendarStr , businessDayAdjustmentStr );
+            IMMDate = AQLDateScheduleHelpers::getIMMDate1( currentIMM.year_, currentIMM.month_, calendarStr , businessDayAdjustmentStr );
         }
         
         return IMMDate;
@@ -226,7 +226,7 @@ namespace etrading
         // Calculate the Nth IMM Date from the Current IMM Date
 		AQLString calendarStr( calendar.c_str() );
 		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        AQLDate nthIMMDate = LADateScheduleHelpers::getIMMDate1( monthYearNthIMM.year_, monthYearNthIMM.month_, calendarStr , businessDayAdjustmentStr );
+        AQLDate nthIMMDate = AQLDateScheduleHelpers::getIMMDate1( monthYearNthIMM.year_, monthYearNthIMM.month_, calendarStr , businessDayAdjustmentStr );
         return nthIMMDate;
     }
 
@@ -243,7 +243,7 @@ namespace etrading
         monthYearRollIMMForwards( monthYearIMM, 3 );
 		AQLString calendarStr( calendar.c_str() );
 		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        AQLDate nextIMMDate = LADateScheduleHelpers::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
+        AQLDate nextIMMDate = AQLDateScheduleHelpers::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
         return nextIMMDate;
     }
 
@@ -260,7 +260,7 @@ namespace etrading
         monthYearRollIMMBackwards( monthYearIMM, 3 );
 		AQLString calendarStr( calendar.c_str() );
 		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        AQLDate previousIMMDate = LADateScheduleHelpers::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
+        AQLDate previousIMMDate = AQLDateScheduleHelpers::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
         return previousIMMDate;
     }
 

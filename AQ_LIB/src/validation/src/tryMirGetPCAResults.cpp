@@ -1,6 +1,6 @@
 #include "tryMirGetPCAResults.h"
 
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 
@@ -31,7 +31,7 @@ namespace validation
 
         // Get Eigen vector results
         DoubleMatrix tmp;
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VECTORS" ), id );
+        tmp = etrading::AQLUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VECTORS" ), id );
         size_t num_factor = tmp.size();
         size_t dim_data = tmp[0].size();
 
@@ -64,7 +64,7 @@ namespace validation
         }
 
         // Get POV results
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "POV" ), id );
+        tmp = etrading::AQLUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "POV" ), id );
 
         ret[dim_data + 1][0] = "POV";
         for( unsigned int i = 0; i < num_factor; i++ )
@@ -73,7 +73,7 @@ namespace validation
         }
 
         // Get Eigen value results
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VALUES" ), id );
+        tmp = etrading::AQLUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VALUES" ), id );
         ret[dim_data + 2][0] = "Eigen Values";
         for( unsigned int i = 0; i < num_factor; i++ )
         {

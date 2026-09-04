@@ -4,7 +4,7 @@
 namespace etrading
 {
 
-	Volatility::Volatility(const LabelValueBlock& volLVB, const std::string& objectName) : IsLWOObject(objectName, VOLATILITY), 
+	Volatility::Volatility(const LabelValueBlock& volLVB, const std::string& objectName) : IsAQObject(objectName, VOLATILITY), 
 																						inputParameters_(volLVB)
 	{
         // Validate Object Type
@@ -32,7 +32,7 @@ namespace etrading
 
 	}
 
-    Volatility::Volatility(const Volatility& rhs) : IsLWOObject(rhs.getRefToName(), VOLATILITY), 
+    Volatility::Volatility(const Volatility& rhs) : IsAQObject(rhs.getRefToName(), VOLATILITY), 
 													inputParameters_(rhs.inputParameters_), 
 													asOfDate_(rhs.asOfDate_),
 													currency_(rhs.currency_),

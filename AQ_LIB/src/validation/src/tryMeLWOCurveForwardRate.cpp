@@ -1,7 +1,7 @@
 #include "tryMeLWOCurveForwardRate.h"
 #include "tryMeCurveForwardRate.h" // needed for the utility functions
 #include "tryMeDate.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "ParameterValidation.h"
@@ -38,7 +38,7 @@ namespace validation
         DoubleVector forwardRateResults;
 
         // Load the LWO Curve
-        auto& curveStore = etrading::getObjectStore<etrading::LWOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        auto& curveStore = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( curveStore.has( lwoCurveName ) )
         {
             auto lwoCurve = curveStore.get( lwoCurveName );
@@ -97,7 +97,7 @@ namespace validation
         DoubleVector forwardRateResults;
 
         // Load the LWO Curve
-        auto& curveStore = etrading::getObjectStore<etrading::LWOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        auto& curveStore = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( curveStore.has( lwoCurveName ) )
         {
             auto lwoCurve = curveStore.get( lwoCurveName );
@@ -158,7 +158,7 @@ namespace validation
          DoubleVector forwardRateResults;
 
         // Load the LWO Curve
-        auto& curveStore = etrading::getObjectStore<etrading::LWOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        auto& curveStore = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( curveStore.has( lwoCurveName ) )
         {
             auto lwoCurve = curveStore.get( lwoCurveName );

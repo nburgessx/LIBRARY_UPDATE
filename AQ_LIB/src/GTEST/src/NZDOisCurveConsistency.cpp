@@ -53,7 +53,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::OIS_MARKETDATA,    // Calibration Instrument: OIS Outright Swaps
                                        {"1D", "1M", "2M", "3M", "4M", "5M", "6M", "7M", "8M", "9M", "1Y", "18M", "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y"}, // Calibration Tenors                                  
-                                       curveObjectNZDOIS_,                               // LWOCurveName
+                                       curveObjectNZDOIS_,                               // AQOCurveName
                                        "NZDYC",                                          // CurveCollection
                                        "20200420",                                       // Swap Effective Date
                                        "NZD_OIS",                                        // Swap Generator

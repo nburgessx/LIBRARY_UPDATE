@@ -4,13 +4,13 @@
 namespace etrading
 {
 
-	SwapGenerator::SwapGenerator(const std::string& instanceName, const LegGenerator& leg1, const LegGenerator& leg2) : IsLWOObject(instanceName, SWAP_GENERATOR)
+	SwapGenerator::SwapGenerator(const std::string& instanceName, const LegGenerator& leg1, const LegGenerator& leg2) : IsAQObject(instanceName, SWAP_GENERATOR)
 	{
 		legGenerators_.push_back(leg1);
     	legGenerators_.push_back(leg2);
     }
 
-    SwapGenerator::SwapGenerator(const SwapGenerator& rhs) : IsLWOObject(rhs.getRefToName(), SWAP_GENERATOR), legGenerators_(rhs.legGenerators_)
+    SwapGenerator::SwapGenerator(const SwapGenerator& rhs) : IsAQObject(rhs.getRefToName(), SWAP_GENERATOR), legGenerators_(rhs.legGenerators_)
 	{}
 
     LegGenerator SwapGenerator::getLegGenerator(size_t i) const

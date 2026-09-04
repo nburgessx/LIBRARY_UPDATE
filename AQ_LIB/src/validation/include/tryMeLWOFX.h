@@ -10,8 +10,8 @@ namespace validation
 
     /* @brief validation interface for meLWOFXCurveCreate, creating a FxCurve using a CurveGenerator object and a CurveMarketData object
 	 * @param [in] objectName                The objectName of the FxCurve
-     * @param [in] lwoCurveGeneratorName     The name of the LWOCurveGenerator object to use
-	 * @param [in] lwoCurveMarketDataName    The name of the LWOCurveMarketData object to use
+     * @param [in] lwoCurveGeneratorName     The name of the AQOCurveGenerator object to use
+	 * @param [in] lwoCurveMarketDataName    The name of the AQOCurveMarketData object to use
 	 * @param [out]                          The created FxCurve objectName
 	 */
     std::string tryMeLWOFXCurveCreate(	const std::string& objectName,

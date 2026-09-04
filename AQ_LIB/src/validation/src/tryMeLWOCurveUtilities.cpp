@@ -2,7 +2,7 @@
 #include <boost/format.hpp>
 
 #include "tryMeLWOCurveUtilities.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -26,11 +26,11 @@ namespace validation
 {
     const std::vector<std::string> tryMeLWOCurveList()
     {
-        auto& curveStore = etrading::getObjectStore<etrading::LWOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        auto& curveStore = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         auto keys = curveStore.keys();
         if( keys.size() <= 0 )
         {
-            AQ_THROW( "No LWOCurves are registered" );
+            AQ_THROW( "No AQOCurves are registered" );
         }
         return curveStore.keys();
     };
@@ -41,12 +41,12 @@ namespace validation
         {
             AQ_THROW( ( boost::format( "Object %s does not exist." ) % curveName.c_str() ).str().c_str() );
         }
-        return etrading::Environment::defaultEnv().deleteObject<etrading::LWOCurve>(curveName);
+        return etrading::Environment::defaultEnv().deleteObject<etrading::AQOCurve>(curveName);
     };
 
     const int tryMeLWOCurveDeleteAll()
     {
-        return etrading::Environment::defaultEnv().deleteAllObjects<etrading::LWOCurve>();
+        return etrading::Environment::defaultEnv().deleteAllObjects<etrading::AQOCurve>();
     };
 
     std::string tryMeLWOCurveSave(	const std::string& lwoCurveName,
@@ -55,11 +55,11 @@ namespace validation
     {
 
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
 
         if( !lwoCurve )
         {
-            AQ_THROW( ( boost::format( "LWOCurve %s does not exist" ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "AQOCurve %s does not exist" ) % lwoCurveName.c_str() ).str().c_str() );
         }
         
         // Append the file extension if missing
@@ -89,7 +89,7 @@ namespace validation
         auto cacheInfoOnDeserialization = etrading::deSerializeFromJSON( etrading::serialize::FILE, filenameWithExtension );
         std::string objectName = cacheInfoOnDeserialization.first;
 
-        auto& curveStore = etrading::getObjectStore<etrading::LWOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        auto& curveStore = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( !curveStore.has( objectName ) )
         {
             throw AQLCoreAppError( ( boost::format( "File (%s) was loaded and read but was not a Curve, found object of type %s" )

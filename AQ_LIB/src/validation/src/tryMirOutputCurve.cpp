@@ -1,5 +1,5 @@
 #include "tryMirOutputCurve.h"
-#include "LACurveCalibrationHelpers.h"
+#include "AQLCurveCalibrationHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -39,7 +39,7 @@ namespace validation
 
         AQLString curName( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
-        DoubleArray ret = etrading::LACurveCalibrationHelpers::outPutCurveFromYieldData( dataInstance, curveID, curName );
+        DoubleArray ret = etrading::AQLCurveCalibrationHelpers::outPutCurveFromYieldData( dataInstance, curveID, curName );
 
         if ( CreateDataFile::recordEnabled() )
         {

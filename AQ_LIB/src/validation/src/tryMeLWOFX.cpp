@@ -5,7 +5,7 @@
 #include "StructuredExceptionHandler.h"
 #include "CoreEnumerations.h"
 #include "RecordMacros.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "ObjectUtilities.h"
 #include "FXCurveUtilities.h"
 
@@ -17,8 +17,8 @@ namespace validation
 
     /* @brief validation interface for meLWOFXCurveCreate, creating a FxCurve using a CurveGenerator object and a CurveMarketData object
 	 * @param [in] objectName                The objectName of the FxCurve
-     * @param [in] lwoCurveGeneratorName     The name of the LWOCurveGenerator object to use
-	 * @param [in] lwoCurveMarketDataName    The name of the LWOCurveMarketData object to use
+     * @param [in] lwoCurveGeneratorName     The name of the AQOCurveGenerator object to use
+	 * @param [in] lwoCurveMarketDataName    The name of the AQOCurveMarketData object to use
 	 * @param [out]                          The created FxCurve objectName
 	 */
     std::string tryMeLWOFXCurveCreate(	const std::string& objectName,
@@ -40,10 +40,10 @@ namespace validation
 				throw AQLCoreInvalidData(	( "#Error: Missing lwoCurveMarketData name" ), __FILE__, __LINE__ );
 		}
 
-		// Attempt to retrieve LWOCurveMarketData object from the LWO Cache
+		// Attempt to retrieve AQOCurveMarketData object from the LWO Cache
 		auto lwoCurveMarketData = etrading::getCurveMarketData( lwoCurveMarketDataName );
   
-		// Attempt to retrieve LWOCurveGenerator object from the LWO Cache
+		// Attempt to retrieve AQOCurveGenerator object from the LWO Cache
 		auto lwoCurveGenerator = etrading::getCurveGenerator( lwoCurveGeneratorName );
        
 		// Check for matching IdentityParams from the CurveGenerator and CurveMarketData

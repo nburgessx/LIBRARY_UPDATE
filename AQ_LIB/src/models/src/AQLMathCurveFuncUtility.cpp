@@ -2093,7 +2093,7 @@ bool AQLMathCurveFuncUtility::isFixingInAdvance(const AQLString& fixingAdvanceOr
 }
 
 // Update the accrual frequency if it is greater than the payment frequency
-// *** Duplicate OF LACurveForwardRateHelpers.cpp UpdateAccrualFrequency ***
+// *** Duplicate OF AQLCurveForwardRateHelpers.cpp UpdateAccrualFrequency ***
 static void updateAccrualFrequency(AQLString& accrualFreq, const AQLString& paymentFreq, bool fixingInAdvance=true)
 {
 	if ( accrualFreq == paymentFreq ) return;

@@ -9,7 +9,7 @@
 
 #include "SwapUtilities.h"
 #include "ObjectUtilities.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "CoreEnumerations.h"
 #include "CrossCurrencySwap.h"
 #include "FeeLeg.h"
@@ -20,11 +20,11 @@
 #include "TotalReturnSwap.h"
 #include "CreditModel.h"
 #include "CreditBasketModel.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "ExceptionMacros.h"
 #include "tryMeCurveDiscountFactor.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "SettingsValidation.h"
 #include "ValuationSettings.h"
 
@@ -1041,7 +1041,7 @@ namespace validation
         populateDiscountFactorConventions( curveCollectionAsLAString, curveIndex, interp, busdayAdj, calendar );
 
         // Get the Spot Discount Factors
-        DoubleVector discountFactors = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates, etrading::getDataInstance(), curveCollectionAsLAString, getDayCount(), busdayAdj, calendar, interp, isBasisFlag(), curveIndex );
+        DoubleVector discountFactors = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates, etrading::getDataInstance(), curveCollectionAsLAString, getDayCount(), busdayAdj, calendar, interp, isBasisFlag(), curveIndex );
         AQ_REQUIRE( discountFactors.size() > 0, "No discount factors have been returned" );
         AQ_REQUIRE( discountFactors.size() == paymentDates.size(), "Number of discount factors and payment dates do not match." )
 

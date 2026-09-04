@@ -5,10 +5,10 @@
 #include "ReadDataFile.h"
 #include "CreateDataFile.h"
 
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "AQLMultiSwapPricer.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LACurveCalibrationHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLCurveCalibrationHelpers.h"
 
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;

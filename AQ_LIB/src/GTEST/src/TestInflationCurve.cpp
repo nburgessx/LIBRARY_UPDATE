@@ -17,8 +17,8 @@
 
 // etrading
 #include "AQLMathDateUtilities.h"
-#include "LADateScheduleHelpers.h"
-#include "LWOUtilities.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQOUtilities.h"
 #include "InflationCurve.h"
 #include "ZeroCouponInflationSwap.h"
 
@@ -77,7 +77,7 @@ namespace
 		for (size_t i = 0; i< expectedDates.size(); i++ )
 		{
 			const AQLDate expectedDate = expectedDates[ i ];
-			const int expectedExcelDate = etrading::LADateScheduleHelpers::getExcelDate( expectedDate );
+			const int expectedExcelDate = etrading::AQLDateScheduleHelpers::getExcelDate( expectedDate );
 
 			const int calibrationDate = boost::get<int>( calibrationResults[ i ][0] );
 
@@ -302,7 +302,7 @@ namespace google_test
 
 			AQLDate swapMaturity = asOfDate;
 			swapMaturity.addYears(maturityYears);
-			const int maturityExcelDate = etrading::LADateScheduleHelpers::getExcelDate( swapMaturity );
+			const int maturityExcelDate = etrading::AQLDateScheduleHelpers::getExcelDate( swapMaturity );
 			std::string maturityString = std::to_string( maturityExcelDate );
 
 			LabelValueBlock expressionLVB( expressionTemplateLVB, "MATURITYDATE", maturityString );

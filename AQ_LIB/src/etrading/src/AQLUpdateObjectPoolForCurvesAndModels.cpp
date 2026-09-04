@@ -9,19 +9,21 @@
 #endif
 
 
-#include "LAUpdateModelObject.h"
+#include "AQLUpdateObjectPoolForCurvesAndModels.h"
 #include <fstream>
 #include "AQLDataInstance.h"
 #include "AQLFunctionManager.h"
 #include "AQLPriceDataManager.h"
 #include "AQLDataReference.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 
+#ifndef VISUAL_STUDIO_2010_ANALYTICS 
 #include "AQLMathCorrelation.h"
 #include "AQLRatesTermStructureSDE.h"
 #include "AQLRatesLJTermStructureSDE.h"
 #include "AQLRatesCurveLinearInterpolation.h"
 #include "AQLDealUtils.h"
+#endif
 
 #include "AQLCoreDataService.h"
 #include "AQLStaticData.h"
@@ -37,15 +39,15 @@
 
 using namespace std;
 
-// constructor
+//! constructor
 /*!
 
 */
 
 UpdateObjectPoolForSDEsAndCurves::UpdateObjectPoolForSDEsAndCurves(const AQLString &baseCurrency)
-: LAUpdateCurveObject(baseCurrency){
+: AQLUpdateObjectPoolForCurves(baseCurrency){
 }
-// destructor
+//! destructor
 /*!
 
 */

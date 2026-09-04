@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "FreeObject.h"
 #include "LabelValueBlock.h"
@@ -34,7 +34,7 @@ namespace etrading
 	// @brief Holds a map of all calibration points, sorted by date
 	typedef std::map<AQLDate, ZCInflationSwapMarketData > InflationMarketDataMap;
 
-	class InflationCurve : public IsLWOObject
+	class InflationCurve : public IsAQObject
 	{
 	public:
 		

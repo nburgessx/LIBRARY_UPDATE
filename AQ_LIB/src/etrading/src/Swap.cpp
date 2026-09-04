@@ -1,12 +1,12 @@
 #include "Swap.h"
 #include "SwapCalculation.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "SettingsValidation.h"
 
 namespace etrading
 {
 
-    Swap::Swap(const std::string& instanceName, const SwapTypeEnum swapType, const LabelValueBlock& swapPropertiesLVB) : IsLWOObject(instanceName, SWAP_OBJECT), swapType_(swapType), inputParameters_(swapPropertiesLVB)
+    Swap::Swap(const std::string& instanceName, const SwapTypeEnum swapType, const LabelValueBlock& swapPropertiesLVB) : IsAQObject(instanceName, SWAP_OBJECT), swapType_(swapType), inputParameters_(swapPropertiesLVB)
 	{}
 
     void Swap::validateLegs(const LegPtr& leg1, const LegPtr& leg2) const
@@ -25,7 +25,7 @@ namespace etrading
 
     }
 
-    Swap::Swap(const Swap& rhs) : IsLWOObject(rhs.getRefToName(), SWAP_OBJECT), 
+    Swap::Swap(const Swap& rhs) : IsAQObject(rhs.getRefToName(), SWAP_OBJECT), 
                                 swapType_(rhs.swapType_),
                                 inputParameters_(rhs.inputParameters_)
 	{

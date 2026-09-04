@@ -1,5 +1,5 @@
 //
-// LACurveForwardRateHelpers.h
+// AQLCurveForwardRateHelpers.h
 // *** This file used to be called "LAMathCurveFuncUti1ity.h" ***
 //
 #pragma once
@@ -26,7 +26,7 @@
 #include "AQLCoreTemplateType.h"
 #include "AQLDataInstance.h"
 #include "AQLString.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "AQLTime.h"
 
 // TODO - Try to remove this file. It contains lots of #defines that clash with external binaries
@@ -35,7 +35,7 @@
 namespace etrading
 {
 
-    class LACurveForwardRateHelpers
+    class AQLCurveForwardRateHelpers
     {
     public:
 
@@ -223,9 +223,9 @@ namespace etrading
             const AQLString& dolDiscountCurveID, const AQLString& frequency, const AQLString& daycount, const AQLString& slidingrule,
             const AQLString& calendar, bool isEOMRoll = false);
 
-        static LACurvePricingObject& getYieldCurveForCurveID(AQLDataInstance* dataInstance, const AQLString& curveid);
-        static void setCalendarForCurveID(LACurvePricingObject& yc, const AQLString& calendar);
-        static bool setUpForwardDayCount(AQLDataInstance *dataInstance, const AQLString &curveid, const AQLString &curveName, LACurvePricingObject &yc);
+        static AQLCurvePricingObject& getYieldCurveForCurveID(AQLDataInstance* dataInstance, const AQLString& curveid);
+        static void setCalendarForCurveID(AQLCurvePricingObject& yc, const AQLString& calendar);
+        static bool setUpForwardDayCount(AQLDataInstance *dataInstance, const AQLString &curveid, const AQLString &curveName, AQLCurvePricingObject &yc);
         static bool setUpForwardDayCount(AQLDataInstance *dataInstance, const AQLString &curveid, const AQLString &curveName, AQLPriceDataDayCount &dc);
 
         static double compound( AQLDataInstance* dataInstance,
@@ -561,14 +561,14 @@ namespace etrading
     private:
 
         static void setUpYieldCurveConvention(const AQLString &foreCurveName, const AQLString &inter, const AQLString &dc, const AQLString &sld,
-            const AQLString &cal, const AQLString &freq, const AQLString &curveid, LACurvePricingObject &yc);
+            const AQLString &cal, const AQLString &freq, const AQLString &curveid, AQLCurvePricingObject &yc);
 
         static bool getForwardConvention(AQLDataInstance *dataInstance, const AQLString &curveid, const AQLString &curveName, AQLPriceDataDayCount &dc, AQLPriceDataSlidingRule &sld, AQLPriceDataCalendar &cal, AQLString &accessory);
 
-        LACurveForwardRateHelpers(void);
-        ~LACurveForwardRateHelpers(void);
-        LACurveForwardRateHelpers(const LACurveForwardRateHelpers &rhs);
-        LACurveForwardRateHelpers &operator=(const LACurveForwardRateHelpers &rhs);
+        AQLCurveForwardRateHelpers(void);
+        ~AQLCurveForwardRateHelpers(void);
+        AQLCurveForwardRateHelpers(const AQLCurveForwardRateHelpers &rhs);
+        AQLCurveForwardRateHelpers &operator=(const AQLCurveForwardRateHelpers &rhs);
     };
 
 }

@@ -1,8 +1,8 @@
 #include "CMSSchedule.h"
 #include "CMSCashflow.h"
 #include "SwapValidation.h"
-#include "LWOUtilities.h"
-#include "LADateScheduleHelpers.h"
+#include "AQOUtilities.h"
+#include "AQLDateScheduleHelpers.h"
 #include "DataUtilities.h"          // For AQ_TO_STRING Macros
 
 namespace etrading
@@ -107,9 +107,9 @@ namespace etrading
         addKeys[1] = IRS_KEY::MATURITY_DATE;
 
         StandardStringVector addValues(2);
-        addValues[0] = AQ_TO_STRING_FROM_INT( LADateScheduleHelpers::getExcelDate( underlyingEffectiveDate ) );
+        addValues[0] = AQ_TO_STRING_FROM_INT( AQLDateScheduleHelpers::getExcelDate( underlyingEffectiveDate ) );
         const AQLDate irsMaturityDate = validateMaturityDate( underlyingEffectiveDate, underlyingMaturity );
-        addValues[1] = AQ_TO_STRING_FROM_INT(LADateScheduleHelpers::getExcelDate( irsMaturityDate ) );
+        addValues[1] = AQ_TO_STRING_FROM_INT(AQLDateScheduleHelpers::getExcelDate( irsMaturityDate ) );
 
         LabelValueBlock swapExpressionLVB( setupSwapExpressionLVBForCMS(), addKeys, addValues );
 

@@ -2,7 +2,7 @@
 
 #include "MultiCurveObject.h"
 #include "SingleCurveObject.h"
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "FreeObject.h"
 #include "Variant.h"

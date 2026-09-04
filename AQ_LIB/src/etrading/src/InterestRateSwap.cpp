@@ -1,6 +1,6 @@
 #include "InterestRateSwap.h"
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CommonConstants.h"
 #include "AQLCoreComponentManager.h"
 #include "CurveValidation.h"
@@ -9,7 +9,7 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "ConstantDeclarations.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "AQLPriceDataSlidingRule.h"
 
 namespace etrading

@@ -1,5 +1,5 @@
 #include "tryMeProductSwapPV01.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -82,7 +82,7 @@ namespace validation
         AQLString fixedDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
 
         // Get the Swap PV01
-        double ret = etrading::LACurveForwardRateHelpers::getSwapPV01( isFixedRatePayerSwap,
+        double ret = etrading::AQLCurveForwardRateHelpers::getSwapPV01( isFixedRatePayerSwap,
                                                                   notional,
                                                                   fixedAccrualDates,
                                                                   fixedPaymentDates,

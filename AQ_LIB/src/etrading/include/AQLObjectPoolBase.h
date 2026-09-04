@@ -1,5 +1,5 @@
 //
-// LAObjectPoolBase.h
+// AQLObjectPoolBase.h
 // This file used to be called Calibrator.h and before that AQLCalibrateModel.h
 //
 #pragma once
@@ -20,23 +20,23 @@ class AQLMathCorrelation;
 class AQLMathVolatility;
 class AQLStaticData;
 
-//===================== Class Declare LAObjectPoolBase ==================================
+//===================== Class Declare AQLObjectPoolBase ==================================
 /*! 
     @brief SDE generator 
 	
 	this class is abstract
 
 */
-class LAObjectPoolBase
+class AQLObjectPoolBase
 {
 public:
 	// constructor
-	explicit LAObjectPoolBase(void);
+	explicit AQLObjectPoolBase(void);
 	// destructor
-	virtual ~LAObjectPoolBase(void);
+	virtual ~AQLObjectPoolBase(void);
 	// copy constructor
-	LAObjectPoolBase(const LAObjectPoolBase &rhs);
-	LAObjectPoolBase &operator=(const LAObjectPoolBase &rhs);
+	AQLObjectPoolBase(const AQLObjectPoolBase &rhs);
+	AQLObjectPoolBase &operator=(const AQLObjectPoolBase &rhs);
 
 	//==============================================
 	// generate SDE

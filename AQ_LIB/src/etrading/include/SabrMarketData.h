@@ -8,7 +8,7 @@
  *
  * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "FreeObject.h"
 #include "Variant.h"
@@ -19,7 +19,7 @@ namespace etrading
 {
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, VariantMatrix>  TableInfo;
 
-    class SabrMarketData : public IsLWOObject
+    class SabrMarketData : public IsAQObject
     {
 	public:
 

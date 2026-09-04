@@ -27,7 +27,7 @@
 using etrading::ReadDataFile;
 
 // Define the Test Input Folder Here
-#define TEST_DIR			  "ETrading/LWObjects/TestLWOTotalReturnSwap/"
+#define TEST_DIR			  "ETrading/AQObjects/TestLWOTotalReturnSwap/"
 
 
 namespace

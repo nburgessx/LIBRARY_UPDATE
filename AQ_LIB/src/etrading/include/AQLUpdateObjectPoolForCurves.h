@@ -1,5 +1,5 @@
 //
-// LAUpdateObjectPoolForCurves.h
+// AQLUpdateObjectPoolForCurves.h
 // This file used to be called CalibratorIR.h and before that AQLCalibrateModelIR.h
 //
 #pragma once
@@ -7,7 +7,7 @@
 
 
 #include "AQLString.h"
-#include "LAObjectPoolBase.h"
+#include "AQLObjectPoolBase.h"
 
 
 class AQLDataInstance;
@@ -23,23 +23,23 @@ class AQLObject;
 class AQLObjectPool;
 
 
-//===================== Class Declare LAUpdateObjectPoolForCurves ==================================
+//===================== Class Declare AQLUpdateObjectPoolForCurves ==================================
 /*! 
     @brief IR SDE generator 
 	
 	this class is abstract
 
 */
-class LAUpdateObjectPoolForCurves : public LAObjectPoolBase
+class AQLUpdateObjectPoolForCurves : public AQLObjectPoolBase
 {
 public:
 	//! constructor
-	explicit LAUpdateObjectPoolForCurves(const AQLString &baseCurrency);
+	explicit AQLUpdateObjectPoolForCurves(const AQLString &baseCurrency);
 	//! destructor
-	virtual ~LAUpdateObjectPoolForCurves(void);
+	virtual ~AQLUpdateObjectPoolForCurves(void);
 	//! copy constructor
-	LAUpdateObjectPoolForCurves(const LAUpdateObjectPoolForCurves &rhs);
-	LAUpdateObjectPoolForCurves &operator=(const LAUpdateObjectPoolForCurves &rhs);
+	AQLUpdateObjectPoolForCurves(const AQLUpdateObjectPoolForCurves &rhs);
+	AQLUpdateObjectPoolForCurves &operator=(const AQLUpdateObjectPoolForCurves &rhs);
 	//==============================================
 	//! generate SDE market data
 	virtual void generateSDEMarketData(const AQLString &currency, AQLDataInstance &dataInstance, const bool isCurve = true, const bool isOthers = true) const;

@@ -1,6 +1,6 @@
 #include "VanillaInterestRateSwap.h"
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CommonConstants.h"
 #include "AQLCoreComponentManager.h"
 #include "CurveValidation.h"
@@ -10,7 +10,7 @@
 #include "ParameterValidation.h"
 #include "InitializeETrading.h"
 #include "ConstantDeclarations.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "CurveInstrumentPricing.h"
 #include "AQLPriceDataSlidingRule.h"
 
@@ -30,10 +30,10 @@ namespace etrading
 		if ( !isYieldCurveReady_ )
 		{
 			// Is forward interpolation possible?
-			LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( etrading::InitializeETrading::instance().dataInstance(), curveSet_ );
+			AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID( etrading::InitializeETrading::instance().dataInstance(), curveSet_ );
 
 			AQLString curveType = getCurveType( curveSet_, forecastCurve_ );
-			if (etrading::LACurveForwardRateHelpers::setUpForwardDayCount( etrading::getDataInstance(), curveSet_, forecastCurve_, yc )
+			if (etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount( etrading::getDataInstance(), curveSet_, forecastCurve_, yc )
 					&& curveType.getCString() != MARKET_KEY::CURVE_TYPE_BASIS
 					&& curveType.getCString() != MARKET_KEY::CURVE_TYPE_TENORBASIS
 					&& curveType.getCString() != MARKET_KEY::CURVE_TYPE_XCCYBASIS )

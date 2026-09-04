@@ -3,34 +3,34 @@
 #include <boost/format.hpp>
 #include <boost/date_time.hpp>
 
-#include "LWOCurve.h"
+#include "AQOCurve.h"
 #include "ETradingException.h"
 #include "ContainerUtilities.h"
 #include "Variant.h"
 #include "CurveBuildProperties.h"
 #include "DateUtilities.h"
 #include "InterpolationFactory.h"
-#include "LWOUtilities.h"
-#include "LADateScheduleHelpers.h"
+#include "AQOUtilities.h"
+#include "AQLDateScheduleHelpers.h"
 #include "EntityPoolUtilities.h"
 #include "AQLMathInterpolationUtilities.h"
 
 namespace etrading
 {
     
-    AscendingOrderRule< std::vector<boost::gregorian::date> >  LWOCurve::dateChecker_  ;  // static
+    AscendingOrderRule< std::vector<boost::gregorian::date> >  AQOCurve::dateChecker_  ;  // static
 
-    BoundaryRule<> LWOCurve::posNumerChecker_( 0.0, std::numeric_limits<double>::max() ); // static
+    BoundaryRule<> AQOCurve::posNumerChecker_( 0.0, std::numeric_limits<double>::max() ); // static
     
-    AscendingOrderRule<> LWOCurve::increasingYearFractions_;  // static
+    AscendingOrderRule<> AQOCurve::increasingYearFractions_;  // static
     
-    const etrading::CachedObjectEnum LWOCurve::ENUM_TYPE = etrading::CURVE_DEPRECATED; // static
+    const etrading::CachedObjectEnum AQOCurve::ENUM_TYPE = etrading::CURVE_DEPRECATED; // static
 
     // TODO: use delegating constructors in C++11
 
     // CurveBuildProperties is a unique_ptr so it needs to be deep copied
-    LWOCurve::LWOCurve( const LWOCurve& instance )
-        : IsLWOObject( instance.getName() ,LWOCurve::ENUM_TYPE ),
+    AQOCurve::AQOCurve( const AQOCurve& instance )
+        : IsAQObject( instance.getName() ,AQOCurve::ENUM_TYPE ),
           HasCurveData( instance ),
           curveBuildProps_( instance.curveBuildProps_ ? new CurveBuildProperties( *( instance.curveBuildProps_.get() ) ) : nullptr ),
           dates_( instance.getDates() ),
@@ -40,15 +40,15 @@ namespace etrading
     {
     }
 
-    LWOCurve::LWOCurve( const std::string& objName )
-        :   IsLWOObject( objName, LWOCurve::ENUM_TYPE ), 
+    AQOCurve::AQOCurve( const std::string& objName )
+        :   IsAQObject( objName, AQOCurve::ENUM_TYPE ), 
             curveBuildProps_(),
             interpolationOnDiscountFactors_(), interpolationOnForwardRates_(),
             dates_(  0 ), discountFactors_( 0 ), forwardRates_( 0 ), datesAsYearFractions_( 0 )
     {};
 
-    LWOCurve::LWOCurve( LWOCurve&& moved )
-        :  IsLWOObject( moved.getName() , LWOCurve::ENUM_TYPE ),
+    AQOCurve::AQOCurve( AQOCurve&& moved )
+        :  IsAQObject( moved.getName() , AQOCurve::ENUM_TYPE ),
            HasCurveData( std::ref(moved)), 
            curveBuildProps_( std::move( moved.curveBuildProps_ ) ),
            dates_( std::move( moved.getDates() ) ),
@@ -61,23 +61,23 @@ namespace etrading
 
     };
 
-    LWOCurve::LWOCurve(	const std::string& objName,
+    AQOCurve::AQOCurve(	const std::string& objName,
                         const std::vector<boost::gregorian::date>& dates,
                         const std::vector<double>& discountFactors,
                         const CurveBuildProperties& curveConvention,
                         const std::vector<double>& forwardRates )
-        : IsLWOObject( objName , LWOCurve::ENUM_TYPE )
+        : IsAQObject( objName , AQOCurve::ENUM_TYPE )
     {
         setData( dates, discountFactors, forwardRates );
         setCurveBuildStaticDataObject( curveConvention );
         setYearFractions();
     };
 
-    LWOCurve::LWOCurve(	const std::string& objName,
+    AQOCurve::AQOCurve(	const std::string& objName,
                         const std::vector<double>& yearFractionsAsActAct,
                         const std::vector<double>& discountFactors,
                         const CurveBuildProperties& curveConvention )
-        : IsLWOObject( objName, LWOCurve::ENUM_TYPE ),
+        : IsAQObject( objName, AQOCurve::ENUM_TYPE ),
           interpolationOnDiscountFactors_(), interpolationOnForwardRates_(),
           curveBuildProps_( new CurveBuildProperties( curveConvention ) ),
           datesAsYearFractions_( 0 ), discountFactors_( 0 ), dates_( 0 ), forwardRates_( 0 )
@@ -88,25 +88,25 @@ namespace etrading
         setData( yearFractionsAsActAct, discountFactors ); // used for checking as well
     };
 
-    LWOCurve::LWOCurve(	const std::string& objName,
+    AQOCurve::AQOCurve(	const std::string& objName,
                         const std::vector<boost::gregorian::date>& dates,
                         const std::vector<double>& yearFractionsAsActAct,
                         const std::vector<double>& discountFactors,
                         const CurveBuildProperties& curveConvention )
-        : IsLWOObject( objName, LWOCurve::ENUM_TYPE ),
+        : IsAQObject( objName, AQOCurve::ENUM_TYPE ),
           interpolationOnDiscountFactors_(), interpolationOnForwardRates_(),
           curveBuildProps_( new CurveBuildProperties( curveConvention ) ),
           datesAsYearFractions_( 0 ), discountFactors_( 0 ), dates_( 0 ), forwardRates_( 0 )
     {
         if( dates.size() != yearFractionsAsActAct.size() )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::LWOCurve: Dates and Year Fractions are not of the same size (%i and %i respectively)" )
+            throw ETradingException( ( boost::format( "AQOCurve::AQOCurve: Dates and Year Fractions are not of the same size (%i and %i respectively)" )
                                        % dates.size() % yearFractionsAsActAct.size() ).str() );
         }
         dates_.reserve( discountFactors.size() );
         if( !setDates( dates ) )
         {
-            throw ETradingException( ( boost::format( "Dates in the CTOR of LWOCurve are not in ascending order - verify: %s" )
+            throw ETradingException( ( boost::format( "Dates in the CTOR of AQOCurve are not in ascending order - verify: %s" )
                                        % containerAsString( getDisplayableContainer( dates ) ) ).str() );
         }
         datesAsYearFractions_.reserve( yearFractionsAsActAct.size() );
@@ -114,31 +114,31 @@ namespace etrading
         setData( yearFractionsAsActAct, discountFactors, false ); // used for checking as well
     };
 
-    LWOCurve::LWOCurve(	const std::string& objName,
+    AQOCurve::AQOCurve(	const std::string& objName,
                         const std::vector<boost::gregorian::date>& dates,
                         const std::vector<double>& yearFractionsAsActAct,
                         const std::vector<double>& discountFactors,
                         const std::vector<double>& forwardRates,
                         const CurveBuildProperties& curveConvention )
-        :	IsLWOObject( objName, LWOCurve::ENUM_TYPE ),
+        :	IsAQObject( objName, AQOCurve::ENUM_TYPE ),
           interpolationOnDiscountFactors_(), interpolationOnForwardRates_(),
           curveBuildProps_( new CurveBuildProperties( curveConvention ) ),
           datesAsYearFractions_( 0 ), discountFactors_( 0 ), dates_( 0 ), forwardRates_( 0 )
     {
         if( dates.size() != yearFractionsAsActAct.size() )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::LWOCurve: Dates and Year Fractions are not of the same size (%i and %i respectively)" )
+            throw ETradingException( ( boost::format( "AQOCurve::AQOCurve: Dates and Year Fractions are not of the same size (%i and %i respectively)" )
                                        % dates.size() % yearFractionsAsActAct.size() ).str() );
         }
         if( forwardRates.size() != yearFractionsAsActAct.size() )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::LWOCurve: Forward Rates and Year Fractions are not of the same size (%i and %i respectively)" )
+            throw ETradingException( ( boost::format( "AQOCurve::AQOCurve: Forward Rates and Year Fractions are not of the same size (%i and %i respectively)" )
                                        % forwardRates.size() % yearFractionsAsActAct.size() ).str() );
         }
         dates_.reserve( discountFactors.size() );
         if( !setDates( dates ) )
         {
-            throw ETradingException( ( boost::format( "Dates in the CTOR of LWOCurve are not in ascending order - verify: %s" )
+            throw ETradingException( ( boost::format( "Dates in the CTOR of AQOCurve are not in ascending order - verify: %s" )
                                        % containerAsString( getDisplayableContainer( dates ) ) ).str() );
         }
         datesAsYearFractions_.reserve( yearFractionsAsActAct.size() );
@@ -147,13 +147,13 @@ namespace etrading
         setForwardRates( forwardRates );
     };
 
-    LWOCurve::~LWOCurve()
+    AQOCurve::~AQOCurve()
     {
 		// we used to call removeUnderlyingEntityPoolCurve() here
-        // but that will cause an issue on moving an LWOCurve or when a locally created LWO curve gets destroyed
+        // but that will cause an issue on moving an AQOCurve or when a locally created LWO curve gets destroyed
 	};
 
-    void LWOCurve::removeUnderlyingEntityPoolCurve() const
+    void AQOCurve::removeUnderlyingEntityPoolCurve() const
     {
         if( curveBuildProps_ )
         {
@@ -166,13 +166,13 @@ namespace etrading
         }
     };
 
-    void LWOCurve::inspectDataFormat(	const std::vector<boost::gregorian::date>& dates,
+    void AQOCurve::inspectDataFormat(	const std::vector<boost::gregorian::date>& dates,
                                         const std::vector<double>& discountFactors,
                                         const std::vector<double>& forwardRates ) const
     {
         if( discountFactors.size() != dates.size() )
         {
-            throw ETradingException( ( boost::format( "The Dates and DiscountFactors in the CTOR of the LWOCurve are not of the same length %i (Dates) and %i (DiscountFactors)" )
+            throw ETradingException( ( boost::format( "The Dates and DiscountFactors in the CTOR of the AQOCurve are not of the same length %i (Dates) and %i (DiscountFactors)" )
                                        % dates.size() % discountFactors.size() ).str() );
         };
 
@@ -180,7 +180,7 @@ namespace etrading
         {
             if( forwardRates.size() != dates.size() )
             {
-                throw ETradingException( ( boost::format( "The number of forward rates needs to equal the number of dates in the CTOR of the LWOCurve if the forward rates are set, current sizes: %i (Dates) and %i (forwardRates)" )
+                throw ETradingException( ( boost::format( "The number of forward rates needs to equal the number of dates in the CTOR of the AQOCurve if the forward rates are set, current sizes: %i (Dates) and %i (forwardRates)" )
                                            % dates.size() % forwardRates.size() ).str() );
             }
         };
@@ -212,14 +212,14 @@ namespace etrading
 
     };
 
-    void LWOCurve::setData(	const std::vector<boost::gregorian::date>& dates,
+    void AQOCurve::setData(	const std::vector<boost::gregorian::date>& dates,
                             const std::vector<double>& discountFactors,
                             const std::vector<double>& forwardRates )
     {
         inspectDataFormat( dates, discountFactors, forwardRates );
         if( !setDates( dates ) )
         {
-            throw ETradingException( ( boost::format( "Dates in the CTOR of LWOCurve are not in ascending order - verify: %s" )
+            throw ETradingException( ( boost::format( "Dates in the CTOR of AQOCurve are not in ascending order - verify: %s" )
                                        % containerAsString( getDisplayableContainer( dates ) ) ).str() );
         }
         
@@ -229,7 +229,7 @@ namespace etrading
 
         /*if( !setDiscountFactors( discountFactors ) )
         {
-            throw ETradingException( ( boost::format( "One or more DiscountFactors in the CTOR of LWOCurve were not positive - verify: %s" )
+            throw ETradingException( ( boost::format( "One or more DiscountFactors in the CTOR of AQOCurve were not positive - verify: %s" )
                                        % containerAsString( getDisplayableContainer( discountFactors ) ) ).str() );
         }*/
         
@@ -238,11 +238,11 @@ namespace etrading
         setYearFractions();
     };
 
-    void LWOCurve::setData ( const  std::vector<double>& yearFractionsAsActAct,
+    void AQOCurve::setData ( const  std::vector<double>& yearFractionsAsActAct,
                              const std::vector<double>& discountFactors,
                              const bool setDatesFromFractions )
     {
-        if( !LWOCurve::posNumerChecker_.verify( yearFractionsAsActAct ) || !LWOCurve::increasingYearFractions_.verify( yearFractionsAsActAct ) )
+        if( !AQOCurve::posNumerChecker_.verify( yearFractionsAsActAct ) || !AQOCurve::increasingYearFractions_.verify( yearFractionsAsActAct ) )
         {
             throw ETradingException(
                 ( boost::format( "#Error Invalid curve dates. Curve nodes are in the past or decreasing with time" ) ).str() );
@@ -254,7 +254,7 @@ namespace etrading
         // Currently Tenor basis curves can extrapolate negatively, which needs resolving, upon which this fix should be re-instated.
        /* if( !setDiscountFactors( discountFactors ) )
         {
-            throw ETradingException( ( boost::format( "One or more DiscountFactors in the CTOR of LWOCurve were not positive - verify: %s" )
+            throw ETradingException( ( boost::format( "One or more DiscountFactors in the CTOR of AQOCurve were not positive - verify: %s" )
                                        % containerAsString( getDisplayableContainer( discountFactors ) ) ).str() );
         }*/
 
@@ -264,9 +264,9 @@ namespace etrading
         }
     };
 
-    bool LWOCurve::setDates( const std::vector<boost::gregorian::date>& dates )
+    bool AQOCurve::setDates( const std::vector<boost::gregorian::date>& dates )
     {
-        if( LWOCurve::dateChecker_.verify( dates ) )
+        if( AQOCurve::dateChecker_.verify( dates ) )
         {
             dates_ = dates;
             return true;
@@ -274,7 +274,7 @@ namespace etrading
         return false;
     };
 
-    bool LWOCurve::setDiscountFactors( const std::vector<double>& discountFactors )
+    bool AQOCurve::setDiscountFactors( const std::vector<double>& discountFactors )
     {
 
         discountFactors_ = discountFactors;
@@ -284,7 +284,7 @@ namespace etrading
         // go out 30 years and we are checking for 50 years of daily discount factors which extrapolate negatively.
         // Once the tenor basis extrapolation has been fixed we should reinstate this check and delete the above.
         
-        /*if( LWOCurve::posNumerChecker_.verify( discountFactors ) )
+        /*if( AQOCurve::posNumerChecker_.verify( discountFactors ) )
         {
             discountFactors_ = discountFactors;
             return true;
@@ -293,28 +293,28 @@ namespace etrading
         return false;*/
     };
 
-    bool LWOCurve::setForwardRates( const std::vector<double>& forwardRates )
+    bool AQOCurve::setForwardRates( const std::vector<double>& forwardRates )
     {
         // it is OK if the forward rates are an empty vector
         forwardRates_ = forwardRates;
         return true;
     };
 
-    void LWOCurve::setCurveBuildStaticDataObject( const CurveBuildProperties& cbp )
+    void AQOCurve::setCurveBuildStaticDataObject( const CurveBuildProperties& cbp )
     {
         curveBuildProps_.reset( new CurveBuildProperties( cbp ) );
         inspectDataFormat( dates_, discountFactors_, forwardRates_ );
         setYearFractions();
     };
 
-    void LWOCurve::setCurveBuildStaticDataObject( CurveBuildProperties&& curveConvention )
+    void AQOCurve::setCurveBuildStaticDataObject( CurveBuildProperties&& curveConvention )
     {
         curveBuildProps_.reset( &curveConvention );
         inspectDataFormat( dates_, discountFactors_, forwardRates_ );
         setYearFractions();
     };
 
-    void LWOCurve::setYearFractions()
+    void AQOCurve::setYearFractions()
     {
         if( curveBuildProps_ && dates_.size() > 0 )
         {
@@ -332,7 +332,7 @@ namespace etrading
         }
     };
 
-    void LWOCurve::setDatesFromFractions()
+    void AQOCurve::setDatesFromFractions()
     {
         if( curveBuildProps_ != nullptr && datesAsYearFractions_.size() > 0 )
         {
@@ -351,7 +351,7 @@ namespace etrading
         }
     };
 
-    void LWOCurve::setInterpolationData( const etrading::InterpolationEnum interpMethod ) const
+    void AQOCurve::setInterpolationData( const etrading::InterpolationEnum interpMethod ) const
     {
         if( dates_.size() > 0 )
         {
@@ -368,12 +368,12 @@ namespace etrading
         }
     };
 
-    int LWOCurve::getIndexOfDate( const boost::gregorian::date& date ) const
+    int AQOCurve::getIndexOfDate( const boost::gregorian::date& date ) const
     {
         return getIndexOf( date, dates_ );
     };
 
-    std::tuple<boost::gregorian::date, double, double> LWOCurve::getData( const unsigned int idx ) const
+    std::tuple<boost::gregorian::date, double, double> AQOCurve::getData( const unsigned int idx ) const
     {
         boost::gregorian::date date = dates_[ idx ];
         double dfRate = discountFactors_[ idx ];
@@ -381,31 +381,31 @@ namespace etrading
         return std::make_tuple( date, dfRate, fwdRate );
     };
 
-    std::string LWOCurve::getName() const
+    std::string AQOCurve::getName() const
     {
         return getRefToName();
     };
 
-    const std::vector<boost::gregorian::date>& LWOCurve::getDates() const
+    const std::vector<boost::gregorian::date>& AQOCurve::getDates() const
     {
         return dates_;
     };
 
-    const std::vector<double>& LWOCurve::getDiscountFactors() const
+    const std::vector<double>& AQOCurve::getDiscountFactors() const
     {
         return discountFactors_;
     };
 
-    const std::vector<double>& LWOCurve::getForwardRates() const
+    const std::vector<double>& AQOCurve::getForwardRates() const
     {
         return forwardRates_;
     };
 
-    const CurveBuildProperties* LWOCurve::getCurveBuildStaticDataObject() const
+    const CurveBuildProperties* AQOCurve::getCurveBuildStaticDataObject() const
     {
         return curveBuildProps_.get();
     };
-    //SerializationResult LWOCurve::serialize(
+    //SerializationResult AQOCurve::serialize(
     //    const serialize::SerializationMethodEnum method,
     //    const serialize::SerializationTargetEnum target,
     //    const std::string& targetInfo,
@@ -415,7 +415,7 @@ namespace etrading
     //    return toSchemaObject().serialize( method, target, targetInfo, variableNames, variableValues );
     //};
 
-    const SchemaObject LWOCurve::toSchemaObject() const
+    const SchemaObject AQOCurve::toSchemaObject() const
     {
         SchemaObject schemaObject( etrading::CURVE_DEPRECATED, getRefToName() );
         // TODO: remove hard-coded string or "RATES", etc.
@@ -441,12 +441,12 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( "LWOCurve::toSchemaObject() - Cannot convert to SchemaObject object when CurveBuildProperties have not been set" );
+            throw ETradingException( "AQOCurve::toSchemaObject() - Cannot convert to SchemaObject object when CurveBuildProperties have not been set" );
         }
         return schemaObject;
     };
 
-    bool LWOCurve::isBeforeAsOf( const boost::gregorian::date& date ) const
+    bool AQOCurve::isBeforeAsOf( const boost::gregorian::date& date ) const
     {
         if( !curveBuildProps_ )
         {
@@ -455,7 +455,7 @@ namespace etrading
         return date < curveBuildProps_.get()->asOfDate_;
     };
 
-    const std::vector<double>& LWOCurve::getYearFractions() const
+    const std::vector<double>& AQOCurve::getYearFractions() const
     {
         if( interpolationOnDiscountFactors_ )
         {
@@ -480,7 +480,7 @@ namespace etrading
     };
 
     // using ACT_365 from the AsOfDate
-    double LWOCurve::calculateDiscountFactor( const boost::gregorian::date& toDate ) const
+    double AQOCurve::calculateDiscountFactor( const boost::gregorian::date& toDate ) const
     {
         const boost::gregorian::date asOfDate = curveBuildProps_.get()->asOfDate_;
 
@@ -491,7 +491,7 @@ namespace etrading
 
         if( toDate < asOfDate )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateDiscountFactor(date) => Date supplied (%s) lies before asOfDate(%s)" )
+            throw ETradingException( ( boost::format( "AQOCurve::calculateDiscountFactor(date) => Date supplied (%s) lies before asOfDate(%s)" )
                                        % toYYYYMMDDFromGregorianDate( toDate )
                                        % toYYYYMMDDFromGregorianDate( asOfDate ) ).str() );
         }
@@ -510,7 +510,7 @@ namespace etrading
         }
     };
 
-    double LWOCurve::calculateDiscountFactor( const double yearFraction ) const
+    double AQOCurve::calculateDiscountFactor( const double yearFraction ) const
     {
         if ( yearFraction < 0.0 )
         {
@@ -524,7 +524,7 @@ namespace etrading
 
         if( curveBuildProps_ == nullptr )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateDiscountFactor(yearFraction): Cannot calculate Discount Factor because not CurveBuildProperties were set; yearFraction (%f)" ) % yearFraction ).str() );
+            throw ETradingException( ( boost::format( "AQOCurve::calculateDiscountFactor(yearFraction): Cannot calculate Discount Factor because not CurveBuildProperties were set; yearFraction (%f)" ) % yearFraction ).str() );
         }
 
         if( !curveBuildProps_->isOnlyAllowLookup() )
@@ -571,7 +571,7 @@ namespace etrading
                 auto idxToRetrieve = getIndexWithPrecision( datesAsYearFractions_, yearFraction );
                 if( idxToRetrieve < 0 )
                 {
-                    throw ETradingException( ( boost::format( "LWOCurve::calculateDiscountFactor(yearFraction) LOOKUPONLY : Cannot find discount factor matching date (%s)" )
+                    throw ETradingException( ( boost::format( "AQOCurve::calculateDiscountFactor(yearFraction) LOOKUPONLY : Cannot find discount factor matching date (%s)" )
                                                % toYYYYMMDDFromGregorianDate( dateToEvaluate ).c_str() ).str() );
                 }
                 else
@@ -583,7 +583,7 @@ namespace etrading
     };
 
     // this is the discount factor from a future payment date (which will be adjusted) to term past that future date (which will not be adjusted)
-    double LWOCurve::calculateDiscountFactor(
+    double AQOCurve::calculateDiscountFactor(
         const boost::gregorian::date& futurePaymentDate,
         const double yearFraction,
         const BusinessDayAdjustmentEnum dayAdjustment,
@@ -607,7 +607,7 @@ namespace etrading
         }
     };
 
-    double LWOCurve::calculateDiscountFactor(
+    double AQOCurve::calculateDiscountFactor(
         const boost::gregorian::date& futurePaymentDate,
         const std::string& termAsString,
         const BusinessDayAdjustmentEnum dayAdjustment,
@@ -620,14 +620,14 @@ namespace etrading
         return dfBetweenDates;
     };
 
-    double LWOCurve::calculateDiscountFactor( const boost::gregorian::date& fromDate, const boost::gregorian::date& toDate ) const
+    double AQOCurve::calculateDiscountFactor( const boost::gregorian::date& fromDate, const boost::gregorian::date& toDate ) const
     {
         double fromDF = calculateDiscountFactor( fromDate );
         double toDF = calculateDiscountFactor( toDate );
         return toDF / fromDF; // time fraction
     };
 
-    double LWOCurve::calculateDiscountFactor( const boost::gregorian::date& valuationDate, const boost::gregorian::date& paymentDate,
+    double AQOCurve::calculateDiscountFactor( const boost::gregorian::date& valuationDate, const boost::gregorian::date& paymentDate,
             const BusinessDayAdjustmentEnum dayAdjustment, const std::string& calendar ) const
     {
         auto ptrMlibCalendar = getCalendar( trim_to_upper( calendar.c_str() ) );
@@ -643,13 +643,13 @@ namespace etrading
         }
     };
 
-    double LWOCurve::calculateDiscountFactor( const std::string& tenorString ) const
+    double AQOCurve::calculateDiscountFactor( const std::string& tenorString ) const
     {
         boost::gregorian::date date = adjustFromAsOfDateUsingTenorString( tenorString );
         return calculateDiscountFactor( date );
     };
 
-    double LWOCurve::calculateDiscountFactor( const std::string& tenorString, const BusinessDayAdjustmentEnum dayAdjustment, const std::string& calendar ) const
+    double AQOCurve::calculateDiscountFactor( const std::string& tenorString, const BusinessDayAdjustmentEnum dayAdjustment, const std::string& calendar ) const
     {
         boost::gregorian::date date = curveBuildProps_.get()->asOfDate_;
         date = addTenorString( date, tenorString );
@@ -673,13 +673,13 @@ namespace etrading
         }
     };
 
-    std::vector<double> LWOCurve::calculateDiscountFactor(
+    std::vector<double> AQOCurve::calculateDiscountFactor(
         const std::vector<boost::gregorian::date>& valuationDates,
         const std::vector<boost::gregorian::date>& paymentDates ) const
     {
         if( valuationDates.size() != paymentDates.size() )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateDiscountFactor(valuationDates, paymentDates) ; the number of valuationDates (%i) does not equal the number of paymentDates (%i)" )
+            throw ETradingException( ( boost::format( "AQOCurve::calculateDiscountFactor(valuationDates, paymentDates) ; the number of valuationDates (%i) does not equal the number of paymentDates (%i)" )
                                        % valuationDates.size() % paymentDates.size() ).str() );
         }
         std::vector<double> retVec(valuationDates.size()); // reserve the size
@@ -693,14 +693,14 @@ namespace etrading
     };
 
     // TODO: implement more efficiently - don't be lazy
-    std::vector<double> LWOCurve::calculateDiscountFactor(
+    std::vector<double> AQOCurve::calculateDiscountFactor(
         const std::vector<boost::gregorian::date>& valuationDates,
         const std::vector<boost::gregorian::date>& paymentDates,
         const BusinessDayAdjustmentEnum dayAdjustment, const std::string& calendar ) const
     {
         if( valuationDates.size() != paymentDates.size() )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateDiscountFactor(valuationDates, paymentDates) ; the number of valuationDates (%i) does not equal the number of paymentDates (%i)" )
+            throw ETradingException( ( boost::format( "AQOCurve::calculateDiscountFactor(valuationDates, paymentDates) ; the number of valuationDates (%i) does not equal the number of paymentDates (%i)" )
                                        % valuationDates.size() % paymentDates.size() ).str() );
         }
         std::vector<double> retVec;
@@ -712,7 +712,7 @@ namespace etrading
         return retVec;
     }
 
-    std::vector<double> LWOCurve::calculateDiscountFactor( const std::vector<boost::gregorian::date>& paymentDates ) const
+    std::vector<double> AQOCurve::calculateDiscountFactor( const std::vector<boost::gregorian::date>& paymentDates ) const
     {
         // TODO: would this get sped up if passed the asOfDate (less checks)
         std::vector<double> retVec;
@@ -724,7 +724,7 @@ namespace etrading
         return retVec;
     };
 
-    std::vector<double> LWOCurve::calculateDiscountFactor( const std::vector<double>& yearFractions ) const
+    std::vector<double> AQOCurve::calculateDiscountFactor( const std::vector<double>& yearFractions ) const
     {
         std::vector<double> retVec;
         for( unsigned int fractionCounter = 0u; fractionCounter < yearFractions.size(); fractionCounter++ )
@@ -735,11 +735,11 @@ namespace etrading
         return retVec;
     }
 
-    std::vector<double> LWOCurve::calculateDiscountFactor( const std::vector<boost::gregorian::date>& futurePaymentDates, const std::vector<double>& yearFractions, const BusinessDayAdjustmentEnum dayAdjustment, const std::string& calendar ) const
+    std::vector<double> AQOCurve::calculateDiscountFactor( const std::vector<boost::gregorian::date>& futurePaymentDates, const std::vector<double>& yearFractions, const BusinessDayAdjustmentEnum dayAdjustment, const std::string& calendar ) const
     {
         if( yearFractions.size() != futurePaymentDates.size() )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateDiscountFactor(futurePaymentDates, yearFractions,dayAdjustment,calendar) ; the number of futurePaymentDates (%i) does not equal the number of yearFractions (%i)" )
+            throw ETradingException( ( boost::format( "AQOCurve::calculateDiscountFactor(futurePaymentDates, yearFractions,dayAdjustment,calendar) ; the number of futurePaymentDates (%i) does not equal the number of yearFractions (%i)" )
                                        % futurePaymentDates.size() % yearFractions.size() ).str() );
         }
         std::vector<double> retVec;
@@ -751,7 +751,7 @@ namespace etrading
         return retVec;
     };
 
-    std::vector<double> LWOCurve::calculateDiscountFactor( const std::vector<std::string>& tenorStrings ) const
+    std::vector<double> AQOCurve::calculateDiscountFactor( const std::vector<std::string>& tenorStrings ) const
     {
         std::vector<double> retVec;
         for( unsigned int tenorStringCounter = 0u; tenorStringCounter < tenorStrings.size(); tenorStringCounter++ )
@@ -762,7 +762,7 @@ namespace etrading
         return retVec;
     };
 
-    std::vector<double> LWOCurve::calculateDiscountFactor( const std::vector<std::string>& tenorStrings, const BusinessDayAdjustmentEnum dayAdjustment, const std::string& calendar ) const
+    std::vector<double> AQOCurve::calculateDiscountFactor( const std::vector<std::string>& tenorStrings, const BusinessDayAdjustmentEnum dayAdjustment, const std::string& calendar ) const
     {
         // TODO: can get sped up by passing asOfDate and the AlgoQuantLib common calendar pointer
         std::vector<double> retVec;
@@ -774,7 +774,7 @@ namespace etrading
         return retVec;
     };
 
-    std::vector<double> LWOCurve::calculateDiscountFactor(
+    std::vector<double> AQOCurve::calculateDiscountFactor(
         const std::vector<boost::gregorian::date>& futurePaymentDates,
         const std::vector<std::string>& termsAsString,
         const BusinessDayAdjustmentEnum dayAdjustment,
@@ -793,7 +793,7 @@ namespace etrading
         return retVec;
     };
 
-    double LWOCurve::calculateForwardRateUsingDiscountFactors(
+    double AQOCurve::calculateForwardRateUsingDiscountFactors(
         const boost::gregorian::date& accrualFromDate,
         const boost::gregorian::date& accrualToDate,
         const DayCountEnum dayCount,
@@ -801,7 +801,7 @@ namespace etrading
     {
         if( accrualFromDate >= accrualToDate )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateForwardRateUsingDiscountFactors  Accrual Start Date (%s) is on or after Accrual End Date (%s)" )
+            throw ETradingException( ( boost::format( "AQOCurve::calculateForwardRateUsingDiscountFactors  Accrual Start Date (%s) is on or after Accrual End Date (%s)" )
                                        % toYYYYMMDDFromGregorianDate( accrualFromDate ).c_str()
                                        % toYYYYMMDDFromGregorianDate( accrualToDate ).c_str() ).str() );
         }
@@ -813,17 +813,17 @@ namespace etrading
         // return (fromDF/toDF  - 1.0)*(1.0/termAsDoubleForBetweenDates); // time fraction
     };
 
-    double LWOCurve::calculateForwardRate( const boost::gregorian::date& unadjustedFixingDate ) const
+    double AQOCurve::calculateForwardRate( const boost::gregorian::date& unadjustedFixingDate ) const
     {
         if( curveBuildProps_ == nullptr )
         {
-            throw ETradingException( "LWOCurve::calculateForwardRate(fixingDate) : Cannot calculate because CurveBuildProperties were not set" );
+            throw ETradingException( "AQOCurve::calculateForwardRate(fixingDate) : Cannot calculate because CurveBuildProperties were not set" );
         }
 
         const boost::gregorian::date asOfDate = curveBuildProps_.get()->asOfDate_;
         if( unadjustedFixingDate < asOfDate )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateForwardRate(date) => unadjustedFixingDate supplied (%s) lies before asOfDate (%s)" )
+            throw ETradingException( ( boost::format( "AQOCurve::calculateForwardRate(date) => unadjustedFixingDate supplied (%s) lies before asOfDate (%s)" )
                                        % toYYYYMMDDFromGregorianDate( unadjustedFixingDate )
                                        % toYYYYMMDDFromGregorianDate( asOfDate ) ).str() );
         }
@@ -831,12 +831,12 @@ namespace etrading
         // Forward Rates are saved and indexed by an ACT/365 yearFraction
         const bool includeLast = true;
 		AQLString dayCount("ACT/365");
-        const double yearFractionForFixingDate = LADateScheduleHelpers::getTerm( toLADateFromGregorianDate( asOfDate ), toLADateFromGregorianDate( unadjustedFixingDate ), dayCount, includeLast );
+        const double yearFractionForFixingDate = AQLDateScheduleHelpers::getTerm( toLADateFromGregorianDate( asOfDate ), toLADateFromGregorianDate( unadjustedFixingDate ), dayCount, includeLast );
 
         return calculateForwardRate( yearFractionForFixingDate );
     };
 
-    double LWOCurve::calculateForwardRate( const double yearFraction ) const
+    double AQOCurve::calculateForwardRate( const double yearFraction ) const
     {
         if ( yearFraction < 0.0 )
         {
@@ -844,11 +844,11 @@ namespace etrading
         }
         if( curveBuildProps_ == nullptr )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateForwardRate(yearFraction): Cannot calculate forward rate because not CurveBuildProperties were set; yearFraction (%f)" ) % yearFraction ).str() );
+            throw ETradingException( ( boost::format( "AQOCurve::calculateForwardRate(yearFraction): Cannot calculate forward rate because not CurveBuildProperties were set; yearFraction (%f)" ) % yearFraction ).str() );
         }
         if( forwardRates_.size() == 0 )
         {
-            throw ETradingException( "LWOCurve::calculateForwardRate(yearFraction): Cannot calculate forward rate because no input rates have been set" );
+            throw ETradingException( "AQOCurve::calculateForwardRate(yearFraction): Cannot calculate forward rate because no input rates have been set" );
         }
 
         if( !curveBuildProps_ ->isOnlyAllowLookup() )
@@ -866,7 +866,7 @@ namespace etrading
             auto idxToRetrieve = getIndexWithPrecision( datesAsYearFractions_, yearFraction );
             if( idxToRetrieve < 0 )
             {
-                throw ETradingException( ( boost::format( "LWOCurve::calculateDiscountFactor(yearFraction) LOOKUPONLY : Cannot find discount factor matching yearFraction (%f)" )
+                throw ETradingException( ( boost::format( "AQOCurve::calculateDiscountFactor(yearFraction) LOOKUPONLY : Cannot find discount factor matching yearFraction (%f)" )
                                            % yearFraction ).str() );
             }
             else
@@ -876,19 +876,19 @@ namespace etrading
         }
     };
 
-    double LWOCurve::calculateForwardRate( const std::string& tenorString ) const
+    double AQOCurve::calculateForwardRate( const std::string& tenorString ) const
     {
         if( forwardRates_.size() != dates_.size() || forwardRates_.size() == 0 )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateForwardRate(tenorString) => cannot interpolate forward rates given %i input rates and %i dates " )
+            throw ETradingException( ( boost::format( "AQOCurve::calculateForwardRate(tenorString) => cannot interpolate forward rates given %i input rates and %i dates " )
                                        % forwardRates_.size()
                                        % dates_.size()					 ).str() );
         }
-        boost::gregorian::date toDate = adjustFromAsOfDateUsingTenorString( tenorString, LWOCurve::FIXING_BUSINESSDAYADJUSTMENT ); // curve build props checked in here
+        boost::gregorian::date toDate = adjustFromAsOfDateUsingTenorString( tenorString, AQOCurve::FIXING_BUSINESSDAYADJUSTMENT ); // curve build props checked in here
         return calculateForwardRate( toDate ); // attempting the same business day adjustment should generate the same day
     };
 
-    std::vector<double> LWOCurve::calculateForwardRateUsingDiscountFactors(
+    std::vector<double> AQOCurve::calculateForwardRateUsingDiscountFactors(
         const std::vector<boost::gregorian::date>& accrualStartDates,
         const std::vector<boost::gregorian::date>& accrualEndDates,
         const DayCountEnum dayCount,
@@ -896,7 +896,7 @@ namespace etrading
     {
         if( accrualStartDates.size() != accrualEndDates.size() )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateForwardRate(startDates, endDates) ; the number of startDates (%i) does not equal the number of endDates (%i)" )
+            throw ETradingException( ( boost::format( "AQOCurve::calculateForwardRate(startDates, endDates) ; the number of startDates (%i) does not equal the number of endDates (%i)" )
                                        % accrualStartDates.size() % accrualEndDates.size() ).str() );
         }
         std::vector<double> retVec;
@@ -908,7 +908,7 @@ namespace etrading
         return retVec;
     };
 
-    std::vector<double> LWOCurve::calculateForwardRate( const std::vector<boost::gregorian::date>& unadjustedFixingDates ) const
+    std::vector<double> AQOCurve::calculateForwardRate( const std::vector<boost::gregorian::date>& unadjustedFixingDates ) const
     {
         std::vector<double> retVec;
         for( unsigned int dateCounter = 0u; dateCounter < unadjustedFixingDates.size(); dateCounter++ )
@@ -919,7 +919,7 @@ namespace etrading
         return retVec;
     };
 
-    std::vector<double> LWOCurve::calculateForwardRate( const std::vector<double>& yearFractionsAsOfDateToAccrualFromDate ) const
+    std::vector<double> AQOCurve::calculateForwardRate( const std::vector<double>& yearFractionsAsOfDateToAccrualFromDate ) const
     {
         std::vector<double> retVec;
         for( unsigned int dateCounter = 0u; dateCounter < yearFractionsAsOfDateToAccrualFromDate.size(); dateCounter++ )
@@ -930,34 +930,34 @@ namespace etrading
         return retVec;
     };
 
-    const std::pair<const BusinessDayAdjustmentEnum, const AQLMathCalendar*> LWOCurve::getBusinessDayAdjust( const BusinessDayAdjustmentType adjType ) const
+    const std::pair<const BusinessDayAdjustmentEnum, const AQLMathCalendar*> AQOCurve::getBusinessDayAdjust( const BusinessDayAdjustmentType adjType ) const
     {
         if( curveBuildProps_ == nullptr )
         {
-            throw ETradingException( "LWOCurve::getBusinessDayAdjust(adjType) - Cannot business day adjusment when CurveBuildProperties have not been set" );
+            throw ETradingException( "AQOCurve::getBusinessDayAdjust(adjType) - Cannot business day adjusment when CurveBuildProperties have not been set" );
         }
 
-        if( adjType == LWOCurve::ACCRUAL_BUSINESSDAYADJUSTMENT )
+        if( adjType == AQOCurve::ACCRUAL_BUSINESSDAYADJUSTMENT )
         {
             return std::make_pair( curveBuildProps_->accrualDayAdjustment_, curveBuildProps_->getMlibAccrualCalendar() ) ;
         }
-        if( adjType == LWOCurve::PAYMENT_BUSINESSDAYADJUSTMENT )
+        if( adjType == AQOCurve::PAYMENT_BUSINESSDAYADJUSTMENT )
         {
             return std::make_pair( curveBuildProps_->paymentDayAdjustment_, curveBuildProps_->getMlibPaymentCalendar() ) ;
         }
-        if( adjType == LWOCurve::FIXING_BUSINESSDAYADJUSTMENT )
+        if( adjType == AQOCurve::FIXING_BUSINESSDAYADJUSTMENT )
         {
             return std::make_pair( curveBuildProps_->fixingDayAdjustment_, curveBuildProps_->getMlibFixingCalendar() ) ;
         }
 
-        throw ETradingException( ( boost::format( "LWOCurve::getBusinessDayAdjust(adjType) - Unable to retrieve BusinessDayAdjustmentType (%i)" ) % adjType ).str() );
+        throw ETradingException( ( boost::format( "AQOCurve::getBusinessDayAdjust(adjType) - Unable to retrieve BusinessDayAdjustmentType (%i)" ) % adjType ).str() );
     };
 
-    boost::gregorian::date LWOCurve::adjustFromAsOfDateUsingTenorString( const std::string& tenorString, const BusinessDayAdjustmentType adjType ) const
+    boost::gregorian::date AQOCurve::adjustFromAsOfDateUsingTenorString( const std::string& tenorString, const BusinessDayAdjustmentType adjType ) const
     {
         if( curveBuildProps_ == nullptr )
         {
-            throw ETradingException( "LWOCurve::calculateDiscountFactor(tenorString) - Cannot convert to calculate discount factor when CurveBuildProperties have not been set" );
+            throw ETradingException( "AQOCurve::calculateDiscountFactor(tenorString) - Cannot convert to calculate discount factor when CurveBuildProperties have not been set" );
         };
 
         boost::gregorian::date date = curveBuildProps_.get()->asOfDate_;
@@ -968,13 +968,13 @@ namespace etrading
         const auto ptrHolidayCalendar = adjInfo.second;
         if( ptrHolidayCalendar == nullptr )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateDiscountFactor(tenorString) - Missing AlgoQuantLib Calendar for calendar (%s)" ) % curveBuildProps_->getPaymentDayCalendar().c_str() ).str() );
+            throw ETradingException( ( boost::format( "AQOCurve::calculateDiscountFactor(tenorString) - Missing AlgoQuantLib Calendar for calendar (%s)" ) % curveBuildProps_->getPaymentDayCalendar().c_str() ).str() );
         };
         date = dayAdjust( date, busDayAdjustment, *ptrHolidayCalendar );
         return date;
     };
 
-    const AQLMathCalendar* LWOCurve::getCalendar( const std::string& calendar ) const
+    const AQLMathCalendar* AQOCurve::getCalendar( const std::string& calendar ) const
     {
         const std::string calendarName = trim_to_upper( calendar.c_str() );
         if( curveBuildProps_ )
@@ -995,7 +995,7 @@ namespace etrading
         return &AQLMathCalendarSet::getCalendar( calendarName.c_str() );
     };
 
-    VariantMatrix LWOCurve::getVariantMatrix() const
+    VariantMatrix AQOCurve::getVariantMatrix() const
     {
         VariantMatrix variantMatrix;
         variantMatrix.emplace_back( Variant::createVariantVector( this->dates_, etrading::DATE_VALUE ) );
@@ -1008,7 +1008,7 @@ namespace etrading
         return variantMatrix;
     };
 
-    VariantMatrix LWOCurve::getDiscountFactorMatrix() const
+    VariantMatrix AQOCurve::getDiscountFactorMatrix() const
     {
         VariantMatrix variantMatrix;
         
@@ -1018,7 +1018,7 @@ namespace etrading
         return variantMatrix;
     };
 
-    VariantMatrix LWOCurve::getForwardRateMatrix() const
+    VariantMatrix AQOCurve::getForwardRateMatrix() const
     {
         VariantMatrix variantMatrix;
         

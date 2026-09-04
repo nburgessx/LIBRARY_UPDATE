@@ -1,6 +1,6 @@
 #include "tryMeDateIMM.h"
 
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -44,7 +44,7 @@ namespace validation
         AQLString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
 
 		AQLString calendarCopy( calendar );
-        AQLDate ret = etrading::LADateScheduleHelpers::getIMMDate1( year, month, calendarCopy, bdAdj );
+        AQLDate ret = etrading::AQLDateScheduleHelpers::getIMMDate1( year, month, calendarCopy, bdAdj );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -86,7 +86,7 @@ namespace validation
         etrading::validateStringEmptiness( calendar, "#Error: 'Calendar' must be specified." );
         AQLString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
 		AQLString calendarCopy( calendar );
-        AQLDate ret = etrading::LADateScheduleHelpers::getIMMDate2( year, nth, calendarCopy, bdAdj );
+        AQLDate ret = etrading::AQLDateScheduleHelpers::getIMMDate2( year, nth, calendarCopy, bdAdj );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -128,7 +128,7 @@ namespace validation
         etrading::validateStringEmptiness( calendar, "#Error: 'Calendar' must be specified." );
         AQLString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
 		AQLString calendarCopy( calendar );
-        AQLDate ret = etrading::LADateScheduleHelpers::getIMMDate3( startDate, nth, calendarCopy, bdAdj );
+        AQLDate ret = etrading::AQLDateScheduleHelpers::getIMMDate3( startDate, nth, calendarCopy, bdAdj );
 
         if ( CreateDataFile::recordEnabled() )
         {

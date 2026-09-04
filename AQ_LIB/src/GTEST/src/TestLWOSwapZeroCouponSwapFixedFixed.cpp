@@ -14,13 +14,13 @@
 #include "ResultsProcessor.h"
 #include <gTest/gTest.h>
 
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;
 
 // Define the Test Input Folder Here
-#define TEST_DIR "ETrading/LWObjects/TestLWOSwapZeroCouponSwapFixedFixed/"
+#define TEST_DIR "ETrading/AQObjects/TestLWOSwapZeroCouponSwapFixedFixed/"
 
 namespace
 {

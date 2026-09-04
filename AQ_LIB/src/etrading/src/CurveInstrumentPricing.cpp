@@ -14,10 +14,10 @@
 #include <boost/algorithm/string.hpp>
 
 // LA Includes
-#include "LACurvePricingObject.h"
-#include "LADateHelpers.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLCurvePricingObject.h"
+#include "AQLDateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 
 // Internal Includes
 #include "AQLMathDefine.h"
@@ -118,7 +118,7 @@ namespace
 			{
 				// Get the equivalent rate of each **non-past** accrual period. 
 				// The equivalent rate is obtained either through daily compounding over this period or finding the arithmetic average.
-				double equivalentRate = etrading::LACurveForwardRateHelpers::compound(dataInstance,
+				double equivalentRate = etrading::AQLCurveForwardRateHelpers::compound(dataInstance,
 																                 curveID,
 																                 foreCurveName,				// The forecast curve given by user is expected to be an OIS curve
 																                 floatAccrualDates[i-1],
@@ -214,7 +214,7 @@ double CurveInstrumentPricing::getParRate( DateVector& fixedAccrualDates,
 			throw AQLCoreInvalidData("#Error: Invalid Float Leg Payment Date(s).",__FILE__,__LINE__);
 	}
 
-	etrading::LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
+	etrading::AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
 	AQLString foreInter = AQLCoreComponentManager::getInterpolation(interpolation);
 
 	AQLString dfCurve = etrading::getCurveStaticDataTableName( curveid, dfCurveName );
@@ -225,10 +225,10 @@ double CurveInstrumentPricing::getParRate( DateVector& fixedAccrualDates,
 	    
     yc.getDayCount().setDayCount( floatdc ); // floatdc
 	
-    etrading::LACurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
+    etrading::AQLCurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
 	yc.getSlidingRule().convertFromString( NO_CH );
 
-	if (isFWDInter && !etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS)
+	if (isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS)
 	{
         throw AQLCoreInvalidData("#Error: Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing",__FILE__,__LINE__);
 	}
@@ -279,10 +279,10 @@ double CurveInstrumentPricing::getParRate( DateVector& fixedAccrualDates,
 	if(isOIS && oisCompoundingType.size() != 0)
 	{		
 		std::string curveID(yc.getName().convertToString().getCString());
-		size_t pos = curveID.find(etrading::LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
+		size_t pos = curveID.find(etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
 		if ( pos != std::string::npos)
 		{
-			size_t len = std::string(etrading::LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
+			size_t len = std::string(etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
 			curveID = curveID.substr(pos + len, curveID.length() - len - pos - 1); 
 		}
 
@@ -388,7 +388,7 @@ double CurveInstrumentPricing::getParRate( DateVector& fixedAccrualDates,
 			{
 				for( size_t i = 1; i < floatPaymentDates.size(); ++i )
 				{
-					AQLDate fixingEndDate = etrading::LADateHelpers::getDate(floatFixingDates[i-1], accessary_forecast, sld_forecast, &cal_forecast, true);
+					AQLDate fixingEndDate = etrading::AQLDateHelpers::getDate(floatFixingDates[i-1], accessary_forecast, sld_forecast, &cal_forecast, true);
 					double fixingFraction = floatLegDaycount.getTerm( floatFixingDates[i-1], fixingEndDate );
 				 
 					// Apply the first fixing rate for the first stub, if needed
@@ -532,7 +532,7 @@ double CurveInstrumentPricing::getSwapPV( bool&             isFixedRatePayerSwap
 			throw AQLCoreInvalidData("#Error: Invalid Float Leg Payment Date(s).",__FILE__,__LINE__);
 	}
 
-	etrading::LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
+	etrading::AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
 	AQLString foreInter = AQLCoreComponentManager::getInterpolation(interpolation);
 
 	AQLString dfCurve = etrading::getCurveStaticDataTableName( curveid, dfCurveName );
@@ -543,10 +543,10 @@ double CurveInstrumentPricing::getSwapPV( bool&             isFixedRatePayerSwap
 	    
     yc.getDayCount().setDayCount( floatdc ); // floatdc
 	
-    etrading::LACurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
+    etrading::AQLCurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
 	yc.getSlidingRule().convertFromString( NO_CH );
 
-	if (isFWDInter && !etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS)
+	if (isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS)
 	{
         throw AQLCoreInvalidData("#Error: Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing",__FILE__,__LINE__);
 	}
@@ -636,10 +636,10 @@ double CurveInstrumentPricing::getSwapPV( bool&             isFixedRatePayerSwap
 	if(isOIS && compoundingMethod.size() != 0)
 	{
 		std::string curveID(yc.getName().convertToString().getCString());
-		size_t pos = curveID.find(etrading::LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
+		size_t pos = curveID.find(etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
 		if ( pos != std::string::npos)
 		{
-			size_t len = std::string(etrading::LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
+			size_t len = std::string(etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
 			curveID = curveID.substr(pos + len, curveID.length() - len - pos - 1); 
 		}
 
@@ -697,7 +697,7 @@ double CurveInstrumentPricing::getSwapPV( bool&             isFixedRatePayerSwap
 		{			
 			for( size_t i = 1; i < floatPaymentDates.size(); i++ )
 			{
-				AQLDate fixingEndDate = etrading::LADateHelpers::getDate(floatFixingDates[i-1], accessary_forecast, sld_forecast, &cal_forecast, true);
+				AQLDate fixingEndDate = etrading::AQLDateHelpers::getDate(floatFixingDates[i-1], accessary_forecast, sld_forecast, &cal_forecast, true);
 				double fixingFraction = floatLegDaycount.getTerm( floatFixingDates[i-1], fixingEndDate );
 
 				// Apply the first fixing rate for the first stub, if needed
@@ -834,7 +834,7 @@ double CurveInstrumentPricing::getSwapDV01( bool             isFixedRatePayerSwa
 			throw AQLCoreInvalidData("#Error: Invalid Float Leg Payment Date(s).",__FILE__,__LINE__);
 	}
 
-    etrading::LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
+    etrading::AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
 	AQLString foreInter = AQLCoreComponentManager::getInterpolation(interpolation);
 
 	AQLString dfCurve = etrading::getCurveStaticDataTableName( curveid, dfCurveName );
@@ -845,10 +845,10 @@ double CurveInstrumentPricing::getSwapDV01( bool             isFixedRatePayerSwa
 	    
     yc.getDayCount().setDayCount( floatdc ); // floatdc
 	
-    etrading::LACurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
+    etrading::AQLCurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
 	yc.getSlidingRule().convertFromString( NO_CH );
 
-	if (isFWDInter && !etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS)
+	if (isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS)
 	{
 		throw AQLCoreInvalidData("#Error: Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing",__FILE__,__LINE__);
 	}
@@ -970,10 +970,10 @@ double CurveInstrumentPricing::getSwapDV01( bool             isFixedRatePayerSwa
 	if(isOIS && compoundingMethod.size() != 0)
 	{
 	    std::string curveID(yc.getName().convertToString().getCString());
-	    size_t pos = curveID.find(etrading::LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
+	    size_t pos = curveID.find(etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
 	    if ( pos != std::string::npos)
 	    {
-	    	size_t len = std::string(etrading::LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
+	    	size_t len = std::string(etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
 	    	curveID = curveID.substr(pos + len, curveID.length() - len - pos - 1); 
 	    }
 
@@ -1028,7 +1028,7 @@ double CurveInstrumentPricing::getSwapDV01( bool             isFixedRatePayerSwa
 	    {	    	
 	    	for( size_t i = 1; i < floatPaymentDates.size(); i++ )
 	    	{
-				AQLDate fixingEndDate = etrading::LADateHelpers::getDate(floatFixingDates[i-1], accessary_forecast, sld_forecast, &cal_forecast, true);
+				AQLDate fixingEndDate = etrading::AQLDateHelpers::getDate(floatFixingDates[i-1], accessary_forecast, sld_forecast, &cal_forecast, true);
 				double fixingFraction = floatLegDaycount.getTerm( floatFixingDates[i-1], fixingEndDate );
 					    			
 	    		// Apply the first fixing rate for the first stub, if needed
@@ -1257,7 +1257,7 @@ double CurveInstrumentPricing::getAssetSwapSpread( const double&    bondPrice,
 			throw AQLCoreInvalidData("#Error: Invalid Float Leg Payment Date(s).",__FILE__,__LINE__);
 	}
 
-    etrading::LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
+    etrading::AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
 	AQLString foreInter = AQLCoreComponentManager::getInterpolation(interpolation);
 
 	AQLString dfCurve = etrading::getCurveStaticDataTableName( curveid, dfCurveName );
@@ -1268,10 +1268,10 @@ double CurveInstrumentPricing::getAssetSwapSpread( const double&    bondPrice,
 	    
     yc.getDayCount().setDayCount( floatdc ); // floatdc
 	
-    etrading::LACurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
+    etrading::AQLCurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
 	yc.getSlidingRule().convertFromString( NO_CH );
 
-	if (isFWDInter && !etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc))
+	if (isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc))
 	{
 		throw AQLCoreInvalidData("#Error: Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing",__FILE__,__LINE__);
 	}
@@ -1389,7 +1389,7 @@ double CurveInstrumentPricing::getAssetSwapSpread( const double&    bondPrice,
 	{
 		for( size_t i = 1; i < floatPaymentDates.size(); i++ )
 		{			
-			AQLDate fixingEndDate = etrading::LADateHelpers::getDate(floatFixingDates[i-1], accessary_forecast, sld_forecast, &cal_forecast, true);
+			AQLDate fixingEndDate = etrading::AQLDateHelpers::getDate(floatFixingDates[i-1], accessary_forecast, sld_forecast, &cal_forecast, true);
 			double fixingFraction = floatLegDaycount.getTerm( floatFixingDates[i-1], fixingEndDate );
 
             // Apply the first fixing rate for the first stub, if needed
@@ -1555,12 +1555,12 @@ StubRateAndFixingDate CurveInstrumentPricing::getStubRate( const DateVector& fix
 	bool useGivenFixings = nFixings == 0 ? false : true;
 
 	// Retrieve yield curve through curveid
-    etrading::LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
+    etrading::AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
 	
 	AQLString dc = AQLCoreComponentManager::getDayCount( DATECOUNT );
     yc.getDayCount().setDayCount( dc ); 
 	
-    etrading::LACurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
+    etrading::AQLCurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
 	yc.getSlidingRule().convertFromString( NO_CH );
 	    	
 	// 2. Stub Calculation
@@ -1653,7 +1653,7 @@ StubRateAndFixingDate CurveInstrumentPricing::getStubRate( const DateVector& fix
 	//{
 	//	// When swap schedule is regular it means there is no stub period
 	//	AQLString freqTenor = etrading::fromFrequencyToTerm(indexFrequency);
-	//	stubEnd = etrading::LADateHelpers::getDate(stubStart, freqTenor, sr, &cal, true, NULL);
+	//	stubEnd = etrading::AQLDateHelpers::getDate(stubStart, freqTenor, sr, &cal, true, NULL);
 	//}
 
 	// 2. Stub Calculation
@@ -1722,7 +1722,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
 
 	// Retrieve yield curve through curveid
 	AQLDataInstance*	dataInstance = etrading::InitializeETrading::instance().dataInstance();
-	LACurvePricingObject& yc = LACurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance, curveid);
+	AQLCurvePricingObject& yc = AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance, curveid);
 	const AQLObject& YieldData = yc.getYieldData().get().get();
 
 	// Get yield curve AsOf date
@@ -1764,7 +1764,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
 	AQLString dc = AQLCoreComponentManager::getDayCount(DATECOUNT);
 	yc.getDayCount().setDayCount(dc);
 
-	LACurveForwardRateHelpers::setCalendarForCurveID(yc, "");
+	AQLCurveForwardRateHelpers::setCalendarForCurveID(yc, "");
 	yc.getSlidingRule().convertFromString(NO_CH);
 
 
@@ -1804,7 +1804,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
 		{
 			// When we use a user-specified curve, we should use the corresponding curve tenor to calculate the
 			// stub end date instead of using the old stub end date
-			stubEnd = etrading::LADateHelpers::getDate(stubStart, curveTenors[idx], sr, &cal, true, NULL);
+			stubEnd = etrading::AQLDateHelpers::getDate(stubStart, curveTenors[idx], sr, &cal, true, NULL);
 
 			// Set the right curve to use
 
@@ -1833,7 +1833,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
 			if (isFwdInter && isSwapCurve)
 			{
 				AQLPriceDataDayCount dc;
-				if (!etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, useCurveName, dc))
+				if (!etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, useCurveName, dc))
 				{
 					AQ_THROW( "Stub Rate Error - The STD Swap Curve is invalid and has no forward rates." )
 				}
@@ -1871,8 +1871,8 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
 		AQLDate upperCurveDate;
         
 		// Pick the curves to interpolate from
-		AQLDate firstTenorDate = etrading::LADateHelpers::getDate(stubStart, curveTenors.at(0), sr, &cal, true, NULL);
-		AQLDate lastTenorDate = etrading::LADateHelpers::getDate(stubStart, curveTenors.at(curveTenors.size() - 1), sr, &cal, true, NULL);
+		AQLDate firstTenorDate = etrading::AQLDateHelpers::getDate(stubStart, curveTenors.at(0), sr, &cal, true, NULL);
+		AQLDate lastTenorDate = etrading::AQLDateHelpers::getDate(stubStart, curveTenors.at(curveTenors.size() - 1), sr, &cal, true, NULL);
 		if (stubEnd == firstTenorDate)
 		{
 			lowerCurveIndex = 0;
@@ -1895,7 +1895,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
 			for(size_t i = 0; i < curveCount; ++i)
 			{
 				AQLString curveTenor = curveTenors.at(i);
-				AQLDate tenorEnd = etrading::LADateHelpers::getDate(stubStart, curveTenor, sr, &cal, true, NULL);
+				AQLDate tenorEnd = etrading::AQLDateHelpers::getDate(stubStart, curveTenor, sr, &cal, true, NULL);
 
                 // a) Lower Curve Boundary Condition
                 if ( i == 0 )
@@ -1903,7 +1903,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
                     lowerCurveIndex = i;
 					lowerCurveDate = tenorEnd;
 
-                    AQLDate stubEndWithTolerance = etrading::LADateHelpers::getDate(stubEnd, stubToleranceTenor, sr, &cal, true  /*add tolerance tenor*/ , NULL);
+                    AQLDate stubEndWithTolerance = etrading::AQLDateHelpers::getDate(stubEnd, stubToleranceTenor, sr, &cal, true  /*add tolerance tenor*/ , NULL);
                     AQ_REQUIRE( lowerCurveDate <= stubEndWithTolerance , "Stub Rate Extrapolation Error - Stub term is shorter than '" + curveTenor + "'. A curve with tenor less than '" + curveTenor + "' is required when setting StubIndex to 'NATURAL'." )
                 }
                 // b) Select the two Nearest Curves containing the Stub Date
@@ -1932,7 +1932,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
                     upperCurveIndex = i;
 					upperCurveDate = tenorEnd;
                     
-                    AQLDate stubEndWithTolerance = etrading::LADateHelpers::getDate(stubEnd, stubToleranceTenor, sr, &cal, false /*subtract tolerance tenor*/, NULL);
+                    AQLDate stubEndWithTolerance = etrading::AQLDateHelpers::getDate(stubEnd, stubToleranceTenor, sr, &cal, false /*subtract tolerance tenor*/, NULL);
                     AQ_REQUIRE( stubEndWithTolerance <= upperCurveDate, "Stub Rate Extrapolation Error - Stub term is larger than '" + curveTenor + "'. A curve with tenor larger than '" + curveTenor + "' is required when setting StubIndex to 'NATURAL'." )
                 }
 			}		
@@ -1946,8 +1946,8 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
 			AQLDate nearbyDate;
 			if (useNearbyCurve)
 			{
-                AQLDate lowerToleranceDate = etrading::LADateHelpers::getDate(lowerCurveDate, stubToleranceTenor, sr, &cal, true  /*forward add date*/ , NULL);;
-				AQLDate upperToleranceDate = etrading::LADateHelpers::getDate(upperCurveDate, stubToleranceTenor, sr, &cal, false /*backward add date*/, NULL);;
+                AQLDate lowerToleranceDate = etrading::AQLDateHelpers::getDate(lowerCurveDate, stubToleranceTenor, sr, &cal, true  /*forward add date*/ , NULL);;
+				AQLDate upperToleranceDate = etrading::AQLDateHelpers::getDate(upperCurveDate, stubToleranceTenor, sr, &cal, false /*backward add date*/, NULL);;
 						
 				if (lowerToleranceDate >= stubEnd)
 				{
@@ -1998,7 +1998,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
                     if (isFwdInter && isSwapCurve)
 					{				
 						AQLPriceDataDayCount dc;
-						if (!etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, nearbyIndexCurve, dc))
+						if (!etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, nearbyIndexCurve, dc))
 						{
                             AQ_THROW( "Stub Rate Error - The STD Swap Curve is invalid and has no forward rates." )
 						}
@@ -2099,7 +2099,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
                     if (isFwdInter && isLowerCurveSwapCurve)
 					{												
 						AQLPriceDataDayCount dc;
-						if (!etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, lowerCurveIndexCurve, dc))
+						if (!etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, lowerCurveIndexCurve, dc))
 						{
 							AQ_THROW( "Stub Rate Error - The STD Swap Curve is invalid and has no forward rates." )
 						}
@@ -2135,7 +2135,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
 					if (isFwdInter && isUpperCurveSwapCurve)
 					{
 						AQLPriceDataDayCount dc;
-						if (!etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, upperCurveIndexCurve, dc))
+						if (!etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, upperCurveIndexCurve, dc))
 						{
 							AQ_THROW( "Stub Rate Error - Unable to interpolate the STD swap curve forward rates. The STD Swap Curve is invalid and has no forward rates." )
 						}

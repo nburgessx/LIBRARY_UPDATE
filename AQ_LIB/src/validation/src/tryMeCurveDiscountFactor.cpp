@@ -6,15 +6,15 @@
 #include "StructuredExceptionHandler.h"
 #include "CreateDataFile.h"
 #include "RecordMacros.h"
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "ParameterValidation.h"
 #include "tryMeDate.h"
 #include "tryMeCurveDiscountFactor.h"
 #include "CurveValidation.h"
 #include "CurveStreaming.h"
 #include "CurveResultsContainer.h"
-#include "LWOUtilities.h"			// includes getCurveCollectionFromHandle()
+#include "AQOUtilities.h"			// includes getCurveCollectionFromHandle()
 
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;
@@ -126,7 +126,7 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
 
         // Convert Year Fractions to ACT/365 ones
         AQLDate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
@@ -194,7 +194,7 @@ namespace validation
         AQLString cal( calendar );
         populateDiscountFactorConventions( curveCollection, curIndex, interp, bdAdj, cal );
 
-        DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( tenors, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
+        DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiDF( tenors, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
         if ( ret.size() == 0 )
         {
             throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
@@ -247,7 +247,7 @@ namespace validation
 
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
         if( lwoCurve )
         {
             ret = lwoCurve->calculateDiscountFactor( tenors, busDayAdjust, calendar );
@@ -337,7 +337,7 @@ namespace validation
         AQLString cal;
         populateDiscountFactorConventions( curveCollection, curIndex, interp, bdAdj, cal );
 
-        DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( fromDateVec, toDates, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
+        DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiDF( fromDateVec, toDates, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
 
         if ( ret.size() == 0 )
         {
@@ -408,7 +408,7 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
 
         if( lwoCurve )
         {
@@ -519,7 +519,7 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
 
 
         // Convert Year Fractions to ACT/365 ones
@@ -595,7 +595,7 @@ namespace validation
         AQLString cal( calendar );
         populateDiscountFactorConventions( curveCollection, curIndex, interp, bdAdj, cal );
 
-        DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( fromDates, tenor, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
+        DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiDF( fromDates, tenor, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
         if ( ret.size() == 0 )
         {
             throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
@@ -656,7 +656,7 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
         if( lwoCurve )
         {
             ret = lwoCurve->calculateDiscountFactor( fromDates, tenors, busDayAdjust, calendar );
@@ -720,7 +720,7 @@ namespace validation
         AQLString cal;
         populateDiscountFactorConventions( curveCollectionFromHandle, curIndex, interp, bdAdj, cal );
 
-        DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( toDates, etrading::getDataInstance(), curveCollectionFromHandle, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
+        DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( toDates, etrading::getDataInstance(), curveCollectionFromHandle, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
 
         if ( ret.size() == 0 )
         {

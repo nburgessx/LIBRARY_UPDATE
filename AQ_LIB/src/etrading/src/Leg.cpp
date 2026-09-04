@@ -10,10 +10,10 @@
 namespace etrading
 {
 
-	Leg::Leg(const std::string& instanceName) : IsLWOObject(instanceName, LEG), legStaticData_(), schedule_(), inputParameters_(LabelValueBlock())
+	Leg::Leg(const std::string& instanceName) : IsAQObject(instanceName, LEG), legStaticData_(), schedule_(), inputParameters_(LabelValueBlock())
 	{}
 	
-	Leg::Leg(const LabelValueBlock& legLVB, const std::string& instanceName, const SchedulePtr& schedule) : IsLWOObject(instanceName, LEG), legStaticData_(), schedule_(schedule)
+	Leg::Leg(const LabelValueBlock& legLVB, const std::string& instanceName, const SchedulePtr& schedule) : IsAQObject(instanceName, LEG), legStaticData_(), schedule_(schedule)
 	{
         inputParameters_ = legLVB;
 		
@@ -24,7 +24,7 @@ namespace etrading
 		}
 	}
 
-    Leg::Leg(const std::string& instanceName, const LegStaticDataPtr& legStaticData, const SchedulePtr& schedule) : IsLWOObject(instanceName, LEG), legStaticData_(legStaticData), schedule_(schedule)
+    Leg::Leg(const std::string& instanceName, const LegStaticDataPtr& legStaticData, const SchedulePtr& schedule) : IsAQObject(instanceName, LEG), legStaticData_(legStaticData), schedule_(schedule)
     {
   		if (legStaticData_ == nullptr || schedule_ == nullptr)
 		{
@@ -34,7 +34,7 @@ namespace etrading
         inputParameters_ = LabelValueBlock( legStaticData_->getInputParameters(), schedule_->getInputParameters() );
     }
 
-    Leg::Leg( const Leg& rhs) : IsLWOObject(rhs.getRefToName(), LEG), inputParameters_(rhs.inputParameters_)
+    Leg::Leg( const Leg& rhs) : IsAQObject(rhs.getRefToName(), LEG), inputParameters_(rhs.inputParameters_)
 	{
         if (rhs.legStaticData_ != nullptr)
         {

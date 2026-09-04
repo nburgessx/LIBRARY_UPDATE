@@ -1,6 +1,6 @@
 #include "tryMeUtilityPCA.h"
 
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -31,7 +31,7 @@ namespace validation
 
         // Get Eigen vector results
         DoubleMatrix tmp;
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VECTORS" ), key );
+        tmp = etrading::AQLUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VECTORS" ), key );
         size_t num_factor = tmp.size();
         size_t dim_data = tmp[0].size();
 
@@ -65,7 +65,7 @@ namespace validation
         }
 
         // Get POV results
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "POV" ), key );
+        tmp = etrading::AQLUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "POV" ), key );
 
         ret[dim_data + 1][0] = "Proportion of Variance";
         for( unsigned int i = 0; i < num_factor; i++ )
@@ -76,7 +76,7 @@ namespace validation
         }
 
         // Get Eigen value results
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VALUES" ), key );
+        tmp = etrading::AQLUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VALUES" ), key );
         ret[dim_data + 2][0] = "Eigen Values";
         for( unsigned int i = 0; i < num_factor; i++ )
         {
@@ -112,7 +112,7 @@ namespace validation
 
         DoubleArray mean;
         DoubleMatrix coVar;
-        etrading::LAUpdateStaticDataManager::CalcMeanAndCovariance( data, mean, coVar );
+        etrading::AQLUpdateStaticDataManager::CalcMeanAndCovariance( data, mean, coVar );
 
         DoubleMatrix corr( coVar.size() );
         if ( useCorrelationMatrix )
@@ -142,7 +142,7 @@ namespace validation
         }
 
         // Carry out PCA
-        etrading::LAUpdateStaticDataManager::SetUpPCA( etrading::getDataInstance(), corr, nFactors, key );
+        etrading::AQLUpdateStaticDataManager::SetUpPCA( etrading::getDataInstance(), corr, nFactors, key );
 
         //++num_call_pca[key.getCString()];
         //AQLString msg = key + ":" + AQLString( static_cast<int > (num_call_pca[key.getCString()]) );

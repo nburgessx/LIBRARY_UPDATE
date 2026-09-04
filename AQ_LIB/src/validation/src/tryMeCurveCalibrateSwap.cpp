@@ -1,5 +1,5 @@
 #include "tryMeCurveCalibrateSwap.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
@@ -145,7 +145,7 @@ namespace validation
             throw AQLCoreInvalidData( "#Error: Tenor Basis Adjustment Rates column size must be 2", __FILE__, __LINE__ );
         }
 
-        etrading::LAUpdateStaticDataManager::setUpSwapCurve( etrading::getDataInstance(),
+        etrading::AQLUpdateStaticDataManager::setUpSwapCurve( etrading::getDataInstance(),
                                                                   curveCollection,
                                                                   staticDataTable,
                                                                   curveConv,

@@ -1,6 +1,6 @@
 #include "tryMeCurveForwardRate.h"
 #include "tryMeDate.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "RecordMacros.h"
 #include "StructuredExceptionHandler.h"
@@ -10,7 +10,7 @@
 #include "ContainerUtilities.h"
 #include "CurveValidation.h"
 #include "CurveUtilities.h"
-#include "LWOUtilities.h"			// includes getCurveCollectionFromHandle()
+#include "AQOUtilities.h"			// includes getCurveCollectionFromHandle()
 
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;

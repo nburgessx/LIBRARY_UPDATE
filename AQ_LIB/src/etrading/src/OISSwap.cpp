@@ -1,6 +1,6 @@
 #include "OISSwap.h"
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CommonConstants.h"
 #include "AQLCoreComponentManager.h"
 #include "CurveValidation.h"
@@ -10,7 +10,7 @@
 #include "ParameterValidation.h"
 #include "InitializeETrading.h"
 #include "ConstantDeclarations.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "AQLPriceDataSlidingRule.h"
 #include <boost/algorithm/string.hpp>
 
@@ -29,7 +29,7 @@ namespace etrading
     */
     double OISSwap::pv()
     {
-        LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( etrading::InitializeETrading::instance().dataInstance(), curveSet_ );
+        AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID( etrading::InitializeETrading::instance().dataInstance(), curveSet_ );
 
         AQLString fixeddc = AQLCoreComponentManager::getDayCount( fixedDayCount_ );
         AQLString floatdc = AQLCoreComponentManager::getDayCount( floatDayCount_ );
@@ -47,12 +47,12 @@ namespace etrading
 
             yc.getDayCount().setDayCount( floatdc ); // floatdc
 
-            etrading::LACurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
+            etrading::AQLCurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
 
             yc.getSlidingRule().convertFromString( NO_CH );
 
             // Is forward interpolation possible?
-            if ( etrading::LACurveForwardRateHelpers::setUpForwardDayCount( etrading::getDataInstance(), curveSet_, forecastCurve_, yc ) )
+            if ( etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount( etrading::getDataInstance(), curveSet_, forecastCurve_, yc ) )
             {
                 isFwdInterp_ = true;
             }

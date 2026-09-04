@@ -1,7 +1,7 @@
 #include "AQLDataInstance.h"
 #include "InitializeETrading.h"
 #include "LibSetUpETrading.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "tryMeUtilitySetup.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
@@ -95,8 +95,8 @@ namespace validation
         // ---------------------------------------------------------------------------------------------------------------
         const bool checkIfStaticDataLoaded = true;
         const bool checkIfCalendarFileLoaded = true;
-        etrading::LAUpdateStaticDataManager::setUpForIRServer(); // TODO: Stop making this lower layer refer to an interface (like Excel)
-        etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *(etrading::InitializeETrading::instance( checkIfStaticDataLoaded, checkIfCalendarFileLoaded ).dataInstance()) );
+        etrading::AQLUpdateStaticDataManager::setUpForIRServer(); // TODO: Stop making this lower layer refer to an interface (like Excel)
+        etrading::AQLUpdateStaticDataManager::setUpDefaultIRStaticData( *(etrading::InitializeETrading::instance( checkIfStaticDataLoaded, checkIfCalendarFileLoaded ).dataInstance()) );
         // ---------------------------------------------------------------------------------------------------------------
 			
         // Disable Thread Locking - since we have a local thread guard
@@ -149,9 +149,9 @@ namespace validation
         AQLDataInstance* dataInstance = etrading::getDataInstance();
         dataInstance->getObjectPool().clear();
         AQLCoreDataService::finalize();
-        etrading::LAUpdateStaticDataManager::setUpForIRServer();
+        etrading::AQLUpdateStaticDataManager::setUpForIRServer();
         AQLCoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
-        etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance );
+        etrading::AQLUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance );
 
         AQLString ret( "Cleared the Object Pool Cache" );
         return ret;
@@ -230,7 +230,7 @@ namespace validation
         dataInstance->getObjectPool().clear();
 
         AQLCoreDataService::finalize();
-        etrading::LAUpdateStaticDataManager::setUpForIRServer();
+        etrading::AQLUpdateStaticDataManager::setUpForIRServer();
         AQLCoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
 
         //Check if the file exists
@@ -245,7 +245,7 @@ namespace validation
 			fin.close();
         }
 
-        etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance, filepath );
+        etrading::AQLUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance, filepath );
 
         AQLString ret( "AllEntityPoolCleared and StaticDataLoaded" );
 

@@ -6,7 +6,7 @@
 
 namespace google_test
 {
-    // wrapper for LAUpdateStaticDataManager::setUpFwdFXConstantCurve
+    // wrapper for AQLUpdateStaticDataManager::setUpFwdFXConstantCurve
     class CurveFwdFxConst
         : public virtual google_test::InitializeGoogleTest
         , public CurveAccessors

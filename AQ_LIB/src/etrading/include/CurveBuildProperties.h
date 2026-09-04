@@ -22,17 +22,17 @@
 #include "AQLMathCalendarSet.h"
 #include "AQLMathCalendar.h"
 #include "Variant.h"
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 
 /*
-This class holds the basic properties needed for operating on LWOCurve objects
+This class holds the basic properties needed for operating on AQOCurve objects
 */
 
 
 namespace etrading
 {
     struct CurveBuildProperties
-        : public IsLWOObject,
+        : public IsAQObject,
           public HasConstInstance<CurveTypeEnum>
     {
         CurveBuildProperties( const CurveBuildProperties& ins );

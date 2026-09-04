@@ -1,11 +1,11 @@
 #include "tryMeCurveCalibrateOIS.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
 #include "ParameterValidation.h"
 #include "CurveResultsContainer.h"          // CurveResultsContainer - Singleton object for storage of curve results
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "CurveUtilities.h"
 
 using etrading::CreateDataFile;
@@ -84,7 +84,7 @@ namespace validation
 
 		auto fixingTableDateRates = etrading::retrieveFixingTableMatrix(oisHistoricalRates);
 
-        etrading::LAUpdateStaticDataManager::setUpOISCurve( etrading::getDataInstance(),
+        etrading::AQLUpdateStaticDataManager::setUpOISCurve( etrading::getDataInstance(),
                                                             curveCollection,
                                                             staticDataTable,
                                                             curveConv,

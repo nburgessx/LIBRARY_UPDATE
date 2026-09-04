@@ -2,7 +2,7 @@
 
 #include "tryMeLWOCurveCreateFXForwards.h"
 
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
@@ -11,15 +11,15 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "CurveBuildProperties.h"
-#include "LWOCurve.h"
+#include "AQOCurve.h"
 #include "EnvironmentPool.h"
 #include "ObjectUtilities.h"
 #include "EnvironmentUtilities.h"
 #include "Environment.h"
 #include "DateUtilities.h"
 #include "AQLCoreComponentManager.h"
-#include "LACurvePricingObject.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurvePricingObject.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "AQLPriceDataInterpolation.h"
 #include "EntityPoolUtilities.h"
 #include "CurveResultsContainer.h"
@@ -98,10 +98,10 @@ namespace validation
         // ------------------------------------------
 
 		// 1. Load Static Data
-        LAUpdateStaticDataManager::loadStaticDataFwdFXConstantCurve( etrading::getDataInstance(), curveCollection, staticDataTable, fxFwdConv, curveConv, curveIndex );
+        AQLUpdateStaticDataManager::loadStaticDataFwdFXConstantCurve( etrading::getDataInstance(), curveCollection, staticDataTable, fxFwdConv, curveConv, curveIndex );
 
 		// 2. Calibrate Curve
-		LAUpdateStaticDataManager::calibrateFwdFXConstantCurve( etrading::getDataInstance(), curveCollection, staticDataTable, curveConv );
+		AQLUpdateStaticDataManager::calibrateFwdFXConstantCurve( etrading::getDataInstance(), curveCollection, staticDataTable, curveConv );
 
         // Important Note on: CurveIndexCopy
         // ---------------------------------
@@ -140,10 +140,10 @@ namespace validation
         // ----------------------------------------------------------------
 
         // Get the Discount Factors from the Object Pool Curve Engine
-        auto massiveDFVector = etrading::LACurveForwardRateHelpers::getMultiDF( massiveYearFractionVector, etrading::getDataInstance(), curveCollection, AQLString( "ACT/365" ), interpolation.toUpper(), false, staticDataTable );
+        auto massiveDFVector = etrading::AQLCurveForwardRateHelpers::getMultiDF( massiveYearFractionVector, etrading::getDataInstance(), curveCollection, AQLString( "ACT/365" ), interpolation.toUpper(), false, staticDataTable );
 
         // Set the LWO Curve; yearFractions, discountFactors and Curve build properties (cbp)
-        etrading::LWOCurve lwoCurve( lwoCurveName, massiveYearFractionVector, massiveDFVector, cbp );
+        etrading::AQOCurve lwoCurve( lwoCurveName, massiveYearFractionVector, massiveDFVector, cbp );
 
         // Get the Fixing Dates
         const auto& lwoFixingDates = lwoCurve.getDates();
@@ -161,7 +161,7 @@ namespace validation
 
 
         etrading::moveToCache( std::move( lwoCurve ) );
-        auto& curve_store = etrading::getObjectStore<etrading::LWOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        auto& curve_store = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
 
         if( curve_store.has( lwoCurveName ) )
         {
@@ -175,7 +175,7 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Unable to create LWOCurve named %s" ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Unable to create AQOCurve named %s" ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         VALID_EXCEPTION_END

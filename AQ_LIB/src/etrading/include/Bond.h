@@ -5,7 +5,7 @@
 #include "CoreEnumerations.h"
 #include "BondEnumerations.h"
 #include "BondYields.h"
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "BondUtilities.h"
 #include "BondCurves.h"
@@ -16,7 +16,7 @@ namespace etrading
     class Bond;
     typedef std::shared_ptr< Bond > BondPtr;
 
-    class Bond : public IsLWOObject 
+    class Bond : public IsAQObject 
     {
 	public:
         

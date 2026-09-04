@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "FreeObject.h"
 #include "Variant.h"
@@ -53,7 +53,7 @@ namespace etrading
 
 	/* @brief	Represents a BondCurve calibrated from bond yield quotes
 	*/
-	class BondCurve : public IsLWOObject
+	class BondCurve : public IsAQObject
 	{
 	public:
 			

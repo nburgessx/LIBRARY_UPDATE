@@ -47,7 +47,7 @@
 #include "FileUtilities.h"
 #include "EnvironmentPool.h"
 #include "RuleInterface.h"
-#include "LWOCurve.h"
+#include "AQOCurve.h"
 #include "CurveBuildProperties.h"
 #include "EnvironmentUtilities.h"
 #include "ObjectUtilities.h"
@@ -74,7 +74,7 @@ namespace google_test
         // InitializeGoogleTest instance; // Resolved using the DECLARE_TEST_FIXTURE macro above
 
         auto& env = Environment::defaultEnv();
-        auto& curveOutputsInCache = env.getCache<LWOCurve>();
+        auto& curveOutputsInCache = env.getCache<AQOCurve>();
 
         EXPECT_THROW( CurveBuildProperties( etrading::SWAP_CURVETYPE, "CBP_for_MyCurveOutput", "EURYC", "OIS",
                                             etrading::EUR, boost::gregorian::date( 2016, 5, 3 ),
@@ -94,30 +94,30 @@ namespace google_test
                 ( boost::gregorian::date( 2024, 11, 4 ) );
         std::vector<double> discountFactors = boost::assign::list_of( 0.995 )( 0.98 )( 0.7 )( 0.75 )( 0.65 );
         std::vector<double> forwardRates = boost::assign::list_of( 0.00568 )( 0.00912 )( 0.01444 )( 0.02685 )( 0.01799 );
-        LWOCurve curveOutput( "MyCurveOutput", dates, discountFactors, conventionUsed, forwardRates );
+        AQOCurve curveOutput( "MyCurveOutput", dates, discountFactors, conventionUsed, forwardRates );
 
         // Say I wish to keep my local copy and cache a independent copy:
         etrading::copyToCache( curveOutput );
-        LWOCurve myCurveOutputTest = env.copyObject<LWOCurve>( "MyCurveOutput" );
+        AQOCurve myCurveOutputTest = env.copyObject<AQOCurve>( "MyCurveOutput" );
 
         // I want to check that the correct object is indeed there
-        env.hasObject<LWOCurve>( "MyCurveOutput" );
+        env.hasObject<AQOCurve>( "MyCurveOutput" );
         curveOutputsInCache.has( "MyCurveOutput" );
-        EXPECT_TRUE( env.hasObject<LWOCurve>( "MyCurveOutput" ) );
+        EXPECT_TRUE( env.hasObject<AQOCurve>( "MyCurveOutput" ) );
 
         // I want to remove the object from the cache
-        env.deleteObject<LWOCurve>( "MyCurveOutput" );
+        env.deleteObject<AQOCurve>( "MyCurveOutput" );
         curveOutputsInCache.erase( "MyCurveOutput" );
-        EXPECT_FALSE( env.hasObject<LWOCurve>( "MyCurveOutput" ) );
+        EXPECT_FALSE( env.hasObject<AQOCurve>( "MyCurveOutput" ) );
 
         // I no longer wish to use my local object and want to move the memory to the cache
         etrading::moveToCache( std::move( curveOutput ) );
         // any use of curveOutput here will give UB
 
-        EXPECT_TRUE( env.hasObject<LWOCurve>( "MyCurveOutput" ) );
+        EXPECT_TRUE( env.hasObject<AQOCurve>( "MyCurveOutput" ) );
 
         // now I want to change or do a calculation using the object on the cache
-        auto ptrToObj = env.accessObject<LWOCurve>( "MyCurveOutput" );
+        auto ptrToObj = env.accessObject<AQOCurve>( "MyCurveOutput" );
         // or
         // auto ptrToObj = curveOutputsInCache.get("MyCurveOutput");
         double my_df = ptrToObj->calculateDiscountFactor( "1Y" );
@@ -129,15 +129,15 @@ namespace google_test
         ptrToObj->setCurveBuildStaticDataObject( newConventionUsed );
 
         // I have an object on the cache I want to get a local copy of it - the object must have a copy CTOR defined
-        LWOCurve myCurveOutput = env.copyObject<LWOCurve>( "MyCurveOutput" );
+        AQOCurve myCurveOutput = env.copyObject<AQOCurve>( "MyCurveOutput" );
 
         // I want to create a new object straight on the store and calculate on it
-        auto ptrToCurveOutput = CreateObjectOnStore<LWOCurve>::create( Environment::DEFAULT_ENV_NAME, "AnotherCurveOutput" );
+        auto ptrToCurveOutput = CreateObjectOnStore<AQOCurve>::create( Environment::DEFAULT_ENV_NAME, "AnotherCurveOutput" );
         ptrToCurveOutput->setData( dates, discountFactors, forwardRates );
         ptrToCurveOutput->setCurveBuildStaticDataObject( newConventionUsed );
         double my_df2 = ptrToCurveOutput->calculateDiscountFactor( "3M" );
 
-        const std::string readWriteFileName = ( boost::format( "%s/resource/test/inputs/ETrading/LWObjects/LWOCurve/%s.json" )
+        const std::string readWriteFileName = ( boost::format( "%s/resource/test/inputs/ETrading/AQObjects/AQOCurve/%s.json" )
                                                 % etrading::getEnvironmentVariable( "MLIBQ" ).c_str() % ptrToCurveOutput->getName().c_str() ).str();
 
         // I want to serialize an object to a file (local or pointing to an object in the cache)
@@ -145,17 +145,17 @@ namespace google_test
         EXPECT_TRUE( fileExists( readWriteFileName ) );
 
         // or I could have used the interface on the Environment
-        auto ptrToCurveOutput2 = env.createObject<LWOCurve, LWOCurve>( "YetAnotherCurveOutput" );
+        auto ptrToCurveOutput2 = env.createObject<AQOCurve, AQOCurve>( "YetAnotherCurveOutput" );
 
-        EXPECT_TRUE( env.hasObject<LWOCurve>( "AnotherCurveOutput" ) );
+        EXPECT_TRUE( env.hasObject<AQOCurve>( "AnotherCurveOutput" ) );
         curveOutputsInCache.erase( "AnotherCurveOutput" );
-        EXPECT_FALSE( env.hasObject<LWOCurve>( "AnotherCurveOutput" ) );
+        EXPECT_FALSE( env.hasObject<AQOCurve>( "AnotherCurveOutput" ) );
         // I want to de-serliaze from a file into an enviroment
 
         auto deserializationInfo = deSerializeFromJSON(  etrading::serialize::FILE, readWriteFileName );
         // whatever we deserialized has now overrwritten any object with the same name in the cache
-        EXPECT_TRUE( env.hasObject<LWOCurve>( "AnotherCurveOutput" ) );
-        auto ptrToCheck = env.accessObject<LWOCurve>( "AnotherCurveOutput" );
+        EXPECT_TRUE( env.hasObject<AQOCurve>( "AnotherCurveOutput" ) );
+        auto ptrToCheck = env.accessObject<AQOCurve>( "AnotherCurveOutput" );
 
         auto info = ptrToCheck->getData( 0 );
         auto date0 = std::get<0>( info );
@@ -191,18 +191,18 @@ namespace google_test
         EXPECT_DOUBLE_EQ( ptrToCheck->calculateForwardRate( date0 ), fwdr0 );
         EXPECT_DOUBLE_EQ( ptrToCheck->calculateForwardRate( date3 ), fwdr3 );
 
-        env.hasObject<LWOCurve>( "AnotherCurveOutput" );
+        env.hasObject<AQOCurve>( "AnotherCurveOutput" );
 
         // I want to delete a specific object
-        env.deleteObject<LWOCurve>( "YetAnotherCurveOutput" );
-        env.hasObject<LWOCurve>( "YetAnotherCurveOutput" );
+        env.deleteObject<AQOCurve>( "YetAnotherCurveOutput" );
+        env.hasObject<AQOCurve>( "YetAnotherCurveOutput" );
 
         // or I could have accessed the cache directly
         curveOutputsInCache.erase( "MoreCurveOutput" );
         curveOutputsInCache.has( "MoreCurveOutput" );
 
         // I want to delete all objects of this type
-        env.deleteAllObjects<LWOCurve>();
+        env.deleteAllObjects<AQOCurve>();
 
         // or I could have accessed the cache directly
         curveOutputsInCache.clear();

@@ -15,7 +15,7 @@
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;
 
-#define TEST_DIR "ETrading/LWObjects/LWOBonds/BondPricing/"
+#define TEST_DIR "ETrading/AQObjects/AQOBonds/BondPricing/"
 
 namespace
 {

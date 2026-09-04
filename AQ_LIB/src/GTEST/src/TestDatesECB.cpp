@@ -2,7 +2,7 @@
 
 // Includes: This Library
 #include "AQLMathCentralBank.h"
-#include "LADateHelpers.h"
+#include "AQLDateHelpers.h"
 
 #include "tryMirGetNextECBDate.h"
 #include "tryMirGetECBStartDate.h"
@@ -24,14 +24,14 @@ namespace google_test
     TEST( TestDatesECB, UNIT_haveNextECBDate )
     {
         const AQLDate today( "20151008" );
-        EXPECT_EQ(etrading::LADateHelpers::haveNextECBDate( today ), true );
+        EXPECT_EQ(etrading::AQLDateHelpers::haveNextECBDate( today ), true );
 
         const AQLDate ecbLast = AQLMathCentralBank::meetingSchedule( "ecb" ).back();
-        EXPECT_EQ(etrading::LADateHelpers::haveNextECBDate( ecbLast ), false );
-        EXPECT_EQ(etrading::LADateHelpers::haveNextECBDate( ecbLast, false ), true );
+        EXPECT_EQ(etrading::AQLDateHelpers::haveNextECBDate( ecbLast ), false );
+        EXPECT_EQ(etrading::AQLDateHelpers::haveNextECBDate( ecbLast, false ), true );
 
         const AQLDate farAway( "21151008" );
-        EXPECT_EQ(etrading::LADateHelpers::haveNextECBDate( farAway ), false );
+        EXPECT_EQ(etrading::AQLDateHelpers::haveNextECBDate( farAway ), false );
     }
 
     TEST( TestDatesECB, UNIT_getNextECBDate )

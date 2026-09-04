@@ -6,7 +6,7 @@
 #include "BindFileToClassConstructor.h"
 #include "Dependency.h"
 #include "CurveTenorBasis.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "AQLCoreError.h"
 
 #include "ReadDataFile.h"

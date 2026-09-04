@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 
 #include "CoreEnumerations.h"
@@ -11,7 +11,7 @@
 namespace etrading
 {
 
-    class FXCurve :	public IsLWOObject
+    class FXCurve :	public IsAQObject
     {
     public:
 

@@ -15,9 +15,9 @@
 #include "InitializeETrading.h"
 #include "ParameterValidation.h"
 #include "AQLDefinitions.h"
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LACurveCalibrationHelpers.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLCurveCalibrationHelpers.h"
 #include "AQLPriceDataCalendar.h"
 #include "CurveCalibrationData.h"
 #include "AQLMarketData.h"
@@ -88,7 +88,7 @@ namespace etrading
             forwardRateTable.forwardRates_      = forwardRates;
             
             // Set the Forward Rates Table
-            etrading::LACurveCalibrationHelpers::setCurveForwardRateTable( etrading::getDataInstance(), curveCollection, curveIndices, forwardRateTable );
+            etrading::AQLCurveCalibrationHelpers::setCurveForwardRateTable( etrading::getDataInstance(), curveCollection, curveIndices, forwardRateTable );
 
             if ( setCorrespondingDiscountFactors )
             {
@@ -182,7 +182,7 @@ namespace etrading
 
         // Set the Discount Factors to the Curve - No dates are used here, just terms and discount factors.
         const AQLStringVector curveIndices = curveIndexAliasList( curveCollection, curveIndex );
-        etrading::LACurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndices,  dfInputTable );
+        etrading::AQLCurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndices,  dfInputTable );
 
         // Imply and Set Equivalent Forward Rates on STD Curve
         const bool isSTDSwapCurve = etrading::isSTDCurve( curveCollection, curveIndex );
@@ -220,7 +220,7 @@ namespace etrading
     AQLString setCurveDiscountFactorsToOne( const AQLString& curveCollection, const AQLString& curveIndex )
     {
 		// Get the existing discount factor dates and values, then reset the values to one
-        DiscountFactorTable results = etrading::LACurveCalibrationHelpers::getCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndex );
+        DiscountFactorTable results = etrading::AQLCurveCalibrationHelpers::getCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndex );
         
         // Reset the Existing Discount Factors to One
         DoubleVector newDiscountFactors( results.terms_.size(), 1.0 );
@@ -241,7 +241,7 @@ namespace etrading
     DiscountFactorTable getCurveDiscountFactors( const AQLString& curveCollection, const AQLString& curveIndex )
     {
 		// Discount Factor Results are returned as an of array terms and discount factors 
-        DiscountFactorTable results = etrading::LACurveCalibrationHelpers::getCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndex );
+        DiscountFactorTable results = etrading::AQLCurveCalibrationHelpers::getCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndex );
         return results;
     }
 
@@ -253,7 +253,7 @@ namespace etrading
     ForwardRateTable getCurveForwardRates( const AQLString& curveCollection, const AQLString& curveIndex )
     {
 		// Forward Rate Results are returned as an array of terms and forward rates
-        ForwardRateTable results = etrading::LACurveCalibrationHelpers::getCurveForwardRateTable( etrading::getDataInstance(), curveCollection, curveIndex );
+        ForwardRateTable results = etrading::AQLCurveCalibrationHelpers::getCurveForwardRateTable( etrading::getDataInstance(), curveCollection, curveIndex );
         return results;
     }
 
@@ -474,7 +474,7 @@ namespace etrading
 
 			// For each iteration set the estimated discount factors to the curve to update the implied forwards
 			// Only Set a single curveIndex, not the entire curve index alias list, we update all index aliases at the end of the routine only rather than on every solver iteration
-			etrading::LACurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, AQLStringVector( 1, curveIndex ), solverDiscountFactorTable );
+			etrading::AQLCurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, AQLStringVector( 1, curveIndex ), solverDiscountFactorTable );
 
 			// Set Discount Factors in the Curve Results Object since required for implied forward rates
 			// Only Set a single curveIndex, not the entire curve index alias list, we update all index aliases at the end of the routine only rather than on every solver iteration
@@ -539,7 +539,7 @@ namespace etrading
 		{
 			// Restore Original DFs and Throw 
             // Only Reset the single solver curveIndex, not the entire curve index alias list, since we only used one curveIndex for solving purposes
-            etrading::LACurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, AQLStringVector( 1, curveIndex ), originalDFs );
+            etrading::AQLCurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, AQLStringVector( 1, curveIndex ), originalDFs );
 
 			// Set Discount Factors in the Curve Results Object
 			if( etrading::isEnabledCurveResults() && etrading::doesExistCurveResultsDiscountFactors( curveCollection.c_str(), curveIndex.c_str() ) )
@@ -552,7 +552,7 @@ namespace etrading
 
 		// Set the results for the entire curve index alias list
 		const AQLStringVector curveIndices = curveIndexAliasList( curveCollection, curveIndex );
-		etrading::LACurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndices, solverDiscountFactorTable );
+		etrading::AQLCurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndices, solverDiscountFactorTable );
 
 		// Set Discount Factors in the Curve Results Object for the entire curve index alias list
 		if( etrading::isEnabledCurveResults() && etrading::doesExistCurveResultsDiscountFactors( curveCollection.c_str(), curveIndex.c_str() ) )
@@ -608,7 +608,7 @@ namespace etrading
 
         // Set Implied Forward Rates on STD Curve
         const AQLStringVector curveIndices = curveIndexAliasList( curveCollection, curveIndex );
-        etrading::LACurveCalibrationHelpers::setCurveForwardRateTable( etrading::getDataInstance(), curveCollection, curveIndices, forwardRateTable );
+        etrading::AQLCurveCalibrationHelpers::setCurveForwardRateTable( etrading::getDataInstance(), curveCollection, curveIndices, forwardRateTable );
     }
 
 }

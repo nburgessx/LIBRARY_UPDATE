@@ -1293,7 +1293,7 @@ AQLMathDateCalculations::convertToDateGrid(const AQLDate &asofDate, const Double
 }
 
 // Return the frequency in months for comparing two frequencies, not for accurate calculations
-// *** Duplicate method in LADateHelpers.cpp ***
+// *** Duplicate method in AQLDateHelpers.cpp ***
 double AQLMathDateCalculations::getPeriodFrequencyInMonths(const AQLString& freq)
 {
 	double frequencyInMonths;

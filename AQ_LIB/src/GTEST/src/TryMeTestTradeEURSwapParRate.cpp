@@ -9,7 +9,7 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "AQLCoreError.h"
 
 #include <gTest/gTest.h>

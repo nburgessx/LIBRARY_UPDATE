@@ -1,8 +1,8 @@
 #include "tryMeProductSwapStubRate.h"
 
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CurveInstrumentPricing.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -144,7 +144,7 @@ namespace
 
         // Generate the fixing schedule
         DateVector fixingDates;
-        etrading::LACurveForwardRateHelpers::generateFixingSchedule( fixingDates,
+        etrading::AQLCurveForwardRateHelpers::generateFixingSchedule( fixingDates,
                                                                 effectiveDate,
                                                                 maturityDate,
                                                                 floatLegFreq,

@@ -1,5 +1,5 @@
 #include "tryMeDate.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "RecordMacros.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
@@ -320,7 +320,7 @@ namespace validation
         startDateVector.push_back( date );
 
         // Calculate the adjusted date taking into account holidays
-        DateVector adjustedDate = etrading::LADateScheduleHelpers::getMultiDate( startDateVector,     // StartDateVector
+        DateVector adjustedDate = etrading::AQLDateScheduleHelpers::getMultiDate( startDateVector,     // StartDateVector
                                                                                "0D",                // Tenor
                                                                                "FOLLOWING",         // BusinessDayAdjustment
                                                                                holidayCentre,       // Calendar
@@ -381,7 +381,7 @@ namespace validation
             startDateVector.push_back( date );
 
             // Calculate the adjusted date taking into account holidays
-            DateVector adjustedDate = etrading::LADateScheduleHelpers::getMultiDate( startDateVector,     // StartDateVector
+            DateVector adjustedDate = etrading::AQLDateScheduleHelpers::getMultiDate( startDateVector,     // StartDateVector
                                                                                    "0D",                // Tenor
                                                                                    "FOLLOWING",         // BusinessDayAdjustment
                                                                                    holidayCentre,       // Calendar

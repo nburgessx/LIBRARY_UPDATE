@@ -2,10 +2,10 @@
 #include "TypeHelpers.h"
 #include "Swap.h"
 
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "ObjectUtilities.h"
 #include "DataUtilities.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "AQLMathSwaptionVolUtility.h"
 #include "AQLMathDateCalculations.h"
 #include "AQLMathDateUtilities.h"
@@ -17,7 +17,7 @@ namespace etrading
 	 * @param[in] propertyKeys  A vector containing the names of each configuration block
 	 * @param[in] infoBlocks    A vector containing the configuation blocks
 	 */
-	SabrModel::SabrModel(const std::string& objectName, const std::vector<std::string>& propertyKeys, const std::vector<TableInfo>& infoBlocks)	: IsLWOObject(objectName, SABR_MODEL), freeObject_(objectName)
+	SabrModel::SabrModel(const std::string& objectName, const std::vector<std::string>& propertyKeys, const std::vector<TableInfo>& infoBlocks)	: IsAQObject(objectName, SABR_MODEL), freeObject_(objectName)
 	{
 		// Create a FreeObject from each property label-value block, and concatenate to our FreeObject data member
 		const bool allowJaggedData = false;
@@ -39,7 +39,7 @@ namespace etrading
 	 * @param[in] objectName    The name of this SabrModel instance
 	 * @param[in] freeObject    A freeObject constructed from the serialized data
 	 */
-	SabrModel::SabrModel(const std::string& objectName, const FreeObject& freeObject) : IsLWOObject(objectName, SABR_MODEL), freeObject_(freeObject)
+	SabrModel::SabrModel(const std::string& objectName, const FreeObject& freeObject) : IsAQObject(objectName, SABR_MODEL), freeObject_(freeObject)
 	{
 		calibrate();
 	}
@@ -47,7 +47,7 @@ namespace etrading
 	/* @brief Copy Constructor
 	 */
 	SabrModel::SabrModel(const SabrModel& rhs)
-		: IsLWOObject(rhs.getRefToName(), SABR_MODEL),
+		: IsAQObject(rhs.getRefToName(), SABR_MODEL),
 		freeObject_(rhs.freeObject_),
 		asOfDate_(rhs.asOfDate_),
 		businessDayAdjustment_(rhs.businessDayAdjustment_),
@@ -108,7 +108,7 @@ namespace etrading
 		// We standardize these trade keys because we are only interested in par rate calculations 
 		keys.push_back(IRS_KEY::PAY_RECEIVE.c_str());					values.push_back("PAY");
 		keys.push_back(IRS_KEY::NOTIONAL.c_str());					    values.push_back("1.0");
-		keys.push_back(IRS_KEY::EFFECTIVE_DATE.c_str());				values.push_back(std::to_string(static_cast<long long>(LADateScheduleHelpers::getExcelDate(effectiveDate))));
+		keys.push_back(IRS_KEY::EFFECTIVE_DATE.c_str());				values.push_back(std::to_string(static_cast<long long>(AQLDateScheduleHelpers::getExcelDate(effectiveDate))));
 		keys.push_back(IRS_KEY::MATURITY_DATE.c_str());				    values.push_back(maturityTenor);
 		keys.push_back(SWAP_EXPRESSION_KEY::RATE_OR_SPREAD1.c_str());	values.push_back("0.0");
 		keys.push_back(SWAP_EXPRESSION_KEY::RATE_OR_SPREAD2.c_str());	values.push_back("0.0");

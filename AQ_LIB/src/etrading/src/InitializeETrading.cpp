@@ -1,11 +1,11 @@
 #include "InitializeETrading.h"
 #include "FolderConfig.h"
 #include "LibSetUpETrading.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "AQLCoreDataService.h"
 #include "AQLDefinitions.h"
 #include "AQLStaticDataImport.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CurveCalibrationData.h"
 #include "ExceptionMacros.h"
 #include <boost/thread/mutex.hpp>
@@ -23,9 +23,9 @@ namespace etrading
     {
 	    // moved from LibSetUp/initialize;
 	    libSetUpETrading(dataInstance_.get(), checkIfCalendarLoaded);
-	    LAUpdateStaticDataManager::setUpForIRServer();
+	    AQLUpdateStaticDataManager::setUpForIRServer();
 	    AQLCoreDataService::setContext(CONTEXT_KEY_ISSETCURVEID, "TRUE");
-	    LAUpdateStaticDataManager::setUpDefaultIRStaticData(*dataInstance_);
+	    AQLUpdateStaticDataManager::setUpDefaultIRStaticData(*dataInstance_);
 	    if(checkStaticDataLoaded) checkIfStaticDataLoaded();
 		FolderConfig::setupOptionalStartupConfig();
     }
@@ -72,7 +72,7 @@ namespace etrading
         CurveCalibrationData* ycProperties = nullptr;
 
         // Decorated Curve Collection ID used in the object pool
-        AQLString ycPropertiesCurveID = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
+        AQLString ycPropertiesCurveID = etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
 
         // Get the curve data object holder
         AQLObjectHolder ehCurve = instance_->dataInstance()->getObjectPool().getObject( ycPropertiesCurveID );

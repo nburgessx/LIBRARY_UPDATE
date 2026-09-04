@@ -3,7 +3,7 @@
 #include "CoreEnumerations.h"
 #include "ObjectUtilities.h"
 #include "DataUtilities.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 
 namespace etrading
 {
@@ -11,7 +11,7 @@ namespace etrading
 	InflationCurve::InflationCurve( const std::string& objectName,
 									const std::vector<std::string>& propertyKeys,
 									const std::vector<TableInfo>& infoBlocks )
-								: IsLWOObject( objectName, INFLATION_CURVE ),
+								: IsAQObject( objectName, INFLATION_CURVE ),
 								  freeObject_( objectName )
 	{
 		// Create a FreeObject from each property label-value block, and concatenate to our FreeObject data member
@@ -30,7 +30,7 @@ namespace etrading
 
 	InflationCurve::InflationCurve( const std::string& objectName,
 									const FreeObject& freeObject)
-									: IsLWOObject( objectName, INFLATION_CURVE ),
+									: IsAQObject( objectName, INFLATION_CURVE ),
 									freeObject_( freeObject )
 	{
 		calibrate();
@@ -469,10 +469,10 @@ namespace etrading
 		LabelValueBlock valuationSettingsLVB( curveCollection_, "" );
 
 		// Calculate the effective date for calibration instruments
-		const AQLDate effectiveDate = LADateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
+		const AQLDate effectiveDate = AQLDateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
 		LabelValueBlock swapExpressionLVB(  setupSwapExpressionLVBforCalibration(),
 											IRS_KEY::EFFECTIVE_DATE,
-											std::to_string(static_cast<long long>(LADateScheduleHelpers::getExcelDate( effectiveDate ))));
+											std::to_string(static_cast<long long>(AQLDateScheduleHelpers::getExcelDate( effectiveDate ))));
 
 		// Calibrate to ZerouCoupon Inflation Swaps
 		bool firstInstrument = true;
@@ -482,7 +482,7 @@ namespace etrading
 			const ZCInflationSwapMarketData& marketData = it->second;
 
 			// Construct the calibration instrument
-			swapExpressionLVB = LabelValueBlock( swapExpressionLVB, IRS_KEY::MATURITY_DATE, AQ_TO_STRING_FROM_INT( LADateScheduleHelpers::getExcelDate( maturityDate ) ) );
+			swapExpressionLVB = LabelValueBlock( swapExpressionLVB, IRS_KEY::MATURITY_DATE, AQ_TO_STRING_FROM_INT( AQLDateScheduleHelpers::getExcelDate( maturityDate ) ) );
 			swapExpressionLVB = LabelValueBlock( swapExpressionLVB, SWAP_EXPRESSION_KEY::RATE_OR_SPREAD1, AQ_TO_STRING_FROM_DOUBLE( marketData.instrumentQuote ) );
 
 			auto swapInstrument = createSwapFromGenerator( inflationIndexName_, swapGeneratorName, swapExpressionLVB, swapPropertiesLVB, isXccySwap );
@@ -768,7 +768,7 @@ namespace etrading
 			const AQLDate maturityDate = it->first;
 			const double cpiValue = it->second;
 
-			const int dateAsInt = static_cast<long long> (LADateScheduleHelpers::getExcelDate(maturityDate));
+			const int dateAsInt = static_cast<long long> (AQLDateScheduleHelpers::getExcelDate(maturityDate));
 			row.push_back( dateAsInt );
 			row.push_back( cpiValue );
 

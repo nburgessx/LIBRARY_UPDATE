@@ -1,5 +1,5 @@
 //
-// LADateScheduleHelpers.cpp
+// AQLDateScheduleHelpers.cpp
 // *** This file used to be called "LAMathDateFuncUti1ity.cpp" ***
 
 #ifdef __GNUG__
@@ -8,7 +8,7 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "AQLFunctionUtilities.h"
 #include "AQLObject.h"
 #include "AQLDataBasics.h"
@@ -21,7 +21,7 @@
 #include "AQLAlgorithm.h"
 #include "AQLPriceDataDayCount.h"
 #include "AQLPriceCFGenUtility.h"
-#include "LADateHelpers.h"
+#include "AQLDateHelpers.h"
 #include "AQLDataReference.h"
 #include "AQLAnalyticFormula.h"
 #include "AQLBlackScholesCalc.h"
@@ -44,7 +44,7 @@ namespace etrading
 
     //change excel date into AQLDate
     AQLDate
-        LADateScheduleHelpers::getLADate(const int excel_date)
+        AQLDateScheduleHelpers::getLADate(const int excel_date)
     {
         AQLDate    ret_date("19900101");
         const int excel_base = 32874;
@@ -53,7 +53,7 @@ namespace etrading
     }
     //change excel date into AQLDate
     AQLDate
-        LADateScheduleHelpers::getLADate(const AQLString& excel_date_str)
+        AQLDateScheduleHelpers::getLADate(const AQLString& excel_date_str)
     {
         AQLDate    ret_date("19900101");
         const int excel_base = 32874;
@@ -62,7 +62,7 @@ namespace etrading
     }
     //change excel date into AQLString
     AQLString
-        LADateScheduleHelpers::getLAStringDate(const int excel_date)
+        AQLDateScheduleHelpers::getLAStringDate(const int excel_date)
     {
         AQLString  ret_str = getLADate(excel_date).stringWithFormat("YYYYMMDD");
         return ret_str;
@@ -70,19 +70,19 @@ namespace etrading
 
     //change MDate into excel date
     int
-        LADateScheduleHelpers::getExcelDate(const AQLDate & date)
+        AQLDateScheduleHelpers::getExcelDate(const AQLDate & date)
     {
         AQLDate    base("19900101");
         const int excel_base = 32874;
         return excel_base + base.intervalDays(date);
     }
 
-    AQLDate LADateScheduleHelpers::firstStubDateFromStubType(const AQLDate & startDate, const AQLDate & endDate, AQLString & term)
+    AQLDate AQLDateScheduleHelpers::firstStubDateFromStubType(const AQLDate & startDate, const AQLDate & endDate, AQLString & term)
     {
         upper(term);
         bool isAfter = false; // This tells getDate to calculate dates backwards from the End Date
 
-        AQLDate result = LADateHelpers::getDate(endDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
+        AQLDate result = AQLDateHelpers::getDate(endDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
 
         // Ensure the first stub is not before the start date
         if (result < startDate)
@@ -102,7 +102,7 @@ namespace etrading
             longStubDate = shortStubDate;
 
             // Update the Short Stub Date
-            shortStubDate = LADateHelpers::getDate(shortStubDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
+            shortStubDate = AQLDateHelpers::getDate(shortStubDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
 
             // Update the result if the first stub is not before the start date else break out of the while loop
             if (shortStubDate > startDate)
@@ -131,12 +131,12 @@ namespace etrading
     }
 
     AQLDate
-        LADateScheduleHelpers::lastStubDateFromStubType(const AQLDate & startDate, const AQLDate & endDate, AQLString & term)
+        AQLDateScheduleHelpers::lastStubDateFromStubType(const AQLDate & startDate, const AQLDate & endDate, AQLString & term)
     {
         upper(term);
         bool isAfter = true; // This tells getDate to calculate dates forwards from the Start Date
 
-        AQLDate result = LADateHelpers::getDate(startDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
+        AQLDate result = AQLDateHelpers::getDate(startDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
 
         // Ensure the last stub is not after the end date
         if (result > endDate)
@@ -156,7 +156,7 @@ namespace etrading
             longStubDate = shortStubDate;
 
             // Update the Short Stub Date
-            shortStubDate = LADateHelpers::getDate(shortStubDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
+            shortStubDate = AQLDateHelpers::getDate(shortStubDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
 
             // Update the result if the last stub is not after the end date else break out of the while loop
             if (shortStubDate < endDate)
@@ -183,7 +183,7 @@ namespace etrading
     }
 
     DateVector
-        LADateScheduleHelpers::calcDatesWithLag(const DateVector &				dates,
+        AQLDateScheduleHelpers::calcDatesWithLag(const DateVector &				dates,
 												const AQLString &				term,
 												const AQLPriceDataSlidingRule &  slidingRule,
 												const AQLPriceDataCalendar *     pCalendar,
@@ -194,7 +194,7 @@ namespace etrading
 
         for (unsigned int i = 0; i < dates.size(); ++i)
         {
-            results.push_back(LADateHelpers::getDate(dates[i], term, slidingRule, pCalendar, isAfter, rollConvention));
+            results.push_back(AQLDateHelpers::getDate(dates[i], term, slidingRule, pCalendar, isAfter, rollConvention));
         }
 
         return results;
@@ -203,7 +203,7 @@ namespace etrading
     // Generate a Date Schedule with appropriate use of stubs
 	// Note that there is a duplicate method AQLMathDateUtilities::generateSchedule
 	// Default Short/Long Start is determined by AQLMathDateUtilities::getStubDateAndType
-    DateVector LADateScheduleHelpers::generateSchedule(const AQLDate& unadjustedStart,
+    DateVector AQLDateScheduleHelpers::generateSchedule(const AQLDate& unadjustedStart,
 													   const AQLDate& unadjustedEnd,
 													   AQLString& data_frequency,
 													   AQLString& slidingRuleString,
@@ -352,7 +352,7 @@ namespace etrading
         }
         // ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        LADateHelpers::generateSchedule(unadjustedStart,
+        AQLDateHelpers::generateSchedule(unadjustedStart,
 										unadjustedEnd,
 										data_frequency,
 										true,
@@ -383,7 +383,7 @@ namespace etrading
 
     */
     bool
-        LADateScheduleHelpers::isValidDate(const AQLDate & dateToValidate)
+        AQLDateScheduleHelpers::isValidDate(const AQLDate & dateToValidate)
     {
         const unsigned short  mDay = dateToValidate.dayOfMonth();
         const unsigned short  mMonth = dateToValidate.monthOfYear();
@@ -415,7 +415,7 @@ namespace etrading
     }
 
     AQLDate
-        LADateScheduleHelpers::getDateFromTerm(const AQLDate& fromdate, const double termy, const AQLPriceDataDayCount& daycount, bool includelast)
+        AQLDateScheduleHelpers::getDateFromTerm(const AQLDate& fromdate, const double termy, const AQLPriceDataDayCount& daycount, bool includelast)
     {
         AQLPriceDataConvention convention(daycount.getDayCount(), CONT); // Continous compounding rate convention
 
@@ -427,7 +427,7 @@ namespace etrading
     }
 
     AQLDate
-        LADateScheduleHelpers::getDateFromTerm(AQLDate& fromdate, double termy, AQLString& dayCountString, bool includelast)
+        AQLDateScheduleHelpers::getDateFromTerm(AQLDate& fromdate, double termy, AQLString& dayCountString, bool includelast)
     {
         includelast;
         //change nospace & upper
@@ -440,7 +440,7 @@ namespace etrading
     }
 
     double
-        LADateScheduleHelpers::getDayFromTerm(AQLDate& fromdate, double termy, AQLString& daycount, bool includelast)
+        AQLDateScheduleHelpers::getDayFromTerm(AQLDate& fromdate, double termy, AQLString& daycount, bool includelast)
     {
         //change nospace & upper
         upper(daycount);
@@ -454,7 +454,7 @@ namespace etrading
         return ret;
     }
     double
-        LADateScheduleHelpers::getTermFromDay(AQLDate& fromdate, double termd, AQLString& daycount, bool includelast)
+        AQLDateScheduleHelpers::getTermFromDay(AQLDate& fromdate, double termd, AQLString& daycount, bool includelast)
     {
         //change nospace & upper
         upper(daycount);
@@ -468,7 +468,7 @@ namespace etrading
         return ret;
     }
     double
-        LADateScheduleHelpers::getTerm(const AQLDate& fromdate, const AQLDate& todate, AQLString& daycount, bool includelast,
+        AQLDateScheduleHelpers::getTerm(const AQLDate& fromdate, const AQLDate& todate, AQLString& daycount, bool includelast,
             const AQLString* frequency,
             const AQLString* Calendar,
             const AQLString* SlidingRule,
@@ -483,8 +483,8 @@ namespace etrading
 
         if (dc.getDayCount() == ACT_ACT_ICMA)
         {
-            DateMatrix regular_startenddates = LADateScheduleHelpers::calcRegularDates(*frequency, *Calendar, *SlidingRule, *startdates, *enddates);
-            dc.setCouponsInYear(12 / LADateHelpers::getPeriodFrequencyInMonths(*frequency));
+            DateMatrix regular_startenddates = AQLDateScheduleHelpers::calcRegularDates(*frequency, *Calendar, *SlidingRule, *startdates, *enddates);
+            dc.setCouponsInYear(12 / AQLDateHelpers::getPeriodFrequencyInMonths(*frequency));
             dc.setCouponStartDates(regular_startenddates[0]);
             dc.setCouponEndDates(regular_startenddates[1]);
         }
@@ -496,7 +496,7 @@ namespace etrading
     }
 
     AQLDate
-        LADateScheduleHelpers::getDate(const AQLDate& basedate, const AQLString& term, const AQLString& slidingrule, const AQLString& calendar)
+        AQLDateScheduleHelpers::getDate(const AQLDate& basedate, const AQLString& term, const AQLString& slidingrule, const AQLString& calendar)
     {
         //calendar
         AQLPriceDataCalendar cal;
@@ -506,12 +506,12 @@ namespace etrading
         AQLPriceDataSlidingRule sr;
         sr.convertFromString(slidingrule);
 
-        AQLDate ret = LADateHelpers::getDate(basedate, term, sr, &cal, true);
+        AQLDate ret = AQLDateHelpers::getDate(basedate, term, sr, &cal, true);
         return ret;
     }
 
     AQLDate
-        LADateScheduleHelpers::getDateWithRollConv(const AQLDate& basedate, const AQLString& term, const AQLString& slidingRule, const AQLString& calendar, const AQLString* roll_conv)
+        AQLDateScheduleHelpers::getDateWithRollConv(const AQLDate& basedate, const AQLString& term, const AQLString& slidingRule, const AQLString& calendar, const AQLString* roll_conv)
     {
         //calendar
         AQLPriceDataCalendar cal;
@@ -521,12 +521,12 @@ namespace etrading
         AQLPriceDataSlidingRule sr;
         sr.convertFromString(slidingRule);
 
-        AQLDate ret = LADateHelpers::getDate(basedate, term, sr, &cal, true, roll_conv);
+        AQLDate ret = AQLDateHelpers::getDate(basedate, term, sr, &cal, true, roll_conv);
 
         return ret;
     }
 
-    DateVector LADateScheduleHelpers::getMultiDate(const DateVector& basedate, const AQLString& term, const AQLString& slidingrule, const AQLString& calendar, const AQLString* roll_conv)
+    DateVector AQLDateScheduleHelpers::getMultiDate(const DateVector& basedate, const AQLString& term, const AQLString& slidingrule, const AQLString& calendar, const AQLString* roll_conv)
     {
         //calendar
         AQLPriceDataCalendar cal;
@@ -539,13 +539,13 @@ namespace etrading
         DateVector results( basedate.size() );
         for (size_t i = 0; i < basedate.size(); i++)
         {
-            results[i] = LADateHelpers::getDate(basedate[i], term, sr, &cal, true, roll_conv);
+            results[i] = AQLDateHelpers::getDate(basedate[i], term, sr, &cal, true, roll_conv);
         }
         return results;
     }
 
     AQLDate
-        LADateScheduleHelpers::getDateWithRoll(AQLDate& basedate, AQLString& term, AQLString& slidingrule, AQLString& calendar, int roll)
+        AQLDateScheduleHelpers::getDateWithRoll(AQLDate& basedate, AQLString& term, AQLString& slidingrule, AQLString& calendar, int roll)
     {
         //change nospace & upper
         upper(term);
@@ -559,18 +559,18 @@ namespace etrading
         cal.convertFromString(calendar);
 
         int y, m, d, w;
-        LADateHelpers::termStrtoYMDW(term, y, m, d, w);
+        AQLDateHelpers::termStrtoYMDW(term, y, m, d, w);
         y *= roll;
         m *= roll;
         d *= roll;
         AQLString multiterm = AQLString(y) + "y" + AQLString(m) + "m" + AQLString(d) + "d";
 
-        AQLDate ret = LADateHelpers::getDate(basedate, multiterm, sr, &cal, true);
+        AQLDate ret = AQLDateHelpers::getDate(basedate, multiterm, sr, &cal, true);
         return ret;
     }
 
     AQLDate
-        LADateScheduleHelpers::getIMMDate1(const int& year, const int& month, AQLString& calendar, AQLString& slidingRule)
+        AQLDateScheduleHelpers::getIMMDate1(const int& year, const int& month, AQLString& calendar, AQLString& slidingRule)
     {
         upper(slidingRule);
         upper(calendar);
@@ -579,12 +579,12 @@ namespace etrading
         AQLPriceDataCalendar cal;
         cal.convertFromString(calendar);
 
-        AQLDate date = LADateHelpers::getIMMDate(year, month);
+        AQLDate date = AQLDateHelpers::getIMMDate(year, month);
         return sr.getDate(date, cal);
     }
 
     AQLDate
-        LADateScheduleHelpers::getIMMDate2(const int& year, const int& number, AQLString& calendar, AQLString& slidingRule)
+        AQLDateScheduleHelpers::getIMMDate2(const int& year, const int& number, AQLString& calendar, AQLString& slidingRule)
     {
         if (number < 0 || number > 5) throw AQLCoreInvalidData("IMM Dates in a year are 4 days.", __FILE__, __LINE__);
 
@@ -595,12 +595,12 @@ namespace etrading
         AQLPriceDataCalendar cal;
         cal.convertFromString(calendar);
 
-        AQLDate date = LADateHelpers::getIMMDate(year, number * 3);
+        AQLDate date = AQLDateHelpers::getIMMDate(year, number * 3);
         return sr.getDate(date, cal);
     }
 
     AQLDate
-        LADateScheduleHelpers::getIMMDate3(const AQLDate& basedate, const int& number, AQLString& calendar, AQLString& slidingRule)
+        AQLDateScheduleHelpers::getIMMDate3(const AQLDate& basedate, const int& number, AQLString& calendar, AQLString& slidingRule)
     {
         upper(slidingRule);
         upper(calendar);
@@ -618,7 +618,7 @@ namespace etrading
 
         if (m_baseDate % 3 == 0)
         {
-            AQLDate IMMDate_baseDateMonth = LADateHelpers::getIMMDate(y_baseDate, m_baseDate);
+            AQLDate IMMDate_baseDateMonth = AQLDateHelpers::getIMMDate(y_baseDate, m_baseDate);
             IMMDate_baseDateMonth = sr.getDate(IMMDate_baseDateMonth, cal);
             if (IMMDate_baseDateMonth <= basedate) nextIMMDate.addMonths(3);
         }
@@ -631,13 +631,13 @@ namespace etrading
             nextIMMDate.addMonths(1);
         }
         nextIMMDate.addMonths((number - 1) * 3);
-        nextIMMDate = LADateHelpers::getIMMDate(nextIMMDate.yearOfEra(), nextIMMDate.monthOfYear());
+        nextIMMDate = AQLDateHelpers::getIMMDate(nextIMMDate.yearOfEra(), nextIMMDate.monthOfYear());
         return sr.getDate(nextIMMDate, cal);
     }
 
     // calc regular (non-stub) payment dates for daycount ACT/ACT.ICMA
     DateMatrix
-        LADateScheduleHelpers::calcRegularDates(const AQLString& frequency,
+        AQLDateScheduleHelpers::calcRegularDates(const AQLString& frequency,
             const AQLString& Calendar,
             const AQLString& SlidingRule,
             const std::vector<AQLDate>& startdates,
@@ -647,7 +647,7 @@ namespace etrading
         calendar.convertFromString(Calendar);
         AQLPriceDataSlidingRule slidingrule;
         slidingrule.convertFromString(SlidingRule);
-        AQLString term = (AQLString)(LADateHelpers::getPeriodFrequencyInMonths(frequency)) + "M";
+        AQLString term = (AQLString)(AQLDateHelpers::getPeriodFrequencyInMonths(frequency)) + "M";
 
         bool is_sorted_Start = true;
         bool is_sorted_End = true;
@@ -696,22 +696,22 @@ namespace etrading
 
             if (i == 0)
             {
-                regular_startdates.push_back(LADateHelpers::getDate(enddate, "-" + term, slidingrule, &calendar, true));
+                regular_startdates.push_back(AQLDateHelpers::getDate(enddate, "-" + term, slidingrule, &calendar, true));
                 regular_enddates.push_back(enddate);
                 while (regular_startdates.back() > startdate) // Long at start
                 {
                     regular_enddates.push_back(regular_startdates.back());
-                    regular_startdates.push_back(LADateHelpers::getDate(regular_enddates.back(), "-" + term, slidingrule, &calendar, true));
+                    regular_startdates.push_back(AQLDateHelpers::getDate(regular_enddates.back(), "-" + term, slidingrule, &calendar, true));
                 }
             }
             else if (i == startdates.size() - 1)
             {
                 regular_startdates.push_back(startdate);
-                regular_enddates.push_back(LADateHelpers::getDate(startdate, term, slidingrule, &calendar, true));
+                regular_enddates.push_back(AQLDateHelpers::getDate(startdate, term, slidingrule, &calendar, true));
                 while (regular_enddates.back() < enddate) // Long at end
                 {
                     regular_startdates.push_back(regular_enddates.back());
-                    regular_enddates.push_back(LADateHelpers::getDate(regular_startdates.back(), term, slidingrule, &calendar, true));
+                    regular_enddates.push_back(AQLDateHelpers::getDate(regular_startdates.back(), term, slidingrule, &calendar, true));
                 }
             }
             else
@@ -731,7 +731,7 @@ namespace etrading
 
     bool is_last_business_day_temp(const AQLDate& d, const AQLString& cal)
     {
-        const AQLDate next_day = LADateScheduleHelpers::getDate(d, "1d", "FOLLOWING", cal);
+        const AQLDate next_day = AQLDateScheduleHelpers::getDate(d, "1d", "FOLLOWING", cal);
         return next_day.monthOfYear() != d.monthOfYear();
     }
 
@@ -795,7 +795,7 @@ namespace etrading
         int slushCheck = date.findString("/");
         if (slushCheck == -1)
         {
-            ret = LADateScheduleHelpers::getLADate(date);
+            ret = AQLDateScheduleHelpers::getLADate(date);
         }
         else
         {
@@ -865,7 +865,7 @@ namespace etrading
     AQLDate CalendarAdvance(AQLDate baseDate, AQLString term, AQLPriceDataSlidingRule slidingRule, AQLPriceDataCalendar calendar)
     {
         AQLString* roll_conv = 0;
-        return LADateHelpers::getDate(baseDate, term, slidingRule, &calendar, true, roll_conv);
+        return AQLDateHelpers::getDate(baseDate, term, slidingRule, &calendar, true, roll_conv);
     }
 
 }

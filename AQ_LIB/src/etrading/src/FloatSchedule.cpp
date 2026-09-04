@@ -2,7 +2,7 @@
 #include "FloatCashflow.h"
 #include "SwapValidation.h"
 #include "CurveValidation.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 
 namespace etrading
 {
@@ -326,7 +326,7 @@ namespace etrading
 		//Only populate fixingEndDates for the bespoke schedule with Schedule properties 
 		if (bespokeScheduleType_ == BESPOKE_SCHEDULE_WITH_PROPERTIES)
 		{
-			fixingEndDates_ = LADateScheduleHelpers::getMultiDate( fixingDates_, getFrequencyTenor(accrualFrequency_), toString(fixingbusinessDayAdj_).c_str(), fixingCalendar_, nullptr); // rollconvention* = nullptr
+			fixingEndDates_ = AQLDateScheduleHelpers::getMultiDate( fixingDates_, getFrequencyTenor(accrualFrequency_), toString(fixingbusinessDayAdj_).c_str(), fixingCalendar_, nullptr); // rollconvention* = nullptr
 		}
 		
 	}

@@ -1,5 +1,5 @@
 #include "tryMeCurveZeroRate.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "CurveUtilities.h"
@@ -115,7 +115,7 @@ namespace validation
 
         AQLString cal = etrading::getDefaultCalendarForEmptyString( calendar, curveCollection );
 
-        DoubleArray arr = etrading::LACurveForwardRateHelpers::getMultiZeroRate( tenors, etrading::getDataInstance(), curveCollection,
+        DoubleArray arr = etrading::AQLCurveForwardRateHelpers::getMultiZeroRate( tenors, etrading::getDataInstance(), curveCollection,
                           freq, dayC, bdAdj, cal, interp, curIndex, isFwdInter );
 
         if ( CreateDataFile::recordEnabled() )

@@ -1,5 +1,5 @@
 //
-// LAUpdateStaticDataManager.h
+// AQLUpdateStaticDataManager.h
 // This file was previously called YieldCurveFactory.h and before that AQLCurveSetup.h
 //
 #pragma once
@@ -26,7 +26,7 @@ class AQLStaticData;
 
 namespace etrading
 {
-    class LAUpdateStaticDataManager
+    class AQLUpdateStaticDataManager
     {
     public:
 

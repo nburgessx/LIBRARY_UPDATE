@@ -13,8 +13,8 @@
 #include <map>
 
 // LA Headers - Put these last so that legacy defines don't conflict
-#include "LACurveForwardRateHelpers.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "AQLStaticData.h"
 #include "AQLFunctionUtilities.h"
 #include "AQLMarketData.h"
@@ -91,10 +91,10 @@ namespace etrading
 
 				if (isDate_str == "TRUE")
 				{
-					const AQLDate& startdate = LADateScheduleHelpers::getLADate(fraRates[i][3]);
+					const AQLDate& startdate = AQLDateScheduleHelpers::getLADate(fraRates[i][3]);
 					AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 					fraMarketStream += "," + startdate_str;
-					const AQLDate& enddate = LADateScheduleHelpers::getLADate(fraRates[i][4]);
+					const AQLDate& enddate = AQLDateScheduleHelpers::getLADate(fraRates[i][4]);
 					AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 					fraMarketStream += "," + enddate_str;
 				}
@@ -462,7 +462,7 @@ namespace etrading
 			AQLDate syntheticEndDate = instrumentData.frontEndDate;
 			syntheticEndDate.addDays(tensionGap);
 
-			RateConvention rateConvention = LACurvePricingObject::setRC(AQ_SIMPLE);
+			RateConvention rateConvention = AQLCurvePricingObject::setRC(AQ_SIMPLE);
 			AQLPriceDataConvention discountConvention(instrumentDaycount.getDayCount(), rateConvention);
 			const etrading::DayCountEnum accrualDaycount = instrumentDaycount.dayCountEnum();
 
@@ -492,7 +492,7 @@ namespace etrading
 				double syntheticEndTerm = termsToDateDaycount.getTerm(spotDate, syntheticEndDate);
 
 				// Interest Rate Convention - Controls instrument daycount and interest rate compounding conventions e.g. Simple Interest Act/Act.
-				RateConvention rateCompoundingMethod = LACurvePricingObject::setRC(AQ_SIMPLE);
+				RateConvention rateCompoundingMethod = AQLCurvePricingObject::setRC(AQ_SIMPLE);
 				AQLPriceDataConvention discFactConvention(instrumentDaycount.getDayCount(), rateCompoundingMethod);
 
 				// Linear interpolate existing FRAs to imply an artificial / synthetic FRA rate
@@ -987,17 +987,17 @@ namespace etrading
 			else
 			{
 				const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((data_fra->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
-				startDate = etrading::LADateHelpers::getDate(spotDate, sterm_str, sld, &cal, true, &roll_conv);
+				startDate = etrading::AQLDateHelpers::getDate(spotDate, sterm_str, sld, &cal, true, &roll_conv);
 				const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((data_fra->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-				endDate = etrading::LADateHelpers::getDate(startDate, tenor_str, sld, &cal, true, &roll_conv);
+				endDate = etrading::AQLDateHelpers::getDate(startDate, tenor_str, sld, &cal, true, &roll_conv);
 			}
 		}
 		else
 		{
 			const AQLString& terms_str_x = dynamic_cast<const AQLDataString&> ((data_fra->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			const AQLString& terms_str = changeFRATermFormat(terms_str_x);
-			startDate = etrading::LADateHelpers::getDate(spotDate, terms_str, sld, &cal, true, &roll_conv);
-			endDate = etrading::LADateHelpers::getDate(startDate, liborIndexTerm, sld, &cal, true, &roll_conv);
+			startDate = etrading::AQLDateHelpers::getDate(spotDate, terms_str, sld, &cal, true, &roll_conv);
+			endDate = etrading::AQLDateHelpers::getDate(startDate, liborIndexTerm, sld, &cal, true, &roll_conv);
 		}
 	}
 
@@ -1089,11 +1089,11 @@ namespace etrading
 				instrumentRollConvention = AQ_ROLLCONV_NORMAL;
 			}
 
-			RateConvention instrumentRateConvention	= LACurvePricingObject::setRC(instrumentFrequency);
+			RateConvention instrumentRateConvention	= AQLCurvePricingObject::setRC(instrumentFrequency);
 			AQLPriceDataConvention conv(instrumentDaycount.getDayCount(), instrumentRateConvention);
 
 			// Libor Instrument End Date
-			results.lastLiborEndDate_ = etrading::LADateHelpers::getDate(spotDateLibor, instrumentTerm, instrumentBusDayAdj, &instrumentCalendar, true, &instrumentRollConvention);
+			results.lastLiborEndDate_ = etrading::AQLDateHelpers::getDate(spotDateLibor, instrumentTerm, instrumentBusDayAdj, &instrumentCalendar, true, &instrumentRollConvention);
 
 
 			double thisDF	= conv.getDF( instrumentRate, spotDateLibor, results.lastLiborEndDate_ );
@@ -1143,7 +1143,7 @@ namespace etrading
 					MoneyMarketData::const_iterator it_ = data_moneymarket.begin();
 					rate_on								= dynamic_cast<const AQLDataDouble&> ((it_->second->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 					const AQLPriceDataDayCount& dc_on	= dynamic_cast<const AQLPriceDataDayCount&> ((it_->second->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-					RateConvention rc_on				= LACurvePricingObject::setRC(AQ_SIMPLE);
+					RateConvention rc_on				= AQLCurvePricingObject::setRC(AQ_SIMPLE);
 					conv_on								= AQLPriceDataConvention(dc_on.getDayCount(), rc_on);
 				}
 
@@ -1465,7 +1465,7 @@ namespace etrading
 			AQLString liborFreq = dynamic_cast<const AQLDataString&> ((data_libor->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 			liborFreq.toUpper();
 
-			RateConvention liborRC = LACurvePricingObject::setRC(liborFreq);
+			RateConvention liborRC = AQLCurvePricingObject::setRC(liborFreq);
 			AQLPriceDataConvention liborConv(liborDC.getDayCount(), liborRC);
 
 			AQLPriceDataDayCount dc_act365(ACT_365);
@@ -1590,7 +1590,7 @@ namespace etrading
 			AQLString liborFreq = dynamic_cast<const AQLDataString&> ((data_libor->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 			liborFreq.toUpper();
 
-			RateConvention liborRC = LACurvePricingObject::setRC(liborFreq);
+			RateConvention liborRC = AQLCurvePricingObject::setRC(liborFreq);
 			AQLPriceDataConvention liborConv(liborDC.getDayCount(), liborRC);
 
 			AQLPriceDataDayCount dc_act365(ACT_365);
@@ -1765,7 +1765,7 @@ namespace etrading
 		roll_convention = &thisRollConv;
 		// ****************************************
 
-		etrading::LADateHelpers::generateSchedule(startDate,
+		etrading::AQLDateHelpers::generateSchedule(startDate,
 												  endDate,
 												  frequency,
 												  true, //isarrear. Always true.
@@ -1867,9 +1867,9 @@ namespace etrading
 			else
 			{
 				const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((firstSwap->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
-				startDate = etrading::LADateHelpers::getDate(spotDate_swap, sterm_str, *sld, cal, true, &roll_conv);
+				startDate = etrading::AQLDateHelpers::getDate(spotDate_swap, sterm_str, *sld, cal, true, &roll_conv);
 				const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((firstSwap->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-				endDate = etrading::LADateHelpers::getDate(startDate, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+				endDate = etrading::AQLDateHelpers::getDate(startDate, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 			}
 
 			updateAccrualPeriodsAndPaymentDates(startDate, endDate, freq, *cal, *sld, *dc, datesVec, thisAccrualPeriod, thisAccrualPeriod, isEOMRoll);
@@ -1877,7 +1877,7 @@ namespace etrading
 		else
 		{
 			const AQLString& term_str = dynamic_cast<const AQLDataString&> ((firstSwap->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			endDate = etrading::LADateHelpers::getDate(spotDate_swap, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+			endDate = etrading::AQLDateHelpers::getDate(spotDate_swap, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 
 			updateAccrualPeriodsAndPaymentDates(spotDate_swap, endDate, freq, *cal, *sld, *dc, datesVec, thisAccrualPeriod, thisAccrualPeriod, isEOMRoll);
 		}
@@ -3242,13 +3242,13 @@ namespace etrading
 		fwdRate_inter->set(fwdStartTerms, fwdRates);
 
 		// Populate daily entry to Discount factor table, which is required for daily compounding, so that the trade can be repriced when interpolating on fwdRateTable
-		AQLDate firstDate = LADateScheduleHelpers::getDateFromTerm(spotdate, grid.back(), dc_act365);
+		AQLDate firstDate = AQLDateScheduleHelpers::getDateFromTerm(spotdate, grid.back(), dc_act365);
 
 		double joinDateAsDouble = fwdRate_inter->getJoinDateAsDouble();
 
 		// Insert daily DFs till the last term, use the interpolationJoinDate when it is specified 
 		double lastTerm = (joinDateAsDouble != 0) ? joinDateAsDouble : fwdStartTerms.back();
-		AQLDate lastDate = LADateScheduleHelpers::getDateFromTerm(spotdate, lastTerm, dc_act365);
+		AQLDate lastDate = AQLDateScheduleHelpers::getDateFromTerm(spotdate, lastTerm, dc_act365);
 
 		auto lastFutureStartDate = futureRates.rbegin()->first;
 		const AQLDate& lastFutureEndDate = futureRates.at(lastFutureStartDate).first;
@@ -3646,8 +3646,8 @@ namespace etrading
 		std::unique_ptr<AQLInterpolationBase> discountFactor_inter(dynamic_cast<AQLInterpolationBase *>(inter.clone()));
 		discountFactor_inter->set(terms, dfs);
 
-		AQLDate firstDate = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, terms.front(), dc_act365);
-		AQLDate lastDate = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, terms.back(), dc_act365);
+		AQLDate firstDate = etrading::AQLDateScheduleHelpers::getDateFromTerm(baseDate, terms.front(), dc_act365);
+		AQLDate lastDate = etrading::AQLDateScheduleHelpers::getDateFromTerm(baseDate, terms.back(), dc_act365);
 
 		size_t numberOfFixingDates = firstDate.intervalDays(lastDate);
 
@@ -3664,7 +3664,7 @@ namespace etrading
 		for (size_t i = 0; i < terms.size(); ++i)
 		{
 
-			auto startDate = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, terms[i], dc_act365);
+			auto startDate = etrading::AQLDateScheduleHelpers::getDateFromTerm(baseDate, terms[i], dc_act365);
 
 			AQLDate endDate;
 			if (i == lastIndex)
@@ -3673,7 +3673,7 @@ namespace etrading
 			}
 			else
 			{
-				endDate = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, terms[i + 1], dc_act365);
+				endDate = etrading::AQLDateScheduleHelpers::getDateFromTerm(baseDate, terms[i + 1], dc_act365);
 			}
 
 			AQLDate tmp_date = startDate;
@@ -4352,7 +4352,7 @@ namespace etrading
 			AQLDate crossFutureStartDate = serialChain.back().endDate;
 			double crossFutureStartTerm = dc_act365.getTerm(spotdate, crossFutureStartDate);
 
-			AQLDate crossFutureEndDate = etrading::LADateHelpers::getDate(crossFutureStartDate, liborIndexTerm, sld, &cal, true, &roll_conv);
+			AQLDate crossFutureEndDate = etrading::AQLDateHelpers::getDate(crossFutureStartDate, liborIndexTerm, sld, &cal, true, &roll_conv);
 			double crossFutureEndTerm = dc_act365.getTerm(spotdate, crossFutureEndDate);
 			double crossFutureTau = dc.getTerm(crossFutureStartDate, crossFutureEndDate);
 
@@ -4808,7 +4808,7 @@ namespace etrading
 						// set roll convention
 						AQLString roll_conv = getRollConv(freq, isEOMRoll);
 
-						AQLDate endDate = etrading::LADateHelpers::getDate(spotDateLibor, term_str, sld, &cal, true, &roll_conv);
+						AQLDate endDate = etrading::AQLDateHelpers::getDate(spotDateLibor, term_str, sld, &cal, true, &roll_conv);
 
 						// Use the money market LIBOR rate as the first data point
 						// Note: Must update termsDFMatrix at end of routine

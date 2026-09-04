@@ -1,6 +1,6 @@
 #include "tryMirSetUpOISCurve.h"
 
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
@@ -81,7 +81,7 @@ namespace validation
             AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
-        etrading::LAUpdateStaticDataManager::setUpOISCurve( dataInstance,
+        etrading::AQLUpdateStaticDataManager::setUpOISCurve( dataInstance,
                                                         curveID,
                                                         marketName,
                                                         generalProps,

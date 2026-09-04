@@ -5,7 +5,7 @@
 #include "ObjectUtilities.h"
 #include "CoreEnumerations.h"
 #include "CurveGenerator.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "RecordMacros.h"
 #include "JSONInfoBlock.h"
 
@@ -19,7 +19,7 @@ using etrading::decorateFilename;
 
 namespace validation
 {
-    /* @brief Creates an LWOCurveGenerator object, containing all of the curve properties.
+    /* @brief Creates an AQOCurveGenerator object, containing all of the curve properties.
 	 * @param [in] objectName        The name of the Curve Configuration object
 	 * @param [in] propertyNames     A vector of property names corresponding to each label-value block of properties
 	 * @param [in] infoBlocks        A vector of containing the label-value blocks of properties
@@ -96,7 +96,7 @@ namespace validation
 		VALID_EXCEPTION_END
     };
 
-	/* @brief Displays the specified property of an LWOCurveGenerator. If propertyName is blank, all properties are returned.
+	/* @brief Displays the specified property of an AQOCurveGenerator. If propertyName is blank, all properties are returned.
 	 * @param [in] objectName        The CurveGenerator object you wish to display
 	 * @param [in] propertyName      The name of the property label-value block that you wish to display.
 	 * @param [out]                  A VariantMatrix containing a LabelValue block of properties.
@@ -105,7 +105,7 @@ namespace validation
     {
 		VALID_EXCEPTION_START
 
-		// Attempt to retrieve LWOCurveGenerator object from the LWO Cache
+		// Attempt to retrieve AQOCurveGenerator object from the LWO Cache
 		auto curveGenerator = etrading::getCurveGenerator( objectName );
 
 		// extract just the data for the specified propertyKey
@@ -141,7 +141,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-    /* @brief Displays the specified property of an LWOCurveGenerator. If propertyName is blank, all properties are returned.
+    /* @brief Displays the specified property of an AQOCurveGenerator. If propertyName is blank, all properties are returned.
 	 * @param [in] objectName        The CurveGenerator object you wish to display
 	 * @param [in] propertyName      The name of the property label-value block that you wish to display.
 	 * @param [out]                  A VariantMatrix containing a LabelValue block of properties.
@@ -154,7 +154,7 @@ namespace validation
         auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( objectName );
         AQ_REQUIRE( singleCurveObject, "LWO Curve " + objectName + " does not exist" )
 
-		// Attempt to retrieve LWOCurveConventions / generator object from the LWO Cache
+		// Attempt to retrieve AQOCurveConventions / generator object from the LWO Cache
 		auto curveGenerator = singleCurveObject->getCurveGeneratorObj();
 
 		// extract just the data for the specified propertyKey

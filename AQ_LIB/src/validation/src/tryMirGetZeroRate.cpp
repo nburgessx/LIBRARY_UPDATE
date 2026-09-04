@@ -1,5 +1,5 @@
 #include "tryMirGetZeroRate.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -66,7 +66,7 @@ namespace validation
         AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
         AQLString curvename( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
-        DoubleArray arr = etrading::LACurveForwardRateHelpers::getMultiZeroRate( terms, dataInstance, curveid, freq, dayC, interp, curvename, isFwdInterp );
+        DoubleArray arr = etrading::AQLCurveForwardRateHelpers::getMultiZeroRate( terms, dataInstance, curveid, freq, dayC, interp, curvename, isFwdInterp );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -140,7 +140,7 @@ namespace validation
         AQLString rollConv( etrading::getDefaultValueForEmptyString( slidingRule, AQLString( "NO_CHANGE" ) ) );
         AQLString curvename( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
-        DoubleArray arr = etrading::LACurveForwardRateHelpers::getMultiZeroRate( terms, dataInstance, curveId, freq, dayC, rollConv, cal, interp, curvename, isFwdInterp );
+        DoubleArray arr = etrading::AQLCurveForwardRateHelpers::getMultiZeroRate( terms, dataInstance, curveId, freq, dayC, rollConv, cal, interp, curvename, isFwdInterp );
 
         if ( CreateDataFile::recordEnabled() )
         {

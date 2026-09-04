@@ -1,5 +1,5 @@
 //
-// LAObjectPoolBase.cpp
+// AQLObjectPoolBase.cpp
 // This file used to be called Calibrator.cpp and before that AQLCalibrateModel.cpp
 //
 
@@ -10,7 +10,7 @@
 #endif
 
 
-#include "LAObjectPoolBase.h"
+#include "AQLObjectPoolBase.h"
 #include "AQLString.h"
 #include "AQLDataInstance.h"
 #include "AQLPriceDataManager.h"
@@ -30,7 +30,7 @@
 /*!
 
 */
-LAObjectPoolBase::LAObjectPoolBase()
+AQLObjectPoolBase::AQLObjectPoolBase()
 : mpStaticData(&AQLCoreDataService::getStaticDataManager().getStaticData())
 {
 }
@@ -39,7 +39,7 @@ LAObjectPoolBase::LAObjectPoolBase()
 /*!
 
 */
-LAObjectPoolBase::~LAObjectPoolBase(void)
+AQLObjectPoolBase::~AQLObjectPoolBase(void)
 {
 }
 
@@ -54,7 +54,7 @@ LAObjectPoolBase::~LAObjectPoolBase(void)
 	@param[in]   isFirst first execute flag
 */
 void
-LAObjectPoolBase::generateSDE(const AQLString &key, AQLDataInstance &dataInstance, bool isMarketCreate, bool isFirst) const
+AQLObjectPoolBase::generateSDE(const AQLString &key, AQLDataInstance &dataInstance, bool isMarketCreate, bool isFirst) const
 {
 	if (isFirst)
 	{
@@ -108,7 +108,7 @@ LAObjectPoolBase::generateSDE(const AQLString &key, AQLDataInstance &dataInstanc
 	@param[out]   is fwdfx constant curve or not
 */
 bool
-LAObjectPoolBase::isFwdFXConst(const AQLString& ccy) const
+AQLObjectPoolBase::isFwdFXConst(const AQLString& ccy) const
 {
 	AQLString tmpCcy = ccy;
 	AQLString str = mpStaticData->getStaticData(tmpCcy.toLower() + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST);
@@ -123,7 +123,7 @@ LAObjectPoolBase::isFwdFXConst(const AQLString& ccy) const
 	@param[out]   is collateral ccy or not
 */
 bool
-LAObjectPoolBase::isCollateral(const AQLString& ccy) const
+AQLObjectPoolBase::isCollateral(const AQLString& ccy) const
 {
 	AQLString tmpCcy = ccy;
 	AQLString str = mpStaticData->getStaticData(KEY_YIELD_COLLATERAL_CCY);
@@ -138,7 +138,7 @@ LAObjectPoolBase::isCollateral(const AQLString& ccy) const
 	@param[in]  dataInstance
 */
 void
-LAObjectPoolBase::loadVolatilityDataAndCalibrate(const AQLString &key, AQLDataInstance &dataInstance) const
+AQLObjectPoolBase::loadVolatilityDataAndCalibrate(const AQLString &key, AQLDataInstance &dataInstance) const
 {
 	AQLString sdeName = getSDEAttrName(key);
 	AQLString volType = getVolType(key);
@@ -198,7 +198,7 @@ LAObjectPoolBase::loadVolatilityDataAndCalibrate(const AQLString &key, AQLDataIn
 	@return bool 
 */
 bool
-LAObjectPoolBase::isCalibTarget(const AQLString &ccy) const
+AQLObjectPoolBase::isCalibTarget(const AQLString &ccy) const
 {
 	if (!AQLMarketData::isCalibrateModel(AQLMarketData::getModelName(ccy)))
 	{
@@ -233,7 +233,7 @@ LAObjectPoolBase::isCalibTarget(const AQLString &ccy) const
 	@return bool 
 */
 bool
-LAObjectPoolBase::isCancelForFunding(const AQLString &ccy) const
+AQLObjectPoolBase::isCancelForFunding(const AQLString &ccy) const
 {
 
 	AQLStringVector simCur = AQLDealUtils::getSimulationSDECurrencys();

@@ -1,5 +1,5 @@
 //
-// LACurveCalibrationHelpers.cpp 
+// AQLCurveCalibrationHelpers.cpp 
 // *** This file used to be called "LAMathCurveGenerateFuncUti1ity.cpp" ***
 //
 
@@ -10,10 +10,10 @@
 #endif
 
 // LA Includes
-#include "LACurveCalibrationHelpers.h"  // was #include "LAMathCurveGenerateFuncUti1ity.h"
-#include "LADateHelpers.h"              // was #include "LAMathDateCalcUti1ity.h"
-#include "LADateScheduleHelpers.h"      // was #include "LAMathDateFuncUti1ity.h"
-#include "LACurvePricingObject.h"      // was #include "LAMathYie1dCurve.h"
+#include "AQLCurveCalibrationHelpers.h"  // was #include "LAMathCurveGenerateFuncUti1ity.h"
+#include "AQLDateHelpers.h"              // was #include "LAMathDateCalcUti1ity.h"
+#include "AQLDateScheduleHelpers.h"      // was #include "LAMathDateFuncUti1ity.h"
+#include "AQLCurvePricingObject.h"      // was #include "LAMathYie1dCurve.h"
 
 // External Includes
 #include <cmath>
@@ -68,7 +68,7 @@ namespace etrading
 {
 
     void  
-    LACurveCalibrationHelpers::setUpCurveFromMarket(AQLDataInstance* dataInstance, const AQLString& CurveID, 
+    AQLCurveCalibrationHelpers::setUpCurveFromMarket(AQLDataInstance* dataInstance, const AQLString& CurveID, 
 						    AQLStringMatrix mgrid, AQLStringMatrix lgrid, 
 						    AQLStringMatrix fgrid, AQLStringMatrix sgrid,
 						    AQLStringMatrix mdata, AQLStringMatrix ldata, 
@@ -93,7 +93,7 @@ namespace etrading
 	    upper(sdata);
 	    upper(ylddata);
 	
-	    AQLDate		asofdate			= LADateScheduleHelpers::getLADate(chgrow(ylddata,CURVEINPUT_ASOFDATE,1));
+	    AQLDate		asofdate			= AQLDateScheduleHelpers::getLADate(chgrow(ylddata,CURVEINPUT_ASOFDATE,1));
 	    AQLString	Currency			= chgrow(ylddata,CURVEINPUT_CURRENCY,	1);
 	    AQLString	strfutureuse		= chgrow(ylddata,CURVEINPUT_ISFUTUREUSE,1);
 	
@@ -209,7 +209,7 @@ namespace etrading
 	    int N=0;
 	    double rate=0.0;
 	    //Money Market
-        //spotdate	= LADateScheduleHelpers::getLADate(chgrow(mdata,CURVEINPUT_SPOTDATE,1));
+        //spotdate	= AQLDateScheduleHelpers::getLADate(chgrow(mdata,CURVEINPUT_SPOTDATE,1));
 	    itd			= dvar.find(chgrow(mdata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
 		    throw AQLCoreInvalidData("Money Market Daycount is not registered ", __FILE__,__LINE__);
@@ -233,11 +233,11 @@ namespace etrading
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(mdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = LADateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
         }
         else if(tmprow2>=0)
         {
-            spotdate = LADateScheduleHelpers::getLADate(chgrow(mdata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateScheduleHelpers::getLADate(chgrow(mdata,CURVEINPUT_SPOTDATE,1));
         }
 
 	    //i=row=0 is input row (not grid);
@@ -273,7 +273,7 @@ namespace etrading
 		    ref+= name + ":";
 	    }
 	    ////LiborData
-	    //spotdate	= LADateScheduleHelpers::getLADate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
+	    //spotdate	= AQLDateScheduleHelpers::getLADate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
 	    itd			= dvar.find(chgrow(ldata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
 		    throw AQLCoreInvalidData("Libor Daycount is not registered ", __FILE__,__LINE__);
@@ -306,11 +306,11 @@ namespace etrading
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(ldata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = LADateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
         }
         else if(tmprow2>=0)
         {
-            spotdate = LADateScheduleHelpers::getLADate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateScheduleHelpers::getLADate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
         }
 
 	    //i=row=0 is input row (not grid);
@@ -351,7 +351,7 @@ namespace etrading
 		    ref+= name + ":";
 	    }
 	    ////SwapData
-	    //spotdate	= LADateScheduleHelpers::getLADate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
+	    //spotdate	= AQLDateScheduleHelpers::getLADate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
 	    itd			= dvar.find(chgrow(sdata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
 		    throw AQLCoreInvalidData("Swap Daycount is not registered ", __FILE__,__LINE__);
@@ -385,11 +385,11 @@ namespace etrading
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(sdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = LADateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
         }
         else if(tmprow2>=0)
         {
-            spotdate = LADateScheduleHelpers::getLADate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateScheduleHelpers::getLADate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
         }
 
 	    //i=row=0 is input row (not grid);
@@ -468,7 +468,7 @@ namespace etrading
 	    ////Futuredata
 	    if(isfuteruse)
 	    {
-		    //spotdate	= LADateScheduleHelpers::getLADate(chgrow(fdata,CURVEINPUT_SPOTDATE,1));
+		    //spotdate	= AQLDateScheduleHelpers::getLADate(chgrow(fdata,CURVEINPUT_SPOTDATE,1));
 		    itd			= dvar.find(chgrow(fdata,CURVEINPUT_DAYCOUNT,1));
 		    if(itd==dvar.end())
 			    throw AQLCoreInvalidData("Future Daycount is not registered ", __FILE__,__LINE__);
@@ -491,17 +491,17 @@ namespace etrading
             else if(tmprow1>=0)
             {
                 AQLString spotLag = AQLFunctionUtilities::findElement(fdata,CURVEINPUT_SPOTLAG,0,1,true);
-                spotdate = LADateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+                spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
             }
             else if(tmprow2>=0)
             {
-                spotdate = LADateScheduleHelpers::getLADate(chgrow(fdata,CURVEINPUT_SPOTDATE,1));
+                spotdate = AQLDateScheduleHelpers::getLADate(chgrow(fdata,CURVEINPUT_SPOTDATE,1));
             }
 		    //i=row=0 is input row (not grid);
 		    for(int i=1; i<N; i++)
 		    {
-			    AQLDate	StartDate	=	LADateScheduleHelpers::getLADate(chgcol(fgrid,CURVEINPUT_STARTDATE,	i));
-			    AQLDate EndDate		=	LADateScheduleHelpers::getLADate(chgcol(fgrid,CURVEINPUT_ENDDATE,		i));
+			    AQLDate	StartDate	=	AQLDateScheduleHelpers::getLADate(chgcol(fgrid,CURVEINPUT_STARTDATE,	i));
+			    AQLDate EndDate		=	AQLDateScheduleHelpers::getLADate(chgcol(fgrid,CURVEINPUT_ENDDATE,		i));
 			    AQLString name		=  CurveID + Currency + FUTURE + AQLDataDate(StartDate).convertToString();
 			    AQLObject* fe		=	NULL;
 			    if(!objPool.getObject(name).isDefined())
@@ -613,7 +613,7 @@ namespace etrading
     }
 
     void 
-    LACurveCalibrationHelpers::setUpXccyBasisCurve(AQLDataInstance* dataInstance,const AQLString& BCurveID, 
+    AQLCurveCalibrationHelpers::setUpXccyBasisCurve(AQLDataInstance* dataInstance,const AQLString& BCurveID, 
 						    AQLStringMatrix ylddata, AQLStringMatrix bgrid, AQLStringMatrix bdata)
     {
 	    //ylddata
@@ -628,7 +628,7 @@ namespace etrading
 	    AQLString bref;
 	    AQLString term;
         AQLDate spotdate;
-	    //AQLDate spotdate		= LADateScheduleHelpers::getLADate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));		
+	    //AQLDate spotdate		= AQLDateScheduleHelpers::getLADate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));		
 	    AQLString daycount(AC_365I);
 
 	    //BasisType
@@ -677,11 +677,11 @@ namespace etrading
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(bdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = LADateScheduleHelpers::getDate(asofdate,spotLag,bsrule,bcalendar);
+            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,bsrule,bcalendar);
         }
         else
         {
-            spotdate = LADateScheduleHelpers::getLADate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateScheduleHelpers::getLADate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
         }
 
 	    //Interpolation
@@ -729,19 +729,19 @@ namespace etrading
 		    bref+= name+":";
 	    }
 
-	    //LACurvePricingObject
+	    //AQLCurvePricingObject
 	    AQLString yldname =  BCurveID+ "FROMMAKINGBASISCURVE";
 	    const AQLObjectHolder ehyld = objPool.getObject(yldname);
-	    LACurvePricingObject* ycp = NULL;
+	    AQLCurvePricingObject* ycp = NULL;
 	    if(!ehyld.isDefined())
 	    {
-		    ycp = new LACurvePricingObject(dataInstance);
+		    ycp = new AQLCurvePricingObject(dataInstance);
 		    objPool.set(yldname,ycp);
 	    }
 	    else
 	    {
-		    dynamic_cast<LACurvePricingObject &>(objPool.getObject(yldname).get()).reset();
-		    ycp = &dynamic_cast<LACurvePricingObject &>(objPool.getObject(yldname).get());
+		    dynamic_cast<AQLCurvePricingObject &>(objPool.getObject(yldname).get()).reset();
+		    ycp = &dynamic_cast<AQLCurvePricingObject &>(objPool.getObject(yldname).get());
 	    }
 	    ycp->getName().convertFromString(yldname);
 	    ycp->getInterpolation().convertFromString(interpolation);
@@ -773,7 +773,7 @@ namespace etrading
 	    }
 	    else
 	    {
-		    //dynamic_cast<LACurvePricingObject &>(objPool.getObject(CurveIDTool).get()).reset();
+		    //dynamic_cast<AQLCurvePricingObject &>(objPool.getObject(CurveIDTool).get()).reset();
 		    curveCalibrationData	= &dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get());
 	    }
 	
@@ -809,7 +809,7 @@ namespace etrading
     }
 
     void 
-    LACurveCalibrationHelpers::setUpBasisCurve(AQLDataInstance* dataInstance,
+    AQLCurveCalibrationHelpers::setUpBasisCurve(AQLDataInstance* dataInstance,
                                                   const AQLString& stdCurveID, 
                                                   const AQLString& basisCurveID, 
                                                   AQLStringMatrix ylddata, 
@@ -870,11 +870,11 @@ namespace etrading
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(bdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = LADateScheduleHelpers::getDate(asofdate,spotLag,bsrule,bcalendar);
+            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,bsrule,bcalendar);
         }
         else
         {
-            spotdate = LADateScheduleHelpers::getLADate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateScheduleHelpers::getLADate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
         }
 
 	    //Interpolation
@@ -922,19 +922,19 @@ namespace etrading
 		    bref+= name+":";
 	    }
 
-	    //LACurvePricingObject
+	    //AQLCurvePricingObject
 	    AQLString yldname =  stdCurveID+ "FROMMAKINGBASISCURVE";
 	    const AQLObjectHolder ehyld = objPool.getObject(yldname);
-	    LACurvePricingObject* ycp = NULL;
+	    AQLCurvePricingObject* ycp = NULL;
 	    if(!ehyld.isDefined())
 	    {
-		    ycp = new LACurvePricingObject(dataInstance);
+		    ycp = new AQLCurvePricingObject(dataInstance);
 		    objPool.set(yldname,ycp);
 	    }
 	    else
 	    {
-		    dynamic_cast<LACurvePricingObject &>(objPool.getObject(yldname).get()).reset();
-		    ycp = &dynamic_cast<LACurvePricingObject &>(objPool.getObject(yldname).get());
+		    dynamic_cast<AQLCurvePricingObject &>(objPool.getObject(yldname).get()).reset();
+		    ycp = &dynamic_cast<AQLCurvePricingObject &>(objPool.getObject(yldname).get());
 	    }
 	    ycp->getName().convertFromString(yldname);
 	    ycp->getInterpolation().convertFromString(interpolation);
@@ -985,18 +985,18 @@ namespace etrading
     }
 
     void 
-    LACurveCalibrationHelpers::setUpBasisCurveFromMarket(AQLDataInstance* dataInstance,const AQLString& CurveID, 
+    AQLCurveCalibrationHelpers::setUpBasisCurveFromMarket(AQLDataInstance* dataInstance,const AQLString& CurveID, 
 						    AQLStringMatrix mgrid, AQLStringMatrix lgrid, AQLStringMatrix fgrid, 
 						    AQLStringMatrix sgrid,AQLStringMatrix mdata, AQLStringMatrix ldata, 
 						    AQLStringMatrix fdata, AQLStringMatrix sdata,AQLStringMatrix ylddata,
 						    AQLStringMatrix bgrid,AQLStringMatrix bdata,bool isCheckDF, bool isAUDadjust)
     {
-	    LACurveCalibrationHelpers::setUpCurveFromMarket(dataInstance,CurveID,mgrid,lgrid,fgrid,sgrid,mdata,ldata,fdata,sdata,ylddata,isCheckDF,isAUDadjust);
-	    LACurveCalibrationHelpers::setUpXccyBasisCurve(dataInstance,CurveID,ylddata,bgrid,bdata);
+	    AQLCurveCalibrationHelpers::setUpCurveFromMarket(dataInstance,CurveID,mgrid,lgrid,fgrid,sgrid,mdata,ldata,fdata,sdata,ylddata,isCheckDF,isAUDadjust);
+	    AQLCurveCalibrationHelpers::setUpXccyBasisCurve(dataInstance,CurveID,ylddata,bgrid,bdata);
     }
 
     void  
-    LACurveCalibrationHelpers::
+    AQLCurveCalibrationHelpers::
     setUpArbFreeCurveFromMarket( AQLDataInstance* dataInstance, const AQLString& CurveID, 
                                  AQLStringMatrix monGrid, AQLStringMatrix monConv, //money market
                                  AQLStringMatrix libGrid, AQLStringMatrix libConv, //libor market
@@ -1044,7 +1044,7 @@ namespace etrading
         upper(fraGrid3M);upper(fraGrid6M);upper(fraConv);
 	    upper(yldData);
 	
-	    AQLDate asofdate = LADateScheduleHelpers::getLADate(chgrow(yldData,CURVEINPUT_ASOFDATE,1));
+	    AQLDate asofdate = AQLDateScheduleHelpers::getLADate(chgrow(yldData,CURVEINPUT_ASOFDATE,1));
         AQLString isFRAUSE_str = chgrow(yldData,"ISFRAUSE",1);
         bool isFRAUse = false;
         if( isFRAUSE_str == "TRUE" ) 
@@ -1218,11 +1218,11 @@ namespace etrading
         else if(ltmprow1>=0)
         {
             AQLString lspotLag = AQLFunctionUtilities::findElement(swapConv,CURVEINPUT_SPOTLAG,0,1,true);
-		    lspotdate = LADateScheduleHelpers::getDate(asofdate,lspotLag,lrule,lcalendar);
+		    lspotdate = AQLDateScheduleHelpers::getDate(asofdate,lspotLag,lrule,lcalendar);
         }
         else if(ltmprow2>=0)
         {
-            lspotdate = LADateScheduleHelpers::getLADate(chgrow(swapConv,CURVEINPUT_SPOTDATE,1));
+            lspotdate = AQLDateScheduleHelpers::getLADate(chgrow(swapConv,CURVEINPUT_SPOTDATE,1));
         }
 	    /**/
 
@@ -1326,11 +1326,11 @@ namespace etrading
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(swapConv,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = LADateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
         }
         else if(tmprow2>=0)
         {
-            spotdate = LADateScheduleHelpers::getLADate(chgrow(swapConv,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateScheduleHelpers::getLADate(chgrow(swapConv,CURVEINPUT_SPOTDATE,1));
         }
 
 	    for (size_t i=0; i<term.size(); i++)
@@ -1482,11 +1482,11 @@ namespace etrading
 			    else if(tmprow1>=0)
 			    {
 				    AQLString spotLag = AQLFunctionUtilities::findElement(currConv,CURVEINPUT_SPOTLAG,0,1,true);
-				    spotdate = LADateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+				    spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
 			    }
 			    else if(tmprow2>=0)
 			    {
-				    spotdate = LADateScheduleHelpers::getLADate(chgrow(currConv,CURVEINPUT_SPOTDATE,1));
+				    spotdate = AQLDateScheduleHelpers::getLADate(chgrow(currConv,CURVEINPUT_SPOTDATE,1));
 			    }
 
 			    if( rate.size() == 0 ) throw AQLCoreInvalidData("input currency basis market data.", __FILE__,__LINE__);
@@ -1677,11 +1677,11 @@ namespace etrading
             else if(tmprow1>=0)
             {
                 AQLString spotLag = AQLFunctionUtilities::findElement(fraConv,CURVEINPUT_SPOTLAG,0,1,true);
-                spotdate = LADateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+                spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
             }
             else if(tmprow2>=0)
             {
-                spotdate = LADateScheduleHelpers::getLADate(chgrow(fraConv,CURVEINPUT_SPOTDATE,1));
+                spotdate = AQLDateScheduleHelpers::getLADate(chgrow(fraConv,CURVEINPUT_SPOTDATE,1));
             }
 
 		    term = searchvecbycol(fraGrid3M,CURVEINPUT_TERM,true);
@@ -1793,7 +1793,7 @@ namespace etrading
     }
 
     void 
-    LACurveCalibrationHelpers::setUpForecastCurveFromMarket(AQLDataInstance* dataInstance,
+    AQLCurveCalibrationHelpers::setUpForecastCurveFromMarket(AQLDataInstance* dataInstance,
                                                                const AQLString& setUpCurveID, 
 						                                       AQLStringMatrix bgrid, 
                                                                AQLStringMatrix bdata)
@@ -1876,11 +1876,11 @@ namespace etrading
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(bdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = LADateScheduleHelpers::getDate(asofdate,spotLag,bsrule,bcalendar);
+            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,bsrule,bcalendar);
         }
         else
         {
-            spotdate = LADateScheduleHelpers::getLADate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateScheduleHelpers::getLADate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
         }
 	
 	    AQLObjectPool& objPool = dataInstance->getObjectPool(); 
@@ -1926,7 +1926,7 @@ namespace etrading
     }
 
     void 
-    LACurveCalibrationHelpers::setUpForecastCurve(AQLDataInstance* dataInstance,
+    AQLCurveCalibrationHelpers::setUpForecastCurve(AQLDataInstance* dataInstance,
                                                      const AQLString& arbFreeCurveID, 
                                                      const AQLString& forecastCurveID, 
                                                      const AQLDate& asofdate,
@@ -1970,7 +1970,7 @@ namespace etrading
     }
 
     void 
-    LACurveCalibrationHelpers::setUpCdtDFCurve(AQLDataInstance* dataInstance, AQLString curveID, AQLStringMatrix data)
+    AQLCurveCalibrationHelpers::setUpCdtDFCurve(AQLDataInstance* dataInstance, AQLString curveID, AQLStringMatrix data)
     {
         AQLString arbFreeCurveID = chgrow(data,"ArbFreeCurveID",1);
         AQLString forecastCurveID = chgrow(data,"ForecastCurveID",1);
@@ -2004,11 +2004,11 @@ namespace etrading
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(data,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = LADateScheduleHelpers::getDate(asOfDate,spotLag,srule_str,calendar_str);
+            spotdate = AQLDateScheduleHelpers::getDate(asOfDate,spotLag,srule_str,calendar_str);
         }
         else if(tmprow2>=0)
         {
-            spotdate = LADateScheduleHelpers::getLADate(chgrow(data,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateScheduleHelpers::getLADate(chgrow(data,CURVEINPUT_SPOTDATE,1));
         }
         double spread = chgrow(data,"CREDITSPREAD",1).getDoubleValue();
         AQLPriceDataSlidingRule srule;
@@ -2021,7 +2021,7 @@ namespace etrading
     }
 
     AQLString 
-    LACurveCalibrationHelpers::getCurveGenerateTime(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curvename)
+    AQLCurveCalibrationHelpers::getCurveGenerateTime(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curvename)
     {
 
 	    AQLString CurveManager = curveid + curvename + MANAGER;
@@ -2036,10 +2036,10 @@ namespace etrading
     }
 
     void	
-    LACurveCalibrationHelpers::setUpCurve2(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate, 
+    AQLCurveCalibrationHelpers::setUpCurve2(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate, 
 										      const DoubleMatrix& mat, const AQLString& curveName)
     {
-	    LACurveCalibrationHelpers::setUpCurve(dataInstance,curveid,asofdate,mat,curveName);
+	    AQLCurveCalibrationHelpers::setUpCurve(dataInstance,curveid,asofdate,mat,curveName);
 	    AQLString suffix;
 	    if (curveName == STD)
 	    {
@@ -2067,7 +2067,7 @@ namespace etrading
     }
 
     void 
-    LACurveCalibrationHelpers::setUpCurve(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate, 
+    AQLCurveCalibrationHelpers::setUpCurve(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate, 
 										     const DoubleMatrix& mat, const AQLString& curveName)
     {
 	    unsigned int N=mat.size();
@@ -2110,7 +2110,7 @@ namespace etrading
 
     /////////////furuytos20120813///////////
     void 
-    LACurveCalibrationHelpers::setUpCurve3(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate, 
+    AQLCurveCalibrationHelpers::setUpCurve3(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate, 
 										     const DoubleMatrix& mat, const AQLStringMatrix& conv, const AQLString& curveName)
     {
 	    unsigned int N=mat.size();
@@ -2181,7 +2181,7 @@ namespace etrading
     ////////////////////////////////
 
     void 
-    LACurveCalibrationHelpers::setUpCurve(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate,
+    AQLCurveCalibrationHelpers::setUpCurve(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate,
 										     DoubleArray& termarray, DoubleArray& dfarray, const AQLString& curveName)
     {
 	    if(termarray.size() != dfarray.size())
@@ -2195,11 +2195,11 @@ namespace etrading
 	    mat[0] = termarray;
 	    mat[1] = dfarray;
 
-	    LACurveCalibrationHelpers::setUpCurve(dataInstance, curveid, asofdate, mat, curveName);
+	    AQLCurveCalibrationHelpers::setUpCurve(dataInstance, curveid, asofdate, mat, curveName);
     }
 
     DoubleArray 
-    LACurveCalibrationHelpers::outPutCurveFromYieldData(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curveName)
+    AQLCurveCalibrationHelpers::outPutCurveFromYieldData(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curveName)
     {
 	    AQLObjectPool& objPool	= dataInstance->getObjectPool();
 	
@@ -2245,7 +2245,7 @@ namespace etrading
     }
 
     DoubleArray 
-    LACurveCalibrationHelpers::outPutCurveFromYieldData2(AQLDataInstance* dataInstance, const AQLString& curveID, const AQLString& curveID2,
+    AQLCurveCalibrationHelpers::outPutCurveFromYieldData2(AQLDataInstance* dataInstance, const AQLString& curveID, const AQLString& curveID2,
 														    const AQLString& curveName, const AQLString& curveName2)
     {
 	    AQLObjectPool& objPool	= dataInstance->getObjectPool();
@@ -2313,7 +2313,7 @@ namespace etrading
     *  @param [out]     DiscountFactorTable     The discount factor table results
     */
     DiscountFactorTable 
-    LACurveCalibrationHelpers::getCurveDiscountFactorTable(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curveName)
+    AQLCurveCalibrationHelpers::getCurveDiscountFactorTable(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curveName)
     {
 	    AQLObjectPool& objPool	= dataInstance->getObjectPool();
 	
@@ -2354,7 +2354,7 @@ namespace etrading
             // Curve terms are always calculated using ACT/365_ISDA as defined in ConstantDeclarations.h [sic] - see #define AC_365I
             // Etrading curves have been migrated to ACT/365 because ACT/365_ISDA causes leap year irregularities in the yield curve
 		    AQLString ACT_365 = AQLString("ACT/365");
-            paymentDatesVector[i] = LADateScheduleHelpers::getDateFromTerm( asOfDate, termsVector[i], ACT_365);
+            paymentDatesVector[i] = AQLDateScheduleHelpers::getDateFromTerm( asOfDate, termsVector[i], ACT_365);
         }
     
 
@@ -2373,7 +2373,7 @@ namespace etrading
     *  @param [in]		curveNames              A vector of curveindex names to set within the curve
     *  @param [in]      discountFactorTable     The discount factor table inputs
     */
-    void LACurveCalibrationHelpers::setCurveDiscountFactorTable(AQLDataInstance* dataInstance, const AQLString& curveid, const std::vector<AQLString>& curveNames, const DiscountFactorTable& discountFactorTable )
+    void AQLCurveCalibrationHelpers::setCurveDiscountFactorTable(AQLDataInstance* dataInstance, const AQLString& curveid, const std::vector<AQLString>& curveNames, const DiscountFactorTable& discountFactorTable )
     {
         // 1. Get the terms and discount factors from the discountFactorTable
         // ---------------------------------------
@@ -2436,7 +2436,7 @@ namespace etrading
     *  @param [in]		curveName               The curveindex within the curve
     *  @param [out]     ForwardRateTable        The forward rate table results
     */
-    ForwardRateTable LACurveCalibrationHelpers::getCurveForwardRateTable( AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curveName )
+    ForwardRateTable AQLCurveCalibrationHelpers::getCurveForwardRateTable( AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curveName )
     {
         AQLObjectPool& objPool = dataInstance->getObjectPool();
 	
@@ -2481,7 +2481,7 @@ namespace etrading
             // Curve terms are always calculated using ACT/365_ISDA as defined in ConstantDeclarations.h [sic] - see #define AC_365I
 		    // Etrading curves have been migrated to ACT/365 because ACT/365_ISDA causes leap year irregularities in the yield curve
 		    AQLString ACT_365 = AQLString("ACT/365");
-            fixingDatesVector[i] = LADateScheduleHelpers::getDateFromTerm( asOfDate, termsMatrix[0][i], ACT_365);
+            fixingDatesVector[i] = AQLDateScheduleHelpers::getDateFromTerm( asOfDate, termsMatrix[0][i], ACT_365);
         }
    
         // Return Results
@@ -2500,7 +2500,7 @@ namespace etrading
     *  @param [in]		curveNames              A vector of curveindex names to set within the curve
     *  @param [in]      ForwardRateTable        The forward rate table inputs
     */
-    void LACurveCalibrationHelpers::setCurveForwardRateTable( AQLDataInstance* dataInstance, const AQLString& curveid, const std::vector<AQLString>& curveNames, const ForwardRateTable& forwardRateTable )
+    void AQLCurveCalibrationHelpers::setCurveForwardRateTable( AQLDataInstance* dataInstance, const AQLString& curveid, const std::vector<AQLString>& curveNames, const ForwardRateTable& forwardRateTable )
     {
             // 1. Get the terms and discount factors from the discountFactorTable
         // ---------------------------------------
@@ -2575,9 +2575,9 @@ namespace etrading
     }
 
     void 
-    LACurveCalibrationHelpers::restoreSwapRateFromLibor(AQLMathYieldCurvePro &curve, const AQLString &ccy, const std::map<AQLString, double> &sRateMap, AQLStringMatrix sdata)
+    AQLCurveCalibrationHelpers::restoreSwapRateFromLibor(AQLMathYieldCurvePro &curve, const AQLString &ccy, const std::map<AQLString, double> &sRateMap, AQLStringMatrix sdata)
     {
-	    //AQLDate spotDate	= LADateScheduleHelpers::getLADate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
+	    //AQLDate spotDate	= AQLDateScheduleHelpers::getLADate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
 	    std::map<AQLString, AQLString>& dvar = AQLCoreComponentManager::getDayCountMap();
 	    std::map<AQLString, AQLString>::iterator itd = dvar.find(chgrow(sdata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
@@ -2617,11 +2617,11 @@ namespace etrading
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(sdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotDate = LADateScheduleHelpers::getDate(asOfDate,spotLag,slidingStr,calStr);
+            spotDate = AQLDateScheduleHelpers::getDate(asOfDate,spotLag,slidingStr,calStr);
         }
         else if(tmprow2>=0)
         {
-            spotDate = LADateScheduleHelpers::getLADate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
+            spotDate = AQLDateScheduleHelpers::getLADate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
         }
 	    if (asOfDate > spotDate)
 		    throw AQLCoreInvalidData("AsofDate > spotDate, cannnot calc. ", __FILE__, __LINE__);
@@ -2669,9 +2669,9 @@ namespace etrading
     }
 
     void 
-    LACurveCalibrationHelpers::resetMarketDataUseL(AQLMathYieldCurvePro &curve, const AQLString &ccy, AQLStringMatrix ldata)
+    AQLCurveCalibrationHelpers::resetMarketDataUseL(AQLMathYieldCurvePro &curve, const AQLString &ccy, AQLStringMatrix ldata)
     {
-	    //AQLDate spotDate	= LADateScheduleHelpers::getLADate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
+	    //AQLDate spotDate	= AQLDateScheduleHelpers::getLADate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
 	    std::map<AQLString, AQLString>& dvar = AQLCoreComponentManager::getDayCountMap();
 	    std::map<AQLString, AQLString>::iterator itd = dvar.find(chgrow(ldata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
@@ -2710,11 +2710,11 @@ namespace etrading
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(ldata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotDate = LADateScheduleHelpers::getDate(asOfDate,spotLag,slidingStr,calStr);
+            spotDate = AQLDateScheduleHelpers::getDate(asOfDate,spotLag,slidingStr,calStr);
         }
         else if(tmprow2>=0)
         {
-            spotDate = LADateScheduleHelpers::getLADate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
+            spotDate = AQLDateScheduleHelpers::getLADate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
         }
 	    if (asOfDate > spotDate)
 		    throw AQLCoreInvalidData("AsofDate > spotDate, cannnot calc. ", __FILE__, __LINE__);
@@ -2746,7 +2746,7 @@ namespace etrading
 			    if (std::find(liborYTerm.begin(), liborYTerm.end(), searchTerm) == liborYTerm.end())
 			    {
 				    // calc date from spotDate
-				    AQLDate date = LADateHelpers::getDate(spotDate, termStr, sliding, &cal, true);
+				    AQLDate date = AQLDateHelpers::getDate(spotDate, termStr, sliding, &cal, true);
 					
 				    double term     = dc.getTerm(asOfDate, date);
 				    double df       = curve.getDF(term);

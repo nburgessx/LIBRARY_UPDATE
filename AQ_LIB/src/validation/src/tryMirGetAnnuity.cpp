@@ -1,5 +1,5 @@
 #include "tryMirGetAnnuity.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -92,7 +92,7 @@ namespace validation
         AQLString freq( etrading::getDefaultValueForEmptyString( frequency, AQLString( "SEMI-ANNUAL" ) ) );
         AQLString curName( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
-        double ret = etrading::LACurveForwardRateHelpers::getAnnuity( fromDate, toDate, dataInstance, curveId, freq, sRule, cal, firstOddDt, lastOddDt, pDay, dayC, interp, curName );
+        double ret = etrading::AQLCurveForwardRateHelpers::getAnnuity( fromDate, toDate, dataInstance, curveId, freq, sRule, cal, firstOddDt, lastOddDt, pDay, dayC, interp, curName );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -144,7 +144,7 @@ namespace validation
         AQLString dayC( etrading::getDefaultValueForEmptyString( dayCount, AQLString( "ACT/365" ) ) );
         AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
 
-        double ret = etrading::LACurveForwardRateHelpers::getAnnuity( dates, dataInstance, curveId, dayC, interp, curName );
+        double ret = etrading::AQLCurveForwardRateHelpers::getAnnuity( dates, dataInstance, curveId, dayC, interp, curName );
 
         if ( CreateDataFile::recordEnabled() )
         {

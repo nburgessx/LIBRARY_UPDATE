@@ -5,7 +5,7 @@
 
 #include "CreditBasketModel.h"
 #include "NormalDistribution.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "ObjectUtilities.h"
 #include "DataUtilities.h"
 #include "ExceptionMacros.h"
@@ -17,7 +17,7 @@ namespace etrading
 	CreditBasketModel::CreditBasketModel( const std::string& objectName,
 										  const std::vector<std::string>& propertyKeys,
 										  const std::vector<TableInfo>& infoBlocks ) 
-						: IsLWOObject(objectName, CREDIT_BASKET_MODEL), 
+						: IsAQObject(objectName, CREDIT_BASKET_MODEL), 
 						  freeObject_(objectName)
 	{
 
@@ -43,7 +43,7 @@ namespace etrading
 	 * @param[in] freeObject    A freeObject constructed from the serialized data
 	 */
 	CreditBasketModel::CreditBasketModel( const std::string& objectName, const FreeObject& freeObject ) 
-					: IsLWOObject(objectName, CREDIT_MODEL ), 
+					: IsAQObject(objectName, CREDIT_MODEL ), 
 					  freeObject_(freeObject)
 	{
 		initialize();
@@ -53,7 +53,7 @@ namespace etrading
 	/* @brief Copy Constructor
 	 */
 	CreditBasketModel::CreditBasketModel(const CreditBasketModel& rhs) 
-		: IsLWOObject( rhs.getRefToName(), CREDIT_BASKET_MODEL ), 
+		: IsAQObject( rhs.getRefToName(), CREDIT_BASKET_MODEL ), 
 		  freeObject_( rhs.freeObject_ ),
 		  asOfDate_( rhs.asOfDate_ ),
 		  creditModelNames_( rhs.creditModelNames_ ),

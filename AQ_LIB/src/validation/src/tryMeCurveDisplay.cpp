@@ -1,5 +1,5 @@
 #include "tryMeCurveDisplay.h"
-#include "LACurveCalibrationHelpers.h"
+#include "AQLCurveCalibrationHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -7,7 +7,7 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "StructuredExceptionHandler.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;
@@ -39,7 +39,7 @@ namespace validation
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
 
-        DoubleArray ret = etrading::LACurveCalibrationHelpers::outPutCurveFromYieldData( etrading::getDataInstance(), curveCollection, curIndex );
+        DoubleArray ret = etrading::AQLCurveCalibrationHelpers::outPutCurveFromYieldData( etrading::getDataInstance(), curveCollection, curIndex );
 
         if ( CreateDataFile::recordEnabled() )
         {

@@ -1,14 +1,14 @@
 #include "EntityPoolUtilities.h"
 
 #include "ParameterValidation.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CurveCalibrationData.h"
 #include "AQLDataVector.h"
 #include "AQLDefinitions.h"
 #include "TypeHelpers.h"
 #include "ParameterValidation.h"
 #include "AQLCoreDataService.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 
 namespace etrading
 {
@@ -20,7 +20,7 @@ namespace etrading
 	{
 		AQLDataInstance* dataInstance = getDataInstance();
         AQLObjectPool& en = dataInstance->getObjectPool();
-        AQLString name = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
+        AQLString name = etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
 		AQLObjectHolder ehycpro = en.getObject(name);
 		return ehycpro.isDefined();
     };
@@ -37,7 +37,7 @@ namespace etrading
         AQLObjectPool& en = dataInstance->getObjectPool();
 
 		// Get CurveCalibrationData object
-		AQLString name = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
+		AQLString name = etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
 		AQLObjectHolder ehycpro = en.getObject(name);
 		if (!ehycpro.isDefined())
 		{
@@ -50,19 +50,19 @@ namespace etrading
 		//------------------------------------------------------------------------
 		// 1. Remove properties from the property manager singleton object
 
-		LAUpdateStaticDataManager::setUpForIRServer();
+		AQLUpdateStaticDataManager::setUpForIRServer();
         AQLCoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
-        LAUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance );
+        AQLUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance );
 
 		//------------------------------------------------------------------------
 		// 2. Remove all curve build outputs such as DFs, Fwd rates etc
 
 		// Important Note:
 		// Market name and index names that form part of Data names for DFs or forward rates etc 
-		// are case sensitive. This is true in both LACurvePricingObject and the object pool.
+		// are case sensitive. This is true in both AQLCurvePricingObject and the object pool.
 
-		// Remove DF, Fwd rates and day convention data from LACurvePricingObject. 
-		LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance, curveCollection);
+		// Remove DF, Fwd rates and day convention data from AQLCurvePricingObject. 
+		AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance, curveCollection);
 		yc.deleteCurveDataByCurveName(curveName);
 
 		// Remove DFs, terms, FwdRates, Fwd Term Matrix from CurveCollection AQLObject. 

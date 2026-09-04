@@ -33,7 +33,7 @@
 #include "CurveResultsContainer.h"
 #include "tryMeCurveResults.h"
 #include "CurveUtilities.h"						// Contains Legcacy Curve Discount Factor and Forward Rate Methods
-#include "LACurveForwardRateHelpers.h"			// Also contains Legcacy Curve Discount Factor and Forward Rate Methods
+#include "AQLCurveForwardRateHelpers.h"			// Also contains Legcacy Curve Discount Factor and Forward Rate Methods
 #include "ParameterValidation.h"				// Contains etrading::getDataInstance() method
 
 // Interpolators

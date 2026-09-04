@@ -1,5 +1,5 @@
 #include "ZeroCouponSwap.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "CurveValidation.h"
 #include "SwapCalculation.h"
 

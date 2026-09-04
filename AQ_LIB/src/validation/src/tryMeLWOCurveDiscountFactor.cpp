@@ -4,8 +4,8 @@
 #include "CurveValidation.h"
 #include "CurveStreaming.h"
 #include "Environment.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "ParameterValidation.h"
 #include "RecordMacros.h"
 #include "StructuredExceptionHandler.h"
@@ -52,7 +52,7 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
 
         // Convert Year Fractions to ACT/365 ones
         AQLDate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
@@ -115,7 +115,7 @@ namespace validation
 
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
         if( lwoCurve )
         {
             ret = lwoCurve->calculateDiscountFactor( tenors, busDayAdjust, calendar );
@@ -190,7 +190,7 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
 
         if( lwoCurve )
         {
@@ -259,7 +259,7 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
 
 
         // Convert Year Fractions to ACT/365 ones
@@ -336,7 +336,7 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
         if( lwoCurve )
         {
             ret = lwoCurve->calculateDiscountFactor( fromDates, tenors, busDayAdjust, calendar );
@@ -385,7 +385,7 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits< double >::quiet_NaN() );
 
         auto& env       = etrading::Environment::defaultEnv();
-        auto lwoCurve   = env.accessObject< etrading::LWOCurve >( lwoCurveName );
+        auto lwoCurve   = env.accessObject< etrading::AQOCurve >( lwoCurveName );
 
         if( lwoCurve )
         {

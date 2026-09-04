@@ -5,7 +5,7 @@
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "RecordMacros.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "SettingsValidation.h"
 
 #include <memory>

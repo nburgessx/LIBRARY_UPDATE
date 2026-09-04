@@ -3,9 +3,9 @@
 #include "SwapValidation.h"
 #include "CurveValidation.h"
 #include "CurveUtilities.h"
-#include "LACurvePricingObject.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLCurvePricingObject.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "BondAccrualPeriods.h"
 #include "BondUtilities.h"
 #include "SwapUtilities.h"
@@ -14,7 +14,7 @@
 namespace etrading
 {
 
-	Schedule::Schedule(const std::string& instanceName) : IsLWOObject(instanceName, SCHEDULE),
+	Schedule::Schedule(const std::string& instanceName) : IsAQObject(instanceName, SCHEDULE),
         scheduleType_(NONE_SCHEDULE_TYPE),
 		bespokeScheduleType_(NONE_BESPOKE_SCHEDULE),
 		payerReceiver_(NONE_PAYRECEIVE_ENUM),
@@ -62,7 +62,7 @@ namespace etrading
 		unadjustedMaturityDate_(AQLDate())
 	{}
 
-	Schedule::Schedule(const LabelValueBlock& scheduleLVB, const std::string& instanceName) : IsLWOObject(instanceName, SCHEDULE)
+	Schedule::Schedule(const LabelValueBlock& scheduleLVB, const std::string& instanceName) : IsAQObject(instanceName, SCHEDULE)
 	{
 		const std::string inputLVB = "scheduleLVB";
 		inputParameters_ = scheduleLVB;
@@ -186,7 +186,7 @@ namespace etrading
 
 	// cashflowLVBs will be updated by bespokeScheduleProperties
     Schedule::Schedule(const std::string& instanceName, const LabelValueBlock& bespokeScheduleProperties, const std::vector<LabelValueBlock>& cashflowLVBs, const BespokeScheduleTypeEnum& bespokeScheduleType)
-        : IsLWOObject(instanceName, SCHEDULE),
+        : IsAQObject(instanceName, SCHEDULE),
 		bespokeScheduleType_(bespokeScheduleType),
         accrualStartDate_(""),			
         accrualEndDateOrTenor_(""),		
@@ -304,7 +304,7 @@ namespace etrading
 	 * without risking concurrent access to the AQLString reference count. Hence we copy the LAStrings by invoking getCString()
 	 * on the rhs instance, forcing the AQLString to deep copy from a char*.
 	 */
-	Schedule::Schedule(const Schedule& rhs) : IsLWOObject(rhs.getRefToName().c_str(), SCHEDULE), 
+	Schedule::Schedule(const Schedule& rhs) : IsAQObject(rhs.getRefToName().c_str(), SCHEDULE), 
 		scheduleType_(rhs.scheduleType_),
 		bespokeScheduleType_(rhs.bespokeScheduleType_),
 		payerReceiver_(rhs.payerReceiver_),
@@ -466,7 +466,7 @@ namespace etrading
     
             }
 			
-			fixingEndDates_ = LADateScheduleHelpers::getMultiDate( fixingDates_, getFrequencyTenor( getAccrualFrequency() ), toString( getFixingBusinessDayAdj() ).c_str(), getFixingCalendar(), nullptr); // rollconvention* = nullptr
+			fixingEndDates_ = AQLDateScheduleHelpers::getMultiDate( fixingDates_, getFrequencyTenor( getAccrualFrequency() ), toString( getFixingBusinessDayAdj() ).c_str(), getFixingCalendar(), nullptr); // rollconvention* = nullptr
 
     	}
 	}
@@ -505,7 +505,7 @@ namespace etrading
         DateVector accrualDates = accrualEndDates_;
         accrualDates.push_back(accrualEndDates_.back());
 
-        if (!etrading::LACurveForwardRateHelpers::isFixingInAdvance(fixingAdvanceOrArrears_))
+        if (!etrading::AQLCurveForwardRateHelpers::isFixingInAdvance(fixingAdvanceOrArrears_))
         {
            throw AQLCoreInvalidData( "#Error: For OIS Swap, fixing in arrears is not supported.", __FILE__, __LINE__ );
         }

@@ -15,17 +15,17 @@
 #include "CurveValidation.h"
 #include "KeyValueLookupTable.h"
 #include "DateUtilities.h"
-#include "LWOCurve.h"
+#include "AQOCurve.h"
 #include "ContainerUtilities.h"
 #include "CurveBuildProperties.h"
 #include "ObjectUtilities.h"
 #include "Environment.h"
 #include "EnvironmentUtilities.h"
 #include "InterpolationParameters.h"
-#include "LACurvePricingObject.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LAUpdateStaticDataManager.h"
-#include "LACurveCalibrationHelpers.h"
+#include "AQLCurvePricingObject.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLUpdateStaticDataManager.h"
+#include "AQLCurveCalibrationHelpers.h"
 #include "AQLPriceDataInterpolation.h"
 #include "AQLInterpolationBase.h"
 #include "AQLSplineInterpolation.h"
@@ -145,12 +145,12 @@ namespace validation
         // ------------------------------------------
 		
 		// 1. Curve Static Data
-		etrading::LAUpdateStaticDataManager::
+		etrading::AQLUpdateStaticDataManager::
 		loadStaticDataOISCurve( etrading::getDataInstance(), curveCollection, staticDataTable, curveConv, oisRates, oisConv,
 								curveIndex, oisHistoricalRates, liborOisBasisRates,  liborOisBasisConv, swapRates, swapConv );
 	    
 		// 2. Calibrate Curve
-		etrading::LAUpdateStaticDataManager::calibrateOISCurve( etrading::getDataInstance(), curveCollection, staticDataTable, curveConv );
+		etrading::AQLUpdateStaticDataManager::calibrateOISCurve( etrading::getDataInstance(), curveCollection, staticDataTable, curveConv );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndexCopy );
@@ -217,12 +217,12 @@ namespace validation
         */
         
         // curveCollection
-          //auto interpolationData    = etrading::LACurveForwardRateHelpers::getXY( etrading::getDataInstance(), curveCollection );
+          //auto interpolationData    = etrading::AQLCurveForwardRateHelpers::getXY( etrading::getDataInstance(), curveCollection );
           //auto yearFractions        = std::get<0>( interpolationData );
           //auto discountFactors      = std::get<1>( interpolationData );
         
           //// Set the LWO Curve
-          //etrading::LWOCurve lwoCurve( lwoCurveName, yearFractions, discountFactors, oisCurveBuildProperties );
+          //etrading::AQOCurve lwoCurve( lwoCurveName, yearFractions, discountFactors, oisCurveBuildProperties );
 
         /*
         OPTION B: Store daily discount factors and forward rates for 51 years
@@ -255,7 +255,7 @@ namespace validation
         // Calculate Discount Factors and Forwards & Set LWO Curve Container
         // -----------------------------------------------------------------
 
-        auto discountFactors = etrading::LACurveForwardRateHelpers::getMultiDF( yearFractions,
+        auto discountFactors = etrading::AQLCurveForwardRateHelpers::getMultiDF( yearFractions,
                                                                            etrading::getDataInstance(),
                                                                            curveCollection,
                                                                            AQLString( "ACT/365" ),         // dayCount
@@ -280,7 +280,7 @@ namespace validation
         auto forwardRates = etrading::getCurveForwardRates( dates, curveCollection, curveIndexCopy ); // Note we use curveIndexCopy, which is actually the staticDataTable
 
         // Set the LWO Curve; yearFractions, discountFactors, forward rates and Curve build properties (cbp) 
-        etrading::LWOCurve lwoCurve( lwoCurveName,
+        etrading::AQOCurve lwoCurve( lwoCurveName,
                                      datesInBoostFormat,
                                      yearFractions,
                                      discountFactors,
@@ -295,8 +295,8 @@ namespace validation
 
         // ----------------------------------------------------------------
         /*  EXECUTING CODE */
-        etrading::moveToCache<etrading::LWOCurve>( std::move( lwoCurve ) );
-        auto ptrToCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName );
+        etrading::moveToCache<etrading::AQOCurve>( std::move( lwoCurve ) );
+        auto ptrToCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName );
 
         if( ptrToCurve != nullptr )
         {
@@ -310,7 +310,7 @@ namespace validation
         }
         else
         {
-            std::string errString =  ( boost::format( "Unable to create LWOCurve named %s" ) % lwoCurveName.c_str() ).str();
+            std::string errString =  ( boost::format( "Unable to create AQOCurve named %s" ) % lwoCurveName.c_str() ).str();
             if ( CreateDataFile::recordEnabled() )
             {
                 CreateDataFile file( decorateCurvename( "tryMeLWOCurveCalibrateOIS_outputs", curveCollection, staticDataTable ) );

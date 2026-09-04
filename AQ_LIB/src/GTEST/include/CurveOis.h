@@ -6,7 +6,7 @@
 
 namespace google_test
 {
-    // wrapper for LAUpdateStaticDataManager::setUpOISCurve
+    // wrapper for AQLUpdateStaticDataManager::setUpOISCurve
     class CurveOis
         : public virtual google_test::InitializeGoogleTest
         , public CurveAccessors

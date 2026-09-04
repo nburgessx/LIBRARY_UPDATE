@@ -6,7 +6,7 @@
 #include "CurveResultsContainer.h"
 #include "tryMeCurveResults.h"
 #include "CurveUtilities.h"						// Contains Legcacy Curve Discount Factor and Forward Rate Methods
-#include "LACurveForwardRateHelpers.h"			// Also contains Legcacy Curve Discount Factor and Forward Rate Methods
+#include "AQLCurveForwardRateHelpers.h"			// Also contains Legcacy Curve Discount Factor and Forward Rate Methods
 #include "ParameterValidation.h"				// Contains etrading::getDataInstance() method
 #include "GetGoogleTestFolder.h"
 #include "tryMeLWO.h"
@@ -468,7 +468,7 @@ namespace google_test
         AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
-        const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
+        const DoubleVector discountFactorsFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
                                                                                                                                  etrading::getDataInstance(),
                                                                                                                                  curveCollection.c_str(),
                                                                                                                                  etrading::getDiscountFactorDayCount(),
@@ -523,7 +523,7 @@ namespace google_test
         AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
-        const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
+        const DoubleVector discountFactorsFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
                                                                                                                                  etrading::getDataInstance(),
                                                                                                                                  curveCollection.c_str(),
                                                                                                                                  etrading::getDiscountFactorDayCount(),
@@ -578,7 +578,7 @@ namespace google_test
         AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
-        const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
+        const DoubleVector discountFactorsFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
                                                                                                                                  etrading::getDataInstance(),
                                                                                                                                  curveCollection.c_str(),
                                                                                                                                  etrading::getDiscountFactorDayCount(),
@@ -632,7 +632,7 @@ namespace google_test
         AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
-        const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
+        const DoubleVector discountFactorsFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
                                                                                                                                  etrading::getDataInstance(),
                                                                                                                                  curveCollection.c_str(),
                                                                                                                                  etrading::getDiscountFactorDayCount(),
@@ -686,7 +686,7 @@ namespace google_test
         AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
-        const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
+        const DoubleVector discountFactorsFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
                                                                                                                                  etrading::getDataInstance(),
                                                                                                                                  curveCollection.c_str(),
                                                                                                                                  etrading::getDiscountFactorDayCount(),
@@ -740,7 +740,7 @@ namespace google_test
         AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
-        const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
+        const DoubleVector discountFactorsFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
                                                                                                                                  etrading::getDataInstance(),
                                                                                                                                  curveCollection.c_str(),
                                                                                                                                  etrading::getDiscountFactorDayCount(),
@@ -795,7 +795,7 @@ namespace google_test
         AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
-        const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
+        const DoubleVector discountFactorsFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
                                                                                                                                  etrading::getDataInstance(),
                                                                                                                                  curveCollection.c_str(),
                                                                                                                                  etrading::getDiscountFactorDayCount(),
@@ -849,7 +849,7 @@ namespace google_test
         AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
-        const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
+        const DoubleVector discountFactorsFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
                                                                                                                                  etrading::getDataInstance(),
                                                                                                                                  curveCollection.c_str(),
                                                                                                                                  etrading::getDiscountFactorDayCount(),
@@ -905,7 +905,7 @@ namespace google_test
         AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
-        const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
+        const DoubleVector discountFactorsFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
                                                                                                                                  etrading::getDataInstance(),
                                                                                                                                  curveCollection.c_str(),
                                                                                                                                  etrading::getDiscountFactorDayCount(),
@@ -960,7 +960,7 @@ namespace google_test
         AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
-        const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
+        const DoubleVector discountFactorsFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
                                                                                                                              etrading::getDataInstance(),
                                                                                                                              curveCollection.c_str(),
                                                                                                                              etrading::getDiscountFactorDayCount(),
@@ -1032,7 +1032,7 @@ namespace google_test
     
         etrading::populateForwardRateConventions( curveCollection.c_str(), curveIndex.c_str(), etrading::toBooleanEnumFromBool( interpolateOnForwards ), interp, bdAdj, cal, dayC, isFwdInter, useFwdData );
         
-        const DoubleVector forwardRatesFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
+        const DoubleVector forwardRatesFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
         
         // 5.   Compare Forward Rates from 3. and 4. above
         // ================================================
@@ -1098,7 +1098,7 @@ namespace google_test
     
         etrading::populateForwardRateConventions( curveCollection.c_str(), curveIndex.c_str(), etrading::toBooleanEnumFromBool( interpolateOnForwards ), interp, bdAdj, cal, dayC, isFwdInter, useFwdData );
         
-        const DoubleVector forwardRatesFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
+        const DoubleVector forwardRatesFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
         
         // 5.   Compare Forward Rates from 3. and 4. above
         // ================================================
@@ -1164,7 +1164,7 @@ namespace google_test
     
         etrading::populateForwardRateConventions( curveCollection.c_str(), curveIndex.c_str(), etrading::toBooleanEnumFromBool( interpolateOnForwards ), interp, bdAdj, cal, dayC, isFwdInter, useFwdData );
         
-        const DoubleVector forwardRatesFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
+        const DoubleVector forwardRatesFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
         
         // 5.   Compare Forward Rates from 3. and 4. above
         // ================================================
@@ -1230,7 +1230,7 @@ namespace google_test
     
         etrading::populateForwardRateConventions( curveCollection.c_str(), curveIndex.c_str(), etrading::toBooleanEnumFromBool( interpolateOnForwards ), interp, bdAdj, cal, dayC, isFwdInter, useFwdData );
         
-        const DoubleVector forwardRatesFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
+        const DoubleVector forwardRatesFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
         
         // 5.   Compare Forward Rates from 3. and 4. above
         // ================================================
@@ -1296,7 +1296,7 @@ namespace google_test
     
         etrading::populateForwardRateConventions( curveCollection.c_str(), curveIndex.c_str(), etrading::toBooleanEnumFromBool( interpolateOnForwards ), interp, bdAdj, cal, dayC, isFwdInter, useFwdData );
         
-        const DoubleVector forwardRatesFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
+        const DoubleVector forwardRatesFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
         
         // 5.   Compare Forward Rates from 3. and 4. above
         // ================================================
@@ -1361,7 +1361,7 @@ namespace google_test
     
         etrading::populateForwardRateConventions( curveCollection.c_str(), curveIndex.c_str(), etrading::toBooleanEnumFromBool( interpolateOnForwards ), interp, bdAdj, cal, dayC, isFwdInter, useFwdData );
         
-        const DoubleVector forwardRatesFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
+        const DoubleVector forwardRatesFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
         
         // 5.   Compare Forward Rates from 3. and 4. above
         // ================================================
@@ -1427,7 +1427,7 @@ namespace google_test
     
         etrading::populateForwardRateConventions( curveCollection.c_str(), curveIndex.c_str(), etrading::toBooleanEnumFromBool( interpolateOnForwards ), interp, bdAdj, cal, dayC, isFwdInter, useFwdData );
         
-        const DoubleVector forwardRatesFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
+        const DoubleVector forwardRatesFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
         
         // 5.   Compare Forward Rates from 3. and 4. above
         // ================================================
@@ -1493,7 +1493,7 @@ namespace google_test
     
         etrading::populateForwardRateConventions( curveCollection.c_str(), curveIndex.c_str(), etrading::toBooleanEnumFromBool( interpolateOnForwards ), interp, bdAdj, cal, dayC, isFwdInter, useFwdData );
         
-        const DoubleVector forwardRatesFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
+        const DoubleVector forwardRatesFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
         
         // 5.   Compare Forward Rates from 3. and 4. above
         // ================================================
@@ -1559,7 +1559,7 @@ namespace google_test
     
         etrading::populateForwardRateConventions( curveCollection.c_str(), curveIndex.c_str(), etrading::toBooleanEnumFromBool( interpolateOnForwards ), interp, bdAdj, cal, dayC, isFwdInter, useFwdData );
         
-        const DoubleVector forwardRatesFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
+        const DoubleVector forwardRatesFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
         
         // 5.   Compare Forward Rates from 3. and 4. above
         // ================================================
@@ -1625,7 +1625,7 @@ namespace google_test
     
         etrading::populateForwardRateConventions( curveCollection.c_str(), curveIndex.c_str(), etrading::toBooleanEnumFromBool( interpolateOnForwards ), interp, bdAdj, cal, dayC, isFwdInter, useFwdData );
         
-        const DoubleVector forwardRatesFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
+        const DoubleVector forwardRatesFromEntityPool = etrading::AQLCurveForwardRateHelpers::getMultiForwardRate( fixingStartDates, fixingEndDates, etrading::getDataInstance(), curveCollection.c_str(), toString(simpleCompounding).c_str(), dayC, bdAdj, cal, interp, curveIndex.c_str(), isFwdInter, useFwdData );
         
         // 5.   Compare Forward Rates from 3. and 4. above
         // ================================================

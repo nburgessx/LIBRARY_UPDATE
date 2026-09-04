@@ -5,7 +5,7 @@
 #include "ObjectUtilities.h"
 #include "CoreEnumerations.h"
 #include "CurveMarketData.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "JSONInfoBlock.h"
 #include "ExceptionMacros.h"
 #include "RecordMacros.h"
@@ -20,7 +20,7 @@ using etrading::decorateFilename;
 
 namespace validation
 {
-    /* @brief Creates a LWOCurveMarketData object, containing all of the curve properties.
+    /* @brief Creates a AQOCurveMarketData object, containing all of the curve properties.
 	 * @param [in] objectName               The name of the Market Data object
 	 * @param [in] marketDataTypes          A vector of market data instrument types corresponding to each label-value block of market data
 	 * @param [in] infoBlocks               A vector of containing the label-value blocks of market data
@@ -104,7 +104,7 @@ namespace validation
        
 		RECORD_INPUTS( objectName );
         
-        // Attempt to retrieve LWOCurveMarketData object from the LWO Cache
+        // Attempt to retrieve AQOCurveMarketData object from the LWO Cache
 		auto curveMarketData = etrading::getCurveMarketData( objectName );
         curveMarketData->clearMarketDataLocalCache();
 
@@ -225,7 +225,7 @@ namespace validation
         VALID_EXCEPTION_END
     }
 
-	/* @brief Displays a LWOCurveMarketData
+	/* @brief Displays a AQOCurveMarketData
 	* @param [in] marketDataObjectName	The market data object you wish to display
 	* @param [in] marketDataKey			The name of the marketData label-value block that you wish to display
     * @param [in] columnIndexToDisplay	Optional Column Number to display (starting from 1). Specify -1 to get all columns
@@ -237,7 +237,7 @@ namespace validation
     {
 		VALID_EXCEPTION_START
 
-		// Attempt to retrieve LWOCurveMarketData object from the LWO Cache
+		// Attempt to retrieve AQOCurveMarketData object from the LWO Cache
 		auto curveMarketData = etrading::getCurveMarketData( marketDataObjectName );
 
 		 // Attempt to convert the marketData type to enum. This will throw early with a meaningful error message if
@@ -267,7 +267,7 @@ namespace validation
         auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( curveObjectName );
         AQ_REQUIRE( singleCurveObject, "LWO Curve " + curveObjectName + " does not exist" )
 
-		// Attempt to retrieve LWOCurveMarketData object from the LWO Cache
+		// Attempt to retrieve AQOCurveMarketData object from the LWO Cache
 		auto curveMarketData = singleCurveObject->getCurveMarketDataObj();
 
 		 // Attempt to convert the marketData type to enum. This will throw early with a meaningful error message if
@@ -281,7 +281,7 @@ namespace validation
 	}
 	
 
-    /* @brief Displays a Column LWOCurveMarketData for use with Google Test Calibration Tests
+    /* @brief Displays a Column AQOCurveMarketData for use with Google Test Calibration Tests
 	* @param [in] curveObjectName      The curve object whose market data you wish to display
 	* @param [in] marketDataKey     The name of the marketData label-value block that you wish to display
     * @param [in] columnNumber      Optional Column Number to display using column base index 1 and -1 to display all columns
@@ -297,7 +297,7 @@ namespace validation
         auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( curveObjectName );
         AQ_REQUIRE( singleCurveObject, "LWO Curve " + curveObjectName + " does not exist" )
 
-		// Attempt to retrieve LWOCurveMarketData object from the LWO Cache
+		// Attempt to retrieve AQOCurveMarketData object from the LWO Cache
 		auto curveMarketData = singleCurveObject->getCurveMarketDataObj();
 
 		 // Attempt to convert the marketData type to enum. This will throw early with a meaningful error message if

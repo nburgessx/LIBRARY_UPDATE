@@ -1,5 +1,5 @@
 //
-// LADateScheduleHelpers.h
+// AQLDateScheduleHelpers.h
 // *** This file used to be called "LAMathDateFuncUti1ity.h" ***
 #pragma once
 
@@ -24,7 +24,7 @@ class AQLPriceDataDayCount;
 
 namespace etrading
 {
-    class LADateScheduleHelpers
+    class AQLDateScheduleHelpers
     {
     public:
         //change excel date into AQLDate
@@ -93,10 +93,10 @@ namespace etrading
             const std::vector<AQLDate>& enddates);
 
     private:
-        LADateScheduleHelpers(void);
-        ~LADateScheduleHelpers(void);
-        LADateScheduleHelpers(const LADateScheduleHelpers &rhs);
-        LADateScheduleHelpers &operator=(const LADateScheduleHelpers &rhs);
+        AQLDateScheduleHelpers(void);
+        ~AQLDateScheduleHelpers(void);
+        AQLDateScheduleHelpers(const AQLDateScheduleHelpers &rhs);
+        AQLDateScheduleHelpers &operator=(const AQLDateScheduleHelpers &rhs);
     };
 
     bool is_last_business_day_temp(const AQLDate& d, const AQLString& cal);

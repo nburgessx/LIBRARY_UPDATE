@@ -11,9 +11,9 @@
 namespace etrading
 {
 
-    struct IsLWOObject : public Cacheable, public HasSchemaObjectConverter, public HasName
+    struct IsAQObject : public Cacheable, public HasSchemaObjectConverter, public HasName
     {
-        IsLWOObject( const std::string& objectName, const CachedObjectEnum enumValue );
+        IsAQObject( const std::string& objectName, const CachedObjectEnum enumValue );
         virtual SerializationResult serialize(	const serialize::SerializationMethodEnum method,
                                                 const serialize::SerializationTargetEnum target,
                                                 const std::string& targetInfo,

@@ -1,12 +1,12 @@
 
-#include "LWOCurveDayAdjustment.h"
+#include "AQOCurveDayAdjustment.h"
 #include "ContainerUtilities.h"
 
 
 namespace etrading
 {
     // TODO: move to delegating CTORs for C++11 ...
-    LWOCurveDayAdjustment::LWOCurveDayAdjustment(	const BusinessDayAdjustmentEnum businessDayAdjustment,
+    AQOCurveDayAdjustment::AQOCurveDayAdjustment(	const BusinessDayAdjustmentEnum businessDayAdjustment,
             const std::string& dateCalendar )
         :	fixingDateBusinessDayAdjustment_( businessDayAdjustment ),
           fixingDateCalendar_( trim_to_upper( dateCalendar.c_str() ) ),
@@ -20,7 +20,7 @@ namespace etrading
         mlibPaymentDateCalendar_ = &AQLMathCalendarSet::getCalendar( paymentDateCalendar_.c_str() );
     };
 
-    LWOCurveDayAdjustment::LWOCurveDayAdjustment( const BusinessDayAdjustmentEnum fixingDateBusinessDayAdjustment,
+    AQOCurveDayAdjustment::AQOCurveDayAdjustment( const BusinessDayAdjustmentEnum fixingDateBusinessDayAdjustment,
             const std::string& fixingDateCalendar,
             const BusinessDayAdjustmentEnum accrualEndDateDateBusinessDayAdjustment,
             const std::string& accrualEndDateDateCalendar,

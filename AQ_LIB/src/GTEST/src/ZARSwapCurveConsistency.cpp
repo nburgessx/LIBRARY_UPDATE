@@ -51,7 +51,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::SWAP_MARKETDATA,    // Calibration Instrument: STD Interest Rate Swap
                                        { "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y", "25Y", "30Y" }, // Calibration Tenors
-                                       curveObjectZAR3MJ_,                               // LWOCurveName
+                                       curveObjectZAR3MJ_,                               // AQOCurveName
                                        "ZARYC",                                          // CurveCollection
                                        "20200416",                                       // Swap Effective Date
                                        "ZAR_3MJ",                                        // Swap Generator

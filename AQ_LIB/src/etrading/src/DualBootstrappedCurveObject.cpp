@@ -1,8 +1,8 @@
 #include "DualBootstrappedCurveObject.h"
 #include "ParameterValidation.h"
 #include "ObjectUtilities.h"
-#include "LAUpdateStaticDataManager.h"
-#include "LWOUtilities.h"
+#include "AQLUpdateStaticDataManager.h"
+#include "AQOUtilities.h"
 #include "CreateDataFile.h"
 #include "Variant.h"
 
@@ -157,7 +157,7 @@ namespace etrading
 		CurveMarketDataPtr swapCurveMarketObj	= swapCurveObj_->getCurveMarketDataObj();
 		SwapCurveObjectData curveData_swap(swapCurveGeneratorObj, swapCurveMarketObj, frequency_swap, marketDataAsOfDate_swap);
 
-		etrading::LAUpdateStaticDataManager::setUpDualBootstrapCurve( etrading::getDataInstance(),
+		etrading::AQLUpdateStaticDataManager::setUpDualBootstrapCurve( etrading::getDataInstance(),
 												                      curveCollection_ois.c_str(),
 												                      objectName_.c_str(),
 												                      curveName_ois.c_str(),	

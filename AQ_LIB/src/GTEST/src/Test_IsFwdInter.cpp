@@ -7,7 +7,7 @@
 #include "tryMirGetDate.h"
 #include "tryMirGetParRate.h"
 #include "YieldCurveUtil.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "InitializeETrading.h"
 #include "tryMeUtilitySetup.h"
 #include <sstream>
@@ -109,8 +109,8 @@ namespace google_test
 			// Effective date
 			AQLString asofDateStr;
 			findValByKey(asofDateStr, generateProp, generatePropkeys, "AsOfDate");
-			AQLDate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
-			AQLDate effectiveDate = etrading::LADateScheduleHelpers::getDate( asofDate, spotLag, rollConvention, calendar );
+			AQLDate asofDate = etrading::AQLDateScheduleHelpers::getLADate(asofDateStr);
+			AQLDate effectiveDate = etrading::AQLDateScheduleHelpers::getDate( asofDate, spotLag, rollConvention, calendar );
 
 			// Curve collection and forecast curve
 			AQLString curveCollection = etrading::getCurveID( inputFile_STD );
@@ -146,7 +146,7 @@ namespace google_test
 			for (size_t j = 0; j < sizeof(TENORS) / sizeof(char*); ++j)
 			{
 				AQLString maturityTenor = AQLString(TENORS[j]);
-				AQLDate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
+				AQLDate maturity = etrading::AQLDateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
 
 				// Case 1: IsFwdInter = FALSE, UseFwdData = FALSE
 				double parRate = validation::tryMirGetParRate4(etrading::InitializeETrading::instance().dataInstance(),

@@ -3,7 +3,7 @@
 #include "InitializeGoogleTest.h"
 #include "FolderConfig.h"
 
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "FloatingBond.h"
 #include "tryMeLWOBond.h"
 

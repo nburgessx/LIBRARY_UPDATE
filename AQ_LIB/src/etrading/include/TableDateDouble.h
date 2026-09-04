@@ -49,8 +49,8 @@ namespace etrading
         void clear();
 
 		// implementation of SerializeInterface
-		// Bring in the overloaded versions of serialize from IsLWOObject
-		using IsLWOObject::serialize;
+		// Bring in the overloaded versions of serialize from IsAQObject
+		using IsAQObject::serialize;
         virtual SerializationResult serialize(	const serialize::SerializationMethodEnum method,
                                                 const serialize::SerializationTargetEnum target,
                                                 const std::string& targetInfo,

@@ -16,7 +16,7 @@ namespace etrading
           ( "AccrualDayAdjustment" )( "AccrualCalendar" )( "FixingDayAdjustment" )( "FixingCalendar" )( "OnlyAllowLookup" );
 
     CurveBuildProperties::CurveBuildProperties( const CurveBuildProperties&& ins )
-        : IsLWOObject(ins.getRefToName() , etrading::CURVE_BUILD_PROPERTIES ),
+        : IsAQObject(ins.getRefToName() , etrading::CURVE_BUILD_PROPERTIES ),
           HasConstInstance<CurveTypeEnum>( ins.getCurveTypeEnum() ),
           extrapolationTypeEnum_( ins.extrapolationTypeEnum_ ),
           curveCollectionName_( ins.curveCollectionName_ ),
@@ -46,7 +46,7 @@ namespace etrading
 
     CurveBuildProperties::CurveBuildProperties( const std::string& objectName )
         :	extrapolationTypeEnum_( etrading::CONSTANT_EXTRAPOLATION ),
-			IsLWOObject(objectName, etrading::CURVE_BUILD_PROPERTIES ),
+			IsAQObject(objectName, etrading::CURVE_BUILD_PROPERTIES ),
           HasConstInstance<CurveTypeEnum>( etrading::OIS_CURVETYPE ),
           mlibPaymentCalendar_( nullptr ),
           mlibAccrualCalendar_( nullptr ),
@@ -56,7 +56,7 @@ namespace etrading
     {};
 
     CurveBuildProperties::CurveBuildProperties( const CurveBuildProperties& ins )
-		: IsLWOObject(ins.getRefToName(), etrading::CURVE_BUILD_PROPERTIES ),
+		: IsAQObject(ins.getRefToName(), etrading::CURVE_BUILD_PROPERTIES ),
           HasConstInstance<CurveTypeEnum>( ins.getCurveTypeEnum() ),
           extrapolationTypeEnum_( ins.extrapolationTypeEnum_ ),
           curveCollectionName_( ins.curveCollectionName_ ),
@@ -109,7 +109,7 @@ namespace etrading
           floatRateCompoundingFreq_( floatRateCompoundingFreq ), floatRateTenor_( floatRateTenor ),
           oisCompoundingMethod_( oisCompoundingMethod ),
           extrapolationTypeEnum_( etrading::CONSTANT_EXTRAPOLATION ),
-		  IsLWOObject(objectName, etrading::CURVE_BUILD_PROPERTIES),
+		  IsAQObject(objectName, etrading::CURVE_BUILD_PROPERTIES),
           HasConstInstance<CurveTypeEnum>( curveTypeEnum ),
           paymentDayAdjustment_( businessDayAdjustment ),
           mlibPaymentCalendar_( nullptr ),
@@ -135,7 +135,7 @@ namespace etrading
         const boost::gregorian::date& asOfDate ) // this is what gets called for an FX FWD curve
         : ccy_( ccy ), asOfDate_( asOfDate ),
           HasConstInstance<CurveTypeEnum>( FWDFXCONST_CURVETYPE ),
-		  IsLWOObject( objectName , etrading::CURVE_BUILD_PROPERTIES ),
+		  IsAQObject( objectName , etrading::CURVE_BUILD_PROPERTIES ),
           onlyAllowLookup_( true )
     {
     };

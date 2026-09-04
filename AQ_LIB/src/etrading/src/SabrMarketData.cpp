@@ -10,7 +10,7 @@ namespace etrading
 	 * @param[in] marketDataKeys  A vector containing the names of each marketData block
 	 * @param[in] infoBlocks      A vector containing the marketData blocks
 	 */
-	SabrMarketData::SabrMarketData( const std::string& objectName,  const std::vector<std::string>& marketDataKeys, const std::vector<TableInfo>& infoBlocks ) : IsLWOObject(objectName, SABR_MARKETDATA), freeObject_(objectName)
+	SabrMarketData::SabrMarketData( const std::string& objectName,  const std::vector<std::string>& marketDataKeys, const std::vector<TableInfo>& infoBlocks ) : IsAQObject(objectName, SABR_MARKETDATA), freeObject_(objectName)
 	{
 
 		// Create a FreeObject from each property label-value block, and concatenate
@@ -41,7 +41,7 @@ namespace etrading
 	 * @param[in] objectName    The name of this SabrData instance
 	 * @param[in] freeObject    A freeObject constructed from the serialized data
 	 */
-	SabrMarketData::SabrMarketData( const std::string& objectName, const FreeObject& freeObject )  : IsLWOObject(objectName, SABR_MARKETDATA), freeObject_(freeObject)
+	SabrMarketData::SabrMarketData( const std::string& objectName, const FreeObject& freeObject )  : IsAQObject(objectName, SABR_MARKETDATA), freeObject_(freeObject)
 	{
 		loadMarketData();
     }
@@ -49,7 +49,7 @@ namespace etrading
 	/* @brief Copy Constructor
 	 */
 	SabrMarketData::SabrMarketData(const SabrMarketData& rhs) 
-		:	IsLWOObject(rhs.getRefToName(), SABR_MARKETDATA),
+		:	IsAQObject(rhs.getRefToName(), SABR_MARKETDATA),
 			freeObject_(rhs.freeObject_),
 			marketDataType_(rhs.marketDataType_),
 			strikeAdjustAmount_(rhs.strikeAdjustAmount_),

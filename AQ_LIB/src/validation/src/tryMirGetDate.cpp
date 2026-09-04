@@ -1,6 +1,6 @@
 #include "tryMirGetDate.h"
 
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
@@ -45,7 +45,7 @@ namespace validation
             file.write( "rollConvention",	rollConvention );
         }
 
-        AQLDate mbReturnDate = etrading::LADateScheduleHelpers::getDate( baseDate, term, slidingRule, calendar );
+        AQLDate mbReturnDate = etrading::AQLDateScheduleHelpers::getDate( baseDate, term, slidingRule, calendar );
         AQLString ret = mbReturnDate.stringWithFormat( "YYYYMMDD" );
         if ( CreateDataFile::recordEnabled() )
         {
@@ -90,7 +90,7 @@ namespace validation
             file.write( "rollConvention",	rollConvention );
         }
 
-        DateVector ret = etrading::LADateScheduleHelpers::getMultiDate( baseDates,
+        DateVector ret = etrading::AQLDateScheduleHelpers::getMultiDate( baseDates,
                                                                       term,
                                                                       slidingRule,
                                                                       calendar,

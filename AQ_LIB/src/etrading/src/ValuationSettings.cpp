@@ -1,6 +1,6 @@
 #include "ValuationSettings.h"
 #include "SettingsValidation.h"
-#include "LWOUtilities.h"					// Undecorate Handle Method & Curve Object Accessors for Single, Dual and Globally Calibrate Curves
+#include "AQOUtilities.h"					// Undecorate Handle Method & Curve Object Accessors for Single, Dual and Globally Calibrate Curves
 #include "CurveResultsContainer.h"			// CurveGroup Object Methods
 
 namespace etrading

@@ -6,16 +6,16 @@
 #include "LegStaticData.h"
 #include "CurveUtilities.h"
 #include "CurveValidation.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "DataProvider.h"
 
 namespace etrading
 {
 
-	class Leg : public IsLWOObject 
+	class Leg : public IsAQObject 
     {
 	public:
 

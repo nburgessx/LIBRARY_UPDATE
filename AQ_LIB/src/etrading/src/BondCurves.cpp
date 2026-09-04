@@ -1,10 +1,10 @@
 #include "BondCurves.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "ObjectUtilities.h"
 #include "DataUtilities.h"
 #include "ExceptionMacros.h"
 
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 
 #include <boost/algorithm/string.hpp>
 #include <cmath>
@@ -91,7 +91,7 @@ namespace etrading
 	BondCurve::BondCurve( const std::string& objectName,
                           const std::vector<std::string>& propertyKeys,
                           const std::vector<TableInfo>& infoBlocks ) 
-						: IsLWOObject(objectName, BOND_CURVE), 
+						: IsAQObject(objectName, BOND_CURVE), 
 						  freeObject_(objectName)
 	{
 
@@ -114,7 +114,7 @@ namespace etrading
 	/* @brief Copy Constructor
 	 */
 	BondCurve::BondCurve(const BondCurve& rhs) 
-		: IsLWOObject( rhs.getRefToName(), BOND_CURVE ), 
+		: IsAQObject( rhs.getRefToName(), BOND_CURVE ), 
 		  freeObject_( rhs.freeObject_ ),
 		  settlementDate_( rhs.settlementDate_ ),
 		  yieldCalculationTypeEnum_( rhs.yieldCalculationTypeEnum_ ),
@@ -131,7 +131,7 @@ namespace etrading
 	 * @param[in] freeObject    A freeObject constructed from the serialized data
 	 */
 	BondCurve::BondCurve( const std::string& objectName, const FreeObject& freeObject ) 
-					: IsLWOObject(objectName, BOND_CURVE ), 
+					: IsAQObject(objectName, BOND_CURVE ), 
 					  freeObject_(freeObject)
 	{
 		calibrate();
@@ -336,7 +336,7 @@ namespace etrading
 			const AQLDate pillarDate = yieldPillar.first;
 			const double yield = yieldPillar.second;
 
-			const int dateAsInt = static_cast<long long> (LADateScheduleHelpers::getExcelDate(pillarDate));
+			const int dateAsInt = static_cast<long long> (AQLDateScheduleHelpers::getExcelDate(pillarDate));
 			row.push_back(dateAsInt);
 			row.push_back(yield);
 

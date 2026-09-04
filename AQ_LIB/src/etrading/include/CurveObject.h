@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "FreeObject.h"
 #include "Variant.h"
@@ -24,7 +24,7 @@ namespace etrading
 	/* 
 		@brief Base class for all curve objects
 	*/
-    class CurveObject: public IsLWOObject
+    class CurveObject: public IsAQObject
     {
 	public:
 		
@@ -34,7 +34,7 @@ namespace etrading
 		*/
    		CurveObject(const CurveObject& rhs);
 
-		CurveObject()  : IsLWOObject("", CURVE) {}
+		CurveObject()  : IsAQObject("", CURVE) {}
 
 		virtual ~CurveObject() {}
 

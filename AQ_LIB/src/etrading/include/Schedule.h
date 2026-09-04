@@ -7,7 +7,7 @@
 #include "BondYields.h"
 #include "LabelValueBlock.h"
 #include "ScheduleValidation.h"
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "Cashflow.h"
 #include "DataProvider.h"
@@ -16,7 +16,7 @@
 namespace etrading
 {
 	
-	class Schedule : public IsLWOObject
+	class Schedule : public IsAQObject
     {
 	public:
 

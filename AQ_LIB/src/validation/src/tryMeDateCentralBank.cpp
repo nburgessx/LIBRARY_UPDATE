@@ -1,5 +1,5 @@
 #include "tryMeDateCentralBank.h"
-#include "LADateHelpers.h"
+#include "AQLDateHelpers.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "RecordMacros.h"
@@ -31,7 +31,7 @@ namespace validation
             file.write( "strictlyAfter", strictlyAfter );
         }
 
-        AQLDate ret = etrading::LADateHelpers::getNextCBDate( centralBankId, date, strictlyAfter );
+        AQLDate ret = etrading::AQLDateHelpers::getNextCBDate( centralBankId, date, strictlyAfter );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -63,7 +63,7 @@ namespace validation
             file.write( "strictlyAfter", strictlyAfter );
         }
 
-        AQLDate ret = etrading::LADateHelpers::getNextECBDate( date, strictlyAfter );
+        AQLDate ret = etrading::AQLDateHelpers::getNextECBDate( date, strictlyAfter );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -96,7 +96,7 @@ namespace validation
         AQLDate ecbDate = tryMeDateECB( date, false );
 
         //Get the swap start date based on the ECB date
-        AQLDate ret = etrading::LADateHelpers::getECBStartDate( ecbDate );
+        AQLDate ret = etrading::AQLDateHelpers::getECBStartDate( ecbDate );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -162,7 +162,7 @@ namespace validation
 		RECORD_INPUTS(asOfDate, n);
 
 		// Calculation
-		const AQLDate result = etrading::LADateHelpers::getNthECBMeetingDate(asOfDate, n);
+		const AQLDate result = etrading::AQLDateHelpers::getNthECBMeetingDate(asOfDate, n);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
@@ -183,7 +183,7 @@ namespace validation
 		RECORD_INPUTS(asOfDate, n);
 
 		// Calculation
-		const AQLDate result = etrading::LADateHelpers::getNthECBSwapStartDate(asOfDate, n);
+		const AQLDate result = etrading::AQLDateHelpers::getNthECBSwapStartDate(asOfDate, n);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
@@ -204,7 +204,7 @@ namespace validation
 		RECORD_INPUTS(asOfDate, n);
 
 		// Calculation
-		const AQLDate result = etrading::LADateHelpers::getNthECBSwapEndDate(asOfDate, n);
+		const AQLDate result = etrading::AQLDateHelpers::getNthECBSwapEndDate(asOfDate, n);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
@@ -224,7 +224,7 @@ namespace validation
 		RECORD_INPUTS(meetingDate);
 
 		// Calculation
-		const AQLDate result = etrading::LADateHelpers::getNextECBMeetingDate(meetingDate);
+		const AQLDate result = etrading::AQLDateHelpers::getNextECBMeetingDate(meetingDate);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
@@ -244,7 +244,7 @@ namespace validation
 		RECORD_INPUTS(swapStartDate);
 
 		// Calculation
-		const AQLDate result = etrading::LADateHelpers::getNextECBSwapStartDate(swapStartDate);
+		const AQLDate result = etrading::AQLDateHelpers::getNextECBSwapStartDate(swapStartDate);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
@@ -264,7 +264,7 @@ namespace validation
 		RECORD_INPUTS(swapEndDate);
 
 		// Calculation
-		const AQLDate result = etrading::LADateHelpers::getNextECBSwapEndDate(swapEndDate);
+		const AQLDate result = etrading::AQLDateHelpers::getNextECBSwapEndDate(swapEndDate);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);

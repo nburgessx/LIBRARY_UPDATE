@@ -223,10 +223,10 @@
     <Filter Include="include\CurveAnalytics\LACurveHelpers">
       <UniqueIdentifier>{990b79e6-2b69-4db9-a1ea-8f7f0c67d476}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\Dates\LADateHelpers">
+    <Filter Include="include\Dates\AQLDateHelpers">
       <UniqueIdentifier>{aa051f37-b242-4991-a5b4-5e274f63b9b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Dates\LADateHelpers">
+    <Filter Include="src\Dates\AQLDateHelpers">
       <UniqueIdentifier>{3afbe794-d699-4bc4-aa89-1e0d4514faa9}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Dates\DatesAndSchedules">
@@ -426,10 +426,10 @@
     <ClInclude Include="..\src\etrading\include\ExposedInterface.h">
       <Filter>include\LWOInfrastructure\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LWOCurve.h">
+    <ClInclude Include="..\src\etrading\include\AQOCurve.h">
       <Filter>include\LWOInfrastructure\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LWOCurveDayAdjustment.h">
+    <ClInclude Include="..\src\etrading\include\AQOCurveDayAdjustment.h">
       <Filter>include\LWOInfrastructure\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\MultiCurveDeltaRiskGenerator.h">
@@ -450,7 +450,7 @@
     <ClInclude Include="..\src\etrading\include\ParameterValidation.h">
       <Filter>include\Validation</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LWOUtilities.h">
+    <ClInclude Include="..\src\etrading\include\AQOUtilities.h">
       <Filter>include\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\CurveUtilities.h">
@@ -780,7 +780,7 @@
     <ClInclude Include="..\src\etrading\include\HasVariantMatrixAccess.h">
       <Filter>include\LWOInfrastructure\LWO</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\IsLWOObject.h">
+    <ClInclude Include="..\src\etrading\include\IsAQObject.h">
       <Filter>include\LWOInfrastructure\LWO</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\ObjectUtilities.h">
@@ -912,16 +912,16 @@
     <ClInclude Include="..\src\etrading\include\SurvivalPath.h">
       <Filter>include\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LACurveCalibrationHelpers.h">
+    <ClInclude Include="..\src\etrading\include\AQLCurveCalibrationHelpers.h">
       <Filter>include\CurveAnalytics\LACurveHelpers</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LACurveForwardRateHelpers.h">
+    <ClInclude Include="..\src\etrading\include\AQLCurveForwardRateHelpers.h">
       <Filter>include\CurveAnalytics\LACurveHelpers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\CurveCalibration.h">
       <Filter>include\CurveAnalytics\SingleCurveCalibration</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LACurveMarketDataHelpers.h">
+    <ClInclude Include="..\src\etrading\include\AQLCurveMarketDataHelpers.h">
       <Filter>include\CurveAnalytics\LACurveHelpers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\FuturesDates.h">
@@ -930,11 +930,11 @@
     <ClInclude Include="..\src\etrading\include\SwapSchedule.h">
       <Filter>include\Dates\DatesAndSchedules</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LADateHelpers.h">
-      <Filter>include\Dates\LADateHelpers</Filter>
+    <ClInclude Include="..\src\etrading\include\AQLDateHelpers.h">
+      <Filter>include\Dates\AQLDateHelpers</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LADateScheduleHelpers.h">
-      <Filter>include\Dates\LADateHelpers</Filter>
+    <ClInclude Include="..\src\etrading\include\AQLDateScheduleHelpers.h">
+      <Filter>include\Dates\AQLDateHelpers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\CurveInstrumentPricing.h">
       <Filter>include\CurveAnalytics\SingleCurveCalibration</Filter>
@@ -975,7 +975,7 @@
     <ClInclude Include="..\src\etrading\include\CurveEngine.h">
       <Filter>include\CurveAnalytics\CurveEngine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LACurvePricingObject.h">
+    <ClInclude Include="..\src\etrading\include\AQLCurvePricingObject.h">
       <Filter>include\CurveAnalytics\LACurveHelpers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\Swap.h">
@@ -984,10 +984,10 @@
     <ClInclude Include="..\src\etrading\include\Swap.h">
       <Filter>include\Swap\Pricing</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LAObjectPoolBase.h">
+    <ClInclude Include="..\src\etrading\include\AQLObjectPoolBase.h">
       <Filter>include\CurveAnalytics\AQLStaticData</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LAUpdateStaticDataManager.h">
+    <ClInclude Include="..\src\etrading\include\AQLUpdateStaticDataManager.h">
       <Filter>include\CurveAnalytics\AQLStaticData</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\OMPThreadManager.h">
@@ -1071,10 +1071,10 @@
     <ClInclude Include="..\src\etrading\include\InflationCurve.h">
       <Filter>include\Inflation</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LAUpdateCurveObject.h">
+    <ClInclude Include="..\src\etrading\include\AQLUpdateCurveObject.h">
       <Filter>include\CurveAnalytics\AQLStaticData</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\LAUpdateModelObject.h">
+    <ClInclude Include="..\src\etrading\include\AQLUpdateModelObject.h">
       <Filter>include\CurveAnalytics\AQLStaticData</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\SabrMarketData.h">
@@ -1202,16 +1202,16 @@
     <ClCompile Include="..\src\etrading\src\CurveBuildProperties.cpp">
       <Filter>src\LWOInfrastructure\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LWOCurveDayAdjustment.cpp">
+    <ClCompile Include="..\src\etrading\src\AQOCurveDayAdjustment.cpp">
       <Filter>src\LWOInfrastructure\Curves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\ExposedObject.cpp">
       <Filter>src\LWOInfrastructure\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LWOCurve.cpp">
+    <ClCompile Include="..\src\etrading\src\AQOCurve.cpp">
       <Filter>src\LWOInfrastructure\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LWOUtilities.cpp">
+    <ClCompile Include="..\src\etrading\src\AQOUtilities.cpp">
       <Filter>src\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\MultiCurveDeltaRiskGenerator.cpp">
@@ -1532,7 +1532,7 @@
     <ClCompile Include="..\src\etrading\src\ExampleObjects.cpp">
       <Filter>src\LWOInfrastructure\LWO</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\IsLWOObject.cpp">
+    <ClCompile Include="..\src\etrading\src\IsAQObject.cpp">
       <Filter>src\LWOInfrastructure\LWO</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\ObjectUtilities.cpp">
@@ -1661,23 +1661,23 @@
     <ClCompile Include="..\src\etrading\src\SurvivalPath.cpp">
       <Filter>src\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LACurveCalibrationHelpers.cpp">
+    <ClCompile Include="..\src\etrading\src\AQLCurveCalibrationHelpers.cpp">
       <Filter>src\CurveAnalytics\LACurveHelpers</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LACurveForwardRateHelpers.cpp">
+    <ClCompile Include="..\src\etrading\src\AQLCurveForwardRateHelpers.cpp">
       <Filter>src\CurveAnalytics\LACurveHelpers</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CurveCalibration.cpp">
       <Filter>src\CurveAnalytics\SingleCurveCalibration</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LACurveMarketDataHelpers.cpp">
+    <ClCompile Include="..\src\etrading\src\AQLCurveMarketDataHelpers.cpp">
       <Filter>src\CurveAnalytics\LACurveHelpers</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LADateHelpers.cpp">
-      <Filter>src\Dates\LADateHelpers</Filter>
+    <ClCompile Include="..\src\etrading\src\AQLDateHelpers.cpp">
+      <Filter>src\Dates\AQLDateHelpers</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LADateScheduleHelpers.cpp">
-      <Filter>src\Dates\LADateHelpers</Filter>
+    <ClCompile Include="..\src\etrading\src\AQLDateScheduleHelpers.cpp">
+      <Filter>src\Dates\AQLDateHelpers</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\SwapSchedule.cpp">
       <Filter>src\Dates\DatesAndSchedules</Filter>
@@ -1727,16 +1727,16 @@
     <ClCompile Include="..\src\etrading\src\CurveEngine.cpp">
       <Filter>src\CurveAnalytics\CurveEngine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LACurvePricingObject.cpp">
+    <ClCompile Include="..\src\etrading\src\AQLCurvePricingObject.cpp">
       <Filter>src\CurveAnalytics\LACurveHelpers</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CommonConstants.cpp">
       <Filter>src\Enums</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LAObjectPoolBase.cpp">
+    <ClCompile Include="..\src\etrading\src\AQLObjectPoolBase.cpp">
       <Filter>src\CurveAnalytics\AQLStaticData</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LAUpdateStaticDataManager.cpp">
+    <ClCompile Include="..\src\etrading\src\AQLUpdateStaticDataManager.cpp">
       <Filter>src\CurveAnalytics\AQLStaticData</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\OMPThreadManager.cpp">
@@ -1814,10 +1814,10 @@
     <ClCompile Include="..\src\etrading\src\InflationCurve.cpp">
       <Filter>src\Inflation</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LAUpdateCurveObject.cpp">
+    <ClCompile Include="..\src\etrading\src\AQLUpdateCurveObject.cpp">
       <Filter>src\CurveAnalytics\AQLStaticData</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\LAUpdateModelObject.cpp">
+    <ClCompile Include="..\src\etrading\src\AQLUpdateModelObject.cpp">
       <Filter>src\CurveAnalytics\AQLStaticData</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\SabrModel.cpp">

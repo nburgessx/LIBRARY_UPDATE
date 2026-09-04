@@ -2,7 +2,7 @@
 
 #include "tryMeLWOCurveCreateBasis.h"
 
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
@@ -11,8 +11,8 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "InterpolationParameters.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LACurveCalibrationHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLCurveCalibrationHelpers.h"
 #include "AQLInterpolationBase.h"
 #include "AQLSplineInterpolation.h"
 #include "AQLConstrainedSplineInterpolation.h"
@@ -20,7 +20,7 @@
 #include "AQLLinearInterpolation.h"
 #include "AQLStepInterpolation.h"
 #include "AQLCoreComponentManager.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "AQLPriceDataInterpolation.h"
 #include "EntityPoolUtilities.h"
 
@@ -29,7 +29,7 @@
 #include "Environment.h"
 #include "EnvironmentPool.h"
 #include "ObjectUtilities.h"
-#include "LWOCurve.h"
+#include "AQOCurve.h"
 #include "EnvironmentUtilities.h"
 #include "DateUtilities.h"
 #include "CurveResultsContainer.h"
@@ -137,7 +137,7 @@ namespace validation
         // ------------------------------------------
 
 		// 1. Load Static Data
-        etrading::LAUpdateStaticDataManager::loadStaticDataBasisCurve( etrading::getDataInstance(),
+        etrading::AQLUpdateStaticDataManager::loadStaticDataBasisCurve( etrading::getDataInstance(),
 																	   curveCollection,
 																	   staticDataTable,
 																	   basisRates,
@@ -149,7 +149,7 @@ namespace validation
 																	   moneyConv,
 																	   curveIndex );
 		// 2. Calibrate Curve
-		etrading::LAUpdateStaticDataManager::calibrateBasisCurve( etrading::getDataInstance(),
+		etrading::AQLUpdateStaticDataManager::calibrateBasisCurve( etrading::getDataInstance(),
 																  curveCollection,
 																  staticDataTable,
 																  basisConv );
@@ -211,7 +211,7 @@ namespace validation
 			    oisCompoundingMethod, busDayAdjustment, isLeg2 ?  leg2calendar : leg1calendar, {}, true );
 
         // call this paragraph of code if you wish to populate discount factors for every day
-        // this method retrieves 51 years of discount factors and places it in the LWOCurve
+        // this method retrieves 51 years of discount factors and places it in the AQOCurve
         boost::gregorian::date endDate  = asOfDate + boost::gregorian::years( 51 );
         auto numberOfdaysBetween        = boost::gregorian::date_period( asOfDate, endDate ).length().days();
         
@@ -224,7 +224,7 @@ namespace validation
             etrading::stepVector( 0.0, 51.0 / static_cast<double>( numberOfdaysBetween ), numberOfdaysBetween );
         
         // Calculate the discount factors using the Object Pool Curve Engine
-        auto massiveDFVector = etrading::LACurveForwardRateHelpers::getMultiDF( massiveYearFractionVector,
+        auto massiveDFVector = etrading::AQLCurveForwardRateHelpers::getMultiDF( massiveYearFractionVector,
                                                                            etrading::getDataInstance(),
                                                                            curveCollection,
                                                                            AQLString( "ACT/365" ),
@@ -233,7 +233,7 @@ namespace validation
                                                                            staticDataTable );
 
         // Set the LWO Curve; yearFractions, discountFactors and Curve build properties (cbp)
-        etrading::LWOCurve lwoCurve( newCurveName, massiveYearFractionVector, massiveDFVector, stdCurveBuildProperties );
+        etrading::AQOCurve lwoCurve( newCurveName, massiveYearFractionVector, massiveDFVector, stdCurveBuildProperties );
         
         // Get the Fixing Dates
         const auto& lwoFixingDates = lwoCurve.getDates();
@@ -251,7 +251,7 @@ namespace validation
 
         etrading::moveToCache( std::move( lwoCurve ) );
 
-        auto& default_env = etrading::getObjectStore<etrading::LWOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        auto& default_env = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( default_env.has( newCurveName ) )
         {
             AQLString ret = newCurveName.c_str();
@@ -264,7 +264,7 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Unable to create LWOCurve named %s" ) % newCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Unable to create AQOCurve named %s" ) % newCurveName.c_str() ).str().c_str() );
         }
 
         /*

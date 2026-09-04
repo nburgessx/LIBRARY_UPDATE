@@ -3,7 +3,7 @@
 #include "TypeHelpers.h"
 
 #include "DateUtilities.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CurveCalibrationData.h"
 #include "AQLDataMultiReference.h"
 #include "InitializeETrading.h"
@@ -27,10 +27,10 @@ namespace
 		AQLObjectPool& objPool = dataInstance->getObjectPool();
 		AQLString yieldName(curveCollectionID);
 
-        etrading::LACurvePricingObject& bYield = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance, yieldName);
+        etrading::AQLCurvePricingObject& bYield = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance, yieldName);
 
 		// get yield data pro
-		AQLString CurveIDTool = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollectionID;
+		AQLString CurveIDTool = etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollectionID;
 		const AQLObjectHolder ehCur = objPool.getObject(CurveIDTool);
 		CurveCalibrationData* curveCalibrationData = NULL;
 		if (!ehCur.isDefined())

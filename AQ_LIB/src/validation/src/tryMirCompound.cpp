@@ -1,5 +1,5 @@
 #include "tryMirCompound.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -97,7 +97,7 @@ namespace validation
         AQLString cal( calendar );
         if( calendar == AQLString( "" ) )
         {
-            cal = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( dataInstance, curveId ).getCalendar().convertToString();
+            cal = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID( dataInstance, curveId ).getCalendar().convertToString();
         }
 
         AQLString rollCon( etrading::getDefaultValueForEmptyString( rollConvention, AQLString( "ENDDATE" ) ) );
@@ -109,7 +109,7 @@ namespace validation
         DoubleVector ret;
         for( size_t i = 0; i < startDates.size(); i++ )
         {
-            ret[i] = etrading::LACurveForwardRateHelpers::compound( dataInstance,
+            ret[i] = etrading::AQLCurveForwardRateHelpers::compound( dataInstance,
                                                                curveId,
                                                                forecastCurve,
                                                                startDates[i],

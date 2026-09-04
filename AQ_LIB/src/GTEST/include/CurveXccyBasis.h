@@ -6,7 +6,7 @@
 
 namespace google_test
 {
-    // wrapper for LAUpdateStaticDataManager::setUpBasisCurve (used for Xccy basis)
+    // wrapper for AQLUpdateStaticDataManager::setUpBasisCurve (used for Xccy basis)
     class CurveXccyBasis
         : public virtual google_test::InitializeGoogleTest
         , public CurveAccessors

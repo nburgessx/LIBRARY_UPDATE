@@ -11,9 +11,9 @@
 #include "AQLCoreAutoPtr.h"
 #include "AQLPriceDataConvention.h"
 #include "AQLFunctionBase.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "AQLDataBasics.h"
-#include "LADateHelpers.h"
+#include "AQLDateHelpers.h"
 #include "AQLModelDynamicsCurve.h"
 
 #include "AQLMathYieldCurvePro.h"
@@ -429,8 +429,8 @@ public:
 						AQLString lterm = dynamic_cast<const AQLDataString&> ((_Left->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
 						AQLString rterm = dynamic_cast<const AQLDataString&> ((_Right->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
 						asof.setSystemDate();
-						ldate = etrading::LADateHelpers::getDate(asof, lterm, true);
-						rdate = etrading::LADateHelpers::getDate(asof, rterm, true);
+						ldate = etrading::AQLDateHelpers::getDate(asof, lterm, true);
+						rdate = etrading::AQLDateHelpers::getDate(asof, rterm, true);
 						return ldate < rdate;
 					}
 				}
@@ -441,8 +441,8 @@ public:
 			AQLString lterm = AQLPriceYieldGenerator::changeFRATermFormat(lterm_x);
 			AQLString rterm = AQLPriceYieldGenerator::changeFRATermFormat(rterm_x);
 			asof.setSystemDate();
-			ldate = etrading::LADateHelpers::getDate(asof, lterm, true);
-			rdate = etrading::LADateHelpers::getDate(asof, rterm, true);
+			ldate = etrading::AQLDateHelpers::getDate(asof, lterm, true);
+			rdate = etrading::AQLDateHelpers::getDate(asof, rterm, true);
 			return ldate < rdate;
 		}
 		else if(dataType != FUTURE && dataType != BOJ && dataType != FEDFUNDRATE && dataType != YIELD_TYPE_ARR_FUTURE)
@@ -474,15 +474,15 @@ public:
 					AQLString lsterm = dynamic_cast<const AQLDataString&> ( lsah->get() ).get();
 					AQLString rsterm = dynamic_cast<const AQLDataString&> ( rsah->get() ).get();
 					asof.setSystemDate();
-					ldate = etrading::LADateHelpers::getDate(asof, lsterm, true);
-					rdate = etrading::LADateHelpers::getDate(asof, rsterm, true);
+					ldate = etrading::AQLDateHelpers::getDate(asof, lsterm, true);
+					rdate = etrading::AQLDateHelpers::getDate(asof, rsterm, true);
 					return ldate < rdate;
 				}
 			}
 
 			asof.setSystemDate();
-			ldate = etrading::LADateHelpers::getDate(asof, lterm, true);
-			rdate = etrading::LADateHelpers::getDate(asof, rterm, true);
+			ldate = etrading::AQLDateHelpers::getDate(asof, lterm, true);
+			rdate = etrading::AQLDateHelpers::getDate(asof, rterm, true);
 			return ldate < rdate;
 		}
 

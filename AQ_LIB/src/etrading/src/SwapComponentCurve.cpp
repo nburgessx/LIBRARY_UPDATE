@@ -1,5 +1,5 @@
 #include "SwapComponentCurve.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "AQLMathDefine.h"
 #include "AQLInterpolationBase.h"
 #include "AQLPriceDataInterpolation.h"
@@ -22,8 +22,8 @@
 #include "AQLLinearSplineInterpolation.h"
 #include "AQLLinearMonotoneSplineInterpolation.h"
 #include "ConstantDeclarations.h"
-#include "LADateScheduleHelpers.h"
-#include "LADateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLDateHelpers.h"
 #include "ExceptionMacros.h"
 
 const int RATE_PRIORITY_PROXIMITY_DAY_TOLERANCE = 20;
@@ -329,7 +329,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 		{
 			roll_conv = ROLLCONV_NORMAL;
 		}
-		firstSwapDate = etrading::LADateHelpers::getDate(spotdate, term_str, sld, &cal, true, &roll_conv);
+		firstSwapDate = etrading::AQLDateHelpers::getDate(spotdate, term_str, sld, &cal, true, &roll_conv);
 	}
     // ------------------------------------------------------------
 		
@@ -418,7 +418,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 			freq_s_cpd[i] = freq_s_float[i];
 		}
 		
-		cpd_times_[i] = etrading::LADateHelpers::calcCompoundingTimes(freq_s_float[i], freq_s_cpd[i]);
+		cpd_times_[i] = etrading::AQLDateHelpers::calcCompoundingTimes(freq_s_float[i], freq_s_cpd[i]);
 
 		if (i == 0)
 		{
@@ -1124,7 +1124,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 						if (freq == LUNAR) roll_conv = ROLLCONV_LUNAR;
 						else if (eom) roll_conv = ROLLCONV_EOM;
 						else roll_conv = ROLLCONV_NORMAL;
-						AQLDate endDate = etrading::LADateHelpers::getDate(spotdate_l, term_str, sld, &cal, true, &roll_conv);
+						AQLDate endDate = etrading::AQLDateHelpers::getDate(spotdate_l, term_str, sld, &cal, true, &roll_conv);
 		
 						// Use the money market LIBOR rate as the first data point
 						insertSyntheticTensionPoints( dfResults_,
@@ -1300,7 +1300,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 		{
 			const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data_tenorswap[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			double rate = dynamic_cast<const AQLDataDouble &>((data_tenorswap[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-			AQLDate tmpDate = etrading::LADateHelpers::getDate(spotdate_s, strTerm, *pSld_tenorswap, pCal_tenorswap, true, &roll_conv_ts);
+			AQLDate tmpDate = etrading::AQLDateHelpers::getDate(spotdate_s, strTerm, *pSld_tenorswap, pCal_tenorswap, true, &roll_conv_ts);
 			double term = pDaycount_tenorswap->getTerm(spotdate_s, tmpDate);
 			b_t_grid.push_back(term);
 			if (isTimeInter)
@@ -1333,18 +1333,18 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 			else
 			{
 				const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((data_swap[i]->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
-				sdates_s[i] = etrading::LADateHelpers::getDate(spotdate_s, sterm_str, *sld_s[i], cal_s[i], true, &roll_conv_s[i]);
+				sdates_s[i] = etrading::AQLDateHelpers::getDate(spotdate_s, sterm_str, *sld_s[i], cal_s[i], true, &roll_conv_s[i]);
 				const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((data_swap[i]->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-				edates_s_unadjusted[i] = etrading::LADateHelpers::getDate(sdates_s[i], tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
-				edates_s[i] = etrading::LADateHelpers::getDate(sdates_s[i], tenor_str, *sld_s[i], cal_s[i], true, &roll_conv_s[i]);
+				edates_s_unadjusted[i] = etrading::AQLDateHelpers::getDate(sdates_s[i], tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+				edates_s[i] = etrading::AQLDateHelpers::getDate(sdates_s[i], tenor_str, *sld_s[i], cal_s[i], true, &roll_conv_s[i]);
 			}
 			date = edates_s[i];
 		}
 		else
 		{
 			const AQLString& term_str = etrading::getMaturityAsTermString( i, data_swap );
-			dates_s_unadjusted[i] = etrading::LADateHelpers::getDate(spotdate_s, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
-			dates_s[i] = etrading::LADateHelpers::getDate(spotdate_s, term_str, *sld_s[i], cal_s[i], true, &roll_conv_s[i]);
+			dates_s_unadjusted[i] = etrading::AQLDateHelpers::getDate(spotdate_s, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+			dates_s[i] = etrading::AQLDateHelpers::getDate(spotdate_s, term_str, *sld_s[i], cal_s[i], true, &roll_conv_s[i]);
 			date = dates_s[i];
 		}
 
@@ -1364,7 +1364,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 			if (freq_s_float[i] != baseFreq)
 			{
 				const AQLString& term_str_swap = dynamic_cast<const AQLDataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-				const AQLDate tmpDate = etrading::LADateHelpers::getDate(spotdate_s, term_str_swap, *pSld_tenorswap, pCal_tenorswap, true, &roll_conv_ts);
+				const AQLDate tmpDate = etrading::AQLDateHelpers::getDate(spotdate_s, term_str_swap, *pSld_tenorswap, pCal_tenorswap, true, &roll_conv_ts);
 				const double term_basis = pDaycount_tenorswap->getTerm(spotdate_s, tmpDate);
 				if (isTimeInter)
 				{
@@ -1534,7 +1534,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 			}
 
 			// Calculate fixing start dates by applying fixing lag
-			fixingStartDates_[i] = etrading::LADateScheduleHelpers::calcDatesWithLag( fixingStartDates_[i],
+			fixingStartDates_[i] = etrading::AQLDateScheduleHelpers::calcDatesWithLag( fixingStartDates_[i],
 																		           fixingLag,
 																		           *sld_s[i],
 																		           cal_s[i],
@@ -1542,7 +1542,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 																		           nullptr ); // This RollConv = Start, End, IMM, EOM or NULL
 
 			// fixing end dates are always a fixed term after the corresponding fixing start dates
-			fixingEndDates_[i] = etrading::LADateScheduleHelpers::getMultiDate( fixingStartDates_[i], refRateTerm, sld_s[i]->convertToString(), cal_s[i]->convertToString(), nullptr); // rollconvention* = nullptr
+			fixingEndDates_[i] = etrading::AQLDateScheduleHelpers::getMultiDate( fixingStartDates_[i], refRateTerm, sld_s[i]->convertToString(), cal_s[i]->convertToString(), nullptr); // rollconvention* = nullptr
 
 			for(size_t j = 0; j < fixingStartDates_[i].size(); ++j)
 			{
@@ -1618,10 +1618,10 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 			AQLPriceDataDayCount dc = *dc_s_float.front();
 			AQLPriceDataCalendar cal = *cal_s.front();
 			AQLPriceDataSlidingRule sl = *sld_s.front();
-			interpolationJoinDate_ = etrading::LADateScheduleHelpers::getDateFromTerm(lastFutureStartDate, fractionFromLastFutureStartToJoin, dc);
+			interpolationJoinDate_ = etrading::AQLDateScheduleHelpers::getDateFromTerm(lastFutureStartDate, fractionFromLastFutureStartToJoin, dc);
 			
 			// Make sure the join date is not a holiday
-			AQLDate adjustedJoinDate = etrading::LADateScheduleHelpers::getDate(interpolationJoinDate_, "0D", sl.convertToString(), cal.convertToString());
+			AQLDate adjustedJoinDate = etrading::AQLDateScheduleHelpers::getDate(interpolationJoinDate_, "0D", sl.convertToString(), cal.convertToString());
 			if (adjustedJoinDate != interpolationJoinDate_)
 			{
 				interpolationJoinDate_ = adjustedJoinDate;

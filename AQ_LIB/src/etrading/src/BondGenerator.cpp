@@ -12,7 +12,7 @@ namespace etrading
 	BondGenerator::BondGenerator( const std::string& objectName,
                                     const std::vector<std::string>& propertyKeys,
                                     const std::vector<TableInfo>& infoBlocks ) 
-											: IsLWOObject( objectName, BOND_GENERATOR ), 
+											: IsAQObject( objectName, BOND_GENERATOR ), 
 											  freeObject_( objectName )
 	{
 		// Create a FreeObject from each property label-value block, and concatenate to our FreeObject data member
@@ -35,7 +35,7 @@ namespace etrading
 	 * @param[in] freeObject    A freeObject constructed from the serialized data
 	 */
 	BondGenerator::BondGenerator( const std::string& objectName, const FreeObject& freeObject ) 
-											: IsLWOObject( objectName, BOND_GENERATOR ), 
+											: IsAQObject( objectName, BOND_GENERATOR ), 
 											  freeObject_( freeObject )
 	{
     }
@@ -43,7 +43,7 @@ namespace etrading
 	/* @brief Copy Constructor
 	 */
 	BondGenerator::BondGenerator( const BondGenerator& rhs )
-									: IsLWOObject( rhs.getRefToName(), BOND_GENERATOR ), 
+									: IsAQObject( rhs.getRefToName(), BOND_GENERATOR ), 
 									  freeObject_( rhs.freeObject_ )
 	{
 	}

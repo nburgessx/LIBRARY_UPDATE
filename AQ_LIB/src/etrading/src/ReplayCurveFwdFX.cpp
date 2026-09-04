@@ -2,7 +2,7 @@
 
 #include "ReplayCurveFwdFX.h"
 #include "ReadDataFile.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "InitializeETrading.h"
 
 namespace etrading
@@ -35,7 +35,7 @@ namespace etrading
         // 3. Build the Fwd FX Curve
         // -------------------------
         const bool checkStaticDataLoaded = true;
-        LAUpdateStaticDataManager::setUpFwdFXConstantCurve( InitializeETrading::instance( checkStaticDataLoaded ).dataInstance(),
+        AQLUpdateStaticDataManager::setUpFwdFXConstantCurve( InitializeETrading::instance( checkStaticDataLoaded ).dataInstance(),
                 curveID,
                 marketName,
                 fwdfxconstConv,

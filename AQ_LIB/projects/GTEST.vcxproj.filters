@@ -251,7 +251,7 @@
       <Filter>src\etrading\Infrastructure</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOCurve.cpp">
-      <Filter>src\etrading\Curves\LWOCurve</Filter>
+      <Filter>src\etrading\Curves\AQOCurve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestFixingTable.cpp">
       <Filter>src\etrading\Swaps\FixingTable</Filter>
@@ -482,7 +482,7 @@
       <Filter>src\etrading\Swaps\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestMeLWOCurveCalibrate.cpp">
-      <Filter>src\etrading\Curves\LWOCurve</Filter>
+      <Filter>src\etrading\Curves\AQOCurve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLiborOisBasisSwaps.cpp">
       <Filter>src\etrading\Swaps\Swaps</Filter>
@@ -626,7 +626,7 @@
       <Filter>src\etrading\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOCurveDiscountFactorsWithSpread.cpp">
-      <Filter>src\etrading\Curves\LWOCurve</Filter>
+      <Filter>src\etrading\Curves\AQOCurve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestRiskUtilities.cpp">
       <Filter>src\etrading\Risks</Filter>
@@ -926,7 +926,7 @@
     <Filter Include="src\etrading\Curves\StateVariableUtilities">
       <UniqueIdentifier>{5c408a99-dd4b-40c8-bdae-aa79b99551d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\Curves\LWOCurve">
+    <Filter Include="src\etrading\Curves\AQOCurve">
       <UniqueIdentifier>{855e7fe3-2d4c-4971-9d93-6045e105c913}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\etrading\Curves\CurveStreaming">

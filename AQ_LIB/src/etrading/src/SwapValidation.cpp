@@ -1,8 +1,8 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "AQLPriceDataCalendar.h"
 #include <cctype>
 #include "AQLMarketData.h"
@@ -68,14 +68,14 @@ namespace etrading
         if( !isMaturityInDateFormat )
         {
             // *** As a market convention, maturity date is NOT adjusted for holiday
-            AQ_REQUIRE( LADateScheduleHelpers::isValidDate( effectiveDate ), "Invalid Date: Unable to convert MaturityTenor to a date" )
-            maturityDate = LADateScheduleHelpers::getDate( effectiveDate,
+            AQ_REQUIRE( AQLDateScheduleHelpers::isValidDate( effectiveDate ), "Invalid Date: Unable to convert MaturityTenor to a date" )
+            maturityDate = AQLDateScheduleHelpers::getDate( effectiveDate,
                                                          maturityDateStr,		// maturity is Tenor
                                                          AQLString(),         // BusinessDayAdjustment is NO_CHANGE
                                                          AQLString());       // Calendar is NONE
         }
         
-        AQ_REQUIRE( LADateScheduleHelpers::isValidDate( maturityDate ), "Invalid Maturity Date " + maturityDateStr )
+        AQ_REQUIRE( AQLDateScheduleHelpers::isValidDate( maturityDate ), "Invalid Maturity Date " + maturityDateStr )
         return maturityDate;
     }
 

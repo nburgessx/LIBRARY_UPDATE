@@ -1,5 +1,5 @@
 #include "tryMeCurveDualBootstrap.h"
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
@@ -205,7 +205,7 @@ namespace validation
 			throw AQLCoreInvalidData("#Error: Tenor Basis Adjustment Rates column size must be 2", __FILE__, __LINE__);
 		}
 
-		etrading::LAUpdateStaticDataManager::setUpDualBootstrapCurve(etrading::getDataInstance(),
+		etrading::AQLUpdateStaticDataManager::setUpDualBootstrapCurve(etrading::getDataInstance(),
 													                      curveCollection,
 													                      curveName_db,
 													                      curveName_swap,

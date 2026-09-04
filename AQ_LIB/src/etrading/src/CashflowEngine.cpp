@@ -8,9 +8,9 @@
 #include "LabelValueBlock.h"
 
 #include "AQLDefinitions.h"							// AQLStringMatrix
-#include "LADateScheduleHelpers.h"					// validateDate()
+#include "AQLDateScheduleHelpers.h"					// validateDate()
 #include "AQLMathDateUtilities.h"					// getLADate( int excelDate )
-#include "LACurveForwardRateHelpers.h"				// getMultiSpotDiscountFactors
+#include "AQLCurveForwardRateHelpers.h"				// getMultiSpotDiscountFactors
 
 #include <boost/algorithm/string/predicate.hpp>		// boost::iequals
 #include <algorithm>								// for std::min() and std::max()
@@ -319,8 +319,8 @@ namespace etrading
 	void CashflowEngine::populateYieldCurveData()
 	{
 		// # build date schedule and bind to liability flows
-		AQ_REQUIRE( LADateScheduleHelpers::isValidDate( effectiveDate_ ), "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
-		AQ_REQUIRE( LADateScheduleHelpers::isValidDate( maturityDate_ ),  "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
+		AQ_REQUIRE( AQLDateScheduleHelpers::isValidDate( effectiveDate_ ), "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
+		AQ_REQUIRE( AQLDateScheduleHelpers::isValidDate( maturityDate_ ),  "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
 
 		// # portfolio projection always monthly
 		// # back stub
@@ -396,7 +396,7 @@ namespace etrading
 			AQLString calendar;
 			calendar = getDefaultCalendarForEmptyString( calendar, curveCollection );
 
-			currentTrancheCouponScheduleData.discountFactorRiskless_ = LACurveForwardRateHelpers::getMultiSpotDiscountFactors(   currentTrancheCouponScheduleData.paymentDate_,
+			currentTrancheCouponScheduleData.discountFactorRiskless_ = AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors(   currentTrancheCouponScheduleData.paymentDate_,
 																																 getDataInstance(),
 																																 curveCollection,
 																																 dayCount,

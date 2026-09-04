@@ -1,5 +1,5 @@
 //
-//  LACurvePricingObject.cpp
+//  AQLCurvePricingObject.cpp
 // This file used to be called LAMathYiel1Curve.cpp
 
 /*
@@ -21,10 +21,10 @@
 #endif
 
 // LA Includes
-#include "LACurvePricingObject.h"      // was #include "LACurvePricingObject.h"
-#include "LACurveForwardRateHelpers.h"  // was #include "LACurveForwardRateHelpers.h"
-#include "LADateHelpers.h"              // was #include "LADateHelpers.h"
-#include "LADateScheduleHelpers.h"      // was #include "LADateScheduleHelpers.h"
+#include "AQLCurvePricingObject.h"      // was #include "AQLCurvePricingObject.h"
+#include "AQLCurveForwardRateHelpers.h"  // was #include "AQLCurveForwardRateHelpers.h"
+#include "AQLDateHelpers.h"              // was #include "AQLDateHelpers.h"
+#include "AQLDateScheduleHelpers.h"      // was #include "AQLDateScheduleHelpers.h"
 
 // External Includes
 #include <cmath>
@@ -151,7 +151,7 @@ namespace
 			{
 				// Get the equivalent rate of each **non-past** accrual period. 
 				// The equivalent rate is obtained either through daily compounding over this period or finding the arithmetic average.
-				double equivalentRate = etrading::LACurveForwardRateHelpers::compound(dataInstance,
+				double equivalentRate = etrading::AQLCurveForwardRateHelpers::compound(dataInstance,
 																                 curveID,
 																                 foreCurveName,				// The forecast curve given by user is expected to be an OIS curve
 																                 floatAccrualDates[i-1],
@@ -187,7 +187,7 @@ namespace etrading
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Default Constructor
-	LACurvePricingObject::LACurvePricingObject()
+	AQLCurvePricingObject::AQLCurvePricingObject()
 		: AQLObject(), mCurveSuffix( ""), mCurveType( STD ), mpBasisCurveType( NULL )
 	{
 	}
@@ -198,7 +198,7 @@ namespace etrading
 	    @param[in] dataInstance pointer of AQLDataInstance
 
     */
-    LACurvePricingObject::LACurvePricingObject(AQLDataInstance* dataInstance, const AQLString *const pCurveType)
+    AQLCurvePricingObject::AQLCurvePricingObject(AQLDataInstance* dataInstance, const AQLString *const pCurveType)
 		: AQLObject(), mCurveSuffix(""), mCurveType(STD), mpBasisCurveType(NULL)
     {
 	    setDataInstance(dataInstance);
@@ -246,7 +246,7 @@ namespace etrading
 
 	    @param[in] curve original object
     */
-    LACurvePricingObject::LACurvePricingObject( const LACurvePricingObject& curve) : 
+    AQLCurvePricingObject::AQLCurvePricingObject( const AQLCurvePricingObject& curve) : 
         AQLObject(curve), mCurveSuffix(curve.mCurveSuffix), mCurveType(curve.mCurveType)
     {
 	    mpName		 = &getData(CALIBRATION_DATA_NAME);
@@ -302,7 +302,7 @@ namespace etrading
     /*!
         @brief destructor	
     */
-    LACurvePricingObject::~LACurvePricingObject()
+    AQLCurvePricingObject::~AQLCurvePricingObject()
     {
 	    delDFInterpolations();
 	    delFWDInterpolations();
@@ -321,7 +321,7 @@ namespace etrading
 	    @return EntityType
     */
     object_t	
-    LACurvePricingObject::getType(void) const
+    AQLCurvePricingObject::getType(void) const
     {
 	    return ENTITY_IRYIELDCURVE;
     }
@@ -333,7 +333,7 @@ namespace etrading
 			    false :this (inheriated) object doesn't have specified id object
     */
     bool
-    LACurvePricingObject::isTypeOf(object_t id) const
+    AQLCurvePricingObject::isTypeOf(object_t id) const
     {
 	    return (id == ENTITY_IRYIELDCURVE ? true : AQLObject::isTypeOf(id));
     }
@@ -344,7 +344,7 @@ namespace etrading
 	    @return name
     */
     const AQLDataString&	
-    LACurvePricingObject::getName() const	
+    AQLCurvePricingObject::getName() const	
     {
 	    return dynamic_cast<const AQLDataString&>(mpName->get());
     }
@@ -355,7 +355,7 @@ namespace etrading
 	    @return name
     */
     AQLDataString&	
-    LACurvePricingObject::getName()
+    AQLCurvePricingObject::getName()
     {
 	    return dynamic_cast<AQLDataString&>(mpName->get());
     }
@@ -366,7 +366,7 @@ namespace etrading
 	    @return Interpolation
     */
     const AQLPriceDataInterpolation&
-    LACurvePricingObject::getInterpolation() const	
+    AQLCurvePricingObject::getInterpolation() const	
     {
 	    return dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get());
     }
@@ -377,7 +377,7 @@ namespace etrading
 	    @return Interpolation
     */
     AQLPriceDataInterpolation&
-    LACurvePricingObject::getInterpolation() 
+    AQLCurvePricingObject::getInterpolation() 
     {
 	    return dynamic_cast<AQLPriceDataInterpolation&>(mpInter->get());
     }
@@ -389,7 +389,7 @@ namespace etrading
 	    @return Interpolation
     */
     const AQLPriceDataInterpolation&
-    LACurvePricingObject::getInterpolation(const AQLString &curveType) const	
+    AQLCurvePricingObject::getInterpolation(const AQLString &curveType) const	
     {
 	    return getCurveTypeInterpolation(curveType);
     }
@@ -401,7 +401,7 @@ namespace etrading
 	    @return Interpolation
     */
     AQLPriceDataInterpolation&
-    LACurvePricingObject::getInterpolation(const AQLString &curveType) 
+    AQLCurvePricingObject::getInterpolation(const AQLString &curveType) 
     {
 	    return getCurveTypeInterpolation(curveType);
     }
@@ -413,7 +413,7 @@ namespace etrading
 	    @return Interpolation
     */
     AQLPriceDataInterpolation&
-    LACurvePricingObject::getCurveTypeInterpolation(const AQLString &curveType) const 
+    AQLCurvePricingObject::getCurveTypeInterpolation(const AQLString &curveType) const 
     {
 	    map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(curveType);
 	    if (it != mDFInterMap.end())
@@ -434,7 +434,7 @@ namespace etrading
     */
 
     const AQLPriceDataDayCount&
-    LACurvePricingObject::getDayCount() const	
+    AQLCurvePricingObject::getDayCount() const	
     {
 	    return dynamic_cast<const AQLPriceDataDayCount&>(mpDayCount->get());
     }
@@ -445,7 +445,7 @@ namespace etrading
 	    @return DayCount Convension
     */
     AQLPriceDataDayCount&
-    LACurvePricingObject::getDayCount() 
+    AQLCurvePricingObject::getDayCount() 
     {
 	    return dynamic_cast<AQLPriceDataDayCount&>(mpDayCount->get());
     }
@@ -454,7 +454,7 @@ namespace etrading
         @brief get convention from yield curve data object
     */
     void 
-    LACurvePricingObject::getCurveConvention(AQLString& freq, 
+    AQLCurvePricingObject::getCurveConvention(AQLString& freq, 
 								       AQLPriceDataCalendar& cal, 
 								       AQLPriceDataSlidingRule& sld, 
 								       AQLPriceDataDayCount& dc, 
@@ -498,7 +498,7 @@ namespace etrading
         @brief get convention from yield curve data object
     */
     void 
-    LACurvePricingObject::getCurveConvention(AQLString& freq, 
+    AQLCurvePricingObject::getCurveConvention(AQLString& freq, 
 								       AQLPriceDataCalendar& cal, 
 								       AQLPriceDataSlidingRule& sld, 
 								       AQLPriceDataDayCount& dc, 
@@ -544,7 +544,7 @@ namespace etrading
 	    @return 
     */
     const AQLDataReference&
-    LACurvePricingObject::getYieldData() const
+    AQLCurvePricingObject::getYieldData() const
     {
 	    return dynamic_cast<const AQLDataReference&>(mpYieldData->get());
     }
@@ -554,67 +554,67 @@ namespace etrading
 	    @return 
     */
     AQLDataReference&
-    LACurvePricingObject::getYieldData()
+    AQLCurvePricingObject::getYieldData()
     {
 	    return dynamic_cast<AQLDataReference&>(mpYieldData->get());
     }
 
     const AQLPriceDataCalendar&
-    LACurvePricingObject::getCalendar() const
+    AQLCurvePricingObject::getCalendar() const
     {
 	    return dynamic_cast<const AQLPriceDataCalendar&>(mpCalendar->get());
     }
 
     AQLPriceDataCalendar&
-    LACurvePricingObject::getCalendar()
+    AQLCurvePricingObject::getCalendar()
     {
 	    return dynamic_cast<AQLPriceDataCalendar&>(mpCalendar->get());
     }
     const AQLPriceDataSlidingRule&
-    LACurvePricingObject::getSlidingRule() const
+    AQLCurvePricingObject::getSlidingRule() const
     {
 	    return dynamic_cast<const AQLPriceDataSlidingRule&>(mpSlidingRule->get());
     }
     AQLPriceDataSlidingRule&
-    LACurvePricingObject::getSlidingRule()
+    AQLCurvePricingObject::getSlidingRule()
     {
 	    return dynamic_cast<AQLPriceDataSlidingRule&>(mpSlidingRule->get());
     }
     const AQLDataString&
-    LACurvePricingObject::getFrequency() const
+    AQLCurvePricingObject::getFrequency() const
     {
 	    return dynamic_cast<const AQLDataString&>(mpFreq->get());
     }
     AQLDataString&
-    LACurvePricingObject::getFrequency()
+    AQLCurvePricingObject::getFrequency()
     {
 	    return dynamic_cast<AQLDataString&>(mpFreq->get());
     }
 
     const AQLDataString&
-    LACurvePricingObject::getDFInterpolationMethod() const
+    AQLCurvePricingObject::getDFInterpolationMethod() const
     {
 	    return dynamic_cast<const AQLDataString&>(mpValueToInterp->get());
     }
     AQLDataString&
-    LACurvePricingObject::getDFInterpolationMethod()
+    AQLCurvePricingObject::getDFInterpolationMethod()
     {
 	    return dynamic_cast<AQLDataString&>(mpValueToInterp->get());
     }
 
     const AQLDataString&
-    LACurvePricingObject::getDF2InterpolationMethod() const
+    AQLCurvePricingObject::getDF2InterpolationMethod() const
     {
 	    return dynamic_cast<const AQLDataString&>(mpValueToInterp2->get());
     }
     AQLDataString&
-    LACurvePricingObject::getDF2InterpolationMethod()
+    AQLCurvePricingObject::getDF2InterpolationMethod()
     {
 	    return dynamic_cast<AQLDataString&>(mpValueToInterp2->get());
     }
    
 
-    void LACurvePricingObject::analyzeLeg(
+    void AQLCurvePricingObject::analyzeLeg(
 	    const DateVector& dates,
 	    const AQLString& foreCurveName,
 	    const AQLString& dfCurveName,
@@ -691,7 +691,7 @@ namespace etrading
     }
 
     double
-    LACurvePricingObject::getZeroRate(const AQLDate& fromDate, const AQLDate& toDate, bool isFWDInter, bool useFwdData ) const
+    AQLCurvePricingObject::getZeroRate(const AQLDate& fromDate, const AQLDate& toDate, bool isFWDInter, bool useFwdData ) const
     {
 	
 	    const AQLObject& YieldData = getYieldData().get().get();
@@ -737,7 +737,7 @@ namespace etrading
     }
 
     double
-    LACurvePricingObject::getBasisZeroRate(const AQLDate& fromDate, const AQLDate& toDate) const
+    AQLCurvePricingObject::getBasisZeroRate(const AQLDate& fromDate, const AQLDate& toDate) const
     {
 	
 	    const AQLObject& YieldData = getYieldData().get().get();
@@ -787,7 +787,7 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getZeroRate(const AQLDate& fromDate,	const double term, bool isFWDInter, bool useFwdData ) const
+    AQLCurvePricingObject::getZeroRate(const AQLDate& fromDate,	const double term, bool isFWDInter, bool useFwdData ) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -839,7 +839,7 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getBasisZeroRate(const AQLDate& fromDate, const double term)const
+    AQLCurvePricingObject::getBasisZeroRate(const AQLDate& fromDate, const double term)const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -879,7 +879,7 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getZeroRate(const double term, bool isFWDInter) const
+    AQLCurvePricingObject::getZeroRate(const double term, bool isFWDInter) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -896,7 +896,7 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getBasisZeroRate(const double term) const
+    AQLCurvePricingObject::getBasisZeroRate(const double term) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -915,9 +915,9 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getZeroRate(const AQLDate& fromDate,	const AQLString& term_str, bool isFWDInter) const
+    AQLCurvePricingObject::getZeroRate(const AQLDate& fromDate,	const AQLString& term_str, bool isFWDInter) const
     {
-	    AQLDate toDate = LADateHelpers::getDate(fromDate, term_str, true);
+	    AQLDate toDate = AQLDateHelpers::getDate(fromDate, term_str, true);
 	    return getZeroRate(fromDate, toDate, isFWDInter);
     }
 
@@ -931,9 +931,9 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getBasisZeroRate(const AQLDate& fromDate, const AQLString& term_str) const
+    AQLCurvePricingObject::getBasisZeroRate(const AQLDate& fromDate, const AQLString& term_str) const
     {
-	    AQLDate toDate = LADateHelpers::getDate(fromDate, term_str, true);
+	    AQLDate toDate = AQLDateHelpers::getDate(fromDate, term_str, true);
 	    return getBasisZeroRate(fromDate, toDate);
     }
 
@@ -946,7 +946,7 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getZeroRate(const AQLString& term_str, bool isFWDInter) const
+    AQLCurvePricingObject::getZeroRate(const AQLString& term_str, bool isFWDInter) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -962,7 +962,7 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getBasisZeroRate(const AQLString& term_str) const
+    AQLCurvePricingObject::getBasisZeroRate(const AQLString& term_str) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -978,7 +978,7 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getParRate(const AQLString& term_str, AQLString foreCurveName, AQLString dfCurveName, bool isFWDInter, const AQLString* roll_convention)
+    AQLCurvePricingObject::getParRate(const AQLString& term_str, AQLString foreCurveName, AQLString dfCurveName, bool isFWDInter, const AQLString* roll_convention)
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -994,7 +994,7 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getAnnuity(const DateVector& Dates) const
+    AQLCurvePricingObject::getAnnuity(const DateVector& Dates) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -1055,7 +1055,7 @@ namespace etrading
 	    @return Annuity
     */
     double
-    LACurvePricingObject::getAnnuity( const DateVector& accrualDates, const DateVector& paymentDates, const AQLPriceDataDayCount& daycount, const AQLDate settlementDate, const bool deductAccruedInterest, const bool isCleanPrice ) const
+    AQLCurvePricingObject::getAnnuity( const DateVector& accrualDates, const DateVector& paymentDates, const AQLPriceDataDayCount& daycount, const AQLDate settlementDate, const bool deductAccruedInterest, const bool isCleanPrice ) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -1163,7 +1163,7 @@ namespace etrading
 	    @return ParRate
     */
     double
-    LACurvePricingObject::getParRate(const DateVector& dates, const DateVector& dates_float, AQLString foreCurveName, AQLString dfCurveName, bool isFWDInter)
+    AQLCurvePricingObject::getParRate(const DateVector& dates, const DateVector& dates_float, AQLString foreCurveName, AQLString dfCurveName, bool isFWDInter)
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -1250,7 +1250,7 @@ namespace etrading
     }
 
     double
-    LACurvePricingObject::getParCompoundSpread(
+    AQLCurvePricingObject::getParCompoundSpread(
 	    const DateVector& dates,
 	    const DateVector& dates_Cmp,
 	    AQLString foreCurveName,
@@ -1318,7 +1318,7 @@ namespace etrading
     }
 
     double
-    LACurvePricingObject::getParBasis(
+    AQLCurvePricingObject::getParBasis(
 	    const DateVector& dates,
 	    const DateVector& dates_USD,
 	    AQLString modifiedDiscountName,
@@ -1354,12 +1354,12 @@ namespace etrading
 
 	    // valuate PV of the USD leg.
 
-	    LACurvePricingObject* usdCurve = nullptr;
+	    AQLCurvePricingObject* usdCurve = nullptr;
 	    {
 		    const AQLObjectHolder objHolder = getDataInstance()->getObjectPool().getObject("YIELD_SDE_USD_IR");
 		    if (objHolder.isDefined())
 		    {
-			    usdCurve = &dynamic_cast<LACurvePricingObject&>(
+			    usdCurve = &dynamic_cast<AQLCurvePricingObject&>(
 				    getDataInstance()->getObjectPool().getObject("YIELD_SDE_USD_IR", ENCHKTYPE_ISDEFINED).get());
 		    }
 	    }
@@ -1389,7 +1389,7 @@ namespace etrading
     /*
     * @brief	Calculate stub rate of a defined stub period
     */
-    double LACurvePricingObject::getStubRate( const DateVector& fixingDates,
+    double AQLCurvePricingObject::getStubRate( const DateVector& fixingDates,
 									    const AQLStringVector& curveNames,
 									    const AQLStringVector& curveTenors,
 									    const DoubleVector& tenorCurveFixings,									
@@ -1531,7 +1531,7 @@ namespace etrading
 		    {
 			    // When we use a user-specified curve, we should use the corresponding curve tenor to calculate the
 			    // stub end date instead of using the old stub end date
-			    stubEnd = LADateHelpers::getDate(stubStart, curveTenors[idx], sr, &cal, true, NULL);
+			    stubEnd = AQLDateHelpers::getDate(stubStart, curveTenors[idx], sr, &cal, true, NULL);
 
 			    // Set the right curve to use
 			    setCurveType(useCurveNameTemp);
@@ -1542,7 +1542,7 @@ namespace etrading
 			    if (isFwdInter && !isCurveTypeOIS)
 			    {
 				    AQLPriceDataDayCount dc;
-				    if (!LACurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, useCurveNameTemp, dc))
+				    if (!AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, useCurveNameTemp, dc))
 				    {
 					    throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!",__FILE__,__LINE__);
 				    }
@@ -1588,8 +1588,8 @@ namespace etrading
 		    }
 
 		    // Pick the curves to interpolate from
-		    AQLDate firstTenorDate = LADateHelpers::getDate(stubStart, curveTenors.at(0), sr, &cal, true, NULL);
-		    AQLDate lastTenorDate = LADateHelpers::getDate(stubStart, curveTenors.at(curveTenors.size() - 1), sr, &cal, true, NULL);
+		    AQLDate firstTenorDate = AQLDateHelpers::getDate(stubStart, curveTenors.at(0), sr, &cal, true, NULL);
+		    AQLDate lastTenorDate = AQLDateHelpers::getDate(stubStart, curveTenors.at(curveTenors.size() - 1), sr, &cal, true, NULL);
 		    if (stubEnd == firstTenorDate)
 		    {
 			    lowerIndex = 0;
@@ -1611,7 +1611,7 @@ namespace etrading
 			    for(size_t i = 0; i < curveCount; ++i)
 			    {
 				    AQLString curveTenor = curveTenors.at(i);
-				    AQLDate tenorEnd = LADateHelpers::getDate(stubStart, curveTenor, sr, &cal, true, NULL);
+				    AQLDate tenorEnd = AQLDateHelpers::getDate(stubStart, curveTenor, sr, &cal, true, NULL);
 
 				    if (tenorEnd < stubEnd)
 				    {
@@ -1644,8 +1644,8 @@ namespace etrading
 			    AQLDate nearbyDate;
 			    if (useNearbyCurve)
 			    {
-				    AQLDate lowerToleranceDate = LADateHelpers::getDate(lowerDate, toleranceTenor, sr, &cal, true  /*forward add date*/ , NULL);
-				    AQLDate upperToleranceDate = LADateHelpers::getDate(upperDate, toleranceTenor, sr, &cal, false /*backward add date*/, NULL);
+				    AQLDate lowerToleranceDate = AQLDateHelpers::getDate(lowerDate, toleranceTenor, sr, &cal, true  /*forward add date*/ , NULL);
+				    AQLDate upperToleranceDate = AQLDateHelpers::getDate(upperDate, toleranceTenor, sr, &cal, false /*backward add date*/, NULL);
 						
 				    if (lowerToleranceDate >= stubEnd)
 				    {
@@ -1681,7 +1681,7 @@ namespace etrading
                         if (isFwdInter && !isCurveTypeOIS )
 					    {						
 						    AQLPriceDataDayCount dc;
-						    if (!LACurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveName, dc))
+						    if (!AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveName, dc))
 						    {
 							    throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!",__FILE__,__LINE__);
 						    }
@@ -1750,7 +1750,7 @@ namespace etrading
 
 						    AQLPriceDataDayCount dc;
 						    setCurveType(curveNames[lowerIndex]);
-						    if (!LACurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveNames[lowerIndex], dc))
+						    if (!AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveNames[lowerIndex], dc))
 						    {
 							    throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!",__FILE__,__LINE__);
 						    }
@@ -1765,7 +1765,7 @@ namespace etrading
 
 						    // get upper rate
 						    setCurveType(curveNames[upperIndex]);
-						    if (!LACurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveNames[upperIndex], dc))
+						    if (!AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveNames[upperIndex], dc))
 						    {
 							    throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!",__FILE__,__LINE__);
 						    }
@@ -1845,7 +1845,7 @@ namespace etrading
         *
 	    */
     void 
-    LACurvePricingObject::calculateSwapPriceAndRisk( const bool              isFixedRatePayerSwap,      
+    AQLCurvePricingObject::calculateSwapPriceAndRisk( const bool              isFixedRatePayerSwap,      
                                                const double            notional,                  
                                                const double            fixedRate,                 
                                                const double            floatSpreadInBasisPoints,  
@@ -1999,10 +1999,10 @@ namespace etrading
 	    if(isOIS)
 	    {
 	        std::string curveID(getName().convertToString().getCString());
-	        size_t pos = curveID.find(LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
+	        size_t pos = curveID.find(AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
 	        if ( pos != std::string::npos)
 	        {
-	    	    size_t len = std::string(LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
+	    	    size_t len = std::string(AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
 	    	    curveID = curveID.substr(pos + len, curveID.length() - len - pos - 1); 
 	        }
 
@@ -2226,7 +2226,7 @@ namespace etrading
     }
 
     double 
-    LACurvePricingObject::getParRate( const DateVector& fixedAccrualDates,
+    AQLCurvePricingObject::getParRate( const DateVector& fixedAccrualDates,
                                 const DateVector& fixedPaymentDates,
                                 const DateVector& floatFixingDates,
                                 const DateVector& floatAccrualDates,
@@ -2296,10 +2296,10 @@ namespace etrading
 	    if (isOIS)
 	    {		
 		    std::string curveID(getName().convertToString().getCString());
-		    size_t pos = curveID.find(LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
+		    size_t pos = curveID.find(AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
 		    if ( pos != std::string::npos)
 		    {
-			    size_t len = std::string(LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
+			    size_t len = std::string(AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
 			    curveID = curveID.substr(pos + len, curveID.length() - len - pos - 1); 
 		    }
 
@@ -2466,7 +2466,7 @@ namespace etrading
     }
 
     double 
-    LACurvePricingObject::getSwapPV( const bool&            isFixedRatePayerSwap,
+    AQLCurvePricingObject::getSwapPV( const bool&            isFixedRatePayerSwap,
                                const double&          notional,
                                const double&          fixedRate,
                                const double&          floatSpreadInBasisPoints,
@@ -2571,10 +2571,10 @@ namespace etrading
 	    if(isOIS)
 	    {
 		    std::string curveID(getName().convertToString().getCString());
-		    size_t pos = curveID.find(LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
+		    size_t pos = curveID.find(AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX);
 		    if ( pos != std::string::npos)
 		    {
-			    size_t len = std::string(LACurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
+			    size_t len = std::string(AQLCurveForwardRateHelpers::YIELD_CURVE_NAME_PREFIX).length();
 			    curveID = curveID.substr(pos + len, curveID.length() - len - pos - 1); 
 		    }
 
@@ -2691,7 +2691,7 @@ namespace etrading
     }
 
     double 
-    LACurvePricingObject::getSwapDV01( bool                   isFixedRatePayerSwap,
+    AQLCurvePricingObject::getSwapDV01( bool                   isFixedRatePayerSwap,
                                  double                 notional,
                                  double                 fixedRate,
                                  double                 floatSpreadInBasisPoints,
@@ -2747,7 +2747,7 @@ namespace etrading
     }
 
     double 
-    LACurvePricingObject::getSwapPV01( const bool&            isFixedRatePayerSwap,
+    AQLCurvePricingObject::getSwapPV01( const bool&            isFixedRatePayerSwap,
                                  const double&          notional,
                                  const DateVector&      fixedAccrualDates,
                                  const DateVector&      fixedPaymentDates,
@@ -2790,7 +2790,7 @@ namespace etrading
     }
 
     double 
-    LACurvePricingObject::getAssetSwapSpread( const double&          bondPrice,
+    AQLCurvePricingObject::getAssetSwapSpread( const double&          bondPrice,
                                         const double&          fixedRate,
                                         const DateVector&      fixedAccrualDates,
                                         const DateVector&      fixedPaymentDates,
@@ -3014,12 +3014,12 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getParRate(const AQLDate& fromDate, const AQLDate& toDate, 
+    AQLCurvePricingObject::getParRate(const AQLDate& fromDate, const AQLDate& toDate, 
 						       const AQLDate* firstStubDate, const AQLDate* lastStubDate, const int* pday, AQLString foreCurveName, 
 						       AQLString dfCurveName, bool isFWDInter, const AQLString* roll_convention)
     {
 	    DateVector out;
-	    LADateHelpers::generateSchedule(fromDate, toDate, getFrequency().get(),
+	    AQLDateHelpers::generateSchedule(fromDate, toDate, getFrequency().get(),
 							    true, firstStubDate, lastStubDate, pday, out, &getSlidingRule(), &getCalendar(), true, roll_convention);
 	    if(out.front() != fromDate)
 		    out.insert(out.begin(), fromDate);
@@ -3047,7 +3047,7 @@ namespace etrading
 		    else if (accessary_forecast == AQLString("1M")) freq_float = MONTHLY;
 		    else throw AQLCoreInvalidData("getParRate failed. Check accessary of forecast curve!!",__FILE__,__LINE__);
 
-		    LADateHelpers::generateSchedule(fromDate, toDate, freq_float,
+		    AQLDateHelpers::generateSchedule(fromDate, toDate, freq_float,
 								    true, firstStubDate, lastStubDate, pday, dates_float, &getSlidingRule(), &getCalendar(), true, roll_convention);
 		    if(dates_float.front() != fromDate)
 			    dates_float.insert(dates_float.begin(), fromDate);
@@ -3068,11 +3068,11 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getParRate(const AQLDate& fromDate, const AQLString& term_str, 
+    AQLCurvePricingObject::getParRate(const AQLDate& fromDate, const AQLString& term_str, 
 						       const AQLDate* firstStubDate, const AQLDate* lastStubDate, const int* pday, 
 						       AQLString foreCurveName, AQLString dfCurveName, bool isFWDInter, const AQLString* roll_convention)
     {
-	    AQLDate toDate = LADateHelpers::getDate(fromDate, term_str, true, roll_convention);
+	    AQLDate toDate = AQLDateHelpers::getDate(fromDate, term_str, true, roll_convention);
 	    return getParRate(fromDate, toDate, firstStubDate, lastStubDate, pday, foreCurveName, dfCurveName, isFWDInter, roll_convention);
     }
 
@@ -3091,7 +3091,7 @@ namespace etrading
 	*  @returns	The calculated discount factor.
 	*/
     double        
-    LACurvePricingObject::getDF(const AQLDate& fromDate, const AQLDate& toDate) const
+    AQLCurvePricingObject::getDF(const AQLDate& fromDate, const AQLDate& toDate) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&>((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -3131,7 +3131,7 @@ namespace etrading
 	*  @returns	The calculated discount factor.
 	*/
     double        
-    LACurvePricingObject::getBasisDF(const AQLDate& fromDate, const AQLDate& toDate ) const
+    AQLCurvePricingObject::getBasisDF(const AQLDate& fromDate, const AQLDate& toDate ) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&>((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -3175,7 +3175,7 @@ namespace etrading
     */
 
     double        
-    LACurvePricingObject::getDF(const AQLDate& fromDate, const double& term) const
+    AQLCurvePricingObject::getDF(const AQLDate& fromDate, const double& term) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -3210,7 +3210,7 @@ namespace etrading
     }
 
     double        
-    LACurvePricingObject::getBasisDF(const AQLDate& fromDate, const double& term) const
+    AQLCurvePricingObject::getBasisDF(const AQLDate& fromDate, const double& term) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -3248,7 +3248,7 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getDF(const double term, const DayCount* pdc) const
+    AQLCurvePricingObject::getDF(const double term, const DayCount* pdc) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 
@@ -3317,7 +3317,7 @@ namespace etrading
     */
 
     double
-    LACurvePricingObject::getBasisDF(const double term, const DayCount* pdc) const
+    AQLCurvePricingObject::getBasisDF(const double term, const DayCount* pdc) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 
@@ -3399,7 +3399,7 @@ namespace etrading
     */
 
     void
-    LACurvePricingObject::getRawDFs(DoubleArray& terms, DoubleArray& dfs) const
+    AQLCurvePricingObject::getRawDFs(DoubleArray& terms, DoubleArray& dfs) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const DoubleArray& _terms = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS + mCurveSuffix, ISNOTNULL)).get()).get();
@@ -3413,7 +3413,7 @@ namespace etrading
 	           Also set extra interpolation paramters needed for linear-spline interpolation et al
     */
     void
-    LACurvePricingObject::setValuesToInterpolator( const AQLString &curveType, const DoubleArray &index, const DoubleArray &value ) const
+    AQLCurvePricingObject::setValuesToInterpolator( const AQLString &curveType, const DoubleArray &index, const DoubleArray &value ) const
     {	
 	    AQLPriceDataInterpolation* pInterpolationAttr;
 	    std::map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(curveType);
@@ -3445,7 +3445,7 @@ namespace etrading
 	           Also set extra interpolation paramters needed for linear-spline interpolation et al
     */
     void 
-    LACurvePricingObject::setValuesToInterpolator( AQLPriceDataInterpolation* pInter, const AQLString &curveType, const DoubleArray &index, const DoubleArray &value ) const
+    AQLCurvePricingObject::setValuesToInterpolator( AQLPriceDataInterpolation* pInter, const AQLString &curveType, const DoubleArray &index, const DoubleArray &value ) const
     {
         // Linear-Spline only works with the STD / Basis Yield Curve
     	
@@ -3479,7 +3479,7 @@ namespace etrading
 
     */
     void
-    LACurvePricingObject::setUpInterpolation() const
+    AQLCurvePricingObject::setUpInterpolation() const
     {
 
 	    const AQLString interpmethod = getDFInterpolationMethod().get();
@@ -3654,7 +3654,7 @@ namespace etrading
 
     */
     void
-    LACurvePricingObject::setCurveType(const AQLString &curveType)
+    AQLCurvePricingObject::setCurveType(const AQLString &curveType)
     {
 	    if (curveType == mCurveType)
 	    {
@@ -3679,7 +3679,7 @@ namespace etrading
 	    @param[in] interpolation	Interpolation used by the active curve
     */
     void
-    LACurvePricingObject::setCurveNameAndInterpolation(const AQLString &curveName, const AQLString &interpolation)
+    AQLCurvePricingObject::setCurveNameAndInterpolation(const AQLString &curveName, const AQLString &interpolation)
     {
 	    setCurveType(curveName);
 	    setInterpolation(interpolation);
@@ -3692,7 +3692,7 @@ namespace etrading
 
     */
     void
-    LACurvePricingObject::setBasisCurveType(const AQLString &basisCurveType)
+    AQLCurvePricingObject::setBasisCurveType(const AQLString &basisCurveType)
     {
 	    if (mpBasisCurveType != NULL && basisCurveType == *mpBasisCurveType)
 	    {
@@ -3710,7 +3710,7 @@ namespace etrading
 
     */
     AQLString 
-    LACurvePricingObject::getCurveType(void) const 
+    AQLCurvePricingObject::getCurveType(void) const 
     {
 	    return mCurveType;
     }
@@ -3725,7 +3725,7 @@ namespace etrading
 
     */
     const AQLInterpolationBase &
-    LACurvePricingObject::getDFInterpolation(const AQLString *pCurveType) const
+    AQLCurvePricingObject::getDFInterpolation(const AQLString *pCurveType) const
     {
 	    AQLString curveType("");
 	    AQLString suffix("");
@@ -3774,7 +3774,7 @@ namespace etrading
 
     */
     const AQLInterpolationBase &
-    LACurvePricingObject::getForwardsInterpolation(const AQLString *pCurveType) const
+    AQLCurvePricingObject::getForwardsInterpolation(const AQLString *pCurveType) const
     {
 	    AQLString curveType("");
 	    AQLString suffix("");
@@ -3825,7 +3825,7 @@ namespace etrading
 	    @param[in] pCurveType discount factor curve name
     */
     const AQLInterpolationBase &
-    LACurvePricingObject::getBasisDFInterpolation() const
+    AQLCurvePricingObject::getBasisDFInterpolation() const
     {
 	    const AQLDataHolder *dh = &getYieldData().get().getData(IR_CALIBRATION_DATA_DFS2, NOCHECK);
 	    if (dh->isDefined() && !dh->isNull())
@@ -3867,7 +3867,7 @@ namespace etrading
 
     */
     void
-    LACurvePricingObject::delDFInterpolations()
+    AQLCurvePricingObject::delDFInterpolations()
     {
 	    map<AQLString, AQLPriceDataInterpolation *>::iterator it = mDFInterMap.begin();
 	    while (it != mDFInterMap.end())
@@ -3883,7 +3883,7 @@ namespace etrading
 	    @param[in] curve	Name of the curve
 
     */
-    void LACurvePricingObject::delDFInterpolationsByCurve(const AQLString& curve)
+    void AQLCurvePricingObject::delDFInterpolationsByCurve(const AQLString& curve)
     {
 	    map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(curve);
 	    //if (it != mDFInterMap.end())
@@ -3906,7 +3906,7 @@ namespace etrading
 
     */
     void
-    LACurvePricingObject::addDFInterpolation(const AQLString &curveType) const
+    AQLCurvePricingObject::addDFInterpolation(const AQLString &curveType) const
     {
 	    map<AQLString, AQLPriceDataInterpolation *>::iterator it = mDFInterMap.find( curveType );
 	    if ( it != mDFInterMap.end() )
@@ -3933,15 +3933,15 @@ namespace etrading
     */
 
     //double        
-    //LACurvePricingObject::getDF(const AQLDate& fromDate, const AQLString& term_str) const
+    //AQLCurvePricingObject::getDF(const AQLDate& fromDate, const AQLString& term_str) const
     //{
-    //	AQLDate toDate = LADateHelpers::getDate(fromDate, term_str, true);
+    //	AQLDate toDate = AQLDateHelpers::getDate(fromDate, term_str, true);
     //	return getDF(fromDate, toDate);
     //}
 
-    //double LACurvePricingObject::getDF(const AQLDate& fromDate, const AQLString& term_str, AQLString& bdc, AQLString& cal) const
+    //double AQLCurvePricingObject::getDF(const AQLDate& fromDate, const AQLString& term_str, AQLString& bdc, AQLString& cal) const
     //20161207 - Fixed on default values
-    double LACurvePricingObject::getDF(const AQLDate& fromDate, const AQLString& term_str, AQLString bdc, AQLString cal) const
+    double AQLCurvePricingObject::getDF(const AQLDate& fromDate, const AQLString& term_str, AQLString bdc, AQLString cal) const
     {
 
         AQLDate toDate = AQLDate();
@@ -3958,7 +3958,7 @@ namespace etrading
             AQLPriceDataSlidingRule attrBusinessDayAdjustment;
             attrBusinessDayAdjustment.convertFromString(bdc);
 
-            toDate = LADateHelpers::getDate( fromDate, 
+            toDate = AQLDateHelpers::getDate( fromDate, 
                                                    term_str, 
                                                    attrBusinessDayAdjustment,   // SlidingRule or BusinessDayAdjustment
                                                    &attrCalendar,
@@ -3967,16 +3967,16 @@ namespace etrading
         }
         else
         {
-            toDate = LADateHelpers::getDate(fromDate, term_str, true);
+            toDate = AQLDateHelpers::getDate(fromDate, term_str, true);
         }
 
 	    return getDF(fromDate, toDate);
     }
 
     double        
-    LACurvePricingObject::getBasisDF(const AQLDate& fromDate, const AQLString& term_str) const
+    AQLCurvePricingObject::getBasisDF(const AQLDate& fromDate, const AQLString& term_str) const
     {
-	    AQLDate toDate = LADateHelpers::getDate(fromDate, term_str, true);
+	    AQLDate toDate = AQLDateHelpers::getDate(fromDate, term_str, true);
 	    return getBasisDF(fromDate, toDate);
     }
 
@@ -3989,9 +3989,9 @@ namespace etrading
 
 	    @return DiscountFactor
     */
-    //double LACurvePricingObject::getDF(const AQLString& term_str, AQLString& bdc, AQLString& cal) const
+    //double AQLCurvePricingObject::getDF(const AQLString& term_str, AQLString& bdc, AQLString& cal) const
     //20161207 - Fixed compiler failure on default value 
-    double LACurvePricingObject::getDF(const AQLString& term_str, AQLString bdc, AQLString cal) const
+    double AQLCurvePricingObject::getDF(const AQLString& term_str, AQLString bdc, AQLString cal) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -4000,7 +4000,7 @@ namespace etrading
     }
 
     double
-    LACurvePricingObject::getBasisDF(const AQLString& term_str) const
+    AQLCurvePricingObject::getBasisDF(const AQLString& term_str) const
     {
 	    const AQLObject& YieldData = getYieldData().get().get();
 	    const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -4021,7 +4021,7 @@ namespace etrading
 
     */
     void 
-    LACurvePricingObject::getBaseForwardRate(const AQLString &curveType, DoubleArray &terms, DoubleMatrix &termsMat, DoubleArray &taus, DoubleArray &rates, double& joinDateAsDouble, vector<DateVector> *pDateMat_out, vector<DateVector> *pDateMat_in, const bool & useForwardData) const
+    AQLCurvePricingObject::getBaseForwardRate(const AQLString &curveType, DoubleArray &terms, DoubleMatrix &termsMat, DoubleArray &taus, DoubleArray &rates, double& joinDateAsDouble, vector<DateVector> *pDateMat_out, vector<DateVector> *pDateMat_in, const bool & useForwardData) const
     {
 	    terms.clear();
 	    termsMat.clear();
@@ -4064,11 +4064,11 @@ namespace etrading
 	    else
 	    {
 		    fwd_datesmtx.resize(2);
-		    LADateHelpers::convertToDateGrid(asofDate, fwd_termsmtx[0], fwd_datesmtx[0]);
+		    AQLDateHelpers::convertToDateGrid(asofDate, fwd_termsmtx[0], fwd_datesmtx[0]);
 		    DoubleArray s_fwdtermsmtx_1 = fwd_termsmtx[1];
 		    sort(s_fwdtermsmtx_1.begin(), s_fwdtermsmtx_1.end());
 		    DateVector tmpDates;
-		    LADateHelpers::convertToDateGrid(asofDate, s_fwdtermsmtx_1, tmpDates);
+		    AQLDateHelpers::convertToDateGrid(asofDate, s_fwdtermsmtx_1, tmpDates);
 		    unsigned int pos;
 		    for (unsigned int i = 0; i < fwd_termsmtx[1].size(); ++i)
 		    {
@@ -4128,7 +4128,7 @@ namespace etrading
 
     */
     void
-    LACurvePricingObject::getBaseForwardRate(const AQLString &curveType, DoubleArray &terms, DoubleMatrix &termsMat, DoubleArray &taus, DoubleArray &rates, vector<DateVector> *pDateMat_out, vector<DateVector> *pDateMat_in, const bool & useForwardData) const
+    AQLCurvePricingObject::getBaseForwardRate(const AQLString &curveType, DoubleArray &terms, DoubleMatrix &termsMat, DoubleArray &taus, DoubleArray &rates, vector<DateVector> *pDateMat_out, vector<DateVector> *pDateMat_in, const bool & useForwardData) const
     {
 	    double dummyJoinDateAsDouble;
 	    getBaseForwardRate(curveType, terms, termsMat, taus, rates, dummyJoinDateAsDouble, pDateMat_out, pDateMat_in, useForwardData);
@@ -4146,7 +4146,7 @@ namespace etrading
 
     */
     void 
-    LACurvePricingObject::getAdjForwardRate(const AQLString &curveType, const AQLPriceDataDayCount &dc, DoubleArray &terms, DoubleMatrix &termsMat, 
+    AQLCurvePricingObject::getAdjForwardRate(const AQLString &curveType, const AQLPriceDataDayCount &dc, DoubleArray &terms, DoubleMatrix &termsMat, 
 								      DoubleArray &taus, DoubleArray &rates, DateMatrix *pDateMat_in) const
     {
 	    vector<DateVector> dateMat;
@@ -4183,10 +4183,10 @@ namespace etrading
 	    @return	pointer of this class
     */
     AQLObject* 
-    LACurvePricingObject::clone() const
+    AQLCurvePricingObject::clone() const
     {
         try {
-    	    LACurvePricingObject*	pCurve = new LACurvePricingObject(*this);
+    	    AQLCurvePricingObject*	pCurve = new AQLCurvePricingObject(*this);
     	    return pCurve;
         }
         catch (bad_alloc & e){
@@ -4196,7 +4196,7 @@ namespace etrading
 
 
     AQLMathPathYieldCurve
-    LACurvePricingObject::getCurve(double t, DayCount dc) const
+    AQLCurvePricingObject::getCurve(double t, DayCount dc) const
     {
         return AQLMathPathYieldCurve(this, t, dc);
     }
@@ -4212,7 +4212,7 @@ namespace etrading
     */
 
     void
-    LACurvePricingObject::setInterpolation(
+    AQLCurvePricingObject::setInterpolation(
 	    AQLInterpolationBase* a, const AQLString& name)
     {
 	    dynamic_cast<AQLPriceDataInterpolation*>(&(
@@ -4224,7 +4224,7 @@ namespace etrading
 	    @param[in] name name of Interpolation 
     */
     void
-    LACurvePricingObject::setInterpolation(const AQLString& name)
+    AQLCurvePricingObject::setInterpolation(const AQLString& name)
     {
 	    dynamic_cast<AQLPriceDataInterpolation*>(&(
 		    getData(CALIBRATION_DATA_INTERPOLATION).get()))->setMethod(name);
@@ -4236,7 +4236,7 @@ namespace etrading
 	    @param[in] dataName name of Data
     */
     void                
-    LACurvePricingObject::remove(
+    AQLCurvePricingObject::remove(
 	    const AQLString& dataName)
     {
 	    if (dataName == CALIBRATION_DATA_NAME
@@ -4255,7 +4255,7 @@ namespace etrading
     }
 
     void               
-    LACurvePricingObject::reset(void)
+    AQLCurvePricingObject::reset(void)
     {
 	    clear();
 	    mpName		 = &add(CALIBRATION_DATA_NAME);
@@ -4289,7 +4289,7 @@ namespace etrading
 	    @return Reference of this object
     */
     AQLObject&
-    LACurvePricingObject::copy(
+    AQLCurvePricingObject::copy(
 	    const AQLObject& e)
     {
 	    if (this == &e) return *this;
@@ -4297,7 +4297,7 @@ namespace etrading
 	    AQLObject::copy(e);
 	    if (!e.isTypeOf(ENTITY_IRYIELDCURVE))
 	    {
-		    AQLString err = "Assignement error for LACurvePricingObject : from ";
+		    AQLString err = "Assignement error for AQLCurvePricingObject : from ";
 		    err += AQLString(e.getType());
 		    throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	    }
@@ -4328,7 +4328,7 @@ namespace etrading
 
     */
     AQLDataHolder&
-    LACurvePricingObject::add(const AQLString& name)
+    AQLCurvePricingObject::add(const AQLString& name)
     {
 	    AQLDataInstance* dataInstance = getDataInstance();
 	    AQLPriceDataManager& dm = dataInstance->getDataMaster();
@@ -4338,7 +4338,7 @@ namespace etrading
 
 
     const RateConvention
-    LACurvePricingObject::setRC(AQLString Freq)
+    AQLCurvePricingObject::setRC(AQLString Freq)
     {
 	    Freq.toUpper();
 	    if(Freq == SIMPLE || Freq == LUNAR)
@@ -4361,7 +4361,7 @@ namespace etrading
     }
 
     unsigned int 
-    LACurvePricingObject::setSpanFromFrequency(const AQLString& freq )
+    AQLCurvePricingObject::setSpanFromFrequency(const AQLString& freq )
     {
         if (freq == ANNUAL) return 12;
 	    else if (freq == SEMI_ANNUAL) return 6;
@@ -4375,15 +4375,15 @@ namespace etrading
     }
 
     double 
-    LACurvePricingObject::getBasisSwapValue
+    AQLCurvePricingObject::getBasisSwapValue
     (const AQLDate& valueDate, const AQLDate& startDate, const AQLString& term, double basis, 
      bool isPrincipal, const AQLString& frequency, const AQLPriceDataDayCount& daycount, 
       const AQLString& forecastCurveID, const AQLString& discountCurveID, double firstFixingRate, 
       bool isEOMRoll, bool isFRN)
     {
-	    AQLDate endDate = LADateHelpers::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
+	    AQLDate endDate = AQLDateHelpers::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
         DateVector payDates;
-	    LADateHelpers::generateSchedule(startDate, endDate, frequency, true, NULL, NULL, 0, 
+	    AQLDateHelpers::generateSchedule(startDate, endDate, frequency, true, NULL, NULL, 0, 
 		    payDates, &getSlidingRule(), &getCalendar());
     
 	    if (isEOMRoll)
@@ -4433,7 +4433,7 @@ namespace etrading
 				    else if (frequency == SEMI_ANNUAL) indexTerm = "6M";
 				    else if (frequency == QUARTERLY) indexTerm = "3M";
 				    else if (frequency == MONTHLY) indexTerm = "1M";
-				    AQLDate calcEndDate = LADateHelpers::getDate(payDates[i-1], indexTerm, getSlidingRule(), &getCalendar(), true);
+				    AQLDate calcEndDate = AQLDateHelpers::getDate(payDates[i-1], indexTerm, getSlidingRule(), &getCalendar(), true);
 				    rates[i] = getZeroRate(payDates[i-1], calcEndDate);
 			    }
 			    else
@@ -4463,15 +4463,15 @@ namespace etrading
     }
 
     double 
-    LACurvePricingObject::getCurBasisSwapValue
-    (const LACurvePricingObject& yc, const AQLDate& valueDate, const AQLDate& startDate, const AQLString& term, 
+    AQLCurvePricingObject::getCurBasisSwapValue
+    (const AQLCurvePricingObject& yc, const AQLDate& valueDate, const AQLDate& startDate, const AQLString& term, 
      const AQLString& frequency, const AQLPriceDataDayCount& daycount, const AQLString& forecastCurveID, 
      const AQLString& discountCurveID, bool isEOMRoll, double firstFixingAmount, double firstFixingRate)
     {
-	    AQLDate endDate = LADateHelpers::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
+	    AQLDate endDate = AQLDateHelpers::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
 
 	    DateVector payDates;
-	    LADateHelpers::generateSchedule(startDate, endDate, frequency, true, NULL, NULL, 0, 
+	    AQLDateHelpers::generateSchedule(startDate, endDate, frequency, true, NULL, NULL, 0, 
 		    payDates, &getSlidingRule(), &getCalendar());
 
 	    if (isEOMRoll)
@@ -4554,7 +4554,7 @@ namespace etrading
     */
 
     const AQLPriceDataDayCount&
-    LACurvePricingObject::getDayCount(const AQLString &curveType) const	
+    AQLCurvePricingObject::getDayCount(const AQLString &curveType) const	
     {
 	    map<AQLString, AQLPriceDataDayCount *>::const_iterator it = mDayCountMap.find(curveType);
 	    if (it != mDayCountMap.end())
@@ -4574,7 +4574,7 @@ namespace etrading
 	    @return DayCount Convension
     */
     AQLPriceDataDayCount&
-    LACurvePricingObject::getDayCount(const AQLString &curveType) 
+    AQLCurvePricingObject::getDayCount(const AQLString &curveType) 
     {
 	    map<AQLString, AQLPriceDataDayCount *>::const_iterator it = mDayCountMap.find(curveType);
 	    if (it != mDayCountMap.end())
@@ -4595,7 +4595,7 @@ namespace etrading
     */
 
     const AQLPriceDataDayCount&
-    LACurvePricingObject::getDayCountFromYieldData(const AQLString &curveType) const
+    AQLCurvePricingObject::getDayCountFromYieldData(const AQLString &curveType) const
     {
 	    AQLString suffix = "";
 	    if (curveType != STD) suffix = "_" + curveType;
@@ -4608,7 +4608,7 @@ namespace etrading
 
     */
     void
-    LACurvePricingObject::delDayCounts()
+    AQLCurvePricingObject::delDayCounts()
     {
 	    map<AQLString, AQLPriceDataDayCount *>::iterator it = mDayCountMap.begin();
 	    while (it != mDayCountMap.end())
@@ -4624,7 +4624,7 @@ namespace etrading
 	    @param[in] curve	Name of the curve
 
     */
-    void LACurvePricingObject::delDayCountsByCurve(const AQLString& curve)
+    void AQLCurvePricingObject::delDayCountsByCurve(const AQLString& curve)
     {
 	    map<AQLString, AQLPriceDataDayCount *>::const_iterator it = mDayCountMap.find(curve);
 	    //if (it != mDayCountMap.end())
@@ -4651,7 +4651,7 @@ namespace etrading
 						      When false, calculates forwards using forward data directly when isFWDInter is set to TRUE
     */
     const AQLInterpolationBase &
-    LACurvePricingObject::getFWDInterpolation(const AQLString *pCurveType, const bool & useFwdData) const
+    AQLCurvePricingObject::getFWDInterpolation(const AQLString *pCurveType, const bool & useFwdData) const
     {
 	    DoubleArray terms;
 	    DoubleMatrix termsMat;
@@ -4702,7 +4702,7 @@ namespace etrading
 
     */
     void
-    LACurvePricingObject::addFWDInterpolation(const AQLString &curveType) const
+    AQLCurvePricingObject::addFWDInterpolation(const AQLString &curveType) const
     {
 	    map<AQLString, AQLPriceDataInterpolation *>::iterator it = mFWDInterMap.find( curveType );
 	    if ( it != mFWDInterMap.end() )
@@ -4722,7 +4722,7 @@ namespace etrading
 
     */
     void
-    LACurvePricingObject::delFWDInterpolations()
+    AQLCurvePricingObject::delFWDInterpolations()
     {
 	    map<AQLString, AQLPriceDataInterpolation *>::iterator it = mFWDInterMap.begin();
 	    while (it != mFWDInterMap.end())
@@ -4738,7 +4738,7 @@ namespace etrading
 	    @param[in] curve	Name of the curve
 
     */
-    void LACurvePricingObject::delFWDInterpolationsByCurve(const AQLString& curve)
+    void AQLCurvePricingObject::delFWDInterpolationsByCurve(const AQLString& curve)
     {
 	    map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mFWDInterMap.find(curve);
 	    //if (it != mFWDInterMap.end())
@@ -4759,7 +4759,7 @@ namespace etrading
 	    @param[in] curve	Name of the curve
 
     */
-    void LACurvePricingObject::deleteCurveDataByCurveName(const AQLString& curveName)
+    void AQLCurvePricingObject::deleteCurveDataByCurveName(const AQLString& curveName)
     {
 	    delDFInterpolationsByCurve(curveName);
 	    delFWDInterpolationsByCurve(curveName);
@@ -4771,7 +4771,7 @@ namespace etrading
 
     */
     int
-    LACurvePricingObject::getYieldDataVersion() const
+    AQLCurvePricingObject::getYieldDataVersion() const
     {
 	    const AQLObject& yieldData = getYieldData().get().get();
 	    int version = yieldData.getModel();
@@ -4779,7 +4779,7 @@ namespace etrading
     }
 
     bool
-    LACurvePricingObject::operator==(const LACurvePricingObject& a) const
+    AQLCurvePricingObject::operator==(const AQLCurvePricingObject& a) const
     {
 	    return getYieldData().get().getName() == a.getYieldData().get().getName()
 		    && getCurveType() == a.getCurveType();
@@ -4788,7 +4788,7 @@ namespace etrading
     /////////////// AQLMathPathYieldCurve /////////////////////
     
     // Default constructor
-    AQLMathPathYieldCurve::AQLMathPathYieldCurve(const LACurvePricingObject* yc, double t, DayCount dc)
+    AQLMathPathYieldCurve::AQLMathPathYieldCurve(const AQLCurvePricingObject* yc, double t, DayCount dc)
         : AQLRatesPathElementCurve(t), mpYC(yc), mDC(dc)
     {
     }

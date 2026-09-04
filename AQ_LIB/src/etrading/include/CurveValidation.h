@@ -4,7 +4,7 @@
 #include "AQLDataInstance.h"
 #include <boost/lexical_cast.hpp>
 #include "LabelValueBlock.h"
-#include "LACurveCalibrationHelpers.h"
+#include "AQLCurveCalibrationHelpers.h"
 #include <vector>
 
 using etrading::LabelValueBlock;

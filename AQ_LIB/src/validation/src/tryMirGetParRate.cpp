@@ -1,7 +1,7 @@
 #include "tryMirGetParRate.h"
 
 #include "CurveInstrumentPricing.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -9,7 +9,7 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "StructuredExceptionHandler.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 
 namespace validation
 {
@@ -347,7 +347,7 @@ namespace validation
             rollCon = &rollConvention;
         }
 
-        DateVector datevec = etrading::LADateScheduleHelpers::generateSchedule( fromDt,
+        DateVector datevec = etrading::AQLDateScheduleHelpers::generateSchedule( fromDt,
                                                                        toDt,
                                                                        freq,
                                                                        slidingR,
@@ -365,7 +365,7 @@ namespace validation
 
         // Get par rate based on the given dates
         // Note that the sliding rule from user input is not passed to the core function, in the core getParRate function the slidingRule is default as NO_CHANGE
-        double ret = etrading::LACurveForwardRateHelpers::getParRate( datevec,
+        double ret = etrading::AQLCurveForwardRateHelpers::getParRate( datevec,
                                                                  dataInstance,
                                                                  curveId,
                                                                  dayC,

@@ -4,14 +4,14 @@
 #include <vector>
 
 #include "LegGenerator.h"
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "CoreEnumerations.h"
 
 namespace etrading
 {
 
-    class SwapGenerator : public IsLWOObject 
+    class SwapGenerator : public IsAQObject 
     {
 	public:
 		SwapGenerator(const std::string& instanceName, const LegGenerator& leg1, const LegGenerator& leg2);

@@ -27,7 +27,7 @@ namespace etrading
     	const etrading::CurveTenorEnum curveTenor = an enum denoting the curve tenor (cfr. CoreEnumerations.h)
     */
     class FixingTable
-        : public TableDateDouble, // isLWOObject is inherited via TableDateDouble
+        : public TableDateDouble, // isAQObject is inherited via TableDateDouble
           public HasVariantMatrixAccess
     {
     public:

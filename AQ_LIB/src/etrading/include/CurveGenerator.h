@@ -13,7 +13,7 @@
 
 #include <unordered_map>
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "FreeObject.h"
 #include "Variant.h"
@@ -25,7 +25,7 @@ namespace etrading
 {
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, VariantMatrix>  TableInfo;
 
-    class CurveGenerator : public IsLWOObject
+    class CurveGenerator : public IsAQObject
     {
 	public:
 		/* @brief Main Constructor

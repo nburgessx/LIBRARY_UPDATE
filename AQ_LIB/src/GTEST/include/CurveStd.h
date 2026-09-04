@@ -7,7 +7,7 @@
 
 namespace google_test
 {
-    // wrapper for LAUpdateStaticDataManager::setUpSwapCurve
+    // wrapper for AQLUpdateStaticDataManager::setUpSwapCurve
     class CurveStd
         : public virtual google_test::InitializeGoogleTest
         , public CurveAccessors

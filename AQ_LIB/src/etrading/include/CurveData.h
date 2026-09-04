@@ -10,7 +10,7 @@
 #include "Cacheable.h"
 #include "CoreEnumerations.h"
 #include "ETradingException.h"
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "HasVariantMatrixAccess.h"
 #include "SchemaObject.h"
 #include "AQLCoreTemplateType.h"
@@ -21,7 +21,7 @@ namespace etrading
 {
 
     class CurveData : 
-        public IsLWOObject, 
+        public IsAQObject, 
         public HasConstInstance<CurveTenorEnum>, 
         public HasVariantMatrixAccess
     {

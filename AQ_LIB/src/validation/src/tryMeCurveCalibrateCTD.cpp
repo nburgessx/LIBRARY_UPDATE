@@ -2,7 +2,7 @@
 
 #include "tryMeCurveCalibrateCTD.h"
 
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
@@ -54,7 +54,7 @@ namespace validation
 			throw AQLCoreInvalidData( "#Error: No collateral curves are given. ", __FILE__, __LINE__ );
         }
 				
-        LAUpdateStaticDataManager::setUpCheapestToDeliverCurve(etrading::getDataInstance(),
+        AQLUpdateStaticDataManager::setUpCheapestToDeliverCurve(etrading::getDataInstance(),
 														   curveCollection, 
 														   curveName, 
 														   curveIndex, 

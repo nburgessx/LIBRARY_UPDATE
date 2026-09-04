@@ -5,7 +5,7 @@
 #pragma once
 
 #include "AQLObject.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 using namespace etrading;
 
 

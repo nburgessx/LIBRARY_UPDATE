@@ -1,5 +1,5 @@
 #include "OISComponentCurve.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "AQLMathDefine.h"
 #include "AQLInterpolationBase.h"
 #include "AQLPriceDataInterpolation.h"
@@ -18,7 +18,7 @@
 #include "AQLLinearInterpolation.h"
 #include "ConstantDeclarations.h"
 #include "CurveCalibration.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 
 #include <memory>
 
@@ -253,9 +253,9 @@ void OISComponentCurve::initialise()
 		const AQLPriceDataCalendar* cal  = &dynamic_cast<const AQLPriceDataCalendar&> ((data_swap[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 		const AQLPriceDataSlidingRule* sld  = &dynamic_cast<const AQLPriceDataSlidingRule&> ((data_swap[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
 		
-		AQLDate date = etrading::LADateHelpers::getDate(spotDate_, term_str, *sld, cal, true, &roll_conv);
+		AQLDate date = etrading::AQLDateHelpers::getDate(spotDate_, term_str, *sld, cal, true, &roll_conv);
 		double term = dc_act365.getTerm(spotDate_, date);
-		AQLDate date1Y = etrading::LADateHelpers::getDate(spotDate_, "1Y", *sld, cal, true, &roll_conv);
+		AQLDate date1Y = etrading::AQLDateHelpers::getDate(spotDate_, "1Y", *sld, cal, true, &roll_conv);
 		double term1Y = dc_act365.getTerm(spotDate_, date1Y);
 
 		if (size_mpc_swaps > 0)
@@ -486,7 +486,7 @@ void OISComponentCurve::initialise()
 
 			// End date of the last short term swap
 			const AQLString& term_str = dynamic_cast<const AQLDataString&> ((data_swap_curvefront.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get());
-			AQLDate lastSwapEndDate = etrading::LADateHelpers::getDate(spotDate_, term_str, sld, &cal, true, &roll_conv);
+			AQLDate lastSwapEndDate = etrading::AQLDateHelpers::getDate(spotDate_, term_str, sld, &cal, true, &roll_conv);
 
 			double lastYield = stateVariable_rates_.back();
 			double lastShortSwapTerm = stateVariable_grid_.back();
@@ -762,8 +762,8 @@ void OISComponentCurve::initialise()
 			roll_conv = ROLLCONV_NORMAL;
 		}
 
-		AQLDate date_unadjusted = etrading::LADateHelpers::getDate(spotDate_, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
-		AQLDate swapEndDate = etrading::LADateHelpers::getDate(spotDate_, term_str, *sld, cal, true, &roll_conv);
+		AQLDate date_unadjusted = etrading::AQLDateHelpers::getDate(spotDate_, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+		AQLDate swapEndDate = etrading::AQLDateHelpers::getDate(spotDate_, term_str, *sld, cal, true, &roll_conv);
 		if (
 			( ((size_mpc_swaps || shortTermSwapSize) && swapEndDate < shortterm_date) 
 			|| (!size_mpc_swaps && i == 0) 
@@ -873,7 +873,7 @@ void OISComponentCurve::initialise()
 			else roll_conv_s = ROLLCONV_NORMAL;
 
 			// scheduling libor swap
-			const AQLDate date_s_unadjusted = etrading::LADateHelpers::getDate(spotDate_, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+			const AQLDate date_s_unadjusted = etrading::AQLDateHelpers::getDate(spotDate_, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 			terms_grid_s.clear();
 			terms_interval_s.clear();
 			dates_s.clear();
@@ -930,7 +930,7 @@ void OISComponentCurve::initialise()
 			}
 			else
 			{
-				tempFixingEndDates = etrading::LADateScheduleHelpers::getMultiDate(tempFixingStartDates, refRateTerm, sld->convertToString(), cal->convertToString(), nullptr); // rollconvention* = nullptr
+				tempFixingEndDates = etrading::AQLDateScheduleHelpers::getMultiDate(tempFixingStartDates, refRateTerm, sld->convertToString(), cal->convertToString(), nullptr); // rollconvention* = nullptr
 			}
 
 			DoubleVector tempFixingTaus;

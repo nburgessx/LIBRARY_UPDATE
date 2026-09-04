@@ -3,13 +3,13 @@
 
 #include "HedgeCurveEngine.h"
 #include "ObjectUtilities.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "CommonConstants.h"
 #include "InitializeETrading.h"
 
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
-#include "LACurvePricingObject.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
+#include "AQLCurvePricingObject.h"
 #include "CurveCalibrationData.h"
 #include "AQLCoreComponentManager.h"
 #include "AQLDefinitions.h"
@@ -62,7 +62,7 @@ namespace
 			resetLag += 'D';
 		}
 
-		AQLDate effectiveDate = etrading::LADateScheduleHelpers::getDate( asOfDate, resetLag, businessDayAdjust, calendar );
+		AQLDate effectiveDate = etrading::AQLDateScheduleHelpers::getDate( asOfDate, resetLag, businessDayAdjust, calendar );
 		return effectiveDate;
 	}
 }
@@ -119,7 +119,7 @@ namespace etrading
 		const LabelValueBlock marketDataPropertiesLVB = lwoHedgeCurveMarketData->toLabelValueBlock( GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES );
 		const std::string marketDataAsOfDate          = marketDataPropertiesLVB.getCompulsoryValue( "AsOfDate" );
 
-		AQLDate asOfDate( LADateScheduleHelpers::getLADate( marketDataAsOfDate.c_str() ) );
+		AQLDate asOfDate( AQLDateScheduleHelpers::getLADate( marketDataAsOfDate.c_str() ) );
 		AQLDate effectiveDate = getSwapEffectiveDateFromCurve( lwoHedgeCurveGenerator, asOfDate );
 
 		/* 
@@ -145,7 +145,7 @@ namespace etrading
             tradeDateKeys[1] = IRS_KEY::MATURITY_DATE;
 
             StandardStringVector tradeDateValues(2);
-            tradeDateValues[0] = AQ_TO_STRING_FROM_INT( LADateScheduleHelpers::getExcelDate(effectiveDate) );
+            tradeDateValues[0] = AQ_TO_STRING_FROM_INT( AQLDateScheduleHelpers::getExcelDate(effectiveDate) );
             tradeDateValues[1] = swapTenor.c_str();
 
             repriceSwapExpressionLVB_ = LabelValueBlock( repriceSwapExpressionLVB_, tradeDateKeys, tradeDateValues );

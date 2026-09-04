@@ -1,5 +1,5 @@
 //
-//  LACurveMarketDataHelpers.h
+//  AQLCurveMarketDataHelpers.h
 //  This file was previous called YieldCurveMarketUti1s.h and before that AQLMarketData.h
 //
 
@@ -11,7 +11,7 @@
 #include "AQLDataMultiReference.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataCalendar.h"
-#include "LADateHelpers.h"
+#include "AQLDateHelpers.h"
 #include "AQLPriceDataDayCount.h"
 #include "AQLDefinitions.h"
 #include "AQLDefinitionsRisk.h"
@@ -27,7 +27,7 @@
     @brief  Market data util class   
 */
 
-class LACurveMarketDataHelpers
+class AQLCurveMarketDataHelpers
 {
 public:
 		
@@ -48,12 +48,12 @@ private:
 //friend class AQLCoreDataService;
 
 	// constructor
-	LACurveMarketDataHelpers(void);
+	AQLCurveMarketDataHelpers(void);
 	// destructor
-	~LACurveMarketDataHelpers(void);
+	~AQLCurveMarketDataHelpers(void);
 	// copy constructor
-	LACurveMarketDataHelpers(const LACurveMarketDataHelpers &rhs);
-	LACurveMarketDataHelpers &operator=(const LACurveMarketDataHelpers &rhs);
+	AQLCurveMarketDataHelpers(const AQLCurveMarketDataHelpers &rhs);
+	AQLCurveMarketDataHelpers &operator=(const AQLCurveMarketDataHelpers &rhs);
 	
 };
 

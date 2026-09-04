@@ -1,13 +1,13 @@
 #include "FloatLeg.h"
 #include "FloatCashflow.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CurveInstrumentPricing.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "CurveBuildDefaults.h"
-#include "LWOUtilities.h"
-#include "LADateScheduleHelpers.h"
+#include "AQOUtilities.h"
+#include "AQLDateScheduleHelpers.h"
 #include "ConvexityModel.h"
 
 namespace etrading
@@ -870,7 +870,7 @@ namespace etrading
 
 				AQLString crvFreqTenor = validateCurveAndGetCurveFrequency(curveCollection, forecastCurve.c_str());
 
-				AQLDate fixingEndDate = LADateScheduleHelpers::getDate(fixingDate, crvFreqTenor, toString(fixingBusinessDayAdj).c_str(), fixingCalendar.c_str());
+				AQLDate fixingEndDate = AQLDateScheduleHelpers::getDate(fixingDate, crvFreqTenor, toString(fixingBusinessDayAdj).c_str(), fixingCalendar.c_str());
 
 				// get floatRate from the curve
 				const double unadjustedFwdRate = getCurveForwardRatesFromForwardDates(boost::assign::list_of(fixingDate), boost::assign::list_of(fixingEndDate), curveCollection, forecastCurve.c_str(), legStaticData_->getFwdInter(), fixingBusinessDayAdj)[0];

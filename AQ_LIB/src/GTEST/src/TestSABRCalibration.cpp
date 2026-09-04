@@ -7,13 +7,13 @@
 
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "AQLMathDefine.h"
 #include "AQLDataBasics.h"
 #include "AQLMathSwaptionVolUtility.h"
 #include "AQLMathParameterUtility.h"
 #include "AQLPriceCMSTools.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "AQLPriceSABRSwaptionCalculator.h"
 #include "AQLMathOptionTools.h"
 #include "ModelTools.h"
@@ -390,9 +390,9 @@ namespace google_test
 			for (const auto& expiryTenor : TENOR_FOR_TEST)
 			{
 				// Get expiry date and term
-				AQLDate expiryDate = etrading::LADateScheduleHelpers::getDate(asOfDate, AQLString(expiryTenor.c_str()), "", "");
+				AQLDate expiryDate = etrading::AQLDateScheduleHelpers::getDate(asOfDate, AQLString(expiryTenor.c_str()), "", "");
 				AQLString expiryDayCount("ACT/365");
-				double expiryTerm = etrading::LADateScheduleHelpers::getTerm(asOfDate, expiryDate, expiryDayCount);
+				double expiryTerm = etrading::AQLDateScheduleHelpers::getTerm(asOfDate, expiryDate, expiryDayCount);
 
 				// Build SABR model using SABR parameters interpolated according the expiry and swap tenor
 				DoubleVector sabrParameters = AQLPriceCMSObject::InterpolateParameterMatrix(getDataInstance(), expiryDate, AQLString(swapTenor.c_str()), sabrIDs);

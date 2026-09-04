@@ -28,13 +28,13 @@
 
 // Includes: This Library
 #include "DateUtilities.h"
-#include "LADateHelpers.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "ContainerUtilities.h"
 #include "ETradingException.h"
 #include "AQLDate.h"
 #include "TypeHelpers.h"
-#include "LADateScheduleHelpers.h"      // Helper methods create date from string
+#include "AQLDateScheduleHelpers.h"      // Helper methods create date from string
 
 
 namespace etrading
@@ -157,7 +157,7 @@ namespace etrading
         return ret;
     }
 
-    // loosely adapted from LADateHelpers.cpp renamed to LADateHelpers.cpp (around line 528) etrading::LADateHelpers::termStrtoYMDW
+    // loosely adapted from AQLDateHelpers.cpp renamed to AQLDateHelpers.cpp (around line 528) etrading::AQLDateHelpers::termStrtoYMDW
     std::tuple<int, int, int, int> tenorStringToYMDW( const std::string& tenorString )
     {
         size_t pl_y, pl_m, pl_d, pl_w;		//place of year, month, day, week
@@ -505,7 +505,7 @@ namespace etrading
                 // ALTERNATIVE: UNTIL THE ABOVE IS FIXED
                 const bool includeLast = true;
 				AQLString dayCount("ACT/365");
-                double yearFraction = LADateScheduleHelpers::getTerm( toLADateFromGregorianDate( fromDate ), toLADateFromGregorianDate( toDate ), dayCount, includeLast );
+                double yearFraction = AQLDateScheduleHelpers::getTerm( toLADateFromGregorianDate( fromDate ), toLADateFromGregorianDate( toDate ), dayCount, includeLast );
 
                 return yearFraction;
 
@@ -958,7 +958,7 @@ namespace etrading
 
         for( size_t i = 0; i< inputMatrix.size(); ++i )
         {
-            dateOutput[i]   = etrading::LADateScheduleHelpers::getLADate( inputMatrix[i][0].getCString() );
+            dateOutput[i]   = etrading::AQLDateScheduleHelpers::getLADate( inputMatrix[i][0].getCString() );
             char * pFirstNonNumber;
             valueOutput[i]  = std::strtod( inputMatrix[i][1].getCString(), &pFirstNonNumber );
             

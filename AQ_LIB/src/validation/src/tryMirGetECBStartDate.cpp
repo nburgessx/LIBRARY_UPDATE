@@ -1,5 +1,5 @@
 #include "tryMirGetBusinessDays.h"
-#include "LADateHelpers.h"
+#include "AQLDateHelpers.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 
@@ -25,7 +25,7 @@ namespace validation
             file.write( "ecbDate", ecbDate );
         }
 
-        AQLDate ret = etrading::LADateHelpers::getECBStartDate( ecbDate );
+        AQLDate ret = etrading::AQLDateHelpers::getECBStartDate( ecbDate );
 
         if ( CreateDataFile::recordEnabled() )
         {

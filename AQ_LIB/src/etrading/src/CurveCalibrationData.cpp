@@ -32,9 +32,9 @@
 #include "AQLMathFXEntity.h"
 
 #include "InitializeETrading.h"
-#include "LADateHelpers.h"
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLDateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "CurveInstruments.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLLinearSplineInterpolation.h"
@@ -148,7 +148,7 @@ namespace
 
 // Constructor
 CurveCalibrationData::CurveCalibrationData()
-	: LACurvePricingObject()
+	: AQLCurvePricingObject()
 {
 }
 
@@ -160,7 +160,7 @@ CurveCalibrationData::CurveCalibrationData()
 
 */
 CurveCalibrationData::CurveCalibrationData(AQLDataInstance* dataInstance)
-	: LACurvePricingObject(dataInstance)//,mCurveVersion(0)
+	: AQLCurvePricingObject(dataInstance)//,mCurveVersion(0)
 {
 	setDataInstance(dataInstance);
 	AQLPriceDataManager& dm = dataInstance->getDataMaster();
@@ -220,7 +220,7 @@ CurveCalibrationData::CurveCalibrationData(AQLDataInstance* dataInstance)
 */
 CurveCalibrationData::CurveCalibrationData(
 	const CurveCalibrationData& curve) :
-	LACurvePricingObject(curve)//,mCurveVersion(0)
+	AQLCurvePricingObject(curve)//,mCurveVersion(0)
 {
 	mpAsOfDate = &getData(CALIBRATION_DATA_ASOFDATE);
 	mpProcedure = &getData(CALIBRATION_DATA_CURVEGENERATOR);
@@ -269,7 +269,7 @@ CurveCalibrationData::getType(void) const
 bool
 CurveCalibrationData::isTypeOf(object_t id) const
 {
-	return (id == ENTITY_IRYCPRO ? true : LACurvePricingObject::isTypeOf(id));
+	return (id == ENTITY_IRYCPRO ? true : AQLCurvePricingObject::isTypeOf(id));
 }
 
 /*!
@@ -665,13 +665,13 @@ CurveCalibrationData::remove(
 	{
 		return;
 	}
-	LACurvePricingObject::remove(dataName);
+	AQLCurvePricingObject::remove(dataName);
 }
 
 void
 CurveCalibrationData::reset(void)
 {
-	LACurvePricingObject::reset();
+	AQLCurvePricingObject::reset();
 	mpAsOfDate = &add(CALIBRATION_DATA_ASOFDATE);
 	mpProcedure = &add(CALIBRATION_DATA_CURVEGENERATOR);
 	mpMarketData = &add(CALIBRATION_DATA_MARKETDATA);
@@ -709,7 +709,7 @@ CurveCalibrationData::copy(
 		return *this;
 	}
 
-	LACurvePricingObject::copy(e);
+	AQLCurvePricingObject::copy(e);
 	if (!e.isTypeOf(ENTITY_IRYCPRO))
 	{
 		AQLString err = "Assignement error for CurveCalibrationData : from ";
@@ -1479,13 +1479,13 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	if (dh->isDefined() && !dh->isNull())
 	{
 		c_freq_cpd = dynamic_cast<const AQLDataString &>(dh->get()).get();
-		numberOfTimesToCompoundTargetLeg = etrading::LADateHelpers::calcCompoundingTimes(c_freq, c_freq_cpd);
+		numberOfTimesToCompoundTargetLeg = etrading::AQLDateHelpers::calcCompoundingTimes(c_freq, c_freq_cpd);
 	}
 	dh = &(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCYCOMPOUND, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
 		a_c_freq_cpd = dynamic_cast<const AQLDataString &>(dh->get()).get();
-		numberOfTimesToCompoundAgainstLeg = etrading::LADateHelpers::calcCompoundingTimes(a_c_freq, a_c_freq_cpd);
+		numberOfTimesToCompoundAgainstLeg = etrading::AQLDateHelpers::calcCompoundingTimes(a_c_freq, a_c_freq_cpd);
 	}
 
 	// get max term
@@ -1493,7 +1493,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 
 	// calc term (apply to month)
 	int y, m, d, w;
-	etrading::LADateHelpers::termStrtoYMDW(termMax, y, m, d, w);
+	etrading::AQLDateHelpers::termStrtoYMDW(termMax, y, m, d, w);
 	m = 12 * y + m;
 
 	c_freq.toUpper();
@@ -1962,7 +1962,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 		maxTerm = dynamic_cast<AQLDataString&>(dh->get()).get();
 		maxTerm += "Y";
 		maxFreq = dynamic_cast<AQLDataString&>(objHolder.getData(IR_CALIBRATION_DATA_MAXTERMFREQ).get()).get();
-		const AQLDate& maxDate = etrading::LADateHelpers::getDate(c_spotdate, maxTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
+		const AQLDate& maxDate = etrading::AQLDateHelpers::getDate(c_spotdate, maxTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
 		DateVector tmp_dates; DoubleArray tmp_taus;
 		etrading::updateAccrualPeriodsAndPaymentDates(c_spotdate, maxDate, maxFreq, c_cal, c_sld, dc_act, tmp_dates, extra_terms, tmp_taus, isEomRoll);
 	}
@@ -2008,7 +2008,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 		if (fwd_isonly && extra_terms.size() > 0)
 		{
 			extra_terms.clear();
-			const AQLDate& maxDate = etrading::LADateHelpers::getDate(fwd_spotdate, maxTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
+			const AQLDate& maxDate = etrading::AQLDateHelpers::getDate(fwd_spotdate, maxTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
 			DateVector tmp_dates; DoubleArray tmp_taus;
 			etrading::updateAccrualPeriodsAndPaymentDates(fwd_spotdate, maxDate, maxFreq, fwd_cal, fwd_sld, dc_act, tmp_dates, extra_terms, tmp_taus, fwd_eom);
 		}
@@ -2033,7 +2033,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 					else
 					{
 						fwd_ratio_pow *= fwd_ratio;
-						end = etrading::LADateHelpers::getDate(asof, fwd_termStr, SLIDING_RULE_FOLLOWING, &fwd_cal, true);
+						end = etrading::AQLDateHelpers::getDate(asof, fwd_termStr, SLIDING_RULE_FOLLOWING, &fwd_cal, true);
 						term = dc_act.getTerm(asof, end);
 						df = discountFactorsTargetLeg.value(term) / fwd_ratio_pow;
 						fwd_spotdf = df;
@@ -2057,7 +2057,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 				}
 				else
 				{
-					end = etrading::LADateHelpers::getDate(fwd_spotdate, fwd_termStr, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
+					end = etrading::AQLDateHelpers::getDate(fwd_spotdate, fwd_termStr, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
 					term = dc_act.getTerm(asof, end);
 					df = discountFactorsTargetLeg.value(term) / (fwd_ratio * fwd_ratio_pow);
 				}
@@ -2148,7 +2148,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 							fwd_ratio = fwd_ispriceccy ? fwd_fx_on / fwd_fx_tn : fwd_fx_tn / fwd_fx_on;
 						}
 
-						end = etrading::LADateHelpers::getDate(asof, fwd_termStr, SLIDING_RULE_FOLLOWING, &fwd_cal, true);
+						end = etrading::AQLDateHelpers::getDate(asof, fwd_termStr, SLIDING_RULE_FOLLOWING, &fwd_cal, true);
 						term = dc_act.getTerm(asof, end);
 						df = discountFactorsAgainstLeg.value(term) * fwd_ratio;
 						fwd_spotdf = df;
@@ -2182,7 +2182,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 					{
 						fwd_ratio = fwd_ispriceccy ? fwd_fx_on / fwd_fx : fwd_fx / fwd_fx_on;
 					}
-					end = etrading::LADateHelpers::getDate(fwd_spotdate, fwd_termStr, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
+					end = etrading::AQLDateHelpers::getDate(fwd_spotdate, fwd_termStr, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
 
 					term = dc_act.getTerm(fwd_spotdate, end) + fwd_spotTerm;
 
@@ -2303,7 +2303,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 		for (size_t i = 0; i < numberOfBasisSwaps; ++i)
 		{
 			const AQLString &strTerm = dynamic_cast<const AQLDataString &>((temp_Data_Basis[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			const AQLDate swapEnd = etrading::LADateHelpers::getDate(c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
+			const AQLDate swapEnd = etrading::AQLDateHelpers::getDate(c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
 
 			if (endDate < swapEnd)
 			{
@@ -2358,14 +2358,14 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 			else
 			{
 				const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((data_[0]->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
-				start = etrading::LADateHelpers::getDate(c_spotdate, sterm_str, c_sld, &c_cal, true, &roll_conv);
+				start = etrading::AQLDateHelpers::getDate(c_spotdate, sterm_str, c_sld, &c_cal, true, &roll_conv);
 				const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((data_[0]->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-				firstSwapDate = etrading::LADateHelpers::getDate(start, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
+				firstSwapDate = etrading::AQLDateHelpers::getDate(start, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
 			}
 		}
 		else
 		{
-			firstSwapDate = etrading::LADateHelpers::getDate(c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, &roll_conv);
+			firstSwapDate = etrading::AQLDateHelpers::getDate(c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, &roll_conv);
 		}
 
 		// Bootstrap Libor Cash Deposits
@@ -2417,7 +2417,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 			const AQLPriceDataSlidingRule &sld = dynamic_cast<const AQLPriceDataSlidingRule &>(data_ndf[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
 			double rate = dynamic_cast<const AQLDataDouble&> ((data_ndf[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 			const AQLString& term = dynamic_cast<const AQLDataString&> ((data_ndf[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			AQLDate endDate = etrading::LADateHelpers::getDate(c_spotdate, term, sld, &cal, true, &roll_conv);
+			AQLDate endDate = etrading::AQLDateHelpers::getDate(c_spotdate, term, sld, &cal, true, &roll_conv);
 
 			// Interest Rate Convention - Stores instrument daycount and compounding conventions e.g. Simple Interest Act/Act.
 			RateConvention rc = AQLMathYieldCurve::setRC(CONTINUOUS);
@@ -2705,9 +2705,9 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 					else
 					{
 						const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((data_[i]->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
-						start = etrading::LADateHelpers::getDate(a_c_spotdate, sterm_str, a_c_sld, &a_c_cal, true, &roll_conv);
+						start = etrading::AQLDateHelpers::getDate(a_c_spotdate, sterm_str, a_c_sld, &a_c_cal, true, &roll_conv);
 						const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((data_[i]->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-						end = etrading::LADateHelpers::getDate(start, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
+						end = etrading::AQLDateHelpers::getDate(start, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
 					}
 					etrading::updateAccrualPeriodsAndPaymentDates(start, end, a_c_freq, a_c_cal, a_c_sld, a_c_dc, a_dates, a_terms_grid, a_terms_interval, isEomRoll, &a_c_spotdate);
 					fDate = start;
@@ -2715,7 +2715,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 				}
 				else
 				{
-					const AQLDate end = etrading::LADateHelpers::getDate(a_c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
+					const AQLDate end = etrading::AQLDateHelpers::getDate(a_c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
 					etrading::updateAccrualPeriodsAndPaymentDates(a_c_spotdate, end, a_c_freq, a_c_cal, a_c_sld, a_c_dc, a_dates, a_terms_grid, a_terms_interval, isEomRoll);
 				}
 
@@ -2732,7 +2732,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 					{
 						// Fixing date terms
 						a_i_gridVec.push_back(dc_act.getTerm(asof, fDate));
-						AQLDate fixingEndDate = etrading::LADateHelpers::getDate(fDate, a_refRateTerm, a_c_sld, &a_c_cal, true, nullptr);
+						AQLDate fixingEndDate = etrading::AQLDateHelpers::getDate(fDate, a_refRateTerm, a_c_sld, &a_c_cal, true, nullptr);
 						a_i_gridVec.push_back(dc_act.getTerm(asof, fixingEndDate));
 
 						// Index tau
@@ -2800,9 +2800,9 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 					else
 					{
 						const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((data_[i]->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
-						start = etrading::LADateHelpers::getDate(a_c_spotdate, sterm_str, c_sld, &c_cal, true, &roll_conv);
+						start = etrading::AQLDateHelpers::getDate(a_c_spotdate, sterm_str, c_sld, &c_cal, true, &roll_conv);
 						const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((data_[i]->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-						end = etrading::LADateHelpers::getDate(start, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
+						end = etrading::AQLDateHelpers::getDate(start, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
 					}
 
 					etrading::updateAccrualPeriodsAndPaymentDates(start, end, c_freq, c_cal, c_sld, c_dc, dates, cashflowDates, cashflowAccuralPeriods, isEomRoll, &a_c_spotdate);
@@ -2814,7 +2814,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 				}
 				else
 				{
-					const AQLDate end = etrading::LADateHelpers::getDate(a_c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, &roll_conv);
+					const AQLDate end = etrading::AQLDateHelpers::getDate(a_c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, &roll_conv);
 					etrading::updateAccrualPeriodsAndPaymentDates(a_c_spotdate, end, c_freq, c_cal, c_sld, c_dc, dates, cashflowDates, cashflowAccuralPeriods, isEomRoll);
 					spotLag[i] = 0.0;
 				}
@@ -2843,9 +2843,9 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 					else
 					{
 						const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((data_[i]->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
-						start = etrading::LADateHelpers::getDate(c_spotdate, sterm_str, c_sld, &c_cal, true, &roll_conv);
+						start = etrading::AQLDateHelpers::getDate(c_spotdate, sterm_str, c_sld, &c_cal, true, &roll_conv);
 						const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((data_[i]->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-						end = etrading::LADateHelpers::getDate(start, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
+						end = etrading::AQLDateHelpers::getDate(start, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
 					}
 					etrading::updateAccrualPeriodsAndPaymentDates(start, end, c_freq, c_cal, c_sld, c_dc, dates, cashflowDates, cashflowAccuralPeriods, isEomRoll, &c_spotdate);
 					fDate = start;
@@ -2856,7 +2856,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 				}
 				else
 				{
-					const AQLDate end = etrading::LADateHelpers::getDate(c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
+					const AQLDate end = etrading::AQLDateHelpers::getDate(c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
 					etrading::updateAccrualPeriodsAndPaymentDates(c_spotdate, end, c_freq, c_cal, c_sld, c_dc, dates, cashflowDates, cashflowAccuralPeriods, isEomRoll);
 					spotLag[i] = 0.0;
 				}
@@ -2878,7 +2878,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 					// Fixing date terms
 					i_gridVec.push_back(dc_act.getTerm(asof, fDate));
 
-					AQLDate fixingEndDate = etrading::LADateHelpers::getDate(fDate, refRateTerm, c_sld, &c_cal, true, nullptr);
+					AQLDate fixingEndDate = etrading::AQLDateHelpers::getDate(fDate, refRateTerm, c_sld, &c_cal, true, nullptr);
 					i_gridVec.push_back(dc_act.getTerm(asof, fixingEndDate));
 
 					// Index tau
@@ -2970,19 +2970,19 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 					else
 					{
 						const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((data_[0]->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
-						AQLDate start = etrading::LADateHelpers::getDate(c_spotdate, sterm_str, c_sld, &c_cal, true, &roll_conv);
+						AQLDate start = etrading::AQLDateHelpers::getDate(c_spotdate, sterm_str, c_sld, &c_cal, true, &roll_conv);
 						const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((data_[0]->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-						date = etrading::LADateHelpers::getDate(start, tenor_str, c_sld, &c_cal, true, &roll_conv);
+						date = etrading::AQLDateHelpers::getDate(start, tenor_str, c_sld, &c_cal, true, &roll_conv);
 					}
 				}
 				else
 				{
-					date = etrading::LADateHelpers::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+					date = etrading::AQLDateHelpers::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
 				}
 
 				// Spot libor forecasts from spot date
 				const AQLString &strTerm_s = dynamic_cast<const AQLDataString &>(dh->get()).get();
-				AQLDate date_l = etrading::LADateHelpers::getDate(c_spotdate, strTerm_s, c_sld, &c_cal, true, &roll_conv);
+				AQLDate date_l = etrading::AQLDateHelpers::getDate(c_spotdate, strTerm_s, c_sld, &c_cal, true, &roll_conv);
 
 				if (date_l < date)
 				{
@@ -3061,7 +3061,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 						DateVector a_dates;
 						DoubleArray a_terms_grid;
 						DoubleArray a_terms_interval;
-						AQLDate end = etrading::LADateHelpers::getDate(a_c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
+						AQLDate end = etrading::AQLDateHelpers::getDate(a_c_spotdate, strTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr); // isAfter = true, rollConv = nullptr
 
 						// Find the schedules and then PV of the 'against' leg
 						etrading::updateAccrualPeriodsAndPaymentDates(a_c_spotdate, end, a_c_freq, a_c_cal, a_c_sld, a_c_dc, a_dates, a_terms_grid, a_terms_interval, isEomRoll);
@@ -3889,7 +3889,7 @@ void CurveCalibrationData::calcCheapestToDeliverCurve(const AQLString& curveName
 	double smallestCommonEndTerm = *largestDates.begin();
 	AQLDate asOfDate(asof);
 	AQLString daycount(dc_act365.convertToString());
-	AQLDate smallestCommonEndDate = etrading::LADateScheduleHelpers::getDateFromTerm(asOfDate, smallestCommonEndTerm, daycount);
+	AQLDate smallestCommonEndDate = etrading::AQLDateScheduleHelpers::getDateFromTerm(asOfDate, smallestCommonEndTerm, daycount);
 
 	DateVector startDates, endDates;
 	AQLDate startDate = asof;
@@ -3897,7 +3897,7 @@ void CurveCalibrationData::calcCheapestToDeliverCurve(const AQLString& curveName
 	while (startDate < smallestCommonEndDate)
 	{
 		startDates.push_back(startDate);
-		AQLDate endDate = etrading::LADateHelpers::getDate(startDate, tenor, sld, &cal, true);	// Always calculate overnight forward rates
+		AQLDate endDate = etrading::AQLDateHelpers::getDate(startDate, tenor, sld, &cal, true);	// Always calculate overnight forward rates
 		endDates.push_back(endDate);
 
 		startDate = endDate;
@@ -3914,13 +3914,13 @@ void CurveCalibrationData::calcCheapestToDeliverCurve(const AQLString& curveName
 	// Get AQLMathYieldCurve objecct and initialise it
 	AQLString yieldDataName = dynamic_cast<const AQLDataString &>(getYieldData().get().get().getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 	AQLDataInstance* dataInstance = getDataInstance();
-	etrading::LACurvePricingObject yc(dataInstance);
+	etrading::AQLCurvePricingObject yc(dataInstance);
 
 	yc.getYieldData().convertFromString(yieldDataName);
 	yc.getDayCount().setDayCount(dc.convertToString());
 	yc.getSlidingRule().convertFromString(sld.convertToString());
 	yc.getFrequency().convertFromString(SIMPLE);
-	etrading::LACurveForwardRateHelpers::setCalendarForCurveID(yc, cal.convertToString());
+	etrading::AQLCurveForwardRateHelpers::setCalendarForCurveID(yc, cal.convertToString());
 
 	// Loop through all the CSA curves and determine the highest forward rate between two collateral posting dates
 	DoubleArray highestRates;
@@ -4176,7 +4176,7 @@ CurveCalibrationData::calcIndexGrid(const AQLDate &asofdate, const AQLDate &date
 	AQLString tmpFreq = freq;
 	tmpFreq.toUpper();
 	int y, m, d, w;
-	etrading::LADateHelpers::termStrtoYMDW(accessary, y, m, d, w);
+	etrading::AQLDateHelpers::termStrtoYMDW(accessary, y, m, d, w);
 
 	unsigned int size = 0;
 	unsigned int addmonth = 0;
@@ -5266,7 +5266,7 @@ CurveCalibrationData::setBasisRates_old(void)
 	{
 		const AQLString &strTerm = dynamic_cast<const AQLDataString &>((data_basis[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		double rate = dynamic_cast<const AQLDataDouble &>((data_basis[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-		AQLDate tmpDate = etrading::LADateHelpers::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		AQLDate tmpDate = etrading::AQLDateHelpers::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		double term = dcbs.getTerm(spotdate, tmpDate);
 
 		b_t_grid.push_back(term);
@@ -5280,7 +5280,7 @@ CurveCalibrationData::setBasisRates_old(void)
 
 	// calc term (apply to month)
 	int y, m, d, w;
-	etrading::LADateHelpers::termStrtoYMDW(termMax, y, m, d, w);
+	etrading::AQLDateHelpers::termStrtoYMDW(termMax, y, m, d, w);
 	m = 12 * y + m;
 
 	unsigned int mUnit = 0;
@@ -5333,7 +5333,7 @@ CurveCalibrationData::setBasisRates_old(void)
 		AQLString strTerm = AQLString(static_cast<int>(mUnit * i));
 		strTerm += "M";
 
-		AQLDate ldate = etrading::LADateHelpers::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		AQLDate ldate = etrading::AQLDateHelpers::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		//term is term under basis convention.
 		const double term = dcbs.getTerm(spotdate, ldate);
 		//termaa is term act/act.
@@ -5349,7 +5349,7 @@ CurveCalibrationData::setBasisRates_old(void)
 		//making sum of (L + s)*term*DF which tenor is j*i
 		AQLString strTerm_ = AQLString(static_cast<int>(mUnit * i));
 		strTerm_ += "M";
-		ldate = etrading::LADateHelpers::getDate(spotdate, strTerm_, sldbs, &calbs, true, &roll_conv_bs);
+		ldate = etrading::AQLDateHelpers::getDate(spotdate, strTerm_, sldbs, &calbs, true, &roll_conv_bs);
 		const double delta = dcbs.getTerm(fdate, ldate);
 		const double dff = getDF(asof, fdate);
 		const double dfl = getDF(asof, ldate);
@@ -5504,7 +5504,7 @@ CurveCalibrationData::setBasisRates2(const AQLString& basisCurveID)
 	{
 		const AQLString &strTerm = dynamic_cast<const AQLDataString &>((data_basis[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		double rate = dynamic_cast<const AQLDataDouble &>((data_basis[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-		AQLDate tmpDate = etrading::LADateHelpers::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		AQLDate tmpDate = etrading::AQLDateHelpers::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		double term = dcbs.getTerm(spotdate, tmpDate);
 
 		b_t_grid.push_back(term);
@@ -5518,7 +5518,7 @@ CurveCalibrationData::setBasisRates2(const AQLString& basisCurveID)
 
 	// calc term (apply to month)
 	int y, m, d, w;
-	etrading::LADateHelpers::termStrtoYMDW(termMax, y, m, d, w);
+	etrading::AQLDateHelpers::termStrtoYMDW(termMax, y, m, d, w);
 	m = 12 * y + m;
 
 	unsigned int mUnit = 0;
@@ -5566,7 +5566,7 @@ CurveCalibrationData::setBasisRates2(const AQLString& basisCurveID)
 		AQLString strTerm = AQLString(static_cast<int>(mUnit * i));
 		strTerm += "M";
 
-		AQLDate ldate = etrading::LADateHelpers::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		AQLDate ldate = etrading::AQLDateHelpers::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		//term is term under basis convention.
 		const double term = dcbs.getTerm(spotdate, ldate);
 		//termaa is term act/act.
@@ -5583,7 +5583,7 @@ CurveCalibrationData::setBasisRates2(const AQLString& basisCurveID)
 			// calc ldate which is never same with fdate
 			AQLString strTerm_ = AQLString(static_cast<int>(mUnit * j));
 			strTerm_ += "M";
-			ldate = etrading::LADateHelpers::getDate(spotdate, strTerm_, sldbs, &calbs, true, &roll_conv_bs);
+			ldate = etrading::AQLDateHelpers::getDate(spotdate, strTerm_, sldbs, &calbs, true, &roll_conv_bs);
 
 			delta = dcbs.getTerm(fdate, ldate);
 			const double dff = getDF(asof, fdate);
@@ -6756,7 +6756,7 @@ CurveCalibrationData::setFloater(const AQLString& curveName)
 
 		// calc term (apply to month)
 		int y, m, d, w;
-		etrading::LADateHelpers::termStrtoYMDW(termMax, y, m, d, w);
+		etrading::AQLDateHelpers::termStrtoYMDW(termMax, y, m, d, w);
 		m = 12 * y + m;
 
 		c_freq.toUpper();
@@ -6802,7 +6802,7 @@ CurveCalibrationData::setFloater(const AQLString& curveName)
 
 			double rate = dynamic_cast<const AQLDataDouble &>((data[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 			double term = 0.0;
-			AQLDate tmpDate = etrading::LADateHelpers::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate tmpDate = etrading::AQLDateHelpers::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
 			term = c_dc.getTerm(c_spotdate, tmpDate);
 
 			b_t_grid.push_back(term);
@@ -6833,8 +6833,8 @@ CurveCalibrationData::setFloater(const AQLString& curveName)
 		{
 			AQLString strTerm = AQLString(static_cast<int>(mUnit * (i - 1))) + AQLString("M");
 			AQLString dfstrTerm = AQLString(static_cast<int>(mUnit * i)) + AQLString("M");
-			AQLDate fdate = etrading::LADateHelpers::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
-			AQLDate ldate = etrading::LADateHelpers::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate fdate = etrading::AQLDateHelpers::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate ldate = etrading::AQLDateHelpers::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
 			double dfTerm = dc_act365.getTerm(asof, ldate);
 			double dfTerm_last = dc_act365.getTerm(asof, fdate);
 			if (dfTerm > tmax + eps_term)
@@ -6889,7 +6889,7 @@ CurveCalibrationData::setFloater(const AQLString& curveName)
 			DateVector ret;
 
 			const AQLString &strTerm = dynamic_cast<const AQLDataString &>((data[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			AQLDate matudate = etrading::LADateHelpers::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate matudate = etrading::AQLDateHelpers::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
 			ret.push_back(c_spotdate);
 
 			//find dvzeroDates
@@ -7032,7 +7032,7 @@ CurveCalibrationData::setFloater(const AQLString& curveName)
 		const AQLString &termMax = dynamic_cast<const AQLDataString &>((data.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		// calc term (apply to month)
 		int y, m, d, w;
-		etrading::LADateHelpers::termStrtoYMDW(termMax, y, m, d, w);
+		etrading::AQLDateHelpers::termStrtoYMDW(termMax, y, m, d, w);
 		m = 12 * y + m;
 
 		c_freq.toUpper();
@@ -7080,8 +7080,8 @@ CurveCalibrationData::setFloater(const AQLString& curveName)
 		{
 			AQLString strTerm = AQLString(static_cast<int>(mUnit * (i - 1))) + AQLString("M");
 			AQLString dfstrTerm = AQLString(static_cast<int>(mUnit * i)) + AQLString("M");
-			AQLDate fdate = etrading::LADateHelpers::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
-			AQLDate ldate = etrading::LADateHelpers::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate fdate = etrading::AQLDateHelpers::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate ldate = etrading::AQLDateHelpers::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
 			double dfTerm = dc_act365.getTerm(asof, ldate);
 			double dfTerm_last = dc_act365.getTerm(asof, fdate);
 			if (dfTerm > tmax + eps_term)
@@ -7710,7 +7710,7 @@ CurveCalibrationData* CurveCalibrationData::getYieldCurvePro(AQLObjectPool& objP
 	AQLString yieldName(curveCollectionID);
 
 	// get yield data pro
-	AQLString CurveID = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollectionID;
+	AQLString CurveID = etrading::AQLCurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollectionID;
 	const AQLObjectHolder ehCur = objPool.getObject(CurveID);
 	CurveCalibrationData* curveCalibrationData = NULL;
 	if (!ehCur.isDefined())

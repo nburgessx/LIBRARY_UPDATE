@@ -2,8 +2,8 @@
 #include "ParameterValidation.h"    // etrading::getDataInstance()
 #include "CommonConstants.h"
 #include "ObjectUtilities.h"
-#include "LAUpdateStaticDataManager.h"
-#include "LWOUtilities.h"
+#include "AQLUpdateStaticDataManager.h"
+#include "AQOUtilities.h"
 #include "CreateDataFile.h"
 #include "ExceptionMacros.h"
 #include "Variant.h"

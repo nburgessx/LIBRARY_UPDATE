@@ -12,15 +12,15 @@
 namespace etrading
 {
 
-    FXCurve::FXCurve( const std::string& objName ) : IsLWOObject( objName, FX_CURVE ), curveGenerator_(), curveMarketData_()
+    FXCurve::FXCurve( const std::string& objName ) : IsAQObject( objName, FX_CURVE ), curveGenerator_(), curveMarketData_()
     {};
 
     FXCurve::FXCurve(const std::string& objName, const std::shared_ptr<CurveGenerator>& curveGenerator, const std::shared_ptr<CurveMarketData>& curveMarketData)
-        : IsLWOObject(objName, FX_CURVE), curveGenerator_(curveGenerator), curveMarketData_(curveMarketData)
+        : IsAQObject(objName, FX_CURVE), curveGenerator_(curveGenerator), curveMarketData_(curveMarketData)
     {}
 
     FXCurve::FXCurve( const FXCurve& rhs )
-        : IsLWOObject( rhs.getRefToName(), FX_CURVE )
+        : IsAQObject( rhs.getRefToName(), FX_CURVE )
     {
 		curveGenerator_ = (rhs.curveGenerator_ != nullptr) ? rhs.curveGenerator_->clone() : std::shared_ptr<CurveGenerator>();
 		curveMarketData_ = (rhs.curveMarketData_ != nullptr) ? rhs.curveMarketData_->clone() : std::shared_ptr<CurveMarketData>();

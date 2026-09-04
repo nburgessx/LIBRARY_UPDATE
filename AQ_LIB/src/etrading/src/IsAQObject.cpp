@@ -1,15 +1,15 @@
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 
 
 namespace etrading
 {
-    IsLWOObject::IsLWOObject( const std::string& objectName, const CachedObjectEnum enumValue )
+    IsAQObject::IsAQObject( const std::string& objectName, const CachedObjectEnum enumValue )
         : HasName( objectName ), Cacheable( enumValue )
     {};
 
-    SerializationResult IsLWOObject::serialize(	const serialize::SerializationMethodEnum method,
+    SerializationResult IsAQObject::serialize(	const serialize::SerializationMethodEnum method,
                                                 const serialize::SerializationTargetEnum target,
                                                 const std::string& targetInfo,
                                                 std::vector<std::string>& variableNames,
@@ -18,7 +18,7 @@ namespace etrading
         return toSchemaObject().serialize( method, target, targetInfo, variableNames, variableValues );
     };
 
-	SerializationResult IsLWOObject::serialize( const serialize::SerializationMethodEnum method,
+	SerializationResult IsAQObject::serialize( const serialize::SerializationMethodEnum method,
 												const serialize::SerializationTargetEnum target,
 												const std::string& targetInfo ) const
 	{

@@ -9,10 +9,10 @@
 #include "tryMeProductSwapStubRate.h"
 
 #include "tryMeLWO.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "tryMeLWOSwapPricing.h"
 #include <boost/range/irange.hpp>
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "GetGoogleTestFolder.h"
 
 
@@ -99,7 +99,7 @@ namespace google_test
 				auto fixingDt = it[0];
 				auto rate = it[1];
 
-				if (etrading::LADateScheduleHelpers::getLADate(boost::get<double>(it[0])) == fixingDate)
+				if (etrading::AQLDateScheduleHelpers::getLADate(boost::get<double>(it[0])) == fixingDate)
 				{
 					fixingRateFromSwap = boost::get<double>(it[1]);
 					break;

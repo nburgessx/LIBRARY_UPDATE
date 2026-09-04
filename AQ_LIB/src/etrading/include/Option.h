@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "IsLWOObject.h"
+#include "IsAQObject.h"
 #include "SchemaObject.h"
 #include "ScheduleValidation.h"
 #include "CommonConstants.h"
@@ -10,7 +10,7 @@
 namespace etrading
 {
 	// This is the Abstract class of an Optional deal/structure/trade, to store the fields
-	class Option : public IsLWOObject 
+	class Option : public IsAQObject 
     {
 	public:
 

@@ -36,7 +36,7 @@
 #include "FreeObject.h"
 #include "TableDateDouble.h"
 #include "CurveBuildProperties.h"
-#include "LWOCurve.h"
+#include "AQOCurve.h"
 #include "SerializeContainedData.h"
 #include "StaticStructureStore.h"
 #include "EnvironmentPool.h"
@@ -111,7 +111,7 @@ namespace etrading
     // @Environment : a class that represents the context of an individual client
     class Environment : public HasObjectsOfType<FreeObject>,
                         public HasObjectsOfType<TableDateDouble>,
-                        public HasObjectsOfType<LWOCurve>,
+                        public HasObjectsOfType<AQOCurve>,
                         public HasObjectsOfType<CurveBuildProperties>,
                         public HasObjectsOfType<StandAlone>,
                         public HasObjectsOfType<BaseObject>,
@@ -182,7 +182,7 @@ namespace etrading
 								 SABR_MODEL,
 								 SABR_MARKETDATA};
 
-                functionsForCachedObjectMap_[CURVE_DEPRECATED]          = functionTupleForLWO<LWOCurve>();
+                functionsForCachedObjectMap_[CURVE_DEPRECATED]          = functionTupleForLWO<AQOCurve>();
                 functionsForCachedObjectMap_[TABLE]                     = functionTupleForLWO<TableDateDouble>();
                 functionsForCachedObjectMap_[CURVE_BUILD_PROPERTIES]    = functionTupleForLWO<CurveBuildProperties>();
                 functionsForCachedObjectMap_[FREE_OBJECT]               = functionTupleForLWO<FreeObject>();
@@ -296,7 +296,7 @@ namespace etrading
         template <typename Z>
         std::shared_ptr<Z> accessObject( const std::string& objectName )
         {
-			const std::string::size_type indexInString = objectName.find_last_of( LWO_KEY::LWO_OBJECT_COUNTER_DELIMITER );
+			const std::string::size_type indexInString = objectName.find_last_of( AQO_KEY::AQO_OBJECT_COUNTER_DELIMITER );
 			const std::string objectNameWithoutCounter = indexInString == std::string::npos ? objectName :  objectName.substr( 0, indexInString );
 
             auto& objectStore = this->getCache<Z>();
@@ -309,18 +309,18 @@ namespace etrading
 				return std::shared_ptr<Z>(); // nullptr for Linux
             }
         };
-		std::shared_ptr<IsLWOObject> accessObjectInterface( const std::string& objectName, const CachedObjectEnum objectType );
+		std::shared_ptr<IsAQObject> accessObjectInterface( const std::string& objectName, const CachedObjectEnum objectType );
         template <typename Z>
-		std::shared_ptr<IsLWOObject> accessObjectInterface( const std::string& objectName )
+		std::shared_ptr<IsAQObject> accessObjectInterface( const std::string& objectName )
 		{
             auto& objectStore = this->getCache<Z>();
             if( objectStore.has( objectName ) )
             {
-				return std::static_pointer_cast<IsLWOObject>(objectStore.get( objectName ));
+				return std::static_pointer_cast<IsAQObject>(objectStore.get( objectName ));
             }
             else
             {
-				return std::shared_ptr<IsLWOObject>(); // nullptr for Linux
+				return std::shared_ptr<IsAQObject>(); // nullptr for Linux
             }
 		};
 
@@ -361,14 +361,14 @@ namespace etrading
 	// Template Specializations
 	// ------------------------
 
-    // specialization for LWOCurve, this delegates to 
-    // const unsigned int environment_implementation::eraseAllObjects<LWOCurve>( Environment& env )
+    // specialization for AQOCurve, this delegates to 
+    // const unsigned int environment_implementation::eraseAllObjects<AQOCurve>( Environment& env )
     // required because we need to clear the corresponding EntityPool Curve
     template <>
-    const unsigned int Environment::deleteAllObjects<LWOCurve>();
+    const unsigned int Environment::deleteAllObjects<AQOCurve>();
 
 	template <>
-    const bool Environment::deleteObject<LWOCurve>( const std::string& objectName );
+    const bool Environment::deleteObject<AQOCurve>( const std::string& objectName );
 
 
     // Place implementations here, to avoid problem with incomplete types in EnvironmentImplementation.h
@@ -408,7 +408,7 @@ namespace etrading
         };
 
 	    template<typename T>
-        std::shared_ptr<IsLWOObject> accessObjectInterface( const std::string& objectName,  Environment& env )
+        std::shared_ptr<IsAQObject> accessObjectInterface( const std::string& objectName,  Environment& env )
 	    {
 	        return env.accessObjectInterface<T>(objectName);
 	    }

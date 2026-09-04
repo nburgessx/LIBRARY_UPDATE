@@ -2,7 +2,7 @@
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "ObjectUtilities.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "RecordMacros.h"
 #include "BondFactory.h"
 #include "Bond.h"
@@ -1045,7 +1045,7 @@ namespace validation
 	}
 
 
-	/* @brief Creates an LWOBondGenerator object, containing all of the curve properties.
+	/* @brief Creates an AQOBondGenerator object, containing all of the curve properties.
 	 * @param [in] objectName        The name of the Curve Configuration object
 	 * @param [in] propertyNames     A vector of property names corresponding to each label-value block of properties
 	 * @param [in] infoBlocks        A vector of containing the label-value blocks of properties
@@ -1128,7 +1128,7 @@ namespace validation
 		VALID_EXCEPTION_END
     };
 
-	/* @brief Displays the specified property of a LWOBondGenerator. If propertyName is blank, all properties are returned.
+	/* @brief Displays the specified property of a AQOBondGenerator. If propertyName is blank, all properties are returned.
 	 * @param [in] objectName        The BondGenerator object you wish to display
 	 * @param [in] propertyName      The name of the property label-value block that you wish to display
 	 * @param [out]                  A VariantMatrix containing a LabelValue block of properties
@@ -1140,7 +1140,7 @@ namespace validation
 		// Record Inputs for logs, tests and playback
         RECORD_INPUTS( objectName, propertyKey );
 		
-		// Attempt to retrieve LWOCurveGenerator object from the LWO Cache
+		// Attempt to retrieve AQOCurveGenerator object from the LWO Cache
 		auto bondGenerator = etrading::getBondGenerator( objectName );
 
 		// extract just the data for the specified propertyKey

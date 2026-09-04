@@ -55,7 +55,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::OIS_MARKETDATA,    // Calibration Instrument: OIS Outright Swaps
                                        {"12M", "18M", "2Y"},                             // Calibration Tenors                                  
-                                       curveObjectEUROIS_,                               // LWOCurveName
+                                       curveObjectEUROIS_,                               // AQOCurveName
                                        "EURYC",                                          // CurveCollection
                                        "20180814",                                       // Swap Effective Date
                                        "EUR_OIS",                                        // Swap Generator
@@ -108,7 +108,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::LIBOR_OIS_BASISSPREAD_MARKETDATA,    // Calibration Instrument: LIBOR-OIS Basis Swaps
                                        { "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "11Y", "12Y", "15Y", "20Y", "25Y", "30Y", "40Y", "50Y" },  // Calibration Tenors                                  
-                                       curveObjectEUROIS_,                               // LWOCurveName
+                                       curveObjectEUROIS_,                               // AQOCurveName
                                        "EURYC",                                          // CurveCollection
                                        "20180814",                                       // Swap Effective Date
                                        "EUR_BASIS_LIBOROIS",                             // Swap Generator

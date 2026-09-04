@@ -1,5 +1,5 @@
 //
-//  LACurvePricingObject.h
+//  AQLCurvePricingObject.h
 // This file used to be called LAMathYie1dCurve.h
 #pragma once
 
@@ -194,7 +194,7 @@ namespace etrading
     class AQLMathPathYieldCurve;
 
     //=================== YIELD CURVE ==================================
-    class LACurvePricingObject : public AQLObject
+    class AQLCurvePricingObject : public AQLObject
     {
     public:
         
@@ -202,16 +202,16 @@ namespace etrading
         //////////////////////////////////////////////////////////////////////
 
 		// constructor
-		LACurvePricingObject();
+		AQLCurvePricingObject();
 
         // constructor
-        LACurvePricingObject(AQLDataInstance* dataInstance, const AQLString *const pCurveType = 0);
+        AQLCurvePricingObject(AQLDataInstance* dataInstance, const AQLString *const pCurveType = 0);
         
         // copy constructor
-        LACurvePricingObject(const LACurvePricingObject& curve);
+        AQLCurvePricingObject(const AQLCurvePricingObject& curve);
         
         // destructor
-        virtual ~LACurvePricingObject();
+        virtual ~AQLCurvePricingObject();
 
         //  QUERY
         //////////////////////////////////////////////////////////////////////
@@ -620,7 +620,7 @@ namespace etrading
             const AQLString& forecastCurveID, const AQLString& discountCurveID, double firstFixingRate,
             bool isEOMRoll, bool isFRN);
 
-        double getCurBasisSwapValue(const LACurvePricingObject& yc, const AQLDate& valueDate, const AQLDate& startDate,
+        double getCurBasisSwapValue(const AQLCurvePricingObject& yc, const AQLDate& valueDate, const AQLDate& startDate,
             const AQLString& term, const AQLString& frequency, const AQLPriceDataDayCount& daycount,
             const AQLString& forecastCurveID, const AQLString& discountCurveID, bool isEOMRoll,
             double firstFixingAmount = 1., double firstFixingRate = 0.);
@@ -653,7 +653,7 @@ namespace etrading
         // get convension from yield curve data object
         void				getCurveConvention(AQLString& freq, AQLPriceDataCalendar& cal, AQLPriceDataSlidingRule& sld, AQLPriceDataDayCount& dc, AQLString& accessary, const AQLString& curveName);
 
-        virtual bool operator==(const LACurvePricingObject& a) const;
+        virtual bool operator==(const AQLCurvePricingObject& a) const;
 
         /* @brief			Function to calculate the swap price and risk. This function has been written to centralize the calculation of these
         *                   parameters and remove the previous multiple duplication of swap calculations.
@@ -806,7 +806,7 @@ namespace etrading
     public:
         
         // Default constructor
-        AQLMathPathYieldCurve(const LACurvePricingObject* yc, double t, DayCount dc);
+        AQLMathPathYieldCurve(const AQLCurvePricingObject* yc, double t, DayCount dc);
         
         // Destructor
         ~AQLMathPathYieldCurve();
@@ -814,7 +814,7 @@ namespace etrading
         // Make copy(clone) of this class
         virtual AQLRatesPathElementBase*		clone() const;
 
-        const LACurvePricingObject*			    getYC(void) const { return mpYC; }
+        const AQLCurvePricingObject*			    getYC(void) const { return mpYC; }
         const DayCount					    getDC(void) const { return mDC; }
         virtual double					    getP(double T) const;
 
@@ -832,7 +832,7 @@ namespace etrading
         virtual bool					operator==(const AQLMathPathYieldCurve& a) const;
 
     private:
-        const LACurvePricingObject*	mpYC;		// pointer to LACurvePricingObject class
+        const AQLCurvePricingObject*	mpYC;		// pointer to AQLCurvePricingObject class
         DayCount mDC;                       // day count
     };
 

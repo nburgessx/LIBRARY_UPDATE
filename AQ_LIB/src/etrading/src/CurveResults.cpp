@@ -13,7 +13,7 @@
 #include "AQLMathInterpolationUtilities.h"		// Get Interpolation Values
 #include "CurveValidation.h"			        // Convert Dates to Terms and vice versa
 #include "CurveUtilities.h"				        // DateFromTenor methods
-#include "LACurvePricingObject.h"	            // Methods to get the curve daycount conventions
+#include "AQLCurvePricingObject.h"	            // Methods to get the curve daycount conventions
 #include "AQLEnumConversion.h"		            // Methods to convert enum values to legacy enums
 
 // Interpolation Methods

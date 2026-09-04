@@ -9,7 +9,7 @@ namespace validation
 {
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix> TableInfo;
 
-    /* @brief Creates a LWOCurveMarketData object, containing all of the curve properties.
+    /* @brief Creates a AQOCurveMarketData object, containing all of the curve properties.
 	 * @param [in] objectName               The name of the Market Data object
 	 * @param [in] marketDataTypes          A vector of market data instrument types corresponding to each label-value block of market data
 	 * @param [in] infoBlocks               A vector of containing the label-value blocks of market data
@@ -59,7 +59,7 @@ namespace validation
 	 */
     std::string tryMeLWOCurveBumpAll( const std::string& objectName, const double bumpSize, const bool onlyBumpOutrightInstruments = true );
 
-	/* @brief Displays a LWOCurveMarketData
+	/* @brief Displays a AQOCurveMarketData
 	* @param [in] marketDataObjectName	The market data object you wish to display
 	* @param [in] marketDataKey			The name of the marketData label-value block that you wish to display
     * @param [in] columnIndexToDisplay	Optional Column Number to display (starting from 1). Specify -1 to get all columns
@@ -79,7 +79,7 @@ namespace validation
 																	 const std::string& marketDataKey,
 																	 const int columnIndexToDisplay = -1 );
 
-    /* @brief Displays a Column LWOCurveMarketData for use with Google Test Calibration Tests
+    /* @brief Displays a Column AQOCurveMarketData for use with Google Test Calibration Tests
 	* @param [in] curveObjectName   The curve object whose market data you wish to display
 	* @param [in] marketDataKey     The name of the marketData label-value block that you wish to display
     * @param [in] columnNumber      Optional Column Number to display using column base index 1 and -1 to display all columns

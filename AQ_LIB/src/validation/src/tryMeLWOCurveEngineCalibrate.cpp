@@ -6,7 +6,7 @@
 #include "EnvironmentUtilities.h"
 #include "ObjectUtilities.h"
 #include "CoreEnumerations.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "MultiCurveObject.h"
 
 #include <string>

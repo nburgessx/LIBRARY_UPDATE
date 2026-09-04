@@ -30,7 +30,7 @@ using etrading::ReadDataFile;
 using etrading::CreateDataFile;
 
 // Define the Test Input Folder Here
-#define TEST_DIR "ETrading/LWObjects/TestLWOSwapDelta_JPY_LCH6M/"
+#define TEST_DIR "ETrading/AQObjects/TestLWOSwapDelta_JPY_LCH6M/"
 
 
 namespace
@@ -176,9 +176,9 @@ namespace google_test
         buildCurves_JPY();
 
 		// Deliberately build the curves twice:
-		// We attempt to provoke a bug that previously existed in LAUpdateCurveObject::setUpGenerateConfig() when setting  isSwapTenorAdjust:
+		// We attempt to provoke a bug that previously existed in AQLUpdateCurveObject::setUpGenerateConfig() when setting  isSwapTenorAdjust:
 		// ( bug fixed in revision 8069 ).
-		// If the curves are built a 2nd time such that this curve data is reset, the code in LAUpdateCurveObject would incorrectly set the flag to true
+		// If the curves are built a 2nd time such that this curve data is reset, the code in AQLUpdateCurveObject would incorrectly set the flag to true
 		// ( by casting an AQLDataBool object pointer to bool ).
 		// This test is to make sure that we detect this type of coding error in future.
 		buildCurves_JPY();

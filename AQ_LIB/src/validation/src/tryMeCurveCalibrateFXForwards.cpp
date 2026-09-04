@@ -2,7 +2,7 @@
 
 #include "tryMeCurveCalibrateFXForwards.h"
 
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
@@ -59,7 +59,7 @@ namespace validation
             AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
-        LAUpdateStaticDataManager::setUpFwdFXConstantCurve( etrading::getDataInstance(), curveCollection, staticDataTable, fxFwdConv, curveConv, curveIndex );
+        AQLUpdateStaticDataManager::setUpFwdFXConstantCurve( etrading::getDataInstance(), curveCollection, staticDataTable, fxFwdConv, curveConv, curveIndex );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );

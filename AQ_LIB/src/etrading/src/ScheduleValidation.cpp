@@ -11,9 +11,9 @@
 
 // LA Includes
 #include "AQLStaticData.h"
-#include "LADateHelpers.h"
-#include "LADateScheduleHelpers.h"
-#include "LACurveForwardRateHelpers.h"
+#include "AQLDateHelpers.h"
+#include "AQLDateScheduleHelpers.h"
+#include "AQLCurveForwardRateHelpers.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataInterpolation.h"
 
@@ -94,11 +94,11 @@ namespace etrading
         if( !isInDateFormat )
         {
             // DateString is in Tenor Format
-            AQ_REQUIRE( LADateScheduleHelpers::isValidDate( asOfDate ), "Invalid Date: Unable to convert DateTenor to a date" )
-            resultDate = LADateScheduleHelpers::getDate( asOfDate, dateOrTenor, businessDayAdjustment, calendar );
+            AQ_REQUIRE( AQLDateScheduleHelpers::isValidDate( asOfDate ), "Invalid Date: Unable to convert DateTenor to a date" )
+            resultDate = AQLDateScheduleHelpers::getDate( asOfDate, dateOrTenor, businessDayAdjustment, calendar );
         }
 
-        AQ_REQUIRE( LADateScheduleHelpers::isValidDate( resultDate ), "Invalid Date " + dateOrTenor )
+        AQ_REQUIRE( AQLDateScheduleHelpers::isValidDate( resultDate ), "Invalid Date " + dateOrTenor )
         return resultDate;
     }
 
@@ -331,7 +331,7 @@ namespace etrading
         //
 
         // Asset Swap Schedule
-        etrading::LACurveForwardRateHelpers::generateSwapSchedule( effectiveDate,
+        etrading::AQLCurveForwardRateHelpers::generateSwapSchedule( effectiveDate,
                                                               maturityDate,
                                                               fixedLegFreq,
                                                               fixedLegAccrualBusinessDayAdjustment,
@@ -646,7 +646,7 @@ namespace etrading
         // Generate the swap schedule. This function populates the following schedule placeholders
         // ---------------------------------------------------------------------------------------
         //
-        etrading::LACurveForwardRateHelpers::generateFixedLegSchedule( isAssetSwap ? issueDate : effectiveDate,
+        etrading::AQLCurveForwardRateHelpers::generateFixedLegSchedule( isAssetSwap ? issueDate : effectiveDate,
                                                                   maturityDate,
                                                                   fixedLegFreq,
                                                                   fixedLegAccrualBusinessDayAdjustment,
@@ -836,7 +836,7 @@ namespace etrading
         // Generate the swap schedule. This function populates the following schedule placeholders
         // ---------------------------------------------------------------------------------------
         //
-        etrading::LACurveForwardRateHelpers::generateFloatLegSchedule( effectiveDate,
+        etrading::AQLCurveForwardRateHelpers::generateFloatLegSchedule( effectiveDate,
                                                                   maturityDate,
                                                                   floatLegFreq,
                                                                   floatLegFixingBusinessDayAdjustment,
@@ -901,7 +901,7 @@ namespace etrading
 													DateVector&          accrualEndDates,
 													const DateVector&    combinedAccrualDates )
     {
-        etrading::LACurveForwardRateHelpers::validateAndGenerateAccrualStartAndEndDates(accrualStartDates, accrualEndDates, combinedAccrualDates);
+        etrading::AQLCurveForwardRateHelpers::validateAndGenerateAccrualStartAndEndDates(accrualStartDates, accrualEndDates, combinedAccrualDates);
 
 		if (accrualStartDates.size() != accrualEndDates.size())
 		{
@@ -949,7 +949,7 @@ namespace etrading
             else if ( stubType == LONG_START_STUBTYPE )
             {
                 isStartRoll = false;
-                AQLDate pfoddTemp = LADateScheduleHelpers::firstStubDateFromStubType( startDate, endDate, term );
+                AQLDate pfoddTemp = AQLDateScheduleHelpers::firstStubDateFromStubType( startDate, endDate, term );
                 firstStubDtPtr = &pfoddTemp;
                 lastStubDtPtr = nullptr;
             }
@@ -962,7 +962,7 @@ namespace etrading
             else if ( stubType == LONG_END_STUBTYPE )
             {
                 isStartRoll = true;
-                AQLDate pfoddTemp = LADateScheduleHelpers::lastStubDateFromStubType( startDate, endDate, term );
+                AQLDate pfoddTemp = AQLDateScheduleHelpers::lastStubDateFromStubType( startDate, endDate, term );
                 firstStubDtPtr = nullptr;
                 lastStubDtPtr = &pfoddTemp;
             }
@@ -1119,7 +1119,7 @@ namespace etrading
         // Generate accrual schedule and payment schedule. 
         // ---------------------------------------------------------------------------------------
         //
-		etrading::LACurveForwardRateHelpers::generateAccrualAndPaymentSchedule( accrualDates,
+		etrading::AQLCurveForwardRateHelpers::generateAccrualAndPaymentSchedule( accrualDates,
 												                                paymentDates,
 												                                effectiveDate,
 												                                maturityDate,
@@ -1233,7 +1233,7 @@ namespace etrading
         //
         // Generate accrual schedule and payment schedule. 
         //
-        DateVector fixingDates = etrading::LACurveForwardRateHelpers::getFixingSchedule( accrualDates,
+        DateVector fixingDates = etrading::AQLCurveForwardRateHelpers::getFixingSchedule( accrualDates,
 																						 fixingBusinessDayAdjustment,
 																						 fixingCalendar,
 																						 fixLag,
@@ -1271,7 +1271,7 @@ namespace etrading
 		DoubleVector dVec;
 		for(size_t i=0;i<dateVec.size(); ++i)
 		{
-			dVec.push_back((double)(LADateScheduleHelpers::getExcelDate(dateVec[i])));
+			dVec.push_back((double)(AQLDateScheduleHelpers::getExcelDate(dateVec[i])));
 		}
 		return dVec;
 	}
@@ -1287,7 +1287,7 @@ namespace etrading
 		{
 			return std::numeric_limits<double>::quiet_NaN();
 		}
-        return ((double)(LADateScheduleHelpers::getExcelDate(date)));
+        return ((double)(AQLDateScheduleHelpers::getExcelDate(date)));
 	}
 
     /* @brief Transform dates from double format to AQLDate format
@@ -1299,7 +1299,7 @@ namespace etrading
 		DateVector dVec;
 		for(size_t i=0;i<doubleVec.size(); ++i)
 		{
-			dVec.push_back( LADateScheduleHelpers::getLADate( (int)( doubleVec[i] ) ) );
+			dVec.push_back( AQLDateScheduleHelpers::getLADate( (int)( doubleVec[i] ) ) );
 		}
 		return dVec;
 	}
@@ -1458,7 +1458,7 @@ namespace etrading
         else
         {
 			AQLString dayCountStr( toString( dayCount ).c_str() );
-            tao = LADateScheduleHelpers::getTerm( fromDate, toDate, dayCountStr, includeLast );
+            tao = AQLDateScheduleHelpers::getTerm( fromDate, toDate, dayCountStr, includeLast );
         }
         return tao;
     }
@@ -1687,14 +1687,14 @@ namespace etrading
     {
         if ( !useRollConvention )
 		{
-			AQLDate adjustedDate = LADateScheduleHelpers::getDate(unadjustedDate, tenorAdjustment, busDayAdj, calendar);
+			AQLDate adjustedDate = AQLDateScheduleHelpers::getDate(unadjustedDate, tenorAdjustment, busDayAdj, calendar);
             return adjustedDate;
 		}
 		else
         {
             DateVector inputs, outputs;
 		    inputs.push_back(unadjustedDate);
-            outputs = LADateScheduleHelpers::getMultiDate( inputs, tenorAdjustment, busDayAdj, calendar, &rollConvention );
+            outputs = AQLDateScheduleHelpers::getMultiDate( inputs, tenorAdjustment, busDayAdj, calendar, &rollConvention );
             AQLDate adjustedDate = outputs[0];
             return adjustedDate;
         }
@@ -2062,7 +2062,7 @@ namespace etrading
 		DateVector fixingEndDates;
 		fixingEndDates.reserve(accrualEndDates.size());
 
-		if (!etrading::LACurveForwardRateHelpers::isFixingInAdvance(fixingAdvanceOrArrears.c_str()))
+		if (!etrading::AQLCurveForwardRateHelpers::isFixingInAdvance(fixingAdvanceOrArrears.c_str()))
 		{
 			throw AQLCoreInvalidData("#Error: For OIS Swap, fixing in arrears is not supported.", __FILE__, __LINE__);
 		}

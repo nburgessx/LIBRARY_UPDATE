@@ -80,7 +80,7 @@
 #include "AQLPricePayOff.h"
 #include "AQLPriceCouponRainbow.h"
 #include "AQLDataCSVFileLoader.h"
-#include "LACurvePricingObject.h"
+#include "AQLCurvePricingObject.h"
 #include "AQLString.h"
 #include <iomanip>
 

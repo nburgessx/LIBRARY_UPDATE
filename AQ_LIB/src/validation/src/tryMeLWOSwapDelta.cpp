@@ -4,7 +4,7 @@
 #include "Swap.h"
 #include "DeltaRiskGenerator.h"
 #include "MultiCurveDeltaRiskGenerator.h"
-#include "LWOUtilities.h"
+#include "AQOUtilities.h"
 #include "DateUtilities.h"
 #include "StructuredExceptionHandler.h"
 #include "TypeHelpers.h"

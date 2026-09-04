@@ -7,7 +7,7 @@
 #include "tryMirOISParRate.h"
 #include "tryMirOISSwapPV.h"
 #include "YieldCurveUtil.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "InitializeETrading.h"
 #include "tryMeUtilitySetup.h"
 #include <sstream>
@@ -232,8 +232,8 @@ namespace google_test
 			// Effective date
 			AQLString asofDateStr;
 			findValByKey(asofDateStr, generateProp, generatePropkeys, "AsOfDate");
-			AQLDate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
-			AQLDate effectiveDate = etrading::LADateScheduleHelpers::getDate( asofDate, spotLag, oisRollConvention, oisCalendar );
+			AQLDate asofDate = etrading::AQLDateScheduleHelpers::getLADate(asofDateStr);
+			AQLDate effectiveDate = etrading::AQLDateScheduleHelpers::getDate( asofDate, spotLag, oisRollConvention, oisCalendar );
 					
 			// OIS long term convention
 			AQLString oisLongTermConvention("");
@@ -250,7 +250,7 @@ namespace google_test
 			AQLDate longTermCutoffDate;
 			if (oisLongTermTenor.size() != 0 && oisLongTermTenor.size() != 0)
 			{
-				longTermCutoffDate = etrading::LADateScheduleHelpers::getDate(effectiveDate, oisLongTermTenor, "", "");
+				longTermCutoffDate = etrading::AQLDateScheduleHelpers::getDate(effectiveDate, oisLongTermTenor, "", "");
 			}
 
 			//----------------------------------------------------------------------------------------
@@ -280,7 +280,7 @@ namespace google_test
 					// Do NOT test this swap as an OIS outright swap when the maturity tenor is longer than the longTermCutOff tenor
 					if (oisLongTermConvention.size() != 0 && oisLongTermTenor.size() != 0)
 					{					
-						AQLDate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
+						AQLDate maturity = etrading::AQLDateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
 						if (maturity >= longTermCutoffDate)
 						{
 							continue;
@@ -348,7 +348,7 @@ namespace google_test
 				
 					if (oisLongTermConvention.size() != 0 && oisLongTermTenor.size() != 0)
 					{					
-						AQLDate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
+						AQLDate maturity = etrading::AQLDateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
 						if (maturity >= longTermCutoffDate)
 						{
 							// Find libor swap par rate

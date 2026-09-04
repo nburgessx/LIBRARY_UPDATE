@@ -11,7 +11,7 @@ namespace etrading
 {
 
     CurveData::CurveData( const std::string& collectionName, const CurveTenorEnum curveTenorEnum )
-        : etrading::HasConstInstance<CurveTenorEnum>( curveTenorEnum ), IsLWOObject( collectionName, CURVE_DATA ), oisSwapQuotes_(), basisSwapQuotes_()
+        : etrading::HasConstInstance<CurveTenorEnum>( curveTenorEnum ), IsAQObject( collectionName, CURVE_DATA ), oisSwapQuotes_(), basisSwapQuotes_()
     {}
     
     std::shared_ptr<MarketQuote> CurveData::getMarketQuotes( const MarketQuoteTypeEnum mdtype ) const

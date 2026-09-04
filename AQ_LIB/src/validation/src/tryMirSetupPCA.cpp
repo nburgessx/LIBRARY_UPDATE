@@ -1,6 +1,6 @@
 #include "tryMirSetupPCA.h"
 
-#include "LAUpdateStaticDataManager.h"
+#include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 
@@ -43,7 +43,7 @@ namespace validation
 
         DoubleArray mean;
         DoubleMatrix coVar;
-        etrading::LAUpdateStaticDataManager::CalcMeanAndCovariance( data, mean, coVar );
+        etrading::AQLUpdateStaticDataManager::CalcMeanAndCovariance( data, mean, coVar );
 
         DoubleMatrix corr( coVar.size() );
         if ( isScale )
@@ -73,7 +73,7 @@ namespace validation
         }
 
         // Carry out PCA
-        etrading::LAUpdateStaticDataManager::SetUpPCA( dataInstance, corr, factorNum, id );
+        etrading::AQLUpdateStaticDataManager::SetUpPCA( dataInstance, corr, factorNum, id );
 
         ++num_call_pca[id.getCString()];
         AQLString msg = id + ":" + AQLString( static_cast<int > ( num_call_pca[id.getCString()] ) );

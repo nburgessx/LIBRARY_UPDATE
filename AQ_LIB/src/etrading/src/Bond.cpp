@@ -12,14 +12,14 @@
 namespace etrading
 {
     Bond::Bond( const std::string& bondObjectName, const LabelValueBlock& bondLVB, const LabelValueBlock& scheduleLVB )
-        : IsLWOObject( bondObjectName, BOND ), schedule_(), bondParameters_( bondLVB ), scheduleParameters_( scheduleLVB ), bondObjectName_( bondObjectName ), bondYieldParameters_()
+        : IsAQObject( bondObjectName, BOND ), schedule_(), bondParameters_( bondLVB ), scheduleParameters_( scheduleLVB ), bondObjectName_( bondObjectName ), bondYieldParameters_()
 	{
 		
 		initializeBondDescriptionLVB(bondLVB);
 	}
 
 	Bond::Bond(const std::string& bondObjectName, const LabelValueBlock& bondLVB)
-		: IsLWOObject(bondObjectName, BOND), schedule_(), bondParameters_(bondLVB), scheduleParameters_(LabelValueBlock()), bondObjectName_(bondObjectName), bondYieldParameters_()
+		: IsAQObject(bondObjectName, BOND), schedule_(), bondParameters_(bondLVB), scheduleParameters_(LabelValueBlock()), bondObjectName_(bondObjectName), bondYieldParameters_()
 	{
 		initializeBondDescriptionLVB(bondLVB);
 
@@ -40,7 +40,7 @@ namespace etrading
 	}
 
     Bond::Bond( const Bond& rhs )
-        : IsLWOObject( rhs.getRefToName(), BOND ), bondParameters_( rhs.bondParameters_ ), scheduleParameters_( rhs.scheduleParameters_ ), bondObjectName_( rhs.bondObjectName_ )
+        : IsAQObject( rhs.getRefToName(), BOND ), bondParameters_( rhs.bondParameters_ ), scheduleParameters_( rhs.scheduleParameters_ ), bondObjectName_( rhs.bondObjectName_ )
 	{
         // Initialize Bond Label Value Block Parameters
         bondDescription_            = rhs.bondDescription_;

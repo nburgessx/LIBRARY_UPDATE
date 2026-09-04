@@ -59,7 +59,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::BASIS_SWAP_MARKETDATA,    // Calibration Instrument: Tenor Basis Swap
                                        { "1Y", "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y", "25Y", "30Y" }, // Calibration Tenors                                  
-                                       curveObjectEUR1ML_,                               // LWOCurveName
+                                       curveObjectEUR1ML_,                               // AQOCurveName
                                        "EURYC",                                          // CurveCollection
                                        "20180814",                                       // Swap Effective Date
                                        "EUR_BASIS_1X3",                                  // Swap Generator
@@ -112,7 +112,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::BASIS_SWAP_MARKETDATA,    // Calibration Instrument: Tenor Basis Swap
                                        { "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y", "25Y", "30Y" }, // Calibration Tenors                                  
-                                       curveObjectEUR12ML_,                              // LWOCurveName
+                                       curveObjectEUR12ML_,                              // AQOCurveName
                                        "EURYC",                                          // CurveCollection
                                        "20180814",                                       // Swap Effective Date
                                        "EUR_BASIS_6X12",                                 // Swap Generator

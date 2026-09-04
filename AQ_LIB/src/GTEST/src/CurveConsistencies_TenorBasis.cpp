@@ -8,7 +8,7 @@
 #include "tryMirGetDate.h"
 #include "tryMirGetParRate.h"
 #include "YieldCurveUtil.h"
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "InitializeETrading.h"
 #include "tryMeUtilitySetup.h"
 #include "ExceptionMacros.h"
@@ -339,9 +339,9 @@ namespace google_test
 			// Effective dates
 			AQLString asofDateStr;
 			findValByKey(asofDateStr, generateProp, generatePropkeys, "AsOfDate");
-			AQLDate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
-			AQLDate a_startDate = etrading::LADateScheduleHelpers::getDate( asofDate, a_spotLag, a_rollConvention, a_calendar );
-			AQLDate t_startDate = etrading::LADateScheduleHelpers::getDate( asofDate, t_spotLag, t_rollConvention, t_calendar );
+			AQLDate asofDate = etrading::AQLDateScheduleHelpers::getLADate(asofDateStr);
+			AQLDate a_startDate = etrading::AQLDateScheduleHelpers::getDate( asofDate, a_spotLag, a_rollConvention, a_calendar );
+			AQLDate t_startDate = etrading::AQLDateScheduleHelpers::getDate( asofDate, t_spotLag, t_rollConvention, t_calendar );
 			if (a_startDate != t_startDate)
 			{
 				AQLString err = "#Err: Start date is not the same on both legs. This scenario is currently not supported by the test. Please amend your test file or enhance code.";
@@ -373,14 +373,14 @@ namespace google_test
 				{
 					maturityTenor = basisRates(k, colCount - 1);
 					startTenor = basisRates(k, colCount - 2);
-					a_effectiveStart = etrading::LADateScheduleHelpers::getDate( a_startDate, startTenor, a_rollConvention, a_calendar );
-					t_effectiveStart = etrading::LADateScheduleHelpers::getDate( t_startDate, startTenor, t_rollConvention, t_calendar );
+					a_effectiveStart = etrading::AQLDateScheduleHelpers::getDate( a_startDate, startTenor, a_rollConvention, a_calendar );
+					t_effectiveStart = etrading::AQLDateScheduleHelpers::getDate( t_startDate, startTenor, t_rollConvention, t_calendar );
 				}
 				else
 				{
 					maturityTenor = basisRates(k, 0);
 				}
-				AQLDate maturity = etrading::LADateScheduleHelpers::getDate(a_effectiveStart, maturityTenor, "", "");	// Maturity date must not be adjusted first
+				AQLDate maturity = etrading::AQLDateScheduleHelpers::getDate(a_effectiveStart, maturityTenor, "", "");	// Maturity date must not be adjusted first
 				
 				AQLString frequencyFixed = (isLeg1Spread == isLeg1Target) ? t_frequency : a_frequency;
 				AQLString dayCountFixed  = (isLeg1Spread == isLeg1Target) ? t_dayCount : a_dayCount;

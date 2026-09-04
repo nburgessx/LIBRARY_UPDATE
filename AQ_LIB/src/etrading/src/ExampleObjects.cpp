@@ -5,7 +5,7 @@
 namespace etrading
 {
     StandAlone::StandAlone( const std::string& objectName ) :
-        IsLWOObject( objectName, etrading::EXAMPLE_STAND_ALONE ),
+        IsAQObject( objectName, etrading::EXAMPLE_STAND_ALONE ),
         d_( 10.0 )
     {};
 

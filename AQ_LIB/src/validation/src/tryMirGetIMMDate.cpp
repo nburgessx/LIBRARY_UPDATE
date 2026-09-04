@@ -1,6 +1,6 @@
 #include "tryMirGetIMMDate.h"
 
-#include "LADateScheduleHelpers.h"
+#include "AQLDateScheduleHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -40,7 +40,7 @@ namespace validation
 
 		AQLString calendarCopy( calendar );
 		AQLString slidingRuleCopy( slidingRule );
-        AQLDate immDate = etrading::LADateScheduleHelpers::getIMMDate1( year, month, calendarCopy, slidingRuleCopy );
+        AQLDate immDate = etrading::AQLDateScheduleHelpers::getIMMDate1( year, month, calendarCopy, slidingRuleCopy );
         AQLString ret = immDate.stringWithFormat( "YYYYMMDD" );
 
         if ( CreateDataFile::recordEnabled() )
@@ -82,7 +82,7 @@ namespace validation
 
 		AQLString calendarCopy( calendar );
 		AQLString slidingRuleCopy( slidingRule );
-        AQLDate immDate = etrading::LADateScheduleHelpers::getIMMDate2( year, number, calendarCopy, slidingRuleCopy );
+        AQLDate immDate = etrading::AQLDateScheduleHelpers::getIMMDate2( year, number, calendarCopy, slidingRuleCopy );
         AQLString ret = immDate.stringWithFormat( "YYYYMMDD" );
 
         if ( CreateDataFile::recordEnabled() )
@@ -124,7 +124,7 @@ namespace validation
 
 		AQLString calendarCopy( calendar );
 		AQLString slidingRuleCopy( slidingRule );
-        AQLDate immDate = etrading::LADateScheduleHelpers::getIMMDate3( baseDate, number, calendarCopy, slidingRuleCopy );
+        AQLDate immDate = etrading::AQLDateScheduleHelpers::getIMMDate3( baseDate, number, calendarCopy, slidingRuleCopy );
         AQLString ret = immDate.stringWithFormat( "YYYYMMDD" );
 
         if ( CreateDataFile::recordEnabled() )
