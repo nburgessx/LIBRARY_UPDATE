@@ -1,6 +1,8 @@
 #include "CurveOis.h"
 
-#include "tryMirSetUpOISCurve.h"
+#include "AQLUpdateStaticDataManager.h"
+#include "CurveValidation.h"          // etrading::checkIfCurveExists
+#include "CurveResultsContainer.h"    // AQ_CLEAR_CURVE_RESULTS_CACHE
 #include "YieldCurveUtil.h"
 #include "InitializeETrading.h"
 
@@ -13,7 +15,8 @@ namespace google_test
         {
             try
             {
-                validation::tryMirSetUpOISCurve( getDataInstance(),
+                AQ_CLEAR_CURVE_RESULTS_CACHE
+                etrading::AQLUpdateStaticDataManager::setUpOISCurve( getDataInstance(),
                                                      curveID_,
                                                      marketName_,
                                                      inputFile_["generalProps"],
@@ -25,6 +28,7 @@ namespace google_test
                                                      inputFile_["loBasisConv"],
                                                      inputFile_.getOptional( "swapRates" ),
                                                      inputFile_.getOptional( "swapConv" ) );
+                etrading::checkIfCurveExists( getDataInstance(), curveID_ );
             }
             catch( const AQLCoreError& m )
             {
@@ -37,7 +41,7 @@ namespace google_test
         }
     };
 
-	/* 
+	/*
 	*  @brief			Set up OIS curve
 	*  @param [in]		inputFile	File representation of the curve
     */
@@ -52,7 +56,8 @@ namespace google_test
 
 			try
             {
-                validation::tryMirSetUpOISCurve( etrading::InitializeETrading::instance().dataInstance(),
+                AQ_CLEAR_CURVE_RESULTS_CACHE
+                etrading::AQLUpdateStaticDataManager::setUpOISCurve( etrading::InitializeETrading::instance().dataInstance(),
                                                      curveID,
                                                      marketName,
                                                      inputFileObj["generalProps"],
@@ -64,6 +69,7 @@ namespace google_test
                                                      inputFileObj["loBasisConv"],
                                                      inputFileObj.getOptional( "swapRates" ),
                                                      inputFileObj.getOptional( "swapConv" ) );
+                etrading::checkIfCurveExists( etrading::InitializeETrading::instance().dataInstance(), curveID );
             }
             catch( const AQLCoreError& m )
             {

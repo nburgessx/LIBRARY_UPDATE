@@ -1,5 +1,7 @@
 #include "CurveStd.h"
-#include "tryMirSetUpSwapCurve.h"
+#include "AQLUpdateStaticDataManager.h"
+#include "CurveValidation.h"          // etrading::checkIfCurveExists
+#include "CurveResultsContainer.h"    // AQ_CLEAR_CURVE_RESULTS_CACHE
 #include "YieldCurveUtil.h"
 #include "InitializeETrading.h"
 
@@ -12,7 +14,8 @@ namespace google_test
         {
             try
             {
-                validation::tryMirSetUpSwapCurve(
+                AQ_CLEAR_CURVE_RESULTS_CACHE
+                etrading::AQLUpdateStaticDataManager::setUpSwapCurve(
                     getDataInstance(),
                     curveID_,
                     marketName_,
@@ -31,6 +34,7 @@ namespace google_test
                     inputFile_["adjustSwapRates"],
                     inputFile_["curveNames"],
                     inputFile_["curveName_DF2"] );
+                etrading::checkIfCurveExists( getDataInstance(), curveID_ );
             }
             catch( const AQLCoreError& m )
             {
@@ -58,7 +62,8 @@ namespace google_test
 
 			try
             {
-                validation::tryMirSetUpSwapCurve(
+                AQ_CLEAR_CURVE_RESULTS_CACHE
+                etrading::AQLUpdateStaticDataManager::setUpSwapCurve(
                     etrading::InitializeETrading::instance().dataInstance(),
                     curveID,
                     marketName,
@@ -77,6 +82,7 @@ namespace google_test
                     inputFileObj["adjustSwapRates"],
                     inputFileObj["curveNames"],
                     inputFileObj["curveName_DF2"] );
+                etrading::checkIfCurveExists( etrading::InitializeETrading::instance().dataInstance(), curveID );
             }
             catch( const AQLCoreError& m )
             {

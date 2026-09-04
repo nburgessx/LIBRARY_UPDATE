@@ -1,10 +1,14 @@
 #include "CurveXccyBasis.h"
+#include "AQLUpdateStaticDataManager.h"
+#include "CurveValidation.h"          // etrading::checkIfCurveExists
+#include "CurveResultsContainer.h"    // AQ_CLEAR_CURVE_RESULTS_CACHE
 #include "YieldCurveUtil.h"
 #include "InitializeETrading.h"
-#include "tryMirSetUpBasisSwapCurve.h"
 
 namespace google_test
 {
+    // Argument order below is that of etrading::AQLUpdateStaticDataManager::setUpBasisCurve;
+    // the validation wrapper that previously sat here reordered the fixture inputs into it.
     CurveXccyBasis::CurveXccyBasis( const AQLString& inputFile )
         : CurveAccessors( inputFile )
     {
@@ -12,17 +16,22 @@ namespace google_test
         {
             try
             {
-                validation::tryMirSetUpBasisSwapCurve(
+                AQ_CLEAR_CURVE_RESULTS_CACHE
+                etrading::AQLUpdateStaticDataManager::setUpBasisCurve(
                     getDataInstance(),
                     curveID_,
                     marketName_,
-                    inputFile_["generalProps"],
-                    inputFile_["basisConv"],
                     inputFile_["basisRates"],
-                    inputFile_["curveNames"],
-                    inputFile_["fwdConv"],
+                    inputFile_["basisConv"],
                     inputFile_["fwdFXs"],
-                    inputFile_["spotFXs"] );
+                    inputFile_["fwdConv"],
+                    inputFile_["spotFXs"],
+                    inputFile_["generalProps"],
+                    AQLStringMatrix( 0 ),          // moneyConv (unused for xccy basis)
+                    inputFile_["curveNames"],
+                    AQLStringMatrix(),             // fraConv (not supplied for xccy basis)
+                    AQLStringMatrix() );           // fraRates
+                etrading::checkIfCurveExists( getDataInstance(), curveID_ );
             }
             catch( const AQLCoreError& m )
             {
@@ -35,7 +44,7 @@ namespace google_test
         }
     }
 
-	/* 
+	/*
 	*  @brief			Set up xccy basis curve
 	*  @param [in]		inputFile	File representation of the curve
     */
@@ -50,17 +59,22 @@ namespace google_test
 
 			try
             {
-                validation::tryMirSetUpBasisSwapCurve(
+                AQ_CLEAR_CURVE_RESULTS_CACHE
+                etrading::AQLUpdateStaticDataManager::setUpBasisCurve(
                     etrading::InitializeETrading::instance().dataInstance(),
                     curveID,
                     marketName,
-                    inputFileObj["generalProps"],
-                    inputFileObj["basisConv"],
                     inputFileObj["basisRates"],
-                    inputFileObj["curveNames"],
-                    inputFileObj["fwdConv"],
+                    inputFileObj["basisConv"],
                     inputFileObj["fwdFXs"],
-                    inputFileObj["spotFXs"] );
+                    inputFileObj["fwdConv"],
+                    inputFileObj["spotFXs"],
+                    inputFileObj["generalProps"],
+                    AQLStringMatrix( 0 ),          // moneyConv (unused for xccy basis)
+                    inputFileObj["curveNames"],
+                    AQLStringMatrix(),             // fraConv
+                    AQLStringMatrix() );          // fraRates
+                etrading::checkIfCurveExists( etrading::InitializeETrading::instance().dataInstance(), curveID );
             }
             catch( const AQLCoreError& m )
             {
