@@ -1,8 +1,9 @@
 # Rebrand status — pause point 2026-09-05 ~04:00
 
-**HEAD: `5a29a51a`. Last user-confirmed green build: `97c8461e` (step 6a).**
-Unbuilt: `5a29a51a` (step 6b — mir stack deleted, 166 files; needs a full
-Rebuild + GTest, expect 43 fewer test suites, all remaining must pass).
+**HEAD: `8e632c65`. Last user-confirmed green build: `5a29a51a` (step 6b).**
+Unbuilt: `ab35bf0b` (7b prose sweep) and `8e632c65` (7c embedded LWO -> AQO:
+34 GTEST files renamed, 1108 fixture paths + their code strings moved in
+lockstep, 200 project-file refs). Needs a full Rebuild + GTest.
 Tree is clean. `baseline` tag is the pre-rebrand reference for GTest output diffs.
 
 ---
@@ -32,7 +33,17 @@ Tree is clean. `baseline` tag is the pre-rebrand reference for GTest output diff
 15 `__LAMATH*_H__` guards in `src/models/include/` → `__AQLMATH*_H__`. Guard-token
 only, no build impact.
 
-### Step 7b — prose sweep  ← PENDING (own pass)
+### Step 7b/7c — LWO + MLIB sweep  ← DONE (`ab35bf0b`, `8e632c65`)
+7b: 299 bare LWO->AQO (comments + 9 message strings), 117 plain-English
+supplements, 28 MLIB test labels -> AQ, deleted stale AQ_API README.txt.
+7c: 128 embedded LWO/lwo identifiers, 34 TestLWO*.cpp renamed, the
+ETrading/LWObjects fixture tree (1108 files) renamed in lockstep with its code
+path-strings, 200 vcxproj/.filters refs.
+Only `lwoer` (a typo for 'lower' in a comment, math/src/AQLFunctionUtilities.cpp)
+is left under src/ -- deliberately untouched. Remaining LWO lives in
+resources/{documentation,examples} -> Phase 6 audit.
+
+### OLD 7b note (superseded)
 ~70 `MLIB` GTest test-case labels (`UNIT_TestMacro_MLIB_THROW`) + ~296 `LWO`
 prose/error-string mentions (`"LWO Curve … does not exist"` → `AQO`/`Object`? — a
 naming call). `validation_api` / `MLIB_CLIENT_API` / `GOOGLE_TEST` residue is
