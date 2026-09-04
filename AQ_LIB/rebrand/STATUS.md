@@ -223,14 +223,11 @@ existing `AsOfDate` / `getAsOfDate` spellings — a separate, pre-existing inter
 inconsistency), and a sweep of `Displaye` would have turned `msgDisplayed` into
 `msgDisplayd`.
 
-### OPEN — needs a decision
-`tryAqObjRatesFixingTableDisplaye_outputs`, `validation/src/tryAqObjRatesFixingTable.cpp:165`.
-Both spellings sit in the **same function**: `Display_outputs` on the success
-branch (line 145), `Displaye_outputs` on the error branch (line 165). Correcting
-the typo would make the error recording overwrite the success recording for the
-same table name, so it is a behaviour change, not a cosmetic fix. Suggested
-resolution: rename the error branch to `tryAqObjRatesFixingTableDisplay_error_outputs`.
-Left untouched pending Nicholas.
+### Resolved: the Displaye_outputs recording name
+`tryAqObjRatesFixingTable.cpp:165` now writes `tryAqObjRatesFixingTableDisplay_outputs`,
+matching line 145. Nicholas confirmed this is safe: the two are the success and
+error branches of one `if`, so only one of them runs per call and only one file
+is written per invocation.
 
 ### Still open from step 8 (unchanged)
 The 5 wrapper-name-drift advisories from `api_pair_check.py`. All route through

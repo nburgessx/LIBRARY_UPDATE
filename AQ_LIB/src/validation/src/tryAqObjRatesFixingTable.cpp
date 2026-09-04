@@ -162,7 +162,7 @@ namespace validation
             std::string errString =  ( boost::format( "Fixing table %s does not exist" ) % tableName.c_str() ).str();
             if ( CreateDataFile::recordEnabled() )
             {
-				CreateDataFile file( decorateFilename( "tryAqObjRatesFixingTableDisplaye_outputs", tableName.c_str() ) );
+				CreateDataFile file( decorateFilename( "tryAqObjRatesFixingTableDisplay_outputs", tableName.c_str() ) );
                 file.write( "output", errString.c_str() );
             }
             AQ_THROW( errString );
