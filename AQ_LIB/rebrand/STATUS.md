@@ -1,6 +1,9 @@
 # Rebrand status — pause point 2026-09-05 ~04:00
 
-**HEAD: `2d7eb95c` — builds green, all GTests pass (user-confirmed).**
+**HEAD: `97c8461e`. Last user-confirmed green build: `2d7eb95c`.**
+Since then, unbuilt: `4fb2fdb6` (step 7a guards, no build impact) and
+`97c8461e` (step 6a — GTEST curve-fixture builders ported off mir wrappers;
+needs a build + GTest run to confirm the Basis/FwdFXConst arg reordering).
 Tree is clean. `baseline` tag is the pre-rebrand reference for GTest output diffs.
 
 ---
@@ -26,7 +29,50 @@ Tree is clean. `baseline` tag is the pre-rebrand reference for GTest output diff
 
 ## Pending — Phase 3
 
-### Step 7 — include-guard / comment sweep  ← ATTEMPTED, REVERTED
+### Step 7a — legacy include guards  ← DONE (`4fb2fdb6`)
+15 `__LAMATH*_H__` guards in `src/models/include/` → `__AQLMATH*_H__`. Guard-token
+only, no build impact.
+
+### Step 7b — prose sweep  ← PENDING (own pass)
+~70 `MLIB` GTest test-case labels (`UNIT_TestMacro_MLIB_THROW`) + ~296 `LWO`
+prose/error-string mentions (`"LWO Curve … does not exist"` → `AQO`/`Object`? — a
+naming call). `validation_api` / `MLIB_CLIENT_API` / `GOOGLE_TEST` residue is
+**Linux-Makefile only → Phase 7**. `XllPlus` → Phase 4.
+
+### Step 6 — mir removal  ← IN PROGRESS
+**6a DONE (`97c8461e`)**: 5 GTEST curve-fixture builders (`CurveOis/Std/TenorBasis/
+XccyBasis/FwdFxConst.cpp`) now call `etrading::AQLUpdateStaticDataManager::setUp*
+Curve` directly. Needs build + GTest.
+
+**6b TODO** (bigger than first scoped):
+  1. Port `src/GTEST/src/InterestRateSwap.cpp` — shared helper used by ~8 keeper
+     Trade tests; its `parRate()/pv()/pv01()` call `tryMirGetParRate4` (→ schedule
+     gen + `etrading::AQLCurveForwardRateHelpers::getParRate`), `tryMirSwapPV`,
+     `tryMirSwapPV01`. Not trivial passthroughs — read the 3 wrappers, reproduce inline.
+  2. Gut `TestCurveEngineCalibrate.cpp` — drop the DEAD `testEngineCurveForwardRates`
+     method (all call sites already commented out) + `#include "tryMirGetForwardRate.h"`
+     + `#include "CurveOis.h"`.
+  3. `git rm`: `src/AQ_API/source/mir*.{h,cpp}` (58, nothing else references), 
+     `src/validation/{include,src}/tryMir*.{h,cpp}` (65), and 36 mir-only GTEST .cpp
+     (`InterestRateSwap.cpp`? NO — that's the ported helper; its `.h` in GTEST/include
+     is shared, keep. The 36 are `TestCurve{Ois,Std,TenorBasis,XccyBasis,FwdFxConst}*`
+     (test suites, not the builders), `TestCurveReplay`, `TestMirDateFunctions`,
+     `TestDatesECB`, `TestTradeEUR{AssetSwapSpread,OISParRate,SwapStubRate}`,
+     `CurveConsistencies_{OIS,STD,TenorBasis}`, `LinearSplineTests`, `Test_IsFwdInter`,
+     `InterestRateSwap.cpp`→NO). 
+     Recount: exclude the 5 kept builders and InterestRateSwap → ~35 test .cpp.
+  4. Edit `swig_{CSharp,JAVA,Python,R}.i` — drop `%include`/`#include "mir*.h"` lines
+     (keep `EntityPoolUtilities.h`).
+  5. Edit `apiTryAqToolsLVB.h` — drop dead `#include "MBTemplateType.h"`.
+  6. Edit `BindFileToClassConstructor.h:20` — stale `_tryMirSetUpOISCurve_inputs`
+     comment example.
+  7. vcxproj/.filters: strip mir + deleted-test entries from AQ_API / validation / GTEST.
+  8. **KEEP all `resources/test/inputs/` fixture files** — keeper tests read the
+     `*_tryMirSetUp*_inputs.csv` fixtures via the ported builders; orphan CSVs
+     (dirs of deleted tests) → Phase 6 resources audit.
+  9. `EntityPoolUtilities` + `tryAqToolsClearEntityPool` — CORE, keep.
+
+### OLD step-7 note (broad attempt, reverted)
 A quick script anchored on `#ifndef`/`#define` lines mangled **non-guard conditional-define macros**
 (`IR_CALIBRATION_DATA_MAXLOOP → …AQXLOOP`, `MARKETTYPE → AQRKETTYPE`, `LEVENBERG_MARQUARDT → …AQRQUARDT`,
 `MAXTERM → AQXTERM`) — the classic `MA`-in-English hazard. Fully reverted; nothing committed.
