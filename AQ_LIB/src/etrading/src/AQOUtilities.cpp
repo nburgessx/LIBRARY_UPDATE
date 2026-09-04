@@ -67,17 +67,17 @@ namespace etrading
 		return inflationCurve;
 	}
 	
-    bool doesLWOExist( const std::string& objectName, const etrading::CachedObjectEnum& objectTypeEnum )
+    bool doesAQOExist( const std::string& objectName, const etrading::CachedObjectEnum& objectTypeEnum )
     {
         auto objectNames = etrading::Environment::defaultEnv().getObjectNames( objectTypeEnum );
         return ( etrading::getIndexOf( objectName, objectNames ) >= 0 );
     }
 
-    bool doesLWOExist( const std::string& objectName, const std::string& objectTypeAsString )
+    bool doesAQOExist( const std::string& objectName, const std::string& objectTypeAsString )
     {
         const etrading::CachedObjectEnum objectTypeEnum = etrading::toCachedObjectEnum( etrading::trim_to_upper( objectTypeAsString.c_str() ) );
         // Call the Enumerated Method
-        return doesLWOExist( objectName, objectTypeEnum );
+        return doesAQOExist( objectName, objectTypeEnum );
     }
 
 	LegPtr getLeg(const std::string& objectName)

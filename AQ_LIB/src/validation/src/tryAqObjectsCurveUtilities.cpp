@@ -37,7 +37,7 @@ namespace validation
 
     const bool tryAqObjectsCurveDelete( const std::string& curveName )
     {
-        if ( !etrading::doesLWOExist( curveName, "CURVE" ) )
+        if ( !etrading::doesAQOExist( curveName, "CURVE" ) )
         {
             AQ_THROW( ( boost::format( "Object %s does not exist." ) % curveName.c_str() ).str().c_str() );
         }
@@ -49,30 +49,30 @@ namespace validation
         return etrading::Environment::defaultEnv().deleteAllObjects<etrading::AQOCurve>();
     };
 
-    std::string tryAqObjectsCurveSave(	const std::string& lwoCurveName,
+    std::string tryAqObjectsCurveSave(	const std::string& aqoCurveName,
                                     const std::string& fileNameToWriteTo,
                                     const etrading::FileTypeEnum fileType )
     {
 
         auto& env = etrading::Environment::defaultEnv();
-        auto lwoCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
+        auto aqoCurve = env.accessObject<etrading::AQOCurve>( aqoCurveName ); // 			etrading::getAQOCurve(aqoCurveName);
 
-        if( !lwoCurve )
+        if( !aqoCurve )
         {
-            AQ_THROW( ( boost::format( "AQOCurve %s does not exist" ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "AQOCurve %s does not exist" ) % aqoCurveName.c_str() ).str().c_str() );
         }
         
         // Append the file extension if missing
         std::string filenameWithExtension = etrading::appendFileExtension( fileNameToWriteTo, fileType );
 	
         // Serialize
-        lwoCurve->serialize( etrading::serialize::JSON, etrading::serialize::FILE, filenameWithExtension );
+        aqoCurve->serialize( etrading::serialize::JSON, etrading::serialize::FILE, filenameWithExtension );
         
         // Check the Serialization file was created
         etrading::checkFileExists( filenameWithExtension, fileType );
 
         // Return Result
-        return ( boost::format( "Curve %s was written to file %s" ) % lwoCurveName.c_str() % filenameWithExtension.c_str() ).str();
+        return ( boost::format( "Curve %s was written to file %s" ) % aqoCurveName.c_str() % filenameWithExtension.c_str() ).str();
         
     };
 

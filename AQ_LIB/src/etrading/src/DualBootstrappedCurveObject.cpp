@@ -19,15 +19,15 @@ namespace etrading
 	*  @param [in]  curveCollection			Curve collection to which calibrated curves belong
 	*  @param [in]  swapCurveGeneratorName  The name of the Swap curve generator that defines Swap curve's conventions
 	*  @param [in]  oisCurveGeneratorName   The name of the OIS curve generator that defines OIS curve's conventions
-	*  @param [in]  lwoSwapMarketObj		Object that encapsulates all of Swap curve's market data
-	*  @param [in]  lwoOISMarketObj			Object that encapsulates all of OIS curve's market data
+	*  @param [in]  aqoSwapMarketObj		Object that encapsulates all of Swap curve's market data
+	*  @param [in]  aqoOISMarketObj			Object that encapsulates all of OIS curve's market data
 	*/
 	DualBootstrappedCurveObject::DualBootstrappedCurveObject(const std::string& objectName,
 															const std::string& curveCollection,
 															const std::string& swapCurveGeneratorName,
 															const std::string& oisCurveGeneratorName,
-															const std::string& lwoSwapMarketObj,
-															const std::string& lwoOISMarketObj)
+															const std::string& aqoSwapMarketObj,
+															const std::string& aqoOISMarketObj)
 		: curveCollection_(curveCollection),
 		  oisCurveName_(""),
 		  swapCurveName_(""),
@@ -38,8 +38,8 @@ namespace etrading
 		engineParams_.clear();
 
 		// Build the OIS and Swap curve objects
-		swapCurveObj_ = SingleCurveObjectPtr(new SingleCurveObject("", swapCurveGeneratorName, lwoSwapMarketObj, curveCollection, ""));
-		oisCurveObj_  = SingleCurveObjectPtr(new SingleCurveObject("", oisCurveGeneratorName, lwoOISMarketObj, curveCollection, ""));
+		swapCurveObj_ = SingleCurveObjectPtr(new SingleCurveObject("", swapCurveGeneratorName, aqoSwapMarketObj, curveCollection, ""));
+		oisCurveObj_  = SingleCurveObjectPtr(new SingleCurveObject("", oisCurveGeneratorName, aqoOISMarketObj, curveCollection, ""));
 	}
 
 

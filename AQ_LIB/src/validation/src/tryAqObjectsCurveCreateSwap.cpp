@@ -60,7 +60,7 @@ namespace validation
     *  @param [in]		convexityAdjConv	Convexity adjustment market conventions
     *  @param [in]		convexityAdjRates	Convexity adjustment market data
     */
-    const AQLString tryAqObjectsCurveCreateSwap( const std::string& lwoCurveName,
+    const AQLString tryAqObjectsCurveCreateSwap( const std::string& aqoCurveName,
                                             const AQLString& curveCollectionInput,
                                             const AQLString& staticDataTableInput,
                                             const AQLString& curveIndexInput,
@@ -103,7 +103,7 @@ namespace validation
         {
             CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateSwap_inputs", curveCollection, staticDataTable ) );
             file.write( "generatorFunction", "tryAqCurvesCalibrateSwap" );
-            file.write( "lwoCurveName", lwoCurveName.c_str()  );
+            file.write( "aqoCurveName", aqoCurveName.c_str()  );
             file.write( "curveCollection", curveCollection );
             file.write( "staticDataTable", staticDataTable );
             file.write( "curveIndex", curveIndex );
@@ -244,8 +244,8 @@ namespace validation
         // CurveBuildProperties because it creates the AlgoQuantLib Calendar
         const std::string staticDataName = etrading::trim_to_upper( staticDataTable.getCString() );
 
-        const std::string baseCurveName = lwoCurveName;
-        const std::string curveNameForLWOCurve =  baseCurveName;
+        const std::string baseCurveName = aqoCurveName;
+        const std::string curveNameForAQOCurve =  baseCurveName;
 
         const etrading::CurveTypeEnum curveTypeEnum = etrading::toCurveTypeEnum( staticDataName );
 
@@ -274,7 +274,7 @@ namespace validation
             etrading::toInterpolationEnum( curveConvLVB.getCompulsoryValue( "YIELDGEN.INTERPOLATION" ) );
 
         etrading::CurveBuildProperties stdCurveBuildProperties(	curveTypeEnum,
-                                                                curveNameForLWOCurve + "_CBP",
+                                                                curveNameForAQOCurve + "_CBP",
                                                                 std::string( curveCollection.getCString() ),
                                                                 staticDataName,
                                                                 ccy,
@@ -343,7 +343,7 @@ namespace validation
 
 
         // Set the AQO Curve; yearFractions, discountFactors, forward rates and Curve build properties (cbp)
-        etrading::AQOCurve lwoCurve( curveNameForLWOCurve,
+        etrading::AQOCurve aqoCurve( curveNameForAQOCurve,
                                      massiveDateVectorBoost,
                                      massiveYearFractionVector,
                                      massiveDFVector,
@@ -353,12 +353,12 @@ namespace validation
         // ----------------------------------------------------------------
 
 
-        etrading::moveToCache(  std::move( lwoCurve ) );
+        etrading::moveToCache(  std::move( aqoCurve ) );
         auto& curve_store = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         
-        if( curve_store.has( curveNameForLWOCurve ) )
+        if( curve_store.has( curveNameForAQOCurve ) )
         {
-            AQLString ret = curveNameForLWOCurve.c_str();
+            AQLString ret = curveNameForAQOCurve.c_str();
             if ( CreateDataFile::recordEnabled() )
             {
                 CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateSwap_outputs", curveCollection, staticDataTable ) );
@@ -368,7 +368,7 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Unable to create AQOCurve named %s" ) % curveNameForLWOCurve.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Unable to create AQOCurve named %s" ) % curveNameForAQOCurve.c_str() ).str().c_str() );
         }
 
         VALID_EXCEPTION_END

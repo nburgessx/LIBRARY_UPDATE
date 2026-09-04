@@ -17,41 +17,41 @@ namespace validation
 
     /* @brief validation interface for aqObjectsFXCurveCreate, creating a FxCurve using a CurveGenerator object and a CurveMarketData object
 	 * @param [in] objectName                The objectName of the FxCurve
-     * @param [in] lwoCurveGeneratorName     The name of the AQOCurveGenerator object to use
-	 * @param [in] lwoCurveMarketDataName    The name of the AQOCurveMarketData object to use
+     * @param [in] aqoCurveGeneratorName     The name of the AQOCurveGenerator object to use
+	 * @param [in] aqoCurveMarketDataName    The name of the AQOCurveMarketData object to use
 	 * @param [out]                          The created FxCurve objectName
 	 */
     std::string tryAqObjectsFXCurveCreate(	const std::string& objectName,
-										const std::string& lwoCurveGeneratorName,
-										const std::string& lwoCurveMarketDataName )
+										const std::string& aqoCurveGeneratorName,
+										const std::string& aqoCurveMarketDataName )
     {
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( objectName, lwoCurveGeneratorName, lwoCurveMarketDataName );
+        RECORD_INPUTS( objectName, aqoCurveGeneratorName, aqoCurveMarketDataName );
 
 		// Perform initial basic sanity checks
-		if ( lwoCurveGeneratorName.size() == 0 )
+		if ( aqoCurveGeneratorName.size() == 0 )
 		{
-				throw AQLCoreInvalidData(	( "#Error: Missing lwoCurveGenerator name" ), __FILE__, __LINE__ );
+				throw AQLCoreInvalidData(	( "#Error: Missing aqoCurveGenerator name" ), __FILE__, __LINE__ );
 		}
-		if ( lwoCurveMarketDataName.size() == 0 )
+		if ( aqoCurveMarketDataName.size() == 0 )
 		{
-				throw AQLCoreInvalidData(	( "#Error: Missing lwoCurveMarketData name" ), __FILE__, __LINE__ );
+				throw AQLCoreInvalidData(	( "#Error: Missing aqoCurveMarketData name" ), __FILE__, __LINE__ );
 		}
 
 		// Attempt to retrieve AQOCurveMarketData object from the AQO object cache
-		auto lwoCurveMarketData = etrading::getCurveMarketData( lwoCurveMarketDataName );
+		auto aqoCurveMarketData = etrading::getCurveMarketData( aqoCurveMarketDataName );
   
 		// Attempt to retrieve AQOCurveGenerator object from the AQO object cache
-		auto lwoCurveGenerator = etrading::getCurveGenerator( lwoCurveGeneratorName );
+		auto aqoCurveGenerator = etrading::getCurveGenerator( aqoCurveGeneratorName );
        
 		// Check for matching IdentityParams from the CurveGenerator and CurveMarketData
-		const LabelValueBlock curvePropertiesLVB = lwoCurveGenerator->toLabelValueBlock( "CURVEPROPERTIES" );
+		const LabelValueBlock curvePropertiesLVB = aqoCurveGenerator->toLabelValueBlock( "CURVEPROPERTIES" );
 		const std::string configCurrency         = curvePropertiesLVB.getCompulsoryValue( "Currency" );
 		const std::string configCurveType        = curvePropertiesLVB.getCompulsoryValue( "CurveType" );
 		
-		const LabelValueBlock marketDataPropertiesLVB = lwoCurveMarketData->toLabelValueBlock( "MARKETDATAPROPERTIES" );
+		const LabelValueBlock marketDataPropertiesLVB = aqoCurveMarketData->toLabelValueBlock( "MARKETDATAPROPERTIES" );
 		const std::string marketDataCurrency          = marketDataPropertiesLVB.getCompulsoryValue( "Currency" );
 		const std::string marketDataCurveType         = marketDataPropertiesLVB.getCompulsoryValue( "CurveType" );
 		
@@ -74,7 +74,7 @@ namespace validation
 		}
 
 		// Create the FxCurve object
-        etrading::FXCurve fxCurve(objectName, lwoCurveGenerator, lwoCurveMarketData);
+        etrading::FXCurve fxCurve(objectName, aqoCurveGenerator, aqoCurveMarketData);
 
         // ..  and store in the cache
         etrading::copyToCache<etrading::FXCurve>( fxCurve );

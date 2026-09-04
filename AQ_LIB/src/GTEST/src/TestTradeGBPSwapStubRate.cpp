@@ -75,7 +75,7 @@ namespace google_test
 	}
 
 
-	TEST_F(TestTradeGBPSwapStubRate, CONSISTENCY_LWOSwap_subRateFromFixingTable)
+	TEST_F(TestTradeGBPSwapStubRate, CONSISTENCY_AQOSwap_subRateFromFixingTable)
 	{
 		try
 		{

@@ -59,7 +59,7 @@ namespace validation
     *  @param [in]		swapConv			Libor swap conventions
     *  @param [in]		swapRates			Libor swap market rates
     */
-    const AQLString tryAqObjectsCurveCreateOIS( const std::string& lwoCurveName,
+    const AQLString tryAqObjectsCurveCreateOIS( const std::string& aqoCurveName,
                                            const AQLString& curveCollectionInput,
                                            const AQLString& staticDataTableInput,
                                            const AQLString& curveIndexInput,
@@ -97,7 +97,7 @@ namespace validation
         {
             CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateOIS_inputs", curveCollection, staticDataTable ) );
             file.write( "generatorFunction", "tryAqCurvesCalibrateOIS" );
-            file.write( "lwoCurveName", lwoCurveName.c_str() );
+            file.write( "aqoCurveName", aqoCurveName.c_str() );
             file.write( "curveCollection", curveCollection );
             file.write( "staticDataTable", staticDataTable );
             file.write( "curveIndex", curveIndex );
@@ -173,8 +173,8 @@ namespace validation
 
         const std::string staticDataName = etrading::trim_to_upper( staticDataTable.getCString() );
 
-        const std::string baseNameToUse = lwoCurveName;
-        const std::string lwoCurveName =  baseNameToUse;
+        const std::string baseNameToUse = aqoCurveName;
+        const std::string aqoCurveName =  baseNameToUse;
 
         const etrading::CurveTypeEnum curveTypeEnum = etrading::toCurveTypeEnum( staticDataName );
         const etrading::CCY ccy = etrading::toCCYEnum( etrading::trim_to_upper( curveConvLVB.getCompulsoryValue( "CURRENCY" ).c_str() ) );
@@ -195,7 +195,7 @@ namespace validation
         
         // Curve Build Properties
         etrading::CurveBuildProperties oisCurveBuildProperties(	curveTypeEnum,
-                                                                lwoCurveName + "_CBP",
+                                                                aqoCurveName + "_CBP",
                                                                 std::string( curveCollection.getCString() ),
                                                                 staticDataName,
                                                                 ccy,
@@ -222,7 +222,7 @@ namespace validation
           //auto discountFactors      = std::get<1>( interpolationData );
         
           //// Set the AQO Curve
-          //etrading::AQOCurve lwoCurve( lwoCurveName, yearFractions, discountFactors, oisCurveBuildProperties );
+          //etrading::AQOCurve aqoCurve( aqoCurveName, yearFractions, discountFactors, oisCurveBuildProperties );
 
         /*
         OPTION B: Store daily discount factors and forward rates for 51 years
@@ -280,7 +280,7 @@ namespace validation
         auto forwardRates = etrading::getCurveForwardRates( dates, curveCollection, curveIndexCopy ); // Note we use curveIndexCopy, which is actually the staticDataTable
 
         // Set the AQO Curve; yearFractions, discountFactors, forward rates and Curve build properties (cbp) 
-        etrading::AQOCurve lwoCurve( lwoCurveName,
+        etrading::AQOCurve aqoCurve( aqoCurveName,
                                      datesInBoostFormat,
                                      yearFractions,
                                      discountFactors,
@@ -291,12 +291,12 @@ namespace validation
         // -----------------------------------------------------------------------------------------
         
         // create a MarketDataCollectionObject
-        // etrading::MarketDataCollection mdcOIS( std::string("MDC_") + lwoCurveName , floatRateTenor);
+        // etrading::MarketDataCollection mdcOIS( std::string("MDC_") + aqoCurveName , floatRateTenor);
 
         // ----------------------------------------------------------------
         /*  EXECUTING CODE */
-        etrading::moveToCache<etrading::AQOCurve>( std::move( lwoCurve ) );
-        auto ptrToCurve = env.accessObject<etrading::AQOCurve>( lwoCurveName );
+        etrading::moveToCache<etrading::AQOCurve>( std::move( aqoCurve ) );
+        auto ptrToCurve = env.accessObject<etrading::AQOCurve>( aqoCurveName );
 
         if( ptrToCurve != nullptr )
         {
@@ -304,13 +304,13 @@ namespace validation
             if ( CreateDataFile::recordEnabled() )
             {
                 CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateOIS_outputs", curveCollection, staticDataTable ) );
-                file.write( "output", lwoCurveName );
+                file.write( "output", aqoCurveName );
             }
-            return lwoCurveName.c_str();
+            return aqoCurveName.c_str();
         }
         else
         {
-            std::string errString =  ( boost::format( "Unable to create AQOCurve named %s" ) % lwoCurveName.c_str() ).str();
+            std::string errString =  ( boost::format( "Unable to create AQOCurve named %s" ) % aqoCurveName.c_str() ).str();
             if ( CreateDataFile::recordEnabled() )
             {
                 CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateOIS_outputs", curveCollection, staticDataTable ) );

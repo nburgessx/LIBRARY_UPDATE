@@ -114,7 +114,7 @@ namespace
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*  @return			Handle to the market data object
 	*/
-	std::string createLWOMarketDataObjectFromFileName(const AQLString& marketDataFileName)
+	std::string createAQOMarketDataObjectFromFileName(const AQLString& marketDataFileName)
 	{
 		etrading::ReadDataFile::Load marketDataFileObj = etrading::ReadDataFile::Load(marketDataFileName);
 
@@ -157,7 +157,7 @@ namespace
 		AQLString marketDataDir = TEST_DIR;
 		AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(testIndex)) + AQLString("_");
 		marketDataDir += prefix + marketDataObj + AQLString("_MARKETDATA");
-		std::string curveMarketObjectHandle = createLWOMarketDataObjectFromFileName(marketDataDir);
+		std::string curveMarketObjectHandle = createAQOMarketDataObjectFromFileName(marketDataDir);
 		return curveMarketObjectHandle;
 	}
 }

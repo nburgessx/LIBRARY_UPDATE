@@ -50,7 +50,7 @@ namespace validation
     *  @param [in]		fxFwdRates			Forward FX rates
     *  @param [in]		spotFxRates			Spot FX rates
     */
-    const AQLString tryAqObjectsCurveCreateBasis( const std::string& lwoCurveName,
+    const AQLString tryAqObjectsCurveCreateBasis( const std::string& aqoCurveName,
                                              const AQLString& curveCollectionInput,
                                              const AQLString& staticDataTableInput,
                                              const AQLString& curveIndexInput,
@@ -86,7 +86,7 @@ namespace validation
         {
             CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateBasis_inputs", curveCollection, staticDataTable ) );
             file.write( "generatorFunction", "tryAqObjectsCurveCreateBasis" );
-            file.write( "lwoCurveName", lwoCurveName );
+            file.write( "aqoCurveName", aqoCurveName );
             file.write( "curveCollection", curveCollection );
             file.write( "staticDataTable", staticDataTable );
             file.write( "curveIndex", curveIndex );
@@ -181,7 +181,7 @@ namespace validation
 
         const std::string staticDataName = etrading::trim_to_upper( staticDataTable.getCString() );
 
-        const std::string baseOfCurveName = lwoCurveName;
+        const std::string baseOfCurveName = aqoCurveName;
         const std::string	newCurveName = baseOfCurveName;
 
 
@@ -233,23 +233,23 @@ namespace validation
                                                                            staticDataTable );
 
         // Set the AQO Curve; yearFractions, discountFactors and Curve build properties (cbp)
-        etrading::AQOCurve lwoCurve( newCurveName, massiveYearFractionVector, massiveDFVector, stdCurveBuildProperties );
+        etrading::AQOCurve aqoCurve( newCurveName, massiveYearFractionVector, massiveDFVector, stdCurveBuildProperties );
         
         // Get the Fixing Dates
-        const auto& lwoFixingDates = lwoCurve.getDates();
-        auto fixingDatesAsMlibDates = etrading::toAQLDatesFromGregorianDates( lwoFixingDates );
+        const auto& aqoFixingDates = aqoCurve.getDates();
+        auto fixingDatesAsMlibDates = etrading::toAQLDatesFromGregorianDates( aqoFixingDates );
         
         // Get the Forward Rates from the Object Pool Curve Engine
         auto massiveFwdRatesVector
             = etrading::getCurveForwardRates( fixingDatesAsMlibDates, curveCollection, curveIndexCopy ); // Note we use curveIndexCopy, which is actually the staticDataTable
 
         // Set the AQO Curve; dates, discountFactors and forwardRates ... done twice to resolve a date consistency issue
-        lwoCurve.setData( lwoCurve.getDates(), lwoCurve.getDiscountFactors(), massiveFwdRatesVector );
+        aqoCurve.setData( aqoCurve.getDates(), aqoCurve.getDiscountFactors(), massiveFwdRatesVector );
 
         // ----------------------------------------------------------------
 
 
-        etrading::moveToCache( std::move( lwoCurve ) );
+        etrading::moveToCache( std::move( aqoCurve ) );
 
         auto& default_env = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( default_env.has( newCurveName ) )

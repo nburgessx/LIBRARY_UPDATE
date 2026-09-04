@@ -47,8 +47,8 @@ namespace etrading
 	SabrModelPtr getSabrModel(const std::string& objectName, bool throwIfMissing = true);
 	SabrMarketDataPtr getSabrMarketData(const std::string& objectName, bool throwIfMissing = true);
 
-    bool doesLWOExist( const std::string& objectName, const etrading::CachedObjectEnum& objectTypeEnum );
-    bool doesLWOExist( const std::string& objectName, const std::string& objectTypeAsString );
+    bool doesAQOExist( const std::string& objectName, const etrading::CachedObjectEnum& objectTypeEnum );
+    bool doesAQOExist( const std::string& objectName, const std::string& objectTypeAsString );
     
     SwapGeneratorPtr getSwapGenerator( const std::string& objectName );
     FixingTablePtr getFixingTable( const std::string& objectName, bool throwIfMissing = true);

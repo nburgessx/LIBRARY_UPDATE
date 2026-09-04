@@ -27,7 +27,7 @@ namespace validation
 	AnyTypeMatrix tryAqObjectsInflationCurveCalibrationParameters( const std::string& inflationCurveName );
 
 
-	/* @brief	validation interface for the neLWOInflationZCSwapPVFromIndex method.
+	/* @brief	validation interface for the aqObjectsInflationZCSwapPVFromIndex method.
 	*			Calculates the PV of the specified Zero Coupon Inflation Swap.
 	*			This function requires the user to provide the inflation fixing level at the start and end of the trade,
 	*			taking into account the correct lag.

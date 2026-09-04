@@ -28,7 +28,7 @@
 using etrading::ReadDataFile;
 
 // Define the Test Input Folder Here
-#define TEST_DIR			  "ETrading/LWObjects/TestLWOCreditModel/"
+#define TEST_DIR			  "ETrading/AQObjects/TestAQOCreditModel/"
 
 
 namespace
@@ -124,7 +124,7 @@ namespace
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOMarketDataObjectFromFileName( const AQLString& marketDataFileName )
+	void createAQOMarketDataObjectFromFileName( const AQLString& marketDataFileName )
 	{
 		etrading::ReadDataFile::Load marketDataFileObj = etrading::ReadDataFile::Load( marketDataFileName );
 
@@ -162,18 +162,18 @@ namespace
 	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
+	void createAQOCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
-		std::string lwoCurveGeneratorName	= curveCalibrationFileObj[ "lwoCurveGeneratorName" ];
-		std::string lwoCurveMarketDataName	= curveCalibrationFileObj[ "lwoCurveMarketDataName" ];
+		std::string aqoCurveGeneratorName	= curveCalibrationFileObj[ "aqoCurveGeneratorName" ];
+		std::string aqoCurveMarketDataName	= curveCalibrationFileObj[ "aqoCurveMarketDataName" ];
 		std::string domesticCurveCollection	= curveCalibrationFileObj[ "domesticCurveCollection" ];
 		std::string foreignCurveCollection	= curveCalibrationFileObj[ "foreignCurveCollection" ];
 		
-		std::string objectName = lwoCurveGeneratorName;
+		std::string objectName = aqoCurveGeneratorName;
 
-		validation::tryAqObjectsCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjectsCurveCalibrate(	objectName, aqoCurveGeneratorName, aqoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -182,11 +182,11 @@ namespace
 	*/
 	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
-		createLWOMarketDataObjectFromFileName( marketDataFileName );
-		createLWOCurveFromFileName( curveCalibrationFileName );
+		createAQOMarketDataObjectFromFileName( marketDataFileName );
+		createAQOCurveFromFileName( curveCalibrationFileName );
 	}
 
-	std::string createLWOCreditBasketModelFromFileName( const AQLString& creditBasketModelFileName )
+	std::string createAQOCreditBasketModelFromFileName( const AQLString& creditBasketModelFileName )
 	{
 		etrading::ReadDataFile::Load creditBasketModelFileObj = etrading::ReadDataFile::Load( creditBasketModelFileName );
 		const std::string creditBasketModelName	= creditBasketModelFileObj[ "objectName" ];
@@ -285,7 +285,7 @@ namespace google_test
 			"20280312"
         };
 
-		std::string creditBasketModelName = createLWOCreditBasketModelFromFileName( CREDIT_BASKET_MODEL );
+		std::string creditBasketModelName = createAQOCreditBasketModelFromFileName( CREDIT_BASKET_MODEL );
 
 
 		AQLDate fromDate(stoppingDates[0].c_str());

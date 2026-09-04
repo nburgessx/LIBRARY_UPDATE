@@ -29,7 +29,7 @@ namespace google_test
     *                                                   Please specify here which instrument tenors in the curve were used for calibration and should be consistency testing
     *                                                   Enter as a std:set for example as { "1W", "1M", "2M", "3M", "4M", "5M", "6M", "9M", "1Y", "2Y" } 
     *
-    *  @param [in]		lwoCurveObjectName	            The AQO Curve Object Name - Needed to access the AQO Curve Market Data Object
+    *  @param [in]		aqoCurveObjectName	            The AQO Curve Object Name - Needed to access the AQO Curve Market Data Object
     *  @param [in]		curveCollection                 Needed for Swap Pricing
     *  @param [in]		swapEffectiveDateYYYYMMDD		The Swap Effective Date as a String with Format YYYYMMDD
     *  @param [in]		swapGenerator                   The AQO Swap Generator Namee - The Swap Generator is Preloaded on AlgoQuantLib StartUp
@@ -39,7 +39,7 @@ namespace google_test
     */
     void repriceCalibrationInstruments( const etrading::CurveMarketDataEnum & calibrationInstrumentType,
                                         const std::set<std::string> tenorsToReprice,
-                                        const std::string & lwoCurveObjectName,
+                                        const std::string & aqoCurveObjectName,
                                         const std::string & curveCollection,                       
                                         const std::string & swapEffectiveDateYYYYMMDD,
                                         const std::string & swapGenerator,

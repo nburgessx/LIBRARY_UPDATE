@@ -6,67 +6,67 @@
 namespace validation
 {
     /* @brief			validation method for aqCurvesDiscountFactorsFromYearFractions
-    *  @param [in]		lwoCurveName	Curve Name
+    *  @param [in]		aqoCurveName	Curve Name
     *  @param [in]		yearFractions	An array of yearFractions by year count
     *  @param [in]		dayCount	    The daycount fraction used to generate the yearFraction
     *  @return			An array of discount factor
     */
-    DoubleVector tryAqObjectsCurveDiscountFactorsFromYearFractions( const std::string& lwoCurveName,
+    DoubleVector tryAqObjectsCurveDiscountFactorsFromYearFractions( const std::string& aqoCurveName,
             const DoubleVector& yearFractions,
             const AQLString& dayCount );
 
-    /* @brief			validation method for aqCurvesLWODiscountFactorsFromTenors
-    *  @param [in]		lwoCurveName	Curve Name
+    /* @brief			validation method for aqObjectsCurveDiscountFactorsFromTenors
+    *  @param [in]		aqoCurveName	Curve Name
     *  @param [in]		tenors			An array of tenor strings
     *  @param [in]		businessDayAdj	Rule that decides if end date should roll forward or backward etc, ie, MF. Default to 'NO_CHANGE'.
     *  @param [in]		calendar		Calendar
     *  @return			An array of discount factor
     */
-    DoubleVector tryAqObjectsCurveDiscountFactorsFromTenors( const std::string& lwoCurveName,
+    DoubleVector tryAqObjectsCurveDiscountFactorsFromTenors( const std::string& aqoCurveName,
             const std::vector< std::string >& tenors,
             const std::string& businessDayAdj  = "NO_CHANGE",
             const std::string& calendar = "" );
 
     /* @brief			validation method for aqCurvesDiscountFactors
-    *  @param [in]		lwoCurveName	Curve Name
+    *  @param [in]		aqoCurveName	Curve Name
     *  @param [in]		paymentDates			A single or an array of payment Dates in YYYYMMDD formate
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjectsCurveDiscountFactors( const std::string& lwoCurveName,
+    DoubleVector tryAqObjectsCurveDiscountFactors( const std::string& aqoCurveName,
             const std::vector<boost::gregorian::date>& paymentDates );
 
 
     /* @brief			validation method for aqCurvesDiscountFactorsForwardStarting
-    *  @param [in]		lwoCurveName	AQO Curve Name
+    *  @param [in]		aqoCurveName	AQO Curve Name
     *  @param [in]		fromDates		A single array of dates in YYYYMMDD formate
     *  @param [in]		toDates			An array of dates in YYYYMMDD formate
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStarting( const std::string& lwoCurveName,
+    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStarting( const std::string& aqoCurveName,
             const std::vector<boost::gregorian::date>& fromDates,
             const std::vector<boost::gregorian::date>& toDates );
 
     /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromYearFractions
-    *  @param [in]		lwoCurveName	AQO Curve Name
+    *  @param [in]		aqoCurveName	AQO Curve Name
     *  @param [in]		fromDates			An array of from-dates in YYYYMMDD formate
     *  @param [in]		yearFractions		An array of year fraction yearFractions
     *  @param [in]		dayCount	        The daycount fraction used to generate the yearFraction
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStartingFromYearFractions( const std::string& lwoCurveName,
+    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStartingFromYearFractions( const std::string& aqoCurveName,
             const std::vector<boost::gregorian::date>& fromDates,
             const DoubleVector& yearFractions,
             const AQLString& dayCount );
 
     /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromTenor
-    *  @param [in]		lwoCurveName	    AQO Curve Name
+    *  @param [in]		aqoCurveName	    AQO Curve Name
     *  @param [in]		fromDates		    An array of from-dates in YYYYMMDD formate
     *  @param [in]		tenor			    A tenor string
     *  @param [in]		businessDayAdj	    Rule that decides if end date should roll forward or backward etc, ie, MF. Default to 'NO_CHANGE'.
     *  @param [in]		calendar		    Calendar
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStartingFromTenors( const std::string& lwoCurveName,
+    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStartingFromTenors( const std::string& aqoCurveName,
                                                                         const std::vector<boost::gregorian::date>& fromDates,
                                                                         const std::vector<std::string>& tenors,
                                                                         const std::string& businessDayAdj,

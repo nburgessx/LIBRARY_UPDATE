@@ -26,8 +26,8 @@ namespace validation
 	 * @param [in] curveCollection			Curve collection to which calibrated curves belong
 	 * @param [in] swapCurveGeneratorName   The name of the Swap curve generator that defines Swap curve's conventions
 	 * @param [in] oisCurveGeneratorName   The name of the OIS curve generator that defines OIS curve's conventions
-	 * @param [in] lwoSwapMarketObj			Object that encapsulates all of Swap curve's market data
-	 * @param [in] lwoOISMarketObj			Object that encapsulates all of OIS curve's market data
+	 * @param [in] aqoSwapMarketObj			Object that encapsulates all of Swap curve's market data
+	 * @param [in] aqoOISMarketObj			Object that encapsulates all of OIS curve's market data
 	 * @param [in] commonParams				A collection of parameters common across curves
 	 *                                      
 	 * @param [out]                         The curve indexes
@@ -36,14 +36,14 @@ namespace validation
 																	const std::string& curveCollection,
 																	const std::string& swapCurveGeneratorName,
 																	const std::string& oisCurveGeneratorName,
-																	const std::string& lwoSwapMarketObj,
-																	const std::string& lwoOISMarketObj,
+																	const std::string& aqoSwapMarketObj,
+																	const std::string& aqoOISMarketObj,
 																	const AQLStringMatrix& commonParams)
     {
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( objectName, curveCollection, swapCurveGeneratorName, oisCurveGeneratorName, lwoSwapMarketObj, lwoOISMarketObj, commonParams);
+        RECORD_INPUTS( objectName, curveCollection, swapCurveGeneratorName, oisCurveGeneratorName, aqoSwapMarketObj, aqoOISMarketObj, commonParams);
 
         // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
         AQ_CLEAR_CURVE_RESULTS_CACHE
@@ -59,19 +59,19 @@ namespace validation
 			throw AQLCoreInvalidData(( "#Error: Missing oisCurveGeneratorName input" ), __FILE__, __LINE__ );
 		}
 
-		if ( lwoSwapMarketObj.size() == 0 )
+		if ( aqoSwapMarketObj.size() == 0 )
 		{
-			throw AQLCoreInvalidData(( "#Error: Missing lwoSwapMarketObj input" ), __FILE__, __LINE__ );
+			throw AQLCoreInvalidData(( "#Error: Missing aqoSwapMarketObj input" ), __FILE__, __LINE__ );
 		}
 
-		if ( lwoOISMarketObj.size() == 0 )
+		if ( aqoOISMarketObj.size() == 0 )
 		{
-			throw AQLCoreInvalidData(( "#Error: Missing lwoOISMarketObj input" ), __FILE__, __LINE__ );
+			throw AQLCoreInvalidData(( "#Error: Missing aqoOISMarketObj input" ), __FILE__, __LINE__ );
 		}
 		
 		// Create the Curve object and store in the cache
 
-		etrading::DualBootstrappedCurveObject curveObject( objectName, curveCollection, swapCurveGeneratorName, oisCurveGeneratorName, lwoSwapMarketObj, lwoOISMarketObj);
+		etrading::DualBootstrappedCurveObject curveObject( objectName, curveCollection, swapCurveGeneratorName, oisCurveGeneratorName, aqoSwapMarketObj, aqoOISMarketObj);
 		curveObject.setEngineParams(commonParams);
 		curveObject.calibrateCurve();
 

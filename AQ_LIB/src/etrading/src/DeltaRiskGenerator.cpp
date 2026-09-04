@@ -190,12 +190,12 @@ namespace etrading
 										  aggregateRisks_( aggregateRisks ),
 										  reportInLegCCY_( false ),
 										  riskCutOffTenor_( riskCutOffTenor ),
-										  usingLWO_( false ),
+										  usingAQO_( false ),
 										  isUsingGlobalCurveEngine_(false)
 
     {
-		myLWOSwaps_.clear();
-		myLWOSwapLegs_.clear();
+		myAQOSwaps_.clear();
+		myAQOSwapLegs_.clear();
 	}
 
 	/* @brief	Constructor for AQO Swap legs
@@ -211,10 +211,10 @@ namespace etrading
 									const bool reportInLegCCY,
 									const std::string& riskCutOffTenor,
 									const bool useGlobalCurveEngine)
-										: myLWOSwapLegs_( swapLegs ),
+										: myAQOSwapLegs_( swapLegs ),
 										  myInstrumentIDs_( legIDs ),
-										  myLWOFixingTables_( fixingTableNames ),
-                                          myLWOXccyFXAsOfDateRates_( xccyFXAsOfDateRates ),
+										  myAQOFixingTables_( fixingTableNames ),
+                                          myAQOXccyFXAsOfDateRates_( xccyFXAsOfDateRates ),
 										  bumpSpreadInstruments_( bumpSpreadInstruments ),
 										  bumpSize_( bumpSize ),
 										  bumpMode_( bumpMode ),
@@ -222,16 +222,16 @@ namespace etrading
 										  aggregateRisks_( aggregateRisks ),
 										  reportInLegCCY_( reportInLegCCY ),
 										  riskCutOffTenor_( riskCutOffTenor ),
-										  usingLWO_( true ),
-										  riskOnLWOLegs_(true),
+										  usingAQO_( true ),
+										  riskOnAQOLegs_(true),
 										  isUsingGlobalCurveEngine_(useGlobalCurveEngine)
     {
-		myLWOSwaps_.clear();
+		myAQOSwaps_.clear();
 	}
 
 	/* @brief	Constructor for AQO Swaps
 	*/
-	DeltaGenerator::DeltaGenerator(const std::vector<SwapPtr >& lwoSwaps,
+	DeltaGenerator::DeltaGenerator(const std::vector<SwapPtr >& aqoSwaps,
 											const std::vector<AQLString>& swapIDs,
 											const std::vector<LabelValueBlock >& fixingTableNames,
                                             const std::vector<double>& xccyFXAsOfDateRates,
@@ -241,10 +241,10 @@ namespace etrading
 											const bool aggregateRisks,
 											const std::string& riskCutOffTenor,
 											const bool useGlobalCurveEngine)
-											: myLWOSwaps_(lwoSwaps),
+											: myAQOSwaps_(aqoSwaps),
 												myInstrumentIDs_(swapIDs),
-												myLWOFixingTables_(fixingTableNames),
-                                                myLWOXccyFXAsOfDateRates_( xccyFXAsOfDateRates ),
+												myAQOFixingTables_(fixingTableNames),
+                                                myAQOXccyFXAsOfDateRates_( xccyFXAsOfDateRates ),
 												bumpSpreadInstruments_(bumpSpreadInstruments),
 												bumpSize_(bumpSize),
 												bumpMode_(bumpMode),
@@ -252,11 +252,11 @@ namespace etrading
 												aggregateRisks_(aggregateRisks),
 												reportInLegCCY_(false),
 												riskCutOffTenor_(riskCutOffTenor),
-												usingLWO_(true),
-										        riskOnLWOLegs_(false),
+												usingAQO_(true),
+										        riskOnAQOLegs_(false),
 												isUsingGlobalCurveEngine_(useGlobalCurveEngine)
 	{
-		myLWOSwapLegs_.clear();
+		myAQOSwapLegs_.clear();
 	}
 
 	/* @brief			Set the yield curves required for delta calculation
@@ -350,19 +350,19 @@ namespace etrading
     }
 
 	/* @brief		Returns the size of the trade portfolio
-	*				Examines myTrades_ or myLWOSwapLegs_ depending on whether AQO Swaps are being used
+	*				Examines myTrades_ or myAQOSwapLegs_ depending on whether AQO Swaps are being used
 	*/
 	size_t DeltaGenerator::getPortfolioSize()
 	{
-		if (usingLWO_)
+		if (usingAQO_)
 		{
-			if (riskOnLWOLegs_)
+			if (riskOnAQOLegs_)
 			{
-				return myLWOSwapLegs_.size();
+				return myAQOSwapLegs_.size();
 			}
 			else
 			{
-				return myLWOSwaps_.size();
+				return myAQOSwaps_.size();
 			}
 		}
 		else
@@ -436,10 +436,10 @@ namespace etrading
 	*/
 	double DeltaGenerator::calculateTradePV(int index, bool setMarketDataAndInterpolation)
 	{
-		if (usingLWO_)
+		if (usingAQO_)
 		{
 			const AQLString curveCollectionID = marketDataCollection_.getOptionalValueAsAQLString( MARKET_KEY::CURVE_COLLECTION );
-			const double xccyFXAsOfDateRate = myLWOXccyFXAsOfDateRates_[index];
+			const double xccyFXAsOfDateRate = myAQOXccyFXAsOfDateRates_[index];
 			//We assume valuation date is always the asOfDate when calculating risk.
 			const AQLDate valuationDate = getCurveAsOfDate(curveCollectionID);
 
@@ -456,11 +456,11 @@ namespace etrading
 
             LabelValueBlock valuationSettingsLVB( lvbKeys, lvbValues );
 			
-			const LabelValueBlock fixingTableNames = myLWOFixingTables_[index];
+			const LabelValueBlock fixingTableNames = myAQOFixingTables_[index];
 
-			if (riskOnLWOLegs_)
+			if (riskOnAQOLegs_)
 			{
-				auto leg = myLWOSwapLegs_[index];
+				auto leg = myAQOSwapLegs_[index];
 
 				DataProvider dataProvider(ValuationSettings(valuationSettingsLVB, fixingTableNames, leg->getLegName()));
 
@@ -469,10 +469,10 @@ namespace etrading
 			else
 			{
 				double pv = 0.0;
-				SwapPtr lwoTrade = myLWOSwaps_[index];
-				for (size_t j = 0; j < lwoTrade->getLegSize(); j++)
+				SwapPtr aqoTrade = myAQOSwaps_[index];
+				for (size_t j = 0; j < aqoTrade->getLegSize(); j++)
 				{
-					auto leg = lwoTrade->getLeg(j);
+					auto leg = aqoTrade->getLeg(j);
 
 					DataProvider dataProvider(ValuationSettings(valuationSettingsLVB, fixingTableNames, leg->getLegName()));
 

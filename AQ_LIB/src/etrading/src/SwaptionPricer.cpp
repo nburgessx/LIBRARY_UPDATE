@@ -20,7 +20,7 @@ namespace etrading
 
         // Set the CurveCollection from the Valuation Settings - Compatible with CurveCollection or AQO CurveObject input
         // =======================================================================================================
-        curveCollection_  = getLWOCurveCollectionFromValuationSettings( valuationSettingsLVB ).getCString();
+        curveCollection_  = getAQOCurveCollectionFromValuationSettings( valuationSettingsLVB ).getCString();
 
 
         // Set the Volatility Provider

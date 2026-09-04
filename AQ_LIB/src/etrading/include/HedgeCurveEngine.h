@@ -25,22 +25,22 @@ namespace etrading
 		/* @brief	Constructor for the HedgeCurveEngine.
 		 *			Stores the curve generators and curve market data object names used to define the hedge curve.
 		 *			
-		 * @param[in]	lwoHedgeOISCurveGeneratorName	OIS Curve Generator name
-		 * @param[in]	lwoHedgeOISCurveMarketDataName	OIS market data object name
-		 * @param[in]	lwoHedgeOISCurveGeneratorName	Swap Curve Generator name: Specifies the hedge curve config
-		 * @param[in]	lwoHedgeOISCurveMarketDataName	Swap market data object name: Specifies the swap tenors to use in the hedge curve
+		 * @param[in]	aqoHedgeOISCurveGeneratorName	OIS Curve Generator name
+		 * @param[in]	aqoHedgeOISCurveMarketDataName	OIS market data object name
+		 * @param[in]	aqoHedgeOISCurveGeneratorName	Swap Curve Generator name: Specifies the hedge curve config
+		 * @param[in]	aqoHedgeOISCurveMarketDataName	Swap market data object name: Specifies the swap tenors to use in the hedge curve
 		 */
-		HedgeCurveEngine( const std::string& lwoHedgeOISCurveGeneratorName,
-						  const std::string& lwoHedgeOISCurveMarketDataName,
-						  const std::string& lwoHedgeSwapCurveGeneratorName,
-						  const std::string& lwoHedgeSwapCurveMarketDataName );
+		HedgeCurveEngine( const std::string& aqoHedgeOISCurveGeneratorName,
+						  const std::string& aqoHedgeOISCurveMarketDataName,
+						  const std::string& aqoHedgeSwapCurveGeneratorName,
+						  const std::string& aqoHedgeSwapCurveMarketDataName );
 
 		/* @brief	Reprices the swaps in the hedge-curve using the specified pricing curve collection
 		 * @param[in]	pricingCurveCollection	The curveCollection containing the curves used for instrument repricing
-		 * @param[in]	lwoSwapGeneratorName	The name of the swap generator which holds the config used to calculate the par-rate for each swap calibration instrument
+		 * @param[in]	aqoSwapGeneratorName	The name of the swap generator which holds the config used to calculate the par-rate for each swap calibration instrument
 		 */
 		void repriceHedgeInstruments( const std::string& pricingCurveCollection,
-									  const std::string& lwoSwapGeneratorName );
+									  const std::string& aqoSwapGeneratorName );
 
 		/* @brief		Builds the hedge curve and stores it in the specified hedgeCurveCollection.
 		 * @param[in]	oisCurveObjectName		The name of the AQO object handle corresponding to the OIS curve which will be built
@@ -54,10 +54,10 @@ namespace etrading
         ~HedgeCurveEngine() {}
 
 	private:
-		std::string lwoHedgeOISCurveGeneratorName_;
-		std::string lwoHedgeOISCurveMarketDataName_;
-		std::string lwoHedgeSwapCurveGeneratorName_;
-		std::string lwoHedgeSwapCurveMarketDataName_;
+		std::string aqoHedgeOISCurveGeneratorName_;
+		std::string aqoHedgeOISCurveMarketDataName_;
+		std::string aqoHedgeSwapCurveGeneratorName_;
+		std::string aqoHedgeSwapCurveMarketDataName_;
 		LabelValueBlock repriceSwapExpressionLVB_;
 
     };

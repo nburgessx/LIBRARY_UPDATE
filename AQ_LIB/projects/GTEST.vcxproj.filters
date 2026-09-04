@@ -136,7 +136,7 @@
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisJPY3M6MConvergence.cpp">
       <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURTenorBasis.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapEURTenorBasis.cpp">
       <Filter>src\etrading\Swaps\TenorBasisSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\EnvironmentAttacker.cpp">
@@ -145,13 +145,13 @@
     <ClCompile Include="..\src\GTEST\src\TestExampleObject.cpp">
       <Filter>src\etrading\Infrastructure</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOInfrastructure.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOInfrastructure.cpp">
       <Filter>src\etrading\Infrastructure</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestUtilities.cpp">
       <Filter>src\etrading\Infrastructure</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOCurve.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOCurve.cpp">
       <Filter>src\etrading\Curves\AQOCurve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestFixingTable.cpp">
@@ -160,46 +160,46 @@
     <ClCompile Include="..\src\GTEST\src\TestMarketDataCollection.cpp">
       <Filter>src\etrading\MarketData</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURVariableNotionalSwaps.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapEURVariableNotionalSwaps.cpp">
       <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestMirDateFunctions.cpp">
       <Filter>src\Legacy\Dates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURUSDXccySwap.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapEURUSDXccySwap.cpp">
       <Filter>src\etrading\Swaps\XccySwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqCurvesOisAUD.cpp">
       <Filter>src\etrading\Curves\CurveOIS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDelta.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapDelta.cpp">
       <Filter>src\etrading\Risks</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapFixedFixed.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapZeroCouponSwapFixedFixed.cpp">
       <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapXccyFloatFloat.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapZeroCouponSwapXccyFloatFloat.cpp">
       <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapFixedFloat.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapZeroCouponSwapFixedFloat.cpp">
       <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapFloatFloat.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapZeroCouponSwapFloatFloat.cpp">
       <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapXccyFixedFixed.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapZeroCouponSwapXccyFixedFixed.cpp">
       <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapXccyFixedFloat.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapZeroCouponSwapXccyFixedFloat.cpp">
       <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapGBPEURXccySwap.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapGBPEURXccySwap.cpp">
       <Filter>src\etrading\Swaps\XccySwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqDatesYearFraction.cpp">
       <Filter>src\etrading\Dates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURUSDXccySwapFixedFixed.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapEURUSDXccySwapFixedFixed.cpp">
       <Filter>src\etrading\Swaps\XccySwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestHelperUtilities.cpp">
@@ -211,7 +211,7 @@
     <ClCompile Include="..\src\GTEST\src\TestBondYields.cpp">
       <Filter>src\etrading\Bonds</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapCompounding.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapCompounding.cpp">
       <Filter>src\etrading\Swaps\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\CreateFixedBond.cpp">
@@ -235,7 +235,7 @@
     <ClCompile Include="..\src\GTEST\src\TestBondPricesUSTreasuries.cpp">
       <Filter>src\etrading\Bonds</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaXCCY.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapDeltaXCCY.cpp">
       <Filter>src\etrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPricesFrenchOATsBTANsFixed.cpp">
@@ -244,16 +244,16 @@
     <ClCompile Include="..\src\GTEST\src\TestBondPricesFrenchOATsBTANsZeroCoupon.cpp">
       <Filter>src\etrading\Bonds</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaXCCY_CSA.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapDeltaXCCY_CSA.cpp">
       <Filter>src\etrading\Risks</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDelta_JPY.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapDelta_JPY.cpp">
       <Filter>src\etrading\Risks</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapAmortization.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapAmortization.cpp">
       <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapFloatRate.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapFloatRate.cpp">
       <Filter>src\etrading\Swaps\FixingTable</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqDatesFuturesContract.cpp">
@@ -265,7 +265,7 @@
     <ClCompile Include="..\src\GTEST\src\TestUtilitiesSetup.cpp">
       <Filter>src\etrading\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURUSDXccySwapFixedFloat.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapEURUSDXccySwapFixedFloat.cpp">
       <Filter>src\etrading\Swaps\XccySwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestExceptionMacros.cpp">
@@ -289,10 +289,10 @@
     <ClCompile Include="..\src\GTEST\src\TestStateVariableUtilities.cpp">
       <Filter>src\etrading\Curves\StateVariableUtilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOHedgeCurveDelta.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOHedgeCurveDelta.cpp">
       <Filter>src\etrading\Risks</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOFra.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOFra.cpp">
       <Filter>src\etrading\Swaps\Fra</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLeakChecker.cpp">
@@ -331,10 +331,10 @@
     <ClCompile Include="..\src\GTEST\src\TryAqTestTradeEURSwapStubRate.cpp">
       <Filter>src\etrading\Swaps\Swaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapStubImpactOnParRate.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapStubImpactOnParRate.cpp">
       <Filter>src\etrading\Swaps\Swaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEUROvernightIndexedSwaps.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapEUROvernightIndexedSwaps.cpp">
       <Filter>src\etrading\Swaps\OIS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestConstantMaturitySwap.cpp">
@@ -349,10 +349,10 @@
     <ClCompile Include="..\src\GTEST\src\TestValidateAndConvertStringToDate.cpp">
       <Filter>src\etrading\Dates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaDualBootstrap.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapDeltaDualBootstrap.cpp">
       <Filter>src\etrading\Risks</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapGenerator.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapGenerator.cpp">
       <Filter>src\etrading\Swaps\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqObjectsCurveCalibrate.cpp">
@@ -427,7 +427,7 @@
     <ClCompile Include="..\src\GTEST\src\AUDOisCurveConsistency.cpp">
       <Filter>src\etrading\Curves\CurveConsistency\AUDCurves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaWithCurveEngine.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapDeltaWithCurveEngine.cpp">
       <Filter>src\etrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\BuildMarketDataObjectFromFile.cpp">
@@ -445,7 +445,7 @@
     <ClCompile Include="..\src\GTEST\src\TestIMMDates.cpp">
       <Filter>src\etrading\Dates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOInfoBlock.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOInfoBlock.cpp">
       <Filter>src\etrading\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\GetGoogleTestFolder.cpp">
@@ -481,10 +481,10 @@
     <ClCompile Include="..\src\GTEST\src\ModelTools.cpp">
       <Filter>src\etrading\IRVol</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapFromBespokeSchedule.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapFromBespokeSchedule.cpp">
       <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapFromStructuredBespokeSchedule.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapFromStructuredBespokeSchedule.cpp">
       <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveResults.cpp">
@@ -499,7 +499,7 @@
     <ClCompile Include="..\src\GTEST\src\TestUtilitiesInterpolation.cpp">
       <Filter>src\etrading\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOCurveDiscountFactorsWithSpread.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOCurveDiscountFactorsWithSpread.cpp">
       <Filter>src\etrading\Curves\AQOCurve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestRiskUtilities.cpp">
@@ -523,10 +523,10 @@
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdSerialFRA.cpp">
       <Filter>src\etrading\Curves\CurveSTD</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDelta_ARR.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapDelta_ARR.cpp">
       <Filter>src\etrading\Risks</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaXCCY_ZAR.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQOSwapDeltaXCCY_ZAR.cpp">
       <Filter>src\etrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\ZARSwapCurveConsistency.cpp">

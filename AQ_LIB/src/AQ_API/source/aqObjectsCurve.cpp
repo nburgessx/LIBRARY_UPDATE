@@ -73,22 +73,22 @@ SWIG_STRINGMATRIX aqObjectsCurveMarketDataDisplayFromCurve(const std::string& cu
 }
 
 /* @brief Builds a curve using a CurveGenerator object and a CurveMarketData object
-* @param [in] lwoCurveGeneratorName     The name of the AQOCurveGenerator object to use
-* @param [in] lwoCurveMarketDataName    The name of the AQOCurveMarketData object to use
+* @param [in] aqoCurveGeneratorName     The name of the AQOCurveGenerator object to use
+* @param [in] aqoCurveMarketDataName    The name of the AQOCurveMarketData object to use
 * @param [in] domesticCurveCollection   The curveCollection this curve will be stored in ( The Target CurveCollection )
 * @param [in] foreignCurveCollection    The curveCollection containing foreign curve dependencies ( The Against CurveCollection )
 *                                       Allowed to be blank if this is a single CCY curve (OIS, STD, TenorBasis)
 * @param [out]                          The curve build status
 */
 std::string aqObjectsCurveCalibrate( const std::string& objectName,
-								 const std::string& lwoCurveGeneratorName,
-								 const std::string& lwoCurveMarketDataName,
+								 const std::string& aqoCurveGeneratorName,
+								 const std::string& aqoCurveMarketDataName,
 								 const std::string& domesticCurveCollection,
 								 const std::string& foreignCurveCollection )
 {
 	AQ_API_START
 
-	std::string curveIndexAndAliasNames = validation::tryAqObjectsCurveCalibrate( objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+	std::string curveIndexAndAliasNames = validation::tryAqObjectsCurveCalibrate( objectName, aqoCurveGeneratorName, aqoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	return curveIndexAndAliasNames;
 
 	AQ_API_END

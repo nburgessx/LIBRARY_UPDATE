@@ -25,7 +25,7 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	AQLString getLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
+	AQLString getAQOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
     {
         std::string curveCollection         = getOptionalCurveCollectionFromValuationSettings( valuationSettingsLVB, legName ).getCString();
         const std::string curveObjectName   = getCurveObjectFromValuationSettings( valuationSettingsLVB ).getCString();
@@ -64,9 +64,9 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	AQLString getValidatedLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
+	AQLString getValidatedAQOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
     {
-        const AQLString curveCollection  = getLWOCurveCollectionFromValuationSettings( valuationSettingsLVB, legName );
+        const AQLString curveCollection  = getAQOCurveCollectionFromValuationSettings( valuationSettingsLVB, legName );
         const AQLDate curveAsOfDate      = getCurveAsOfDate( curveCollection );
                 
         // Check Curve AsOf Date Matches the ValuationDate Specified in the Valuation Settings

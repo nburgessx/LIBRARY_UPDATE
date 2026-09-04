@@ -13,8 +13,8 @@ namespace validation
 	 * @param [in] curveCollection			Curve collection to which calibrated curves belong
 	 * @param [in] swapCurveGeneratorName   The name of the Swap curve generator that defines Swap curve's conventions
 	 * @param [in] oisCurveGeneratorName    The name of the OIS curve generator that defines OIS curve's conventions
-	 * @param [in] lwoSwapMarketObj			Object that encapsulates all of Swap curve's market data
-	 * @param [in] lwoOISMarketObj			Object that encapsulates all of OIS curve's market data
+	 * @param [in] aqoSwapMarketObj			Object that encapsulates all of Swap curve's market data
+	 * @param [in] aqoOISMarketObj			Object that encapsulates all of OIS curve's market data
 	 * @param [in] commonParams				A collection of parameters common across curves
 	 *                                      
 	 * @param [out]                         The curve indexes
@@ -23,7 +23,7 @@ namespace validation
 																	const std::string& curveCollection,
 																	const std::string& swapCurveGeneratorName,
 																	const std::string& oisCurveGeneratorName,
-																	const std::string& lwoSwapMarketObj,
-																	const std::string& lwoOISMarketObj,
+																	const std::string& aqoSwapMarketObj,
+																	const std::string& aqoOISMarketObj,
 																	const AQLStringMatrix& commonParams = AQLStringMatrix());
 }

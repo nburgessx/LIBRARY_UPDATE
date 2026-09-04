@@ -38,7 +38,7 @@ namespace etrading
         }
         
         // Always Pulse / Recalculate if the Object does not exist
-        const bool doesObjectExist = etrading::doesLWOExist( objectName, objectType );
+        const bool doesObjectExist = etrading::doesAQOExist( objectName, objectType );
         if ( !doesObjectExist )
         {
             return recalculate;

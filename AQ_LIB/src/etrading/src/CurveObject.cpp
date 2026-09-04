@@ -52,12 +52,12 @@ namespace
 
 	/* @brief	Build the Curve Convention LVB appending the 'AsOfDate' to the CurveProperties String Matrix Block
 	*  @param[out]		curveConv			The Curve Convention block
-	*  @param[in]		lwoCurveGenerator	Curve generator object
+	*  @param[in]		aqoCurveGenerator	Curve generator object
 	*  @param[in]		marketDataAsOfDate	As of date
 	*/
-	void getCurveConventionBlock( etrading::LabelValueBlock& curveConvLVB, const etrading::CurveGeneratorPtr& lwoCurveGenerator, const std::string& marketDataAsOfDate)
+	void getCurveConventionBlock( etrading::LabelValueBlock& curveConvLVB, const etrading::CurveGeneratorPtr& aqoCurveGenerator, const std::string& marketDataAsOfDate)
 	{
-		AQLStringMatrix curveProperties = lwoCurveGenerator->toAQLStringMatrix( "CURVEPROPERTIES" );
+		AQLStringMatrix curveProperties = aqoCurveGenerator->toAQLStringMatrix( "CURVEPROPERTIES" );
 
 		// Push the MarketData AsOfDate into the CurveConventions, as required by the underlying curve calibration routines.
 		AQLString asOfDateKey( "AsOfDate" );
@@ -104,31 +104,31 @@ namespace etrading
 
 	/* @brief Constructor of OIS curve data
 	 */
-	OISCurveObjectData::OISCurveObjectData(const CurveGeneratorPtr& lwoCurveGenerator, const CurveMarketDataPtr& lwoCurveMarketData, const std::string& marketDataAsOfDate, bool useSwaps, const std::string& curveNameIn, const std::string& curveIndexIn)
+	OISCurveObjectData::OISCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const CurveMarketDataPtr& aqoCurveMarketData, const std::string& marketDataAsOfDate, bool useSwaps, const std::string& curveNameIn, const std::string& curveIndexIn)
 	{
-		getCurveConventionBlock(curveConvLVB_, lwoCurveGenerator, marketDataAsOfDate);
+		getCurveConventionBlock(curveConvLVB_, aqoCurveGenerator, marketDataAsOfDate);
 
 		curveName_       = curveNameIn.c_str();
 		curveIndex_      = curveIndexIn.c_str();
 
-		oisRates_        = lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_OIS );
-		oisConvLVB_      = LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_OIS ) );
+		oisRates_        = aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_OIS );
+		oisConvLVB_      = LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_OIS ) );
 		
         // Optional: OIS FIXINGS
         // ----------------------
-        histRates_       = lwoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_OISFIXINGS ) ? etrading::retrieveFixingTableMatrix(lwoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_OISFIXINGS)) : AQLStringMatrix(0);
+        histRates_       = aqoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_OISFIXINGS ) ? etrading::retrieveFixingTableMatrix(aqoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_OISFIXINGS)) : AQLStringMatrix(0);
 
-		loBasisRates_    = lwoCurveMarketData->doesKeyExist(GENERATOR_COMPONENTS::KEY_LIBOROISBASISSPREADS) ? lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_LIBOROISBASISSPREADS ) : AQLStringMatrix(0);
-		loBasisConvLVB_  = lwoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_LIBOROISBASIS) ? LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_LIBOROISBASIS ) ) : LabelValueBlock();
-		swapConvLVB_     = lwoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_SWAPS) ? LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_SWAPS ) ): LabelValueBlock();
+		loBasisRates_    = aqoCurveMarketData->doesKeyExist(GENERATOR_COMPONENTS::KEY_LIBOROISBASISSPREADS) ? aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_LIBOROISBASISSPREADS ) : AQLStringMatrix(0);
+		loBasisConvLVB_  = aqoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_LIBOROISBASIS) ? LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_LIBOROISBASIS ) ) : LabelValueBlock();
+		swapConvLVB_     = aqoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_SWAPS) ? LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_SWAPS ) ): LabelValueBlock();
 		
-		forwardAdjustments_ = lwoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? lwoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
+		forwardAdjustments_ = aqoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? aqoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
 
 		// When used in dual-bootstrapping context, we do not extract Libor swap par rates from the OIS curve
 		if (useSwaps)
 		{
             // Libor Swap Rates on an OIS Curve are Optional and may not exist
-            swapRates_ = lwoCurveMarketData->doesKeyExist(GENERATOR_COMPONENTS::KEY_SWAPS) ? lwoCurveMarketData->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_SWAPS ) : AQLStringMatrix(0);
+            swapRates_ = aqoCurveMarketData->doesKeyExist(GENERATOR_COMPONENTS::KEY_SWAPS) ? aqoCurveMarketData->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_SWAPS ) : AQLStringMatrix(0);
 		}
 
         // Optional Market Data Bump / Shift Parameter
@@ -247,18 +247,18 @@ namespace etrading
 
 	/* @brief Constructor of ARR curve data
 	*/
-    ARRCurveObjectData::ARRCurveObjectData(const CurveGeneratorPtr& lwoCurveGenerator, const CurveMarketDataPtr& lwoCurveMarketData, const std::string& marketDataAsOfDate, bool useSwaps, const std::string& curveNameIn, const std::string& curveIndexIn)
+    ARRCurveObjectData::ARRCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const CurveMarketDataPtr& aqoCurveMarketData, const std::string& marketDataAsOfDate, bool useSwaps, const std::string& curveNameIn, const std::string& curveIndexIn)
     {
-		getCurveConventionBlock( curveConvLVB_, lwoCurveGenerator, marketDataAsOfDate );
+		getCurveConventionBlock( curveConvLVB_, aqoCurveGenerator, marketDataAsOfDate );
 
 		curveName_      = curveNameIn.c_str();
 		curveIndex_     = curveIndexIn.c_str();
 
-		oisRates_       = lwoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_OIS);
-		auto oisConv     = lwoCurveGenerator->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_OIS) ;
+		oisRates_       = aqoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_OIS);
+		auto oisConv     = aqoCurveGenerator->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_OIS) ;
 
 		// Optional: LinearSplineJoinDate
-		const LabelValueBlock marketDataPropertiesLVB = lwoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES);
+		const LabelValueBlock marketDataPropertiesLVB = aqoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES);
 		const AQLString joinDateStr = marketDataPropertiesLVB.getOptionalValueAsAQLString(CURVEGENERATOR_CURVEPROPERTIES_KEY::INTERPOLATION_JOIN_DATE);
 
 		if (joinDateStr.size() > 0)
@@ -274,19 +274,19 @@ namespace etrading
 
 		// Optional: OIS FIXINGS
 		// ----------------------
-		histRates_ = lwoCurveMarketData->doesKeyExist(GENERATOR_COMPONENTS::KEY_OISFIXINGS) ? etrading::retrieveFixingTableMatrix(lwoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_OISFIXINGS)) : AQLStringMatrix(0);
+		histRates_ = aqoCurveMarketData->doesKeyExist(GENERATOR_COMPONENTS::KEY_OISFIXINGS) ? etrading::retrieveFixingTableMatrix(aqoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_OISFIXINGS)) : AQLStringMatrix(0);
 
-		loBasisRates_   = lwoCurveMarketData->doesKeyExist(GENERATOR_COMPONENTS::KEY_LIBOROISBASISSPREADS) ? lwoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_LIBOROISBASISSPREADS) : AQLStringMatrix(0);
-		loBasisConvLVB_ = lwoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_LIBOROISBASIS) ? LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_LIBOROISBASIS) ) : LabelValueBlock();
-		swapConvLVB_    = lwoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_SWAPS) ? LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_SWAPS) ) : LabelValueBlock();
+		loBasisRates_   = aqoCurveMarketData->doesKeyExist(GENERATOR_COMPONENTS::KEY_LIBOROISBASISSPREADS) ? aqoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_LIBOROISBASISSPREADS) : AQLStringMatrix(0);
+		loBasisConvLVB_ = aqoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_LIBOROISBASIS) ? LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_LIBOROISBASIS) ) : LabelValueBlock();
+		swapConvLVB_    = aqoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_SWAPS) ? LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_SWAPS) ) : LabelValueBlock();
 
-		forwardAdjustments_ = lwoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? lwoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
+		forwardAdjustments_ = aqoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? aqoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
 
 		// When used in dual-bootstrapping context, we do not extract Libor swap par rates from the OIS curve
 		if (useSwaps)
 		{
 			// Libor Swap Rates on an OIS Curve are Optional and may not exist
-			swapRates_ = lwoCurveMarketData->doesKeyExist(GENERATOR_COMPONENTS::KEY_SWAPS) ? lwoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_SWAPS) : AQLStringMatrix(0);
+			swapRates_ = aqoCurveMarketData->doesKeyExist(GENERATOR_COMPONENTS::KEY_SWAPS) ? aqoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_SWAPS) : AQLStringMatrix(0);
 		}
 
         // Optional Market Data Bump / Shift Parameter
@@ -405,25 +405,25 @@ namespace etrading
 
 	/* @brief Constructor of swap curve data
 	 */
-	SwapCurveObjectData::SwapCurveObjectData(const CurveGeneratorPtr& lwoCurveGenerator, const CurveMarketDataPtr& lwoCurveMarketData, const std::string& frequency, const std::string& marketDataAsOfDate, const std::string& curveNameIn, const std::string& curveIndexIn)
+	SwapCurveObjectData::SwapCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const CurveMarketDataPtr& aqoCurveMarketData, const std::string& frequency, const std::string& marketDataAsOfDate, const std::string& curveNameIn, const std::string& curveIndexIn)
 	{
-		getCurveConventionBlock(curveConvLVB_, lwoCurveGenerator, marketDataAsOfDate);
+		getCurveConventionBlock(curveConvLVB_, aqoCurveGenerator, marketDataAsOfDate);
 
 		curveName_          = curveNameIn.c_str();
 		curveIndex_         = curveIndexIn.c_str();
 
-		moneyMarketConvLVB_ = LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_MONEYMARKET ) );
-		liborRates_         = lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_LIBORFIXINGS );
-		liborConvLVB_       = LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_LIBORFIXINGS ) );
-		swapRates_          = lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_SWAPS );
-		swapConvLVB_        = LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_SWAPS ) );
+		moneyMarketConvLVB_ = LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_MONEYMARKET ) );
+		liborRates_         = aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_LIBORFIXINGS );
+		liborConvLVB_       = LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_LIBORFIXINGS ) );
+		swapRates_          = aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_SWAPS );
+		swapConvLVB_        = LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_SWAPS ) );
 		
-		forwardAdjustments_ = lwoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? lwoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
+		forwardAdjustments_ = aqoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? aqoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
 
         // Optional: FRAS
         // -----------------
-        fraRates_           = lwoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS ) ? lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) : AQLStringMatrix(0);
-        fraConvLVB_         = lwoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS ) ? LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) ) : LabelValueBlock();
+        fraRates_           = aqoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS ) ? aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) : AQLStringMatrix(0);
+        fraConvLVB_         = aqoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS ) ? LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) ) : LabelValueBlock();
 
 		// If FRA market data is provided, determine the FRA tenor (3M or 6M)
 		if (fraRates_.size() > 0)
@@ -447,13 +447,13 @@ namespace etrading
 
         // Optional: FUTURES
         // -----------------
-        futureRates_        = lwoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FUTURES ) ? lwoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_FUTURES ) : AQLStringMatrix(0);
-        futureConvLVB_      = lwoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_FUTURES ) ? LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FUTURES ) ) : LabelValueBlock();
+        futureRates_        = aqoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FUTURES ) ? aqoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_FUTURES ) : AQLStringMatrix(0);
+        futureConvLVB_      = aqoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_FUTURES ) ? LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FUTURES ) ) : LabelValueBlock();
 
 		// Optional Fields - Tenor Basis Instruments
         // -----------------------------------------
-        basisAdjConvLVB_    = lwoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_BASISSWAPS) ? LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_BASISSWAPS ) ) : LabelValueBlock();
-        basisAdjRates_      = lwoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_BASISSWAPS) ? lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_BASISSWAPS ) : AQLStringMatrix(0);
+        basisAdjConvLVB_    = aqoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_BASISSWAPS) ? LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_BASISSWAPS ) ) : LabelValueBlock();
+        basisAdjRates_      = aqoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_BASISSWAPS) ? aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_BASISSWAPS ) : AQLStringMatrix(0);
 
         // Optional Market Data Bump / Shift Parameter
         shiftSize_ = 0.0;
@@ -652,29 +652,29 @@ namespace etrading
 
 	/* @brief Constructor of tenor basis curve data
 	 */
-	TenorBasisCurveObjectData::TenorBasisCurveObjectData(const CurveGeneratorPtr& lwoCurveGenerator, const CurveMarketDataPtr& lwoCurveMarketData, const std::string frequency, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection, const std::string& curveNameIn, const std::string& curveIndexIn)
+	TenorBasisCurveObjectData::TenorBasisCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const CurveMarketDataPtr& aqoCurveMarketData, const std::string frequency, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection, const std::string& curveNameIn, const std::string& curveIndexIn)
 	{
-		getCurveConventionBlock(curveConvLVB_, lwoCurveGenerator, marketDataAsOfDate);
+		getCurveConventionBlock(curveConvLVB_, aqoCurveGenerator, marketDataAsOfDate);
 
 		curveName_           = curveNameIn.c_str();
 		curveIndex_          = curveIndexIn.c_str();
 
-		basisRates_          = lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_BASISSWAPS );
-		basisConvLVB_        = LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_BASISSWAPS ) );
+		basisRates_          = aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_BASISSWAPS );
+		basisConvLVB_        = LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix(  GENERATOR_COMPONENTS::KEY_BASISSWAPS ) );
 		moneyMarketConvLVB_  = AQLStringMatrix( 0 );
 
-		forwardAdjustments_ = lwoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? lwoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
+		forwardAdjustments_ = aqoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? aqoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
 
         // Optional Fields - Fixing Table
         // ------------------------------
-        liborRates_         = lwoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_LIBORFIXINGS) ?  lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_LIBORFIXINGS ) : AQLStringMatrix(0);
-        liborConvLVB_       = lwoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_LIBORFIXINGS) ? LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_LIBORFIXINGS ) ) : LabelValueBlock();
+        liborRates_         = aqoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_LIBORFIXINGS) ?  aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_LIBORFIXINGS ) : AQLStringMatrix(0);
+        liborConvLVB_       = aqoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_LIBORFIXINGS) ? LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_LIBORFIXINGS ) ) : LabelValueBlock();
         // ------------------------------
 
         // Optional: FRAS
         // -----------------
-        fraRates_           = lwoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS ) ? lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) : AQLStringMatrix(0);
-        fraConvLVB_         = lwoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS ) ? LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) ) : LabelValueBlock();
+        fraRates_           = aqoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS ) ? aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) : AQLStringMatrix(0);
+        fraConvLVB_         = aqoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS ) ? LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) ) : LabelValueBlock();
 
 		AQLStringMatrix tmpStringMatrix = basisConvLVB_.toAQLStringMatrix();
 		basisConvLVB_ = modifyConventionsAndApplyCurveCollections( tmpStringMatrix, domesticCurveCollection, foreignCurveCollection );
@@ -683,8 +683,8 @@ namespace etrading
 		etrading::FrequencyEnum frequencyEnum = etrading::toFrequencyEnum( frequency );
 		if ( (frequencyEnum == etrading::SEMI_ANNUAL_FREQUENCY) || (frequencyEnum == etrading::QUARTERLY_FREQUENCY) )
 		{
-            fraRates_       = lwoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS) ? lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) : AQLStringMatrix(0);
-            fraConvLVB_     = lwoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS) ? lwoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) : AQLStringMatrix(0);
+            fraRates_       = aqoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS) ? aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) : AQLStringMatrix(0);
+            fraConvLVB_     = aqoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_FRAS) ? aqoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FRAS ) : AQLStringMatrix(0);
 		}
         
         // Optional Market Data Bump / Shift Parameter
@@ -808,22 +808,22 @@ namespace etrading
 	
 	/* @brief Constructor of xccy basis curve data
 	 */
-	XccyBasisCurveObjectData::XccyBasisCurveObjectData(const CurveGeneratorPtr& lwoCurveGenerator, const CurveMarketDataPtr& lwoCurveMarketData, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection, const std::string& curveNameIn, const std::string& curveIndexIn)
+	XccyBasisCurveObjectData::XccyBasisCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const CurveMarketDataPtr& aqoCurveMarketData, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection, const std::string& curveNameIn, const std::string& curveIndexIn)
 	{
-		getCurveConventionBlock(curveConvLVB_, lwoCurveGenerator, marketDataAsOfDate);
+		getCurveConventionBlock(curveConvLVB_, aqoCurveGenerator, marketDataAsOfDate);
 
 		curveName_      = curveNameIn.c_str();
 		curveIndex_     = curveIndexIn.c_str();
 
-		basisRates_     = lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_XCCYSWAPS );
-		basisConvLVB_   = LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_XCCYSWAPS ) );
+		basisRates_     = aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_XCCYSWAPS );
+		basisConvLVB_   = LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_XCCYSWAPS ) );
 		
-		forwardAdjustments_ = lwoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? lwoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
+		forwardAdjustments_ = aqoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? aqoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
 
         // Optional Instruments
-        fxFwdRates_     = lwoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FXFWDS)   ? lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FXFWDS )    : AQLStringMatrix(0);
-		fxFwdConvLVB_   = lwoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_FXFWDS)    ? LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FXFWDS ) ) : LabelValueBlock();
-		spotFxRates_    = lwoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FXSPOTS)  ? lwoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FXSPOTS )   : AQLStringMatrix(0);
+        fxFwdRates_     = aqoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FXFWDS)   ? aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FXFWDS )    : AQLStringMatrix(0);
+		fxFwdConvLVB_   = aqoCurveGenerator->doesKeyExist( GENERATOR_COMPONENTS::KEY_FXFWDS)    ? LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FXFWDS ) ) : LabelValueBlock();
+		spotFxRates_    = aqoCurveMarketData->doesKeyExist( GENERATOR_COMPONENTS::KEY_FXSPOTS)  ? aqoCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FXSPOTS )   : AQLStringMatrix(0);
 
 		AQLStringMatrix tmpStringMatrix = basisConvLVB_.toAQLStringMatrix();
 		basisConvLVB_   = modifyConventionsAndApplyCurveCollections( tmpStringMatrix, domesticCurveCollection, foreignCurveCollection );
@@ -948,18 +948,18 @@ namespace etrading
 
 	/* @brief Constructor of fwd constant curve data
 	 */
-	FwdConstantCurveObjectData::FwdConstantCurveObjectData(const CurveGeneratorPtr& lwoCurveGenerator, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection, const std::string& curveNameIn, const std::string& curveIndexIn)
+	FwdConstantCurveObjectData::FwdConstantCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection, const std::string& curveNameIn, const std::string& curveIndexIn)
 	{
-		getCurveConventionBlock(curveConvLVB_, lwoCurveGenerator, marketDataAsOfDate);
+		getCurveConventionBlock(curveConvLVB_, aqoCurveGenerator, marketDataAsOfDate);
 
 		curveName_          = curveNameIn.c_str();
 		curveIndex_         = curveIndexIn.c_str();
 
-		fwdfxconstConvLVB_  = LabelValueBlock( lwoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FWDFXCONST ) );
+		fwdfxconstConvLVB_  = LabelValueBlock( aqoCurveGenerator->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_FWDFXCONST ) );
 		AQLStringMatrix tmpStringMatrix = fwdfxconstConvLVB_.toAQLStringMatrix();
 		fwdfxconstConvLVB_  = modifyConventionsAndApplyCurveCollections( tmpStringMatrix, domesticCurveCollection, foreignCurveCollection );
 
-		forwardAdjustments_ = lwoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? lwoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
+		forwardAdjustments_ = aqoCurveGenerator->doesKeyExist(GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS) ? aqoCurveGenerator->toStandardStringMatrix( GENERATOR_COMPONENTS::KEY_FORWARDADJUSTMENTS ) : StandardStringMatrix();
 
         // Optional Market Data Bump / Shift Parameter
         shiftSize_ = 0.0;

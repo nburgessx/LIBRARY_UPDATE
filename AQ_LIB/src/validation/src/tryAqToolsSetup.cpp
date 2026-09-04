@@ -261,16 +261,16 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 
-		const AQLString* lwoStartUpConfigPath = etrading::FolderConfig::setupOptionalStartupConfig();
+		const AQLString* aqoStartUpConfigPath = etrading::FolderConfig::setupOptionalStartupConfig();
 
-        if( lwoStartUpConfigPath == nullptr )
+        if( aqoStartUpConfigPath == nullptr )
         {
             return "#Error: Failed to load AQO configuration file(s)";
         }
 
         std::string result;
-        result = "Loaded lwo configuration files from ";
-		result += lwoStartUpConfigPath->getCString();
+        result = "Loaded aqo configuration files from ";
+		result += aqoStartUpConfigPath->getCString();
 		
         AQLString resultString( result.c_str() ) ;
         return resultString;

@@ -72,7 +72,7 @@ namespace etrading
     class Environment;
 
     template <typename T>
-    environment_implementation::CachedObjectFunctionSet functionTupleForLWO()
+    environment_implementation::CachedObjectFunctionSet functionTupleForAQO()
     {
         return std::make_tuple(
                    &environment_implementation::has<T>,
@@ -182,33 +182,33 @@ namespace etrading
 								 SABR_MODEL,
 								 SABR_MARKETDATA};
 
-                functionsForCachedObjectMap_[CURVE_DEPRECATED]          = functionTupleForLWO<AQOCurve>();
-                functionsForCachedObjectMap_[TABLE]                     = functionTupleForLWO<TableDateDouble>();
-                functionsForCachedObjectMap_[CURVE_BUILD_PROPERTIES]    = functionTupleForLWO<CurveBuildProperties>();
-                functionsForCachedObjectMap_[FREE_OBJECT]               = functionTupleForLWO<FreeObject>();
-                functionsForCachedObjectMap_[EXAMPLE_STAND_ALONE]       = functionTupleForLWO<StandAlone>();
-                functionsForCachedObjectMap_[EXAMPLE_BASE]              = functionTupleForLWO<BaseObject>();
-                functionsForCachedObjectMap_[SWAP_OBJECT]               = functionTupleForLWO<Swap>(); 
-                functionsForCachedObjectMap_[SWAP_GENERATOR]            = functionTupleForLWO<SwapGenerator>(); 
-				functionsForCachedObjectMap_[SCHEDULE]                  = functionTupleForLWO<Schedule>(); 
-				functionsForCachedObjectMap_[LEG]                       = functionTupleForLWO<Leg>(); 
-                functionsForCachedObjectMap_[BOND]                      = functionTupleForLWO<Bond>(); 
-				functionsForCachedObjectMap_[CURVE_DATA]                = functionTupleForLWO<CurveData>(); 
-                functionsForCachedObjectMap_[FIXING_TABLE]              = functionTupleForLWO<FixingTable>(); 
-				functionsForCachedObjectMap_[CURVE_GENERATOR]           = functionTupleForLWO<CurveGenerator>();
-				functionsForCachedObjectMap_[CURVE_MARKETDATA]          = functionTupleForLWO<CurveMarketData>();
-				functionsForCachedObjectMap_[CURVE]                     = functionTupleForLWO<SingleCurveObject>();
-				functionsForCachedObjectMap_[MULTICURVE]				= functionTupleForLWO<MultiCurveObject>();
-				functionsForCachedObjectMap_[FX_CURVE]                  = functionTupleForLWO<FXCurve>();
-				functionsForCachedObjectMap_[BOND_GENERATOR]            = functionTupleForLWO<BondGenerator>();
-				functionsForCachedObjectMap_[OPTION]					= functionTupleForLWO<Option>();
-				functionsForCachedObjectMap_[VOLATILITY]				= functionTupleForLWO<Volatility>();
-				functionsForCachedObjectMap_[CREDIT_MODEL]				= functionTupleForLWO<CreditModel>();
-				functionsForCachedObjectMap_[CREDIT_BASKET_MODEL]		= functionTupleForLWO<CreditBasketModel>();
-				functionsForCachedObjectMap_[BOND_CURVE]				= functionTupleForLWO<BondCurve>();
-				functionsForCachedObjectMap_[INFLATION_CURVE]			= functionTupleForLWO<InflationCurve>();
-				functionsForCachedObjectMap_[SABR_MODEL]				= functionTupleForLWO<SabrModel>();
-				functionsForCachedObjectMap_[SABR_MARKETDATA]		    = functionTupleForLWO<SabrMarketData>();
+                functionsForCachedObjectMap_[CURVE_DEPRECATED]          = functionTupleForAQO<AQOCurve>();
+                functionsForCachedObjectMap_[TABLE]                     = functionTupleForAQO<TableDateDouble>();
+                functionsForCachedObjectMap_[CURVE_BUILD_PROPERTIES]    = functionTupleForAQO<CurveBuildProperties>();
+                functionsForCachedObjectMap_[FREE_OBJECT]               = functionTupleForAQO<FreeObject>();
+                functionsForCachedObjectMap_[EXAMPLE_STAND_ALONE]       = functionTupleForAQO<StandAlone>();
+                functionsForCachedObjectMap_[EXAMPLE_BASE]              = functionTupleForAQO<BaseObject>();
+                functionsForCachedObjectMap_[SWAP_OBJECT]               = functionTupleForAQO<Swap>(); 
+                functionsForCachedObjectMap_[SWAP_GENERATOR]            = functionTupleForAQO<SwapGenerator>(); 
+				functionsForCachedObjectMap_[SCHEDULE]                  = functionTupleForAQO<Schedule>(); 
+				functionsForCachedObjectMap_[LEG]                       = functionTupleForAQO<Leg>(); 
+                functionsForCachedObjectMap_[BOND]                      = functionTupleForAQO<Bond>(); 
+				functionsForCachedObjectMap_[CURVE_DATA]                = functionTupleForAQO<CurveData>(); 
+                functionsForCachedObjectMap_[FIXING_TABLE]              = functionTupleForAQO<FixingTable>(); 
+				functionsForCachedObjectMap_[CURVE_GENERATOR]           = functionTupleForAQO<CurveGenerator>();
+				functionsForCachedObjectMap_[CURVE_MARKETDATA]          = functionTupleForAQO<CurveMarketData>();
+				functionsForCachedObjectMap_[CURVE]                     = functionTupleForAQO<SingleCurveObject>();
+				functionsForCachedObjectMap_[MULTICURVE]				= functionTupleForAQO<MultiCurveObject>();
+				functionsForCachedObjectMap_[FX_CURVE]                  = functionTupleForAQO<FXCurve>();
+				functionsForCachedObjectMap_[BOND_GENERATOR]            = functionTupleForAQO<BondGenerator>();
+				functionsForCachedObjectMap_[OPTION]					= functionTupleForAQO<Option>();
+				functionsForCachedObjectMap_[VOLATILITY]				= functionTupleForAQO<Volatility>();
+				functionsForCachedObjectMap_[CREDIT_MODEL]				= functionTupleForAQO<CreditModel>();
+				functionsForCachedObjectMap_[CREDIT_BASKET_MODEL]		= functionTupleForAQO<CreditBasketModel>();
+				functionsForCachedObjectMap_[BOND_CURVE]				= functionTupleForAQO<BondCurve>();
+				functionsForCachedObjectMap_[INFLATION_CURVE]			= functionTupleForAQO<InflationCurve>();
+				functionsForCachedObjectMap_[SABR_MODEL]				= functionTupleForAQO<SabrModel>();
+				functionsForCachedObjectMap_[SABR_MARKETDATA]		    = functionTupleForAQO<SabrMarketData>();
 			};
         } const initializer_;
     public:

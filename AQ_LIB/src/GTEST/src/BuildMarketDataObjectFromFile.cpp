@@ -82,7 +82,7 @@ namespace google_test
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*  @return			Handle to the market data object
 	*/
-	std::string createLWOMarketDataObjectFromFileName(const AQLString& marketDataFileName)
+	std::string createAQOMarketDataObjectFromFileName(const AQLString& marketDataFileName)
 	{
 		etrading::ReadDataFile::Load marketDataFileObj = etrading::ReadDataFile::Load(marketDataFileName);
 

@@ -25,7 +25,7 @@ namespace validation
 
     bool tryAqObjectsExists( const std::string& typeAsString, const std::string& objectName )
     {
-        bool doesObjectExist = etrading::doesLWOExist( objectName, typeAsString );
+        bool doesObjectExist = etrading::doesAQOExist( objectName, typeAsString );
         return doesObjectExist;
     }
 
@@ -60,7 +60,7 @@ namespace validation
 
     bool tryAqObjectsDelete( const std::string& typeAsString, const std::string& objectName )
     {
-        if ( !etrading::doesLWOExist( objectName, typeAsString ) )
+        if ( !etrading::doesAQOExist( objectName, typeAsString ) )
         {
             AQ_THROW( ( boost::format( "Object %s does not exist." ) % objectName.c_str() ).str().c_str() );
         }
@@ -78,10 +78,10 @@ namespace validation
     
 	// Helper Function
     // Function to get the object name from the aqObjectsLoad function which returns a tuple
-    std::string getObjectName( const std::tuple<std::string, etrading::CachedObjectEnum> & lwoLoadResultTuple )
+    std::string getObjectName( const std::tuple<std::string, etrading::CachedObjectEnum> & aqoLoadResultTuple )
     {
         // Return the string name from the tuple in position 0
-        return std::get<0>( lwoLoadResultTuple );
+        return std::get<0>( aqoLoadResultTuple );
     }
 
     std::tuple<std::string, etrading::CachedObjectEnum> tryAqObjectsLoadAndReturnTupleResults( const std::string& fileName, const etrading::FileTypeEnum fileType, etrading::Environment& env )
@@ -185,16 +185,16 @@ namespace validation
 		
 		// typename etrading::to_cached_object_type<objectType>::type  // this does not work because it is not a constant expression for compilation
 		// so we should try to code to an interface
-		auto lwoPtr = env.accessObjectInterface( objectName , objectType); // etrading::getLWOCurve(lwoCurveName);
+		auto aqoPtr = env.accessObjectInterface( objectName , objectType); // etrading::getAQOCurve(aqoCurveName);
 		
         // For Intel Linux Compiler use nullptr = {}
-        AQ_REQUIRE( lwoPtr != nullptr, "Object '" + objectName + " ' with type '" + toString(objectType) + "' does not exist" )
+        AQ_REQUIRE( aqoPtr != nullptr, "Object '" + objectName + " ' with type '" + toString(objectType) + "' does not exist" )
 
         // Append the file extension if missing
         std::string filenameWithExtension = etrading::appendFileExtension( fileName, fileType );
 
         // Serialize
-		lwoPtr->serialize( etrading::serialize::JSON, etrading::serialize::FILE, filenameWithExtension );
+		aqoPtr->serialize( etrading::serialize::JSON, etrading::serialize::FILE, filenameWithExtension );
 			
         // Check the Serialization file was created
         etrading::checkFileExists( filenameWithExtension, fileType );

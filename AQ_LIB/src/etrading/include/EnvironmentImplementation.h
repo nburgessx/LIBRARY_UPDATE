@@ -19,7 +19,7 @@ namespace etrading
         // Usage: copyObject(myInstance) 
         // where myInstance is an instance of MyClass
         // If MyClass has a clone method it will get called else its copy CTOR is used to produce a shared_ptr to a copy
-        // cfr. TEST (TestLWOInfrastructure, EnvironmentImplementation)
+        // cfr. TEST (TestAQOInfrastructure, EnvironmentImplementation)
         template<typename T>
         struct has_clone
         {

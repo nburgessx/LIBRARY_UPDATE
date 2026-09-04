@@ -30,7 +30,7 @@
 using etrading::ReadDataFile;
 
 // Define the Test Input Folder Here
-#define TEST_DIR			  "ETrading/LWObjects/TestLWOCreditModel/"
+#define TEST_DIR			  "ETrading/AQObjects/TestAQOCreditModel/"
 
 
 namespace
@@ -160,7 +160,7 @@ namespace
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOMarketDataObjectFromFileName( const AQLString& marketDataFileName )
+	void createAQOMarketDataObjectFromFileName( const AQLString& marketDataFileName )
 	{
 		etrading::ReadDataFile::Load marketDataFileObj = etrading::ReadDataFile::Load( marketDataFileName );
 
@@ -198,18 +198,18 @@ namespace
 	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
+	void createAQOCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
-		std::string lwoCurveGeneratorName	= curveCalibrationFileObj[ "lwoCurveGeneratorName" ];
-		std::string lwoCurveMarketDataName	= curveCalibrationFileObj[ "lwoCurveMarketDataName" ];
+		std::string aqoCurveGeneratorName	= curveCalibrationFileObj[ "aqoCurveGeneratorName" ];
+		std::string aqoCurveMarketDataName	= curveCalibrationFileObj[ "aqoCurveMarketDataName" ];
 		std::string domesticCurveCollection	= curveCalibrationFileObj[ "domesticCurveCollection" ];
 		std::string foreignCurveCollection	= curveCalibrationFileObj[ "foreignCurveCollection" ];
 		
-		std::string objectName = lwoCurveGeneratorName;
+		std::string objectName = aqoCurveGeneratorName;
 
-		validation::tryAqObjectsCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjectsCurveCalibrate(	objectName, aqoCurveGeneratorName, aqoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -218,11 +218,11 @@ namespace
 	*/
 	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
-		createLWOMarketDataObjectFromFileName( marketDataFileName );
-		createLWOCurveFromFileName( curveCalibrationFileName );
+		createAQOMarketDataObjectFromFileName( marketDataFileName );
+		createAQOCurveFromFileName( curveCalibrationFileName );
 	}
 
-	std::string createLWOCreditModelFromFileName( const AQLString& creditModelFileName )
+	std::string createAQOCreditModelFromFileName( const AQLString& creditModelFileName )
 	{
 		etrading::ReadDataFile::Load creditModelFileObj = etrading::ReadDataFile::Load( creditModelFileName );
 		const std::string creditModelName		= creditModelFileObj[ "objectName" ];
@@ -241,7 +241,7 @@ namespace
 		return objectName;
 	}
 
-	void checkLWOCreditModelCalibration( const AQLString& viewCreditModelCalibrationFileName, const AQLString& expectedCreditModelCalibrationFileName )
+	void checkAQOCreditModelCalibration( const AQLString& viewCreditModelCalibrationFileName, const AQLString& expectedCreditModelCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load viewCreditModelCalibrationFileObj = etrading::ReadDataFile::Load( viewCreditModelCalibrationFileName );
 		std::string creditModelName = viewCreditModelCalibrationFileObj[ "creditModelName" ];
@@ -296,22 +296,22 @@ namespace
 		}
 	}
 
-	std::string createLWOCreditDefaultSwapFromFileName( const AQLString& cdsFileName )
+	std::string createAQOCreditDefaultSwapFromFileName( const AQLString& cdsFileName )
 	{
 		etrading::ReadDataFile::Load creditDefaultSwapFileObj = etrading::ReadDataFile::Load( cdsFileName );
 		
 		const std::string swapName				= creditDefaultSwapFileObj[ "swapName" ];
-		const std::string lwoswapGeneratorName	= creditDefaultSwapFileObj[ "swapGeneratorName" ];
+		const std::string aqoswapGeneratorName	= creditDefaultSwapFileObj[ "swapGeneratorName" ];
 		const AQLStringMatrix expressionLVB		= creditDefaultSwapFileObj[ "expressionLVB" ];
 		const AQLStringMatrix swapPropertiesLVB	= creditDefaultSwapFileObj[ "swapPropertiesLVB" ];
 		const bool isXccySwap					= creditDefaultSwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= creditDefaultSwapFileObj[ "validateKeys" ];
 		
-		std::string cdsName = validation::tryAqObjectsSwapCreateFromGenerator( swapName, lwoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		std::string cdsName = validation::tryAqObjectsSwapCreateFromGenerator( swapName, aqoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 		return cdsName;
 	}
 
-	void checkLWOCreditModelConsistency( const AQLString& viewCreditModelCalibrationFileName )
+	void checkAQOCreditModelConsistency( const AQLString& viewCreditModelCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load viewCreditModelCalibrationFileObj = etrading::ReadDataFile::Load( viewCreditModelCalibrationFileName );
 		std::string creditModelName = viewCreditModelCalibrationFileObj[ "creditModelName" ];
@@ -371,7 +371,7 @@ namespace
 
 	}
 
-	void checkLWOCreditModelExtrapolation( const AQLString& viewCreditModelCalibrationFileName )
+	void checkAQOCreditModelExtrapolation( const AQLString& viewCreditModelCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load viewCreditModelCalibrationFileObj = etrading::ReadDataFile::Load( viewCreditModelCalibrationFileName );
 		std::string creditModelName = viewCreditModelCalibrationFileObj[ "creditModelName" ];
@@ -547,13 +547,13 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
 		
 		// Create and Calibrate the credit model
-		createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 		
 		// Check the calibration parameters match snapshot results
-		checkLWOCreditModelCalibration( VIEW_CREDIT_MODEL_CALIBRATION, CREDITMODEL_EXPECTED_CALIBRATION );
+		checkAQOCreditModelCalibration( VIEW_CREDIT_MODEL_CALIBRATION, CREDITMODEL_EXPECTED_CALIBRATION );
 
 		// Now create a CDS which matches the 5Y point in calibration data
-		createLWOCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP_5Y );
+		createAQOCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP_5Y );
 
 		// Calculate the CDS PV using CreditModel.
 		calculateAndCheckCDS_PV();
@@ -572,10 +572,10 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
 		
 		// Create and Calibrate the credit model
-		createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
 		// Now create a CDS which matches the 5Y point in calibration data
-		createLWOCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP_5Y );
+		createAQOCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP_5Y );
 
 		// Calculate the CDS PV using CreditModel.
 		calculateAndCheckCDS_PV_by_Integration();
@@ -588,10 +588,10 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
 		
 		// Create and Calibrate the credit model
-		createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
 		// Now create a CDS which matches the 5Y point in calibration data
-		createLWOCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP_5Y );
+		createAQOCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP_5Y );
 
 		// Calculate the CDS PV using CreditModel.
 		calculateAndCheckCDS_PV_by_MonteCarlo();
@@ -605,7 +605,7 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
 		
 		// Create and Calibrate the credit model
-		std::string creditModelName = createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		std::string creditModelName = createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
 		etrading::ReadDataFile::Load creditModelFileObj = etrading::ReadDataFile::Load( GEN_USD_CREDIT_MODEL );
 		const AQLStringMatrix cdsMarketData		= creditModelFileObj[ "CDS_MARKETDATA" ];
@@ -614,7 +614,7 @@ namespace google_test
 		for (size_t row = 0; row < nRows; row++ )
 		{
 			std::string filename = std::string( CDS_REPRICE_PREFIX )  + AQ_TO_STRING_FROM_SIZE_T(row) + ".csv";
-			std::string cdsName = createLWOCreditDefaultSwapFromFileName( filename.c_str() );
+			std::string cdsName = createAQOCreditDefaultSwapFromFileName( filename.c_str() );
 
 			AQLString premiumLegName;
 			AQLString protectionLegName;
@@ -635,9 +635,9 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
 		
 		// Create and Calibrate the credit model
-		std::string creditModelName = createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		std::string creditModelName = createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
-		checkLWOCreditModelConsistency( VIEW_CREDIT_MODEL_CALIBRATION );
+		checkAQOCreditModelConsistency( VIEW_CREDIT_MODEL_CALIBRATION );
 
 	}
 
@@ -649,9 +649,9 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
 		
 		// Create and Calibrate the credit model
-		std::string creditModelName = createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		std::string creditModelName = createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
-		checkLWOCreditModelExtrapolation( VIEW_CREDIT_MODEL_CALIBRATION );
+		checkAQOCreditModelExtrapolation( VIEW_CREDIT_MODEL_CALIBRATION );
 	}
 
 	std::string setUpManualCreditModel( const std::string creditModelName )

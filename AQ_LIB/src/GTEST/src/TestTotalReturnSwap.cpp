@@ -27,7 +27,7 @@
 using etrading::ReadDataFile;
 
 // Define the Test Input Folder Here
-#define TEST_DIR			  "ETrading/LWObjects/TestLWOTotalReturnSwap/"
+#define TEST_DIR			  "ETrading/AQObjects/TestAQOTotalReturnSwap/"
 
 
 namespace
@@ -163,7 +163,7 @@ namespace
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOMarketDataObjectFromFileName( const AQLString& marketDataFileName )
+	void createAQOMarketDataObjectFromFileName( const AQLString& marketDataFileName )
 	{
 		etrading::ReadDataFile::Load marketDataFileObj = etrading::ReadDataFile::Load( marketDataFileName );
 
@@ -201,18 +201,18 @@ namespace
 	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
+	void createAQOCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
-		std::string lwoCurveGeneratorName	= curveCalibrationFileObj[ "lwoCurveGeneratorName" ];
-		std::string lwoCurveMarketDataName	= curveCalibrationFileObj[ "lwoCurveMarketDataName" ];
+		std::string aqoCurveGeneratorName	= curveCalibrationFileObj[ "aqoCurveGeneratorName" ];
+		std::string aqoCurveMarketDataName	= curveCalibrationFileObj[ "aqoCurveMarketDataName" ];
 		std::string domesticCurveCollection	= curveCalibrationFileObj[ "domesticCurveCollection" ];
 		std::string foreignCurveCollection	= curveCalibrationFileObj[ "foreignCurveCollection" ];
 		
-		std::string objectName = lwoCurveGeneratorName;
+		std::string objectName = aqoCurveGeneratorName;
 
-		validation::tryAqObjectsCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjectsCurveCalibrate(	objectName, aqoCurveGeneratorName, aqoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -221,11 +221,11 @@ namespace
 	*/
 	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
-		createLWOMarketDataObjectFromFileName( marketDataFileName );
-		createLWOCurveFromFileName( curveCalibrationFileName );
+		createAQOMarketDataObjectFromFileName( marketDataFileName );
+		createAQOCurveFromFileName( curveCalibrationFileName );
 	}
 
-	std::string createLWOCreditModelFromFileName( const AQLString& creditModelFileName )
+	std::string createAQOCreditModelFromFileName( const AQLString& creditModelFileName )
 	{
 		etrading::ReadDataFile::Load creditModelFileObj = etrading::ReadDataFile::Load( creditModelFileName );
 		const std::string creditModelName		= creditModelFileObj[ "objectName" ];
@@ -244,7 +244,7 @@ namespace
 		return objectName;
 	}
 
-	std::string createLWOSwapGeneratorFromFileName( const AQLString& swapGeneratorFilename )
+	std::string createAQOSwapGeneratorFromFileName( const AQLString& swapGeneratorFilename )
 	{
 		etrading::ReadDataFile::Load swapGeneratorFileObj = etrading::ReadDataFile::Load( swapGeneratorFilename );
 		const std::string swapGeneratorName		= swapGeneratorFileObj[ "swapGeneratorName" ];
@@ -255,18 +255,18 @@ namespace
 	}
 
 
-	std::string createLWOTotalReturnSwapFromFileName( const AQLString& cmsFileName )
+	std::string createAQOTotalReturnSwapFromFileName( const AQLString& cmsFileName )
 	{
 		etrading::ReadDataFile::Load constantMaturitySwapFileObj = etrading::ReadDataFile::Load( cmsFileName );
 		
 		const std::string swapName				= constantMaturitySwapFileObj[ "swapName" ];
-		const std::string lwoswapGeneratorName	= constantMaturitySwapFileObj[ "swapGeneratorName" ];
+		const std::string aqoswapGeneratorName	= constantMaturitySwapFileObj[ "swapGeneratorName" ];
 		const AQLStringMatrix expressionLVB		= constantMaturitySwapFileObj[ "expressionLVB" ];
 		const AQLStringMatrix swapPropertiesLVB	= constantMaturitySwapFileObj[ "swapPropertiesLVB" ];
 		const bool isXccySwap					= constantMaturitySwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= constantMaturitySwapFileObj[ "validateKeys" ];
 		
-		validation::tryAqObjectsSwapCreateFromGenerator( swapName, lwoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		validation::tryAqObjectsSwapCreateFromGenerator( swapName, aqoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 		return swapName;
 	}
 
@@ -336,13 +336,13 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
 
 		// Create and Calibrate the credit model
-		createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
 		// Create swap generator
-		createLWOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
+		createAQOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
 
 		// Create TRS
-		createLWOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
+		createAQOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
 
 		// ---- Calculate the total PV of both swap legs ----
 
@@ -388,13 +388,13 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
 
 		// Create and Calibrate the credit model
-		createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
 		// Create swap generator
-		createLWOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
+		createAQOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
 
 		// Create TRS
-		createLWOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
+		createAQOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
 
 		// Calculate the Par Rate
 
@@ -415,13 +415,13 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
 
 		// Create and Calibrate the credit model
-		createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
 		// Create swap generator
-		createLWOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
+		createAQOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
 
 		// Create TRS
-		createLWOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
+		createAQOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
 
 		// Calculate the Par Spread i.e. the spread (in bps) on the float leg LIBOR rates required to make the PV of the swap = 0.
 
@@ -442,13 +442,13 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
 
 		// Create and Calibrate the credit model
-		createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
 		// Create swap generator
-		createLWOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR_PAY_ON_SURVIVAL );
+		createAQOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR_PAY_ON_SURVIVAL );
 
 		// Create TRS
-		const std::string swapName_payOnSurvival = createLWOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP_PAY_ON_SURVIVAL );
+		const std::string swapName_payOnSurvival = createAQOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP_PAY_ON_SURVIVAL );
 
 		// ---- Calculate the total PV of both swap legs ----
 
@@ -484,8 +484,8 @@ namespace google_test
         CheckTestResultsAndRebaseOnRequest( calculatedFloat_PayOnSurvival_PV, TEST_DIR, TRS_EXPECTED_PAY_ON_SURVIVAL_FLOAT_PV, pvTolerance );
 
 		// Final sanity check: The PV of the FLOAT leg with PayOnSurvival should be LESS than the PV with PayAlways
-		createLWOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
-		const std::string swapName = createLWOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
+		createAQOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
+		const std::string swapName = createAQOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
 
 		const double calculatedFloatPV = validation::tryAqObjectsTotalReturnSwapPV( swapName, creditModelName, floatLegName.c_str() );
 
@@ -500,13 +500,13 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
 
 		// Create and Calibrate the credit model
-		std::string creditModelName = createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		std::string creditModelName = createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
 		// Create swap generator
-		createLWOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR_PAY_ON_SURVIVAL );
+		createAQOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR_PAY_ON_SURVIVAL );
 
 		// Create TRS
-		const std::string swapName_payOnSurvival = createLWOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP_PAY_ON_SURVIVAL );
+		const std::string swapName_payOnSurvival = createAQOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP_PAY_ON_SURVIVAL );
 
 		// Check that we can display cashflows without needing to first invoking PV
 
@@ -526,14 +526,14 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
 
 		// Create and Calibrate the credit model
-		std::string creditModelName = createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
+		std::string creditModelName = createAQOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
 
 		// Create swap generator - PaymentTrigger: PayAlways
-		createLWOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
+		createAQOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
 
 		// Create TRS
-		std::string swapName = createLWOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
+		std::string swapName = createAQOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
 		
 		// 1. Calculate Premium Leg annuity
 		etrading::ReadDataFile::Load annuityFileObj = etrading::ReadDataFile::Load( TRS_CALCULATE_PREMIUM_ANNUITY );
@@ -551,10 +551,10 @@ namespace google_test
 
 		
 		// Create swap generator - PaymentTrigger: PayOnSurvival
-		createLWOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR_PAY_ON_SURVIVAL );
+		createAQOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR_PAY_ON_SURVIVAL );
 
 		// Create TRS: PayOnSurvival
-		const std::string swapName_payOnSurvival = createLWOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP_PAY_ON_SURVIVAL );
+		const std::string swapName_payOnSurvival = createAQOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP_PAY_ON_SURVIVAL );
 
 		// 3. Calculate Float Leg annuity: PayOnSurvival
 		const double calculatedFloatAnnuity_payOnSurvival = validation::tryAqObjectsTotalReturnSwapAnnuity( swapName_payOnSurvival, creditModelName, legName );

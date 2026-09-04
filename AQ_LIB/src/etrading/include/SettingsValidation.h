@@ -27,7 +27,7 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	AQLString getLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "" );
+	AQLString getAQOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "" );
 
     /* @brief			Get CurveCollection from the valuationSettingsLVB map, by matching the legName 
     *                   *** Supports Curve Objects and the Older Non-Curve Object Types ***
@@ -36,7 +36,7 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	AQLString getValidatedLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "" );
+	AQLString getValidatedAQOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "" );
 
     /* @brief			Get CurveCollection from the valuationSettingsLVB map, by matching the legName
 	* @param [in]		valuationSettingsLVB	ValuationSettings map

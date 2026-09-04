@@ -12,7 +12,7 @@
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;
 
-#define TEST_DIR "ETrading/LWObjects/LWOBonds/BondGenerator/"
+#define TEST_DIR "ETrading/AQObjects/AQOBonds/BondGenerator/"
 
 namespace
 {

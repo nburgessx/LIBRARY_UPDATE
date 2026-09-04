@@ -165,7 +165,7 @@ namespace etrading
 
 		if (creditModelName_.empty())
 		{
-			curveCollection_ = getLWOCurveCollectionFromValuationSettings(valuationSettingsLVB, legName).getCString();
+			curveCollection_ = getAQOCurveCollectionFromValuationSettings(valuationSettingsLVB, legName).getCString();
 		}
 		else
 		{

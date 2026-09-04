@@ -48,7 +48,7 @@ namespace etrading
 
 		/* @brief	Constructor for AQO Swaps
 		*/
-		DeltaGenerator(const std::vector<SwapPtr >& lwoSwaps,
+		DeltaGenerator(const std::vector<SwapPtr >& aqoSwaps,
 						const std::vector<AQLString>& swapIDs,
 						const std::vector<LabelValueBlock>& fixingTableNames,
                         const std::vector<double>& xccyFXSpotRates,
@@ -210,7 +210,7 @@ namespace etrading
         //-------------------------------------------------------------------------------------
 
 		/* @brief		Returns the size of the trade portfolio
-		*				Examines myTrades_ or myLWOSwapLegs_ depending on whether AQO Swaps are being used
+		*				Examines myTrades_ or myAQOSwapLegs_ depending on whether AQO Swaps are being used
 		*/
 		size_t getPortfolioSize();
 
@@ -222,11 +222,11 @@ namespace etrading
 
         // Trade portfolio
         std::vector<BaseInstrumentPtr> myTrades_;
-		std::vector<LegPtr > myLWOSwapLegs_;
-		std::vector<SwapPtr > myLWOSwaps_;
+		std::vector<LegPtr > myAQOSwapLegs_;
+		std::vector<SwapPtr > myAQOSwaps_;
 		std::vector<AQLString> myInstrumentIDs_;
-		std::vector<LabelValueBlock > myLWOFixingTables_;
-        std::vector<double> myLWOXccyFXAsOfDateRates_;
+		std::vector<LabelValueBlock > myAQOFixingTables_;
+        std::vector<double> myAQOXccyFXAsOfDateRates_;
 
         // Delta parameters
 		bool bumpSpreadInstruments_;
@@ -257,10 +257,10 @@ namespace etrading
 		std::string riskCutOffTenor_;
 
 		// Set to true if the portfolio contains AQO Swaps
-		bool usingLWO_;
+		bool usingAQO_;
 
 		// Calculate risks at the AQO swap leg level
-		bool riskOnLWOLegs_;
+		bool riskOnAQOLegs_;
 
 		// Are we using global curve engine to build curves
 		bool isUsingGlobalCurveEngine_;

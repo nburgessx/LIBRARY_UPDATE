@@ -76,7 +76,7 @@ namespace google_test
 		common::AQLCoreLockControl::enableThreadLocks( false );
 
         // Initialize the AQO Configuration Files
-        AQLString loadLWOConfigStatus = validation::tryAqToolsLoadConfigurationFiles();
+        AQLString loadAQOConfigStatus = validation::tryAqToolsLoadConfigurationFiles();
     }
 
     InitializeGoogleTest::~InitializeGoogleTest()

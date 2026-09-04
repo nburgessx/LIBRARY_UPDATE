@@ -28,8 +28,8 @@ namespace etrading
 	public:
 		/* @brief Main Constructor of the AQO Curve object
 		*  @param[in]	objectName				The AQO object handle name for the curve object
-		*  @param[in]	lwoCurveGeneratorName	The curve generator containing the conventions used to build this curve
-		*  @param[in]	lwoCurveMarketDataName	The AQO object handle of the object containing the market data for this curve
+		*  @param[in]	aqoCurveGeneratorName	The curve generator containing the conventions used to build this curve
+		*  @param[in]	aqoCurveMarketDataName	The AQO object handle of the object containing the market data for this curve
 		*  @param[in]	domesticCurveCollection	The collection which this curve will be placed in, once built   ( The Target CurveCollection )
 		*  @param[in]	foreignCurveCollection	The collection containing foreign curve dependencies   ( The Against CurveCollection )
 		*/
@@ -120,16 +120,16 @@ namespace etrading
 		std::string objectName_;
 
 		// Name of the curve generator
-		std::string lwoCurveGeneratorName_;
+		std::string aqoCurveGeneratorName_;
 
 		// Curve generator object
-		CurveGeneratorPtr lwoCurveGenerator_;
+		CurveGeneratorPtr aqoCurveGenerator_;
 
 		// Name of the curve market data object
-		std::string lwoCurveMarketDataName_;
+		std::string aqoCurveMarketDataName_;
 
 		// Curve market data object
-		CurveMarketDataPtr lwoCurveMarketData_;
+		CurveMarketDataPtr aqoCurveMarketData_;
 
 		// Domestic curve collection
 		std::string domesticCurveCollection_;
@@ -145,14 +145,14 @@ namespace etrading
 		/* @brief	Converts the internal FreeObject into a group of string parameters.
 		*			Used when de-serialising the curve.
 		*  @param[out]	objectName				The AQO object handle name for the curve object
-		*  @param[out]	lwoCurveGeneratorName	The curve generator containing the conventions used to build this curve
-		*  @param[out]	lwoCurveMarketDataName	The AQO object handle of the object containing the market data for this curve
+		*  @param[out]	aqoCurveGeneratorName	The curve generator containing the conventions used to build this curve
+		*  @param[out]	aqoCurveMarketDataName	The AQO object handle of the object containing the market data for this curve
 		*  @param[out]	domesticCurveCollection	The collection which this curve will be placed in, once built
 		*  @param[out]	foreignCurveCollection	The collection containing foreign curve dependencies
 		*/
 		virtual void getBuildParametersFromFreeObject( std::string& objectName,
-											   std::string& lwoCurveGeneratorName,
-											   std::string& lwoCurveMarketDataName,
+											   std::string& aqoCurveGeneratorName,
+											   std::string& aqoCurveMarketDataName,
 											   std::string& domesticCurveCollection,
 											   std::string& foreignCurveCollection ) const;
 						

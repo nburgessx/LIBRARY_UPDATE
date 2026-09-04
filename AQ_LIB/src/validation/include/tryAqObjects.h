@@ -33,7 +33,7 @@ namespace validation
     int tryAqObjectsDeleteAll( const std::string& typeAsString );
 
     // Helper Function:
-    std::string getObjectName( const std::tuple<std::string, etrading::CachedObjectEnum> & lwoLoadResultTuple );
+    std::string getObjectName( const std::tuple<std::string, etrading::CachedObjectEnum> & aqoLoadResultTuple );
     
 	std::tuple<std::string, etrading::CachedObjectEnum> tryAqObjectsLoadAndReturnTupleResults( const std::string& fileName, const etrading::FileTypeEnum fileType = etrading::JSON, etrading::Environment& env = etrading::Environment::defaultEnv() );
     

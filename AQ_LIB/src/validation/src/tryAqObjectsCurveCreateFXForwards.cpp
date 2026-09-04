@@ -37,7 +37,7 @@ namespace validation
     *  @param [in]		curveConv			General curve properties such as asofdate, ccy, interp, etc
     *  @param [in]		fxFwdConv			FX forward conventions
     */
-    AQLString tryAqObjectsCurveCreateFXForwards( const std::string& lwoCurveName,
+    AQLString tryAqObjectsCurveCreateFXForwards( const std::string& aqoCurveName,
                                             const AQLString& curveCollectionInput,
                                             const AQLString& staticDataTableInput,
                                             const AQLString& curveIndexInput,
@@ -69,7 +69,7 @@ namespace validation
         {
             CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateFXForwards_inputs", curveCollection, staticDataTable ) );
             file.write( "generatorFunction", "tryAqCurvesCalibrateFXForwards" );
-            file.write( "lwoCurveName", lwoCurveName.c_str() );
+            file.write( "aqoCurveName", aqoCurveName.c_str() );
             file.write( "curveCollection", curveCollection );
             file.write( "staticDataTable", staticDataTable );
             file.write( "curveIndex", curveIndex );
@@ -122,10 +122,10 @@ namespace validation
         const boost::gregorian::date asOfDate( effectiveDate.yearOfEra(), effectiveDate.monthOfYear(), effectiveDate.dayOfMonth() );
         const etrading::CCY ccy = etrading::toCCYEnum( curveConvLVB.getCompulsoryValue( "CURRENCY" ) );
 
-        const std::string baseCurveName = lwoCurveName;
-        const std::string lwoCurveName = baseCurveName;
+        const std::string baseCurveName = aqoCurveName;
+        const std::string aqoCurveName = baseCurveName;
 
-        CurveBuildProperties cbp( lwoCurveName + "_CBP", ccy, asOfDate );
+        CurveBuildProperties cbp( aqoCurveName + "_CBP", ccy, asOfDate );
 
         boost::gregorian::date endDate = asOfDate + boost::gregorian::years( 51 );
         auto numberOfdaysBetween = boost::gregorian::date_period( asOfDate, endDate ).length().days();
@@ -143,29 +143,29 @@ namespace validation
         auto massiveDFVector = etrading::AQLCurveForwardRateHelpers::getMultiDF( massiveYearFractionVector, etrading::getDataInstance(), curveCollection, AQLString( "ACT/365" ), interpolation.toUpper(), false, staticDataTable );
 
         // Set the AQO Curve; yearFractions, discountFactors and Curve build properties (cbp)
-        etrading::AQOCurve lwoCurve( lwoCurveName, massiveYearFractionVector, massiveDFVector, cbp );
+        etrading::AQOCurve aqoCurve( aqoCurveName, massiveYearFractionVector, massiveDFVector, cbp );
 
         // Get the Fixing Dates
-        const auto& lwoFixingDates = lwoCurve.getDates();
-        auto fixingDatesAsMlibDates = etrading::toAQLDatesFromGregorianDates( lwoFixingDates );
+        const auto& aqoFixingDates = aqoCurve.getDates();
+        auto fixingDatesAsMlibDates = etrading::toAQLDatesFromGregorianDates( aqoFixingDates );
 
         // Get the Forward Rates from the Object Pool Curve Engine
         auto massiveFwdRatesVector
             = etrading::getCurveForwardRates( fixingDatesAsMlibDates, curveCollection, curveIndexCopy ); // Note we use curveIndexCopy, which is actually the staticDataTable
 
         // Set the AQO Curve; dates, discountFactors and forwardRates ... done twice to resolve a date consistency issue
-        lwoCurve.setData( lwoCurve.
-            getDates(), lwoCurve.getDiscountFactors(), massiveFwdRatesVector );
+        aqoCurve.setData( aqoCurve.
+            getDates(), aqoCurve.getDiscountFactors(), massiveFwdRatesVector );
 
         // ----------------------------------------------------------------
 
 
-        etrading::moveToCache( std::move( lwoCurve ) );
+        etrading::moveToCache( std::move( aqoCurve ) );
         auto& curve_store = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
 
-        if( curve_store.has( lwoCurveName ) )
+        if( curve_store.has( aqoCurveName ) )
         {
-            AQLString ret = lwoCurveName.c_str();
+            AQLString ret = aqoCurveName.c_str();
             if ( CreateDataFile::recordEnabled() )
             {
                 CreateDataFile file( decorateCurvename( "tryAqObjectsCurveCalibrateFXForwards_outputs", curveCollection, staticDataTable ) );
@@ -175,7 +175,7 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Unable to create AQOCurve named %s" ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Unable to create AQOCurve named %s" ) % aqoCurveName.c_str() ).str().c_str() );
         }
 
         VALID_EXCEPTION_END

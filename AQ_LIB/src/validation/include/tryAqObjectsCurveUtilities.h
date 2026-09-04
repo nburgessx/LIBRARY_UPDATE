@@ -29,7 +29,7 @@ namespace validation
 
     const int tryAqObjectsCurveDeleteAll();
 
-    std::string tryAqObjectsCurveSave( const std::string& lwoCurveName,
+    std::string tryAqObjectsCurveSave( const std::string& aqoCurveName,
                                    const std::string& fileNameToWriteTo,
                                    const etrading::FileTypeEnum fileType = etrading::JSON );
 
