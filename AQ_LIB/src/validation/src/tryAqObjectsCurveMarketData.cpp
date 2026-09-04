@@ -104,7 +104,7 @@ namespace validation
        
 		RECORD_INPUTS( objectName );
         
-        // Attempt to retrieve AQOCurveMarketData object from the LWO Cache
+        // Attempt to retrieve AQOCurveMarketData object from the AQO object cache
 		auto curveMarketData = etrading::getCurveMarketData( objectName );
         curveMarketData->clearMarketDataLocalCache();
 
@@ -237,7 +237,7 @@ namespace validation
     {
 		VALID_EXCEPTION_START
 
-		// Attempt to retrieve AQOCurveMarketData object from the LWO Cache
+		// Attempt to retrieve AQOCurveMarketData object from the AQO object cache
 		auto curveMarketData = etrading::getCurveMarketData( marketDataObjectName );
 
 		 // Attempt to convert the marketData type to enum. This will throw early with a meaningful error message if
@@ -265,9 +265,9 @@ namespace validation
 
         auto& env = etrading::Environment::defaultEnv();
         auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( curveObjectName );
-        AQ_REQUIRE( singleCurveObject, "LWO Curve " + curveObjectName + " does not exist" )
+        AQ_REQUIRE( singleCurveObject, "AQO Curve " + curveObjectName + " does not exist" )
 
-		// Attempt to retrieve AQOCurveMarketData object from the LWO Cache
+		// Attempt to retrieve AQOCurveMarketData object from the AQO object cache
 		auto curveMarketData = singleCurveObject->getCurveMarketDataObj();
 
 		 // Attempt to convert the marketData type to enum. This will throw early with a meaningful error message if
@@ -295,9 +295,9 @@ namespace validation
 
         auto& env = etrading::Environment::defaultEnv();
         auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( curveObjectName );
-        AQ_REQUIRE( singleCurveObject, "LWO Curve " + curveObjectName + " does not exist" )
+        AQ_REQUIRE( singleCurveObject, "AQO Curve " + curveObjectName + " does not exist" )
 
-		// Attempt to retrieve AQOCurveMarketData object from the LWO Cache
+		// Attempt to retrieve AQOCurveMarketData object from the AQO object cache
 		auto curveMarketData = singleCurveObject->getCurveMarketDataObj();
 
 		 // Attempt to convert the marketData type to enum. This will throw early with a meaningful error message if

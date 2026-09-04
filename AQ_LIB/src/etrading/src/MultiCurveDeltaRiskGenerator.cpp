@@ -116,7 +116,7 @@ namespace etrading
         }
     }
 
-	/* @brief	Constructor for LWO Swaps
+	/* @brief	Constructor for AQO Swaps
     *  Note1:   We must disable the CurveResults Object otherwise Products will price outside the object pool and not incorporate curve bumps and shift results
 	*/
 	MultiCurveDeltaGenerator::MultiCurveDeltaGenerator( const AQLStringVector& swapNames,
@@ -395,7 +395,7 @@ namespace etrading
     }
 
 	/* @brief		Returns the size of the trade portfolio
-	*				Examines portfolio_ or lwoPortfolio_ depending on whether LWO Swaps are being used
+	*				Examines portfolio_ or lwoPortfolio_ depending on whether AQO Swaps are being used
 	*/
 	size_t MultiCurveDeltaGenerator::getPortfolioSize()
 	{
@@ -410,7 +410,7 @@ namespace etrading
 	}
 
 	/* @brief		Examines the lwoTrade input and adds the trade data to a map based on the curve dependencies required to PV that leg
-	* @param [in]	lwoTrade					The LWO Swap to be processed
+	* @param [in]	lwoTrade					The AQO Swap to be processed
 	* @param [in]	curveCollectionForTrade		A LabelValueBlock containing the curve collections required to PV this swap
 	* @param [out]	allTradeIDs					An output which accumulates the trade IDs that have been processed so far
 	* @param [out]	allTradeCCYs				An output which accumulates the trade native currencies
@@ -478,7 +478,7 @@ namespace etrading
 	}
 
 	/* @brief		Examines the lwoTrade input and adds the trade leg data to a map based on the curve dependencies required to PV that leg
-	* @param [in]	lwoTrade					The LWO Swap to be processed
+	* @param [in]	lwoTrade					The AQO Swap to be processed
 	* @param [in]	curveCollectionForTrade		A LabelValueBlock containing the curve collections required to PV this swap
 	* @param [out]  fixingTableForTrade			A map containing the fixingTableNames required to PV this swap
 	* @param [out]	allLegIDs					An output which accumulates the legIDs that have been processed so far
@@ -606,7 +606,7 @@ namespace etrading
 
         // Group instruments in the given portfolio by their common curve dependencies
 
-		// These maps store dependency information for portfolios of LWO SwapLegs
+		// These maps store dependency information for portfolios of AQO SwapLegs
 		std::map< CurveDependencies, std::vector< LegPtr > > lwoSwapLegsByCurves;
 		std::map< CurveDependencies, std::vector< SwapPtr > > lwoSwapsByCurves;
 		std::map< CurveDependencies, std::vector< AQLString > > lwoTradeIDsByCurves;
@@ -755,7 +755,7 @@ namespace etrading
 				std::vector<AQLString>& tradeIDs = tradeIDsByCurves[key];
 				
 				// Run the delta ladder on a mini portfolio where trades share the same forecast and discount curves
-				// Note: Non-LWO Base Case does not support Xccy Swaps - No need for Xccy FX Spot Rates here
+				// Note: Non-AQO Base Case does not support Xccy Swaps - No need for Xccy FX Spot Rates here
                 DeltaGenerator riskGen( miniPortfolio, tradeIDs, bumpSpreadInstruments_, bumpSize_, bumpMode_, aggregateRisks_, riskCutOffTenor_ );
 				riskGen.setCurves( key.curveCollectionID_, key.forecastCurve_, key.discountCurve_ );
 
@@ -873,7 +873,7 @@ namespace etrading
 		
 		// Group instruments in the given portfolio by their common curve dependencies
 
-		// These maps store dependency information for portfolios of LWO SwapLegs
+		// These maps store dependency information for portfolios of AQO SwapLegs
 		std::map< CurveDependencies, std::vector< LegPtr > > lwoSwapLegsByCurves;
 		std::map < CurveDependencies, std::vector< SwapPtr > > lwoSwapsByCurves;
 		std::map< CurveDependencies, std::vector< AQLString > > lwoTradeIDsByCurves;

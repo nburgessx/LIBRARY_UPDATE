@@ -109,7 +109,7 @@ namespace validation
 			// 1. First create the curve pointer to the correct curve in the Cache
 			auto& env = etrading::Environment::defaultEnv();
 			auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( curveObjectName );
-			AQ_REQUIRE(singleCurveObject, "LWO Curve " + curveObjectName + " does not exist")
+			AQ_REQUIRE(singleCurveObject, "AQO Curve " + curveObjectName + " does not exist")
 
 			displaySingleCurve(singleCurveObject, results);
         }
@@ -118,7 +118,7 @@ namespace validation
 			// 1. First create the curve pointer to the correct curve in the Cache
 			auto& env = etrading::Environment::defaultEnv();
 			auto curveEngineObject = env.accessObject<etrading::MultiCurveObject>(curveObjectName);
-			AQ_REQUIRE(curveEngineObject, "LWO Curve Engine" + curveObjectName + " does not exist")
+			AQ_REQUIRE(curveEngineObject, "AQO Curve Engine" + curveObjectName + " does not exist")
 
 			std::vector<etrading::SingleCurveObjectPtr> singleCurveObjs = curveEngineObject->getCurveObjects();
 			size_t curveCount = singleCurveObjs.size();

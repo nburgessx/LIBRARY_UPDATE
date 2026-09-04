@@ -1,7 +1,7 @@
 // JSONInfoBlock.cpp
 
 /*
- * @brief			Class to Manage the JSON InfoBlock Container for LWO Serialization
+ * @brief			Class to Manage the JSON InfoBlock Container for AQO Serialization
  * @Created:		24th September 2018
  * @Author:			Nicholas Burgess
  * @Department:		AlgoQuantHub, Quant Research & Analytics
@@ -65,11 +65,11 @@ namespace etrading
     // ------------------------------------------------------------------------------------------------------------
 
 
-    /* @brief			Function to trim and remove blank rows from LWO Object Information Blocks
+    /* @brief			Function to trim and remove blank rows from AQO object Information Blocks
     *  @param [in]		infoBlockNames		    A vector of info block names
     *  @param [in]		infoBlocks		        A vector of info blocks
     *  @param [in]		checkForErrors		    Parameter to control throw if an error is found, default is true
-    *  @return			Returns a LWO Object information blocks with empty data rows removed
+    *  @return			Returns a AQO object information blocks with empty data rows removed
     */ 
     JSONInfoBlockTuples JSONInfoBlock::trimInfoBlocks( const std::vector<std::string>& infoBlockNames,
                                                        const JSONInfoBlockTuples& infoBlocks,
@@ -90,11 +90,11 @@ namespace etrading
     }
 
 
-    /* @brief			Function to trim and remove blank rows from a single LWO Object Information Block
+    /* @brief			Function to trim and remove blank rows from a single AQO object Information Block
     *  @param [in]		infoBlocks		        A vector of info blocks
     *  @param [in]		checkForErrors		    Parameter to control throw if an error is found, default is true
     *  @param [in]		enforceVariantDataType  Force infoBlock to have Varaint type, default is true
-    *  @return			Returns a LWO Object information blocks with empty data rows removed
+    *  @return			Returns a AQO object information blocks with empty data rows removed
     */ 
     JSONInfoBlockTuple JSONInfoBlock::trimInfoBlock( const JSONInfoBlockTuple& infoBlock,
                                                      const bool checkForErrors,
@@ -103,12 +103,12 @@ namespace etrading
         return trimInfoBlock( infoBlock, "InfoBlockData", checkForErrors, enforceVariantDataType );
     }
 
-    /* @brief			Function to trim and remove blank rows from a single LWO Object Information Block
+    /* @brief			Function to trim and remove blank rows from a single AQO object Information Block
     *  @param [in]		infoBlock		        A vector of info blocks
     *  @param [in]		infoBlockName	        An optional descriptive name for the info block
     *  @param [in]		checkForErrors		    Parameter to control throw if an error is found, default is true
     *  @param [in]		enforceVariantDataType  Force infoBlock to have Varaint type, default is true
-    *  @return			Returns a LWO Object information blocks with empty data rows removed
+    *  @return			Returns a AQO object information blocks with empty data rows removed
     */ 
     JSONInfoBlockTuple JSONInfoBlock::trimInfoBlock( const JSONInfoBlockTuple & infoBlock,
                                                      const std::string & infoBlockName,
@@ -174,7 +174,7 @@ namespace etrading
         }
 
         // *** Important - Transpose Column Data to Row Data ***
-        // Data must be transposed from Columns to Rows in LWO JSON Format
+        // Data must be transposed from Columns to Rows in AQO JSON Format
         // ----------------------------------------------------------------------
         VariantMatrix dataMatrixTransposedByRow;
         for( size_t j = 0; j < nColumns; ++j )

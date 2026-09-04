@@ -14,8 +14,8 @@
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 /* @brief			swig interface for aqObjectsCurveDisplay
-*  @param [in]		curveHandle		    LWO curve handle or object name
-*  @return			StandardStringMatrix of LWO Curve static and market data inputs
+*  @param [in]		curveHandle		    AQO curve handle or object name
+*  @return			StandardStringMatrix of AQO Curve static and market data inputs
 */
 SWIG_STRINGMATRIX aqObjectsCurveDisplay(const std::string& curveHandle)
 {
@@ -35,7 +35,7 @@ SWIG_STRINGMATRIX aqObjectsCurveDisplay(const std::string& curveHandle)
 }
 
 /* @brief			swig interface for aqObjectsCurveMarketDataDisplay
-*  @param [in]		marketDataObjectName	LWO curve market data handle or object name
+*  @param [in]		marketDataObjectName	AQO curve market data handle or object name
 *  @param [in]		marketDataKey			The specific market data block of interest, for example "SWAPS"
 *  @return			A string matrix containing the specified market data block.
 */
@@ -54,7 +54,7 @@ SWIG_STRINGMATRIX aqObjectsCurveMarketDataDisplay(const std::string& marketDataO
 }
 
 /* @brief			swig interface for aqObjectsCurveDisplayMarketDataFromCurve
-*  @param [in]		curveObjectName			LWO curve data handle or object name
+*  @param [in]		curveObjectName			AQO curve data handle or object name
 *  @param [in]		marketDataKey			The specific market data block of interest, for example "SWAPS"
 *  @return			A string matrix containing the specified market data block.
 */

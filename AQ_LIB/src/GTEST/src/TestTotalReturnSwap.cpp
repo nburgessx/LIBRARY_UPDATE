@@ -158,7 +158,7 @@ namespace
         return std::make_tuple( columnNames, columnEnumTypes, dataValues );
 	}
 
-	/* @brief			Builds LWO MarketData Object by invoking the tryAqObjectsCurveMarketDataCreate() API.
+	/* @brief			Builds AQO MarketData Object by invoking the tryAqObjectsCurveMarketDataCreate() API.
 	*                   The code loops over all of the capitalized data keys in the specified filename and uses
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions

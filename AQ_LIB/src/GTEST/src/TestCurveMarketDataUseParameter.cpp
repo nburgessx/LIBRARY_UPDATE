@@ -5,7 +5,7 @@
 #include "GetGoogleTestFolder.h"
 #include "RecordMacros.h"						// Logfile Macros
 #include "ResultsProcessor.h"					// Test Rebase Methods
-#include "tryAqObjects.h"							// LWO Curve Loading et al.
+#include "tryAqObjects.h"							// AQO Curve Loading et al.
 #include "tryAqObjectsCurveMarketData.h"			// Curve Market Data Bumping Method(s)
 #include "CurveMarketData.h"					// Method to clean market data - checkDimensionsAndRemoveUnusedData
 
@@ -26,7 +26,7 @@ const std::string singleDataPoint_Swap			= "EUR_SWAP_SINGLE_POINT";
 const std::string singleDataPoint_TenorBasis	= "EUR_TENOR_BASIS_SINGLE_POINT";
 const std::string singleDataPoint_Xccy			= "EUR_XCCY_SINGLE_POINT";
 
-// Curve Market Data LWO Files
+// Curve Market Data AQO Files
 const std::string oisMarket_NoData				= TEST_FOLDER + emptyData_OIS;
 const std::string swapMarket_NoData				= TEST_FOLDER + emptyData_Swap;
 const std::string tenorBasisMarket_NoData		= TEST_FOLDER + emptyData_TenorBasis;

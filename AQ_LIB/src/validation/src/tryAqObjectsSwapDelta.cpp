@@ -37,7 +37,7 @@ namespace validation
 	*  @param [out]		headers						Headers of the delta report
     *  @param [out]		pillarNames					The final list of pillar names
     *  @param [out]		deltas						All the deltas
-    *  @param [in]		swapNames					A vector of strings representing the LWO Swap names
+    *  @param [in]		swapNames					A vector of strings representing the AQO Swap names
 	*  @param [in]		curveCollectionNames		A vector of strings representing the CurveCollection names for each leg of swap
     *  @param [in]		fixingTableNames			A vector of strings represening the fixing table names for each leg of swap
 	*  @param [in]		bumpSpreadInstruments		Whether to bump the LIBOR_OIS spread instruments in the OIS curve. Default is TRUE.
@@ -200,7 +200,7 @@ namespace validation
 	*  @param [out]		headers						Headers of the delta report
     *  @param [out]		pillarNames					A vector of AQLStringVector, with each AQLStringVector representing a column of pillarNames for a curve
     *  @param [out]		deltas						A vector of DoubleVector, with each DoubleVector representing a column of delta sensitivities for a curve
-    *  @param [in]		swapNames					A vector of strings representing the LWO Swap names
+    *  @param [in]		swapNames					A vector of strings representing the AQO Swap names
 	*  @param [in]		curveCollectionNames		A vector of strings representing the CurveCollection names for each leg of swap
     *  @param [in]		fixingTableNames			A vector of strings represening the fixing table names for each leg of swap
 	*  @param [in]		bumpSpreadInstruments		Whether to bump the LIBOR_OIS spread instruments in the OIS curve. Default is TRUE.
@@ -409,7 +409,7 @@ namespace validation
    /* @brief			validation interface for the aqSwapsDelta method. This method calculates a Flat-Shift Delta for a vector of swaps
 	*  @param [out]		positionIDs					The vector of positions for which the flat-shift delta is calculated
     *  @param [out]		deltas						The delta value for each SwapLeg
-    *  @param [in]		swapNames					A vector of strings representing the LWO Swap names
+    *  @param [in]		swapNames					A vector of strings representing the AQO Swap names
 	*  @param [in]		CurveCollectionNamesLeg1	A vector of strings representing the CurveCollection names for Leg1 of each swap
 	*  @param [in]		CurveCollectionNamesLeg2	A vector of strings representing the CurveCollection names for Leg2 of each swap
     *  @param [in]		fixingTableNamesLeg1		A vector of strings represening the fixing table names for Leg1 of each swap

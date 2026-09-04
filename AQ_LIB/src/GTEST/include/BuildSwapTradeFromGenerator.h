@@ -47,6 +47,6 @@ namespace google_test
     // Function to Create an IRS from a Swap Generator
     std::string createSwapCalibrationInstrument( const std::string & swapName, const std::string & swapGeneratorName, const std::string & effectiveDate, const std::string & maturityDateOrTenor );
 
-	// Build a LWO swap object from a given test file representing a LWO swap
+	// Build a AQO swap object from a given test file representing a AQO swap
 	void createSwapFromDataFile(const char* swapInputs);
 }

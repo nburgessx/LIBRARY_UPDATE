@@ -10,7 +10,7 @@ namespace etrading
     BondOptionPricer::BondOptionPricer(const std::shared_ptr<BondOption>& bondOption, const LabelValueBlock& valuationSettingsLVB, const double& discountRate, const DayCountEnum& discountDayCount) : bondOption_(bondOption), discountDayCount_(discountDayCount)
 	{
 		const std::string volObjectName = getVolatilityModelFromValuationSettings(valuationSettingsLVB).getCString();
-		volProvider_ = getVolatility(volObjectName); // LWO Utility method to get the volatility object pointer from the LWO Cache
+		volProvider_ = getVolatility(volObjectName); // AQO Utility method to get the volatility object pointer from the AQO object cache
 
 		AQ_REQUIRE(bondOption_ != nullptr, "Invalid Bond Optione trade.");
 		AQ_REQUIRE(bondOption_->getCurrency() == volProvider_->currency(), "The Currency of Volatility and Option must be the same" );

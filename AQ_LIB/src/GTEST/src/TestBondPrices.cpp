@@ -71,7 +71,7 @@ namespace google_test
             // Create the Bond
             etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputsFile1 );
 
-            // Register the Bond in the LWO Cache
+            // Register the Bond in the AQO object cache
             etrading::registerToCache< etrading::Bond >( myBondPtr );
 
             // Load the Input and Output Files
@@ -114,7 +114,7 @@ namespace google_test
             // Create the Bond
             etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputsFile1 );
 
-            // Register the Bond in the LWO Cache
+            // Register the Bond in the AQO object cache
             etrading::registerToCache< etrading::Bond >( myBondPtr );
 
             // Load the Input and Output Files
@@ -156,7 +156,7 @@ namespace google_test
             // Create the Bond
             etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputsFile1 );
 
-            // Register the Bond in the LWO Cache
+            // Register the Bond in the AQO object cache
             etrading::registerToCache< etrading::Bond >( myBondPtr );
 
             // Load the Input and Output Files
@@ -197,7 +197,7 @@ namespace google_test
             // Create the Bond
             etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputsFile1 );
 
-            // Register the Bond in the LWO Cache
+            // Register the Bond in the AQO object cache
             etrading::registerToCache< etrading::Bond >( myBondPtr );
 
             // Load the Input and Output Files
@@ -240,7 +240,7 @@ namespace google_test
             // Create the Bond
             etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputsFileParallel );
 			
-            // Register the Bond in the LWO Cache
+            // Register the Bond in the AQO object cache
             etrading::registerToCache< etrading::Bond >( myBondPtr );
 
             // Load the Input and Output Files
@@ -301,7 +301,7 @@ namespace google_test
             // Create the Bond
             etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputsFile1 );
 
-            // Register the Bond in the LWO Cache
+            // Register the Bond in the AQO object cache
             etrading::registerToCache< etrading::Bond >( myBondPtr );
 
             // Load the Input and Output Files
@@ -345,7 +345,7 @@ namespace google_test
             // Create the Bond
             etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputsFile1 );
 
-            // Register the Bond in the LWO Cache
+            // Register the Bond in the AQO object cache
             etrading::registerToCache< etrading::Bond >( myBondPtr );
 
             // Load the Input and Output Files
@@ -387,7 +387,7 @@ namespace google_test
             // Create the Bond
             etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputsFile1 );
 
-            // Register the Bond in the LWO Cache
+            // Register the Bond in the AQO object cache
             etrading::registerToCache< etrading::Bond >( myBondPtr );
 
             // Load the Input and Output Files

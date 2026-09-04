@@ -114,7 +114,7 @@ namespace validation
         VALID_EXCEPTION_END
 	}
 
-    // Loads Multiple LWO Objects of the Same Type by Referencing the Names and Folder
+    // Loads Multiple AQO objects of the Same Type by Referencing the Names and Folder
     std::vector<std::string> tryAqObjectsQuickLoad( const std::vector<std::string>& objectNames,
                                                 const std::string& folder,
                                                 const etrading::FileTypeEnum fileType,
@@ -208,7 +208,7 @@ namespace validation
         VALID_EXCEPTION_END
 	}
 
-    // Loads Multiple LWO Objects of the Same Type by Referencing the Names and Folder
+    // Loads Multiple AQO objects of the Same Type by Referencing the Names and Folder
     std::vector<std::string> tryAqObjectsQuickSave( const std::vector<std::string>& objectNames,
                                                 const std::string& folder,
                                                 const etrading::FileTypeEnum fileType,

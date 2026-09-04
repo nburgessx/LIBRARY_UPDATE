@@ -37,25 +37,25 @@ namespace validation
     
 	std::tuple<std::string, etrading::CachedObjectEnum> tryAqObjectsLoadAndReturnTupleResults( const std::string& fileName, const etrading::FileTypeEnum fileType = etrading::JSON, etrading::Environment& env = etrading::Environment::defaultEnv() );
     
-    // Load a Single LWO Object given the full file path
+    // Load a Single AQO object given the full file path
     std::string tryAqObjectsLoad( const std::string& fileName,
                               const etrading::FileTypeEnum fileType = etrading::JSON,
                               etrading::Environment& env = etrading::Environment::defaultEnv() );
 
-    // Loads Multiple LWO Objects of the Same Type by Referencing the Names and Folder
+    // Loads Multiple AQO objects of the Same Type by Referencing the Names and Folder
     std::vector<std::string> tryAqObjectsQuickLoad( const std::vector<std::string>& objectNames,
                                                 const std::string& folder,
                                                 const etrading::FileTypeEnum fileType = etrading::JSON,
                                                 etrading::Environment& env = etrading::Environment::defaultEnv() );
 
-    // Save a Single LWO Object givent the full file path
+    // Save a Single AQO object givent the full file path
 	std::string tryAqObjectsSave( const std::string& objectName,
 		                      const std::string& objectTypeString,
                               const std::string& fileName,
                               const etrading::FileTypeEnum fileType = etrading::JSON,
 		                      etrading::Environment& env = etrading::Environment::defaultEnv() );
 
-    // Loads Multiple LWO Objects of the Same Type by Referencing the Names and Folder
+    // Loads Multiple AQO objects of the Same Type by Referencing the Names and Folder
     std::vector<std::string> tryAqObjectsQuickSave( const std::vector<std::string>& objectNames,
                                                 const std::string& folder,
                                                 const etrading::FileTypeEnum fileType = etrading::JSON,

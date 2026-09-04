@@ -40,10 +40,10 @@ namespace validation
 				throw AQLCoreInvalidData(	( "#Error: Missing lwoCurveMarketData name" ), __FILE__, __LINE__ );
 		}
 
-		// Attempt to retrieve AQOCurveMarketData object from the LWO Cache
+		// Attempt to retrieve AQOCurveMarketData object from the AQO object cache
 		auto lwoCurveMarketData = etrading::getCurveMarketData( lwoCurveMarketDataName );
   
-		// Attempt to retrieve AQOCurveGenerator object from the LWO Cache
+		// Attempt to retrieve AQOCurveGenerator object from the AQO object cache
 		auto lwoCurveGenerator = etrading::getCurveGenerator( lwoCurveGeneratorName );
        
 		// Check for matching IdentityParams from the CurveGenerator and CurveMarketData

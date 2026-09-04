@@ -9,7 +9,7 @@ namespace google_test
 {
     
     // Test the AQ_DEBUG_VALUE function prints to the visual studio output window or google_test.exe command screen
-    TEST( TestDebugMacros, UNIT_TestMacro_MLIB_DEBUG_VALUE )
+    TEST( TestDebugMacros, UNIT_TestMacro_AQ_DEBUG_VALUE )
     {
         const double d1 = 1.1;
         const double d2 = 2.2;
@@ -52,7 +52,7 @@ namespace google_test
 
 
     // Test the AQ_DEBUG_PARAMETER function prints to the visual studio output window or google_test.exe command screen
-    TEST( TestDebugMacros, UNIT_TestMacro_MLIB_DEBUG_PARAMETER )
+    TEST( TestDebugMacros, UNIT_TestMacro_AQ_DEBUG_PARAMETER )
     {
         const std::string s1 = "a";
         const std::string s2 = "b";

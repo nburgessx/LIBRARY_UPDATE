@@ -165,8 +165,8 @@ namespace etrading
 
 
 	/* @brief		Builds the hedge curve and stores it in the specified hedgeCurveCollection.
-	*  @param[in]	oisCurveObjectName		The name of the LWO handle corresponding to the OIS curve which will be built
-	*  @param[in]	swapCurveObjectName		The name of the LWO handle corresponding to the Swap curve which will be built
+	*  @param[in]	oisCurveObjectName		The name of the AQO object handle corresponding to the OIS curve which will be built
+	*  @param[in]	swapCurveObjectName		The name of the AQO object handle corresponding to the Swap curve which will be built
 	*  @param[in]	hedgeCurveCollection	The CurveCollection which will contain the hedge OIS and Swap curve
 	*/
 	HedgeCurveInfo HedgeCurveEngine::buildHedgeCurve( const std::string& oisCurveObjectName,

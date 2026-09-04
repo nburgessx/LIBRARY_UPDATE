@@ -76,7 +76,7 @@ namespace etrading
         // return a pair of Header matrix and Body matrix 
         std::pair<AnyTypeMatrix, AnyTypeMatrix> view(bool showBespokeProperties=false, bool showColumnHeaders=true, const std::unordered_set<CashflowHeaderEnum, EnumClassHash>& columnList=std::unordered_set<CashflowHeaderEnum, EnumClassHash>(), const bool convertDatesToExcelFormat=true) const;
 
-        //this method is only for backward compatibility with me methods (none LWO)	
+        //this method is only for backward compatibility with me methods (none AQO)	
 		AQLStringMatrix display(bool showColumnHeaders=true, const std::unordered_set<CashflowHeaderEnum, EnumClassHash>& columnList=std::unordered_set<CashflowHeaderEnum, EnumClassHash>(), const bool convertDatesToExcelFormat=true) const;
 
 		//Schedule input parameters

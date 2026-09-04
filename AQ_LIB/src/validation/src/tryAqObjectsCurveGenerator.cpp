@@ -105,7 +105,7 @@ namespace validation
     {
 		VALID_EXCEPTION_START
 
-		// Attempt to retrieve AQOCurveGenerator object from the LWO Cache
+		// Attempt to retrieve AQOCurveGenerator object from the AQO object cache
 		auto curveGenerator = etrading::getCurveGenerator( objectName );
 
 		// extract just the data for the specified propertyKey
@@ -127,13 +127,13 @@ namespace validation
 
 		RECORD_INPUTS( newObjectName, baseObjectName, modifiedValues );
 
-		// Attempt to retrieve the existing CurveGenerator object from the LWO Cache
+		// Attempt to retrieve the existing CurveGenerator object from the AQO object cache
 		auto baseCurveGenerator = etrading::getCurveGenerator( baseObjectName );
 
 		// Construct the new CurveGenerator with modified values
 		auto newCurveGenerator = etrading::CurveGenerator( newObjectName, *baseCurveGenerator, modifiedValues );
 
-		// Store the new CurveGenerator in the LWO cache
+		// Store the new CurveGenerator in the AQO object cache
         etrading::copyToCache<etrading::CurveGenerator>( newCurveGenerator );
 
 		RECORD_OUTPUTS_AND_RETURN_RESULT( newObjectName );
@@ -152,9 +152,9 @@ namespace validation
 
 		auto& env = etrading::Environment::defaultEnv();
         auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( objectName );
-        AQ_REQUIRE( singleCurveObject, "LWO Curve " + objectName + " does not exist" )
+        AQ_REQUIRE( singleCurveObject, "AQO Curve " + objectName + " does not exist" )
 
-		// Attempt to retrieve AQOCurveConventions / generator object from the LWO Cache
+		// Attempt to retrieve AQOCurveConventions / generator object from the AQO object cache
 		auto curveGenerator = singleCurveObject->getCurveGeneratorObj();
 
 		// extract just the data for the specified propertyKey

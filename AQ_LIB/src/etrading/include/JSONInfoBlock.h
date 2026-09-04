@@ -1,7 +1,7 @@
 // JSONInfoBlock.h
 
 /*
- * @brief			Class to Manage the JSON InfoBlock Container for LWO Serialization
+ * @brief			Class to Manage the JSON InfoBlock Container for AQO Serialization
  * @Created:		24th September 2018
  * @Author:			Nicholas Burgess
  * @Department:		AlgoQuantHub, Quant Research & Analytics

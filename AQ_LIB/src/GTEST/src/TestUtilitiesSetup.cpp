@@ -9,7 +9,7 @@
 
 
 
-TEST( TestUtilitiesSetupMLIB, UNIT_SetupMLIB_and_TearDownMLIB_CheckForSuccess )
+TEST( TestUtilitiesSetupMLIB, UNIT_SetupAQ_and_TearDownAQ_CheckForSuccess )
 {
     // Check funtion does not fail
     // Parameters: ir.properties filepath, calendar filepath and central bank calendar filepath respectively
@@ -18,7 +18,7 @@ TEST( TestUtilitiesSetupMLIB, UNIT_SetupMLIB_and_TearDownMLIB_CheckForSuccess )
 }
 
 
-TEST( TestUtilitiesSetupMLIB, UNIT_SetupMLIB_and_TearDownMLIB_CheckForInvalidPathInputs )
+TEST( TestUtilitiesSetupMLIB, UNIT_SetupAQ_and_TearDownAQ_CheckForInvalidPathInputs )
 {
     // Check funtion correctly fails
     // Parameters: ir.properties filepath, calendar filepath and central bank calendar filepath respectively

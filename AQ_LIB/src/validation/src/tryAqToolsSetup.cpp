@@ -102,7 +102,7 @@ namespace validation
         // Disable Thread Locking - since we have a local thread guard
 		common::AQLCoreLockControl::enableThreadLocks( false );
 
-		// Initialize the Optional LWO Configuration Files - will not throw if unsuccessful
+		// Initialize the Optional AQO Configuration Files - will not throw if unsuccessful
 		validation::tryAqToolsLoadConfigurationFiles();
 
 		return "Initialized AlgoQuantLib";
@@ -118,7 +118,7 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 
-		// Clear LWO Cache
+		// Clear AQO object cache
 		etrading::deleteAllObjects( etrading::Environment::defaultEnv() );  
         
         // Clear the Curve- and Swap results objects
@@ -159,7 +159,7 @@ namespace validation
         VALID_EXCEPTION_END
     }
 
-    /* @brief			validation interface for the aqObjectsClearCache function, to clear the object pool and all the objects in the LWO Cache
+    /* @brief			validation interface for the aqObjectsClearCache function, to clear the object pool and all the objects in the AQO object cache
     *  @return			A notification string
     */
     AQLString tryAqObjectsClearCache()
@@ -167,7 +167,7 @@ namespace validation
         // IMPORTANT: Use no thread guard because the nested try functions will invalidate the thread guard reference count
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
         
-        // Clear the LWO Cache                
+        // Clear the AQO object cache                
         etrading::deleteAllObjects(etrading::Environment::defaultEnv());
 
         // Clear the Curve- and Swap results objects
@@ -178,10 +178,10 @@ namespace validation
         // Clear the Object Pool Cache
         tryAqToolsClearEntityPool();
         
-        // Restore the LWO Configuration Files
+        // Restore the AQO Configuration Files
         tryAqToolsLoadConfigurationFiles();
 
-        std::string ret = "Cleared LWO and Object Pool Cache";
+        std::string ret = "Cleared AQO and Object Pool Cache";
         AQLString retMB( ret.c_str() ) ;
         
         return retMB;
@@ -265,7 +265,7 @@ namespace validation
 
         if( lwoStartUpConfigPath == nullptr )
         {
-            return "#Error: Failed to load LWO configuration file(s)";
+            return "#Error: Failed to load AQO configuration file(s)";
         }
 
         std::string result;

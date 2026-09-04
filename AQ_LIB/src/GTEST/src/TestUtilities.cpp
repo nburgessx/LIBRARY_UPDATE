@@ -109,7 +109,7 @@ namespace google_test
     }
 
 
-	TEST( TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_ALL_TYPES )
+	TEST( TestDataUtilitiesMacro, UNIT_AQ_TO_STRING_ALL_TYPES )
 	{
 		const float floatVarible	= float(1.123456789);
 		const double doubleVarible	= double(1.123456789);
@@ -139,7 +139,7 @@ namespace google_test
 		EXPECT_EQ( "1.123457",  result9 );  // rounded to 6 d.p. (rounded-up in this case)
 	}
 
-	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_SIZE_T)
+	TEST(TestDataUtilitiesMacro, UNIT_AQ_TO_STRING_FROM_SIZE_T)
 	{
 		std::string result1  = AQ_TO_STRING_FROM_SIZE_T(1);
 		std::string result2  = AQ_TO_STRING_FROM_SIZE_T(2);
@@ -164,7 +164,7 @@ namespace google_test
 		EXPECT_EQ("10", result10);
 	}
 
-	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_LONG)
+	TEST(TestDataUtilitiesMacro, UNIT_AQ_TO_STRING_FROM_LONG)
 	{
 		std::string result1  = AQ_TO_STRING_FROM_LONG(1);
 		std::string result2  = AQ_TO_STRING_FROM_LONG(2);
@@ -189,7 +189,7 @@ namespace google_test
 		EXPECT_EQ("10", result10);
 	}
 
-	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_INT)
+	TEST(TestDataUtilitiesMacro, UNIT_AQ_TO_STRING_FROM_INT)
 	{
 		std::string result1  = AQ_TO_STRING_FROM_INT(1);
 		std::string result2  = AQ_TO_STRING_FROM_INT(2);
@@ -214,7 +214,7 @@ namespace google_test
 		EXPECT_EQ("10", result10);
 	}
 
-	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_FLOAT)
+	TEST(TestDataUtilitiesMacro, UNIT_AQ_TO_STRING_FROM_FLOAT)
 	{
 		std::string result1  = AQ_TO_STRING_FROM_FLOAT( float(1.123456789) );
 		std::string result2  = AQ_TO_STRING_FROM_FLOAT( float(2.123456789) );
@@ -239,7 +239,7 @@ namespace google_test
 		EXPECT_EQ("0.123457", result10);	// to 6 d.p. by default, rounded-up in this case
 	}
 
-	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_DOUBLE)
+	TEST(TestDataUtilitiesMacro, UNIT_AQ_TO_STRING_FROM_DOUBLE)
 	{
 		std::string result1  = AQ_TO_STRING_FROM_DOUBLE( double(1.123456789) );
 		std::string result2  = AQ_TO_STRING_FROM_DOUBLE( double(2.123456789) );
@@ -264,7 +264,7 @@ namespace google_test
 		EXPECT_EQ("0.123457", result10);	// to 6 d.p. by default, rounded-up in this case
 	}
 
-	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION)
+	TEST(TestDataUtilitiesMacro, UNIT_AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION)
 	{
 		std::string result1  = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(1.123456789), 1 );
 		std::string result2  = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(2.123456789), 2 );
@@ -289,7 +289,7 @@ namespace google_test
 		EXPECT_EQ("0.1235", result10);		// rounded-up
 	}
 
-	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION)
+	TEST(TestDataUtilitiesMacro, UNIT_AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION)
 	{
 		std::string result1  = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(1.123456789), 0 );
 		std::string result2  = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(2.123456789), 1 );

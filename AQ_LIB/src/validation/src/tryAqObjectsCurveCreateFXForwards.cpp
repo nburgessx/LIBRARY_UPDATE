@@ -46,7 +46,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
         
-        // LWO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
+        // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
         AQ_CLEAR_CURVE_RESULTS_CACHE
 
         // Ensure Curve Name Data is in uppercase
@@ -136,13 +136,13 @@ namespace validation
         AQLString interpolation = etrading::trim_to_upper( etrading::getCurveInterpolation( curveCollection, staticDataTable ).getCString() ).c_str();
 
 
-        // Calculate Discount Factors and Forwards & Set LWO Curve Container
+        // Calculate Discount Factors and Forwards & Set AQO Curve Container
         // ----------------------------------------------------------------
 
         // Get the Discount Factors from the Object Pool Curve Engine
         auto massiveDFVector = etrading::AQLCurveForwardRateHelpers::getMultiDF( massiveYearFractionVector, etrading::getDataInstance(), curveCollection, AQLString( "ACT/365" ), interpolation.toUpper(), false, staticDataTable );
 
-        // Set the LWO Curve; yearFractions, discountFactors and Curve build properties (cbp)
+        // Set the AQO Curve; yearFractions, discountFactors and Curve build properties (cbp)
         etrading::AQOCurve lwoCurve( lwoCurveName, massiveYearFractionVector, massiveDFVector, cbp );
 
         // Get the Fixing Dates
@@ -153,7 +153,7 @@ namespace validation
         auto massiveFwdRatesVector
             = etrading::getCurveForwardRates( fixingDatesAsMlibDates, curveCollection, curveIndexCopy ); // Note we use curveIndexCopy, which is actually the staticDataTable
 
-        // Set the LWO Curve; dates, discountFactors and forwardRates ... done twice to resolve a date consistency issue
+        // Set the AQO Curve; dates, discountFactors and forwardRates ... done twice to resolve a date consistency issue
         lwoCurve.setData( lwoCurve.
             getDates(), lwoCurve.getDiscountFactors(), massiveFwdRatesVector );
 

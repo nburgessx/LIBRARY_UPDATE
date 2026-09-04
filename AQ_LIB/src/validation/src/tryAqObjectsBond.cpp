@@ -37,7 +37,7 @@ namespace validation
         // Use the Bond Factory to validate and create the bond
         etrading::BondPtr bondPtr = etrading::createBond( bondObjectName, bondLVB, scheduleLVB, validateKeys ); // bondSchedule = nullptr; The schedule class will build the schedule object if null. Note sometimes the end-user will want to provide the schedule
 
-        // Register the Bond in the LWO Cache
+        // Register the Bond in the AQO object cache
         etrading::registerToCache< etrading::Bond >( bondPtr );
 
         std::string result = bondObjectName;
@@ -67,7 +67,7 @@ namespace validation
 		// Use the Bond Factory to validate and create the bond
         etrading::BondPtr bondPtr = etrading::createBondFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, validateKeys ); 
 
-		// Register the Bond in the LWO Cache
+		// Register the Bond in the AQO object cache
         etrading::registerToCache< etrading::Bond >( bondPtr );
 		
 		std::string result = bondObjectName;
@@ -1140,7 +1140,7 @@ namespace validation
 		// Record Inputs for logs, tests and playback
         RECORD_INPUTS( objectName, propertyKey );
 		
-		// Attempt to retrieve AQOCurveGenerator object from the LWO Cache
+		// Attempt to retrieve AQOCurveGenerator object from the AQO object cache
 		auto bondGenerator = etrading::getBondGenerator( objectName );
 
 		// extract just the data for the specified propertyKey
@@ -1165,7 +1165,7 @@ namespace validation
 		// Use the Bond Factory to validate and create the bond
 		etrading::BondPtr bondPtr = etrading::createBondFromSingleLVB(bondObjectName, bondLVB, validateKeys);
 		
-		// Register the Bond in the LWO Cache
+		// Register the Bond in the AQO object cache
 		etrading::registerToCache< etrading::Bond >(bondPtr);
 
 		std::string result = bondObjectName;
@@ -1661,7 +1661,7 @@ namespace validation
 		// Use the Bond Factory to validate and create the bond
 		etrading::BondPtr notionalBond = etrading::createBondFromSingleLVB(bondObjectName, bondLVB, false);
 
-		// Register the Bond in the LWO Cache
+		// Register the Bond in the AQO object cache
 		etrading::registerToCache< etrading::Bond >(notionalBond);
 
 		std::string result = bondObjectName;

@@ -19,8 +19,8 @@ namespace etrading
 	const std::string GRADIENT_EPSILON	= "GRADIENTEPSILON";
 	const std::string DELTA_EPSILON		= "DELTA";
 
-	/* @brief Main Constructor of the LWO Curve object
-	*  @param[in]	objectName				The LWO handle name for the curve object
+	/* @brief Main Constructor of the AQO Curve object
+	*  @param[in]	objectName				The AQO object handle name for the curve object
 	*/
 	MultiCurveObject::MultiCurveObject(const std::string& objectName): CurveObject(objectName), objectName_(objectName), freeObject_(objectName)
 	{
@@ -30,9 +30,9 @@ namespace etrading
 	}
 
 	/* @brief Main Constructor 
-	*  @param[in]	objectName				The LWO handle name for the curve object
+	*  @param[in]	objectName				The AQO object handle name for the curve object
 	*  @param[in]	curveGeneratorNames		The curve generators containing the conventions used to build this curve
-	*  @param[in]	curveMarketDataNames	The LWO handles of the objects containing the market data for this curve
+	*  @param[in]	curveMarketDataNames	The AQO object handles of the objects containing the market data for this curve
 	*  @param[in]	engineParams			Engine parameters such as tolerance etc
 	*  @param[in]	domesticCurveCollection	The collection which this curve will be placed in, once built   ( The Target CurveCollection )
 	*  @param[in]	foreignCurveCollection	The collection containing foreign curve dependencies   ( The Against CurveCollection )
@@ -299,9 +299,9 @@ namespace etrading
 
 	/* @brief	Converts the internal FreeObject into a group of string parameters.
 	*			Used when de-serialising the curves.
-	*  @param[out]	objectName				The LWO handle name for the curve object
+	*  @param[out]	objectName				The AQO object handle name for the curve object
 	*  @param[out]	curveGeneratorNames		The curve generators containing the conventions used to build this curve
-	*  @param[out]	curveMarketDataNames	The LWO handles of the objects containing the market data for this curve
+	*  @param[out]	curveMarketDataNames	The AQO object handles of the objects containing the market data for this curve
 	*  @param[out]	domesticCurveCollection	The collection which this curve will be placed in, once built
 	*  @param[out]	foreignCurveCollection	The collection containing foreign curve dependencies
 	*  @param[out]	engineParams			Engine parameters

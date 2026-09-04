@@ -37,7 +37,7 @@ namespace validation
 
 
     /* @brief			validation method for aqCurvesDiscountFactorsForwardStarting
-    *  @param [in]		lwoCurveName	LWO Curve Name
+    *  @param [in]		lwoCurveName	AQO Curve Name
     *  @param [in]		fromDates		A single array of dates in YYYYMMDD formate
     *  @param [in]		toDates			An array of dates in YYYYMMDD formate
     *  @return			A array of discount factors
@@ -47,7 +47,7 @@ namespace validation
             const std::vector<boost::gregorian::date>& toDates );
 
     /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromYearFractions
-    *  @param [in]		lwoCurveName	LWO Curve Name
+    *  @param [in]		lwoCurveName	AQO Curve Name
     *  @param [in]		fromDates			An array of from-dates in YYYYMMDD formate
     *  @param [in]		yearFractions		An array of year fraction yearFractions
     *  @param [in]		dayCount	        The daycount fraction used to generate the yearFraction
@@ -59,7 +59,7 @@ namespace validation
             const AQLString& dayCount );
 
     /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromTenor
-    *  @param [in]		lwoCurveName	    LWO Curve Name
+    *  @param [in]		lwoCurveName	    AQO Curve Name
     *  @param [in]		fromDates		    An array of from-dates in YYYYMMDD formate
     *  @param [in]		tenor			    A tenor string
     *  @param [in]		businessDayAdj	    Rule that decides if end date should roll forward or backward etc, ie, MF. Default to 'NO_CHANGE'.

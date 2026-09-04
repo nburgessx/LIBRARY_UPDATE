@@ -63,7 +63,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( NZD_OisCurve_Consistency, CONSISTENCY_NZDOIS_OisSwap_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the LWO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQO Curve Object
         std::vector<std::string>    oisSwapTerms    = curveCalibrationOisSwapTenors( curveObjectNZDOIS_ ); 
         std::vector<double>         oisSwapParRates = curveCalibrationOisSwapParRates( curveObjectNZDOIS_ );
         AQ_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )

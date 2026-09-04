@@ -62,7 +62,7 @@ namespace google_test
 	// Call Test Fixture Class
     TEST_F( AUD_OisCurve_LoadCurve_x3, CONSISTENCY_AUDOIS_OisSwap_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the LWO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQO Curve Object
         std::vector<std::string>    oisSwapTerms    = curveCalibrationOisSwapTenors( curveObjectAUDOIS3_ );		// Load the curve 3 times and use the 3rd curve
         std::vector<double>         oisSwapParRates = curveCalibrationOisSwapParRates( curveObjectAUDOIS3_ );	// Load the curve 3 times and use the 3rd curve
         AQ_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
@@ -102,7 +102,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( AUD_OisCurve_Consistency, CONSISTENCY_AUDOIS_OisSwap_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the LWO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQO Curve Object
         std::vector<std::string>    oisSwapTerms    = curveCalibrationOisSwapTenors( curveObjectAUDOIS_ ); 
         std::vector<double>         oisSwapParRates = curveCalibrationOisSwapParRates( curveObjectAUDOIS_ );
         AQ_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
@@ -143,7 +143,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( AUD_OisCurve_Consistency, CONSISTENCY_AUDOIS_LiborOIS_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the LWO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQO Curve Object
         std::vector<std::string>    liborOisTerms    = curveCalibrationLiborOisTenors( curveObjectAUDOIS_ ); 
         std::vector<double>         liborOisSpreads  = curveCalibrationLiborOisSpreads( curveObjectAUDOIS_ );
         AQ_REQUIRE( liborOisTerms.size() == liborOisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Libor OIS Terms and Spreads" )

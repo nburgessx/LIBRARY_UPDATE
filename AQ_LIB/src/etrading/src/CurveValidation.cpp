@@ -1047,7 +1047,7 @@ namespace etrading
 	*/
     AQLStringVector curveIndexAliasList( const AQLString& curveCollection, const AQLString& curveIndex, const bool throwOnError )
     {
-        // *** Important - We must format the curve index when searching the object pool, since the object pool is case sensitive and LWO is all uppercase ***
+        // *** Important - We must format the curve index when searching the object pool, since the object pool is case sensitive and AQO is all uppercase ***
         const AQLString formattedCurveIndex = formatCurveIndex( curveIndex );
 
         // Results Place Holder
@@ -1106,7 +1106,7 @@ namespace etrading
 	*/
     StandardStringVector curveIndexAliasListAsStandardString( const StandardString& curveCollection, const StandardString& curveIndex )
     {
-        // *** Important - We must format the curve index when searching the object pool, since the object pool is case sensitive and LWO is all uppercase ***
+        // *** Important - We must format the curve index when searching the object pool, since the object pool is case sensitive and AQO is all uppercase ***
         const AQLString formattedCurveIndex = formatCurveIndex( curveIndex.c_str() );
 
         // Results Place Holder

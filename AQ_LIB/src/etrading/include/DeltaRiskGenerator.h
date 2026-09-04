@@ -22,7 +22,7 @@ namespace etrading
         DeltaGenerator();
 
 		/* @brief	Constructor for BaseInstruments
-        *  Note:    Non-LWO Base Case does not support Xccy Swaps
+        *  Note:    Non-AQO Base Case does not support Xccy Swaps
 		*/
         DeltaGenerator( const std::vector<BaseInstrumentPtr>& trades,
 						const std::vector<AQLString>& tradeIDs,
@@ -32,7 +32,7 @@ namespace etrading
                         const bool aggregateRisks,
 						const std::string& riskCutOffTenor );
 
-		/* @brief	Constructor for LWO Swap Legs
+		/* @brief	Constructor for AQO Swap Legs
 		*/
 		DeltaGenerator( const std::vector<std::shared_ptr<Leg> >& swapLegs,
 						const std::vector<AQLString>& legIDs,
@@ -46,7 +46,7 @@ namespace etrading
 						const std::string& riskCutOffTenor,
 						const bool useGlobalCurveEngine);
 
-		/* @brief	Constructor for LWO Swaps
+		/* @brief	Constructor for AQO Swaps
 		*/
 		DeltaGenerator(const std::vector<SwapPtr >& lwoSwaps,
 						const std::vector<AQLString>& swapIDs,
@@ -210,13 +210,13 @@ namespace etrading
         //-------------------------------------------------------------------------------------
 
 		/* @brief		Returns the size of the trade portfolio
-		*				Examines myTrades_ or myLWOSwapLegs_ depending on whether LWO Swaps are being used
+		*				Examines myTrades_ or myLWOSwapLegs_ depending on whether AQO Swaps are being used
 		*/
 		size_t getPortfolioSize();
 
 		/* @brief		Calculates the PV of the specified instrument
 		 * @param [in]	index							The index of the instrument in the portfolio
-		 * @param [in]	setMarketDataAndInterpolation	For non LWO-swaps, specifies whether to initialize the trade with MarketData and Interpolation parameters
+		 * @param [in]	setMarketDataAndInterpolation	For non AQO-swaps, specifies whether to initialize the trade with MarketData and Interpolation parameters
 		*/
 		double calculateTradePV(int index, bool setMarketDataAndInterpolation = false);
 
@@ -256,10 +256,10 @@ namespace etrading
 		// The maximum tenor in years (e.g. 10Y) beyond which the curves are no longer bumped
 		std::string riskCutOffTenor_;
 
-		// Set to true if the portfolio contains LWO Swaps
+		// Set to true if the portfolio contains AQO Swaps
 		bool usingLWO_;
 
-		// Calculate risks at the LWO swap leg level
+		// Calculate risks at the AQO swap leg level
 		bool riskOnLWOLegs_;
 
 		// Are we using global curve engine to build curves

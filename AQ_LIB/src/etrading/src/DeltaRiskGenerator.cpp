@@ -171,7 +171,7 @@ namespace etrading
     {}
 
     /* @brief	Constructor for BaseInstruments
-    *  Note:    Non-LWO Base Case does not support Xccy Swaps
+    *  Note:    Non-AQO Base Case does not support Xccy Swaps
     */
     DeltaGenerator::DeltaGenerator( const std::vector<BaseInstrumentPtr>& trades,
 									const std::vector<AQLString>& tradeIDs,
@@ -198,7 +198,7 @@ namespace etrading
 		myLWOSwapLegs_.clear();
 	}
 
-	/* @brief	Constructor for LWO Swap legs
+	/* @brief	Constructor for AQO Swap legs
     */
 	DeltaGenerator::DeltaGenerator( const std::vector<std::shared_ptr<Leg> >& swapLegs,
 									const std::vector<AQLString>& legIDs,
@@ -229,7 +229,7 @@ namespace etrading
 		myLWOSwaps_.clear();
 	}
 
-	/* @brief	Constructor for LWO Swaps
+	/* @brief	Constructor for AQO Swaps
 	*/
 	DeltaGenerator::DeltaGenerator(const std::vector<SwapPtr >& lwoSwaps,
 											const std::vector<AQLString>& swapIDs,
@@ -350,7 +350,7 @@ namespace etrading
     }
 
 	/* @brief		Returns the size of the trade portfolio
-	*				Examines myTrades_ or myLWOSwapLegs_ depending on whether LWO Swaps are being used
+	*				Examines myTrades_ or myLWOSwapLegs_ depending on whether AQO Swaps are being used
 	*/
 	size_t DeltaGenerator::getPortfolioSize()
 	{
@@ -432,7 +432,7 @@ namespace etrading
 
 	/* @brief		Calculates the PV of the specified instrument
 	 * @param [in]	index							The index of the instrument in the portfolio
-	 * @param [in]	setMarketDataAndInterpolation	For non LWO-swaps, specifies whether to initialize the trade with MarketData and Interpolation parameters
+	 * @param [in]	setMarketDataAndInterpolation	For non AQO-swaps, specifies whether to initialize the trade with MarketData and Interpolation parameters
 	*/
 	double DeltaGenerator::calculateTradePV(int index, bool setMarketDataAndInterpolation)
 	{

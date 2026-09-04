@@ -1,7 +1,7 @@
 // TestSimpsonsRuleForInterpolants.cpp
 
 /*
- * @brief			Tests to validate the LWO curve calibration for CNH and BRL Curves
+ * @brief			Tests to validate the AQO curve calibration for CNH and BRL Curves
  * @Created:		29th May 2018
  * @Author:			Nicholas Burgess
  * @Department:		AlgoQuantHub London Quant Research and Analytics

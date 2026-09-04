@@ -365,7 +365,7 @@ namespace validation
 
     /* @brief			validation method for aqObjectsCurveDiscountFactors
     *  @param [in]		paymentDates	A single or an array of to-date in YYYYMMDD formate
-    *  @param [in]		lwoCurveName	LWO Curve Name
+    *  @param [in]		lwoCurveName	AQO Curve Name
     *  @return			A array of discount factors
     */
     DoubleVector tryAqObjectsCurveDiscountFactors( const std::string& lwoCurveName,

@@ -18,7 +18,7 @@ namespace etrading
 		AQ_REQUIRE( swaptionTrade_ != nullptr, "Invalid swaption trade" );
 		
 
-        // Set the CurveCollection from the Valuation Settings - Compatible with CurveCollection or LWO CurveObject input
+        // Set the CurveCollection from the Valuation Settings - Compatible with CurveCollection or AQO CurveObject input
         // =======================================================================================================
         curveCollection_  = getLWOCurveCollectionFromValuationSettings( valuationSettingsLVB ).getCString();
 
@@ -26,7 +26,7 @@ namespace etrading
         // Set the Volatility Provider
         // =======================================================================================================
         const AQLString volObjectName = getVolatilityModelFromValuationSettings( valuationSettingsLVB );
-        volProvider_ = getVolatility( volObjectName.getCString() ); // LWO Utility method to get the volatility object pointer from the LWO Cache
+        volProvider_ = getVolatility( volObjectName.getCString() ); // AQO Utility method to get the volatility object pointer from the AQO object cache
 
 
         // Validation: Ensure that Curve and Vol Model have the same Valuation Date and Currency

@@ -1,7 +1,7 @@
 // BondFactory.cpp
 
 /*
- * @brief			Bond Factory to Create Bond LWO Objects
+ * @brief			Bond Factory to Create Bond AQO objects
  * @Created:		3rd February 2017
  * @Author:			Nicholas Burgess
  * @Department:		AlgoQuantHub Quant Research and Analytics

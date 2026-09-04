@@ -74,7 +74,7 @@ namespace etrading
 
     }
         
-	 /* @brief Create the Bond Label Value Block from a LWO Free-Object
+	 /* @brief Create the Bond Label Value Block from a AQO Free-Object
 	 *  @param [in]		freeObject				freeObject
 	 *  @param [in]		objectName			    objectName
 	 *  @Return     A Label Value Block containing Bond Schedule Data

@@ -150,7 +150,7 @@ namespace etrading
     AQOCurve::~AQOCurve()
     {
 		// we used to call removeUnderlyingEntityPoolCurve() here
-        // but that will cause an issue on moving an AQOCurve or when a locally created LWO curve gets destroyed
+        // but that will cause an issue on moving an AQOCurve or when a locally created AQO curve gets destroyed
 	};
 
     void AQOCurve::removeUnderlyingEntityPoolCurve() const
@@ -539,7 +539,7 @@ namespace etrading
             double result = AQLMathInterpolationUtilities::interpolate( datesAsYearFractions_, discountFactors_, yearFraction, interpMethod );
             return result;
 
-            // LWO Independent Interpolation
+            // AQO Independent Interpolation
             // -----------------------------
 
             // const InterpolationEnum interpMethod = curveBuildProps_->interpMethod_;

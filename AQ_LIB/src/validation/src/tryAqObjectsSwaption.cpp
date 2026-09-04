@@ -32,7 +32,7 @@ namespace validation
 
 		std::shared_ptr<etrading::Option> optionPtr = etrading::createOption(objectName, tradeLVB, validateKeys);
 
-		// Register the Option in the LWO Cache
+		// Register the Option in the AQO object cache
 		etrading::registerToCache< etrading::Option >(optionPtr);
 
 		std::string result = objectName;

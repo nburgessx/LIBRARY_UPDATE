@@ -9,7 +9,7 @@ namespace validation
 {
 
     /* @brief			validation interface for aqObjectsCurveForwardRatesFromYearFraction
-    *  @param [in]		lwoCurveName	LWO Curve Name
+    *  @param [in]		lwoCurveName	AQO Curve Name
     *  @param [in]		fromDates	    A vector of from dates
     *  @param [in]		yearFraction	YearFraction
     *  @param [in]		dayCount		Day count convention. Default to ACT/365
@@ -21,7 +21,7 @@ namespace validation
             const std::string& dayCount );
 
     /* @brief			validation interface for tryAqObjectsCurveForwardRatesFromForwardDates
-    *  @param [in]		lwoCurveName	LWO Curve Name
+    *  @param [in]		lwoCurveName	AQO Curve Name
     *  @param [in]		fromDates	    A vector of from dates
     *  @param [in]		toDates			A vector of to dates
     *  @return			The forward rates based on fromDates and toDates
@@ -31,7 +31,7 @@ namespace validation
             const std::vector<boost::gregorian::date>& toDates );
 
     /* @brief			validation interface for aqObjectsCurveForwardRates, which uses the curve frequency
-    *  @param [in]		lwoCurveName	LWO Curve Name
+    *  @param [in]		lwoCurveName	AQO Curve Name
     *  @param [in]		fixingDates	    A vector of fixing dates
     *  @return			The forward rates based on fixing dates
     */

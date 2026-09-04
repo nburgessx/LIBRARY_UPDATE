@@ -28,7 +28,7 @@ namespace google_test
     }
 
     // Test the AQ_THROW Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_THROW )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_THROW )
     {
         // AQ_THROW( Message )
         EXPECT_THROW( AQ_THROW( "ErrorMessage" ), AQLCoreAppError );
@@ -36,7 +36,7 @@ namespace google_test
 
 
     // Test the AQ_REQUIRE Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_REQUIRE )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_REQUIRE )
     {
         // AQ_REQUIRE( Condition, Message ) - Will throw Message if Condition false
         EXPECT_THROW( AQ_REQUIRE( false, "ErrorMessage" ), AQLCoreAppError );
@@ -44,7 +44,7 @@ namespace google_test
     }
 
 	// Test the AQ_THROW_IF Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_THROW_IF )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_THROW_IF )
     {
         // AQ_THROW_IF( Condition, Message ) - Will throw Message if Condition true
         EXPECT_THROW( AQ_THROW_IF( true, "ErrorMessage" ), AQLCoreAppError );
@@ -52,7 +52,7 @@ namespace google_test
     }
 
     // Test the AQ_TRY Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_TRY )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_TRY )
     {
         // AQ_TRY( FunctionCall, Message ) - Will throw if function call fails
         EXPECT_THROW( AQ_TRY( throwFunction( true, 1.0 ), "ErrorMessage" ), AQLCoreAppError );
@@ -61,7 +61,7 @@ namespace google_test
 
 
     // Test the AQ_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE )
     {
         double result_of_echo;
         AQ_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE( result_of_echo, goodFunction( 1.0 ), 999.0 );
@@ -74,7 +74,7 @@ namespace google_test
 
 
     // Test the AQ_IS_EQUAL Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_ROUND )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_ROUND )
     {
         EXPECT_EQ( AQ_ROUND( 123, 1.0 ),          123.0 );
         EXPECT_EQ( AQ_ROUND( 123, 10.0 ),         120.0 );
@@ -99,7 +99,7 @@ namespace google_test
 
 
     // Test the AQ_IS_EQUAL Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_IS_EQUAL )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_IS_EQUAL )
     {
         EXPECT_TRUE( AQ_IS_EQUAL( 10, 10 ) );
         EXPECT_TRUE( AQ_IS_EQUAL( 9.9999999999999999999999, 10 ) );
@@ -112,7 +112,7 @@ namespace google_test
 
 
     // Test the AQ_IS_LESS_THAN Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_IS_LESS_THAN )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_IS_LESS_THAN )
     {
         EXPECT_TRUE( AQ_IS_LESS_THAN( -10, 10 ) );
         EXPECT_TRUE( AQ_IS_LESS_THAN( 9.9, 10 ) );
@@ -123,7 +123,7 @@ namespace google_test
 
 
     // Test theMLIB_IS_LESS_THAN_OR_EQUAL Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_IS_LESS_THAN_OR_EQUAL )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_IS_LESS_THAN_OR_EQUAL )
     {
         EXPECT_TRUE( AQ_IS_LESS_THAN_OR_EQUAL( 10.000000000000000000000001, 10 ) );
         EXPECT_TRUE( AQ_IS_LESS_THAN_OR_EQUAL( 9.9999999999999999999999999, 10 ) );
@@ -136,7 +136,7 @@ namespace google_test
 
 
     // Test the AQ_IS_GREATER_THAN Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_IS_GREATER_THAN )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_IS_GREATER_THAN )
     {
         EXPECT_TRUE( AQ_IS_GREATER_THAN( 15, 10 ) );
         EXPECT_TRUE( AQ_IS_GREATER_THAN( 10.1, 10 ) );
@@ -147,7 +147,7 @@ namespace google_test
 
 
     // Test the AQ_IS_GREATER_THAN_OR_EQUAL Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_IS_GREATER_THAN_OR_EQUAL )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_IS_GREATER_THAN_OR_EQUAL )
     {
         EXPECT_TRUE( AQ_IS_GREATER_THAN_OR_EQUAL( 10.000000000000000000000001, 10 ) );
         EXPECT_TRUE( AQ_IS_GREATER_THAN_OR_EQUAL( 9.9999999999999999999999999, 10 ) );
@@ -161,7 +161,7 @@ namespace google_test
 
 
     // Test the AQ_IS_EQUAL_ZERO Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_IS_EQUAL_ZERO )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_IS_EQUAL_ZERO )
     {
         EXPECT_TRUE( AQ_IS_EQUAL_ZERO( 0.00000000000000000001 ) );
         EXPECT_TRUE( AQ_IS_EQUAL_ZERO( -0.00000000000000000001 ) );
@@ -172,7 +172,7 @@ namespace google_test
 
 
     // Test the AQ_IS_LESS_THAN_ZERO Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_IS_LESS_THAN_ZERO )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_IS_LESS_THAN_ZERO )
     {
         EXPECT_TRUE( AQ_IS_LESS_THAN_ZERO( -0.00001 ) );
         EXPECT_TRUE( AQ_IS_LESS_THAN_ZERO( -10 ) );
@@ -183,7 +183,7 @@ namespace google_test
 
 
     // Test the AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO )
     {
         EXPECT_TRUE( AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( 0.0000000000000000000000001 ) );
         EXPECT_TRUE( AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( -0.0000000000000000000000001 ) );
@@ -194,7 +194,7 @@ namespace google_test
 
 
     // Test the AQ_IS_GREATER_THAN_ZERO Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_IS_GREATER_THAN_ZERO )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_IS_GREATER_THAN_ZERO )
     {
         EXPECT_TRUE( AQ_IS_GREATER_THAN_ZERO( 0.00001 ) );
         EXPECT_TRUE( AQ_IS_GREATER_THAN_ZERO( 10 ) );
@@ -205,7 +205,7 @@ namespace google_test
 
 
     // Test the AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO Exception Macro
-    TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO )
+    TEST( TestExceptionMacros, UNIT_TestMacro_AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO )
     {
         EXPECT_TRUE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( 0.0000000000000000000000001 ) );
         EXPECT_TRUE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( -0.0000000000000000000000001 ) );

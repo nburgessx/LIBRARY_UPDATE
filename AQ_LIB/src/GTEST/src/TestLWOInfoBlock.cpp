@@ -1,7 +1,7 @@
 // TestLWOInfoBlock.cpp
 
 /*
- * @brief			Method to Test the Utility Methods used to interact with the LWO InfoBlock
+ * @brief			Method to Test the Utility Methods used to interact with the AQO InfoBlock
  *                  The InfoBlock is a tuple containing 1) vector of column names 2) vector of column enum types
  *                  e.g. STRING, INTEGER, DOUBLE, VARIANT and a data matrix of type variant.
  * @Created:		20th September 2018

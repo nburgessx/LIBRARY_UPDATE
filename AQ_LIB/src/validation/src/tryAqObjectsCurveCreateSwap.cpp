@@ -80,7 +80,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
         
-        // LWO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
+        // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
         AQ_CLEAR_CURVE_RESULTS_CACHE
 
         // Ensure Curve Name Data is in uppercase
@@ -313,7 +313,7 @@ namespace validation
         }
 
 
-        // Calculate Discount Factors and Forwards & Set LWO Curve Container
+        // Calculate Discount Factors and Forwards & Set AQO Curve Container
         // ----------------------------------------------------------------
 
         // Calculate the discount factors using the Object Pool Curve Engine
@@ -342,7 +342,7 @@ namespace validation
         } );
 
 
-        // Set the LWO Curve; yearFractions, discountFactors, forward rates and Curve build properties (cbp)
+        // Set the AQO Curve; yearFractions, discountFactors, forward rates and Curve build properties (cbp)
         etrading::AQOCurve lwoCurve( curveNameForLWOCurve,
                                      massiveDateVectorBoost,
                                      massiveYearFractionVector,

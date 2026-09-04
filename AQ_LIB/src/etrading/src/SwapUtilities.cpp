@@ -398,7 +398,7 @@ namespace etrading
 
 	/* @brief Create Swap object based on a swapGenerator config
 	*  @param [in]	swapName			Swap name
-	*  @param [in]	swapGeneratorName	Name of the LWO SwapGenerator to use
+	*  @param [in]	swapGeneratorName	Name of the AQO SwapGenerator to use
 	*  @param [in]	expressionLVB		Additional swap config
 	*  @param [in]	swapPropertiesLVB	Swap level properties
 	*  @param [in]	isXccySwap			Boolean flag which specifies whether this is an ordinary IRS or a Xccy swap

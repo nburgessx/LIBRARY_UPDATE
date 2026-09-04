@@ -36,7 +36,7 @@ namespace etrading
                                   const bool aggregateRisks,
 								  const std::string& riskCutOffTenor );
 
-		/* @brief	Constructor for LWO Swaps
+		/* @brief	Constructor for AQO Swaps
         *  Note1:   We must disable the CurveResults Object otherwise Products will price outside the object pool and not incorporate curve bumps and shift results
 		*/
 		MultiCurveDeltaGenerator( const AQLStringVector& swapNames,
@@ -104,12 +104,12 @@ namespace etrading
 		};
 
 		/* @brief		Returns the size of the trade portfolio
-		*				Examines portfolio_ or lwoPortfolio_ depending on whether LWO Swaps are being used
+		*				Examines portfolio_ or lwoPortfolio_ depending on whether AQO Swaps are being used
 		*/
 		size_t getPortfolioSize();
 
 		/* @brief		Examines the lwoTrade input and adds the trade leg data to a map based on the curve dependencies required to PV that leg
-		 * @param [in]	lwoTrade					The LWO Swap to be processed
+		 * @param [in]	lwoTrade					The AQO Swap to be processed
 		 * @param [in]	curveCollectionForTrade		A LabelValueBlock containing the curve collections required to PV this swap
 		 * @param [out] fixingTableForTrade			A fixingTableMap containing the fixingTableNames required to PV this swap
 		 * @param [out]	allLegIDs					An output containing all LegIDs processed so far
@@ -129,7 +129,7 @@ namespace etrading
 											       std::map< CurveDependencies, std::vector< LabelValueBlock > >& fixingTableNamesByCurves);
 
 		/* @brief		Examines the lwoTrade input and adds the trade data to a map based on the curve dependencies required to PV that leg
-		* @param [in]	lwoTrade					The LWO Swap to be processed
+		* @param [in]	lwoTrade					The AQO Swap to be processed
 		* @param [in]	curveCollectionForTrade		A LabelValueBlock containing the curve collections required to PV this swap
 		* @param [out]	allTradeIDs					An output which accumulates the trade IDs that have been processed so far
 		* @param [out]	allTradeCCYs				An output which accumulates the trade native currencies
@@ -161,14 +161,14 @@ namespace etrading
 
         std::vector<BaseInstrumentPtr> portfolio_;
 
-		// For LWO Swaps
+		// For AQO Swaps
 		AQLStringVector lwoSwapNames_;
 		std::vector<std::shared_ptr<Swap> > lwoPortfolio_;
 		std::vector<LabelValueBlock> fixingTableNames_;
 		std::vector<LabelValueBlock> curveCollections_;
         std::vector<LabelValueBlock> valuationSettingsLVB_;
 
-		// Set to true if the portfolio contains LWO Swaps
+		// Set to true if the portfolio contains AQO Swaps
 		bool usingLWO_;
 
 		// Stores the CurveDependencies for a portfolio of BaseInstrument Swaps

@@ -55,9 +55,9 @@ namespace etrading
 
 	/* @brief	Converts the internal FreeObject into a group of string parameters.
 	*			Used when de-serialising the curve.
-	*  @param[out]	objectName				The LWO handle name for the curve object
+	*  @param[out]	objectName				The AQO object handle name for the curve object
 	*  @param[out]	lwoCurveGeneratorName	The curve generator containing the conventions used to build this curve
-	*  @param[out]	lwoCurveMarketDataName	The LWO handle of the object containing the market data for this curve
+	*  @param[out]	lwoCurveMarketDataName	The AQO object handle of the object containing the market data for this curve
 	*  @param[out]	domesticCurveCollection	The collection which this curve will be placed in, once built
 	*  @param[out]	foreignCurveCollection	The collection containing foreign curve dependencies
 	*/
@@ -207,10 +207,10 @@ namespace etrading
 	}
 
 
-	/* @brief Main Constructor of the LWO Curve object
-	*  @param[in]	objectName				The LWO handle name for the curve object
+	/* @brief Main Constructor of the AQO Curve object
+	*  @param[in]	objectName				The AQO object handle name for the curve object
 	*  @param[in]	lwoCurveGeneratorName	The curve generator containing the conventions used to build this curve
-	*  @param[in]	lwoCurveMarketDataName	The LWO handle of the object containing the market data for this curve
+	*  @param[in]	lwoCurveMarketDataName	The AQO object handle of the object containing the market data for this curve
 	*  @param[in]	domesticCurveCollection	The collection which this curve will be placed in, once built   ( The Target CurveCollection )
 	*  @param[in]	foreignCurveCollection	The collection containing foreign curve dependencies   ( The Against CurveCollection )
 	*/

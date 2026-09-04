@@ -241,15 +241,15 @@ namespace etrading
         extern const std::string LASTFIXING1;
         extern const std::string FIRSTFIXING2;
         extern const std::string LASTFIXING2;
-		extern const std::string ROLLDAY; // this is used for the LWO FX Curve
+		extern const std::string ROLLDAY; // this is used for the AQO FX Curve
         extern const std::string IS_FWD_INTER1;
         extern const std::string IS_FWD_INTER2;
     }
 
     namespace BOND_KEY
     {
-        extern const std::string AQO_BOND_DESCRIPTION_LVB;  // LWO SERIALIZATION LABEL FOR BOND DESCRIPTION LVB
-        extern const std::string AQO_BOND_SCHEDULE_LVB;     // LWO SERIALIZATION LABEL FOR BOND SCHEDULE LVB
+        extern const std::string AQO_BOND_DESCRIPTION_LVB;  // AQO SERIALIZATION LABEL FOR BOND DESCRIPTION LVB
+        extern const std::string AQO_BOND_SCHEDULE_LVB;     // AQO SERIALIZATION LABEL FOR BOND SCHEDULE LVB
 
         extern const std::string BOND_DESCRIPTION;
         extern const std::string BOND_TYPE;

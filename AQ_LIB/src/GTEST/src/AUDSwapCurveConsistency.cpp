@@ -52,7 +52,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( AUD_SwapCurve_Consistency, CONSISTENCY_AUD3ML_Swap_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the LWO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQO Curve Object
         std::vector<std::string>    swapTerms   = curveCalibrationSwapTenors( curveObjectAUD3ML_ ); 
         std::vector<double>         parRates    = curveCalibrationSwapParRates( curveObjectAUD3ML_ );
         AQ_REQUIRE( swapTerms.size() == parRates.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Terms and Par Rates" )
@@ -93,7 +93,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( AUD_SwapCurve_Consistency, CONSISTENCY_AUD6ML_Swap_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the LWO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQO Curve Object
         std::vector<std::string>    swapTerms   = curveCalibrationSwapTenors( curveObjectAUD6ML_ ); 
         std::vector<double>         parRates    = curveCalibrationSwapParRates( curveObjectAUD6ML_ );
         AQ_REQUIRE( swapTerms.size() == parRates.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Terms and Par Rates" )

@@ -74,7 +74,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
         
-        // LWO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
+        // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
         AQ_CLEAR_CURVE_RESULTS_CACHE
 
         // Ensure Curve Name Data is in uppercase
@@ -221,7 +221,7 @@ namespace validation
           //auto yearFractions        = std::get<0>( interpolationData );
           //auto discountFactors      = std::get<1>( interpolationData );
         
-          //// Set the LWO Curve
+          //// Set the AQO Curve
           //etrading::AQOCurve lwoCurve( lwoCurveName, yearFractions, discountFactors, oisCurveBuildProperties );
 
         /*
@@ -252,7 +252,7 @@ namespace validation
             iterDate.addDays( 1 );
         }
 
-        // Calculate Discount Factors and Forwards & Set LWO Curve Container
+        // Calculate Discount Factors and Forwards & Set AQO Curve Container
         // -----------------------------------------------------------------
 
         auto discountFactors = etrading::AQLCurveForwardRateHelpers::getMultiDF( yearFractions,
@@ -279,7 +279,7 @@ namespace validation
         // Calculate the forward rates using the Object Pool Curve Engine
         auto forwardRates = etrading::getCurveForwardRates( dates, curveCollection, curveIndexCopy ); // Note we use curveIndexCopy, which is actually the staticDataTable
 
-        // Set the LWO Curve; yearFractions, discountFactors, forward rates and Curve build properties (cbp) 
+        // Set the AQO Curve; yearFractions, discountFactors, forward rates and Curve build properties (cbp) 
         etrading::AQOCurve lwoCurve( lwoCurveName,
                                      datesInBoostFormat,
                                      yearFractions,

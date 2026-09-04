@@ -50,7 +50,7 @@ namespace etrading
 
         if ( !curveObjectName.empty() )
         {
-            std::shared_ptr<SingleCurveObject> curveObject = getSingleCurveObject( curveObjectName ); // LWO Utility method to get the curve object pointer from the LWO Cache
+            std::shared_ptr<SingleCurveObject> curveObject = getSingleCurveObject( curveObjectName ); // AQO Utility method to get the curve object pointer from the AQO object cache
             curveCollection = curveObject->getCurveCollection().c_str();
         }
 

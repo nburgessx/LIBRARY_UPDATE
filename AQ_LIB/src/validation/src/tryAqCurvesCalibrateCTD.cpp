@@ -29,7 +29,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
         
-        // LWO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
+        // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
         AQ_CLEAR_CURVE_RESULTS_CACHE
 
         // Prefix the curveName to the curveIndex Name Set, ensuring to use the ':' delimiter

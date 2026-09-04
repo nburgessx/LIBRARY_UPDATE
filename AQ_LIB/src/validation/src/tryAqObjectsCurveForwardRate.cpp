@@ -37,7 +37,7 @@ namespace validation
 
         DoubleVector forwardRateResults;
 
-        // Load the LWO Curve
+        // Load the AQO Curve
         auto& curveStore = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( curveStore.has( lwoCurveName ) )
         {
@@ -96,7 +96,7 @@ namespace validation
 
         DoubleVector forwardRateResults;
 
-        // Load the LWO Curve
+        // Load the AQO Curve
         auto& curveStore = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( curveStore.has( lwoCurveName ) )
         {
@@ -137,7 +137,7 @@ namespace validation
 
 
     /* @brief			validation interface for aqObjectsCurveForwardRates, which uses the curve frequency
-    *  @param [in]		lwoCurveName	LWO Curve Name
+    *  @param [in]		lwoCurveName	AQO Curve Name
     *  @param [in]		fixingDates	    A vector of fixing dates
     *  @return			The forward rates based on fromDates and toDates
     */
@@ -157,7 +157,7 @@ namespace validation
 
          DoubleVector forwardRateResults;
 
-        // Load the LWO Curve
+        // Load the AQO Curve
         auto& curveStore = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( curveStore.has( lwoCurveName ) )
         {
