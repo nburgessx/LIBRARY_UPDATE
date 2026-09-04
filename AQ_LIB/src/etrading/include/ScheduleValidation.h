@@ -364,7 +364,7 @@ namespace etrading
     *  @param [in] date date in AQLDate format
     *  @Return     date in double format
     */
-	double fromLADateToDouble(const AQLDate& date);
+	double fromAQLDateToDouble(const AQLDate& date);
 
     /* @brief Transform dates from double format to AQLDate format
     *  @param [in] doubleVec dates in double format

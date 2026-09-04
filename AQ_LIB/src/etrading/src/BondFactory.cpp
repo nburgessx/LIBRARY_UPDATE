@@ -34,7 +34,7 @@ namespace etrading
 	BondPtr createBond( const std::string& bondObjectName, const LabelValueBlock& bondLVB, const LabelValueBlock& scheduleLVB, const bool& validateKeys )
 	{
         // Will throw if the bond type is invalid
-		BondTypeEnum bondType = etrading::toBondTypeEnum( bondLVB.getCompulsoryValueAsLAString( BOND_KEY::BOND_TYPE, "bondLVB" ).getCString() );
+		BondTypeEnum bondType = etrading::toBondTypeEnum( bondLVB.getCompulsoryValueAsAQLString( BOND_KEY::BOND_TYPE, "bondLVB" ).getCString() );
 	
         // Validate the Bond Description and Schedule Label Value Blocks
         // ---------------------------------------------------------
@@ -90,7 +90,7 @@ namespace etrading
 	BondPtr createBondFromSingleLVB(const std::string& bondObjectName, const LabelValueBlock& bondLVB, const bool& validateKeys)
 	{
 		// Will throw if the bond type is invalid
-		BondTypeEnum bondType = etrading::toBondTypeEnum(bondLVB.getCompulsoryValueAsLAString(BOND_KEY::BOND_TYPE, "bondLVB").getCString());
+		BondTypeEnum bondType = etrading::toBondTypeEnum(bondLVB.getCompulsoryValueAsAQLString(BOND_KEY::BOND_TYPE, "bondLVB").getCString());
 
 		BondPtr ret;
 		switch (bondType)

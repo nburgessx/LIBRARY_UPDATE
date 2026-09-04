@@ -33,9 +33,9 @@ namespace etrading
     */
     void TradeCollection::setMarketData( const LabelValueBlock& marketDataLVB )
     {
-        curveSet_		= marketDataLVB.getCompulsoryValueAsLAString( MARKET_KEY::CURVE_COLLECTION, "CurveCollections" );
-        forecastCurve_	= marketDataLVB.getCompulsoryValueAsLAString( MARKET_KEY::FORECAST_CURVE, "CurveCollections" );
-        discountCurve_	= marketDataLVB.getCompulsoryValueAsLAString( MARKET_KEY::DISCOUNT_CURVE, "CurveCollections" );
+        curveSet_		= marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::CURVE_COLLECTION, "CurveCollections" );
+        forecastCurve_	= marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::FORECAST_CURVE, "CurveCollections" );
+        discountCurve_	= marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::DISCOUNT_CURVE, "CurveCollections" );
 
         if ( forecastCurve_.size() == 0 )
         {

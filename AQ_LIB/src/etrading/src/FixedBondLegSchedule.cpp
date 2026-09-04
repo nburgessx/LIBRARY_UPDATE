@@ -22,7 +22,7 @@ namespace etrading
 	void FixedBondLegSchedule::populateAccrualStartDates(const LabelValueBlock& scheduleLVB)
 	{
 		const std::string inputLVB = "scheduleLVB";
-		accrualStartDate_ = scheduleLVB.getCompulsoryValueAsLAString(IRS_KEY::EFFECTIVE_DATE, inputLVB);
+		accrualStartDate_ = scheduleLVB.getCompulsoryValueAsAQLString(IRS_KEY::EFFECTIVE_DATE, inputLVB);
 	}
 
 	void FixedBondLegSchedule::calculateScheduleDates()

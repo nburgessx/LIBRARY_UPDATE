@@ -39,7 +39,7 @@ namespace etrading
         bool isEmpty() const;
 
         // Static Helpers
-        static LabelValueBlock createLabelValueBlockUsingLAString( const AQLString& key, const AQLString& value, const bool& makeAllKeysUppercase = true );
+        static LabelValueBlock createLabelValueBlockUsingAQLString( const AQLString& key, const AQLString& value, const bool& makeAllKeysUppercase = true );
         static LabelValueBlock createLabelValueBlock( const std::string& key, const std::string& value, const bool& makeAllKeysUppercase = true );
 
         // Convert LVB to a Matrix Type
@@ -75,17 +75,17 @@ namespace etrading
         std::string getOptionalValueAsStringFromKeys(const std::string& key1, const std::string& key2, const std::string& defaultVal = "") const;
         std::string getOptionalValueAsStringFromMultipleKeys(const std::vector<std::string>& keys, const std::string& defaultVal = "") const;
 
-        AQLString getCompulsoryValueAsLAString( const std::string& key, const std::string& labelValueBlockName = "", bool makeKeyUppercase = false ) const;
-        AQLString getOptionalValueAsLAString( const std::string& key, const AQLString& defaultVal = "") const;
-        AQLString getOptionalValueAsLAStringFromKeys( const std::string& key1, const std::string& key2, const AQLString& defaultVal = "") const;
-        AQLString getOptionalValueAsLAStringFromMultipleKeys( const std::vector<std::string>& keys, const AQLString& defaultVal = "") const;
-        AQLString getCompulsoryValueAsLAStringFromKeys(const std::string& key1, const std::string& key2, const std::string& labelValueBlockName) const;
-        AQLString getCompulsoryValueAsLAStringFromMultipleKeys( const std::vector<std::string>& keys, const std::string& labelValueBlockName) const;
+        AQLString getCompulsoryValueAsAQLString( const std::string& key, const std::string& labelValueBlockName = "", bool makeKeyUppercase = false ) const;
+        AQLString getOptionalValueAsAQLString( const std::string& key, const AQLString& defaultVal = "") const;
+        AQLString getOptionalValueAsAQLStringFromKeys( const std::string& key1, const std::string& key2, const AQLString& defaultVal = "") const;
+        AQLString getOptionalValueAsAQLStringFromMultipleKeys( const std::vector<std::string>& keys, const AQLString& defaultVal = "") const;
+        AQLString getCompulsoryValueAsAQLStringFromKeys(const std::string& key1, const std::string& key2, const std::string& labelValueBlockName) const;
+        AQLString getCompulsoryValueAsAQLStringFromMultipleKeys( const std::vector<std::string>& keys, const std::string& labelValueBlockName) const;
         
     private:
 
         // Private Helper Method to Construct a LVB from a AQLStringMatrix
-        void initializefromLAStringMatrix( const AQLStringMatrix & input, const bool& makeAllKeysUppercase = true );
+        void initializefromAQLStringMatrix( const AQLStringMatrix & input, const bool& makeAllKeysUppercase = true );
         
         // Private Helper Method to Construct a LVB from a StandardStringMatrix
         void initializefromStandardStringMatrix( const StandardStringMatrix & input, const bool& makeAllKeysUppercase = true );
@@ -113,18 +113,18 @@ namespace etrading
     // --------------------------------------------------------------------------------
     
     StandardStringVector convertToStandardStringVector( const AQLStringVector& laStringVector );
-    AQLStringVector convertToLAStringVector( const StandardStringVector& standardStringVector );
+    AQLStringVector convertToAQLStringVector( const StandardStringVector& standardStringVector );
     
     StandardStringMatrix convertToStandardStringMatrix( const AQLStringMatrix & laStringMatrix );
-    AQLStringMatrix convertToLAStringMatrix( const StandardStringMatrix & standardStringMatrix );
+    AQLStringMatrix convertToAQLStringMatrix( const StandardStringMatrix & standardStringMatrix );
 
     StandardStringMatrix combineStandardStringMatrices( const StandardStringMatrix & matrix1, const StandardStringMatrix & matrix2 );
-    AQLStringMatrix combineLAStringMatrices( const AQLStringMatrix & matrix1, const AQLStringMatrix & matrix2 );
+    AQLStringMatrix combineAQLStringMatrices( const AQLStringMatrix & matrix1, const AQLStringMatrix & matrix2 );
 
     // Helper Methods - Getting Values from LVB String Matrices
     // --------------------------------------------------------------------------------
     
-    AQLString searchLAStringMatrix( const AQLString & searchKey, const AQLStringMatrix & searchMatrix );
+    AQLString searchAQLStringMatrix( const AQLString & searchKey, const AQLStringMatrix & searchMatrix );
     StandardString searchStandardStringMatrix( const StandardString & searchKey, const StandardStringMatrix & searchMatrix );
 
 }

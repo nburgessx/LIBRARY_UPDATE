@@ -34,10 +34,10 @@ namespace etrading
 		const std::string inputLVB = "scheduleLVB";
 
 		//A bond always have an issue date
-		issueDate_ = scheduleLVB.getCompulsoryValueAsLAString(BOND_KEY::ISSUE_DATE, inputLVB);
+		issueDate_ = scheduleLVB.getCompulsoryValueAsAQLString(BOND_KEY::ISSUE_DATE, inputLVB);
 
 		//A zero coupon bond has no accrual start date. If accrual started date is specified then use it; otherwise use issue date
-		accrualStartDate_ = scheduleLVB.getOptionalValueAsLAString(BOND_KEY::ACCRUAL_START_DATE, issueDate_);
+		accrualStartDate_ = scheduleLVB.getOptionalValueAsAQLString(BOND_KEY::ACCRUAL_START_DATE, issueDate_);
 	}
 
 	void BondSchedule::populateNotionalAndPaymentFreqEnum(const LabelValueBlock& scheduleLVB)
@@ -629,34 +629,34 @@ namespace etrading
 		const std::string inputLVB = "scheduleLVB";
 		inputParameters_ = LabelValueBlock( scheduleLVB, IRS_KEY::SCHEDULE_TYPE, toString(scheduleType_) );
 
-		payerReceiver_ = toPayReceiveEnum(scheduleLVB.getCompulsoryValueAsLAStringFromKeys(IRS_KEY::PAY_RECEIVE, IRS_KEY::PAYER_RECEIVER, inputLVB).getCString());
+		payerReceiver_ = toPayReceiveEnum(scheduleLVB.getCompulsoryValueAsAQLStringFromKeys(IRS_KEY::PAY_RECEIVE, IRS_KEY::PAYER_RECEIVER, inputLVB).getCString());
 
 		amortization_ = scheduleLVB.getOptionalValueAsDouble(IRS_KEY::AMORTIZATION);
 		amortFrequency_ = scheduleLVB.getOptionalValueAsUnsignedInt(IRS_KEY::AMORT_FREQUENCY);
 
-		notionalExchangeEnum_ = toNotionalExchangeEnum(scheduleLVB.getOptionalValueAsLAString(IRS_KEY::NOTIONAL_EXCHANGE, "NONE").getCString());
+		notionalExchangeEnum_ = toNotionalExchangeEnum(scheduleLVB.getOptionalValueAsAQLString(IRS_KEY::NOTIONAL_EXCHANGE, "NONE").getCString());
 
 		leverage_ = scheduleLVB.getOptionalValueAsDouble(IRS_KEY::LEVERAGE, 1.);
 
-		accrualEndDateOrTenor_ = scheduleLVB.getCompulsoryValueAsLAString(IRS_KEY::MATURITY_DATE, inputLVB);
+		accrualEndDateOrTenor_ = scheduleLVB.getCompulsoryValueAsAQLString(IRS_KEY::MATURITY_DATE, inputLVB);
 
-		AQLString fixedBusinessDayAdjustment = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT));
-		AQLString fixedCalendar = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR));
-		AQLString fixedLegFreq = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY));
-		AQLString fixedDayCount = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT));
+		AQLString fixedBusinessDayAdjustment = scheduleLVB.getOptionalValueAsAQLStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT));
+		AQLString fixedCalendar = scheduleLVB.getOptionalValueAsAQLStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR));
+		AQLString fixedLegFreq = scheduleLVB.getOptionalValueAsAQLStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY));
+		AQLString fixedDayCount = scheduleLVB.getOptionalValueAsAQLStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT));
 
-		accrualbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT, IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT, fixedBusinessDayAdjustment).getCString());
-		accrualCalendar_ = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALCALENDAR, IRS_KEY::ACCRUALCALENDAR, fixedCalendar);
-		accrualFrequency_ = toFrequencyEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALFREQUENCY, IRS_KEY::ACCRUALFREQUENCY, fixedLegFreq).getCString());
-		accrualDaycount_ = toDayCountEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALDAYCOUNT, IRS_KEY::ACCRUALDAYCOUNT, fixedDayCount).getCString());
+		accrualbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT, IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT, fixedBusinessDayAdjustment).getCString());
+		accrualCalendar_ = scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FIXED_ACCRUALCALENDAR, IRS_KEY::ACCRUALCALENDAR, fixedCalendar);
+		accrualFrequency_ = toFrequencyEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FIXED_ACCRUALFREQUENCY, IRS_KEY::ACCRUALFREQUENCY, fixedLegFreq).getCString());
+		accrualDaycount_ = toDayCountEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FIXED_ACCRUALDAYCOUNT, IRS_KEY::ACCRUALDAYCOUNT, fixedDayCount).getCString());
 
 		auto defaultBusinessDayAdj = fixedBusinessDayAdjustment.size() != 0 ? fixedBusinessDayAdjustment : toString(accrualbusinessDayAdj_).c_str();
 		auto defaultCalendar = fixedCalendar.size() != 0 ? fixedCalendar : accrualCalendar_;
 		auto defaultFrequency = fixedLegFreq.size() != 0 ? fixedLegFreq : toString(accrualFrequency_).c_str();
 
-		paymentbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_PAYMENTBUSINESSDAYADJUSTMENT, IRS_KEY::PAYMENTBUSINESSDAYADJUSTMENT, defaultBusinessDayAdj).getCString());
-		paymentCalendar_ = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_PAYMENTCALENDAR, IRS_KEY::PAYMENTCALENDAR, defaultCalendar);
-		paymentFrequency_ = toFrequencyEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_PAYMENTFREQUENCY, IRS_KEY::PAYMENTFREQUENCY, defaultFrequency).getCString());
+		paymentbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FIXED_PAYMENTBUSINESSDAYADJUSTMENT, IRS_KEY::PAYMENTBUSINESSDAYADJUSTMENT, defaultBusinessDayAdj).getCString());
+		paymentCalendar_ = scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FIXED_PAYMENTCALENDAR, IRS_KEY::PAYMENTCALENDAR, defaultCalendar);
+		paymentFrequency_ = toFrequencyEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FIXED_PAYMENTFREQUENCY, IRS_KEY::PAYMENTFREQUENCY, defaultFrequency).getCString());
 
 		populateNotionalAndPaymentFreqEnum(scheduleLVB);
 
@@ -671,24 +671,24 @@ namespace etrading
 		lastStubKeys.push_back(IRS_KEY::LASTSTUBDATE);
 		lastStubKeys.push_back(BOND_KEY::LAST_COUPON_DATE);
 
-		firstStub_ = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(firstStubKeys);
-		lastStub_ = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(lastStubKeys);
+		firstStub_ = scheduleLVB.getOptionalValueAsAQLStringFromMultipleKeys(firstStubKeys);
+		lastStub_ = scheduleLVB.getOptionalValueAsAQLStringFromMultipleKeys(lastStubKeys);
 
-		rollDayInput_ = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ROLLDAY, IRS_KEY::ROLLDAY);
-		payLag_ = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_PAYMENTLAG, IRS_KEY::PAYMENTLAG, "0D");
-		stubType_ = toStubTypeEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_STUBTYPE, IRS_KEY::STUBTYPE).getCString());
+		rollDayInput_ = scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FIXED_ROLLDAY, IRS_KEY::ROLLDAY);
+		payLag_ = scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FIXED_PAYMENTLAG, IRS_KEY::PAYMENTLAG, "0D");
+		stubType_ = toStubTypeEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FIXED_STUBTYPE, IRS_KEY::STUBTYPE).getCString());
 
 		//fxFixing
-		fxFixingLag_ = scheduleLVB.getOptionalValueAsLAString(IRS_KEY::FXFIXINGLAG, "0D");
-		fxFixingbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAString(IRS_KEY::FXFIXINGBUSINESSDAYADJUSTMENT, defaultBusinessDayAdj).getCString());
-		fxFixingCalendar_ = scheduleLVB.getOptionalValueAsLAString(IRS_KEY::FXFIXINGCALENDAR, defaultCalendar);
+		fxFixingLag_ = scheduleLVB.getOptionalValueAsAQLString(IRS_KEY::FXFIXINGLAG, "0D");
+		fxFixingbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsAQLString(IRS_KEY::FXFIXINGBUSINESSDAYADJUSTMENT, defaultBusinessDayAdj).getCString());
+		fxFixingCalendar_ = scheduleLVB.getOptionalValueAsAQLString(IRS_KEY::FXFIXINGCALENDAR, defaultCalendar);
 
 		// Bond Calculation Type
-		bondCalculationType_ = toBondCalculationTypeEnum(scheduleLVB.getCompulsoryValueAsLAString(BOND_KEY::CALCULATION_TYPE, inputLVB).getCString());
+		bondCalculationType_ = toBondCalculationTypeEnum(scheduleLVB.getCompulsoryValueAsAQLString(BOND_KEY::CALCULATION_TYPE, inputLVB).getCString());
 
 		issuePrice_ = scheduleLVB.getOptionalValueAsDouble(BOND_KEY::ISSUE_PRICE, std::numeric_limits<double>::quiet_NaN());
 		taxRate_ = scheduleLVB.getOptionalValueAsDouble(BOND_KEY::TAX_RATE, std::numeric_limits<double>::quiet_NaN());
-		yieldFrequency_ = toFrequencyEnum(scheduleLVB.getOptionalValueAsLAString(BOND_KEY::YIELD_FREQUENCY, toString(accrualFrequency_).c_str()).getCString());
+		yieldFrequency_ = toFrequencyEnum(scheduleLVB.getOptionalValueAsAQLString(BOND_KEY::YIELD_FREQUENCY, toString(accrualFrequency_).c_str()).getCString());
 
 		// Populate exDividend tenor and busAdj:
 		exDividendTenor_ = scheduleLVB.getOptionalValueAsString(BOND_KEY::EX_DIVIDEND_TENOR, "");
@@ -855,14 +855,14 @@ namespace etrading
 
 			// bool isUpfrontCf = cashflow->isUpfrontCashflow(); <--- Unused Variable
 
-			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getAccrualStartDate()), includeAccrualStart);
-			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getAccrualEndDate()), includeAccrualEnd);
+			AQ_PUSH_BACK_IF(body, fromAQLDateToDouble(cashflow->getAccrualStartDate()), includeAccrualStart);
+			AQ_PUSH_BACK_IF(body, fromAQLDateToDouble(cashflow->getAccrualEndDate()), includeAccrualEnd);
 			AQ_PUSH_BACK_IF(body, cashflow->getAccrualYearFraction(), includeAccrualYearFraction);
 
-			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getPaymentDate()), includePaymentDate);
+			AQ_PUSH_BACK_IF(body, fromAQLDateToDouble(cashflow->getPaymentDate()), includePaymentDate);
 
 			AQ_PUSH_BACK_IF(body, cashflow->getBondTrueYieldYearFraction(), includeTrueYieldAccrualYearFraction);
-			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getBondExDividendDate()), hasBondExDividendDate && includeExDividendDate);
+			AQ_PUSH_BACK_IF(body, fromAQLDateToDouble(cashflow->getBondExDividendDate()), hasBondExDividendDate && includeExDividendDate);
 
 			AQ_PUSH_BACK_IF(body, cashflow->getNotional(), includeNotional);
 

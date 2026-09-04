@@ -869,7 +869,7 @@ namespace validation
 				maturityDate = etrading::getDateFromTenor(settleDates, tenor, businessDayAdj, calendar, rollConvention)[0];
 			}
 
-		   int	maturityDateInteger = (int)etrading::fromLADateToDouble(maturityDate);
+		   int	maturityDateInteger = (int)etrading::fromAQLDateToDouble(maturityDate);
 	
 		   AQLString rawRate = curRow[1];
 		   double rate = 0.0;
@@ -899,7 +899,7 @@ namespace validation
 		}
 
         // Check bondMaturity is between which two standard OIS Swap Maturity Date
-        int bondMaturity = (int)etrading::fromLADateToDouble(bondMaturityDt);
+        int bondMaturity = (int)etrading::fromAQLDateToDouble(bondMaturityDt);
 
 		// Find uppper maturity date, which is the First date in maturityDates GREATER THAN OR EQUAL to the bondMaturity
         auto it = std::lower_bound( maturityDates.begin(), maturityDates.end(), bondMaturity );
@@ -960,7 +960,7 @@ namespace validation
 
 			AQLDate lastCouponDate = bond->getBondLastCouponDate(settlementDate);
 
-			lastCouponDates[i] = etrading::fromLADateToDouble(lastCouponDate);
+			lastCouponDates[i] = etrading::fromAQLDateToDouble(lastCouponDate);
         }
 
 		// Recording of outputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.

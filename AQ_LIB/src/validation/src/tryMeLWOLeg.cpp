@@ -42,7 +42,7 @@ namespace validation
 			file.write("validateKeys", validateKeys);
 		}
 
-        AQLString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE);
+        AQLString legName = legLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE);
         etrading::validateSwapLegLVBKeys(legName, legLVB.getKeys(), validateKeys);
 
 		auto myLeg = etrading::createLegByLVB(legLVB, legObjectName);
@@ -84,7 +84,7 @@ namespace validation
 			file.write("validateKeys", validateKeys);
 		}
 
-		AQLString legName = feeProperties.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE);
+		AQLString legName = feeProperties.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE);
         std::vector<LabelValueBlock> cashflowLVBs = etrading::buildMultiLabelValueBlock(feeScheduleLVB);
         
         if (validateKeys)
@@ -137,7 +137,7 @@ namespace validation
 			file.write("validateKeys", validateKeys);
 		}
 
-		AQLString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE);
+		AQLString legName = legLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE);
 		etrading::validateSwapLegLVBKeys(legName, legLVB.getKeys(), validateKeys, false);
 
 		std::shared_ptr<Schedule> schedule = etrading::getSchedule(scheduleName);

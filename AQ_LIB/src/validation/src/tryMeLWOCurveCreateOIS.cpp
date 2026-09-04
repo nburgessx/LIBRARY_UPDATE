@@ -273,7 +273,7 @@ namespace validation
                         std::back_inserter( datesInBoostFormat ),
                         []( const AQLDate & AQLDate )
         {
-            return etrading::toGregorianDateFromLADate( AQLDate );
+            return etrading::toGregorianDateFromAQLDate( AQLDate );
         } );
 
         // Calculate the forward rates using the Object Pool Curve Engine

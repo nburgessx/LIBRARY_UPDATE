@@ -114,8 +114,8 @@ namespace validation
 		}
     	
         const std::string inputLVB = "swapLVB";
-        AQLString leg1Name = leg1LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
-		AQLString leg2Name = leg2LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+        AQLString leg1Name = leg1LVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+		AQLString leg2Name = leg2LVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
         
         etrading::validateSwapLegLVBKeys(leg1Name, leg1LVB.getKeys(), validateKeys);
 		etrading::validateSwapLegLVBKeys(leg2Name, leg2LVB.getKeys(), validateKeys);
@@ -180,7 +180,7 @@ namespace validation
 			for (size_t i = 0; i < legsLVB.size(); ++i)
 			{
 				legLVB = legsLVB[i];
-				legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+				legName = legLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
 				etrading::validateSwapLegLVBKeys(legName, legLVB.getKeys(), validateKeys);
 			}
 
@@ -283,8 +283,8 @@ namespace validation
 		std::shared_ptr<Schedule> schedule2 = etrading::getSchedule(schedule2Name);
 
 		const std::string inputLVB = "swapLVB";
-   		AQLString leg1Name = leg1LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
-		AQLString leg2Name = leg2LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+   		AQLString leg1Name = leg1LVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+		AQLString leg2Name = leg2LVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
 
 		etrading::validateSwapLegLVBKeys(leg1Name, leg1LVB.getKeys(), validateKeys, false);
 		etrading::validateSwapLegLVBKeys(leg2Name, leg2LVB.getKeys(), validateKeys, false);

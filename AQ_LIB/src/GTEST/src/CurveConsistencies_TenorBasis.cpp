@@ -339,7 +339,7 @@ namespace google_test
 			// Effective dates
 			AQLString asofDateStr;
 			findValByKey(asofDateStr, generateProp, generatePropkeys, "AsOfDate");
-			AQLDate asofDate = etrading::AQLDateScheduleHelpers::getLADate(asofDateStr);
+			AQLDate asofDate = etrading::AQLDateScheduleHelpers::getAQLDate(asofDateStr);
 			AQLDate a_startDate = etrading::AQLDateScheduleHelpers::getDate( asofDate, a_spotLag, a_rollConvention, a_calendar );
 			AQLDate t_startDate = etrading::AQLDateScheduleHelpers::getDate( asofDate, t_spotLag, t_rollConvention, t_calendar );
 			if (a_startDate != t_startDate)

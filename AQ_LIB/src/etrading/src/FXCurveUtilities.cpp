@@ -491,7 +491,7 @@ namespace etrading
 	{
 
 		LabelValueBlock curveFxConventionsLVB;
-		auto forecastCurve = fwdFxConstConvLVB.getCompulsoryValueAsLAString(forecastCurveKey);
+		auto forecastCurve = fwdFxConstConvLVB.getCompulsoryValueAsAQLString(forecastCurveKey);
 		if (forecastCurve.findString(MULTI_STATIC_DATA_DELIMITER) != -1)
 		{
 			forecastCurve = forecastCurve.toToken(MULTI_STATIC_DATA_DELIMITER)[1];

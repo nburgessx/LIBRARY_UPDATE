@@ -67,9 +67,9 @@ namespace validation
 		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor, xccyFXSpotRates );
 
         // Trim Inputs then Check if they are empty
-        AQLStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
-        AQLStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
-        AQLStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
+        AQLStringVector trimmedSwapNames = validation::trimAQLStringVector( swapNames );
+        AQLStringMatrix trimmedCurveCollectionsNames = validation::trimAQLStringMatrix( curveCollectionNames );
+        AQLStringMatrix trimmedFixingTableNames = validation::trimAQLStringMatrix( fixingTableNames );
         
         // Appears to be already trimmed in the XLLPlusTips.cpp
         // How would we trim double vectors?, blank excel input mostly treated as zero, perhaps in XLOper layer
@@ -230,9 +230,9 @@ namespace validation
 		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor, xccyFXSpotRates );
 
         // Trim Inputs then Check if they are empty
-        AQLStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
-        AQLStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
-        AQLStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
+        AQLStringVector trimmedSwapNames = validation::trimAQLStringVector( swapNames );
+        AQLStringMatrix trimmedCurveCollectionsNames = validation::trimAQLStringMatrix( curveCollectionNames );
+        AQLStringMatrix trimmedFixingTableNames = validation::trimAQLStringMatrix( fixingTableNames );
         
         // Appears to be already trimmed in the XLLPlusTips.cpp
         // How would we trim double vectors?, blank excel input mostly treated as zero, perhaps in XLOper layer
@@ -439,9 +439,9 @@ namespace validation
 		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, groupRiskBy, aggregateRisks, reportInLegCCY, xccyFXSpotRates );
 
 		// Trim Inputs then Check if they are empty
-        AQLStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
-        AQLStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
-        AQLStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
+        AQLStringVector trimmedSwapNames = validation::trimAQLStringVector( swapNames );
+        AQLStringMatrix trimmedCurveCollectionsNames = validation::trimAQLStringMatrix( curveCollectionNames );
+        AQLStringMatrix trimmedFixingTableNames = validation::trimAQLStringMatrix( fixingTableNames );
         
         // Appears to be already trimmed in the XLLPlusTips.cpp
         // How would we trim double vectors?, blank excel input mostly treated as zero, perhaps in XLOper layer

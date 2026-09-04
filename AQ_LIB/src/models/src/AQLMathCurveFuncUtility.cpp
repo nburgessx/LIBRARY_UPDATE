@@ -1682,7 +1682,7 @@ AQLMathCurveFuncUtility::getGridRate(AQLDataInstance* dataInstance, const AQLStr
 		name = curveid+currency+SWAP+grid;
 	else if(FUTURE == index)
 	{
-		AQLDate tmp = AQLMathDateUtilities::getLADate(grid);
+		AQLDate tmp = AQLMathDateUtilities::getAQLDate(grid);
 		name = curveid+currency+ FUTURE + AQLDataDate(tmp).convertToString();
 	}
 	else

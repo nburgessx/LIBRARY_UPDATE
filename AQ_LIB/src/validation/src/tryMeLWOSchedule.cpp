@@ -34,7 +34,7 @@ namespace validation
 			file.write("validateKeys", validateKeys);
 		}
 
-		AQLString scheduleType = swapScheduleLVB.getOptionalValueAsLAString( etrading::IRS_KEY::SCHEDULE_TYPE);
+		AQLString scheduleType = swapScheduleLVB.getOptionalValueAsAQLString( etrading::IRS_KEY::SCHEDULE_TYPE);
 		etrading::validateKeysForLVB(etrading::getScheduleLVBKeys(scheduleType), swapScheduleLVB.getKeys(), validateKeys );
 
 		std::shared_ptr<Schedule> mySchedule = etrading::createSchedule(scheduleName, swapScheduleLVB);
@@ -228,7 +228,7 @@ namespace validation
 
 		const std::string inputLVB = "SwapScheduleLVB";
 
-		AQLString scheduleType = swapScheduleLVB.getOptionalValueAsLAString(etrading::IRS_KEY::SCHEDULE_TYPE, "");
+		AQLString scheduleType = swapScheduleLVB.getOptionalValueAsAQLString(etrading::IRS_KEY::SCHEDULE_TYPE, "");
 		etrading::validateKeysForLVB(etrading::getScheduleLVBKeys(scheduleType), swapScheduleLVB.getKeys(), validateKeys);
 
 		auto schedule = etrading::createSchedule("schedule", swapScheduleLVB);

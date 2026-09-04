@@ -12,20 +12,20 @@ namespace etrading
     {
         const std::string inputLVB = "legPropertiesLVB";
 
-        forecastCurve_	= marketDataLVB.getOptionalValueAsLAString( MARKET_KEY::FORECAST_CURVE, "" );
+        forecastCurve_	= marketDataLVB.getOptionalValueAsAQLString( MARKET_KEY::FORECAST_CURVE, "" );
         forecastCurveMarketName_ = "";
 
-  		firstStubCurveIndex_ = marketDataLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_FIRSTSTUBCURVEINDEX, IRS_KEY::FIRSTSTUBCURVEINDEX, "NATURAL");
-	    lastStubCurveIndex_ = marketDataLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_LASTSTUBCURVEINDEX, IRS_KEY::LASTSTUBCURVEINDEX, "NATURAL");
+  		firstStubCurveIndex_ = marketDataLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_FIRSTSTUBCURVEINDEX, IRS_KEY::FIRSTSTUBCURVEINDEX, "NATURAL");
+	    lastStubCurveIndex_ = marketDataLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_LASTSTUBCURVEINDEX, IRS_KEY::LASTSTUBCURVEINDEX, "NATURAL");
 		firstFixing_ = marketDataLVB.getOptionalValueAsDoubleFromKeys(IRS_KEY::FLOAT_FIRSTFIXING, IRS_KEY::FIRSTFIXING, std::numeric_limits<double>::quiet_NaN() );
 		lastFixing_	= marketDataLVB.getOptionalValueAsDoubleFromKeys(IRS_KEY::FLOAT_LASTFIXING, IRS_KEY::LASTFIXING, std::numeric_limits<double>::quiet_NaN() );
 
 		//Get the input from user, default to NONE
-		fwdInter_ = toBooleanEnum(marketDataLVB.getOptionalValueAsLAString(IRS_KEY::IS_FWD_INTER, "").getCString());
+		fwdInter_ = toBooleanEnum(marketDataLVB.getOptionalValueAsAQLString(IRS_KEY::IS_FWD_INTER, "").getCString());
 
 		// For a OIS float leg, the compounding method is required for OIS float rate calculation
         // For non-OIS float leg, this field is required when the accrual frequencey is less than payment frequency (e.g. 3M vs 6M, or 3M vs AT_MATURITY)
-		couponCompoundMethod_ = toCompoundingMethodEnum(marketDataLVB.getOptionalValueAsLAString(IRS_KEY::COMPOUND_METHOD, "").getCString());
+		couponCompoundMethod_ = toCompoundingMethodEnum(marketDataLVB.getOptionalValueAsAQLString(IRS_KEY::COMPOUND_METHOD, "").getCString());
 
 	}
 

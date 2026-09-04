@@ -96,7 +96,7 @@ namespace
 
 		// 1. Check first calibration point in the curve
 
-		const double fixingAtAsOfDateWithLag = fixingTable->getFixingValue(etrading::toGregorianDateFromLADate(asOfDateWithLag));
+		const double fixingAtAsOfDateWithLag = fixingTable->getFixingValue(etrading::toGregorianDateFromAQLDate(asOfDateWithLag));
 
 		const double calibratedValueAtFrontOfCurve = boost::get<double>( calibrationResults[0][1] );
 
@@ -342,7 +342,7 @@ namespace google_test
 		{
 			const double calibrationValue	= boost::get<double>( calibrationResults[i][1] );
 			const int calibrationExcelDate	= boost::get<int>( calibrationResults[i][0] );
-			const AQLDate laggedDate = AQLMathDateUtilities::getLADate( calibrationExcelDate );
+			const AQLDate laggedDate = AQLMathDateUtilities::getAQLDate( calibrationExcelDate );
 
 			const double interpolatedValue = inflationCurve->getMonthlyInflationIndexForLaggedDate( laggedDate );
 

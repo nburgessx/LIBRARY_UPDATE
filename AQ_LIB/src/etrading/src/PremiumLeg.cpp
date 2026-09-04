@@ -15,7 +15,7 @@ namespace etrading
 
 		// Specifies whether the cashflows have credit risk: i.e. do they PayAlways, or PayOnSurvival	
 		// The default value is PayOnSurvival
-		paymentTrigger_ = toPaymentTriggerEnum(legLVB.getOptionalValueAsLAString(IRS_KEY::PAYMENT_TRIGGER, "PAYONSURVIVAL").getCString());
+		paymentTrigger_ = toPaymentTriggerEnum(legLVB.getOptionalValueAsAQLString(IRS_KEY::PAYMENT_TRIGGER, "PAYONSURVIVAL").getCString());
 
 		//Schedule
 		if (schedule==nullptr)

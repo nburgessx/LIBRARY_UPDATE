@@ -361,8 +361,8 @@ namespace etrading
     */
     void validateSwapCurrency(bool isXccySwap, const LabelValueBlock& leg1LVB, const LabelValueBlock& leg2LVB)
     {
-        auto leg1Currency =   toCCYEnum( leg1LVB.getOptionalValueAsLAString( etrading::IRS_KEY::CURRENCY ).getCString() );
-        auto leg2Currency =   toCCYEnum( leg2LVB.getOptionalValueAsLAString( etrading::IRS_KEY::CURRENCY ).getCString() );
+        auto leg1Currency =   toCCYEnum( leg1LVB.getOptionalValueAsAQLString( etrading::IRS_KEY::CURRENCY ).getCString() );
+        auto leg2Currency =   toCCYEnum( leg2LVB.getOptionalValueAsAQLString( etrading::IRS_KEY::CURRENCY ).getCString() );
 
         validateSwapCurrency(isXccySwap, leg1Currency, leg2Currency);
     }

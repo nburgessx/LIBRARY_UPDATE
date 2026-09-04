@@ -49,7 +49,7 @@ namespace validation
         etrading::validateKeysForLVB( tryMeProductSwapParRateLVBKeys(), swapLVB.getKeys(), validateKeys );
 
         const std::string inputLVB = "SwapLVB";
-        AQLString curveCollection = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
+        AQLString curveCollection = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -58,8 +58,8 @@ namespace validation
             file.write( "swapLVB", swapLVB );
         }
 
-        AQLString forecastCurveIndex	= swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
-        AQLString discountCurveIndex = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+        AQLString forecastCurveIndex	= swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
+        AQLString discountCurveIndex = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, discountCurveIndex );
@@ -76,8 +76,8 @@ namespace validation
         etrading::validateAndGenerateSwapCashflows( swapLVB, inputLVB, fixedAccrualDates, fixedPaymentDates, floatFixingDates, floatAccrualDates, floatPaymentDates );
 
         double floatSpread = swapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FLOAT_SPREAD );
-        AQLString fixedDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
-        AQLString floatDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
+        AQLString fixedDayCount = swapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FIXED_DAYCOUNT );
+        AQLString floatDayCount = swapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
 
         // Float Leg Fixing Parameters
         double floatFirstFix = swapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FLOAT_FIRSTFIXING, std::numeric_limits<double>::quiet_NaN() );
@@ -85,7 +85,7 @@ namespace validation
         bool useFirstFixing = etrading::useFloatFixing( floatFirstFix );
         bool useLastFixing = etrading::useFloatFixing( floatLastFix );
 
-		const std::string fwdInter = swapLVB.getOptionalValueAsLAString( etrading::IRS_KEY::IS_FWD_INTER, "").getCString();
+		const std::string fwdInter = swapLVB.getOptionalValueAsAQLString( etrading::IRS_KEY::IS_FWD_INTER, "").getCString();
 
         //----------------------------------------------------------------------------------
         // Get the Swap Par Rates using the full swap definition for both legs of the swap

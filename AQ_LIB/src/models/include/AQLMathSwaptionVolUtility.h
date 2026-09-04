@@ -225,7 +225,7 @@ public:
 	static double getNumeraire(AQLDataInstance* dataInstance, const AQLDate& expiry, const AQLString& tenor, const AQLString& curveID, const AQLString& convID, 
 							   AQLString curveName = STD);
 
-	static AQLDate getLADate(AQLString date);
+	static AQLDate getAQLDate(AQLString date);
 
 	static double getTenorPoint(AQLString str);
 

@@ -129,7 +129,7 @@ namespace etrading
 	*/
 	LabelValueBlock InflationCurve::propertyToLabelValueBlock( const std::string& propertyKey ) const
 	{
-		AQLStringMatrix stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey );
+		AQLStringMatrix stringMatrix = getAQLStringMatrixFromFreeObject( freeObject_, propertyKey );
 		LabelValueBlock lvb( stringMatrix );
 
 		return lvb;
@@ -533,7 +533,7 @@ namespace etrading
 		* shorter than the first swap instrument maturity.
 		*/
 		auto fixingTable = getFixingTable( fixingTableName_ );
-		const double inflationFixing = fixingTable->getFixingValue( toGregorianDateFromLADate( asOfDateWithFixlag_ ) );
+		const double inflationFixing = fixingTable->getFixingValue( toGregorianDateFromAQLDate( asOfDateWithFixlag_ ) );
 		calibratedInflationPoints_[ asOfDateWithFixlag_ ] = inflationFixing;
 	}
 
@@ -567,7 +567,7 @@ namespace etrading
 	{
 		// First check the fixingTable to see if there is a fixing for this date
 		auto fixingTable = getFixingTable( fixingTableName_ );
-		FixingResult fixingResult = fixingTable->getOptionalFixingValue( toGregorianDateFromLADate(laggedDate ) );
+		FixingResult fixingResult = fixingTable->getOptionalFixingValue( toGregorianDateFromAQLDate(laggedDate ) );
 		
 		if ( fixingResult.fixingFound_ )
 		{
@@ -607,7 +607,7 @@ namespace etrading
 			forwardRateResults.lowerBracketDate.setDay( 1 );  // Fixings are always asOf the 1st of the month
 			
 			auto fixingTable = getFixingTable( fixingTableName_ );
-			const double lowerBracketCPI = fixingTable->getFixingValue( toGregorianDateFromLADate( forwardRateResults.lowerBracketDate ) );
+			const double lowerBracketCPI = fixingTable->getFixingValue( toGregorianDateFromAQLDate( forwardRateResults.lowerBracketDate ) );
 
 			// Calculate the log return of the growth rate
 			forwardRateResults.forwardRate = std::log( upperBracketCPI / lowerBracketCPI );

@@ -457,11 +457,11 @@ TEST(TestDataTrimmingMethods, UNIT_TrimStandardStringVector)
 	}
 }
 
-TEST(TestDataTrimmingMethods, UNIT_TrimLAStringVector)
+TEST(TestDataTrimmingMethods, UNIT_TrimAQLStringVector)
 {
 	AQLStringVector dirtyString = { "", "1", "", "2", "", "3", "" };
 	AQLStringVector expectedResults = { "1", "2", "3" };
-	AQLStringVector actualResults = validation::trimLAStringVector(dirtyString);
+	AQLStringVector actualResults = validation::trimAQLStringVector(dirtyString);
 	
 	ASSERT_EQ( actualResults.size(), expectedResults.size() );
 	for ( size_t i = 0; i < expectedResults.size(); ++i )
@@ -497,7 +497,7 @@ TEST(TestDataTrimmingMethods, UNIT_TrimStandardStringMatrix)
 	}
 }
 
-TEST(TestDataTrimmingMethods, UNIT_TrimLAStringMatrix)
+TEST(TestDataTrimmingMethods, UNIT_TrimAQLStringMatrix)
 {
 	AQLStringMatrix dirtyString =
     {
@@ -511,7 +511,7 @@ TEST(TestDataTrimmingMethods, UNIT_TrimLAStringMatrix)
         { "1", "2", "3" }, 
         { "4", "5", "6" }
     };
-	AQLStringMatrix actualResults = validation::trimLAStringMatrix( dirtyString );
+	AQLStringMatrix actualResults = validation::trimAQLStringMatrix( dirtyString );
 	
 	ASSERT_EQ( actualResults.size(), expectedResults.size() );
 

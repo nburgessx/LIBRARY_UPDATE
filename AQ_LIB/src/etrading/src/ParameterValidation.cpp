@@ -94,7 +94,7 @@ namespace etrading
 				}
                 try
                 {
-                    outDate =  AQLDateScheduleHelpers::getLADate( inDate );
+                    outDate =  AQLDateScheduleHelpers::getAQLDate( inDate );
                 
                     // Return Valid Dates only
                     if ( AQLDateScheduleHelpers::isValidDate( outDate ) )
@@ -125,7 +125,7 @@ namespace etrading
                 // 2b) Try Excel Date Format
                 try
                 {
-                    outDate =  AQLDateScheduleHelpers::getLADate( inDate );
+                    outDate =  AQLDateScheduleHelpers::getAQLDate( inDate );
                 
                     // Return Valid Dates only
                     if ( AQLDateScheduleHelpers::isValidDate( outDate ) )
@@ -232,7 +232,7 @@ namespace etrading
     boost::gregorian::date validateAndConvertStringToGregorianDate( const AQLString & inDate, const AQLString& err )
     {
         AQLDate laDate = stringToDate( inDate, err );
-        boost::gregorian::date gregorianDate = toGregorianDateFromLADate( laDate );
+        boost::gregorian::date gregorianDate = toGregorianDateFromAQLDate( laDate );
         return gregorianDate;
     }
 

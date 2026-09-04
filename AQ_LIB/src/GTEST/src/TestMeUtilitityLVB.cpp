@@ -18,7 +18,7 @@
 
 namespace google_test
 {
-    TEST( TestLVBHelpers, UNIT_LVB_ConvertToLAStringMatrix )
+    TEST( TestLVBHelpers, UNIT_LVB_ConvertToAQLStringMatrix )
     {
         AQLStringMatrix laStringMatrix 
         {
@@ -34,7 +34,7 @@ namespace google_test
             {"G", "H", "I"}
         };
 
-        AQLStringMatrix actualStringMatrix = etrading::convertToLAStringMatrix( standardStringMatrix );
+        AQLStringMatrix actualStringMatrix = etrading::convertToAQLStringMatrix( standardStringMatrix );
         
         ASSERT_EQ( actualStringMatrix.size(), laStringMatrix.size() );
         for ( size_t i = 0; i < actualStringMatrix.size(); ++i )
@@ -120,7 +120,7 @@ namespace google_test
         }
     }
 
-    TEST( TestLVBMethod, UNIT_LVB_toLAStringMatrix )
+    TEST( TestLVBMethod, UNIT_LVB_toAQLStringMatrix )
     {
         AQLStringMatrix laStringMatrix 
         {
@@ -145,7 +145,7 @@ namespace google_test
             
             AQLString thisKey         = actualStringMatrix[i][0]; // Column 1
             AQLString actualValue     = actualStringMatrix[i][1]; // Column 2
-            AQLString expectedValue   = LVB.getCompulsoryValueAsLAString( thisKey.c_str() );
+            AQLString expectedValue   = LVB.getCompulsoryValueAsAQLString( thisKey.c_str() );
         
             EXPECT_EQ( expectedValue, actualValue );
         }
@@ -158,13 +158,13 @@ namespace google_test
             
             AQLString thisKey         = laStringMatrix[i][0]; // Column 1
             AQLString actualValue     = laStringMatrix[i][1]; // Column 2
-            AQLString expectedValue   = LVB.getCompulsoryValueAsLAString( thisKey.c_str() );
+            AQLString expectedValue   = LVB.getCompulsoryValueAsAQLString( thisKey.c_str() );
         
             EXPECT_EQ( expectedValue, actualValue );
         }
     }
 
-    TEST( TestLVBMethod, UNIT_LVB_combineLAStringMatrices )
+    TEST( TestLVBMethod, UNIT_LVB_combineAQLStringMatrices )
     {
         AQLStringMatrix matrix1
         {
@@ -190,7 +190,7 @@ namespace google_test
             {"KEY6", "VALUE6"}
         };
 
-        AQLStringMatrix actualMatrix = etrading::combineLAStringMatrices( matrix1, matrix2 );
+        AQLStringMatrix actualMatrix = etrading::combineAQLStringMatrices( matrix1, matrix2 );
 
         ASSERT_GT( actualMatrix.size(), size_t(0) );
         ASSERT_EQ( expectedMatrix.size(), actualMatrix.size() );
@@ -246,7 +246,7 @@ namespace google_test
         }
     }
 
-    TEST( TestLVBMethod, UNIT_LVB_searchLAStringMatrix )
+    TEST( TestLVBMethod, UNIT_LVB_searchAQLStringMatrix )
     {
         AQLStringMatrix searchMatrix 
         {
@@ -265,20 +265,20 @@ namespace google_test
         AQLString actualValue;
         AQLString expectedValue;
 
-        actualValue     = etrading::searchLAStringMatrix( "KEY1", searchMatrix );
+        actualValue     = etrading::searchAQLStringMatrix( "KEY1", searchMatrix );
         expectedValue   = "VALUE1";
         EXPECT_EQ( expectedValue, actualValue );
 
-        actualValue     = etrading::searchLAStringMatrix( "KEY5", searchMatrix );
+        actualValue     = etrading::searchAQLStringMatrix( "KEY5", searchMatrix );
         expectedValue   = "VALUE5";
         EXPECT_EQ( expectedValue, actualValue );
 
-        actualValue     = etrading::searchLAStringMatrix( "KEY10", searchMatrix );
+        actualValue     = etrading::searchAQLStringMatrix( "KEY10", searchMatrix );
         expectedValue   = "VALUE10";
         EXPECT_EQ( expectedValue, actualValue );
     }
 
-    TEST( TestLVBMethod, UNIT_LVB_searchLAStringMatrix_ViaLVBLookupMethods )
+    TEST( TestLVBMethod, UNIT_LVB_searchAQLStringMatrix_ViaLVBLookupMethods )
     {
         AQLStringMatrix searchMatrix 
         {
@@ -299,15 +299,15 @@ namespace google_test
         AQLString actualValue;
         AQLString expectedValue;
 
-        actualValue     = LVB.getCompulsoryValueAsLAString( "KEY1", "SEARCH MATRIX" );
+        actualValue     = LVB.getCompulsoryValueAsAQLString( "KEY1", "SEARCH MATRIX" );
         expectedValue   = "VALUE1";
         EXPECT_EQ( expectedValue, actualValue );
 
-        actualValue     = LVB.getCompulsoryValueAsLAString( "KEY5", "SEARCH MATRIX" );
+        actualValue     = LVB.getCompulsoryValueAsAQLString( "KEY5", "SEARCH MATRIX" );
         expectedValue   = "VALUE5";
         EXPECT_EQ( expectedValue, actualValue );
 
-        actualValue     = LVB.getCompulsoryValueAsLAString( "KEY10", "SEARCH MATRIX" );
+        actualValue     = LVB.getCompulsoryValueAsAQLString( "KEY10", "SEARCH MATRIX" );
         expectedValue   = "VALUE10";
         EXPECT_EQ( expectedValue, actualValue );
     }
@@ -365,15 +365,15 @@ namespace google_test
         AQLString actualValue;
         AQLString expectedValue;
 
-        actualValue     = LVB.getCompulsoryValueAsLAString( "KEY1", "SEARCH MATRIX" );
+        actualValue     = LVB.getCompulsoryValueAsAQLString( "KEY1", "SEARCH MATRIX" );
         expectedValue   = "VALUE1";
         EXPECT_EQ( expectedValue, actualValue );
 
-        actualValue     = LVB.getCompulsoryValueAsLAString( "KEY5", "SEARCH MATRIX" );
+        actualValue     = LVB.getCompulsoryValueAsAQLString( "KEY5", "SEARCH MATRIX" );
         expectedValue   = "VALUE5";
         EXPECT_EQ( expectedValue, actualValue );
 
-        actualValue     = LVB.getCompulsoryValueAsLAString( "KEY10", "SEARCH MATRIX" );
+        actualValue     = LVB.getCompulsoryValueAsAQLString( "KEY10", "SEARCH MATRIX" );
         expectedValue   = "VALUE10";
         EXPECT_EQ( expectedValue, actualValue );
     }
@@ -416,8 +416,8 @@ namespace google_test
         for ( size_t i = 0; i < expectedLVB.size(); ++i )
         {
             AQLString key            = expectedStringMatrix[i][0];
-            AQLString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
-            AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
+            AQLString actualValue    = actualLVB.getCompulsoryValueAsAQLString( key.c_str(), "Actual LVB" );
+            AQLString expectedValue  = expectedLVB.getCompulsoryValueAsAQLString( key.c_str(), "Expected LVB" );
             EXPECT_EQ( expectedValue, actualValue );
         }
     }
@@ -460,13 +460,13 @@ namespace google_test
         for ( size_t i = 0; i < expectedLVB.size(); ++i )
         {
             AQLString key            = expectedStringMatrix[i][0];
-            AQLString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
-            AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
+            AQLString actualValue    = actualLVB.getCompulsoryValueAsAQLString( key.c_str(), "Actual LVB" );
+            AQLString expectedValue  = expectedLVB.getCompulsoryValueAsAQLString( key.c_str(), "Expected LVB" );
             EXPECT_EQ( expectedValue, actualValue );
         }
     }
 
-    TEST( TestLVBConstructors, UNIT_CreateLVB_SingleKeyValue_UsingLAString )
+    TEST( TestLVBConstructors, UNIT_CreateLVB_SingleKeyValue_UsingAQLString )
     {
         AQLString key    = "KEY1";
         AQLString value  = "VALUE1";
@@ -486,12 +486,12 @@ namespace google_test
         // Check expected LVB size same as it's matrix size
         EXPECT_EQ( expectedLVB.size(), expectedStringMatrix.size() );
 
-        AQLString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
-        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
+        AQLString actualValue    = actualLVB.getCompulsoryValueAsAQLString( key.c_str(), "Actual LVB" );
+        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsAQLString( key.c_str(), "Expected LVB" );
         EXPECT_EQ( expectedValue, actualValue );
     }
 
-    TEST( TestLVBConstructors, UNIT_CreateLVB_SingleKeyValue_UsingLAString_CamelCaseKey )
+    TEST( TestLVBConstructors, UNIT_CreateLVB_SingleKeyValue_UsingAQLString_CamelCaseKey )
     {
         AQLString key    = "CamelCaseKey1";
         AQLString value  = "Value1";
@@ -511,8 +511,8 @@ namespace google_test
         // Check expected LVB size same as it's matrix size
         EXPECT_EQ( expectedLVB.size(), expectedStringMatrix.size() );
 
-        AQLString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
-        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
+        AQLString actualValue    = actualLVB.getCompulsoryValueAsAQLString( key.c_str(), "Actual LVB" );
+        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsAQLString( key.c_str(), "Expected LVB" );
         EXPECT_EQ( expectedValue, actualValue );
     }
 
@@ -537,7 +537,7 @@ namespace google_test
         EXPECT_EQ( expectedLVB.size(), expectedStringMatrix.size() );
 
         AQLString actualValue    = actualLVB.getCompulsoryValueAsString( key, "Actual LVB" );
-        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key, "Expected LVB" );
+        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsAQLString( key, "Expected LVB" );
         EXPECT_EQ( expectedValue, actualValue );
     }
 
@@ -562,11 +562,11 @@ namespace google_test
         EXPECT_EQ( expectedLVB.size(), expectedStringMatrix.size() );
 
         AQLString actualValue    = actualLVB.getCompulsoryValueAsString( key, "Actual LVB" );
-        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key, "Expected LVB" );
+        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsAQLString( key, "Expected LVB" );
         EXPECT_EQ( expectedValue, actualValue );
     }
 
-    TEST( TestLVBConstructors, UNIT_CreateLVB_MultipleKeysValues_UsingLAString )
+    TEST( TestLVBConstructors, UNIT_CreateLVB_MultipleKeysValues_UsingAQLString )
     {
         AQLStringVector keys    = { "KEY1", "KEY2" };
         AQLStringVector values  = { "VALUE1", "VALUE2" };
@@ -589,8 +589,8 @@ namespace google_test
 
         for( size_t i = 0; i < actualLVB.size(); ++i )
         {
-            AQLString actualValue    = actualLVB.getCompulsoryValueAsLAString( keys[i].c_str(), "Actual LVB" );
-            AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( keys[i].c_str(), "Expected LVB" );
+            AQLString actualValue    = actualLVB.getCompulsoryValueAsAQLString( keys[i].c_str(), "Actual LVB" );
+            AQLString expectedValue  = expectedLVB.getCompulsoryValueAsAQLString( keys[i].c_str(), "Expected LVB" );
             EXPECT_EQ( expectedValue, actualValue );
         }
     }
@@ -624,7 +624,7 @@ namespace google_test
         }
     }
 
-    TEST( TestLVBConstructors, UNIT_CreateLVB_fromLAStringMatrix )
+    TEST( TestLVBConstructors, UNIT_CreateLVB_fromAQLStringMatrix )
     {
         AQLStringMatrix expectedMatrix
         {
@@ -644,7 +644,7 @@ namespace google_test
         {
             AQLString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
             AQLString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
-            EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsLAString( expectedKey.c_str() ) );
+            EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsAQLString( expectedKey.c_str() ) );
         }
     }
 
@@ -672,7 +672,7 @@ namespace google_test
         }
     }
     
-    TEST( TestLVBConstructors, UNIT_CreateLVB_fromLAStringKeyValue )
+    TEST( TestLVBConstructors, UNIT_CreateLVB_fromAQLStringKeyValue )
     {
         AQLStringMatrix expectedMatrix
         {
@@ -694,7 +694,7 @@ namespace google_test
         {
             AQLString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
             AQLString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
-            EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsLAString( expectedKey.c_str() ) );
+            EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsAQLString( expectedKey.c_str() ) );
         }
     }
     
@@ -724,7 +724,7 @@ namespace google_test
         }
     }
     
-    TEST( TestLVBConstructors, UNIT_CreateLVB_fromLAStringMatrixKeysValues )
+    TEST( TestLVBConstructors, UNIT_CreateLVB_fromAQLStringMatrixKeysValues )
     {
         AQLStringMatrix expectedMatrix
         {
@@ -747,7 +747,7 @@ namespace google_test
         {
             AQLString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
             AQLString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
-            EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsLAString( expectedKey.c_str() ) );
+            EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsAQLString( expectedKey.c_str() ) );
         }
     }
     
@@ -816,7 +816,7 @@ namespace google_test
         }
     }
     
-    TEST( TestLVBConstructors, UNIT_CreateLVB_OriginalMatrix_AppendLAStringKeyValue )
+    TEST( TestLVBConstructors, UNIT_CreateLVB_OriginalMatrix_AppendAQLStringKeyValue )
     {
         AQLStringMatrix originalMatrix
         {
@@ -844,11 +844,11 @@ namespace google_test
         {
             AQLString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
             AQLString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
-            EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsLAString( expectedKey.c_str() ) );
+            EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsAQLString( expectedKey.c_str() ) );
         }
     }
     
-    TEST( TestLVBConstructors, UNIT_CreateLVB_OriginalMatrix_AppendLAStringKeysValues )
+    TEST( TestLVBConstructors, UNIT_CreateLVB_OriginalMatrix_AppendAQLStringKeysValues )
     {
         AQLStringMatrix originalMatrix
         {
@@ -877,7 +877,7 @@ namespace google_test
         {
             AQLString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
             AQLString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
-            EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsLAString( expectedKey.c_str() ) );
+            EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsAQLString( expectedKey.c_str() ) );
         }
     }
     

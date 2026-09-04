@@ -1103,8 +1103,8 @@ int AQLString::cmp(const AQLString& rString) const
 // String Comparison: Standard String std::string
 int AQLString::cmp(const std::string& rString) const
 {
-    AQLString myLAString(rString);
-    return cmp( myLAString );
+    AQLString myAQLString(rString);
+    return cmp( myAQLString );
 }
 
 // String Comparison: char_t*

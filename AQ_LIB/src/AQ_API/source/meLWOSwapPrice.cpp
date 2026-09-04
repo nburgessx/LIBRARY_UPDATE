@@ -30,7 +30,7 @@ double meLWOSwapPV( const std::string& swapName,
     AQ_API_START
     
     // Marshall Inputs
-    AQLString legNameAsLAString( legName.c_str() );
+    AQLString legNameAsAQLString( legName.c_str() );
     
     AQLStringMatrix valuationSettingsAsStringMatrix;
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
@@ -41,7 +41,7 @@ double meLWOSwapPV( const std::string& swapName,
     // Call Function and Return Result
     double result = validation::tryMeLWOSwapPV( swapName,
                                                     valuationSettingsAsStringMatrix,
-                                                    legNameAsLAString,
+                                                    legNameAsAQLString,
                                                     fixingTableAsStringMatrix );
     return result;
     
@@ -146,7 +146,7 @@ double meLWOSwapAnnuity( const std::string& swapName,
     AQ_API_START
     
     // Marshall Inputs
-    AQLString legNameAsLAString( legName.c_str() );
+    AQLString legNameAsAQLString( legName.c_str() );
     
     AQLStringMatrix valuationSettingsAsStringMatrix;
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
@@ -154,7 +154,7 @@ double meLWOSwapAnnuity( const std::string& swapName,
     // Call Function and Return Result
     double result = validation::tryMeLWOSwapAnnuity( swapName,
                                                             valuationSettingsAsStringMatrix,
-                                                            legNameAsLAString );
+                                                            legNameAsAQLString );
     return result;
     AQ_API_END
 }
@@ -174,7 +174,7 @@ double meLWOSwapParSpread( const std::string& swapName,
     AQ_API_START
     
     // Marshall Inputs
-    AQLString spreadLegNameAsLAString( spreadLegName.c_str() );
+    AQLString spreadLegNameAsAQLString( spreadLegName.c_str() );
     
     AQLStringMatrix valuationSettingsAsStringMatrix;
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
@@ -186,7 +186,7 @@ double meLWOSwapParSpread( const std::string& swapName,
     double result = validation::tryMeLWOSwapParSpread( swapName,
                                                            valuationSettingsAsStringMatrix,
                                                            fixingTableAsStringMatrix,
-                                                           spreadLegNameAsLAString );
+                                                           spreadLegNameAsAQLString );
     return result;
     AQ_API_END
 }
@@ -207,7 +207,7 @@ double meLWOSwapSpread( const std::string& swapName,
     AQ_API_START
     
     // Marshall Inputs
-    AQLString spreadLegNameAsLAString( spreadLegName.c_str() );
+    AQLString spreadLegNameAsAQLString( spreadLegName.c_str() );
     
     AQLStringMatrix valuationSettingsAsStringMatrix;
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
@@ -219,7 +219,7 @@ double meLWOSwapSpread( const std::string& swapName,
     double result = validation::tryMeLWOSwapSpread( swapName,
                                                        valuationSettingsAsStringMatrix,
                                                        fixingTableAsStringMatrix,
-                                                       spreadLegNameAsLAString );
+                                                       spreadLegNameAsAQLString );
     return result;
     AQ_API_END
 }
@@ -242,7 +242,7 @@ SWIG_STRINGMATRIX meLWOSwapDisplayCashflows( const std::string& swapName,
 	AQ_API_START
 
 	// Marshall Inputs
-	AQLString legNameAsLAString( legName.c_str() );
+	AQLString legNameAsAQLString( legName.c_str() );
 
 	AQLStringMatrix valuationSettingsAsStringMatrix;
 	swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
@@ -254,7 +254,7 @@ SWIG_STRINGMATRIX meLWOSwapDisplayCashflows( const std::string& swapName,
 	std::vector<AnyTypeMatrix> result
 		= validation::tryMeLWOSwapDisplayCashflows( swapName,
 														valuationSettingsAsStringMatrix,
-														legNameAsLAString,
+														legNameAsAQLString,
 														fixingTableAsStringMatrix,
 														showColumnHeaders );
 

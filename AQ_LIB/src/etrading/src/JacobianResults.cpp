@@ -433,7 +433,7 @@ namespace etrading
         for ( size_t row = 1; row < inputMatrix.size(); ++row )
         {
             // Column 1: Risk Dates - Cast String to Date
-            riskDates.push_back( etrading::AQLDateScheduleHelpers::getLADate( inputMatrix[row][0] ) );
+            riskDates.push_back( etrading::AQLDateScheduleHelpers::getAQLDate( inputMatrix[row][0] ) );
             
             // Column 2: Risk Values - Cast from String to Double
             char * pFirstNonNumber;
@@ -489,7 +489,7 @@ namespace etrading
             }
 
             // Column 1: Risk Dates - Cast String to Date
-            riskDates.push_back( etrading::AQLDateScheduleHelpers::getLADate( inputMatrix[row][0] ) );
+            riskDates.push_back( etrading::AQLDateScheduleHelpers::getAQLDate( inputMatrix[row][0] ) );
             
             // Column 2 Onwards: Risk Values - Cast from String to Double
             DoubleVector thisJacobianRowWithoutHeader( inputMatrix[row].size() - 1 );

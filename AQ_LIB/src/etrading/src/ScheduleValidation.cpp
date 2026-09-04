@@ -131,20 +131,20 @@ namespace etrading
         /////////////////////////////////////////////////////////////////////////////////////
         // Fixed Leg Parameters
         /////////////////////////////////////////////////////////////////////////////////////
-        AQLString fixedLegFreq							= swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FIXED_FREQUENCY,                       inputLVB                     );
-        AQLString fixedDayCount			                = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FIXED_DAYCOUNT,                        inputLVB                     );
-        AQLString fixedBusinessDayAdjustment             = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT                                         );
-        AQLString fixedCalendar	                        = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_CALENDAR                                                      );
-        AQLString fixedLegAccrualBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment   );
-        AQLString fixedLegAccrualCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_ACCRUALCALENDAR,                 fixedCalendar                );
-        AQLString fixedLegPaymentBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment   );
-        AQLString fixedLegPaymentCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTCALENDAR,                 fixedCalendar                );
-        AQLString fixedLegPaymentFreq					= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTFREQUENCY,                fixedLegFreq                 );
-        AQLString fixedLegFirstStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_FIRSTSTUBDATE                                                 );
-        AQLString fixedLegLastStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_LASTSTUBDATE                                                  );
-        AQLString fixedLegRollDayString		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_ROLLDAY                                                       );
-        AQLString fixedLegPayLag							= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTLAG,                      "0D"                         );
-        AQLString fixedLegStubType			            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_STUBTYPE                                                      );
+        AQLString fixedLegFreq							= swapLVB.getCompulsoryValueAsAQLString(    IRS_KEY::FIXED_FREQUENCY,                       inputLVB                     );
+        AQLString fixedDayCount			                = swapLVB.getCompulsoryValueAsAQLString(    IRS_KEY::FIXED_DAYCOUNT,                        inputLVB                     );
+        AQLString fixedBusinessDayAdjustment             = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT                                         );
+        AQLString fixedCalendar	                        = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_CALENDAR                                                      );
+        AQLString fixedLegAccrualBusinessDayAdjustment   = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment   );
+        AQLString fixedLegAccrualCalendar	            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_ACCRUALCALENDAR,                 fixedCalendar                );
+        AQLString fixedLegPaymentBusinessDayAdjustment   = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_PAYMENTBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment   );
+        AQLString fixedLegPaymentCalendar	            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_PAYMENTCALENDAR,                 fixedCalendar                );
+        AQLString fixedLegPaymentFreq					= swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_PAYMENTFREQUENCY,                fixedLegFreq                 );
+        AQLString fixedLegFirstStubDate		            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_FIRSTSTUBDATE                                                 );
+        AQLString fixedLegLastStubDate		            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_LASTSTUBDATE                                                  );
+        AQLString fixedLegRollDayString		            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_ROLLDAY                                                       );
+        AQLString fixedLegPayLag							= swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_PAYMENTLAG,                      "0D"                         );
+        AQLString fixedLegStubType			            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_STUBTYPE                                                      );
 
         validateStringEmptiness( fixedLegAccrualBusinessDayAdjustment,  "#Error: Fixed leg 'Accrual Business Day Adjustment' must be specified." );
         validateStringEmptiness( fixedLegPaymentBusinessDayAdjustment, "#Error: Fixed leg 'Payment Business Day Adjustment' must be specified." );
@@ -152,7 +152,7 @@ namespace etrading
         validateStringEmptiness( fixedLegPaymentCalendar,               "#Error: Fixed leg 'Payment Calendar' must be specified." );
 
         AQLDate effectiveDate	         = swapLVB.getCompulsoryValueAsDate( IRS_KEY::EFFECTIVE_DATE, inputLVB );
-        AQLString maturityDateString      = swapLVB.getCompulsoryValueAsLAString( IRS_KEY::MATURITY_DATE, inputLVB );
+        AQLString maturityDateString      = swapLVB.getCompulsoryValueAsAQLString( IRS_KEY::MATURITY_DATE, inputLVB );
         AQLDate maturityDate	             = validateMaturityDate( effectiveDate, maturityDateString);
 
         if ( maturityDate < effectiveDate )
@@ -207,17 +207,17 @@ namespace etrading
         /////////////////////////////////////////////////////////////////////////////////////
         // Float Leg Parameters
         /////////////////////////////////////////////////////////////////////////////////////
-        AQLString floatLegFreq			                = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FLOAT_FREQUENCY,                       inputLVB                     );
-        AQLString floatLegDayCount			            = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FLOAT_DAYCOUNT,                        inputLVB                     );
-        AQLString floatBusinessDayAdjustment             = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT                                         );
-        AQLString floatCalendar	                        = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_CALENDAR                                                      );
-        AQLString floatLegFixingBusinessDayAdjustment    = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIXINGBUSINESSDAYADJUSTMENT,     floatBusinessDayAdjustment   );
-        AQLString floatLegFixingCalendar	                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIXINGCALENDAR,                  floatCalendar                );
-        AQLString floatLegAccrualBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment   );
-        AQLString floatLegAccrualCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_ACCRUALCALENDAR,                 floatCalendar                );
-        AQLString floatLegPaymentBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment   );
-        AQLString floatLegPaymentCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTCALENDAR,                 floatCalendar                );
-        AQLString floatLegPaymentFreq					= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTFREQUENCY,                floatLegFreq                 );
+        AQLString floatLegFreq			                = swapLVB.getCompulsoryValueAsAQLString(    IRS_KEY::FLOAT_FREQUENCY,                       inputLVB                     );
+        AQLString floatLegDayCount			            = swapLVB.getCompulsoryValueAsAQLString(    IRS_KEY::FLOAT_DAYCOUNT,                        inputLVB                     );
+        AQLString floatBusinessDayAdjustment             = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT                                         );
+        AQLString floatCalendar	                        = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_CALENDAR                                                      );
+        AQLString floatLegFixingBusinessDayAdjustment    = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_FIXINGBUSINESSDAYADJUSTMENT,     floatBusinessDayAdjustment   );
+        AQLString floatLegFixingCalendar	                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_FIXINGCALENDAR,                  floatCalendar                );
+        AQLString floatLegAccrualBusinessDayAdjustment   = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment   );
+        AQLString floatLegAccrualCalendar	            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_ACCRUALCALENDAR,                 floatCalendar                );
+        AQLString floatLegPaymentBusinessDayAdjustment   = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_PAYMENTBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment   );
+        AQLString floatLegPaymentCalendar	            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_PAYMENTCALENDAR,                 floatCalendar                );
+        AQLString floatLegPaymentFreq					= swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_PAYMENTFREQUENCY,                floatLegFreq                 );
  
 
         validateStringEmptiness( floatLegFixingBusinessDayAdjustment,	"#Error: Float leg 'Fixing Business Day Adjustment' must be specified." );
@@ -227,12 +227,12 @@ namespace etrading
         validateStringEmptiness( floatLegAccrualCalendar,               "#Error: Float leg 'Accrual Calendar' must be specified." );
         validateStringEmptiness( floatLegPaymentCalendar,               "#Error: Float leg 'Payment Calendar' must be specified." );
 
-        AQLString floatLegFirstStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIRSTSTUBDATE                                                );
-        AQLString floatLegLastStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_LASTSTUBDATE                                                 );
-        AQLString floatLegRollDayString		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_ROLLDAY                                                      );
-        AQLString floatLegFixLag			                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIXINGLAG,                       "0D"                        );
-        AQLString floatLegPayLag							= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTLAG,                      "0D"                        );
-        AQLString floatLegStubType			            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_STUBTYPE                                                     );
+        AQLString floatLegFirstStubDate		            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_FIRSTSTUBDATE                                                );
+        AQLString floatLegLastStubDate		            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_LASTSTUBDATE                                                 );
+        AQLString floatLegRollDayString		            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_ROLLDAY                                                      );
+        AQLString floatLegFixLag			                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_FIXINGLAG,                       "0D"                        );
+        AQLString floatLegPayLag							= swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_PAYMENTLAG,                      "0D"                        );
+        AQLString floatLegStubType			            = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_STUBTYPE                                                     );
 
         // Set-Up First and Last Stub Parameters
         AQLDate* floatAccrualFirstOddDate    = NULL;
@@ -1281,7 +1281,7 @@ namespace etrading
     *  @param [in] date date in AQLDate format
     *  @Return     date in double format
     */
-	double fromLADateToDouble(const AQLDate& date)
+	double fromAQLDateToDouble(const AQLDate& date)
 	{
 		if (date == AQLDate())
 		{
@@ -1299,7 +1299,7 @@ namespace etrading
 		DateVector dVec;
 		for(size_t i=0;i<doubleVec.size(); ++i)
 		{
-			dVec.push_back( AQLDateScheduleHelpers::getLADate( (int)( doubleVec[i] ) ) );
+			dVec.push_back( AQLDateScheduleHelpers::getAQLDate( (int)( doubleVec[i] ) ) );
 		}
 		return dVec;
 	}

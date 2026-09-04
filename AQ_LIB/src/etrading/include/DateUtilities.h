@@ -70,7 +70,7 @@ namespace etrading
     std::string toYYYYMMDDFromDate( const AQLDate& date );
 
 	// returns a boost::gregorian::date from AQLDate
-    boost::gregorian::date toGregorianDateFromLADate( const AQLDate& );
+    boost::gregorian::date toGregorianDateFromAQLDate( const AQLDate& );
     
 	// returns a boost::gregorian::date from String Date "YYYYMMDD"
     boost::gregorian::date toGregorianDateFromYYYYMMDD( const std::string& inputDate );

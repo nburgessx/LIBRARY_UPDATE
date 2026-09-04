@@ -1,0 +1,9 @@
+source,token,owned,proposed,refs,english,bucket,kind
+token,MARKET_KEY,0,,47,1,B_acronym,?
+token,METHOD,0,,8,1,B_acronym,?
+token,MATURITY_DATE,0,,3,1,B_acronym,?
+token,MBTemplateType,0,,2,0,A_convention,?
+token,MBRoot,0,,2,0,A_convention,?
+token,LASTSTUBDATE,0,,1,0,B_acronym,?
+token,MARKETDATAPROPERTIES,0,,1,1,B_acronym,?
+token,MDC_,0,,1,0,D_other,?

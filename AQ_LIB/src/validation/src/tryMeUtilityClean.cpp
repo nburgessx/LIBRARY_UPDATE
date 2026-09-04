@@ -109,9 +109,9 @@ namespace validation
     }
 
 	// Function to trim a LA String Vector and remove blanks
-	AQLStringVector trimLAStringVector( const AQLStringVector & inputVector )
+	AQLStringVector trimAQLStringVector( const AQLStringVector & inputVector )
 	{
-		AQLStringVector results = etrading::trimLAStringVector( inputVector );
+		AQLStringVector results = etrading::trimAQLStringVector( inputVector );
 		return results;
 	}
 
@@ -123,9 +123,9 @@ namespace validation
 	}
 
     // Function to trim a LA String Matrix and remove blanks
-	AQLStringMatrix trimLAStringMatrix( const AQLStringMatrix & inputMatrix )
+	AQLStringMatrix trimAQLStringMatrix( const AQLStringMatrix & inputMatrix )
 	{
-		AQLStringMatrix results = etrading::trimLAStringMatrix( inputMatrix );
+		AQLStringMatrix results = etrading::trimAQLStringMatrix( inputMatrix );
 		return results;
 	}
 

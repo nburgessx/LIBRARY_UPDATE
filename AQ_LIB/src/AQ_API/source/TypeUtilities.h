@@ -63,13 +63,13 @@ namespace swig
     *  @param [in]		dateFormat		Date Format, typically "YYYYMMDD"
 	*  @output			Date in AQLDate format
 	*/
-    AQLDate fromStringToLADate(const std::string& dateString, const std::string& dateFormat = "YYYYMMDD" );
+    AQLDate fromStringToAQLDate(const std::string& dateString, const std::string& dateFormat = "YYYYMMDD" );
 
 	/* @brief			build a vector of strings from a DoubleVector object
 	*  @param [in]		dVector			A DoubleVector object
 	*  @output			date with expected format
 	*/
-	AQLString fromStringToLAString(const std::string& inVal);
+	AQLString fromStringToAQLString(const std::string& inVal);
 
 	/* @brief			Check each row of the input matrix and keep a record of the maximum column size. This is designed to work with ragged matrices.
 	*  @param [in]		inputMatrix	The matrix of type T to check.

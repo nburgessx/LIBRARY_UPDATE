@@ -221,10 +221,10 @@ double meDateYearFraction( const std::string& fromDate,
     AQ_API_START
 
 	// Input marshalling
-	AQLDate fromLADate( etrading::stringToDate( fromDate ) );
+	AQLDate fromAQLDate( etrading::stringToDate( fromDate ) );
 	AQLDate toAQLDate( etrading::stringToDate( toDate ) );
 
-	double yearFraction = validation::tryMeDateYearFraction( fromLADate, toAQLDate, dayCount, includeLast );
+	double yearFraction = validation::tryMeDateYearFraction( fromAQLDate, toAQLDate, dayCount, includeLast );
 	return yearFraction;
 
     AQ_API_END
@@ -243,10 +243,10 @@ double meDateYearFraction( const std::string& fromDate,
     AQ_API_START
 
 	// Input marshalling
-	AQLDate fromLADate( etrading::stringToDate( fromDate ) );
+	AQLDate fromAQLDate( etrading::stringToDate( fromDate ) );
 	AQLDate toAQLDate( etrading::stringToDate( toDate ) );
 
-	double yearFraction = validation::tryMeDateYearFraction( fromLADate, toAQLDate, dayCount );
+	double yearFraction = validation::tryMeDateYearFraction( fromAQLDate, toAQLDate, dayCount );
 	return yearFraction;
 
     AQ_API_END

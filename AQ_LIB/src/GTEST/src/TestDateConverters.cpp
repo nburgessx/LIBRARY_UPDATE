@@ -19,7 +19,7 @@ namespace google_test
     
     // ===========================================================================================================================
 
-    TEST( TestDateConverters, UNIT_toLADateFromREGEX )
+    TEST( TestDateConverters, UNIT_toAQLDateFromREGEX )
     {
         // Date Format 1: Excel Integer 43686 = 09-Aug-2019
         std::string dateFormat1 = "43686";
@@ -73,7 +73,7 @@ namespace google_test
         EXPECT_EQ( expectedDate4, actualDate4 );
     }
 
-    TEST( TestDateConverters, UNIT_toLADateFromGregorianDate )
+    TEST( TestDateConverters, UNIT_toAQLDateFromGregorianDate )
     {
         // 09-Aug-2019
         boost::gregorian::date gregorianDate( 2019, 8, 9 );
@@ -100,12 +100,12 @@ namespace google_test
         EXPECT_EQ( expectedDate, actualDate );
     }
     
-    TEST( TestDateConverters, UNIT_toGregorianDateFromLADate )
+    TEST( TestDateConverters, UNIT_toGregorianDateFromAQLDate )
     {
         // 09-Aug-2019
         AQLDate laDate("20190809");
         boost::gregorian::date expectedDate( 2019, 8, 9 );
-        boost::gregorian::date actualDate = etrading::toGregorianDateFromLADate( laDate );
+        boost::gregorian::date actualDate = etrading::toGregorianDateFromAQLDate( laDate );
         EXPECT_EQ( expectedDate, actualDate );
     }
 

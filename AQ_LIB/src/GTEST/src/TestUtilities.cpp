@@ -34,13 +34,13 @@ using namespace etrading;
 namespace google_test
 {
     // Function to copy string using copy constructor, passsing by value
-    size_t sizeLAString( AQLString s )
+    size_t sizeAQLString( AQLString s )
     {
         AQLString newString(s);
         return newString.size();
     }
 
-    TEST( TestLAString, UNIT_Test_For_ThreadSafety )
+    TEST( TestAQLString, UNIT_Test_For_ThreadSafety )
     {
         try
         {
@@ -54,7 +54,7 @@ namespace google_test
             #pragma AQ_PARALLEL_FOR_WITH_REDUCTION_ADD( totalStringSize )
             for ( int i = 0; i < 100000; ++i )
             {
-                totalStringSize += sizeLAString( myString );
+                totalStringSize += sizeAQLString( myString );
             }
 
             // If we reach here our test has passed.
@@ -66,7 +66,7 @@ namespace google_test
         }
     }
 
-    TEST( TestLAString, UNIT_Test_StandardString_Constructor )
+    TEST( TestAQLString, UNIT_Test_StandardString_Constructor )
     {
         AQLString expectedString("BERT");
 
@@ -76,36 +76,36 @@ namespace google_test
         EXPECT_EQ( expectedString, actualString);
     }
 
-    TEST( TestLAString, UNIT_Test_CharString_Method )
+    TEST( TestAQLString, UNIT_Test_CharString_Method )
     {
         std::string myStandardString("BERT");
         const char* charArrayFromStandardString = myStandardString.c_str();
         const std::string expectedString = charArrayFromStandardString;
 
-        AQLString myLAString("BERT");
-        const char* charArrayFromLAString = myLAString.c_str();
-        const std::string actualString = charArrayFromLAString;
+        AQLString myAQLString("BERT");
+        const char* charArrayFromAQLString = myAQLString.c_str();
+        const std::string actualString = charArrayFromAQLString;
 
         EXPECT_EQ( expectedString, actualString);
     }
 
-    TEST( TestLAString, UNIT_Test_LAString_StandardString_Operators )
+    TEST( TestAQLString, UNIT_Test_AQLString_StandardString_Operators )
     {
         // Comparator: AQLString vs StandardString
-        AQLString myLAString1("BERT");
+        AQLString myAQLString1("BERT");
         std::string myStandardString1("BERT");
-        bool comparator = ( myLAString1 == myStandardString1 );
+        bool comparator = ( myAQLString1 == myStandardString1 );
         EXPECT_EQ( true, comparator );
 
         // Assignment: AQLString assigned from StandardString
         std::string myStandardString2("ERNIE");
-        AQLString myLAString2 = myStandardString2;
-        EXPECT_EQ( myLAString2, myStandardString2 );
+        AQLString myAQLString2 = myStandardString2;
+        EXPECT_EQ( myAQLString2, myStandardString2 );
 
         // Addition / Concatination of Mixed String Types i.e. AQLString + StandardString
-        AQLString expectedLAString2("BERTERNIE");
-        AQLString actualLAString2 = myLAString1 + myStandardString2;
-        EXPECT_EQ( expectedLAString2, actualLAString2 );
+        AQLString expectedAQLString2("BERTERNIE");
+        AQLString actualAQLString2 = myAQLString1 + myStandardString2;
+        EXPECT_EQ( expectedAQLString2, actualAQLString2 );
     }
 
 

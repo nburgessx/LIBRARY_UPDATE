@@ -48,7 +48,7 @@ namespace etrading
 	VariantMatrix transpose( const VariantMatrix & input);
 
     // Converts an AQLStringMatrix to a JSON VariantMatrix, note transposes by default to match the default JSON schema convention
-    VariantMatrix toVariantMatrixFromLAStringMatrix( const AQLStringMatrix & laStringMatrix, const bool & transpose = true );
+    VariantMatrix toVariantMatrixFromAQLStringMatrix( const AQLStringMatrix & laStringMatrix, const bool & transpose = true );
 
     // Converts a StandardStringMatrix to a JSON VariantMatrix, note transposes by default to match the default JSON schema convention
     VariantMatrix toVariantMatrixFromStandardStringMatrix( const StandardStringMatrix & standardStringMatrix, const bool & transpose = true );

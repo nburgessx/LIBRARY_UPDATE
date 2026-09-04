@@ -9,7 +9,7 @@
 namespace google_test
 {
     
-    TEST( TestVariantDataType, UNIT_toVariantMatrixFromLAStringMatrix_NoTranspose )
+    TEST( TestVariantDataType, UNIT_toVariantMatrixFromAQLStringMatrix_NoTranspose )
     {
         const AQLStringMatrix laStringMatrix =
         {
@@ -24,7 +24,7 @@ namespace google_test
         };
 
         // Call Underlying Function without transposing
-        const etrading::VariantMatrix actualVariantMatrix = etrading::toVariantMatrixFromLAStringMatrix( laStringMatrix, false ); // false = don't transpose
+        const etrading::VariantMatrix actualVariantMatrix = etrading::toVariantMatrixFromAQLStringMatrix( laStringMatrix, false ); // false = don't transpose
 
         // Dimension Check - Assume Rectangular Matrix i.e. not jagged
         ASSERT_EQ( actualVariantMatrix.size(), expectedVariantMatrix.size() );
@@ -40,7 +40,7 @@ namespace google_test
         }
     }
 
-    TEST( TestVariantDataType, UNIT_toVariantMatrixFromLAStringMatrix_WithTranspose )
+    TEST( TestVariantDataType, UNIT_toVariantMatrixFromAQLStringMatrix_WithTranspose )
     {
         const AQLStringMatrix laStringMatrix =
         {
@@ -56,7 +56,7 @@ namespace google_test
         };
 
         // Call Underlying Function applying transpose
-        const etrading::VariantMatrix actualVariantMatrix = etrading::toVariantMatrixFromLAStringMatrix( laStringMatrix, true ); // true = apply transpose
+        const etrading::VariantMatrix actualVariantMatrix = etrading::toVariantMatrixFromAQLStringMatrix( laStringMatrix, true ); // true = apply transpose
 
         // Dimension Check - Assume Rectangular Matrix i.e. not jagged
         ASSERT_EQ( actualVariantMatrix.size(), expectedVariantMatrix.size() );
@@ -135,7 +135,7 @@ namespace google_test
         }
     }
 
-    TEST( TestVariantDataType, UNIT_toLAStringMatrixFromVariantMatrix_NoTranspose )
+    TEST( TestVariantDataType, UNIT_toAQLStringMatrixFromVariantMatrix_NoTranspose )
     {
         const etrading::VariantMatrix variantMatrix =
         {
@@ -166,7 +166,7 @@ namespace google_test
         }
     }
 
-    TEST( TestVariantDataType, UNIT_toLAStringMatrixFromVariantMatrix_WithTranspose )
+    TEST( TestVariantDataType, UNIT_toAQLStringMatrixFromVariantMatrix_WithTranspose )
     {
         const etrading::VariantMatrix variantMatrix =
         {

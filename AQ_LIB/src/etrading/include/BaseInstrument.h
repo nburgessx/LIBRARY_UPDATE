@@ -19,7 +19,7 @@ namespace etrading
 
         BaseInstrument( const LabelValueBlock& tradeLVB )
         {
-            tradeID_ = tradeLVB.getCompulsoryValueAsLAString( IRS_KEY::TRADE_ID );
+            tradeID_ = tradeLVB.getCompulsoryValueAsAQLString( IRS_KEY::TRADE_ID );
         }
 
         /* @brief		Method that returns instrument PV

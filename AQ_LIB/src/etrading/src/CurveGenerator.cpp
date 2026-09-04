@@ -427,7 +427,7 @@ namespace etrading
 		
 		if (iter == stringMatrixByKey_.end())
 		{
-			stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey, trimBlankRows );
+			stringMatrix = getAQLStringMatrixFromFreeObject( freeObject_, propertyKey, trimBlankRows );
 			stringMatrixByKey_[propertyKey] = stringMatrix;
 		}
 		else

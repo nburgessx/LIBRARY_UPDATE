@@ -211,7 +211,7 @@ namespace etrading
 
 			AnyTypeVector body;
 
-			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->coreCashflow()->fixingDate()), includeFixingDate);
+			AQ_PUSH_BACK_IF(body, fromAQLDateToDouble(cashflow->coreCashflow()->fixingDate()), includeFixingDate);
 
 
 			const auto& coreCashflow = cashflow->coreCashflow();
@@ -219,11 +219,11 @@ namespace etrading
 			const auto accrualEndDt = coreCashflow->accrualEndDate();
 			const int accrualDays = getDays(accrualStartDt, accrualEndDt);
 
-			AQ_PUSH_BACK_IF(body, fromLADateToDouble(accrualStartDt), includeAccrualStart);
-			AQ_PUSH_BACK_IF(body, fromLADateToDouble(accrualEndDt), includeAccrualEnd);
+			AQ_PUSH_BACK_IF(body, fromAQLDateToDouble(accrualStartDt), includeAccrualStart);
+			AQ_PUSH_BACK_IF(body, fromAQLDateToDouble(accrualEndDt), includeAccrualEnd);
 			AQ_PUSH_BACK_IF(body, accrualDays, includeAccrualDays);
 			AQ_PUSH_BACK_IF(body, coreCashflow->accrualYearFraction(), includeAccrualYearFraction);
-			AQ_PUSH_BACK_IF(body, fromLADateToDouble(coreCashflow->paymentDate()), includePaymentDate);
+			AQ_PUSH_BACK_IF(body, fromAQLDateToDouble(coreCashflow->paymentDate()), includePaymentDate);
 
 			AQ_PUSH_BACK_IF(body, coreCashflow->notional(), includeNotional);
 			AQ_PUSH_BACK_IF(body, coreCashflow->leverage(), includeLeverage);

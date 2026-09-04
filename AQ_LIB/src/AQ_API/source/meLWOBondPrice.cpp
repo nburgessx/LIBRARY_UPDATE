@@ -139,8 +139,8 @@ double meLWOBondForwardPrice( const std::string& bondObjectName,
 	AQ_API_START
         
     // Marshall Inputs
-    AQLDate settleDate_          = swig::fromStringToLADate( settleDate );
-    AQLDate forwardSettleDate_   = swig::fromStringToLADate( forwardSettleDate );
+    AQLDate settleDate_          = swig::fromStringToAQLDate( settleDate );
+    AQLDate forwardSettleDate_   = swig::fromStringToAQLDate( forwardSettleDate );
         
     // Call validation method
     const double result = validation::tryMeLWOBondForwardPrice( bondObjectName, settleDate_, forwardSettleDate_, price, repoRate, repoDayCount );

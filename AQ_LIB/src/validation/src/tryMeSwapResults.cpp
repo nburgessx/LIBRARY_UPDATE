@@ -89,8 +89,8 @@ namespace validation
 		boost::to_upper( swapHandleUpperCase );
 
         // Trim Discount Factor Risk LVB
-        const AQLStringMatrix trimmedDiscountRisk = validation::trimLAStringMatrix( discountRiskLVB );
-		const AQLStringMatrix trimmedForwardRisk = validation::trimLAStringMatrix( forwardRiskLVB );
+        const AQLStringMatrix trimmedDiscountRisk = validation::trimAQLStringMatrix( discountRiskLVB );
+		const AQLStringMatrix trimmedForwardRisk = validation::trimAQLStringMatrix( forwardRiskLVB );
 
 		// Record Inputs
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk, trimmedForwardRisk )
@@ -138,7 +138,7 @@ namespace validation
 		boost::to_upper( swapHandleUpperCase );
 
         // Trim Discount Factor Risk LVB
-        const AQLStringMatrix trimmedDiscountRisk = validation::trimLAStringMatrix( discountRiskLVB );
+        const AQLStringMatrix trimmedDiscountRisk = validation::trimAQLStringMatrix( discountRiskLVB );
 
 		// Record Inputs
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk )
@@ -181,7 +181,7 @@ namespace validation
 		boost::to_upper( swapHandleUpperCase );
 
         // Trim Forward Rate Risk LVB
-        const AQLStringMatrix trimmedForwardRisk = validation::trimLAStringMatrix( forwardRiskLVB );
+        const AQLStringMatrix trimmedForwardRisk = validation::trimAQLStringMatrix( forwardRiskLVB );
 
 		// Record Inputs
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedForwardRisk )

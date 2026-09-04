@@ -49,7 +49,7 @@ namespace validation
         etrading::validateKeysForLVB( tryMeProductOISParRateLVBKeys(), oisLVB.getKeys(), validateKeys );
 
         const std::string inputLVB = "OISLVB";
-        AQLString curveCollection = oisLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
+        AQLString curveCollection = oisLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -63,8 +63,8 @@ namespace validation
         //----------------------------------------------------------------------------------
         // Validate non-cash flow related parameters
 
-        AQLString forecastCurveIndex	= oisLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
-        AQLString discountCurveIndex = oisLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+        AQLString forecastCurveIndex	= oisLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
+        AQLString discountCurveIndex = oisLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
 
         //Throw exception if the curve has not been built.
         AQLString staticDataTable = etrading::getCurveStaticDataTableName( curveCollection, forecastCurveIndex );
@@ -84,17 +84,17 @@ namespace validation
         //----------------------------------------------------------------------------------
         // Validate OIS specific parameters
 
-        AQLString floatLegRollDayString      = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_ROLLDAY );
-        AQLString compoundingMethod          = oisLVB.getOptionalValueAsLAString( etrading::PRICING_PARAMS::COMPOUND_METHOD );
+        AQLString floatLegRollDayString      = oisLVB.getOptionalValueAsAQLString( etrading::IRS_KEY::FLOAT_ROLLDAY );
+        AQLString compoundingMethod          = oisLVB.getOptionalValueAsAQLString( etrading::PRICING_PARAMS::COMPOUND_METHOD );
         etrading::validateOISParameters( floatLegRollDayString, compoundingMethod, false );
 
-        AQLString floatBusinessDayAdjustment             = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT                                        );
-        AQLString floatCalendar	                        = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_CALENDAR                                                     );
-        AQLString floatAccrualBusinessDayAdjustment   = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment );
-        AQLString floatAccrualCalendar	            = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_ACCRUALCALENDAR,                 floatCalendar              );
+        AQLString floatBusinessDayAdjustment             = oisLVB.getOptionalValueAsAQLString( etrading::IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT                                        );
+        AQLString floatCalendar	                        = oisLVB.getOptionalValueAsAQLString( etrading::IRS_KEY::FLOAT_CALENDAR                                                     );
+        AQLString floatAccrualBusinessDayAdjustment   = oisLVB.getOptionalValueAsAQLString( etrading::IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment );
+        AQLString floatAccrualCalendar	            = oisLVB.getOptionalValueAsAQLString( etrading::IRS_KEY::FLOAT_ACCRUALCALENDAR,                 floatCalendar              );
 
-        AQLString fixedDayCount              = oisLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
-        AQLString floatDayCount              = oisLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
+        AQLString fixedDayCount              = oisLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FIXED_DAYCOUNT );
+        AQLString floatDayCount              = oisLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
 
         double floatSpread                  = oisLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FLOAT_SPREAD );
 

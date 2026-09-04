@@ -72,9 +72,9 @@ namespace etrading
         //Swap level properties take priority than the leg level ones
         if (swapPropertiesLVB.size() != 0)
         {
-            valuationCurrency_ = toCCYEnum(swapPropertiesLVB.getOptionalValueAsLAString(IRS_KEY::VALUATION_CURRENCY).getCString());
+            valuationCurrency_ = toCCYEnum(swapPropertiesLVB.getOptionalValueAsAQLString(IRS_KEY::VALUATION_CURRENCY).getCString());
             isMTM_ = swapPropertiesLVB.getOptionalValueAsBool(IRS_KEY::MTM, false);
-            notionalResetLegName_ = swapPropertiesLVB.getOptionalValueAsLAString(IRS_KEY::NOTIONAL_FX_RESET_LEG);
+            notionalResetLegName_ = swapPropertiesLVB.getOptionalValueAsAQLString(IRS_KEY::NOTIONAL_FX_RESET_LEG);
         }
         else
         {

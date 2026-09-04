@@ -25,7 +25,7 @@ namespace google_test
         EXPECT_EQ( 5, 5 );
     }
 
-    TEST( ComparisionTest2, UNIT_LAStrings )
+    TEST( ComparisionTest2, UNIT_AQLStrings )
     {
         EXPECT_EQ( AQLString( "A" ), AQLString( "A" ) );
         EXPECT_EQ( AQLString( "B" ), AQLString( "B" ) );
@@ -34,7 +34,7 @@ namespace google_test
         EXPECT_EQ( AQLString( "E" ), AQLString( "E" ) );
     }
 
-    TEST( ComparisionTest3, UNIT_LADates )
+    TEST( ComparisionTest3, UNIT_AQLDates )
     {
         EXPECT_EQ( AQLDate( "20150827" ), AQLDate( "20150827" ) );
         EXPECT_EQ( AQLDate( "20160827" ), AQLDate( "20160827" ) );

@@ -12,11 +12,11 @@ namespace etrading
         const std::string inputLVB = "legPropertiesLVB";
 
 		//cast it to upper case so that legName lookup is not case-sensitive (i.e Leg3:Fee, leg3:fee, LEG3:FEE are the same)
-        legName_ = marketDataLVB.getCompulsoryValueAsLAString(IRS_KEY::LEG_TYPE,  inputLVB, true);
+        legName_ = marketDataLVB.getCompulsoryValueAsAQLString(IRS_KEY::LEG_TYPE,  inputLVB, true);
 
-        discountCurve_ = marketDataLVB.getCompulsoryValueAsLAString( MARKET_KEY::DISCOUNT_CURVE, inputLVB );
-        currency_ = toCCYEnum( marketDataLVB.getOptionalValueAsLAString( IRS_KEY::CURRENCY ).getCString());
-        valuationCurrency_ = toCCYEnum( marketDataLVB.getOptionalValueAsLAString( IRS_KEY::VALUATION_CURRENCY).getCString());
+        discountCurve_ = marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+        currency_ = toCCYEnum( marketDataLVB.getOptionalValueAsAQLString( IRS_KEY::CURRENCY ).getCString());
+        valuationCurrency_ = toCCYEnum( marketDataLVB.getOptionalValueAsAQLString( IRS_KEY::VALUATION_CURRENCY).getCString());
     }
 
     LegStaticDataPtr FeeStaticData::clone()

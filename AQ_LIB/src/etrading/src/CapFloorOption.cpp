@@ -71,7 +71,7 @@ namespace etrading
 		// BusinessDayAdjusted effectiveDate, which is used to generate schedule output. 
 		const auto effectiveDate = stringToDate(accrualStartDate.c_str(), "#Error: Invalid 'EffectiveDate'");
 		const auto adjustedEffectiveDate = getDateFromTenor(boost::assign::list_of(effectiveDate), "0D", toString(accrualbusinessDayAdj).c_str(), accrualCalendar.c_str(), "")[0];
-		const std::string adjustedAccrualStartDate = boost::lexical_cast<std::string>(fromLADateToDouble(adjustedEffectiveDate));
+		const std::string adjustedAccrualStartDate = boost::lexical_cast<std::string>(fromAQLDateToDouble(adjustedEffectiveDate));
 
 		// Unadjusted maturityDate
 		const auto accrualEndDateOrTenor = dealLVB.getCompulsoryValueAsString(IRS_KEY::MATURITY_DATE, inputLVB);

@@ -55,7 +55,7 @@ namespace etrading
 
 
 	// Function to get the curve Daycount as an AQLString
-	AQLString getCurveDaycountAsLAString(const AQLString& curveCollection, const AQLString& curveIndex);
+	AQLString getCurveDaycountAsAQLString(const AQLString& curveCollection, const AQLString& curveIndex);
 
 	/// Function to get the curve Daycount as a std::string
 	std::string getCurveDaycountAsStandardString(const std::string & curveCollection, const std::string & curveIndex);

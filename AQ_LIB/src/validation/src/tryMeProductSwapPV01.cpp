@@ -47,7 +47,7 @@ namespace validation
         etrading::validateKeysForLVB( tryMeProductSwapPV01LVBKeys(), swapLVB.getKeys(), validateKeys );
 
         const std::string inputLVB = "SwapLVB";
-        AQLString curveCollection = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
+        AQLString curveCollection = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -57,8 +57,8 @@ namespace validation
             file.write( "swapLVB", swapLVB );
         }
 
-        AQLString forecastCurveIndex	= swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
-        AQLString discountCurveIndex = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+        AQLString forecastCurveIndex	= swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
+        AQLString discountCurveIndex = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, discountCurveIndex );
@@ -75,11 +75,11 @@ namespace validation
         DateVector floatPaymentDates;
         etrading::validateAndGenerateSwapCashflows( swapLVB, inputLVB, fixedAccrualDates, fixedPaymentDates, floatFixingDates, floatAccrualDates, floatPaymentDates );
 
-        AQLString payRec	= swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE , inputLVB );
+        AQLString payRec	= swapLVB.getCompulsoryValueAsAQLStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE , inputLVB );
         bool isFixedRatePayerSwap = etrading::validateSwapPayRecFlag( payRec );
 
         double notional = swapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::NOTIONAL );
-        AQLString fixedDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
+        AQLString fixedDayCount = swapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FIXED_DAYCOUNT );
 
         // Get the Swap PV01
         double ret = etrading::AQLCurveForwardRateHelpers::getSwapPV01( isFixedRatePayerSwap,

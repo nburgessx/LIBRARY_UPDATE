@@ -21,7 +21,7 @@ namespace etrading
     */
     OISSwap::OISSwap( const LabelValueBlock& swapLVB ) : InterestRateSwap( swapLVB ), isFwdInterp_( false ), isYieldCurveReady_( false )
     {
-        compoundingMethod_ = swapLVB.getCompulsoryValueAsLAString( IRS_KEY::COMPOUND_METHOD );
+        compoundingMethod_ = swapLVB.getCompulsoryValueAsAQLString( IRS_KEY::COMPOUND_METHOD );
     }
 
     /* @brief		Method that returns swap PV

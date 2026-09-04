@@ -1220,7 +1220,7 @@ namespace etrading
 		// *********************
         
 		LabelValueBlock curvePropertiesLVB( generateProp );
-		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
+		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsAQLString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 		
 		std::unique_ptr<AQLObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves( currency) );
 	    objectPoolManager->loadModelDataAndCalibrate( currency, *dataInstance, true, false, curveID, marketName );
@@ -1845,7 +1845,7 @@ namespace etrading
 		// *********************
         
 		LabelValueBlock curvePropertiesLVB( generateProp );
-		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
+		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsAQLString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 		
 		std::unique_ptr<AQLObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
 	    objectPoolManager->loadModelDataAndCalibrate(currency, *dataInstance, true, false, curveID, marketName);
@@ -2408,7 +2408,7 @@ namespace etrading
 		// ***********************
 	    
 		LabelValueBlock curvePropertiesLVB( generateProp );
-		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
+		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsAQLString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 
 		std::unique_ptr<AQLObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
 	    objectPoolManager->loadModelDataAndCalibrate(currency, *dataInstance, true, false, curveID, marketName );
@@ -2598,7 +2598,7 @@ namespace etrading
 		// ***********************
 
 		LabelValueBlock curvePropertiesLVB( generateProp );
-		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
+		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsAQLString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 
 		AQLUpdateCurveObject *entityPoolManager = new UpdateObjectPoolForSDEsAndCurves(currency);
 	    entityPoolManager->loadFwdFXConstCurveDataAndCalibrate(currency, *dataInstance, curveID, marketName);

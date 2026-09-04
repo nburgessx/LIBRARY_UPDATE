@@ -244,13 +244,13 @@ namespace etrading
 
         for(auto it = fwdFxRateMap.begin(); it != fwdFxRateMap.end(); ++it) 
 		{
-			settleDates.push_back(fromLADateToDouble(it->first));
+			settleDates.push_back(fromAQLDateToDouble(it->first));
 			auto fxFwdRate = it->second[1];
 			fwdFxBidOutrights.push_back(fxFwdRate.bid);
 			fwdFxAskOutrights.push_back(fxFwdRate.ask);
         }
 
-        auto settleDateInDouble = fromLADateToDouble(settlementDate);
+        auto settleDateInDouble = fromAQLDateToDouble(settlementDate);
 		auto interpMethod = toInterpolationEnum(interpolationMethod);
 
 		FxFwd fwdFxRatesInterp;

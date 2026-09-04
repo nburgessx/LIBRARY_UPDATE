@@ -86,7 +86,7 @@ namespace etrading
     }
 
 	// Function to get the curve Daycount as an AQLString
-	AQLString getCurveDaycountAsLAString( const AQLString& curveCollection, const AQLString& curveIndex )
+	AQLString getCurveDaycountAsAQLString( const AQLString& curveCollection, const AQLString& curveIndex )
 	{
 		AQLString daycount = validateCurveAndGetFloatDaycount(curveCollection, curveIndex);
 		daycount = getDefaultValueForEmptyString( daycount, "ACT/360" ); // USD forward rates are based on Act/360, most markets follow suit
@@ -96,7 +96,7 @@ namespace etrading
 	// Function to get the curve Daycount as a std::string
 	std::string getCurveDaycountAsStandardString( const std::string& curveCollection, const std::string& curveIndex )
 	{
-		std::string daycount = getCurveDaycountAsLAString( curveCollection.c_str(), curveIndex.c_str() ).getCString();
+		std::string daycount = getCurveDaycountAsAQLString( curveCollection.c_str(), curveIndex.c_str() ).getCString();
 		return daycount;
 	}
 
@@ -144,7 +144,7 @@ namespace etrading
         interpolation       = getCurveInterpolation( curveCollection, staticDataTable );
 		businessDayAdj      = getDefaultValueForEmptyString( businessDayAdj, "MOD_FOLLOWING" );
         calendar            = getDefaultCalendarForEmptyString( calendar, curveCollection );
-        dayCount            = getCurveDaycountAsLAString( curveCollection, curveIndex );
+        dayCount            = getCurveDaycountAsAQLString( curveCollection, curveIndex );
     }
 
 	/* @brief	Generate a fixing schedule with conventions obtained from the curve.
@@ -326,7 +326,7 @@ namespace etrading
 			if ( fixingStartDate < asOfDate )
 			{
 				AQ_REQUIRE( fixingTable != nullptr, "Fixing Table required for fixing date " << fixingStartDate.convertDateToString() );
-				impliedFwdRate = fixingTable->getFixingValue( toGregorianDateFromLADate( fixingStartDate ) );
+				impliedFwdRate = fixingTable->getFixingValue( toGregorianDateFromAQLDate( fixingStartDate ) );
 			}
 			else
 			{
@@ -470,7 +470,7 @@ namespace etrading
             {
                 try
                 {
-                    forwardRate.resetRate = fixingTable->getFixingValue(toGregorianDateFromLADate(fixingDate));
+                    forwardRate.resetRate = fixingTable->getFixingValue(toGregorianDateFromAQLDate(fixingDate));
                 }
                 catch( ETradingException &e )
                 {
@@ -496,7 +496,7 @@ namespace etrading
             // If provided use the fixing table otherwise use the curveForwardRate
             try
             {
-                forwardRate.resetRate = fixingTable->getFixingValue(toGregorianDateFromLADate(fixingDate));
+                forwardRate.resetRate = fixingTable->getFixingValue(toGregorianDateFromAQLDate(fixingDate));
             }
             catch( ETradingException& )
             {
@@ -1532,7 +1532,7 @@ namespace etrading
             for(size_t i = 0; i < pastFixingDuration; i++)
             {
                 auto fixingDate = pastFixingDates[i];
-                double rate = fixingTable->getFixingValue( toGregorianDateFromLADate(fixingDate) );
+                double rate = fixingTable->getFixingValue( toGregorianDateFromAQLDate(fixingDate) );
                 pastRates.push_back(rate);
             }
         }

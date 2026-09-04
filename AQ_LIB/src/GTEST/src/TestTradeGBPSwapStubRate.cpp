@@ -84,7 +84,7 @@ namespace google_test
 			etrading::DataProvider dataProvider(etrading::ValuationSettings(etrading::fromStringToLVB("GBPLIVE"), etrading::fromStringToLVB(fixingTableName), ""));
 			auto fixingTable = etrading::getFixingTable(fixingTableName, false /* do not throw when missing*/);
 			AQLDate fixingDate("20200309", "YYYYMMDD");
-			double expectedFixingRate = fixingTable->getFixingValue(etrading::toGregorianDateFromLADate(fixingDate));
+			double expectedFixingRate = fixingTable->getFixingValue(etrading::toGregorianDateFromAQLDate(fixingDate));
 
 			//2) Get fixing rate from Swap object
 			const std::string swapName = validation::tryMeLWOLoad(SwapObject, etrading::JSON);
@@ -99,7 +99,7 @@ namespace google_test
 				auto fixingDt = it[0];
 				auto rate = it[1];
 
-				if (etrading::AQLDateScheduleHelpers::getLADate(boost::get<double>(it[0])) == fixingDate)
+				if (etrading::AQLDateScheduleHelpers::getAQLDate(boost::get<double>(it[0])) == fixingDate)
 				{
 					fixingRateFromSwap = boost::get<double>(it[1]);
 					break;

@@ -216,7 +216,7 @@ namespace swig
     *  @param [in]		dateFormat		Date Format, typically "YYYYMMDD"
 	*  @output			Date in AQLDate format
 	*/
-    AQLDate fromStringToLADate(const std::string& dateString, const std::string& dateFormat )
+    AQLDate fromStringToAQLDate(const std::string& dateString, const std::string& dateFormat )
     {
         const AQLDate result( dateString.c_str(), dateFormat.c_str() );
         return result;
@@ -226,7 +226,7 @@ namespace swig
 	*  @param [in]		inVal	input value as a string
 	*  @output			output value as a AQLString
 	*/
-	AQLString fromStringToLAString(const std::string& inVal) 
+	AQLString fromStringToAQLString(const std::string& inVal) 
 	{
 		AQLString outVal(inVal.c_str()); 
 		return outVal; 

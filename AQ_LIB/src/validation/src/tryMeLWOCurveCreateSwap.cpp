@@ -338,7 +338,7 @@ namespace validation
                         std::back_inserter( massiveDateVectorBoost ),
                         []( const AQLDate & AQLDate )
         {
-            return etrading::toGregorianDateFromLADate( AQLDate );
+            return etrading::toGregorianDateFromAQLDate( AQLDate );
         } );
 
 

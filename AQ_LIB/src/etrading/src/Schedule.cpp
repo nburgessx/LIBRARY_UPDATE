@@ -73,7 +73,7 @@ namespace etrading
         //Since ScheduleType field is provided by the user, then 
         inputParameters_ = LabelValueBlock( inputParameters_, IRS_KEY::SCHEDULE_TYPE, toString(scheduleType_) );
 
-		payerReceiver_ = toPayReceiveEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::PAY_RECEIVE, IRS_KEY::PAYER_RECEIVER, "").getCString());
+		payerReceiver_ = toPayReceiveEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::PAY_RECEIVE, IRS_KEY::PAYER_RECEIVER, "").getCString());
 		notional_= scheduleLVB.getOptionalValueAsDouble(IRS_KEY::NOTIONAL, std::numeric_limits<double>::quiet_NaN());
 
         amortization_ = scheduleLVB.getOptionalValueAsDouble(IRS_KEY::AMORTIZATION);
@@ -82,39 +82,39 @@ namespace etrading
         futureValueNotional_ = std::numeric_limits<double>::quiet_NaN();
         paymentFreqEnum_ = NONE_FREQUENCY;
 
-		notionalExchangeEnum_	= toNotionalExchangeEnum(scheduleLVB.getOptionalValueAsLAString(IRS_KEY::NOTIONAL_EXCHANGE, "NONE").getCString());
+		notionalExchangeEnum_	= toNotionalExchangeEnum(scheduleLVB.getOptionalValueAsAQLString(IRS_KEY::NOTIONAL_EXCHANGE, "NONE").getCString());
 		leverage_ = 1.;
 		couponMultiplier_ = 1.;
 		
-		accrualEndDateOrTenor_ = scheduleLVB.getCompulsoryValueAsLAString( IRS_KEY::MATURITY_DATE,  inputLVB );
+		accrualEndDateOrTenor_ = scheduleLVB.getCompulsoryValueAsAQLString( IRS_KEY::MATURITY_DATE,  inputLVB );
 
-		accrualbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getCompulsoryValueAsLAString( IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT, inputLVB ).getCString());
-        accrualCalendar_ = scheduleLVB.getCompulsoryValueAsLAString( IRS_KEY::ACCRUALCALENDAR, inputLVB );
-        accrualFrequency_ = toFrequencyEnum(scheduleLVB.getCompulsoryValueAsLAString( IRS_KEY::ACCRUALFREQUENCY, inputLVB ).getCString());
-        accrualDaycount_ = toDayCountEnum(scheduleLVB.getCompulsoryValueAsLAString( IRS_KEY::ACCRUALDAYCOUNT, inputLVB ).getCString());
+		accrualbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getCompulsoryValueAsAQLString( IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT, inputLVB ).getCString());
+        accrualCalendar_ = scheduleLVB.getCompulsoryValueAsAQLString( IRS_KEY::ACCRUALCALENDAR, inputLVB );
+        accrualFrequency_ = toFrequencyEnum(scheduleLVB.getCompulsoryValueAsAQLString( IRS_KEY::ACCRUALFREQUENCY, inputLVB ).getCString());
+        accrualDaycount_ = toDayCountEnum(scheduleLVB.getCompulsoryValueAsAQLString( IRS_KEY::ACCRUALDAYCOUNT, inputLVB ).getCString());
 
-		paymentbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getCompulsoryValueAsLAString( IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT ).getCString());
-        paymentCalendar_ = scheduleLVB.getCompulsoryValueAsLAString( IRS_KEY::PAYMENTCALENDAR );
-    	paymentFrequency_ = toFrequencyEnum(scheduleLVB.getOptionalValueAsLAString( IRS_KEY::PAYMENTFREQUENCY, toString(accrualFrequency_).c_str()).getCString());
+		paymentbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getCompulsoryValueAsAQLString( IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT ).getCString());
+        paymentCalendar_ = scheduleLVB.getCompulsoryValueAsAQLString( IRS_KEY::PAYMENTCALENDAR );
+    	paymentFrequency_ = toFrequencyEnum(scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::PAYMENTFREQUENCY, toString(accrualFrequency_).c_str()).getCString());
 
-		payLag_	= scheduleLVB.getOptionalValueAsLAString( IRS_KEY::PAYMENTLAG, "0D" );
+		payLag_	= scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::PAYMENTLAG, "0D" );
         
-		rollDayInput_ = scheduleLVB.getOptionalValueAsLAString( IRS_KEY::ROLLDAY );
-		stubType_ = toStubTypeEnum(scheduleLVB.getOptionalValueAsLAString( IRS_KEY::STUBTYPE  ).getCString());
-	    firstStub_ = scheduleLVB.getOptionalValueAsLAString( IRS_KEY::FIRSTSTUBDATE );
-        lastStub_ = scheduleLVB.getOptionalValueAsLAString( IRS_KEY::LASTSTUBDATE  );
-        fixingAdvanceOrArrears_	= scheduleLVB.getOptionalValueAsLAString( IRS_KEY::FIXINGADVANCEORARREAR, "advance" );
+		rollDayInput_ = scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::ROLLDAY );
+		stubType_ = toStubTypeEnum(scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::STUBTYPE  ).getCString());
+	    firstStub_ = scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::FIRSTSTUBDATE );
+        lastStub_ = scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::LASTSTUBDATE  );
+        fixingAdvanceOrArrears_	= scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::FIXINGADVANCEORARREAR, "advance" );
 
 		//fixing
-		fixingbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAString( IRS_KEY::FIXINGBUSINESSDAYADJUSTMENT).getCString());
-        fixingCalendar_ = scheduleLVB.getOptionalValueAsLAString( IRS_KEY::FIXINGCALENDAR);
-        fixLag_ = scheduleLVB.getOptionalValueAsLAString( IRS_KEY::FIXINGLAG, "0D" );
-        firstFixLag_ = scheduleLVB.getOptionalValueAsLAString( IRS_KEY::FIRSTFIXINGLAG, fixLag_);
+		fixingbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::FIXINGBUSINESSDAYADJUSTMENT).getCString());
+        fixingCalendar_ = scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::FIXINGCALENDAR);
+        fixLag_ = scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::FIXINGLAG, "0D" );
+        firstFixLag_ = scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::FIRSTFIXINGLAG, fixLag_);
 
         //fxFixing
-        fxFixingLag_              = scheduleLVB.getOptionalValueAsLAString( IRS_KEY::FXFIXINGLAG, "0D" );
-		fxFixingbusinessDayAdj_   = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAString( IRS_KEY::FXFIXINGBUSINESSDAYADJUSTMENT, toString(accrualbusinessDayAdj_).c_str()).getCString());
-        fxFixingCalendar_         = scheduleLVB.getOptionalValueAsLAString( IRS_KEY::FXFIXINGCALENDAR, accrualCalendar_ );
+        fxFixingLag_              = scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::FXFIXINGLAG, "0D" );
+		fxFixingbusinessDayAdj_   = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::FXFIXINGBUSINESSDAYADJUSTMENT, toString(accrualbusinessDayAdj_).c_str()).getCString());
+        fxFixingCalendar_         = scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::FXFIXINGCALENDAR, accrualCalendar_ );
 
         populateAccrualStartDates(scheduleLVB);
 
@@ -132,7 +132,7 @@ namespace etrading
     void Schedule::populateAccrualStartDates(const LabelValueBlock& scheduleLVB)
     {
 		const std::string inputLVB = "scheduleLVB";
-		accrualStartDate_ = scheduleLVB.getCompulsoryValueAsLAString(IRS_KEY::EFFECTIVE_DATE, inputLVB);
+		accrualStartDate_ = scheduleLVB.getCompulsoryValueAsAQLString(IRS_KEY::EFFECTIVE_DATE, inputLVB);
 	}
 
     FrequencyEnum Schedule::getPaymentFreqEnum() const
@@ -210,20 +210,20 @@ namespace etrading
 		{
 		case BESPOKE_SCHEDULE_WITH_PROPERTIES:
 		{
-			accrualDaycount_ = toDayCountEnum(bespokeScheduleProperties.getCompulsoryValueAsLAString(IRS_KEY::ACCRUALDAYCOUNT, inputLVB).getCString());
-			stubType_ = toStubTypeEnum(bespokeScheduleProperties.getOptionalValueAsLAString(IRS_KEY::STUBTYPE).getCString());
-			fixingAdvanceOrArrears_ = bespokeScheduleProperties.getOptionalValueAsLAString(IRS_KEY::FIXINGADVANCEORARREAR, "advance");
+			accrualDaycount_ = toDayCountEnum(bespokeScheduleProperties.getCompulsoryValueAsAQLString(IRS_KEY::ACCRUALDAYCOUNT, inputLVB).getCString());
+			stubType_ = toStubTypeEnum(bespokeScheduleProperties.getOptionalValueAsAQLString(IRS_KEY::STUBTYPE).getCString());
+			fixingAdvanceOrArrears_ = bespokeScheduleProperties.getOptionalValueAsAQLString(IRS_KEY::FIXINGADVANCEORARREAR, "advance");
 
-			accrualbusinessDayAdj_ = toBusinessDayAdjustmentEnum(bespokeScheduleProperties.getCompulsoryValueAsLAString(IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT).getCString());
-			accrualCalendar_ = bespokeScheduleProperties.getCompulsoryValueAsLAString(IRS_KEY::ACCRUALCALENDAR);
+			accrualbusinessDayAdj_ = toBusinessDayAdjustmentEnum(bespokeScheduleProperties.getCompulsoryValueAsAQLString(IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT).getCString());
+			accrualCalendar_ = bespokeScheduleProperties.getCompulsoryValueAsAQLString(IRS_KEY::ACCRUALCALENDAR);
 
 			// 1) These fields are required to check if the schedule is regular or not: accrualFrequency_, accrualbusinessDayAdj_, accrualCalendar_, rollDayInput_
 			// 2) These fields are mandatory fields for OIS Swap with bespoke schedule: accrualbusinessDayAdj_, accrualCalendar_, rollDayInput_
-			accrualFrequency_ = toFrequencyEnum(bespokeScheduleProperties.getCompulsoryValueAsLAString(IRS_KEY::ACCRUALFREQUENCY, inputLVB).getCString());
+			accrualFrequency_ = toFrequencyEnum(bespokeScheduleProperties.getCompulsoryValueAsAQLString(IRS_KEY::ACCRUALFREQUENCY, inputLVB).getCString());
 
-			rollDayInput_ = bespokeScheduleProperties.getOptionalValueAsLAString(IRS_KEY::ROLLDAY);
+			rollDayInput_ = bespokeScheduleProperties.getOptionalValueAsAQLString(IRS_KEY::ROLLDAY);
 
-			paymentFrequency_ = toFrequencyEnum(bespokeScheduleProperties.getOptionalValueAsLAString(IRS_KEY::PAYMENTFREQUENCY, toString(accrualFrequency_).c_str()).getCString());
+			paymentFrequency_ = toFrequencyEnum(bespokeScheduleProperties.getOptionalValueAsAQLString(IRS_KEY::PAYMENTFREQUENCY, toString(accrualFrequency_).c_str()).getCString());
 			paymentbusinessDayAdj_ = accrualbusinessDayAdj_;
 			paymentCalendar_ = accrualCalendar_;
 
@@ -254,8 +254,8 @@ namespace etrading
 
 
 		// These are mandatory fields to populate a bespoke schedule:
-		payerReceiver_ = toPayReceiveEnum(bespokeScheduleProperties.getCompulsoryValueAsLAStringFromKeys(IRS_KEY::PAY_RECEIVE, IRS_KEY::PAYER_RECEIVER, inputLVB).getCString());
-		notionalExchangeEnum_ = toNotionalExchangeEnum(bespokeScheduleProperties.getOptionalValueAsLAString(IRS_KEY::NOTIONAL_EXCHANGE, "NONE").getCString());
+		payerReceiver_ = toPayReceiveEnum(bespokeScheduleProperties.getCompulsoryValueAsAQLStringFromKeys(IRS_KEY::PAY_RECEIVE, IRS_KEY::PAYER_RECEIVER, inputLVB).getCString());
+		notionalExchangeEnum_ = toNotionalExchangeEnum(bespokeScheduleProperties.getOptionalValueAsAQLString(IRS_KEY::NOTIONAL_EXCHANGE, "NONE").getCString());
 
 		scheduleType_ = toScheduleTypeEnum(bespokeScheduleProperties.getCompulsoryValueAsString(IRS_KEY::SCHEDULE_TYPE, inputLVB));
 
@@ -269,7 +269,7 @@ namespace etrading
 			AQ_REQUIRE(!fixingbusinessDayAdjStr.empty(), "FixingBusinessDayAdjustment cannot be empty.");
 			fixingbusinessDayAdj_ = toBusinessDayAdjustmentEnum(fixingbusinessDayAdjStr);
 
-			fixingCalendar_ = bespokeScheduleProperties.getOptionalValueAsLAString(IRS_KEY::FIXINGCALENDAR, accrualCalendar_.getCString());
+			fixingCalendar_ = bespokeScheduleProperties.getOptionalValueAsAQLString(IRS_KEY::FIXINGCALENDAR, accrualCalendar_.getCString());
 			AQ_REQUIRE(fixingCalendar_.size() > 0, "FixingCalendar cannot be empty.");
 
 			defaultFxFixingbusinessDayAdj = fixingbusinessDayAdj_;
@@ -277,9 +277,9 @@ namespace etrading
 		}
 
 		// These optional fields are for xccy swap
-		fxFixingbusinessDayAdj_ = toBusinessDayAdjustmentEnum(bespokeScheduleProperties.getOptionalValueAsLAString(IRS_KEY::FXFIXINGBUSINESSDAYADJUSTMENT, toString(defaultFxFixingbusinessDayAdj).c_str()).getCString());
-		fxFixingCalendar_ = bespokeScheduleProperties.getOptionalValueAsLAString(IRS_KEY::FXFIXINGCALENDAR, defaultFxFixingCalendar);
-		fxFixingLag_ = bespokeScheduleProperties.getOptionalValueAsLAString(IRS_KEY::FXFIXINGLAG, "0D");
+		fxFixingbusinessDayAdj_ = toBusinessDayAdjustmentEnum(bespokeScheduleProperties.getOptionalValueAsAQLString(IRS_KEY::FXFIXINGBUSINESSDAYADJUSTMENT, toString(defaultFxFixingbusinessDayAdj).c_str()).getCString());
+		fxFixingCalendar_ = bespokeScheduleProperties.getOptionalValueAsAQLString(IRS_KEY::FXFIXINGCALENDAR, defaultFxFixingCalendar);
+		fxFixingLag_ = bespokeScheduleProperties.getOptionalValueAsAQLString(IRS_KEY::FXFIXINGLAG, "0D");
 
 		// These optional fields are for Zero Coupon Swap
         futureValueNotional_        = bespokeScheduleProperties.getOptionalValueAsDouble(IRS_KEY::FV_NOTIONAL, std::numeric_limits<double>::quiet_NaN()); 			
@@ -301,7 +301,7 @@ namespace etrading
 	/*
 	 * Some subtlety in the Schedule copy constructor: We require the AQLString member variables to deep copy (rather than shallow copy
 	 * with an incremented reference count). We require this so that we can use the new Schedule instance on a different thread,
-	 * without risking concurrent access to the AQLString reference count. Hence we copy the LAStrings by invoking getCString()
+	 * without risking concurrent access to the AQLString reference count. Hence we copy the AQLStrings by invoking getCString()
 	 * on the rhs instance, forcing the AQLString to deep copy from a char*.
 	 */
 	Schedule::Schedule(const Schedule& rhs) : IsAQObject(rhs.getRefToName().c_str(), SCHEDULE), 
@@ -1415,7 +1415,7 @@ namespace etrading
             }
 	    }
 
-        double defaultLADate = fromLADateToDouble(AQLDate());
+        double defaultAQLDate = fromAQLDateToDouble(AQLDate());
         auto nanValue = std::numeric_limits<double>::quiet_NaN();
 
         for( size_t i = 0; i < bodyBlock.size(); ++i )
@@ -1442,7 +1442,7 @@ namespace etrading
 					std::stringstream s;
 					//1) Handle NaN value, by setting the result to empty string
 					//2) Handle upfront cashflow, by setting AQLDate() value to empty string
-					if (boost::math::isnan(value) || (isUpfrontCashflow && (value - defaultLADate == 0)))
+					if (boost::math::isnan(value) || (isUpfrontCashflow && (value - defaultAQLDate == 0)))
 					{
 						s << std::string();
 					}

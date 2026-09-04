@@ -44,7 +44,7 @@ namespace etrading
 
     //change excel date into AQLDate
     AQLDate
-        AQLDateScheduleHelpers::getLADate(const int excel_date)
+        AQLDateScheduleHelpers::getAQLDate(const int excel_date)
     {
         AQLDate    ret_date("19900101");
         const int excel_base = 32874;
@@ -53,7 +53,7 @@ namespace etrading
     }
     //change excel date into AQLDate
     AQLDate
-        AQLDateScheduleHelpers::getLADate(const AQLString& excel_date_str)
+        AQLDateScheduleHelpers::getAQLDate(const AQLString& excel_date_str)
     {
         AQLDate    ret_date("19900101");
         const int excel_base = 32874;
@@ -62,9 +62,9 @@ namespace etrading
     }
     //change excel date into AQLString
     AQLString
-        AQLDateScheduleHelpers::getLAStringDate(const int excel_date)
+        AQLDateScheduleHelpers::getAQLStringDate(const int excel_date)
     {
-        AQLString  ret_str = getLADate(excel_date).stringWithFormat("YYYYMMDD");
+        AQLString  ret_str = getAQLDate(excel_date).stringWithFormat("YYYYMMDD");
         return ret_str;
     }
 
@@ -795,7 +795,7 @@ namespace etrading
         int slushCheck = date.findString("/");
         if (slushCheck == -1)
         {
-            ret = AQLDateScheduleHelpers::getLADate(date);
+            ret = AQLDateScheduleHelpers::getAQLDate(date);
         }
         else
         {

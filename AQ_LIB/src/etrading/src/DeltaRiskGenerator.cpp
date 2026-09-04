@@ -346,7 +346,7 @@ namespace etrading
     */
     void DeltaGenerator::setPricingParams( const LabelValueBlock& params )
     {
-        interpolation_ = params.getCompulsoryValueAsLAString( PRICING_PARAMS::INTERPOLATION, "DeltaGenerator" );
+        interpolation_ = params.getCompulsoryValueAsAQLString( PRICING_PARAMS::INTERPOLATION, "DeltaGenerator" );
     }
 
 	/* @brief		Returns the size of the trade portfolio
@@ -438,7 +438,7 @@ namespace etrading
 	{
 		if (usingLWO_)
 		{
-			const AQLString curveCollectionID = marketDataCollection_.getOptionalValueAsLAString( MARKET_KEY::CURVE_COLLECTION );
+			const AQLString curveCollectionID = marketDataCollection_.getOptionalValueAsAQLString( MARKET_KEY::CURVE_COLLECTION );
 			const double xccyFXAsOfDateRate = myLWOXccyFXAsOfDateRates_[index];
 			//We assume valuation date is always the asOfDate when calculating risk.
 			const AQLDate valuationDate = getCurveAsOfDate(curveCollectionID);

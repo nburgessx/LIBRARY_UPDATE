@@ -87,7 +87,7 @@ namespace validation
         etrading::validateKeysForLVB( tryMeProductAssetSwapSpreadLVBKeys(), assetSwapLVB.getKeys(), validateKeys );
 
         const std::string inputLVB = "AssetSwapLVB";
-        AQLString curveCollection = assetSwapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
+        AQLString curveCollection = assetSwapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -101,8 +101,8 @@ namespace validation
 
         //----------------------------------------------------------------------------------
         // Validate non-cash flow related parameters
-        AQLString forecastCurveIndex	= assetSwapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
-        AQLString discountCurveIndex = assetSwapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+        AQLString forecastCurveIndex	= assetSwapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
+        AQLString discountCurveIndex = assetSwapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, discountCurveIndex );
@@ -129,15 +129,15 @@ namespace validation
             throw AQLCoreInvalidData( "#Error: Swap schedule error. There must be at least 1 fixed and float coupon.", __FILE__, __LINE__ );
         }
 
-        AQLString fixedFreq = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_FREQUENCY );
-        AQLString floatFreq = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_FREQUENCY );
+        AQLString fixedFreq = assetSwapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FIXED_FREQUENCY );
+        AQLString floatFreq = assetSwapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FLOAT_FREQUENCY );
         validateAssetSwapFrequency( fixedFreq, "#Error: Invalid 'FixedFrequency'. Available frequencies are Annual, Semi-Annual, Quarterly, Monthly and Weekly." );
         validateAssetSwapFrequency( floatFreq, "#Error: Invalid 'FloatFrequency'. Available frequencies are Annual, Semi-Annual, Quarterly, Monthly and Weekly." );
 
         double fixedRate = assetSwapLVB.getCompulsoryValueAsDouble( etrading::IRS_KEY::FIXED_RATE );
 
-        AQLString fixedDayCount = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
-        AQLString floatDayCount = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
+        AQLString fixedDayCount = assetSwapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FIXED_DAYCOUNT );
+        AQLString floatDayCount = assetSwapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
 
         double floatFirstFix = assetSwapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FLOAT_FIRSTFIXING, std::numeric_limits<double>::quiet_NaN() );
         double floatLastFix	= assetSwapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FLOAT_LASTFIXING, std::numeric_limits<double>::quiet_NaN() );
@@ -146,7 +146,7 @@ namespace validation
         bool useFirstFixing = etrading::useFloatFixing( floatFirstFix );
         bool useLastFixing = etrading::useFloatFixing( floatLastFix );
 
-		const std::string fwdInter = assetSwapLVB.getOptionalValueAsLAString( etrading::IRS_KEY::IS_FWD_INTER, "").getCString();
+		const std::string fwdInter = assetSwapLVB.getOptionalValueAsAQLString( etrading::IRS_KEY::IS_FWD_INTER, "").getCString();
 
         bool isFwdInter = etrading::getfwdInterInfo( curveCollection, forecastCurveStaticDataTable, etrading::toBooleanEnum(fwdInter) ).isFwdInter;
 

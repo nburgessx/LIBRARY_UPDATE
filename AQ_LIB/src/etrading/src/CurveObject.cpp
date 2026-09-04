@@ -143,8 +143,8 @@ namespace etrading
         shiftSize_ = shiftSize;
 
         // Flat-Shift Bumps should bump outright instruments only
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( oisRates_, shiftSize_, OIS_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( swapRates_, shiftSize_, SWAP_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( oisRates_, shiftSize_, OIS_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( swapRates_, shiftSize_, SWAP_MARKETDATA );
     }
 
     // Function to remove a flat-shift a clear an existing flat-shift
@@ -158,8 +158,8 @@ namespace etrading
 
         // Remove Flat-Shifts
         // Flat-Shift Bumps should bump outright instruments only
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( oisRates_, -shiftSize_, OIS_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( swapRates_, -shiftSize_, SWAP_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( oisRates_, -shiftSize_, OIS_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( swapRates_, -shiftSize_, SWAP_MARKETDATA );
 
         // Restore ShiftSize Parameter
         shiftSize_ = 0.0;
@@ -176,13 +176,13 @@ namespace etrading
 		switch( riskInstrumentType_ )
 		{
 			case OIS_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( oisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( oisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			case SWAP_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( swapRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( swapRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			case LIBOR_OIS_BASISSPREAD_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( loBasisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( loBasisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			default:
 				AQ_THROW("Unable to Pertrub OIS Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instruments can be Perturbed.")
@@ -213,13 +213,13 @@ namespace etrading
 		switch( riskInstrumentType )
 		{
 			case OIS_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( oisRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( oisRates_, riskInstrumentType );
 				break;
 			case SWAP_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( swapRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( swapRates_, riskInstrumentType );
 				break;
 			case LIBOR_OIS_BASISSPREAD_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( loBasisRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( loBasisRates_, riskInstrumentType );
 				break;
 			default:
 				AQ_THROW("Unable to Determine OIS Tenors from Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instrument Market Data is permitted.")
@@ -259,7 +259,7 @@ namespace etrading
 
 		// Optional: LinearSplineJoinDate
 		const LabelValueBlock marketDataPropertiesLVB = lwoCurveMarketData->toAQLStringMatrix(GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES);
-		const AQLString joinDateStr = marketDataPropertiesLVB.getOptionalValueAsLAString(CURVEGENERATOR_CURVEPROPERTIES_KEY::INTERPOLATION_JOIN_DATE);
+		const AQLString joinDateStr = marketDataPropertiesLVB.getOptionalValueAsAQLString(CURVEGENERATOR_CURVEPROPERTIES_KEY::INTERPOLATION_JOIN_DATE);
 
 		if (joinDateStr.size() > 0)
 		{
@@ -301,8 +301,8 @@ namespace etrading
         shiftSize_ = shiftSize;
 
         // Flat-Shift Bumps should bump outright instruments only
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( oisRates_, shiftSize_, OIS_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( swapRates_, shiftSize_, SWAP_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( oisRates_, shiftSize_, OIS_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( swapRates_, shiftSize_, SWAP_MARKETDATA );
     }
 
     // Function to remove a flat-shift a clear an existing flat-shift
@@ -316,8 +316,8 @@ namespace etrading
 
         // Remove Flat-Shifts
         // Flat-Shift Bumps should bump outright instruments only
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( oisRates_, -shiftSize_, OIS_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( swapRates_, -shiftSize_, SWAP_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( oisRates_, -shiftSize_, OIS_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( swapRates_, -shiftSize_, SWAP_MARKETDATA );
 
         // Restore ShiftSize Parameter
         shiftSize_ = 0.0;
@@ -334,13 +334,13 @@ namespace etrading
 		switch( riskInstrumentType_ )
 		{
 			case OIS_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( oisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( oisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			case SWAP_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( swapRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( swapRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			case LIBOR_OIS_BASISSPREAD_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( loBasisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( loBasisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			default:
 				AQ_THROW("Unable to Pertrub ARR Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instruments can be Perturbed.")
@@ -371,13 +371,13 @@ namespace etrading
 		switch( riskInstrumentType )
 		{
 			case OIS_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( oisRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( oisRates_, riskInstrumentType );
 				break;
 			case SWAP_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( swapRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( swapRates_, riskInstrumentType );
 				break;
 			case LIBOR_OIS_BASISSPREAD_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( loBasisRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( loBasisRates_, riskInstrumentType );
 				break;
 			default:
 				AQ_THROW("Unable to Determine ARR Tenors from Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instrument Market Data is permitted.")
@@ -467,12 +467,12 @@ namespace etrading
         shiftSize_ = shiftSize;
         
         // Flat-Shift Bumps should bump outright instruments only
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( liborRates_,     shiftSize_,     LIBOR_FIXING_TABLE );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( futureRates_,    shiftSize_,     FUTURES_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( fraRates_,       shiftSize_,     FRA_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( fra3mRates_,     shiftSize_,     FRA_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( fra6mRates_,     shiftSize_,     FRA_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( swapRates_,      shiftSize_,     SWAP_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( liborRates_,     shiftSize_,     LIBOR_FIXING_TABLE );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( futureRates_,    shiftSize_,     FUTURES_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( fraRates_,       shiftSize_,     FRA_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( fra3mRates_,     shiftSize_,     FRA_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( fra6mRates_,     shiftSize_,     FRA_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( swapRates_,      shiftSize_,     SWAP_MARKETDATA );
     }
 
     // Function to remove a flat-shift a clear an existing flat-shift
@@ -486,12 +486,12 @@ namespace etrading
 
         // Remove Flat-Shifts
         // Flat-Shift Bumps should bump outright instruments only
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( liborRates_,     -shiftSize_,      LIBOR_FIXING_TABLE );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( futureRates_,    -shiftSize_,      FUTURES_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( fraRates_,       -shiftSize_,      FRA_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( fra3mRates_,     -shiftSize_,      FRA_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( fra6mRates_,     -shiftSize_,      FRA_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( swapRates_,      -shiftSize_,      SWAP_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( liborRates_,     -shiftSize_,      LIBOR_FIXING_TABLE );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( futureRates_,    -shiftSize_,      FUTURES_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( fraRates_,       -shiftSize_,      FRA_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( fra3mRates_,     -shiftSize_,      FRA_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( fra6mRates_,     -shiftSize_,      FRA_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( swapRates_,      -shiftSize_,      SWAP_MARKETDATA );
 
         // Restore ShiftSize Parameter
         shiftSize_ = 0.0;
@@ -508,14 +508,14 @@ namespace etrading
 		switch( riskInstrumentType_ )
 		{
 			case LIBOR_FIXING_TABLE:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( liborRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( liborRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			case FUTURES_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( futureRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( futureRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			case FRA_MARKETDATA:
 			{
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( fraRates_,   nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( fraRates_,   nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				
 				const bool is3MFra = fra3mRates_.size() == 0 ? false : true;
 				const bool is6MFra = fra6mRates_.size() == 0 ? false : true;
@@ -523,21 +523,21 @@ namespace etrading
 
 				if ( is3MFra )
 				{
-					CurveMarketData::perturbMarketDataFromLAStringMatrix( fra3mRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+					CurveMarketData::perturbMarketDataFromAQLStringMatrix( fra3mRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				}
 				
 				if ( is6MFra )
 				{
-					CurveMarketData::perturbMarketDataFromLAStringMatrix( fra6mRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+					CurveMarketData::perturbMarketDataFromAQLStringMatrix( fra6mRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				}
 
 				break;
 			}
 			case SWAP_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( swapRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( swapRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			case BASIS_SWAP_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( basisAdjRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( basisAdjRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			default:
 				AQ_THROW("Unable to Pertrub Swap Curve Market Data: Only LIBORFIXINGS, FUTURES, FRAS, SWAPS or BASISSWAPS Instruments can be Perturbed.")
@@ -568,10 +568,10 @@ namespace etrading
 		switch( riskInstrumentType )
 		{
 			case LIBOR_FIXING_TABLE:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( liborRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( liborRates_, riskInstrumentType );
 				break;
 			case FUTURES_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( futureRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( futureRates_, riskInstrumentType );
 				break;
 			case FRA_MARKETDATA:
 			{
@@ -581,11 +581,11 @@ namespace etrading
 				
 				if ( is3MFra )
 				{
-					return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( fra3mRates_, riskInstrumentType );
+					return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( fra3mRates_, riskInstrumentType );
 				}
 				else if ( is6MFra )
 				{
-					return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( fra6mRates_, riskInstrumentType );
+					return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( fra6mRates_, riskInstrumentType );
 				}
 				else
 				{
@@ -596,10 +596,10 @@ namespace etrading
 				break;
 			}
 			case SWAP_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( swapRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( swapRates_, riskInstrumentType );
 				break;
 			case BASIS_SWAP_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( basisAdjRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( basisAdjRates_, riskInstrumentType );
 				break;
 			default:
 				AQ_THROW("Unable to Determine Tenors from Swap Curve Market Data: Only LIBORFIXINGS, FUTURES, FRAS, SWAPS or BASISSWAPS Instrument Market Data is permitted.")
@@ -699,9 +699,9 @@ namespace etrading
         shiftSize_ = shiftSize;
         
         // *** For Tenor Basis *** Flat-Shift Bumps should bump outright and basis instruments
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( liborRates_,     shiftSize_,     LIBOR_FIXING_TABLE );
-		CurveMarketData::bumpMarketDataFromLAStringMatrix( fraRates_,       shiftSize_,     FRA_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( basisRates_,		shiftSize_,     BASIS_SWAP_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( liborRates_,     shiftSize_,     LIBOR_FIXING_TABLE );
+		CurveMarketData::bumpMarketDataFromAQLStringMatrix( fraRates_,       shiftSize_,     FRA_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( basisRates_,		shiftSize_,     BASIS_SWAP_MARKETDATA );
     }
 
     // Function to remove a flat-shift a clear an existing flat-shift
@@ -715,9 +715,9 @@ namespace etrading
 
         // Remove Flat-Shifts
 		// *** For Tenor Basis *** Flat-Shift Bumps should bump outright and basis instruments
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( liborRates_,     -shiftSize_,	LIBOR_FIXING_TABLE );
-		CurveMarketData::bumpMarketDataFromLAStringMatrix( fraRates_,       -shiftSize_,	FRA_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( basisRates_,		-shiftSize_,	BASIS_SWAP_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( liborRates_,     -shiftSize_,	LIBOR_FIXING_TABLE );
+		CurveMarketData::bumpMarketDataFromAQLStringMatrix( fraRates_,       -shiftSize_,	FRA_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( basisRates_,		-shiftSize_,	BASIS_SWAP_MARKETDATA );
 		
         // Restore ShiftSize Parameter
         shiftSize_ = 0.0;
@@ -734,13 +734,13 @@ namespace etrading
 		switch( riskInstrumentType_ )
 		{
 			case LIBOR_FIXING_TABLE:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( liborRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( liborRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			case FRA_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( fraRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( fraRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			case BASIS_SWAP_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( basisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( basisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			default:
 				AQ_THROW("Unable to Pertrub Tenor-Basis Curve Market Data: Only LIBORFIXINGS, FRAS or BASISSWAPS Instruments can be Perturbed.")
@@ -774,13 +774,13 @@ namespace etrading
 		switch( riskInstrumentType )
 		{
 			case LIBOR_FIXING_TABLE:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( liborRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( liborRates_, riskInstrumentType );
 				break;
 			case FRA_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( fraRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( fraRates_, riskInstrumentType );
 				break;
 			case BASIS_SWAP_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( basisRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( basisRates_, riskInstrumentType );
 				break;
 			default:
 				AQ_THROW("Unable to Determine Tenors from Tenor Basis Curve Market Data: Only LIBORFIXINGS, FRAS or BASISSWAPS Instrument Market Data is permitted.")
@@ -840,9 +840,9 @@ namespace etrading
         shiftSize_ = shiftSize;
         
 		// *** For Xccy Basis *** Flat-Shift Bumps should bump outright and basis instruments
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( fxFwdRates_,     shiftSize_,     FXFWD_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( spotFxRates_,    shiftSize_,     FXSPOT_MARKETDATA );
-		CurveMarketData::bumpMarketDataFromLAStringMatrix( basisRates_,		shiftSize_,		XCCY_SWAP_MARKETDATA ); // basis = xccy basis
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( fxFwdRates_,     shiftSize_,     FXFWD_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( spotFxRates_,    shiftSize_,     FXSPOT_MARKETDATA );
+		CurveMarketData::bumpMarketDataFromAQLStringMatrix( basisRates_,		shiftSize_,		XCCY_SWAP_MARKETDATA ); // basis = xccy basis
     }
 
 	// Function to remove a flat-shift a clear an existing flat-shift
@@ -856,9 +856,9 @@ namespace etrading
 
         // Remove Flat-Shifts
 		// *** For Xccy Basis *** Flat-Shift Bumps should bump outright and basis instruments
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( fxFwdRates_,     -shiftSize_,    FXFWD_MARKETDATA );
-        CurveMarketData::bumpMarketDataFromLAStringMatrix( spotFxRates_,    -shiftSize_,    FXSPOT_MARKETDATA );
-		CurveMarketData::bumpMarketDataFromLAStringMatrix( basisRates_,		-shiftSize_,	XCCY_SWAP_MARKETDATA ); // basis = xccy basis
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( fxFwdRates_,     -shiftSize_,    FXFWD_MARKETDATA );
+        CurveMarketData::bumpMarketDataFromAQLStringMatrix( spotFxRates_,    -shiftSize_,    FXSPOT_MARKETDATA );
+		CurveMarketData::bumpMarketDataFromAQLStringMatrix( basisRates_,		-shiftSize_,	XCCY_SWAP_MARKETDATA ); // basis = xccy basis
 
         // Restore ShiftSize Parameter
         shiftSize_ = 0.0;
@@ -876,14 +876,14 @@ namespace etrading
 		{
 			case FXFWD_MARKETDATA:
 				// Tenor-Basis Curves Contain Xccy Basis Placeholders - Not used in this case
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( fxFwdRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( fxFwdRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			case FXSPOT_MARKETDATA:
 				// Tenor-Basis Curves Contain Xccy Basis Placeholders - Not used in this case
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( spotFxRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( spotFxRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			case XCCY_SWAP_MARKETDATA:
-				CurveMarketData::perturbMarketDataFromLAStringMatrix( basisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
+				CurveMarketData::perturbMarketDataFromAQLStringMatrix( basisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			default:
 				AQ_THROW("Unable to Pertrub Xccy-Basis Curve Market Data: Only FXFORWARDS, FXSPOTS or XCCYSWAPS Instruments can be Perturbed.")
@@ -914,13 +914,13 @@ namespace etrading
 		switch( riskInstrumentType )
 		{
 			case FXFWD_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( fxFwdRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( fxFwdRates_, riskInstrumentType );
 				break;
 			case FXSPOT_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( spotFxRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( spotFxRates_, riskInstrumentType );
 				break;
 			case XCCY_SWAP_MARKETDATA:
-				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( basisRates_, riskInstrumentType );
+				return CurveMarketData::getMarketDataTenorsFromAQLStringMatrix( basisRates_, riskInstrumentType );
 				break;
 			default:
 				AQ_THROW("Unable to Determine Tenors from Xccy Basis Curve Market Data: Only FXFORWARDS, FXSPOTS or XCCYSWAPS Instrument Market Data is permitted.")

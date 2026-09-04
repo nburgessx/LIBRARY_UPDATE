@@ -97,7 +97,7 @@ namespace etrading
     */
 	LegPtr createLegByLVB(const LabelValueBlock& legLVB, const std::string& legObjectName, const SchedulePtr& schedule)
 	{
-		AQLString legName = legLVB.getCompulsoryValueAsLAString(IRS_KEY::LEG_TYPE);
+		AQLString legName = legLVB.getCompulsoryValueAsAQLString(IRS_KEY::LEG_TYPE);
 
 		ScheduleTypeEnum legScheduleType = getScheduleTypeFromLegName(legName);
 
@@ -308,8 +308,8 @@ namespace etrading
 	std::shared_ptr<Swap> createSwap(const std::string& swapName, const LabelValueBlock& leg1LVB, const LabelValueBlock& leg2LVB, const LabelValueBlock& swapPropertiesLVB, const SchedulePtr& schedule1, const SchedulePtr& schedule2)
 	{
 
-		ScheduleTypeEnum leg1ScheduleType = getScheduleTypeFromLegName(leg1LVB.getCompulsoryValueAsLAString(IRS_KEY::LEG_TYPE));
-		ScheduleTypeEnum leg2ScheduleType = getScheduleTypeFromLegName(leg2LVB.getCompulsoryValueAsLAString(IRS_KEY::LEG_TYPE));
+		ScheduleTypeEnum leg1ScheduleType = getScheduleTypeFromLegName(leg1LVB.getCompulsoryValueAsAQLString(IRS_KEY::LEG_TYPE));
+		ScheduleTypeEnum leg2ScheduleType = getScheduleTypeFromLegName(leg2LVB.getCompulsoryValueAsAQLString(IRS_KEY::LEG_TYPE));
 
 		LegPtr leg1;
 		LegPtr leg2;
@@ -320,7 +320,7 @@ namespace etrading
 			auto fixedLegLVB = isFixedLeg(leg1ScheduleType) ? leg1LVB : leg2LVB;
 			auto floatLegLVB = isFloatLeg(leg1ScheduleType) ? leg1LVB : leg2LVB;
 
-			auto floatLegPaymentFreq = toFrequencyEnum(floatLegLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_PAYMENTFREQUENCY, IRS_KEY::PAYMENTFREQUENCY).getCString());
+			auto floatLegPaymentFreq = toFrequencyEnum(floatLegLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_PAYMENTFREQUENCY, IRS_KEY::PAYMENTFREQUENCY).getCString());
 			if (floatLegPaymentFreq == AT_MATURITY_FREQUENCY)
 			{
 				auto floatLegNotional = floatLegLVB.getOptionalValueAsDouble(IRS_KEY::NOTIONAL, std::numeric_limits<double>::quiet_NaN());
@@ -426,7 +426,7 @@ namespace etrading
 
         // Get Legname from Leg1LVB
         LabelValueBlock leg1LVB = swapGen->getLegGenerator(0).getInputParameters();
-        auto leg1Name = leg1LVB.getOptionalValueAsLAString(etrading::IRS_KEY::LEG_TYPE);
+        auto leg1Name = leg1LVB.getOptionalValueAsAQLString(etrading::IRS_KEY::LEG_TYPE);
 
         etrading::ScheduleTypeEnum schedule1Type = etrading::getScheduleTypeFromLegName(leg1Name);
 		switch(schedule1Type)
@@ -465,19 +465,19 @@ namespace etrading
 
 			case etrading::CMS_SCHEDULE_TYPE:
 			{
-				auto cmsIndexMaturity1   = expressionLVB.getCompulsoryValueAsLAString(etrading::CMS_KEY::CMS_INDEX_MATURITY1 );
+				auto cmsIndexMaturity1   = expressionLVB.getCompulsoryValueAsAQLString(etrading::CMS_KEY::CMS_INDEX_MATURITY1 );
 				leg1LVBKeys.push_back(etrading::CMS_KEY::CMS_INDEX_MATURITY1);
                 leg1LVBValues.push_back(cmsIndexMaturity1.getCString());
 				
-				auto cmsIndexMultiplier1 = expressionLVB.getCompulsoryValueAsLAString(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER1 );
+				auto cmsIndexMultiplier1 = expressionLVB.getCompulsoryValueAsAQLString(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER1 );
 				leg1LVBKeys.push_back(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER1);
                 leg1LVBValues.push_back(cmsIndexMultiplier1.getCString());
 
-				auto cmsIndexMaturity2   = expressionLVB.getOptionalValueAsLAString(etrading::CMS_KEY::CMS_INDEX_MATURITY2 );
+				auto cmsIndexMaturity2   = expressionLVB.getOptionalValueAsAQLString(etrading::CMS_KEY::CMS_INDEX_MATURITY2 );
 				leg1LVBKeys.push_back(etrading::CMS_KEY::CMS_INDEX_MATURITY2);
                 leg1LVBValues.push_back(cmsIndexMaturity2.getCString());
 
-				auto cmsIndexMultiplier2 = expressionLVB.getOptionalValueAsLAString(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER2 );
+				auto cmsIndexMultiplier2 = expressionLVB.getOptionalValueAsAQLString(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER2 );
 				leg1LVBKeys.push_back(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER2);
                 leg1LVBValues.push_back(cmsIndexMultiplier2.getCString());
 				break;
@@ -495,8 +495,8 @@ namespace etrading
 
         // Get Legname from Leg2LVB
         LabelValueBlock leg2LVB = swapGen->getLegGenerator(1).getInputParameters();
-        auto leg2Name = leg2LVB.getOptionalValueAsLAString(etrading::IRS_KEY::LEG_TYPE);
-        auto rate2 = expressionLVB.getCompulsoryValueAsLAString(etrading::SWAP_EXPRESSION_KEY::RATE_OR_SPREAD2, inputLVB);
+        auto leg2Name = leg2LVB.getOptionalValueAsAQLString(etrading::IRS_KEY::LEG_TYPE);
+        auto rate2 = expressionLVB.getCompulsoryValueAsAQLString(etrading::SWAP_EXPRESSION_KEY::RATE_OR_SPREAD2, inputLVB);
 
         etrading::ScheduleTypeEnum schedule2Type = etrading::getScheduleTypeFromLegName(leg2Name);
 		switch(schedule2Type)
@@ -521,19 +521,19 @@ namespace etrading
 
 			case etrading::CMS_SCHEDULE_TYPE:
 			{
-				auto cmsIndexMaturity1   = expressionLVB.getCompulsoryValueAsLAString(etrading::CMS_KEY::CMS_INDEX_MATURITY1 );
+				auto cmsIndexMaturity1   = expressionLVB.getCompulsoryValueAsAQLString(etrading::CMS_KEY::CMS_INDEX_MATURITY1 );
 				leg2LVBKeys.push_back(etrading::CMS_KEY::CMS_INDEX_MATURITY1);
                 leg2LVBValues.push_back(cmsIndexMaturity1.getCString());
 
-				auto cmsIndexMultiplier1 = expressionLVB.getCompulsoryValueAsLAString(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER1 );
+				auto cmsIndexMultiplier1 = expressionLVB.getCompulsoryValueAsAQLString(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER1 );
 				leg2LVBKeys.push_back(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER1);
                 leg2LVBValues.push_back(cmsIndexMultiplier1.getCString());
 
-				auto cmsIndexMaturity2   = expressionLVB.getOptionalValueAsLAString(etrading::CMS_KEY::CMS_INDEX_MATURITY2 );
+				auto cmsIndexMaturity2   = expressionLVB.getOptionalValueAsAQLString(etrading::CMS_KEY::CMS_INDEX_MATURITY2 );
 				leg2LVBKeys.push_back(etrading::CMS_KEY::CMS_INDEX_MATURITY2);
                 leg2LVBValues.push_back(cmsIndexMaturity2.getCString());
 
-				auto cmsIndexMultiplier2 = expressionLVB.getOptionalValueAsLAString(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER2 );
+				auto cmsIndexMultiplier2 = expressionLVB.getOptionalValueAsAQLString(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER2 );
 				leg2LVBKeys.push_back(etrading::CMS_KEY::CMS_INDEX_MULTIPLIER2);
                 leg2LVBValues.push_back(cmsIndexMultiplier2.getCString());
 				break;
@@ -549,9 +549,9 @@ namespace etrading
         }
 
         //payReceive
-        auto payReceive = toPayReceiveEnum(expressionLVB.getOptionalValueAsLAString(etrading::IRS_KEY::PAY_RECEIVE).getCString());
-        auto payReceive1 = toPayReceiveEnum(expressionLVB.getOptionalValueAsLAString(etrading::SWAP_EXPRESSION_KEY::PAY_RECEIVE1).getCString());
-        auto payReceive2 = toPayReceiveEnum(expressionLVB.getOptionalValueAsLAString(etrading::SWAP_EXPRESSION_KEY::PAY_RECEIVE2).getCString());
+        auto payReceive = toPayReceiveEnum(expressionLVB.getOptionalValueAsAQLString(etrading::IRS_KEY::PAY_RECEIVE).getCString());
+        auto payReceive1 = toPayReceiveEnum(expressionLVB.getOptionalValueAsAQLString(etrading::SWAP_EXPRESSION_KEY::PAY_RECEIVE1).getCString());
+        auto payReceive2 = toPayReceiveEnum(expressionLVB.getOptionalValueAsAQLString(etrading::SWAP_EXPRESSION_KEY::PAY_RECEIVE2).getCString());
 
         bool provideBoth = payReceive != NONE_PAYRECEIVE_ENUM && (payReceive1 != NONE_PAYRECEIVE_ENUM || payReceive2 != NONE_PAYRECEIVE_ENUM);
         bool provideNone = payReceive == NONE_PAYRECEIVE_ENUM && payReceive1 == NONE_PAYRECEIVE_ENUM && payReceive2 == NONE_PAYRECEIVE_ENUM;
@@ -585,9 +585,9 @@ namespace etrading
         leg2LVBValues.push_back(toString(payReceive2));
 
          //notional
-        auto notional = expressionLVB.getOptionalValueAsLAString(etrading::IRS_KEY::NOTIONAL);
-        auto notional1 = expressionLVB.getOptionalValueAsLAString(etrading::SWAP_EXPRESSION_KEY::NOTIONAL1);
-        auto notional2 = expressionLVB.getOptionalValueAsLAString(etrading::SWAP_EXPRESSION_KEY::NOTIONAL2);
+        auto notional = expressionLVB.getOptionalValueAsAQLString(etrading::IRS_KEY::NOTIONAL);
+        auto notional1 = expressionLVB.getOptionalValueAsAQLString(etrading::SWAP_EXPRESSION_KEY::NOTIONAL1);
+        auto notional2 = expressionLVB.getOptionalValueAsAQLString(etrading::SWAP_EXPRESSION_KEY::NOTIONAL2);
 
         updateValuesFromGeneratorExpression(notional, notional1, notional2, etrading::IRS_KEY::NOTIONAL.c_str(), true);
 
@@ -598,9 +598,9 @@ namespace etrading
         leg2LVBValues.push_back(notional2.getCString());
 
          //firstFixing
-        auto firstFixing = expressionLVB.getOptionalValueAsLAString(etrading::IRS_KEY::FIRSTFIXING);
-        auto firstFixing1 = expressionLVB.getOptionalValueAsLAString(etrading::SWAP_EXPRESSION_KEY::FIRSTFIXING1);
-        auto firstFixing2 = expressionLVB.getOptionalValueAsLAString(etrading::SWAP_EXPRESSION_KEY::FIRSTFIXING2);
+        auto firstFixing = expressionLVB.getOptionalValueAsAQLString(etrading::IRS_KEY::FIRSTFIXING);
+        auto firstFixing1 = expressionLVB.getOptionalValueAsAQLString(etrading::SWAP_EXPRESSION_KEY::FIRSTFIXING1);
+        auto firstFixing2 = expressionLVB.getOptionalValueAsAQLString(etrading::SWAP_EXPRESSION_KEY::FIRSTFIXING2);
 
         updateValuesFromGeneratorExpression(firstFixing, firstFixing1, firstFixing2,etrading::IRS_KEY::FIRSTFIXING.c_str(), false);
 
@@ -611,9 +611,9 @@ namespace etrading
         leg2LVBValues.push_back(firstFixing2.getCString());
 
         //lastFixing
-        auto lastFixing = expressionLVB.getOptionalValueAsLAString(etrading::IRS_KEY::LASTFIXING);
-        auto lastFixing1 = expressionLVB.getOptionalValueAsLAString(etrading::SWAP_EXPRESSION_KEY::LASTFIXING1);
-        auto lastFixing2 = expressionLVB.getOptionalValueAsLAString(etrading::SWAP_EXPRESSION_KEY::LASTFIXING2);
+        auto lastFixing = expressionLVB.getOptionalValueAsAQLString(etrading::IRS_KEY::LASTFIXING);
+        auto lastFixing1 = expressionLVB.getOptionalValueAsAQLString(etrading::SWAP_EXPRESSION_KEY::LASTFIXING1);
+        auto lastFixing2 = expressionLVB.getOptionalValueAsAQLString(etrading::SWAP_EXPRESSION_KEY::LASTFIXING2);
 
         updateValuesFromGeneratorExpression(lastFixing, lastFixing1, lastFixing2, etrading::IRS_KEY::LASTFIXING.c_str(), false);
 
@@ -624,8 +624,8 @@ namespace etrading
         leg2LVBValues.push_back(lastFixing2.getCString());
 
         //EffectiveDate & MaturityDate
-        auto effectiveDate = expressionLVB.getCompulsoryValueAsLAString(etrading::IRS_KEY::EFFECTIVE_DATE, inputLVB);
-        auto maturity = expressionLVB.getCompulsoryValueAsLAString(etrading::IRS_KEY::MATURITY_DATE, inputLVB);
+        auto effectiveDate = expressionLVB.getCompulsoryValueAsAQLString(etrading::IRS_KEY::EFFECTIVE_DATE, inputLVB);
+        auto maturity = expressionLVB.getCompulsoryValueAsAQLString(etrading::IRS_KEY::MATURITY_DATE, inputLVB);
         
         leg1LVBKeys.push_back(etrading::IRS_KEY::EFFECTIVE_DATE);
         leg1LVBValues.push_back(effectiveDate.getCString());
@@ -640,9 +640,9 @@ namespace etrading
         leg2LVBValues.push_back(maturity.getCString());
 
         //fwdInter
-        auto isFwdInter     = expressionLVB.getOptionalValueAsLAString(etrading::IRS_KEY::IS_FWD_INTER);
-        auto isFwdInter1    = expressionLVB.getOptionalValueAsLAString(etrading::SWAP_EXPRESSION_KEY::IS_FWD_INTER1);
-        auto isFwdInter2    = expressionLVB.getOptionalValueAsLAString(etrading::SWAP_EXPRESSION_KEY::IS_FWD_INTER2);
+        auto isFwdInter     = expressionLVB.getOptionalValueAsAQLString(etrading::IRS_KEY::IS_FWD_INTER);
+        auto isFwdInter1    = expressionLVB.getOptionalValueAsAQLString(etrading::SWAP_EXPRESSION_KEY::IS_FWD_INTER1);
+        auto isFwdInter2    = expressionLVB.getOptionalValueAsAQLString(etrading::SWAP_EXPRESSION_KEY::IS_FWD_INTER2);
 
         updateValuesFromGeneratorExpression(isFwdInter, isFwdInter1, isFwdInter2, IRS_KEY::IS_FWD_INTER.c_str(), false);
 
@@ -692,7 +692,7 @@ namespace etrading
 	{
 		const std::string inputLVB = "swapScheduleLVB";
 
-		AQLString scheduleTypeString = swapScheduleLVB.getOptionalValueAsLAString( IRS_KEY::SCHEDULE_TYPE, "");
+		AQLString scheduleTypeString = swapScheduleLVB.getOptionalValueAsAQLString( IRS_KEY::SCHEDULE_TYPE, "");
 
 		std::shared_ptr<Schedule> mySchedule;
 		if (scheduleTypeString.size() != 0)
@@ -740,7 +740,7 @@ namespace etrading
 
 		const std::string inputLVB = "bespokeScheduleProperties";
 
-		AQLString scheduleTypeString = bespokeScheduleProperties.getCompulsoryValueAsLAString( IRS_KEY::SCHEDULE_TYPE, inputLVB);
+		AQLString scheduleTypeString = bespokeScheduleProperties.getCompulsoryValueAsAQLString( IRS_KEY::SCHEDULE_TYPE, inputLVB);
 		if (scheduleTypeString.size() == 0)
         {
             throw AQLCoreInvalidData("#Error: Schedule type can only be either 'FIXED', 'FLOAT' for BespokeSchedule",__FILE__,__LINE__);
@@ -1171,7 +1171,7 @@ namespace etrading
         // ---------------------------
 
         // PayRecLeg1
-        if ( leg1->getSchedule()->getPayerReceiver() != toPayReceiveEnum( leg1LVB.getOptionalValueAsLAString( etrading::IRS_KEY::PAY_RECEIVE ).getCString() ) )
+        if ( leg1->getSchedule()->getPayerReceiver() != toPayReceiveEnum( leg1LVB.getOptionalValueAsAQLString( etrading::IRS_KEY::PAY_RECEIVE ).getCString() ) )
         {
             return std::shared_ptr<Swap>();
         }
@@ -1227,13 +1227,13 @@ namespace etrading
             }
             
             // IsFwdInter1
-            if ( leg1->getStaticData()->getFwdInter() != toBooleanEnum( leg1LVB.getOptionalValueAsLAString( IRS_KEY::IS_FWD_INTER ).getCString() ) )
+            if ( leg1->getStaticData()->getFwdInter() != toBooleanEnum( leg1LVB.getOptionalValueAsAQLString( IRS_KEY::IS_FWD_INTER ).getCString() ) )
             {
                 return std::shared_ptr<Swap>();
             }
 
 			// PaymentTrigger
-			if ( leg1->getPaymentTrigger() != toPaymentTriggerEnum( leg1LVB.getOptionalValueAsLAString( IRS_KEY::PAYMENT_TRIGGER, "PAYALWAYS" ).getCString() ) )
+			if ( leg1->getPaymentTrigger() != toPaymentTriggerEnum( leg1LVB.getOptionalValueAsAQLString( IRS_KEY::PAYMENT_TRIGGER, "PAYALWAYS" ).getCString() ) )
 			{
 				return std::shared_ptr<Swap>();
 			}
@@ -1286,13 +1286,13 @@ namespace etrading
             }
             
             // IsFwdInter2
-            if ( leg2->getStaticData()->getFwdInter() != toBooleanEnum( leg2LVB.getOptionalValueAsLAString( IRS_KEY::IS_FWD_INTER ).getCString() ) )
+            if ( leg2->getStaticData()->getFwdInter() != toBooleanEnum( leg2LVB.getOptionalValueAsAQLString( IRS_KEY::IS_FWD_INTER ).getCString() ) )
             {
                 return std::shared_ptr<Swap>();
             }
 
 			// PaymentTrigger
-			if ( leg2->getPaymentTrigger() != toPaymentTriggerEnum( leg2LVB.getOptionalValueAsLAString( IRS_KEY::PAYMENT_TRIGGER, "PAYALWAYS" ).getCString() ) )
+			if ( leg2->getPaymentTrigger() != toPaymentTriggerEnum( leg2LVB.getOptionalValueAsAQLString( IRS_KEY::PAYMENT_TRIGGER, "PAYALWAYS" ).getCString() ) )
 			{
 				return std::shared_ptr<Swap>();
 			}

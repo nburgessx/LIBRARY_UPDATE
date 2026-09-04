@@ -501,7 +501,7 @@ namespace etrading
 	*  @param [in]  throwIfMissing	Whether to throw an exception if the specified propertyKey is missing. Default behaviour is to throw.
 	*  @returns		A VariantMatrix containing the data specified by propertyKey
 	*/
-	AQLStringMatrix getLAStringMatrixFromFreeObject( const FreeObject& freeObject, const std::string& propertyKey, const bool trimBlankRows, const bool throwIfMissing)
+	AQLStringMatrix getAQLStringMatrixFromFreeObject( const FreeObject& freeObject, const std::string& propertyKey, const bool trimBlankRows, const bool throwIfMissing)
 	{
 		VariantMatrix variantMatrix = getVariantMatrixFromFreeObject( freeObject, propertyKey, throwIfMissing);
 
@@ -598,7 +598,7 @@ namespace etrading
 	}
 
 	// Function to trim a LA String Vector and remove blanks
-	AQLStringVector trimLAStringVector(const AQLStringVector & inputVector)
+	AQLStringVector trimAQLStringVector(const AQLStringVector & inputVector)
 	{
 		AQLStringVector results;
 		for (size_t i = 0; i < inputVector.size(); ++i)
@@ -620,7 +620,7 @@ namespace etrading
 	}
 
     // Function to trim a LA String Matrix and remove blanks
-	AQLStringMatrix trimLAStringMatrix(const AQLStringMatrix & inputMatrix)
+	AQLStringMatrix trimAQLStringMatrix(const AQLStringMatrix & inputMatrix)
     {
         // Access Violation Guard
         if( inputMatrix.size() == 0 )
@@ -690,7 +690,7 @@ namespace etrading
     }
 
 	// Function to convert a AQLStringMatrix to a VariantMatrix
-	etrading::VariantMatrix convertLAStringMatrixToVariantMatrix( AQLStringMatrix stringMatrix )
+	etrading::VariantMatrix convertAQLStringMatrixToVariantMatrix( AQLStringMatrix stringMatrix )
 	{
 		etrading::VariantMatrix variantMatrix;
 

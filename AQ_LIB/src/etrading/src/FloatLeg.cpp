@@ -22,7 +22,7 @@ namespace etrading
         legStaticData_ = LegStaticDataPtr (new FloatStaticData(legLVB));
 
 		// Control whether the coupons are credit risky
-		paymentTrigger_ = toPaymentTriggerEnum(legLVB.getOptionalValueAsLAString(IRS_KEY::PAYMENT_TRIGGER, "PAYALWAYS").getCString());
+		paymentTrigger_ = toPaymentTriggerEnum(legLVB.getOptionalValueAsAQLString(IRS_KEY::PAYMENT_TRIGGER, "PAYALWAYS").getCString());
 
     	//Schedule
 		if (schedule==nullptr)

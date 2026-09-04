@@ -164,7 +164,7 @@ namespace google_test
         EXPECT_EQ( false, CreateDataFile::recordEnabled() );
     }
 
-    TEST_F( TestDataFilesCreate, UNIT_PrintLAString )
+    TEST_F( TestDataFilesCreate, UNIT_PrintAQLString )
     {
         const AQLString name( "TestString" );
         const AQLString value( "just a test string" );

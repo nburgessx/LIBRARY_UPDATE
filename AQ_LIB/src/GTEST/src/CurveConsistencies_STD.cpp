@@ -172,7 +172,7 @@ namespace google_test
 			// Effective date
 			AQLString asofDateStr;
 			findValByKey(asofDateStr, generateProp, generatePropkeys, "AsOfDate");
-			AQLDate asofDate = etrading::AQLDateScheduleHelpers::getLADate(asofDateStr);
+			AQLDate asofDate = etrading::AQLDateScheduleHelpers::getAQLDate(asofDateStr);
 			AQLDate effectiveDate = etrading::AQLDateScheduleHelpers::getDate( asofDate, spotLag, rollConvention, calendar );
 
 			// Curve collection and forecast curve

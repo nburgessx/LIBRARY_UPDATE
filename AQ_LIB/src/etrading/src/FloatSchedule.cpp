@@ -35,55 +35,55 @@ namespace etrading
         // Add Schedule_Type to LVB
         inputParameters_ = LabelValueBlock( inputParameters_, IRS_KEY::SCHEDULE_TYPE, toString(scheduleType_) );
 
-		payerReceiver_  = toPayReceiveEnum(scheduleLVB.getCompulsoryValueAsLAStringFromKeys(IRS_KEY::PAY_RECEIVE, IRS_KEY::PAYER_RECEIVER, inputLVB).getCString());
+		payerReceiver_  = toPayReceiveEnum(scheduleLVB.getCompulsoryValueAsAQLStringFromKeys(IRS_KEY::PAY_RECEIVE, IRS_KEY::PAYER_RECEIVER, inputLVB).getCString());
 
         amortization_ = scheduleLVB.getOptionalValueAsDouble(IRS_KEY::AMORTIZATION);
         amortFrequency_ = scheduleLVB.getOptionalValueAsUnsignedInt(IRS_KEY::AMORT_FREQUENCY);
 
-        notionalExchangeEnum_	= toNotionalExchangeEnum(scheduleLVB.getOptionalValueAsLAString(IRS_KEY::NOTIONAL_EXCHANGE, "NONE").getCString());
+        notionalExchangeEnum_	= toNotionalExchangeEnum(scheduleLVB.getOptionalValueAsAQLString(IRS_KEY::NOTIONAL_EXCHANGE, "NONE").getCString());
 		leverage_		  = scheduleLVB.getOptionalValueAsDouble(IRS_KEY::LEVERAGE, 1.);
 		couponMultiplier_ = scheduleLVB.getOptionalValueAsDouble(IRS_KEY::COUPONMULTIPLIER, 1.);
 		
         spread_ = scheduleLVB.getOptionalValueAsDouble(IRS_KEY::FLOAT_SPREAD, 0.);
         
-        accrualEndDateOrTenor_ = scheduleLVB.getCompulsoryValueAsLAString( IRS_KEY::MATURITY_DATE,  inputLVB );
+        accrualEndDateOrTenor_ = scheduleLVB.getCompulsoryValueAsAQLString( IRS_KEY::MATURITY_DATE,  inputLVB );
 
-   		AQLString floatBusinessDayAdjustment = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT));
-        AQLString floatCalendar	= scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FLOAT_CALENDAR)(IRS_KEY::CALENDAR));
-		AQLString floatLegFreq	= scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FLOAT_FREQUENCY)(IRS_KEY::FREQUENCY));
-        AQLString floatDayCount	= scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FLOAT_DAYCOUNT)(IRS_KEY::DAYCOUNT));
+   		AQLString floatBusinessDayAdjustment = scheduleLVB.getOptionalValueAsAQLStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT));
+        AQLString floatCalendar	= scheduleLVB.getOptionalValueAsAQLStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FLOAT_CALENDAR)(IRS_KEY::CALENDAR));
+		AQLString floatLegFreq	= scheduleLVB.getOptionalValueAsAQLStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FLOAT_FREQUENCY)(IRS_KEY::FREQUENCY));
+        AQLString floatDayCount	= scheduleLVB.getOptionalValueAsAQLStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FLOAT_DAYCOUNT)(IRS_KEY::DAYCOUNT));
 
-		accrualbusinessDayAdj_  = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,		IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT, floatBusinessDayAdjustment).getCString());
-        accrualCalendar_	    = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_ACCRUALCALENDAR,					IRS_KEY::ACCRUALCALENDAR, floatCalendar);
-	    accrualFrequency_		= toFrequencyEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_ACCRUALFREQUENCY,					IRS_KEY::ACCRUALFREQUENCY, floatLegFreq ).getCString());
-		accrualDaycount_		= toDayCountEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_ACCRUALDAYCOUNT,					IRS_KEY::ACCRUALDAYCOUNT, floatDayCount ).getCString());
+		accrualbusinessDayAdj_  = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,		IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT, floatBusinessDayAdjustment).getCString());
+        accrualCalendar_	    = scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_ACCRUALCALENDAR,					IRS_KEY::ACCRUALCALENDAR, floatCalendar);
+	    accrualFrequency_		= toFrequencyEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_ACCRUALFREQUENCY,					IRS_KEY::ACCRUALFREQUENCY, floatLegFreq ).getCString());
+		accrualDaycount_		= toDayCountEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_ACCRUALDAYCOUNT,					IRS_KEY::ACCRUALDAYCOUNT, floatDayCount ).getCString());
 
         auto defaultBusinessDayAdj = floatBusinessDayAdjustment.size() != 0 ? floatBusinessDayAdjustment : toString(accrualbusinessDayAdj_).c_str();
         auto defaultCalendar = floatCalendar.size() != 0 ? floatCalendar : accrualCalendar_;
         auto defaultFrequency = floatLegFreq.size() != 0 ? floatLegFreq : toString(accrualFrequency_).c_str();
   	
-		paymentbusinessDayAdj_  = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_PAYMENTBUSINESSDAYADJUSTMENT,		IRS_KEY::PAYMENTBUSINESSDAYADJUSTMENT, defaultBusinessDayAdj).getCString() );
-        paymentCalendar_	    = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_PAYMENTCALENDAR,					IRS_KEY::PAYMENTCALENDAR, defaultCalendar );
-        paymentFrequency_		= toFrequencyEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_PAYMENTFREQUENCY,					IRS_KEY::PAYMENTFREQUENCY, defaultFrequency).getCString());
+		paymentbusinessDayAdj_  = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_PAYMENTBUSINESSDAYADJUSTMENT,		IRS_KEY::PAYMENTBUSINESSDAYADJUSTMENT, defaultBusinessDayAdj).getCString() );
+        paymentCalendar_	    = scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_PAYMENTCALENDAR,					IRS_KEY::PAYMENTCALENDAR, defaultCalendar );
+        paymentFrequency_		= toFrequencyEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_PAYMENTFREQUENCY,					IRS_KEY::PAYMENTFREQUENCY, defaultFrequency).getCString());
        
         populateNotionalAndPaymentFreqEnum(scheduleLVB);
 
-        firstStub_		        = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_FIRSTSTUBDATE,						IRS_KEY::FIRSTSTUBDATE);
-        lastStub_	            = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_LASTSTUBDATE,						IRS_KEY::LASTSTUBDATE);
-        rollDayInput_	        = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_ROLLDAY,							IRS_KEY::ROLLDAY);
-        payLag_					= scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_PAYMENTLAG,							IRS_KEY::PAYMENTLAG, "0D");
-        stubType_			    = toStubTypeEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_STUBTYPE,			IRS_KEY::STUBTYPE).getCString());
+        firstStub_		        = scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_FIRSTSTUBDATE,						IRS_KEY::FIRSTSTUBDATE);
+        lastStub_	            = scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_LASTSTUBDATE,						IRS_KEY::LASTSTUBDATE);
+        rollDayInput_	        = scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_ROLLDAY,							IRS_KEY::ROLLDAY);
+        payLag_					= scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_PAYMENTLAG,							IRS_KEY::PAYMENTLAG, "0D");
+        stubType_			    = toStubTypeEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_STUBTYPE,			IRS_KEY::STUBTYPE).getCString());
 	   
-		fixingbusinessDayAdj_   = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_FIXINGBUSINESSDAYADJUSTMENT,		IRS_KEY::FIXINGBUSINESSDAYADJUSTMENT, defaultBusinessDayAdj ).getCString());
-        fixingCalendar_         = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_FIXINGCALENDAR,						IRS_KEY::FIXINGCALENDAR, defaultCalendar);
-		fixLag_					= scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_FIXINGLAG,							IRS_KEY::FIXINGLAG, "0D");
-        firstFixLag_            = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_FIRSTFIXINGLAG,						IRS_KEY::FIRSTFIXINGLAG, fixLag_);
-		fixingAdvanceOrArrears_	= scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FLOAT_FIXINGADVANCEORARREAR,				IRS_KEY::FIXINGADVANCEORARREAR, "advance");
+		fixingbusinessDayAdj_   = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_FIXINGBUSINESSDAYADJUSTMENT,		IRS_KEY::FIXINGBUSINESSDAYADJUSTMENT, defaultBusinessDayAdj ).getCString());
+        fixingCalendar_         = scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_FIXINGCALENDAR,						IRS_KEY::FIXINGCALENDAR, defaultCalendar);
+		fixLag_					= scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_FIXINGLAG,							IRS_KEY::FIXINGLAG, "0D");
+        firstFixLag_            = scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_FIRSTFIXINGLAG,						IRS_KEY::FIRSTFIXINGLAG, fixLag_);
+		fixingAdvanceOrArrears_	= scheduleLVB.getOptionalValueAsAQLStringFromKeys(IRS_KEY::FLOAT_FIXINGADVANCEORARREAR,				IRS_KEY::FIXINGADVANCEORARREAR, "advance");
 
         //fxFixing
-        fxFixingLag_ = scheduleLVB.getOptionalValueAsLAString( IRS_KEY::FXFIXINGLAG, "0D" );
-		fxFixingbusinessDayAdj_   = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAString(IRS_KEY::FXFIXINGBUSINESSDAYADJUSTMENT, defaultBusinessDayAdj ).getCString());
-        fxFixingCalendar_         = scheduleLVB.getOptionalValueAsLAString(IRS_KEY::FXFIXINGCALENDAR, defaultCalendar);
+        fxFixingLag_ = scheduleLVB.getOptionalValueAsAQLString( IRS_KEY::FXFIXINGLAG, "0D" );
+		fxFixingbusinessDayAdj_   = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsAQLString(IRS_KEY::FXFIXINGBUSINESSDAYADJUSTMENT, defaultBusinessDayAdj ).getCString());
+        fxFixingCalendar_         = scheduleLVB.getOptionalValueAsAQLString(IRS_KEY::FXFIXINGCALENDAR, defaultCalendar);
 
         populateAccrualStartDates(scheduleLVB);
 

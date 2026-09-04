@@ -51,13 +51,13 @@ class AQLMathDateUtilities
 public:
 	
 	//change excel date into AQLDate
-	static AQLDate getLADate( const int excel_date );
+	static AQLDate getAQLDate( const int excel_date );
 	
-	//static AQLDate getLADate( AQLString& excel_date_str);
-	static AQLDate getLADate( const AQLString& excel_date_str);
+	//static AQLDate getAQLDate( AQLString& excel_date_str);
+	static AQLDate getAQLDate( const AQLString& excel_date_str);
 	
 	//change excel date into AQLString
-	static AQLString getLAStringDate( const int excel_date );
+	static AQLString getAQLStringDate( const int excel_date );
 	
 	//change MDate into excel date
 	static int getExcelDate( const AQLDate & date );

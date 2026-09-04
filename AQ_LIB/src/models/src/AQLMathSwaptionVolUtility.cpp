@@ -379,7 +379,7 @@ AQLMathSwaptionVolUtility::setUpConvention( AQLDataInstance* dataInstance, const
 	AQLDate asOfDate;
 	if(asOfDate_str != AQLString("")) 
 	{
-		asOfDate = AQLMathDateUtilities::getLADate(asOfDate_str);
+		asOfDate = AQLMathDateUtilities::getAQLDate(asOfDate_str);
 	}
 	else if(curveID != AQLString(""))
 	{
@@ -3538,7 +3538,7 @@ getExpiryPoint(AQLString str, const AQLDate& asOfDate, const AQLPriceDataSliding
 
 	if (y_pos == -1 && m_pos == -1 && d_pos == -1) 
 	{
-		date = getLADate(str.getCString());
+		date = getAQLDate(str.getCString());
 		ret = dc_act365.getTerm(asOfDate, date);
 	}
 	else
@@ -3564,7 +3564,7 @@ getExpiryPoint2(AQLString str, const AQLDate& asOfDate, const AQLPriceDataSlidin
 	d_pos = str.findString("D");
 	if (y_pos == -1 && m_pos == -1 && d_pos == -1) 
 	{
-		date = getLADate(str.getCString());
+		date = getAQLDate(str.getCString());
 	}
 	else
 	{
@@ -3600,14 +3600,14 @@ getTenorPoint(AQLString str)
 }
 
 AQLDate
-AQLMathSwaptionVolUtility::getLADate(AQLString date)
+AQLMathSwaptionVolUtility::getAQLDate(AQLString date)
 {
     return AQLStringToDate(date);
 	//AQLDate ret;
 	//int slushCheck = date.findString("/");
 	//if(slushCheck==-1)
 	//{
-	//	ret =  AQLMathDateUtilities::getLADate(date);
+	//	ret =  AQLMathDateUtilities::getAQLDate(date);
 	//}
 	//else
 	//{

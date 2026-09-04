@@ -242,10 +242,10 @@ namespace etrading
 		businessDayAdjustment_ = modelProperties.getCompulsoryValue(SABR_MODEL_PROPERTIES_KEY::BUSINESSDAY_ADJUSTMENT);
 		calendar_ = modelProperties.getCompulsoryValue(SABR_MODEL_PROPERTIES_KEY::CALENDAR);
 
-		approxMethod_ = toSABRApproxMethodEnum(modelProperties.getCompulsoryValueAsLAString(SABR_MODEL_PROPERTIES_KEY::APPROX_METHOD).getCString());
+		approxMethod_ = toSABRApproxMethodEnum(modelProperties.getCompulsoryValueAsAQLString(SABR_MODEL_PROPERTIES_KEY::APPROX_METHOD).getCString());
 		AQ_REQUIRE(approxMethod_ == HAGAN_APPROX_METHOD, "Approximation Method only support 'HAGAN' at the moment.");
 
-		auto calibMethod = modelProperties.getCompulsoryValueAsLAString(SABR_MODEL_PROPERTIES_KEY::CALIBRATION_METHOD);
+		auto calibMethod = modelProperties.getCompulsoryValueAsAQLString(SABR_MODEL_PROPERTIES_KEY::CALIBRATION_METHOD);
 
 		auto solverEpsilon = modelProperties.getOptionalValueAsDouble(SABR_MODEL_PROPERTIES_KEY::SOLVER_EPSILON, 1e-10);
 
@@ -267,7 +267,7 @@ namespace etrading
 		bool alphaFromAtmVol = modelProperties.getOptionalValueAsBool(SABR_MODEL_PROPERTIES_KEY::ALPHA_FROM_ATM_VOL, true);
 			
 		//Vol MarketData Block
-		auto volMarketDataBlock = getLAStringMatrixFromFreeObject(freeObject_, toString(SABR_MODEL_VOL_MKTDATA));
+		auto volMarketDataBlock = getAQLStringMatrixFromFreeObject(freeObject_, toString(SABR_MODEL_VOL_MKTDATA));
 
 		if (calibrationTarget == SABR_CALIB_VOLATILITY)
 		{
@@ -308,7 +308,7 @@ namespace etrading
 		DoubleMatrix annuityMat(rowSize, DoubleVector(columnSize, 1.0));
 
 		//Allow user to provide Strike MarketData Block, don't throw if empty 
-		AQLStringMatrix swapMarketDataMatrix = getLAStringMatrixFromFreeObject(freeObject_, toString(SABR_MODEL_MKTDATA), true /*trimBlankRows*/, false /* throwIfMissing */);
+		AQLStringMatrix swapMarketDataMatrix = getAQLStringMatrixFromFreeObject(freeObject_, toString(SABR_MODEL_MKTDATA), true /*trimBlankRows*/, false /* throwIfMissing */);
 
 		if (swapMarketDataMatrix.size() == 0)
 		{
@@ -421,7 +421,7 @@ namespace etrading
 		//AQ_REQUIRE(AQ_IS_LESS_THAN_OR_EQUAL(totalWeight, 1.0), "Total weights cannot be greater than 100%")
 
 		//Model parameter block: alpha, beta, nu, rho - first column true to calibrate this paramter; second column - initial values.
-		std::vector<LabelValueBlock> modelParametersMatrix = etrading::buildMultiLabelValueBlock(getLAStringMatrixFromFreeObject(freeObject_, toString(SABR_MODEL_PARAMETERS)));
+		std::vector<LabelValueBlock> modelParametersMatrix = etrading::buildMultiLabelValueBlock(getAQLStringMatrixFromFreeObject(freeObject_, toString(SABR_MODEL_PARAMETERS)));
 		AQ_REQUIRE(modelParametersMatrix.size() == 2, "modelParametersMatrix should have two columns for values.")
 
 		std::vector<bool> calibFlag_bool(4);
@@ -521,7 +521,7 @@ namespace etrading
 				break;
 			case SABR_MODEL_PARAMETERS:
 			{
-				std::vector<LabelValueBlock> modelParametersMatrix = etrading::buildMultiLabelValueBlock(getLAStringMatrixFromFreeObject(freeObject_, propertyName));
+				std::vector<LabelValueBlock> modelParametersMatrix = etrading::buildMultiLabelValueBlock(getAQLStringMatrixFromFreeObject(freeObject_, propertyName));
 				AQ_REQUIRE(modelParametersMatrix.size() == 2, "modelParametersMatrix should have two columns for values.")
 				validateKeysForLVB(model_parameters_lvbKeys(), modelParametersMatrix[0].getKeys(), validateKeys, propertyName);
 				break;
@@ -590,7 +590,7 @@ namespace etrading
 	*/
 	LabelValueBlock SabrModel::toLabelValueBlock(const std::string& propertyKey) const
 	{
-		AQLStringMatrix stringMatrix = getLAStringMatrixFromFreeObject(freeObject_, propertyKey);
+		AQLStringMatrix stringMatrix = getAQLStringMatrixFromFreeObject(freeObject_, propertyKey);
 		LabelValueBlock lvb(stringMatrix);
 
 		return lvb;

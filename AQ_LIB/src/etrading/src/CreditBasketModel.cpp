@@ -137,7 +137,7 @@ namespace etrading
 		// Read Credit Model properties
 		LabelValueBlock modelProperties = toLabelValueBlock( toString( MODEL_PROPERTIES ) );
 		asOfDate_     = modelProperties.getCompulsoryValueAsDate( CREDITBASKETMODEL_MODEL_PROPERTIES_KEY::ASOF_DATE );
-		basketType_   = toCreditBasketTypeEnum( modelProperties.getCompulsoryValueAsLAString( CREDITBASKETMODEL_MODEL_PROPERTIES_KEY::BASKET_TYPE ).getCString() );
+		basketType_   = toCreditBasketTypeEnum( modelProperties.getCompulsoryValueAsAQLString( CREDITBASKETMODEL_MODEL_PROPERTIES_KEY::BASKET_TYPE ).getCString() );
 		nthToDefault_ = (int) modelProperties.getCompulsoryValueAsDouble( CREDITBASKETMODEL_MODEL_PROPERTIES_KEY::NTH_TO_DEFAULT );
 
 		AQ_REQUIRE( basketType_ == HOMOGENEOUS_LOSS, "Only HomogeneousLoss baskets are currently supported." );
@@ -152,7 +152,7 @@ namespace etrading
 	*/
 	LabelValueBlock CreditBasketModel::toLabelValueBlock( const std::string& propertyKey ) const
 	{
-		AQLStringMatrix stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey );
+		AQLStringMatrix stringMatrix = getAQLStringMatrixFromFreeObject( freeObject_, propertyKey );
 		LabelValueBlock lvb( stringMatrix );
 
 		return lvb;

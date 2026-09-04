@@ -85,10 +85,10 @@ namespace etrading
         {
             LabelValueBlock deal = dealsInfo[i];
 
-            AQLString tradeType = deal.getCompulsoryValueAsLAString( IRS_KEY::TRADE_TYPE );
-            AQLString tradeID = deal.getCompulsoryValueAsLAString( IRS_KEY::TRADE_ID );
-            AQLString forecastCurve = deal.getCompulsoryValueAsLAString( MARKET_KEY::FORECAST_CURVE, tradeID.getCString(), false );
-            AQLString discountCurve = deal.getCompulsoryValueAsLAString( MARKET_KEY::DISCOUNT_CURVE, tradeID.getCString(), false );
+            AQLString tradeType = deal.getCompulsoryValueAsAQLString( IRS_KEY::TRADE_TYPE );
+            AQLString tradeID = deal.getCompulsoryValueAsAQLString( IRS_KEY::TRADE_ID );
+            AQLString forecastCurve = deal.getCompulsoryValueAsAQLString( MARKET_KEY::FORECAST_CURVE, tradeID.getCString(), false );
+            AQLString discountCurve = deal.getCompulsoryValueAsAQLString( MARKET_KEY::DISCOUNT_CURVE, tradeID.getCString(), false );
 
             //Throw exception if the curve has not been built and return the Market Names i.e. PropertyFileName /  StaticDataTable
             AQLString forecastCurveMarketName = etrading::getCurveStaticDataTableName( curveCollection, forecastCurve, false ); // false = don't convert marketName to Uppercase

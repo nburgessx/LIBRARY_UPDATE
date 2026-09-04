@@ -271,7 +271,7 @@ namespace etrading
 			AQ_PUSH_BACK_IF(body, cashflowData.floatRateData.convexity, includeConvexity);
 			AQ_PUSH_BACK_IF(body, cashflowData.floatRateData.unadjustedResetRate, includeUnadjustedFloatRate);
 
-			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getFxFixingDate()), includeFxFixingDate);
+			AQ_PUSH_BACK_IF(body, fromAQLDateToDouble(cashflow->getFxFixingDate()), includeFxFixingDate);
 			AQ_PUSH_BACK_IF(body, cashflow->getFwdFxRate(), includeFxRate);
 
 			AQ_PUSH_BACK_IF(body, roundToNearest(cashflow->getSurvivalProbability(), cashflowData.currency), includeSurvivalProbability);

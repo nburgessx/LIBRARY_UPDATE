@@ -63,7 +63,7 @@ namespace etrading
         * @param [in]       bumpSize                        Enter the bump or shift size to apply
         * @param [in]       marketDataType                  The marketData key or type to be updated
 	    */
-        static void bumpMarketDataFromLAStringMatrix( AQLStringMatrix & marketDataStringMatrix, const double bumpSize, const CurveMarketDataEnum & marketDataType );
+        static void bumpMarketDataFromAQLStringMatrix( AQLStringMatrix & marketDataStringMatrix, const double bumpSize, const CurveMarketDataEnum & marketDataType );
 
 		/* @brief Static Helper Method to perturb the nth marketData instrument for the specified MarketDataStringMatrix, bumpSize and marketDataKey 
         * @param [in/out]   marketDataStringMatrix          The market data to be bumped - input the original market data to get bumped market data as output
@@ -71,13 +71,13 @@ namespace etrading
 		* @param [in]       bumpSize                        Enter the bump or shift size to apply
         * @param [in]       marketDataType                  The marketData key or type to be updated
 	    */
-        static void perturbMarketDataFromLAStringMatrix( AQLStringMatrix & marketDataStringMatrix, size_t nthInstrumentToBump, const double bumpSize, const CurveMarketDataEnum & marketDataType );
+        static void perturbMarketDataFromAQLStringMatrix( AQLStringMatrix & marketDataStringMatrix, size_t nthInstrumentToBump, const double bumpSize, const CurveMarketDataEnum & marketDataType );
 
 		/* @brief Static Helper Method to get the Tenor for the marketData instrument for the specified MarketDataStringMatrix
         * @param [in/out]   marketDataStringMatrix          The market data to be bumped - input the original market data to get bumped market data as output
         * @param [in]       marketDataType                  The marketData key or type to be updated
 	    */
-        static StandardStringVector getMarketDataTenorsFromLAStringMatrix( const AQLStringMatrix & marketDataStringMatrix, const CurveMarketDataEnum & marketDataType );
+        static StandardStringVector getMarketDataTenorsFromAQLStringMatrix( const AQLStringMatrix & marketDataStringMatrix, const CurveMarketDataEnum & marketDataType );
 
 		// *** Helper Method to provide the Market Data Rate Column to Bump ***
 		 // Note: We return column number as -1 to indicate there is no rate column

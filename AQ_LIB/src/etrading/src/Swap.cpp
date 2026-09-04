@@ -434,7 +434,7 @@ namespace etrading
 			for (size_t j = 0; j < legs_.size(); ++j)
 			{
 				auto lvb = legs_.get(j)->getInputParameters();
-				row.push_back(lvb.getOptionalValueAsLAString(key));
+				row.push_back(lvb.getOptionalValueAsAQLString(key));
 			}
 			result.push_back(row);
 		}

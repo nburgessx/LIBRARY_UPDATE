@@ -23,7 +23,7 @@ if (predicate)											\
 if (predicate)													\
 {																\
 	if (convertDatesToExcelFormat)								\
-		vectorToChange.push_back( fromLADateToDouble( date) );	\
+		vectorToChange.push_back( fromAQLDateToDouble( date) );	\
     else														\
 		vectorToChange.push_back( std::string( date.stringWithFormat().c_str() ) );	\
 }																\

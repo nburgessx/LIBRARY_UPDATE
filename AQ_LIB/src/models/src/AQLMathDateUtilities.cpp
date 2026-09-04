@@ -37,7 +37,7 @@ using namespace std;
 //////////////////////////Date method//////////////////////////////////////////////////////////
 //change excel date into AQLDate
 AQLDate 
-AQLMathDateUtilities::getLADate( const int excel_date )
+AQLMathDateUtilities::getAQLDate( const int excel_date )
 {
 	AQLDate    ret_date( "19900101" );
 	const int excel_base = 32874;
@@ -46,7 +46,7 @@ AQLMathDateUtilities::getLADate( const int excel_date )
 }
 //change excel date into AQLDate
 AQLDate 
-AQLMathDateUtilities::getLADate(const AQLString& excel_date_str)
+AQLMathDateUtilities::getAQLDate(const AQLString& excel_date_str)
 {
 	AQLDate    ret_date( "19900101" );
 	const int excel_base = 32874;
@@ -55,9 +55,9 @@ AQLMathDateUtilities::getLADate(const AQLString& excel_date_str)
 }
 //change excel date into AQLString
 AQLString 
-AQLMathDateUtilities::getLAStringDate( const int excel_date )
+AQLMathDateUtilities::getAQLStringDate( const int excel_date )
 {
-	AQLString  ret_str  = getLADate(excel_date).stringWithFormat("YYYYMMDD");
+	AQLString  ret_str  = getAQLDate(excel_date).stringWithFormat("YYYYMMDD");
 	return ret_str;
 }
 
@@ -1010,7 +1010,7 @@ AQLDate AQLStringToDate(AQLString date)
 	int slushCheck = date.findString("/");
 	if (slushCheck == -1)
 	{
-		ret = AQLMathDateUtilities::getLADate(date);
+		ret = AQLMathDateUtilities::getAQLDate(date);
 	}
 	else
 	{

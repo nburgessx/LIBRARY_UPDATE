@@ -3198,7 +3198,7 @@ AQLMultiSwapPricer::storePastRates(AQLDataInstance* dataInstance, const AQLStrin
 	map<AQLDate, double> map_date_rate;
 	for (unsigned int i = 0; i < pastSize; i++)
 	{
-		pastdates[i] = AQLMathDateUtilities::getLADate(PastRates[i][0]);
+		pastdates[i] = AQLMathDateUtilities::getAQLDate(PastRates[i][0]);
 		map_date_rate[pastdates[i]] = PastRates[i][1].getDoubleValue();
 		//ratesvec[i] = PastRates[i][1].getDoubleValue();
 	}

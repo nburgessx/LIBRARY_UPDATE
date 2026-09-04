@@ -130,7 +130,7 @@ namespace google_test
                 auto floatLegFirstCashflow = swap->getLeg(1)->getSchedule()->getCashflow(0);
                 AQLDate floatLegFirstCashflowFixingDate = floatLegFirstCashflow->getFixingDate();
                 auto fixingTable = etrading::getFixingTable(tableName, false /* do not throw when missing*/);
-                double expectedFixingRate = fixingTable->getFixingValue( etrading::toGregorianDateFromLADate(floatLegFirstCashflowFixingDate) );
+                double expectedFixingRate = fixingTable->getFixingValue( etrading::toGregorianDateFromAQLDate(floatLegFirstCashflowFixingDate) );
 
                 // Check the Test Results
                 EXPECT_NEAR( expectedFixingRate, actualFloatRate, tolerance );
@@ -283,7 +283,7 @@ namespace google_test
 
                 AQLDate floatLegFirstCashflowFixingDate = floatLegFirstCashflow->getFixingDate();
                 auto fixingTable = etrading::getFixingTable(tableName, false /* do not throw when missing*/);
-                double expectedFixingRate = fixingTable->getFixingValue( etrading::toGregorianDateFromLADate(floatLegFirstCashflowFixingDate) );
+                double expectedFixingRate = fixingTable->getFixingValue( etrading::toGregorianDateFromAQLDate(floatLegFirstCashflowFixingDate) );
 
                 // Check the Test Results
                 EXPECT_NEAR( expectedFixingRate, actualFirstCashflowFloatRate, tolerance );
@@ -338,7 +338,7 @@ namespace google_test
                 auto floatLegFirstCashflow = swap->getLeg(1)->getSchedule()->getCashflow(0);
                 AQLDate floatLegFirstCashflowFixingDate = floatLegFirstCashflow->getFixingDate();
                 auto fixingTable = etrading::getFixingTable(tableName, false /* do not throw when missing*/);
-                double expectedFixingRate = fixingTable->getFixingValue( etrading::toGregorianDateFromLADate(floatLegFirstCashflowFixingDate) );
+                double expectedFixingRate = fixingTable->getFixingValue( etrading::toGregorianDateFromAQLDate(floatLegFirstCashflowFixingDate) );
 
                 // Check the Test Results
                 EXPECT_NEAR( expectedFixingRate, actualFirstCashflowFloatRate, tolerance );

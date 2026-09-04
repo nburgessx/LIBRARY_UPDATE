@@ -236,7 +236,7 @@
 //        smParams[i].highBF = searchbycol(smParams_str,"25FLY",i+1,true).getDoubleValue()/100;
 //        
 //		//Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getLADate(maturityDate_str[i]);
+//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
 //        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
@@ -405,7 +405,7 @@
 //    ret.resize( (strikeSize+1)*maturitySize );
 //    for(size_t i=0;i<maturitySize;i++)
 //    {
-//        ret[i*(strikeSize+1)]=static_cast<double >(AQLMathDateUtilities::getExcelDate(AQLMathDateUtilities::getLADate(maturityDate_str[i])));
+//        ret[i*(strikeSize+1)]=static_cast<double >(AQLMathDateUtilities::getExcelDate(AQLMathDateUtilities::getAQLDate(maturityDate_str[i])));
 //        for(size_t j=1;j<(strikeSize+1);j++)
 //        {
 //            ret[i*(strikeSize+1)+j] = smDatas[i*strikeSize+j-1];
@@ -435,7 +435,7 @@
 //    for(size_t i=0;i<dataNum;i++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getLADate(maturityDate_str[i]);
+//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
 //        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
@@ -523,7 +523,7 @@
 //    for(i=0; i<dataNum;i ++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getLADate(maturityDate_str[i]);
+//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
 //        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
@@ -742,7 +742,7 @@
 //    for(size_t i=0;i<dataNum;i++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getLADate(maturityDate_str[i]);
+//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
 //        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
@@ -831,7 +831,7 @@
 //    for(i=0; i<dataNum;i ++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getLADate(maturityDate_str[i]);
+//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
 //        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
@@ -944,7 +944,7 @@
 //    for(i=0;i<dataNum;i++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getLADate(maturityDate_str[i]);
+//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
 //        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
@@ -1038,7 +1038,7 @@
 //    for(size_t i=0;i<dataNum;i++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getLADate(maturityDate_str[i]);
+//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
 //        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);

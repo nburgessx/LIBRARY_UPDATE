@@ -10,14 +10,14 @@ namespace etrading
     {
 		const std::string inputLVB = "legPropertiesLVB";
 
-		swapGeneratorName1_   = marketDataLVB.getCompulsoryValueAsLAString( CMS_KEY::CMS_GENERATOR_NAME1, inputLVB );
-		swapIndexMaturity1_   = marketDataLVB.getCompulsoryValueAsLAString( CMS_KEY::CMS_INDEX_MATURITY1, inputLVB );
+		swapGeneratorName1_   = marketDataLVB.getCompulsoryValueAsAQLString( CMS_KEY::CMS_GENERATOR_NAME1, inputLVB );
+		swapIndexMaturity1_   = marketDataLVB.getCompulsoryValueAsAQLString( CMS_KEY::CMS_INDEX_MATURITY1, inputLVB );
 		swapIndexMultiplier1_ = marketDataLVB.getCompulsoryValueAsDouble( CMS_KEY::CMS_INDEX_MULTIPLIER1, inputLVB );
 
 		// The second CMS SwapIndex is optional
 		// If present, we are pricing a CMS Spread. if missing, we are pricing a regular CMS>
-		swapGeneratorName2_   = marketDataLVB.getOptionalValueAsLAString( CMS_KEY::CMS_GENERATOR_NAME2, "" );
-		swapIndexMaturity2_   = marketDataLVB.getOptionalValueAsLAString( CMS_KEY::CMS_INDEX_MATURITY2, "" );
+		swapGeneratorName2_   = marketDataLVB.getOptionalValueAsAQLString( CMS_KEY::CMS_GENERATOR_NAME2, "" );
+		swapIndexMaturity2_   = marketDataLVB.getOptionalValueAsAQLString( CMS_KEY::CMS_INDEX_MATURITY2, "" );
 		swapIndexMultiplier2_ = marketDataLVB.getOptionalValueAsDouble( CMS_KEY::CMS_INDEX_MULTIPLIER2, 0. );
 	}
 

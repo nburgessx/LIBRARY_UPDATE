@@ -52,7 +52,7 @@ namespace etrading
 			for (size_t j = 0; j < legGenerators_.size(); ++j)
 			{
 				auto lvb = legGenerators_[j].getInputParameters();
-				row.push_back(lvb.getOptionalValueAsLAString(key));
+				row.push_back(lvb.getOptionalValueAsAQLString(key));
 			}
 			result.push_back(row);
 		}

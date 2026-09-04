@@ -24,17 +24,17 @@ namespace etrading
         const std::string inputLVB = "legPropertiesLVB";
 
 		//cast it to upper case so that legName lookup is not case-sensitive (i.e Leg1:Fixed, leg1:fixed, LEG1:FIXED are the same)
-        legName_ = marketDataLVB.getCompulsoryValueAsLAString(IRS_KEY::LEG_TYPE,  inputLVB, true);
+        legName_ = marketDataLVB.getCompulsoryValueAsAQLString(IRS_KEY::LEG_TYPE,  inputLVB, true);
 
-        discountCurve_ = marketDataLVB.getCompulsoryValueAsLAString( MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+        discountCurve_ = marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::DISCOUNT_CURVE, inputLVB );
        
-        currency_ = toCCYEnum( marketDataLVB.getOptionalValueAsLAString( IRS_KEY::CURRENCY ).getCString() );
+        currency_ = toCCYEnum( marketDataLVB.getOptionalValueAsAQLString( IRS_KEY::CURRENCY ).getCString() );
 		if ( currency_ == NO_CCY )
         {
             AQ_THROW( "No currency specified for swap leg" );
         }
 
-        valuationCurrency_ = toCCYEnum( marketDataLVB.getOptionalValueAsLAString( IRS_KEY::VALUATION_CURRENCY).getCString() );
+        valuationCurrency_ = toCCYEnum( marketDataLVB.getOptionalValueAsAQLString( IRS_KEY::VALUATION_CURRENCY).getCString() );
 		if (valuationCurrency_ == NO_CCY)
         {
             valuationCurrency_ = currency_;

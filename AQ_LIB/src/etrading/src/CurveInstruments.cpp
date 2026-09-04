@@ -91,10 +91,10 @@ namespace etrading
 
 				if (isDate_str == "TRUE")
 				{
-					const AQLDate& startdate = AQLDateScheduleHelpers::getLADate(fraRates[i][3]);
+					const AQLDate& startdate = AQLDateScheduleHelpers::getAQLDate(fraRates[i][3]);
 					AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 					fraMarketStream += "," + startdate_str;
-					const AQLDate& enddate = AQLDateScheduleHelpers::getLADate(fraRates[i][4]);
+					const AQLDate& enddate = AQLDateScheduleHelpers::getAQLDate(fraRates[i][4]);
 					AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 					fraMarketStream += "," + enddate_str;
 				}

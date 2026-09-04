@@ -52,7 +52,7 @@ namespace validation
         etrading::validateKeysForLVB( tryMeProductSwapPVLVBKeys(), swapLVB.getKeys(), validateKeys );
 
         const std::string inputLVB = "SwapLVB";
-        AQLString curveCollection = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
+        AQLString curveCollection = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -65,8 +65,8 @@ namespace validation
 
         //----------------------------------------------------------------------------------
         // Validate non-cash flow related parameters
-        AQLString forecastCurveIndex	= swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
-        AQLString discountCurveIndex = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+        AQLString forecastCurveIndex	= swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
+        AQLString discountCurveIndex = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, discountCurveIndex );
@@ -79,7 +79,7 @@ namespace validation
         // Validate swap trade specific parameters
 
         // Payer or Receiver Swap i.e. Pay or Receive Fixed Coupons
-        AQLString payRec	= swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE , inputLVB );
+        AQLString payRec	= swapLVB.getCompulsoryValueAsAQLStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE , inputLVB );
         bool isFixedRatePayerSwap = etrading::validateSwapPayRecFlag( payRec );
 
 
@@ -103,7 +103,7 @@ namespace validation
         bool useFirstFixing = etrading::useFloatFixing( floatFirstFix );
         bool useLastFixing = etrading::useFloatFixing( floatLastFix );
 
-		const std::string fwdInter = swapLVB.getOptionalValueAsLAString( etrading::IRS_KEY::IS_FWD_INTER, "").getCString();
+		const std::string fwdInter = swapLVB.getOptionalValueAsAQLString( etrading::IRS_KEY::IS_FWD_INTER, "").getCString();
 
         // Get the Swap PV using the full swap definition for both legs of the swap
         etrading::FwdInterInfo info = etrading::getfwdInterInfo( curveCollection, forecastCurveStaticDataTable, etrading::toBooleanEnum(fwdInter) );
@@ -113,16 +113,16 @@ namespace validation
         double notional                         = swapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::NOTIONAL );
         double fixedRate                        = swapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FIXED_RATE );
         double floatSpread                      = swapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FLOAT_SPREAD );
-        AQLString fixedDayCount                  = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
-        AQLString floatDayCount                  = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
-		AQLString floatFrequency                 = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_FREQUENCY );
+        AQLString fixedDayCount                  = swapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FIXED_DAYCOUNT );
+        AQLString floatDayCount                  = swapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
+		AQLString floatFrequency                 = swapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FLOAT_FREQUENCY );
         
-        AQLString floatCalendar                  = swapLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of (etrading::IRS_KEY::CALENDAR)
+        AQLString floatCalendar                  = swapLVB.getOptionalValueAsAQLStringFromMultipleKeys(boost::assign::list_of (etrading::IRS_KEY::CALENDAR)
                                                                                                                             (etrading::IRS_KEY::ACCRUALCALENDAR)
                                                                                                                             (etrading::IRS_KEY::FLOAT_CALENDAR)
                                                                                                                             (etrading::IRS_KEY::FLOAT_ACCRUALCALENDAR) );
 
-		AQLString floatBusinessDayAdjustment     = swapLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(etrading::IRS_KEY::BUSINESSDAYADJUSTMENT)
+		AQLString floatBusinessDayAdjustment     = swapLVB.getOptionalValueAsAQLStringFromMultipleKeys( boost::assign::list_of(etrading::IRS_KEY::BUSINESSDAYADJUSTMENT)
                                                                                                                             (etrading::IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT)
                                                                                                                             (etrading::IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT)
                                                                                                                             (etrading::IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT) );

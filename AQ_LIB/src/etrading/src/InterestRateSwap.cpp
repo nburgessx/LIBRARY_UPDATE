@@ -27,10 +27,10 @@ namespace etrading
 
         // compulsory
         notional_		                        = swapLVB.getCompulsoryValueAsDouble(      IRS_KEY::NOTIONAL,                               nameCollectionName         );
-        effectiveDate_	                        = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::EFFECTIVE_DATE,                         nameCollectionName         );
-        maturityDate_				            = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::MATURITY_DATE,                          nameCollectionName         );
+        effectiveDate_	                        = swapLVB.getCompulsoryValueAsAQLString(    IRS_KEY::EFFECTIVE_DATE,                         nameCollectionName         );
+        maturityDate_				            = swapLVB.getCompulsoryValueAsAQLString(    IRS_KEY::MATURITY_DATE,                          nameCollectionName         );
         
-        AQLString payRec	                        = swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE, nameCollectionName );
+        AQLString payRec	                        = swapLVB.getCompulsoryValueAsAQLStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE, nameCollectionName );
         isPayerSwap_	                        = validateSwapPayRecFlag(              payRec                                                                           );
 
 
@@ -39,27 +39,27 @@ namespace etrading
 
         // Compulsory
         fixedRate_				                = swapLVB.getCompulsoryValueAsDouble(       IRS_KEY::FIXED_RATE,                            nameCollectionName         );
-        fixedFrequency_			                = swapLVB.getCompulsoryValueAsLAString(     IRS_KEY::FIXED_FREQUENCY,                       nameCollectionName         );
-        fixedDayCount_			                = swapLVB.getCompulsoryValueAsLAString(     IRS_KEY::FIXED_DAYCOUNT,                        nameCollectionName         );
+        fixedFrequency_			                = swapLVB.getCompulsoryValueAsAQLString(     IRS_KEY::FIXED_FREQUENCY,                       nameCollectionName         );
+        fixedDayCount_			                = swapLVB.getCompulsoryValueAsAQLString(     IRS_KEY::FIXED_DAYCOUNT,                        nameCollectionName         );
 
         // Optional
-        fixedStubType_			                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_STUBTYPE                                                     );
-        fixedFirstStubDate_		                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_FIRSTSTUBDATE                                                );
-        fixedLastStubDate_		                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_LASTSTUBDATE                                                 );
-        fixedPaymentLag_		                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTLAG,                      "0D"                        );
-        fixedRollDayString_		                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_ROLLDAY                                                      );
+        fixedStubType_			                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_STUBTYPE                                                     );
+        fixedFirstStubDate_		                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_FIRSTSTUBDATE                                                );
+        fixedLastStubDate_		                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_LASTSTUBDATE                                                 );
+        fixedPaymentLag_		                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_PAYMENTLAG,                      "0D"                        );
+        fixedRollDayString_		                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FIXED_ROLLDAY                                                      );
         // Business Day Adjustments
         // ------------------------
         // Note: We can choose to use a single business day adjustment and calendar for the fixed leg or specify the accrual and payment business
         // day adjustments individually. If the individual business day adjustments and calendars are missing the global one will be used. An error will
         // be thrown if none of these are specified, requesting at the mimimum that we populate the global parameters.
 
-        fixedBusinessDayAdjustment_             = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT                                        );
-        fixedCalendar_	                        = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FIXED_CALENDAR                                                     );
-        fixedAccrualBusinessDayAdjustment_      = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment_ );
-        fixedAccrualCalendar_	                = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FIXED_ACCRUALCALENDAR,                 fixedCalendar_              );
-        fixedPaymentBusinessDayAdjustment_      = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FIXED_PAYMENTBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment_ );
-        fixedPaymentCalendar_	                = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FIXED_PAYMENTCALENDAR,                 fixedCalendar_              );
+        fixedBusinessDayAdjustment_             = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT                                        );
+        fixedCalendar_	                        = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FIXED_CALENDAR                                                     );
+        fixedAccrualBusinessDayAdjustment_      = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment_ );
+        fixedAccrualCalendar_	                = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FIXED_ACCRUALCALENDAR,                 fixedCalendar_              );
+        fixedPaymentBusinessDayAdjustment_      = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FIXED_PAYMENTBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment_ );
+        fixedPaymentCalendar_	                = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FIXED_PAYMENTCALENDAR,                 fixedCalendar_              );
 
         if ( fixedAccrualBusinessDayAdjustment_.size() == 0 || fixedPaymentBusinessDayAdjustment_.size() == 0 )
         {
@@ -75,34 +75,34 @@ namespace etrading
         // Float leg parameters
 
         // Compulsory
-        floatFrequency_			                = swapLVB.getCompulsoryValueAsLAString(     IRS_KEY::FLOAT_FREQUENCY,                       nameCollectionName         );
-        floatDayCount_			                = swapLVB.getCompulsoryValueAsLAString(     IRS_KEY::FLOAT_DAYCOUNT,                        nameCollectionName         );
+        floatFrequency_			                = swapLVB.getCompulsoryValueAsAQLString(     IRS_KEY::FLOAT_FREQUENCY,                       nameCollectionName         );
+        floatDayCount_			                = swapLVB.getCompulsoryValueAsAQLString(     IRS_KEY::FLOAT_DAYCOUNT,                        nameCollectionName         );
 
 
         // Optional
-        floatStubType_			                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_STUBTYPE                                                     );
-        floatFirstStubDate_		                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIRSTSTUBDATE                                                );
-        floatLastStubDate_		                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_LASTSTUBDATE                                                 );
-        floatPaymentLag_		                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTLAG,                      "0D"                        );
-        floatFixingLag_			                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIXINGLAG,                       "0D"                        );
+        floatStubType_			                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_STUBTYPE                                                     );
+        floatFirstStubDate_		                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_FIRSTSTUBDATE                                                );
+        floatLastStubDate_		                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_LASTSTUBDATE                                                 );
+        floatPaymentLag_		                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_PAYMENTLAG,                      "0D"                        );
+        floatFixingLag_			                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_FIXINGLAG,                       "0D"                        );
         floatFirstFixing_		                = swapLVB.getOptionalValueAsDouble(        IRS_KEY::FLOAT_FIRSTFIXING, std::numeric_limits<double>::quiet_NaN()        );
         floatLastFixing_		                = swapLVB.getOptionalValueAsDouble(        IRS_KEY::FLOAT_LASTFIXING, std::numeric_limits<double>::quiet_NaN()         );
         floatSpread_			                = swapLVB.getOptionalValueAsDouble(        IRS_KEY::FLOAT_SPREAD                                                       );
-        floatRollDayString_		                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_ROLLDAY                                                      );
+        floatRollDayString_		                = swapLVB.getOptionalValueAsAQLString(      IRS_KEY::FLOAT_ROLLDAY                                                      );
         // Business Day Adjustments
         // ------------------------
         // Note: We can choose to use a single business day adjustment and calendar for the float leg or specify the fixing, accrual and payment business
         // day adjustments individually. If the individual business day adjustments and calendars are missing the global one will be used. An error will
         // be thrown if none of these are specified, requesting at the mimimum that we populate the global parameters.
 
-        floatBusinessDayAdjustment_             = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT                                        );
-        floatCalendar_	                        = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FLOAT_CALENDAR                                                     );
-        floatFixingBusinessDayAdjustment_       = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FLOAT_FIXINGBUSINESSDAYADJUSTMENT,     floatBusinessDayAdjustment_ );
-        floatFixingCalendar_	                = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FLOAT_FIXINGCALENDAR,                  floatCalendar_              );
-        floatAccrualBusinessDayAdjustment_      = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment_ );
-        floatAccrualCalendar_	                = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FLOAT_ACCRUALCALENDAR,                 floatCalendar_              );
-        floatPaymentBusinessDayAdjustment_      = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FLOAT_PAYMENTBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment_ );
-        floatPaymentCalendar_	                = swapLVB.getOptionalValueAsLAString(       IRS_KEY::FLOAT_PAYMENTCALENDAR,                 floatCalendar_              );
+        floatBusinessDayAdjustment_             = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT                                        );
+        floatCalendar_	                        = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FLOAT_CALENDAR                                                     );
+        floatFixingBusinessDayAdjustment_       = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FLOAT_FIXINGBUSINESSDAYADJUSTMENT,     floatBusinessDayAdjustment_ );
+        floatFixingCalendar_	                = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FLOAT_FIXINGCALENDAR,                  floatCalendar_              );
+        floatAccrualBusinessDayAdjustment_      = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment_ );
+        floatAccrualCalendar_	                = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FLOAT_ACCRUALCALENDAR,                 floatCalendar_              );
+        floatPaymentBusinessDayAdjustment_      = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FLOAT_PAYMENTBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment_ );
+        floatPaymentCalendar_	                = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FLOAT_PAYMENTCALENDAR,                 floatCalendar_              );
 
         if ( floatFixingBusinessDayAdjustment_.size() == 0 || floatAccrualBusinessDayAdjustment_.size() == 0 || floatPaymentBusinessDayAdjustment_.size() == 0 )
         {
@@ -161,9 +161,9 @@ namespace etrading
     */
     void InterestRateSwap::setMarketData( const LabelValueBlock& marketDataLVB )
     {
-        curveSet_		= marketDataLVB.getCompulsoryValueAsLAString( MARKET_KEY::CURVE_COLLECTION, "CurveCollections", false );
-        forecastCurve_	= marketDataLVB.getCompulsoryValueAsLAString( MARKET_KEY::FORECAST_CURVE, "CurveCollections", false );
-        discountCurve_	= marketDataLVB.getCompulsoryValueAsLAString( MARKET_KEY::DISCOUNT_CURVE, "CurveCollections", false );
+        curveSet_		= marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::CURVE_COLLECTION, "CurveCollections", false );
+        forecastCurve_	= marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::FORECAST_CURVE, "CurveCollections", false );
+        discountCurve_	= marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::DISCOUNT_CURVE, "CurveCollections", false );
 
         if ( forecastCurve_.size() == 0 )
         {

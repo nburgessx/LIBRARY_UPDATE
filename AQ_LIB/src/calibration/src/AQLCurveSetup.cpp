@@ -113,7 +113,7 @@ setUpBasisCurve
 
 	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	AQLDate asofdate = AQLMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate = AQLMathDateUtilities::getAQLDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
     AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	AQLString currency;
 	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
@@ -366,7 +366,7 @@ setUpFwdFXConstantCurve
 
 	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	AQLDate asofdate = AQLMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate = AQLMathDateUtilities::getAQLDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
     AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	AQLString currency;
 	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
@@ -505,7 +505,7 @@ setUpSwapCurve
 
 	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	AQLDate asofdate	= AQLMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate	= AQLMathDateUtilities::getAQLDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	AQLString currency;
 	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
@@ -972,7 +972,7 @@ SetUpArbFreeCurve
 	
 	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	AQLDate asofdate	= AQLMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate	= AQLMathDateUtilities::getAQLDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	AQLString currency;
 	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
@@ -1457,7 +1457,7 @@ const AQLStringMatrix& swapConv
 	
 	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	AQLDate asofdate	= AQLMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate	= AQLMathDateUtilities::getAQLDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	AQLString currency;
 	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
@@ -1583,10 +1583,10 @@ const AQLStringMatrix& swapConv
 
 			if (oisRates[i].size() == 5)
 			{
-				const AQLDate& startdate = AQLMathDateUtilities::getLADate(oisRates[i][2]);
+				const AQLDate& startdate = AQLMathDateUtilities::getAQLDate(oisRates[i][2]);
 				AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				fedFundFutureStream += "," + startdate_str;
-				const AQLDate& enddate = AQLMathDateUtilities::getLADate(oisRates[i][3]);
+				const AQLDate& enddate = AQLMathDateUtilities::getAQLDate(oisRates[i][3]);
 				AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				fedFundFutureStream += "," + enddate_str;
 			}
@@ -1617,10 +1617,10 @@ const AQLStringMatrix& swapConv
 				double oisRate = oisRates[i][1].getDoubleValue() * 100.0;
 				oisStream += "," + AQLString(oisRate);
 
-				const AQLDate& startdate = AQLMathDateUtilities::getLADate(oisRates[i][2]);
+				const AQLDate& startdate = AQLMathDateUtilities::getAQLDate(oisRates[i][2]);
 				AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				oisStream += "," + startdate_str;
-				const AQLDate& enddate = AQLMathDateUtilities::getLADate(oisRates[i][3]);
+				const AQLDate& enddate = AQLMathDateUtilities::getAQLDate(oisRates[i][3]);
 				AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				oisStream += "," + enddate_str;
 			}
@@ -1675,7 +1675,7 @@ const AQLStringMatrix& swapConv
 	AQLString histStream;
 	for(size_t i=0; i<histRates.size(); i++)
 	{
-		const AQLDate& histdate = AQLMathDateUtilities::getLADate(histRates[i][0]);
+		const AQLDate& histdate = AQLMathDateUtilities::getAQLDate(histRates[i][0]);
 		AQLString histdate_str = histdate.stringWithFormat("YYYYMMDD");
 		histStream += histdate_str;
 		double histRate = histRates[i][1].getDoubleValue() * 100.0;
@@ -2195,10 +2195,10 @@ AQLCurveSetup::createFutureStream(const AQLStringMatrix& future_rates, AQLString
         else if (future_rates[i].size() <= 6)
         {
             futureStream += future_rates[i][0];
-            const AQLDate& startdate = AQLMathDateUtilities::getLADate(future_rates[i][1]);
+            const AQLDate& startdate = AQLMathDateUtilities::getAQLDate(future_rates[i][1]);
             AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
             futureStream += "," + startdate_str;
-            const AQLDate& enddate = AQLMathDateUtilities::getLADate(future_rates[i][2]);
+            const AQLDate& enddate = AQLMathDateUtilities::getAQLDate(future_rates[i][2]);
             AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
             futureStream += "," + enddate_str;
             double futureRate = future_rates[i][3].getDoubleValue();

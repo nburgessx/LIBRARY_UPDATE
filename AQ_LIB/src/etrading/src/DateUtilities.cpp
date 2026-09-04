@@ -670,7 +670,7 @@ namespace etrading
     // returns a date string "YYYYMMDD" from an AQLDate
     std::string toYYYYMMDDFromDate( const AQLDate& date )
     {
-        boost::gregorian::date gregorianDate = toGregorianDateFromLADate( date );
+        boost::gregorian::date gregorianDate = toGregorianDateFromAQLDate( date );
         std::string dateString = toYYYYMMDDFromGregorianDate( gregorianDate );
         return dateString;
     }
@@ -680,7 +680,7 @@ namespace etrading
         return boost::gregorian::from_undelimited_string( inputDate );
     } ;
 
-    boost::gregorian::date toGregorianDateFromLADate( const AQLDate& mbd )
+    boost::gregorian::date toGregorianDateFromAQLDate( const AQLDate& mbd )
     {
         return boost::gregorian::date( mbd.yearOfEra(), mbd.monthOfYear(), mbd.dayOfMonth() );
     };
@@ -958,7 +958,7 @@ namespace etrading
 
         for( size_t i = 0; i< inputMatrix.size(); ++i )
         {
-            dateOutput[i]   = etrading::AQLDateScheduleHelpers::getLADate( inputMatrix[i][0].getCString() );
+            dateOutput[i]   = etrading::AQLDateScheduleHelpers::getAQLDate( inputMatrix[i][0].getCString() );
             char * pFirstNonNumber;
             valueOutput[i]  = std::strtod( inputMatrix[i][1].getCString(), &pFirstNonNumber );
             

@@ -40,7 +40,7 @@ namespace etrading
             
 			AQLDate paymentDate = lvb.getOptionalValueAsDate( CASHFLOW_KEY::PAYMENT_DATE);
 			double amount = lvb.getOptionalValueAsDouble( FEE_KEY::AMOUNT);
-			PayReceiveEnum payReceive = toPayReceiveEnum(lvb.getOptionalValueAsLAString( IRS_KEY::PAY_RECEIVE).getCString());
+			PayReceiveEnum payReceive = toPayReceiveEnum(lvb.getOptionalValueAsAQLString( IRS_KEY::PAY_RECEIVE).getCString());
 
             //Ignore the blank line
             if (paymentDate != AQLDate())

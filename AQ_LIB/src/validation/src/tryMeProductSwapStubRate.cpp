@@ -31,36 +31,36 @@ namespace
 		etrading::validateKeysForLVB( validation::tryMeProductSwapStubRateLVBKeys(), swapLVB.getKeys(), validateKeys );
         
         const std::string inputLVB              = "SwapLVB";
-        AQLString curveCollection                = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
+        AQLString curveCollection                = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
 
         // Get and Validate Label Value Block Inputs
         // --------------------------------------------------------------------------------------------------------
         AQLDate effectiveDate	                = swapLVB.getCompulsoryValueAsDate( etrading::IRS_KEY::EFFECTIVE_DATE, inputLVB );
-        AQLString maturityDateString             = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::MATURITY_DATE, inputLVB );
+        AQLString maturityDateString             = swapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::MATURITY_DATE, inputLVB );
 
-        AQLString floatLegFreq			        = swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_FREQUENCY, etrading::IRS_KEY::FREQUENCY, inputLVB );
-        AQLString floatLegDayCount			    = swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_DAYCOUNT, etrading::IRS_KEY::DAYCOUNT, inputLVB );
+        AQLString floatLegFreq			        = swapLVB.getCompulsoryValueAsAQLStringFromKeys( etrading::IRS_KEY::FLOAT_FREQUENCY, etrading::IRS_KEY::FREQUENCY, inputLVB );
+        AQLString floatLegDayCount			    = swapLVB.getCompulsoryValueAsAQLStringFromKeys( etrading::IRS_KEY::FLOAT_DAYCOUNT, etrading::IRS_KEY::DAYCOUNT, inputLVB );
 
-        AQLString floatCalendar                  = swapLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(etrading::IRS_KEY::CALENDAR)
+        AQLString floatCalendar                  = swapLVB.getOptionalValueAsAQLStringFromMultipleKeys(boost::assign::list_of(etrading::IRS_KEY::CALENDAR)
                                                                                                                            (etrading::IRS_KEY::ACCRUALCALENDAR)
                                                                                                                            (etrading::IRS_KEY::FLOAT_CALENDAR)
                                                                                                                            (etrading::IRS_KEY::FLOAT_ACCRUALCALENDAR) );
 
-        AQLString floatBusinessDayAdjustment     = swapLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(etrading::IRS_KEY::BUSINESSDAYADJUSTMENT)
+        AQLString floatBusinessDayAdjustment     = swapLVB.getOptionalValueAsAQLStringFromMultipleKeys(boost::assign::list_of(etrading::IRS_KEY::BUSINESSDAYADJUSTMENT)
                                                                                                                            (etrading::IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT)
                                                                                                                            (etrading::IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT)
                                                                                                                            (etrading::IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT) );
 
-        AQLString floatLegFixLag			        = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_FIXINGLAG, "0D" );
-        AQLString firstStubDate		            = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_FIRSTSTUBDATE, etrading::IRS_KEY::FIRSTSTUBDATE );
-        AQLString lastStubDate		            = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_LASTSTUBDATE, etrading::IRS_KEY::LASTSTUBDATE );
-        AQLString stubType			            = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_STUBTYPE, etrading::IRS_KEY::STUBTYPE );
-        AQLString floatLegRollDayString		    = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_ROLLDAY, etrading::IRS_KEY::ROLLDAY );
+        AQLString floatLegFixLag			        = swapLVB.getOptionalValueAsAQLStringFromKeys( etrading::IRS_KEY::FLOAT_FIXINGLAG, "0D" );
+        AQLString firstStubDate		            = swapLVB.getOptionalValueAsAQLStringFromKeys( etrading::IRS_KEY::FLOAT_FIRSTSTUBDATE, etrading::IRS_KEY::FIRSTSTUBDATE );
+        AQLString lastStubDate		            = swapLVB.getOptionalValueAsAQLStringFromKeys( etrading::IRS_KEY::FLOAT_LASTSTUBDATE, etrading::IRS_KEY::LASTSTUBDATE );
+        AQLString stubType			            = swapLVB.getOptionalValueAsAQLStringFromKeys( etrading::IRS_KEY::FLOAT_STUBTYPE, etrading::IRS_KEY::STUBTYPE );
+        AQLString floatLegRollDayString		    = swapLVB.getOptionalValueAsAQLStringFromKeys( etrading::IRS_KEY::FLOAT_ROLLDAY, etrading::IRS_KEY::ROLLDAY );
 
-        AQLString interpolation                  = swapLVB.getOptionalValueAsLAString( etrading::PRICING_PARAMS::INTERPOLATION, "SPLINE" );
-        AQLString useCurveIndex		            = swapLVB.getOptionalValueAsLAString( etrading::SWAP_STUB::USE_CURVE_INDEX );
-        AQLString toleranceTenor		            = swapLVB.getOptionalValueAsLAString( etrading::SWAP_STUB::STUB_TOLERANCE, "0D" );
+        AQLString interpolation                  = swapLVB.getOptionalValueAsAQLString( etrading::PRICING_PARAMS::INTERPOLATION, "SPLINE" );
+        AQLString useCurveIndex		            = swapLVB.getOptionalValueAsAQLString( etrading::SWAP_STUB::USE_CURVE_INDEX );
+        AQLString toleranceTenor		            = swapLVB.getOptionalValueAsAQLString( etrading::SWAP_STUB::STUB_TOLERANCE, "0D" );
 		// --------------------------------------------------------------------------------------------------------
 
         AQLDate maturityDate	                    = etrading::validateMaturityDate( effectiveDate, maturityDateString);

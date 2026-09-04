@@ -75,7 +75,7 @@ namespace etrading
 		auto valueTypeStr = modelProperties.getOptionalValue(SABR_MARKETDATA_PROPERTIES_KEY::VALUE_TYPE,"");
 		valueType_ = toSabrMarketDataValueTypeEnum(modelProperties.getOptionalValue(SABR_MARKETDATA_PROPERTIES_KEY::VALUE_TYPE, toString(ABSOLUTE_SABR_VALUETYPE)));
 
-		auto mat = getLAStringMatrixFromFreeObject(freeObject_, toString(SABR_MKTDATA));
+		auto mat = getAQLStringMatrixFromFreeObject(freeObject_, toString(SABR_MKTDATA));
 
 		DoubleVector tenorVec, expiryVec;
 		AQLStringVector tenorStr, expiryStr;
@@ -171,8 +171,8 @@ namespace etrading
 	 */
 	LabelValueBlock SabrMarketData::toLabelValueBlock( const std::string& marketDataKey, const bool trimBlankRows ) const
     {
-        // Reuse the above toLAStringMtrix() method
-        const AQLStringMatrix laStringMatrix = getLAStringMatrixFromFreeObject(freeObject_, marketDataKey, trimBlankRows); 
+        // Reuse the above toAQLStringMtrix() method
+        const AQLStringMatrix laStringMatrix = getAQLStringMatrixFromFreeObject(freeObject_, marketDataKey, trimBlankRows); 
         const LabelValueBlock LVB( laStringMatrix );
 		return LVB;
     }

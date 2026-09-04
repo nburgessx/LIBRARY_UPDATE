@@ -1027,7 +1027,7 @@ namespace validation
         // Load the Credit Model and Discount Curve
         auto creditModel                    = etrading::getCreditModel( creditModelName );
         std::string curveCollection         = creditModel->getCDSCurveCollection();
-        AQLString curveCollectionAsLAString  = AQLString( curveCollection.c_str() );
+        AQLString curveCollectionAsAQLString  = AQLString( curveCollection.c_str() );
 
 
         // Discount Factor Calculation
@@ -1038,10 +1038,10 @@ namespace validation
         AQLString interp;
         AQLString busdayAdj( "NO_CHANGE" );
         AQLString calendar;
-        populateDiscountFactorConventions( curveCollectionAsLAString, curveIndex, interp, busdayAdj, calendar );
+        populateDiscountFactorConventions( curveCollectionAsAQLString, curveIndex, interp, busdayAdj, calendar );
 
         // Get the Spot Discount Factors
-        DoubleVector discountFactors = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates, etrading::getDataInstance(), curveCollectionAsLAString, getDayCount(), busdayAdj, calendar, interp, isBasisFlag(), curveIndex );
+        DoubleVector discountFactors = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates, etrading::getDataInstance(), curveCollectionAsAQLString, getDayCount(), busdayAdj, calendar, interp, isBasisFlag(), curveIndex );
         AQ_REQUIRE( discountFactors.size() > 0, "No discount factors have been returned" );
         AQ_REQUIRE( discountFactors.size() == paymentDates.size(), "Number of discount factors and payment dates do not match." )
 

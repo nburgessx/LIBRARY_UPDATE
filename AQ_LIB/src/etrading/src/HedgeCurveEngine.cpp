@@ -119,7 +119,7 @@ namespace etrading
 		const LabelValueBlock marketDataPropertiesLVB = lwoHedgeCurveMarketData->toLabelValueBlock( GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES );
 		const std::string marketDataAsOfDate          = marketDataPropertiesLVB.getCompulsoryValue( "AsOfDate" );
 
-		AQLDate asOfDate( AQLDateScheduleHelpers::getLADate( marketDataAsOfDate.c_str() ) );
+		AQLDate asOfDate( AQLDateScheduleHelpers::getAQLDate( marketDataAsOfDate.c_str() ) );
 		AQLDate effectiveDate = getSwapEffectiveDateFromCurve( lwoHedgeCurveGenerator, asOfDate );
 
 		/* 

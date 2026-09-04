@@ -148,7 +148,7 @@ namespace etrading
 	*  @param [in]  throwIfMissing	Whether to throw an exception if the specified propertyKey is missing. Default behaviour is to throw.
 	*  @returns		A VariantMatrix containing the data specified by propertyKey
 	*/
-	AQLStringMatrix getLAStringMatrixFromFreeObject( const FreeObject& freeObject, const std::string& propertyKey, const bool trimBlankRows = true, const bool throwIfMissing = true);
+	AQLStringMatrix getAQLStringMatrixFromFreeObject( const FreeObject& freeObject, const std::string& propertyKey, const bool trimBlankRows = true, const bool throwIfMissing = true);
     
     /* @brief Returns a StandardStringMatrix containing the configuration information for the specified propertyKey
 	*  @param [in]	freeObject		The object containing blocks of data indexed by propertyKey
@@ -159,19 +159,19 @@ namespace etrading
     StandardStringMatrix getStandardStringMatrixFromFreeObject( const FreeObject& freeObject, const std::string& propertyKey, const bool trimBlankRows = true );
 
 	// Function to trim a LA String Vector and remove blanks
-	AQLStringVector trimLAStringVector(const AQLStringVector & inputVector);
+	AQLStringVector trimAQLStringVector(const AQLStringVector & inputVector);
 	
 	// Function to trim a Standard String Vector and remove blanks
 	StandardStringVector trimStandardStringVector(const StandardStringVector & inputVector);
 
     // Function to trim a LA String Matrix and remove blanks
-	AQLStringMatrix trimLAStringMatrix(const AQLStringMatrix & inputMatrix);
+	AQLStringMatrix trimAQLStringMatrix(const AQLStringMatrix & inputMatrix);
 	
 	// Function to trim a Standard String Matrix and remove blanks
 	StandardStringMatrix trimStandardStringMatrix(const StandardStringMatrix & inputMatrix);
 
 	// Function to convert a AQLStringMatrix to a VariantMatrix
-	etrading::VariantMatrix convertLAStringMatrixToVariantMatrix( AQLStringMatrix stringMatrix );
+	etrading::VariantMatrix convertAQLStringMatrixToVariantMatrix( AQLStringMatrix stringMatrix );
 
 	// Function to convert a Standard StringMatrix to a VariantMatrix
 	etrading::VariantMatrix convertStandardStringMatrixToVariantMatrix( StandardStringMatrix stringMatrix );

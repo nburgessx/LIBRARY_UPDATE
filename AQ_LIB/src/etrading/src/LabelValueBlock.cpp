@@ -16,7 +16,7 @@ namespace etrading
     LabelValueBlock::LabelValueBlock( const AQLStringMatrix& input, const bool& makeAllKeysUppercase )
     {
         // Call Native Constructor/Initializer
-        initializefromLAStringMatrix( input, makeAllKeysUppercase );
+        initializefromAQLStringMatrix( input, makeAllKeysUppercase );
     }
 
     LabelValueBlock::LabelValueBlock( const StandardStringMatrix& input, const bool& makeAllKeysUppercase )
@@ -37,7 +37,7 @@ namespace etrading
         stringMatrix[0] = stringVector;
 
         // Call Native Constructor/Initializer
-        initializefromLAStringMatrix( stringMatrix, makeAllKeysUppercase );
+        initializefromAQLStringMatrix( stringMatrix, makeAllKeysUppercase );
     }
     
     LabelValueBlock::LabelValueBlock( const StandardString & key, const StandardString & value, const bool& makeAllKeysUppercase )
@@ -52,8 +52,8 @@ namespace etrading
         stringMatrix[0] = stringVector;
 
         // Call Native Constructor/Initializer
-        AQLStringMatrix laStringMatrix  = convertToLAStringMatrix( stringMatrix );
-        initializefromLAStringMatrix( laStringMatrix, makeAllKeysUppercase );
+        AQLStringMatrix laStringMatrix  = convertToAQLStringMatrix( stringMatrix );
+        initializefromAQLStringMatrix( laStringMatrix, makeAllKeysUppercase );
     }
 
     LabelValueBlock::LabelValueBlock( const AQLStringVector & keys, const AQLStringVector & values, const bool& makeAllKeysUppercase )
@@ -74,7 +74,7 @@ namespace etrading
         }
 
         // Call Native Constructor/Initializer
-        initializefromLAStringMatrix( stringMatrix, makeAllKeysUppercase );
+        initializefromAQLStringMatrix( stringMatrix, makeAllKeysUppercase );
     }
 
     LabelValueBlock::LabelValueBlock( const StandardStringVector & keys, const StandardStringVector & values, const bool& makeAllKeysUppercase )
@@ -119,8 +119,8 @@ namespace etrading
         const AQLStringMatrix appendMatrix( 1, inputVector );
 
         // Call Native Constructor/Initializer using Combined Matrix
-        AQLStringMatrix combinedStringMatrix = combineLAStringMatrices( originalLVB.toAQLStringMatrix(), appendMatrix );
-        initializefromLAStringMatrix( combinedStringMatrix, makeAllKeysUppercase );
+        AQLStringMatrix combinedStringMatrix = combineAQLStringMatrices( originalLVB.toAQLStringMatrix(), appendMatrix );
+        initializefromAQLStringMatrix( combinedStringMatrix, makeAllKeysUppercase );
     }
     
     LabelValueBlock::LabelValueBlock( const LabelValueBlock& originalLVB, const AQLStringVector& appendKeys, const AQLStringVector& appendValues, const bool& makeAllKeysUppercase )
@@ -141,8 +141,8 @@ namespace etrading
         }
 
         // Call Native Constructor/Initializer using Combined Matrix
-        AQLStringMatrix combinedStringMatrix = combineLAStringMatrices( originalLVB.toAQLStringMatrix(), appendMatrix );
-        initializefromLAStringMatrix( combinedStringMatrix, makeAllKeysUppercase );
+        AQLStringMatrix combinedStringMatrix = combineAQLStringMatrices( originalLVB.toAQLStringMatrix(), appendMatrix );
+        initializefromAQLStringMatrix( combinedStringMatrix, makeAllKeysUppercase );
     }
     
     LabelValueBlock::LabelValueBlock( const LabelValueBlock& originalLVB, const StandardString& appendKey, const StandardString& appendValue, const bool& makeAllKeysUppercase )
@@ -180,7 +180,7 @@ namespace etrading
     }
 
     // Static Helper: std::string Constructor to build a label value block with a single key and value
-    LabelValueBlock LabelValueBlock::createLabelValueBlockUsingLAString( const AQLString& key, const AQLString& value, const bool& makeAllKeysUppercase )
+    LabelValueBlock LabelValueBlock::createLabelValueBlockUsingAQLString( const AQLString& key, const AQLString& value, const bool& makeAllKeysUppercase )
     {
         // Build a string vector with the string input specified twice, once as LVB key and once for the LVB value
         AQLStringVector inputVector( 2 );
@@ -198,7 +198,7 @@ namespace etrading
     LabelValueBlock LabelValueBlock::createLabelValueBlock( const std::string& key, const std::string& value, const bool& makeAllKeysUppercase )
     {
         // Call the Label Value Block AQLString LVB helper above
-        return createLabelValueBlockUsingLAString( key.c_str(), value.c_str(), makeAllKeysUppercase );
+        return createLabelValueBlockUsingAQLString( key.c_str(), value.c_str(), makeAllKeysUppercase );
     }
 
     /* @brief	Check if a Label Value Block is empty
@@ -354,7 +354,7 @@ namespace etrading
     */
     double LabelValueBlock::getCompulsoryValueAsDouble( const std::string& key, const std::string& labelValueBlockName ) const
     {
-        AQLString value = getCompulsoryValueAsLAString( key, labelValueBlockName );
+        AQLString value = getCompulsoryValueAsAQLString( key, labelValueBlockName );
         double ret = StringToNumber<double>( value.getCString() );
         return ret;
     }
@@ -366,7 +366,7 @@ namespace etrading
 	*/
 	int LabelValueBlock::getCompulsoryValueAsInt(const std::string& key, const std::string& labelValueBlockName) const
 	{
-		AQLString value = getCompulsoryValueAsLAString(key, labelValueBlockName);
+		AQLString value = getCompulsoryValueAsAQLString(key, labelValueBlockName);
 		double ret = StringToNumber<int>(value.getCString());
 		return ret;
 	}
@@ -397,7 +397,7 @@ namespace etrading
     */
     AQLDate LabelValueBlock::getCompulsoryValueAsDate( const std::string& key, const std::string& labelValueBlockName ) const
     {
-        AQLString value = getCompulsoryValueAsLAString( key, labelValueBlockName );
+        AQLString value = getCompulsoryValueAsAQLString( key, labelValueBlockName );
         AQLDate ret = stringToDate( value.getCString(), "" );
         return ret;
     }
@@ -431,7 +431,7 @@ namespace etrading
     */
     AQLDate LabelValueBlock::getCompulsoryDateOrTenorAsDate( const std::string& key, const AQLDate& referenceDate, const std::string& labelValueBlockName ) const
     {
-        AQLString value = getCompulsoryValueAsLAString( key, labelValueBlockName );
+        AQLString value = getCompulsoryValueAsAQLString( key, labelValueBlockName );
         AQLDate ret = validateMaturityDate( referenceDate, value );
         return ret;
     }
@@ -477,7 +477,7 @@ namespace etrading
     */
     bool LabelValueBlock::getCompulsoryValueAsBool( const std::string& key, const std::string& labelValueBlockName ) const
     {
-        AQLString value = getCompulsoryValueAsLAString( key, labelValueBlockName );
+        AQLString value = getCompulsoryValueAsAQLString( key, labelValueBlockName );
 
         bool ret = false;
         if ( value.toUpper() == "TRUE" )
@@ -503,7 +503,7 @@ namespace etrading
     *  @param [in]	defaultVal	Default value for the key
     *  @return		Value in AQLString type
     */
-    AQLString LabelValueBlock::getOptionalValueAsLAString( const std::string& key, const AQLString& defaultVal) const
+    AQLString LabelValueBlock::getOptionalValueAsAQLString( const std::string& key, const AQLString& defaultVal) const
     {
 		std::string value = getOptionalValueAsString(key, defaultVal.getCString());
 		
@@ -534,7 +534,7 @@ namespace etrading
     *  @param [in]	upperCase	    Return an upper case string
     *  @return		Value in AQLString type
     */
-    AQLString LabelValueBlock::getCompulsoryValueAsLAString( const std::string& key, const std::string& labelValueBlockName, bool makeKeyUppercase ) const
+    AQLString LabelValueBlock::getCompulsoryValueAsAQLString( const std::string& key, const std::string& labelValueBlockName, bool makeKeyUppercase ) const
     {
 		std::string value = getCompulsoryValueAsString(key, labelValueBlockName, makeKeyUppercase);
 
@@ -568,7 +568,7 @@ namespace etrading
     *  @param [in]	defaultVal	Default value for the key
     *  @return		Value in AQLString type
     */
-    AQLString LabelValueBlock::getOptionalValueAsLAStringFromKeys( const std::string& key1, const std::string& key2, const AQLString& defaultVal) const
+    AQLString LabelValueBlock::getOptionalValueAsAQLStringFromKeys( const std::string& key1, const std::string& key2, const AQLString& defaultVal) const
     {
         std::string value = getOptionalValueAsStringFromKeys( key1, key2, defaultVal.getCString());
         return value.c_str();
@@ -602,7 +602,7 @@ namespace etrading
     *  @param [in]	defaultVal	Default value for the key
     *  @return		Value in AQLString type
     */
-    AQLString LabelValueBlock::getOptionalValueAsLAStringFromMultipleKeys( const std::vector<std::string>& keys, const AQLString& defaultVal) const
+    AQLString LabelValueBlock::getOptionalValueAsAQLStringFromMultipleKeys( const std::vector<std::string>& keys, const AQLString& defaultVal) const
     {
         std::string value = getOptionalValueAsStringFromMultipleKeys(keys, defaultVal.getCString());
 
@@ -671,12 +671,12 @@ namespace etrading
     *  @param [in]	labelValueBlockName	        Name of the labelValueBlock
     *  @return		Value in AQLString type
     */
-    AQLString LabelValueBlock::getCompulsoryValueAsLAStringFromKeys(const std::string& key1, const std::string& key2, const std::string& labelValueBlockName) const
+    AQLString LabelValueBlock::getCompulsoryValueAsAQLStringFromKeys(const std::string& key1, const std::string& key2, const std::string& labelValueBlockName) const
     {
 
         checkForDuplicateKeys(boost::assign::list_of(key1)(key2));
 
-        std::string value = getOptionalValueAsLAStringFromKeys(key1, key2).getCString(); 
+        std::string value = getOptionalValueAsAQLStringFromKeys(key1, key2).getCString(); 
         if ( value.size() == 0 || value == "" )
         {
             std::stringstream s;
@@ -699,12 +699,12 @@ namespace etrading
     *  @param [in]	labelValueBlockName	        Name of the labelValueBlock
     *  @return		Value in AQLString type
     */
-    AQLString LabelValueBlock::getCompulsoryValueAsLAStringFromMultipleKeys( const std::vector<std::string>& keys, const std::string& labelValueBlockName) const
+    AQLString LabelValueBlock::getCompulsoryValueAsAQLStringFromMultipleKeys( const std::vector<std::string>& keys, const std::string& labelValueBlockName) const
     {
 
         checkForDuplicateKeys(keys);
 
-        std::string value = getOptionalValueAsLAStringFromMultipleKeys(keys).getCString(); 
+        std::string value = getOptionalValueAsAQLStringFromMultipleKeys(keys).getCString(); 
         if ( value.size() == 0 || value == "" )
         {
             std::stringstream s;
@@ -778,7 +778,7 @@ namespace etrading
     }
 
     // Private Helper Method to Construct a LVB from a AQLStringMatrix
-    void LabelValueBlock::initializefromLAStringMatrix( const AQLStringMatrix & input, const bool& makeAllKeysUppercase )
+    void LabelValueBlock::initializefromAQLStringMatrix( const AQLStringMatrix & input, const bool& makeAllKeysUppercase )
     {
         // Update Matrix Member Data
         laStringMatrix_         = input;
@@ -821,7 +821,7 @@ namespace etrading
     void LabelValueBlock::initializefromStandardStringMatrix( const StandardStringMatrix & input, const bool& makeAllKeysUppercase )
     {
         // Update Matrix Member Data
-        laStringMatrix_         = convertToLAStringMatrix( input );
+        laStringMatrix_         = convertToAQLStringMatrix( input );
         standardStringMatrix_   = input;
         
         // Build Label Value Block
@@ -951,7 +951,7 @@ namespace etrading
         return resultVector;
     }
     
-    AQLStringVector convertToLAStringVector( const StandardStringVector& standardStringVector )
+    AQLStringVector convertToAQLStringVector( const StandardStringVector& standardStringVector )
     {
         AQLStringVector resultVector( standardStringVector.size());
         for ( size_t i = 0; i < standardStringVector.size(); ++i )
@@ -973,12 +973,12 @@ namespace etrading
     }
     
     // Method to convert a StandardStringMatrix to a AQLStringMatrix
-    AQLStringMatrix convertToLAStringMatrix( const StandardStringMatrix & standardStringMatrix )
+    AQLStringMatrix convertToAQLStringMatrix( const StandardStringMatrix & standardStringMatrix )
     {
         AQLStringMatrix laStringMatrix( standardStringMatrix.size() );
         for( size_t i = 0; i < standardStringMatrix.size(); ++i)
         {
-            laStringMatrix[i] = convertToLAStringVector( standardStringMatrix[i] );
+            laStringMatrix[i] = convertToAQLStringVector( standardStringMatrix[i] );
         }
         return laStringMatrix;
     }
@@ -1005,7 +1005,7 @@ namespace etrading
     }
     
     // Method to concatinate two LA String Matrices
-    AQLStringMatrix combineLAStringMatrices( const AQLStringMatrix & matrix1, const AQLStringMatrix & matrix2 )
+    AQLStringMatrix combineAQLStringMatrices( const AQLStringMatrix & matrix1, const AQLStringMatrix & matrix2 )
     {
         AQLStringMatrix combinedMatrix( matrix1.size() + matrix2.size() );
 
@@ -1028,7 +1028,7 @@ namespace etrading
     // Helper Methods - Getting Values from LVB String Matrices
     // --------------------------------------------------------------------------------
     
-    AQLString searchLAStringMatrix( const AQLString & searchKey, const AQLStringMatrix & searchMatrix )
+    AQLString searchAQLStringMatrix( const AQLString & searchKey, const AQLStringMatrix & searchMatrix )
     {
         AQ_REQUIRE( searchMatrix.size() >0, "Unable to find lookup value: Thesearch matrix is empty" )
         

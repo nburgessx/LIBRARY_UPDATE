@@ -160,7 +160,7 @@ namespace etrading
 	*/
 	LabelValueBlock BondGenerator::toLabelValueBlock( const std::string& propertyKey ) const
 	{
-		AQLStringMatrix stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey );
+		AQLStringMatrix stringMatrix = getAQLStringMatrixFromFreeObject( freeObject_, propertyKey );
 		LabelValueBlock lvb( stringMatrix );
 
 		return lvb;

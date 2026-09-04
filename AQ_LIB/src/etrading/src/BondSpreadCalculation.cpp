@@ -21,7 +21,7 @@ namespace etrading
 		double asOfDateFxRate = 1.0;
 		if (fixedLeg->getStaticData()->getCurrency() != floatLeg->getStaticData()->getCurrency())
 		{
-			auto valuationCcy = toCCYEnum(valuationSettingsLVB.getOptionalValueAsLAString(IRS_KEY::VALUATION_CURRENCY).getCString());
+			auto valuationCcy = toCCYEnum(valuationSettingsLVB.getOptionalValueAsAQLString(IRS_KEY::VALUATION_CURRENCY).getCString());
 			asOfDateFxRate = calculateAsOfDateFxRate(valuationSettingsLVB, valuationCcy, fixedLeg, floatLeg);
 		}
 		LabelValueBlock valSettingLVB(valuationSettingsLVB, VALUATION_SETTING_KEYS::FX_AS_OF_DATE_RATE, boost::lexical_cast<std::string>(asOfDateFxRate));

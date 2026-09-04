@@ -65,7 +65,7 @@ namespace etrading
 	}
 
     // Converts an AQLStringMatrix to a JSON VariantMatrix, note transposes by default to match the default JSON schema convention
-    VariantMatrix toVariantMatrixFromLAStringMatrix( const AQLStringMatrix & laStringMatrix, const bool & transpose )
+    VariantMatrix toVariantMatrixFromAQLStringMatrix( const AQLStringMatrix & laStringMatrix, const bool & transpose )
     {
         AQ_REQUIRE( !laStringMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
         AQ_REQUIRE( !laStringMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
@@ -293,7 +293,7 @@ namespace etrading
 	template <>
     Variant::Variant( const AQLDate& inputValue )
     {
-        setValue( toGregorianDateFromLADate(inputValue) );
+        setValue( toGregorianDateFromAQLDate(inputValue) );
     }
         
 	template <>

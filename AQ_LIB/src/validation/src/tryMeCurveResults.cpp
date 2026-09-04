@@ -84,7 +84,7 @@ namespace validation
         VALID_EXCEPTION_START
 	
         // Trim Discount Factors
-        const AQLStringMatrix trimmedDiscountFactors = validation::trimLAStringMatrix( discountFactorLVB );
+        const AQLStringMatrix trimmedDiscountFactors = validation::trimAQLStringMatrix( discountFactorLVB );
 
 		// Record Inputs
         RECORD_INPUTS( curveLVB, parameterLVB, trimmedDiscountFactors ) // forwardAdjustments // TODO: Fix me! - Record Inputs does not support StandardStringMatrix
@@ -258,7 +258,7 @@ namespace validation
         VALID_EXCEPTION_START
 	
         // Trim Jacobian
-        const AQLStringMatrix trimmedJacobian = validation::trimLAStringMatrix( jacobianMatrix );
+        const AQLStringMatrix trimmedJacobian = validation::trimAQLStringMatrix( jacobianMatrix );
 
         RECORD_INPUTS( curveLVB, discountFactorParameterLVB, discountFactors, jacobianParameterLVB, marketDataShiftSizeInPercent, trimmedJacobian );
         

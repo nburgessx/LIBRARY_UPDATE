@@ -68,7 +68,7 @@ namespace validation
 
         const std::string inputLVB = "SwapScheduleLVB";
 
-   		AQLString scheduleType = swapScheduleLVB.getOptionalValueAsLAString( etrading::IRS_KEY::SCHEDULE_TYPE, "");
+   		AQLString scheduleType = swapScheduleLVB.getOptionalValueAsAQLString( etrading::IRS_KEY::SCHEDULE_TYPE, "");
 		etrading::validateKeysForLVB(etrading::getScheduleLVBKeys(scheduleType), swapScheduleLVB.getKeys(), validateKeys );
 
         // TODO: Make the schedule pure virtual so that the cashflows can be pure virtual

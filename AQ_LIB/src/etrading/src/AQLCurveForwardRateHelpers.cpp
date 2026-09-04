@@ -1648,7 +1648,7 @@ namespace etrading
 		    name = curveid+currency+SWAP+grid;
 	    else if(FUTURE == index)
 	    {
-		    AQLDate tmp = AQLDateScheduleHelpers::getLADate(grid);
+		    AQLDate tmp = AQLDateScheduleHelpers::getAQLDate(grid);
 		    name = curveid+currency+ FUTURE + AQLDataDate(tmp).convertToString();
 	    }
 	    else
