@@ -24,18 +24,23 @@ namespace
     // ====================================================================================================================
 
     // Alternative File Path ( This is for Developers )
-    // This requires the developer to set an Environment Variable "AQ" pointing to the folder where
+    // This resolves against the "AQ" environment variable, which SetEnvironmentVariables.bat sets
+    // to the library root; the config data lives at $(AQ)/resources/config.
+    //
+    // NOTE: this previously read the legacy "MLIBQ" variable with a "/resource/config" (singular)
+    // suffix -- the .APPLES layout. On a machine where MLIBQ was still set, the library silently
+    // loaded its calendars and properties from the read-only .APPLES reference tree.
     // the library calendar and property files are kept. There should be no final backslash on the property path.
 	//
 	// NOTE: Use forward slash '/' as the directory separator, so that these paths work on Linux as well as Windows
 	//
-    const AQLString CONFIG_FILE_PATH2 = etrading::FolderConfig::toPath( "AQ", "/resource/config/irsvr_excel.conf" );
-    const AQLString DEFAULT_CBSCHEDULE_PATH2 = etrading::FolderConfig::toPath( "AQ", "/resource/config/CBSchedule.csv" );
-    const AQLString DEFAULT_CALENDAR_PATH2 = etrading::FolderConfig::toPath( "AQ", "/resource/config/Calendar.csv" );
-    const AQLString DEFAULT_CALIBPROP_PATH2 = etrading::FolderConfig::toPath( "AQ", "/resource/config/calib.properties" );
-    const AQLString DEFAULT_IRPROP_PATH2 = etrading::FolderConfig::toPath( "AQ", "/resource/config/ir.properties" );
-    const AQLString DEFAULT_IRPROP_PATH3 = etrading::FolderConfig::toPath( "AQ", "/resource/config/ir.properties" );
-	const AQLString OPTIONAL_CONFIG_PATH = etrading::FolderConfig::toPath("AQ", "/resource/config/startup.conf" );
+    const AQLString CONFIG_FILE_PATH2 = etrading::FolderConfig::toPath( "AQ", "/resources/config/irsvr_excel.conf" );
+    const AQLString DEFAULT_CBSCHEDULE_PATH2 = etrading::FolderConfig::toPath( "AQ", "/resources/config/CBSchedule.csv" );
+    const AQLString DEFAULT_CALENDAR_PATH2 = etrading::FolderConfig::toPath( "AQ", "/resources/config/Calendar.csv" );
+    const AQLString DEFAULT_CALIBPROP_PATH2 = etrading::FolderConfig::toPath( "AQ", "/resources/config/calib.properties" );
+    const AQLString DEFAULT_IRPROP_PATH2 = etrading::FolderConfig::toPath( "AQ", "/resources/config/ir.properties" );
+    const AQLString DEFAULT_IRPROP_PATH3 = etrading::FolderConfig::toPath( "AQ", "/resources/config/ir.properties" );
+	const AQLString OPTIONAL_CONFIG_PATH = etrading::FolderConfig::toPath("AQ", "/resources/config/startup.conf" );
 
 
     // #3. Initialize the library for Business Users - This is only required and done if item #1 and #2 not successful

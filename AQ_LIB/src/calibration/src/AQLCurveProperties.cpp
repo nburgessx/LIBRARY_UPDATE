@@ -40,7 +40,7 @@ const AQLString* AQLCurveProperties::ir_prop_path()
     if(ir_prop_path_.get() != NULL && check_file_availability(*ir_prop_path_.get())) return ir_prop_path_.get();
     read_config_file("vnl.ir.properties", ir_prop_path_);
     if(ir_prop_path_.get() != NULL && check_file_availability(*ir_prop_path_.get())) return ir_prop_path_.get();
-	ir_prop_path_.reset(new AQLString(AQLCurveProperties::toPath( "AQ", "\\ir.properties" )));
+	ir_prop_path_.reset(new AQLString(AQLCurveProperties::toPath( "AQ", "\\resources\\config\\ir.properties" )));
 	if(ir_prop_path_.get() != NULL && check_file_availability(*ir_prop_path_.get())) return ir_prop_path_.get();
 
     ir_prop_path_.reset(new AQLString(DEFAULT_IRPROP_PATH));
@@ -52,7 +52,7 @@ const AQLString* AQLCurveProperties::calib_prop_path()
     if(calib_prop_path_.get() != NULL && check_file_availability(*calib_prop_path_.get())) return calib_prop_path_.get();
     read_config_file("vnl.calib.properties", calib_prop_path_);
     if(calib_prop_path_.get() != NULL && check_file_availability(*calib_prop_path_.get())) return calib_prop_path_.get();
-	calib_prop_path_.reset(new AQLString(AQLCurveProperties::toPath( "AQ", "\\calib.properties" )));
+	calib_prop_path_.reset(new AQLString(AQLCurveProperties::toPath( "AQ", "\\resources\\config\\calib.properties" )));
 	if(calib_prop_path_.get() != NULL && check_file_availability(*calib_prop_path_.get())) return calib_prop_path_.get();
 
     calib_prop_path_.reset(new AQLString(DEFAULT_CALIBPROP_PATH));
@@ -64,7 +64,7 @@ const AQLString* AQLCurveProperties::calendar_path()
     if(calendar_path_.get() != NULL && check_file_availability(*calendar_path_.get())) return calendar_path_.get();
     read_config_file("vnl.calendar", calendar_path_);
     if(calendar_path_.get() != NULL && check_file_availability(*calendar_path_.get())) return calendar_path_.get();
-	calendar_path_.reset(new AQLString(AQLCurveProperties::toPath( "AQ", "\\calendar.csv" )));
+	calendar_path_.reset(new AQLString(AQLCurveProperties::toPath( "AQ", "\\resources\\config\\Calendar.csv" )));
 	if(calendar_path_.get() != NULL && check_file_availability(*calendar_path_.get())) return calendar_path_.get();
 
     calendar_path_.reset(new AQLString(DEFAULT_CALENDAR_PATH));
