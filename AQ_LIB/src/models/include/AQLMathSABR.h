@@ -3,8 +3,8 @@
 
 */
 //  2009, AlgoQuantHub.
-#ifndef __LAMATHSABR_H__
-#define __LAMATHSABR_H__
+#ifndef __AQLMATHSABR_H__
+#define __AQLMATHSABR_H__
 
 #ifdef __GNUG__
 #pragma interface

@@ -1,5 +1,5 @@
-#ifndef __LAMATHCOSTRAINTSZ_H__
-#define __LAMATHCOSTRAINTSZ_H__
+#ifndef __AQLMATHCOSTRAINTSZ_H__
+#define __AQLMATHCOSTRAINTSZ_H__
 
 #include <ql/math/optimization/constraint.hpp>
 #include <vector>

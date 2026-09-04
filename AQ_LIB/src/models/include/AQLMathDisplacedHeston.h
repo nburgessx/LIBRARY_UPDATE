@@ -3,8 +3,8 @@
 
 */
 //  2009, AlgoQuantHub.
-#ifndef __LAMATHDISPLACEDHESTON_H__
-#define __LAMATHDISPLACEDHESTON_H__
+#ifndef __AQLMATHDISPLACEDHESTON_H__
+#define __AQLMATHDISPLACEDHESTON_H__
 
 #ifdef __GNUG__
 #pragma interface

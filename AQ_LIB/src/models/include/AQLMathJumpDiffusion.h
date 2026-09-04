@@ -3,8 +3,8 @@
 
 */
 //  2009, AlgoQuantHub.
-#ifndef __LAMATHJUMPDIFFUSION_H__
-#define __LAMATHJUMPDIFFUSION_H__
+#ifndef __AQLMATHJUMPDIFFUSION_H__
+#define __AQLMATHJUMPDIFFUSION_H__
 
 
 #include <AQLCoreTemplateType.h>

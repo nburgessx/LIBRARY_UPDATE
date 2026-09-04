@@ -1,5 +1,5 @@
-#ifndef __LAMATHINTEGRALMULTI_H__
-#define __LAMATHINTEGRALMULTI_H__
+#ifndef __AQLMATHINTEGRALMULTI_H__
+#define __AQLMATHINTEGRALMULTI_H__
 
 #include "AQLFunction.h"
 #include <vector>

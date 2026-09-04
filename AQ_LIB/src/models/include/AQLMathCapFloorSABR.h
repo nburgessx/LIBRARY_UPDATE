@@ -3,8 +3,8 @@
 
 */
 //  2009, AlgoQuantHub.
-#ifndef __LAMATHCAPLETMATRIX_H__
-#define __LAMATHCAPLETMATRIX_H__
+#ifndef __AQLMATHCAPLETMATRIX_H__
+#define __AQLMATHCAPLETMATRIX_H__
 
 #ifdef __GNUG__
 #pragma interface

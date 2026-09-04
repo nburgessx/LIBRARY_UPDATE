@@ -8,8 +8,8 @@
      2009, AlgoQuantHub. All rights reserved.
 */
 
-#ifndef __LAMathFXVOLATILITYSURFACEGENERATE_H__
-#define __LAMathFXVOLATILITYSURFACEGENERATE_H__
+#ifndef __AQLMathFXVOLATILITYSURFACEGENERATE_H__
+#define __AQLMathFXVOLATILITYSURFACEGENERATE_H__
 
 //include
 #include <vector>

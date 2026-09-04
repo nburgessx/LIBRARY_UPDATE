@@ -1,5 +1,5 @@
-#ifndef __LAMATHLEASTSQUARESZ_H__
-#define __LAMATHLEASTSQUARESZ_H__
+#ifndef __AQLMATHLEASTSQUARESZ_H__
+#define __AQLMATHLEASTSQUARESZ_H__
 
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma interface

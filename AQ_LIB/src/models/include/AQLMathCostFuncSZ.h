@@ -1,5 +1,5 @@
-#ifndef __LAMATHCOSTFUNCSZ_H__
-#define __LAMATHCOSTFUNCSZ_H__
+#ifndef __AQLMATHCOSTFUNCSZ_H__
+#define __AQLMATHCOSTFUNCSZ_H__
 
 #include <ql/math/optimization/costfunction.hpp>
 //furuya

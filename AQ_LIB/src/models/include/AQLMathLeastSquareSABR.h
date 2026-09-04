@@ -3,8 +3,8 @@
 
 */
 //  2009, AlgoQuantHub.
-#ifndef __LAMATHLEASTSQUARESABR_H__
-#define __LAMATHLEASTSQUARESABR_H__
+#ifndef __AQLMATHLEASTSQUARESABR_H__
+#define __AQLMATHLEASTSQUARESABR_H__
 
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma interface

@@ -8,8 +8,8 @@
      2008, AlgoQuantHub. All rights reserved.
 */
 
-#ifndef __LAMATHANALYTICALFORMULA_H__
-#define __LAMATHANALYTICALFORMULA_H__
+#ifndef __AQLMATHANALYTICALFORMULA_H__
+#define __AQLMATHANALYTICALFORMULA_H__
 
 #include <cmath>
 #include <vector>
