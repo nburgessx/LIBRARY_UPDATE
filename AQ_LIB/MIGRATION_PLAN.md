@@ -225,9 +225,10 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
   - Old bindings: `Curve`, `Date`, `LWO`, `Product`, `Utility`, plus `mir*`.
   - `validation` wrappers: `tryMe` + `<Category>` + `<Func>`.
   - `GTEST`: test-suite naming.
-- ☑ **2.2 Canonical category list — LOCKED (Nicholas, this session).** 13
-  categories, applied identically in `validation`, `AQ_XLL`, `AQ_API` and
-  `GTEST`:
+- ☑ **2.2 Canonical category list — LOCKED (Nicholas).** **20** categories,
+  applied identically in `validation`, `AQ_XLL`, `AQ_API` and `GTEST`.
+  Revised at step 9: the `Options` umbrella was removed and product sub-types
+  promoted — a user reaches for the product, not the umbrella:
 
   | Category | Covers | Prefix example |
   |---|---|---|
@@ -235,10 +236,17 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
   | `Curves` | **rates yield-curve framework only** — build, calibration, interpolation, DF / zero / forward queries, cross-currency. *Not* bond or credit curves. | `aqCurvesForwardRate` |
   | `Vols` | vol surfaces, surface SABR calibration, cap / swaption vol utilities | `aqVolsSabrImplied` |
   | `Rates` | FRAs, futures, cap / floor, stub rates, compounding | `aqRatesCompound` |
-  | `Swaps` | vanilla / OIS / basis / cross-currency — creation, schedule, pricing, risk | `aqSwapsParRate` |
-  | `Bonds` | bond creation, price / yield, asset-swap spread, **bond-curve fitting** (govie / spread curves) | `aqBondsYield` |
+  | `Swaps` | vanilla / OIS / basis / cross-currency — creation, legs, schedules, pricing, risk. Asset / CMS / total-return swaps have their own categories. | `aqSwapsParRate` |
+  | `Bonds` | bond creation, price / yield, repo / basis / CTD, **bond-curve fitting** (govie / spread curves) | `aqBondsYield` |
   | `Credit` | CDS, **hazard-rate / survival (credit) curves**, par spreads | `aqCreditParSpread` |
-  | `Options` | vanilla option pricing / greeks (Black-Scholes etc.) | `aqOptionsBlackScholesPrice` |
+  | `CapFloor` | caps / floors — creation, PV, greeks (incl. analytical) | `aqObjCapFloorPV` |
+  | `Swaption` | swaptions — PV, delta / gamma / theta / vega, implied vol | `aqObjSwaptionPV` |
+  | `BondOption` | options on bonds — PV, greeks | `aqObjBondOptionPV` |
+  | `BondFutureOption` | options on bond futures — PV, greeks | `aqObjBondFutureOptionPV` |
+  | `AssetSwap` | asset-swap spread, par-par, fixed-equivalent coupon | `aqAssetSwapSpread` |
+  | `ConstantMaturitySwap` | CMS pricing with convexity adjustment | `aqObjConstantMaturitySwapPVUsingConvexityAdjustment` |
+  | `TotalReturnSwap` | TRS — PV, annuity, par rate / spread | `aqObjTotalReturnSwapPV` |
+  | `Inflation` | inflation curve build, CPI, zero-coupon inflation swaps | `aqObjInflationZCSwapPV` |
   | `Math` | **low-level building blocks** — distributions, interpolation, root-finding, matrix ops — for users doing their own calculations or replicating results | `aqMathNormalCdf` |
   | `Models` | term-structure / stochastic models (Hull-White, LMM, Piterbarg, SABR-as-model), model calibration sets, model-based / exotic / CMS-spread pricing, analytic (Jacobian) risk. May be sparse initially. | `aqModelsHullWhiteCalibrate` |
   | `Generators` | list / describe / validate the JSON instrument & model static-data templates; build instruments from a generator + a few overrides | `aqGeneratorsList` |
@@ -247,6 +255,8 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
 
   **Decisions folded in:** `Curves` = rates yield-curve framework only, bond-curve
   fitting → `Bonds`, hazard/survival → `Credit` (each asset owns its curve).
+  **No `Options` umbrella** and **no `Objects` category** — the handle API is
+  marked by the `aqObj` prefix, not by a category (step 8).
   **`Vols`** (not `Vol`, not `Volatility`). **`Math` kept** — low-level surface.
   **`Models` added** (may be thin at first). **`Products` dropped** — not a
   category; it is the union of `Swaps` / `Bonds` / `Credit`. **`Generators`

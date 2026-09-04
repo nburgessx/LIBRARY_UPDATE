@@ -1,6 +1,6 @@
 public_name,category,surface,validation_wrapper,public_header,wrapper_header
-aqAssetSwapSpread,(lifecycle),stateless,tryAqAssetSwapSpread,src/AQ_API/source/aqAssetSwapSpread.h,src/validation/include/tryAqAssetSwapSpread.h
-aqAssetSwapSpreadLVBKeys,(lifecycle),stateless,tryAqAssetSwapSpreadLVBKeys,src/AQ_API/source/aqAssetSwapSpread.h,src/validation/include/tryAqAssetSwapSpread.h
+aqAssetSwapSpread,AssetSwap,stateless,tryAqAssetSwapSpread,src/AQ_API/source/aqAssetSwapSpread.h,src/validation/include/tryAqAssetSwapSpread.h
+aqAssetSwapSpreadLVBKeys,AssetSwap,stateless,tryAqAssetSwapSpreadLVBKeys,src/AQ_API/source/aqAssetSwapSpread.h,src/validation/include/tryAqAssetSwapSpread.h
 aqBondsCurveNelsonSiegelCalibrate,Bonds,stateless,tryAqBondsCurveNelsonSiegelCalibrate,src/AQ_API/source/aqBondsCurve.h,src/validation/include/tryAqBondsCurves.h
 aqBondsCurveNelsonSiegelYield,Bonds,stateless,tryAqBondsCurveNelsonSiegelYield,src/AQ_API/source/aqBondsCurve.h,src/validation/include/tryAqBondsCurves.h
 aqBondsCurvePolynomialCalibrate,Bonds,stateless,tryAqBondsCurvePolynomialCalibrate,src/AQ_API/source/aqBondsCurve.h,src/validation/include/tryAqBondsCurves.h
@@ -86,12 +86,12 @@ aqObjSwapsPV01,Swaps,aqObj,tryAqObjSwapsPV01,src/AQ_API/source/aqObjSwapsPrice.h
 aqObjSwapsParRate,Swaps,aqObj,tryAqObjSwapsParRate,src/AQ_API/source/aqObjSwapsPrice.h,src/validation/include/tryAqObjSwapsPricing.h
 aqObjSwapsParSpread,Swaps,aqObj,tryAqObjSwapsParSpread,src/AQ_API/source/aqObjSwapsPrice.h,src/validation/include/tryAqObjSwapsPricing.h
 aqObjSwapsSpread,Swaps,aqObj,tryAqObjSwapsSpread,src/AQ_API/source/aqObjSwapsPrice.h,src/validation/include/tryAqObjSwapsPricing.h
-aqObjSwapsTotalReturnAnnuity,Swaps,aqObj,tryAqObjSwapsTotalReturnAnnuity,src/AQ_API/source/aqObjCredit.h,src/validation/include/tryAqObjSwapsPricing.h
-aqObjSwapsTotalReturnPV,Swaps,aqObj,tryAqObjSwapsTotalReturnPV,src/AQ_API/source/aqObjCredit.h,src/validation/include/tryAqObjSwapsPricing.h
-aqObjSwapsTotalReturnParRate,Swaps,aqObj,tryAqObjSwapsTotalReturnParRate,src/AQ_API/source/aqObjCredit.h,src/validation/include/tryAqObjSwapsPricing.h
-aqObjSwapsTotalReturnParSpread,Swaps,aqObj,tryAqObjSwapsTotalReturnParSpread,src/AQ_API/source/aqObjCredit.h,src/validation/include/tryAqObjSwapsPricing.h
 aqObjSwapsUSDSpotDate,Swaps,aqObj,tryAqCurvesUSDSpotDate,src/AQ_API/source/aqDates.h,
 aqObjToolsGridDisplay,Tools,aqObj,tryAqObjToolsGridDisplay,src/AQ_API/source/aqObjToolsGrids.h,src/validation/include/tryAqObjToolsGrid.h
+aqObjTotalReturnSwapAnnuity,TotalReturnSwap,aqObj,tryAqObjTotalReturnSwapAnnuity,src/AQ_API/source/aqObjCredit.h,src/validation/include/tryAqObjSwapsPricing.h
+aqObjTotalReturnSwapPV,TotalReturnSwap,aqObj,tryAqObjTotalReturnSwapPV,src/AQ_API/source/aqObjCredit.h,src/validation/include/tryAqObjSwapsPricing.h
+aqObjTotalReturnSwapParRate,TotalReturnSwap,aqObj,tryAqObjTotalReturnSwapParRate,src/AQ_API/source/aqObjCredit.h,src/validation/include/tryAqObjSwapsPricing.h
+aqObjTotalReturnSwapParSpread,TotalReturnSwap,aqObj,tryAqObjTotalReturnSwapParSpread,src/AQ_API/source/aqObjCredit.h,src/validation/include/tryAqObjSwapsPricing.h
 aqSwapsDV01,Swaps,stateless,tryAqSwapsDV01,src/AQ_API/source/aqSwapsDV01.h,src/validation/include/tryAqSwapsDV01.h
 aqSwapsDV01LVBKeys,Swaps,stateless,tryAqSwapsDV01LVBKeys,src/AQ_API/source/aqSwapsDV01.h,src/validation/include/tryAqSwapsDV01.h
 aqSwapsPV,Swaps,stateless,tryAqSwapsPV,src/AQ_API/source/aqSwapsPV.h,src/validation/include/tryAqSwapsPV.h

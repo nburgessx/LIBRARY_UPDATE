@@ -189,6 +189,55 @@ with care.
 
 ---
 
+## Step 9 — Options umbrella removed, sub-types promoted (done, 2026-09-04)
+
+`db980842`. From Nicholas's reviewed map (column "use" of the returned
+`phase3_step8_MAP.csv`). Rule: **a product sub-type is its own top-level
+category**, not a member of an umbrella.
+
+| Umbrella dropped | Promoted to categories |
+|---|---|
+| `Options` (removed entirely) | `CapFloor` 20, `Swaption` 17, `BondOption` 9, `BondFutureOption` 4 |
+| `Swaps` (kept, narrowed) | `AssetSwap` 12, `TotalReturnSwap` 24, `ConstantMaturitySwap` 8 |
+| `Curves` (kept, narrowed) | `Inflation` 15 |
+
+113 renames, 0 collisions, 10 src files + 69 fixtures moved in lockstep.
+**Category list is now LOCKED (20)** — updated in `CLAUDE.md`, `REPO\CLAUDE.md`,
+`MIGRATION_PLAN.md` §2.2 and `rebrand/tools/api_pair_check.py`. `Swaps` now means
+the vanilla swap plus legs and schedules. Stateless surface untouched (it never
+had an `Options` category and already used `aqAssetSwap*`).
+
+### Note on the map Nicholas returned
+Its column C matched the committed map exactly on all 499 rows, but the file was
+**truncated mid-alphabet** at `tryAqObjectsFixingTableValues_inputs` — 275 of 774
+rows absent, including every `tryAqObj` family from `Fra` onward and all 53
+stateless rows. The rule behind the 63 overrides was inferred, checked against
+those overrides (61/63 reproduced; the 2 misses were a copy slip and a typo fix,
+both confirmed by Nicholas), and then applied to the rows the file never reached.
+
+### Typo fixes — exact tokens only
+`DDeltaLadder->DeltaLadder`, `Implived->Implied`, `Mutiple->Multiple`,
+`Asof->AsOf` (2). Applied as **exact whole tokens**: a substring sweep of `Asof`
+would have hit `AsofDate` / `getAsofDate` / `mAsofDate` (which collide with
+existing `AsOfDate` / `getAsOfDate` spellings — a separate, pre-existing internal
+inconsistency), and a sweep of `Displaye` would have turned `msgDisplayed` into
+`msgDisplayd`.
+
+### OPEN — needs a decision
+`tryAqObjRatesFixingTableDisplaye_outputs`, `validation/src/tryAqObjRatesFixingTable.cpp:165`.
+Both spellings sit in the **same function**: `Display_outputs` on the success
+branch (line 145), `Displaye_outputs` on the error branch (line 165). Correcting
+the typo would make the error recording overwrite the success recording for the
+same table name, so it is a behaviour change, not a cosmetic fix. Suggested
+resolution: rename the error branch to `tryAqObjRatesFixingTableDisplay_error_outputs`.
+Left untouched pending Nicholas.
+
+### Still open from step 8 (unchanged)
+The 5 wrapper-name-drift advisories from `api_pair_check.py`. All route through
+`validation` correctly; cosmetic only.
+
+---
+
 ## Known noise / not-bugs
 - **`src/AQ_API/source/swig_*_wrap.{cpp,cxx}`** — SWIG-generated. Still contain old `me*`/`mir*` names
   in HEAD (regenerated in Phase 5, not in the core build). They also keep re-appearing as phantom
@@ -208,8 +257,9 @@ with care.
 - Scratch scripts used this run (not committed) are in the session scratchpad:
   `map_bsimple.py`, `map_blwo.py`, `run_bsimple.py`, `run_blwo.py`, `bfixtures.py`,
   `step6b_delete.py`, `step6b_vcxproj.py`, `step7b_prose.py`, `step7c.py`,
-  `step8_map.py`, `step8a.py`, `step8b.py`.
+  `step8_map.py`, `step8a.py`, `step8b.py`, `step9.py`.
 - `rebrand/phase3_Bsimple_MAP.csv`, `phase3_BLWO_mapB.csv` — the approved `me→aq` maps (committed).
 - `rebrand/phase3_step8_MAP.csv` — the approved step-8 map, 774 rows (committed).
+- `rebrand/phase3_step9_MAP.csv` — the approved step-9 map, 113 rows (committed).
 - `rebrand/tools/api_pair_check.py` — `aq*` must route through `validation`; emits `docs/api_map.csv`.
   Run with `--write` to refresh the map; exit 1 makes it usable as a CI gate.

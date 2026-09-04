@@ -262,15 +262,28 @@ Editions cut **across** categories, so the gate is category-level.
 → **`aqDatesYearFraction`**. Gives an IntelliSense-style grouped feel in Excel and
 in every binding: type `aqDates` and the date functions surface together.
 
-**Canonical category list — LOCKED (13):** `Dates`, `Curves` (rates yield-curve
-framework only — *not* bond/credit curves), `FX`, `Vols`, `Rates`, `Swaps`,
-`Bonds` (incl. bond-curve fitting), `Credit` (incl. hazard/survival curves),
-`Options`, `Math` (low-level building blocks for own-calculation / result
-replication), `Models` (may be sparse initially), `Generators`, `Tools`. **No**
-`Products` category. Use these 13, identically in `validation` / `AQ_XLL` /
-`AQ_API` / `GTEST`. Detail: `MIGRATION_PLAN.md` §2.2.
+**Canonical category list — LOCKED (20):**
 
-`Objects` is **no longer a category** — the handle API is distinguished by the
+`Dates`, `Curves`, `FX`, `Inflation`, `Vols`, `Rates`, `Swaps`, `AssetSwap`,
+`ConstantMaturitySwap`, `TotalReturnSwap`, `CapFloor`, `Swaption`, `BondOption`,
+`BondFutureOption`, `Bonds`, `Credit`, `Math`, `Models`, `Generators`, `Tools`
+
+`Curves` is the rates yield-curve framework only — *not* bond or credit curves;
+`Bonds` includes bond-curve fitting, `Credit` includes hazard/survival curves.
+`Math` is low-level building blocks for own-calculation / result replication.
+`Models` may be sparse initially. **No** `Products` category.
+
+- **No `Options` category.** An option product is its own category —
+  `CapFloor`, `Swaption`, `BondOption`, `BondFutureOption`. Same principle for
+  swaps: `AssetSwap`, `ConstantMaturitySwap` and `TotalReturnSwap` are their own
+  categories, not members of `Swaps`; `Swaps` is the vanilla swap plus its legs
+  and schedules. `Inflation` is likewise its own category, not part of `Curves`.
+  A user reaches for the product, not the umbrella.
+
+Use these 20, identically in `validation` / `AQ_XLL` / `AQ_API` / `GTEST`.
+Detail: `MIGRATION_PLAN.md` §2.2.
+
+`Objects` is **no longer a category** either — the handle API is distinguished by the
 `aqObj` *prefix* instead, so the same product categories serve both surfaces:
 
 | Form | Meaning | Example |

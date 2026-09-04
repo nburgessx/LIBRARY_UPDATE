@@ -16,8 +16,13 @@ import subprocess, re, os, sys, csv, collections
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.chdir(ROOT)
 
-CATEGORIES = ["Dates", "Curves", "FX", "Vols", "Rates", "Swaps", "Bonds", "Credit",
-              "Options", "Math", "Models", "Generators", "Tools"]
+# LOCKED (20). Product sub-types are their own category -- there is no Options
+# umbrella. Longest-first matching matters: BondFutureOption before BondOption,
+# TotalReturnSwap/AssetSwap/ConstantMaturitySwap before Swaps.
+CATEGORIES = ["Dates", "Curves", "FX", "Inflation", "Vols", "Rates",
+              "Swaps", "AssetSwap", "ConstantMaturitySwap", "TotalReturnSwap",
+              "CapFloor", "Swaption", "BondOption", "BondFutureOption",
+              "Bonds", "Credit", "Math", "Models", "Generators", "Tools"]
 
 def files(spec):
     return [p for p in subprocess.check_output(["git", "ls-files", spec], text=True).split()
