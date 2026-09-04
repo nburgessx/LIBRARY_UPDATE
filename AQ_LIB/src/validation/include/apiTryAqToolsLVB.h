@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include "MBTemplateType.h"
 #include "LabelValueBlock.h"
 
 using etrading::LabelValueBlock;

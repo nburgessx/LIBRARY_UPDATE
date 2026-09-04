@@ -25,100 +25,10 @@
     <ClCompile Include="..\src\GTEST\src\CurveXccyBasis.cpp">
       <Filter>src\Legacy\Curve\CurveXccyBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveFwdFxConstEURGBP.cpp">
-      <Filter>src\Legacy\Curve\CurveFwdFxConst</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveFwdFxConstGBPJPY.cpp">
-      <Filter>src\Legacy\Curve\CurveFwdFxConst</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveFwdFxConstJPYEUR.cpp">
-      <Filter>src\Legacy\Curve\CurveFwdFxConst</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveFwdFxConstUSDEUR.cpp">
-      <Filter>src\Legacy\Curve\CurveFwdFxConst</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveOisEUR.cpp">
-      <Filter>src\Legacy\Curve\CurveOIS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveOisGBP.cpp">
-      <Filter>src\Legacy\Curve\CurveOIS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveOisJPY.cpp">
-      <Filter>src\Legacy\Curve\CurveOIS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveOisUSD.cpp">
-      <Filter>src\Legacy\Curve\CurveOIS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveStdEUR.cpp">
-      <Filter>src\Legacy\Curve\CurveSTD</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveStdEURwithTension.cpp">
-      <Filter>src\Legacy\Curve\CurveSTD</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveStdGBP.cpp">
-      <Filter>src\Legacy\Curve\CurveSTD</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveStdJPY.cpp">
-      <Filter>src\Legacy\Curve\CurveSTD</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveStdUSD.cpp">
-      <Filter>src\Legacy\Curve\CurveSTD</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveTenorBasisEUR3M6M.cpp">
-      <Filter>src\Legacy\Curve\CurveTenorBasis</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveTenorBasisGBP3M6M.cpp">
-      <Filter>src\Legacy\Curve\CurveTenorBasis</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveTenorBasisJPY3M6M.cpp">
-      <Filter>src\Legacy\Curve\CurveTenorBasis</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveTenorBasisUSD3M6M.cpp">
-      <Filter>src\Legacy\Curve\CurveTenorBasis</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveXccyBasisEUR.cpp">
-      <Filter>src\Legacy\Curve\CurveXccyBasis</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveXccyBasisGBP.cpp">
-      <Filter>src\Legacy\Curve\CurveXccyBasis</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveXccyBasisJPY.cpp">
-      <Filter>src\Legacy\Curve\CurveXccyBasis</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\GTEST\src\RunTests.cpp">
       <Filter>src\SETUP</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\InterestRateSwap.cpp">
-      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestTradeEURAssetSwapSpread.cpp">
-      <Filter>src\Legacy\Trades\AssetSwaps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestTradeEUROISParRate.cpp">
-      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestTradeEURSwapParRate.cpp">
-      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestTradeEURSwapStubRate.cpp">
-      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestTradeEURWithTensionSwapParRate.cpp">
-      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestTradeGBPSwapParRate.cpp">
-      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestTradeJPYSwapParRate.cpp">
-      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestTradeUSDSwapParRate.cpp">
-      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestDatesCentralBank.cpp">
-      <Filter>src\Legacy\Dates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestDatesECB.cpp">
       <Filter>src\Legacy\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestDatesSwapSchedule.cpp">
@@ -138,12 +48,6 @@
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\InitializeGoogleTest.cpp">
       <Filter>src\SETUP</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveReplay.cpp">
-      <Filter>src\Legacy\Curve\CurveReplay</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveOisEUR_SmoothShortEnd.cpp">
-      <Filter>src\Legacy\Curve\CurveOIS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestRiskSwapDeltaLadder.cpp">
       <Filter>src\Legacy\Risks</Filter>
@@ -232,9 +136,6 @@
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisJPY3M6MConvergence.cpp">
       <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveOisEUR_Compounding.cpp">
-      <Filter>src\Legacy\Curve\CurveOIS</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURTenorBasis.cpp">
       <Filter>src\etrading\Swaps\TenorBasisSwaps</Filter>
     </ClCompile>
@@ -259,20 +160,11 @@
     <ClCompile Include="..\src\GTEST\src\TestMarketDataCollection.cpp">
       <Filter>src\etrading\MarketData</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestTradeUSDSwapParRate_NonOverridingFwds.cpp">
-      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveStdUSD_NonOverridingFwds.cpp">
-      <Filter>src\Legacy\Curve\CurveSTD</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURVariableNotionalSwaps.cpp">
       <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestMirDateFunctions.cpp">
       <Filter>src\Legacy\Dates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestCurveTenorBasisUSD_FRA.cpp">
-      <Filter>src\Legacy\Curve\CurveTenorBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURUSDXccySwap.cpp">
       <Filter>src\etrading\Swaps\XccySwaps</Filter>
@@ -310,12 +202,6 @@
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURUSDXccySwapFixedFixed.cpp">
       <Filter>src\etrading\Swaps\XccySwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\CurveConsistencies_STD.cpp">
-      <Filter>src\Legacy\Curve\CurveConsistency</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\CurveConsistencies_TenorBasis.cpp">
-      <Filter>src\Legacy\Curve\CurveConsistency</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestHelperUtilities.cpp">
       <Filter>src\etrading\Utilities</Filter>
     </ClCompile>
@@ -333,12 +219,6 @@
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPrices.cpp">
       <Filter>src\etrading\Bonds</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestTradeEURSwapPV01.cpp">
-      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\Test_IsFwdInter.cpp">
-      <Filter>src\Legacy\Curve\CurveSTD</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPricesAustraliaType23Govt.cpp">
       <Filter>src\etrading\Bonds</Filter>
@@ -366,9 +246,6 @@
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaXCCY_CSA.cpp">
       <Filter>src\etrading\Risks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\LinearSplineTests.cpp">
-      <Filter>src\Legacy\Curve\Interpolations</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapDelta_JPY.cpp">
       <Filter>src\etrading\Risks</Filter>
@@ -411,9 +288,6 @@
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestStateVariableUtilities.cpp">
       <Filter>src\etrading\Curves\StateVariableUtilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\CurveConsistencies_OIS.cpp">
-      <Filter>src\Legacy\Curve\CurveConsistency</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLWOHedgeCurveDelta.cpp">
       <Filter>src\etrading\Risks</Filter>
@@ -740,9 +614,6 @@
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\CurveXccyBasis.h">
       <Filter>include\etrading\Legacy\Curve</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\GTEST\include\InterestRateSwap.h">
-      <Filter>include\etrading\Legacy\Trade</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\InitializeGoogleTest.h">
       <Filter>include\SETUP</Filter>

@@ -17,7 +17,7 @@ namespace google_test
     //   using google_test::BindFileToClassConstructor;
     //   using google_test::CurveOIS;
     //
-    //   extern const char EURYC_OIS[] = "EURYC_OIS_tryMirSetUpOISCurve_inputs";	// "extern" to make it suitable as a template parameter
+    //   extern const char EURYC_OIS[] = "EURYC_OIS_curve_inputs";	// "extern" to make it suitable as a template parameter
     //
     //   typedef BindFileToClassConstructor<CurveOIS, EURYC_OIS> SourceEURYC_OIS;
     //

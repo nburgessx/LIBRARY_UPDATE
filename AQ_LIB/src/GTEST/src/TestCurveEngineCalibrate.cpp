@@ -12,7 +12,6 @@
 #include <sstream>
 #include <boost/range/irange.hpp>
 
-#include "CurveOis.h"
 
 // "Generator" API
 #include "tryAqObjectsCurveMarketData.h"
@@ -20,7 +19,6 @@
 #include "tryAqObjectsCurveGenerator.h"
 
 // Forward Rates Table
-#include "tryMirGetForwardRate.h"
 
 using etrading::ReadDataFile;
 
@@ -168,45 +166,7 @@ namespace google_test
 {
 	DECLARE_TEST_FIXTURE(TestCurveEngineCalibrate);
 	
-	void testEngineCurveForwardRates(const AQLString& curveName, const AQLString& ccy, unsigned int testIndex)
-	{
-		AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(testIndex));
 
-		AQLString oisForwardRateInputFile = TEST_DIR;
-		oisForwardRateInputFile += prefix + AQLString("_") + curveName + AQLString("_") + FORWARD_RATES_INPUTS;
-
-		const ReadDataFile::Load inputFile(oisForwardRateInputFile);
-		DateVector fromDateVector = inputFile["fromDates"];
-		DateVector toDateVector = inputFile["toDates"];
-
-		const DoubleArray results
-			= validation::tryMirGetForwardRate2(
-				etrading::InitializeETrading::instance().dataInstance(),
-				fromDateVector,
-				toDateVector,
-				inputFile["curveId"],
-				inputFile["frequency"],
-				inputFile["dayCount"],
-				inputFile["slidingRule"],
-				inputFile["calendar"],
-				inputFile["interpolation"],
-				inputFile["curveName"],
-				inputFile["isFwdInterp"],
-				inputFile["useFwdData"]);
-
-		ASSERT_EQ(fromDateVector.size(), results.size())
-			<< "Results size should match the number of forward rates requested" << std::endl;
-
-#if defined(GTEST32)
-		AQLString outputFile = TEST_DIR;
-		outputFile += prefix + AQLString("_") + curveName + AQLString("_") + FORWARD_RATES_OUTPUTS_32bit;
-		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, outputFile, tolerance);
-#else
-		AQLString outputFile = TEST_DIR;
-		outputFile += prefix + AQLString("_") + curveName + AQLString("_") + FORWARD_RATES_OUTPUTS_64bit;
-		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, outputFile, tolerance);
-#endif
-	}
 
 	// TEST_F(TestCurveEngineCalibrate, SNAPSHOT_USD_FORWARD_RATE_TESTS)
 	// {
