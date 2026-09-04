@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLEVENT_h
 #define AQLEVENT_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLEvent.h
-//
-//  DESCRIPTION :        Event class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #include "AQLCoreThread.h"
 //// FROTOTYPE ////
 

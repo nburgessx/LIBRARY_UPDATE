@@ -6,15 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLShiftMethod.h
-//
-//  SYNOPSIS    :       AQLShiftMethod
-//  DESCRIPTION :       Source code of class to represent shift function f(x+a)
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

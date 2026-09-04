@@ -6,17 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRomberg.cpp
-//
-//  SYNOPSIS    :       AQLRomberg
-//  DESCRIPTION :       Class definition of integration by Romberg method
-//                      This class derives from abstract base class "AQLIntegralBase".
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

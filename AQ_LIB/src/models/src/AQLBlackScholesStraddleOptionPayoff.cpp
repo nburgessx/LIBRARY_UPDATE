@@ -6,16 +6,6 @@
 */
 //  2010, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBlackScholesStraddleOption.cpp
-//
-//  SYNOPSIS    :       AQLBlackScholesStraddleOption
-//  DESCRIPTION :       Source code of class to represent function led by AQLBlackScholesBase class
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

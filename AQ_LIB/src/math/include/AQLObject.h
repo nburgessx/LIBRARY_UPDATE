@@ -158,7 +158,7 @@ public:
     virtual void		remove(const AQLString& name);
 
 
-    // register the Data, and the ownership of the pointer to LADataibugte is in AQLObject ( remove then add )
+    // register the Data, and the ownership of the pointer to AQLDataibugte is in AQLObject ( remove then add )
     AQLDataHolder&		reset(const AQLString& name, AQLPriceDataType* att);           
 	
     // register the Data ( remove then add )

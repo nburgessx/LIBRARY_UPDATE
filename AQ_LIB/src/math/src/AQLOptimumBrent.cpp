@@ -6,18 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLOptimumBrent.cpp
-//
-//  SYNOPSIS    :       AQLOptimumBrent
-//  DESCRIPTION :       Class definition for a 1-D function 
-//						optimization(minimization) with Brent method.
-//						This class realize virtual method in abstract base class.
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -54,7 +54,7 @@ AQLScenarioConfigurationVolatility::~AQLScenarioConfigurationVolatility(void)
 
 	@param[int,out] dataInstance
 	@param[in] param
-	@return vector<MBEnity *>
+	@return vector<AQLEnity *>
 */
 vector<AQLObject *>
 AQLScenarioConfigurationVolatility::createScenario(AQLDataInstance &dataInstance, const AQLScenarioParam &param) const

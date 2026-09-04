@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef  AQLModelSetupHW_h
 #define  AQLModelSetupHW_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLModelSetupHW.h
-//
-//  DESCRIPTION :       HW Master data regist class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

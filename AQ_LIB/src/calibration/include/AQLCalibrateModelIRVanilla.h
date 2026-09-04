@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLCalibrateModelIRVanilla_h
 #define AQLCalibrateModelIRVanilla_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateModelIRVanilla.h
-//
-//  DESCRIPTION :       IRVanilla SDE generator 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

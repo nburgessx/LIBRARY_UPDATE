@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfigurationFX_h
 #define AQLScenarioConfigurationFX_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLScenarioConfigurationFX.h
-//
-//  DESCRIPTION :        FX Risk Scenario create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

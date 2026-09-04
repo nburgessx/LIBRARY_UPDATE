@@ -3,16 +3,6 @@
 /*! @file
     @brief Hull-White sde generator class
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateModelHW3F.cpp
-//
-//  DESCRIPTION :        Hull-White SDE generator 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

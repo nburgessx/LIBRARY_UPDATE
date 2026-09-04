@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDriftHJM.cpp
-//
-//  SYNOPSIS    :       AQLPriceDriftHJM
-//  DESCRIPTION :       Source code of drift function of HJM sde 
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

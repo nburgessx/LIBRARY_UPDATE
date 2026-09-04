@@ -5,17 +5,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLIntegralBase.cpp
-//
-//  SYNOPSIS    :       AQLIntegralBase
-//  DESCRIPTION :       Source code of abstract base class of integration method
-//						This class has pure virtual method "integrate".
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

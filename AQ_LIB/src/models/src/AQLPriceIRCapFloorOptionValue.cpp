@@ -813,7 +813,7 @@ AQLPriceIRCapFloorOptionValue::outputResult( AQLObject& object, AQLDataProvider*
 	if ( objHolder.isDefined() )
 		vcapfloor = dynamic_cast< AQLMathObjectValue* >( &( objHolder.get() ) );
 	else
-		throw AQLCoreInvalidData( "vcapfloor is not set! LAPriceIRCapFloorOptionVlaue::outputResult() ",__FILE__,__LINE__);
+		throw AQLCoreInvalidData( "vcapfloor is not set! AQLPriceIRCapFloorOptionVlaue::outputResult() ",__FILE__,__LINE__);
 	
 	AQLLinearRatesOptionValueDataProvider* dataProvider = dynamic_cast< AQLLinearRatesOptionValueDataProvider* >( dataProvider );
 

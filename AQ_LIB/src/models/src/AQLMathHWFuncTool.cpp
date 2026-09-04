@@ -5,16 +5,6 @@
 */
 //  2008, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathHWFuncTool.cpp
-//
-//  SYNOPSIS    :       AQLMathHWFuncTool
-//  DESCRIPTION :       Source code for class to represent constant function
-//             
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

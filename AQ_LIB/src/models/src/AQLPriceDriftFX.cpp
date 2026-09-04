@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDriftFX.cpp
-//
-//  SYNOPSIS    :       AQLPriceDriftFX
-//  DESCRIPTION :       Source code of drift function of fx sde
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

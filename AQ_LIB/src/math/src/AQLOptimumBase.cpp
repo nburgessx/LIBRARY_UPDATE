@@ -6,16 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLOptimumBase.cpp
-//
-//  SYNOPSIS    :       AQLOptimumBase
-//  DESCRIPTION :       Definition of abstract base class for optimization(minimization).
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -6,15 +6,6 @@
 */
 //  2007, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathVolFuncLMM.h
-//
-//  SYNOPSIS    :       AQLMathVolFuncLMM
-//  DESCRIPTION :       Source code of class  to represent volatility of LMM
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

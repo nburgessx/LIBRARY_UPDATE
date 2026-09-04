@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYieldIRShiftDelta_h
 #define AQLRiskConfigurationYieldIRShiftDelta_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationYieldIRShiftDelta.h
-//
-//  DESCRIPTION :       IR Shift Delta setup class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

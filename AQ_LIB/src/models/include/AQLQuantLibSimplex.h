@@ -5,7 +5,7 @@
 
 class AQLQuantLibSimplex : public AQLQuantLibOptimizationMethod
 {
-	// TODO: This class should be derived from LAQuantLibLineSearchBasedMethod because Simplex class is
+	// TODO: This class should be derived from AQLQuantLibLineSearchBasedMethod because Simplex class is
 public:
 	AQLQuantLibSimplex(double lambda);
 

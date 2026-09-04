@@ -5,15 +5,6 @@
 
 #ifndef AQLDefinitionsLMM_h
 #define AQLDefinitionsLMM_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDefinitionsLMM.h
-//
-//  DESCRIPTION :       
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLDefinitions.h"
 

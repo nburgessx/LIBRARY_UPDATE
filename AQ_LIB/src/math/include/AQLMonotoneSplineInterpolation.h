@@ -8,11 +8,11 @@
 
 #include <ql/math/interpolations/cubicinterpolation.hpp> // QuantLib interpolators
 
-// MMLinearInterpolatiaon Function ID
+// AQLLinearInterpolatiaon Function ID
 #define FN_MONOTONESPLINEINTERPOLATION	    1011
 #define FN_MONOTONEPARABOLICINTERPOLATION	1013
 
-// MMLinearInterpolatiaon Function Name
+// AQLLinearInterpolatiaon Function Name
 #define FN_MONOTONESPLINEINTERPOLATION_STR	        "fn_monotonesplineinterpolation"
 #define FN_MONOTONEPARABOLICINTERPOLATION_STR	    "fn_monotoneparabolicinterpolation"
 

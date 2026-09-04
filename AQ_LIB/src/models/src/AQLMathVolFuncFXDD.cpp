@@ -6,15 +6,6 @@
 */
 //  2008, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathVolFuncFXDD.h
-//
-//  SYNOPSIS    :       AQLMathVolFuncFXDD
-//  DESCRIPTION :       Source code of class  to represent displaced diffusion version of volatility of FX
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

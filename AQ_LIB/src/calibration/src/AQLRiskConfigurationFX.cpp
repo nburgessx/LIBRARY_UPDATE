@@ -1,16 +1,6 @@
 /*! @file
     @brief FX setup class for calc risk
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationFX.cpp
-//
-//  DESCRIPTION :       FX setup class for calc risk 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

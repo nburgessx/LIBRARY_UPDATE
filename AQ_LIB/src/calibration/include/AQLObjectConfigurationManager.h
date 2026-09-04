@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLObjectConfigurationManager_h
 #define AQLObjectConfigurationManager_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLObjectConfigurationManager.h
-//
-//  DESCRIPTION :       AQLObjectConfigurationManager 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

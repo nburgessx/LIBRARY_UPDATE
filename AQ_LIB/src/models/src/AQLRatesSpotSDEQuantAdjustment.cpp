@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesSpotSDEQuantAdjustment.cpp
-//
-//  SYNOPSIS    :       AQLRatesSpotSDEQuantAdjustment
-//  DESCRIPTION :       Source code of spot sde class
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -3,16 +3,6 @@
 /*! @file
     @brief Yield Risk Scenario create class
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLScenarioConfigurationYieldCurveBasis.cpp
-//
-//  DESCRIPTION :       Yield Risk Scenario create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -62,7 +52,7 @@ AQLScenarioConfigurationYieldCurveBasis::~AQLScenarioConfigurationYieldCurveBasi
 
 	@param[int,out] dataInstance
 	@param[in] param
-	@return vector<MBEnity *>
+	@return vector<AQLEnity *>
 */
 vector<AQLObject *>
 AQLScenarioConfigurationYieldCurveBasis::createScenario(AQLDataInstance &dataInstance, const AQLScenarioParam &param) const

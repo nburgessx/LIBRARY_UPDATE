@@ -1,16 +1,6 @@
 /*! @file
     @brief HW calibration request
 */
-//  2011, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateFXVannaVolga.cpp
-//
-//  DESCRIPTION :        FXVannaVolga calibration request class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

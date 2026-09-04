@@ -5,15 +5,6 @@
 
 #ifndef AQLDefinitionsFXStrangleSolver_h
 #define AQLDefinitionsFXStrangleSolver_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       LADefinitionsantFXStrangleSolver.h
-//
-//  DESCRIPTION :       
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #include "AQLDefinitions.h"
 
 

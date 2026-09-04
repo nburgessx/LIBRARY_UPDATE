@@ -5,14 +5,6 @@
 // Improved performance & precision by AlgoQuantHub.
 #ifndef AQLBivariateDistribution_h
 #define AQLBivariateDistribution_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBivariateDistribution.h
-//
-//  DESCRIPTION :       Base class for bivariate distributions.
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #else

@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYieldDeltaAnalytic_h
 #define AQLRiskConfigurationYieldDeltaAnalytic_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationYieldDeltaAnalytic.h
-//
-//  DESCRIPTION :       IR Delta setup class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

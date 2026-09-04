@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesPCIntegral.cpp
-//
-//  SYNOPSIS    :       AQLRatesPCIntegral
-//  DESCRIPTION :       Source code of predictor corrector sde integral class
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

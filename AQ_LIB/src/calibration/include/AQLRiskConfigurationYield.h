@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYield_h
 #define AQLRiskConfigurationYield_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationYield.h
-//
-//  DESCRIPTION :       Yield risk setup class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

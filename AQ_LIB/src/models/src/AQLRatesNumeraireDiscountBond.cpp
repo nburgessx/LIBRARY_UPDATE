@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesNumeraireDiscountBond.cpp
-//
-//  SYNOPSIS    :       AQLRatesNumeraireDiscountBond
-//  DESCRIPTION :       Source code of discount bond numeraire class
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

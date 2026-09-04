@@ -6,16 +6,6 @@ This class derives from AQLBlackScholesBaseMethod
 */
 //  2010, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBlackShcolesDigitalFloorletOption.cpp
-//
-//  SYNOPSIS    :       AQLBlackShcolesDigitalFloorletOption
-//  DESCRIPTION :       Source code of class to represent function led by AQLBlackScholesBase class
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

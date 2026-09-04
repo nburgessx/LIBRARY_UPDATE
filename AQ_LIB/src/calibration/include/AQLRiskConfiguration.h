@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLRiskConfiguration_h
 #define AQLRiskConfiguration_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfiguration.h
-//
-//  DESCRIPTION :        Risk setup class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

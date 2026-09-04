@@ -6,15 +6,6 @@
 */
 //  2008, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrationFunc.h
-//
-//  SYNOPSIS    :       AQLCalibrationFunc
-//  DESCRIPTION :       Source code of calibration function
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma implementation

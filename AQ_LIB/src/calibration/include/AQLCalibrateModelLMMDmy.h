@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLCalibrateModelLMMDmy_h
 #define AQLCalibrateModelLMMDmy_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateModelLMMDmy.h
-//
-//  DESCRIPTION :       Dmy LMM SDE generator 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

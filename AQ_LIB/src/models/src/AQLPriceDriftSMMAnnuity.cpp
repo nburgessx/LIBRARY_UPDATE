@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDriftSMMAnnuity.cpp
-//
-//  SYNOPSIS    :       AQLPriceDriftSMMAnnuity
-//  DESCRIPTION :       Source code of drift function of SMM sde (annuity measure)
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

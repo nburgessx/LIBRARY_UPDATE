@@ -8,11 +8,11 @@
 #include "AQLCoreTemplateType.h"
 #include <vector>
 
-// MMLinearMonotoneSplineInterpolation Function ID
+// AQLLinearMonotoneSplineInterpolation Function ID
 #define FN_LINEARMONOTONESPLINEINTERPOLATION	    1012
 #define FN_LINEARMONOTONEPARABOLICINTERPOLATION	    1015
 
-// MMLinearMonotoneSplineInterpolatiaon Function Name
+// AQLLinearMonotoneSplineInterpolatiaon Function Name
 #define FN_LINEARMONOTONESPLINEINTERPOLATION_STR	"fn_linearmonotonesplineinterpolation"
 #define FN_LINEARMONOTONEPARABOLICINTERPOLATION_STR	"fn_linearmonotoneparabolicinterpolation"
 

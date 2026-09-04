@@ -10,10 +10,10 @@
 #include "AQLCoreTemplateType.h"
 #include <vector>
 
-// MMLinearInterpolatiaon Function ID
+// AQLLinearInterpolatiaon Function ID
 #define FN_CONSTRAINEDSPLINEINTERPOLATION		1005
 
-// MMLinearInterpolatiaon Function Name
+// AQLLinearInterpolatiaon Function Name
 #define FN_CONSTRAINEDSPLINEINTERPOLATION_STR	"fn_constrainedsplineinterpolation"
 
 // Alias Name

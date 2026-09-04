@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLCalibrateVolatility_h
 #define AQLCalibrateVolatility_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateVolatility.h
-//
-//  DESCRIPTION :         Volatility data create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 
 #include "AQLString.h"

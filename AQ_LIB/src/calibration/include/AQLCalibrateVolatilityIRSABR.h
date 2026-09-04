@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLCalibrateVolatilityIRSABR_h
 #define AQLCalibrateVolatilityIRSABR_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateVolatilityIRSABR.h
-//
-//  DESCRIPTION :         Volatility data create class for lmm
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

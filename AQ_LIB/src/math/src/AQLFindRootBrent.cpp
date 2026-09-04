@@ -6,17 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLFindRootBrent.cpp
-//
-//  SYNOPSIS    :       AQLFindRootBrent
-//  DESCRIPTION :       Class definition for dataInstance finding of a 1-D function with Brent method.
-//						This class realize virtual method in abstract base class.
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

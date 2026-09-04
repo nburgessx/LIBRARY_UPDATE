@@ -1,16 +1,6 @@
 /*! @file
     @brief  IR Delta setup class
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationYieldBasisDeltaAnalytic.cpp
-//
-//  DESCRIPTION :       IR Delta setup class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -4,15 +4,6 @@
 	This class derives from AQLMathVolFuncHW
 
 */
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathVolFuncSZDDVolFactor.h
-//
-//  SYNOPSIS    :       AQLMathVolFuncSZDDVolFactor
-//  DESCRIPTION :       Source code of class  to represent volatility of FX
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

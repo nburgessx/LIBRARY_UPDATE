@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesSDEIntegralBase.cpp
-//
-//  SYNOPSIS    :       AQLRatesSDEIntegralBase
-//  DESCRIPTION :       Source code of base class of sde integral
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -1,16 +1,6 @@
 /*! @file
     @brief Class to load txt file data
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLLogger.cpp
-//
-//  DESCRIPTION :       Logger class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

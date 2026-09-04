@@ -85,7 +85,7 @@ namespace etrading
 
         if ( h == 0.0 )
         {
-            throw ETradingException( ( boost::format( "SplineInterpolation::interpolate: Invalid Index data is thrown to spline to set method at MMSplineinterpolation (x1 : %f)" ) % x1 ).str() );
+            throw ETradingException( ( boost::format( "SplineInterpolation::interpolate: Invalid Index data is thrown to spline to set method at AQLSplineinterpolation (x1 : %f)" ) % x1 ).str() );
         }
 
         a = ( index_[khi - 1] - x1 ) / h;

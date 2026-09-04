@@ -3,15 +3,6 @@
 */
 //  2007, AlgoQuantHub.
 
-///X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCurveSetup.cpp
-//
-//  DESCRIPTION :       M-Library Excel Addin Lap class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -54,12 +45,12 @@
 #include "AQLPriceTradeValue.h"
 
 //#include "AQLDefinitionsHazardRate.h"
-//#include "LAHazardRateCreator.h"
-//#include "LAMathCreditEntitySetUp.h"
-//#include "LAMathSingleCredit.h"
+//#include "AQLHazardRateCreator.h"
+//#include "AQLMathCreditEntitySetUp.h"
+//#include "AQLMathSingleCredit.h"
 #include "AQL1DDataSet.h"
-//#include "LAPriceAccruedIntFunc.h"
-//#include "LAPriceCDS.h"
+//#include "AQLPriceAccruedIntFunc.h"
+//#include "AQLPriceCDS.h"
 
 #include <memory>
 #include <sstream>

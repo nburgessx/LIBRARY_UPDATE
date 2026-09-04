@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYieldDelta_h
 #define AQLRiskConfigurationYieldDelta_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationYieldDelta.h
-//
-//  DESCRIPTION :       Yield delta setup class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

@@ -5,15 +5,6 @@
 
 #ifndef AQLDefinitionsFXVannaVolga_h
 #define AQLDefinitionsFXVannaVolga_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDefinitionsFXVannaVolga.h
-//
-//  DESCRIPTION :       
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLDefinitions.h"
 

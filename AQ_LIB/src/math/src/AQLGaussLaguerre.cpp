@@ -5,17 +5,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLGaussLaguerre.cpp
-//
-//  SYNOPSIS    :       AQLGaussLaguerre
-//  DESCRIPTION :       Class definition of integratioin by Gauss Laguerre method
-//						This class defines pure virtual method "get" from base class "AQLGaussianQuadrature".
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

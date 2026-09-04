@@ -6,16 +6,6 @@
 */
 //  2012, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceQuantAdjustmentHWFXDD.cpp
-//
-//  SYNOPSIS    :       AQLPriceQuantAdjustmentHWFXDD
-//  DESCRIPTION :       Source of base class of quanto adjustment class
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

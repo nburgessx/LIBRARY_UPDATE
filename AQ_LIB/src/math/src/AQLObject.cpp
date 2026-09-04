@@ -232,7 +232,7 @@ AQLObject::clone(void) const
 }
 
 /*!
-    @brief register the Data, and the ownership of the pointer to LADataibugte is in AQLObject
+    @brief register the Data, and the ownership of the pointer to AQLDataibugte is in AQLObject
 
     if the registered Data is selected, an exception occurs
 
@@ -329,7 +329,7 @@ void AQLObject::remove(const AQLString& att)
 }
 
 /*!
-    @brief register the Data, and the ownership of the pointer to LADataibugte is in AQLObject ( remove then add )
+    @brief register the Data, and the ownership of the pointer to AQLDataibugte is in AQLObject ( remove then add )
 
     if the registered Data is selected, an exception occurs
 

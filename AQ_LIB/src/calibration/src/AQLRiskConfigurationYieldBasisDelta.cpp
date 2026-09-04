@@ -1,16 +1,6 @@
 /*! @file
     @brief  Basis Delta setup class
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationYieldBasisDelta.cpp
-//
-//  DESCRIPTION :       Basis Delta setup class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

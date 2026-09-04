@@ -7,12 +7,12 @@
 			3.IR_CALIBRATION_DATA_GRID_SMALL_T(AQLDataDoubles)<BR>
 			4.CALIBRATION_DATA_INTERPOLATION(AQLPriceDataInterpolation)<BR>
 			5.IR_CALIBRATION_DATA_VOLDATA_MAT(AQLDataDoubleMatrix)<BR>
-			6.IR_CALIBRATION_DATA_VOLDATA_FUNCTIONS(LADataFunctions)<BR>
-			7.IR_CALIBRATION_DATA_VOLDATA_FUNCTION(LADataFunction)<BR>
+			6.IR_CALIBRATION_DATA_VOLDATA_FUNCTIONS(AQLDataFunctions)<BR>
+			7.IR_CALIBRATION_DATA_VOLDATA_FUNCTION(AQLDataFunction)<BR>
 			8.IR_CALIBRATION_DATA_VOLDATA_VECTOR(AQLDataDoubles)<BR>
 			9.IR_CALIBRATION_DATA_VOLDATA_SCALAR(AQLDataDouble)<BR>
-			10.IR_CALIBRATION_DATA_FACTORNUM(LAPriceInt)<BR>
-			11.IR_CALIBRATION_DATA_INPUTTYPE(LAPriceInt)<BR>
+			10.IR_CALIBRATION_DATA_FACTORNUM(AQLPriceInt)<BR>
+			11.IR_CALIBRATION_DATA_INPUTTYPE(AQLPriceInt)<BR>
 	
 */
 //  2007, AlgoQuantHub..
@@ -732,7 +732,7 @@ AQLMathVolatility::getInitialValue() const
 
 /////////////// PROTECTED METHODS /////////////////////
 /*!
-	@brief copy MFSingleCredit
+	@brief copy AQLSingleCredit
 	@param[in] e copy source
 	@return reference to this object
 */

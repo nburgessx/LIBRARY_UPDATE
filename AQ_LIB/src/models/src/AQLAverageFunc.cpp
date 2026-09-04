@@ -6,16 +6,6 @@
 */
 //  2006, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLAverageMethod.cpp
-//
-//  SYNOPSIS    :       AQLAverageMethod
-//  DESCRIPTION :       Source code of class to represent average function
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

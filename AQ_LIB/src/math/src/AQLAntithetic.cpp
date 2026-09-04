@@ -4,18 +4,6 @@
 
 //  2005, Fixed Income Group, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLAntithetic.cpp
-//
-//  SYNOPSIS    :       AQLAntithetic
-//  DESCRIPTION :       
-//                      
-//                     
-//                      
-//  SEE ALSO    :       AQLAntithetic.h
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 
 #include "AQLAntithetic.h"

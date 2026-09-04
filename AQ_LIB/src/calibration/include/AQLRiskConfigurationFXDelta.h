@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationFXDelta_h
 #define AQLRiskConfigurationFXDelta_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationFXDelta.h
-//
-//  DESCRIPTION :         FX delta setup class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

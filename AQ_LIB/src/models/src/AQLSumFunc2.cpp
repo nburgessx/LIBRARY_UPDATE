@@ -6,16 +6,6 @@
 */
 //  2006, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLSumMethod2.cpp
-//
-//  SYNOPSIS    :       AQLSumMethod2
-//  DESCRIPTION :       Source code of class to represent sum function
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef  AQLModelSetupLMM_h
 #define  AQLModelSetupLMM_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLModelSetupLMM.h
-//
-//  DESCRIPTION :       LMM Master data regist class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

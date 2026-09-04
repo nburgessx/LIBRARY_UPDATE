@@ -1,16 +1,6 @@
 /*! @file
     @brief FX Risk Scenario create class
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLScenarioConfigurationFX.cpp
-//
-//  DESCRIPTION :       FX Risk Scenario create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -56,7 +46,7 @@ AQLScenarioConfigurationFX::~AQLScenarioConfigurationFX(void)
 
 	@param[int,out] dataInstance
 	@param[in] param
-	@return vector<MBEnity *>
+	@return vector<AQLEnity *>
 */
 vector<AQLObject *>
 AQLScenarioConfigurationFX::createScenario(AQLDataInstance &dataInstance, const AQLScenarioParam &param) const

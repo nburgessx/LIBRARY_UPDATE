@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDriftLogLMMForward.cpp
-//
-//  SYNOPSIS    :       AQLPriceDriftLogLMMForward
-//  DESCRIPTION :       Source code of drift function of LMM sde (forward measure)(log type)
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

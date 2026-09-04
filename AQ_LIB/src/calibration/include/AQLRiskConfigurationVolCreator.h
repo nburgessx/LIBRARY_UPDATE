@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolCreator_h
 #define AQLRiskConfigurationVolCreator_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationVolCreator.h
-//
-//  DESCRIPTION :         Volatility create class for calc risk
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

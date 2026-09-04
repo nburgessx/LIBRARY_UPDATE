@@ -1,16 +1,6 @@
 /*! @file
     @brief Volatility setup class for calc risk
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationVolatility.cpp
-//
-//  DESCRIPTION :       Volatility setup class for calc risk 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYieldBasisDeltaOptionAnalytic_h
 #define AQLRiskConfigurationYieldBasisDeltaOptionAnalytic_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationYieldBasisDeltaOptionAnalytic.h
-//
-//  DESCRIPTION :        FX Vega setup class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

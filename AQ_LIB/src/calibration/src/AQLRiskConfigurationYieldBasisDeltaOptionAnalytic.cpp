@@ -1,16 +1,6 @@
 /*! @file
     @brief  FX Vega setup class 
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationYieldBasisDeltaOptionAnalytic.cpp
-//
-//  DESCRIPTION :         FX Vega setup class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

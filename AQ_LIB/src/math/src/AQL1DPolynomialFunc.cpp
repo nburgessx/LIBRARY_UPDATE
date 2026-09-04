@@ -6,16 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQL1DPolynomialMethod.cpp
-//
-//  SYNOPSIS    :       AQL1DPolynomialMethod
-//  DESCRIPTION :       Source code of class to represent 1D polynomial function
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

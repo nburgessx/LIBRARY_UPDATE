@@ -26,7 +26,7 @@
 
 #define DATA_DOUBLE      6  // AQLDataDouble Data ID
 
-// Set number of decimal places of convertToString() for AQLDataDouble, LADataiDoubles, AQLDataDoubleMatrix
+// Set number of decimal places of convertToString() for AQLDataDouble, AQLDataiDoubles, AQLDataDoubleMatrix
 const int DOUBLE_PRECISION = 18;
 
 

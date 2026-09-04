@@ -1,16 +1,6 @@
 /*! @file
     @brief Calibration method create class for lmm
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrationParametersLMM.cpp
-//
-//  DESCRIPTION :     Calibration method create class for lmm
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

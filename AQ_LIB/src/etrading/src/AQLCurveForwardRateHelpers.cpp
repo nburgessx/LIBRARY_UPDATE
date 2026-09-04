@@ -10,9 +10,9 @@
 #endif
 
 // This Include
-#include "AQLCurveForwardRateHelpers.h"      // was #include "LAMathCurveFuncUti1ity.h"
-#include "AQLDateHelpers.h"                  // was #include "LAMathDateCalcUti1ity.h"
-#include "AQLDateScheduleHelpers.h"          // was #include "LAMathDateFuncUti1ity.h"
+#include "AQLCurveForwardRateHelpers.h"      // was #include "AQLMathCurveFuncUti1ity.h"
+#include "AQLDateHelpers.h"                  // was #include "AQLMathDateCalcUti1ity.h"
+#include "AQLDateScheduleHelpers.h"          // was #include "AQLMathDateFuncUti1ity.h"
 
 // External Includes
 #include <cmath>

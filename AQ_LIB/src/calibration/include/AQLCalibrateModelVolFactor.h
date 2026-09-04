@@ -5,15 +5,6 @@
 //  2016, AlgoQuantHub.
 #ifndef AQLCalibrateModelVolFactor_h
 #define AQLCalibrateModelVolFactor_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       LACalibrateModelvolaaFactor.h
-//
-//  DESCRIPTION :       Volatility factor SDE generator 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

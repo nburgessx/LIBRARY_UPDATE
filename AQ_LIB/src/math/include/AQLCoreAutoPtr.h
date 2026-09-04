@@ -4,7 +4,7 @@
 
 
 // ---------------------------------------------------------------------------
-// 06MAR06 ysuzuki : The specification change of MBAutoPt(modified to implement in the specification of "Version 3" from 
+// 06MAR06 ysuzuki : The specification change of AQLAutoPt(modified to implement in the specification of "Version 3" from 
 //					 what has been implemented in "Version 1".
 //                   For more information, web page of "More Effective C + +",
 //                   http://www.awprofessional.com/content/images/020163371X/autoptr/std::shared_ptr.html

@@ -6,16 +6,6 @@
 */
 //  2012, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDivideMethod.cpp
-//
-//  SYNOPSIS    :       AQLDivideMethod
-//  DESCRIPTION :       Source code of class to represent divide function
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

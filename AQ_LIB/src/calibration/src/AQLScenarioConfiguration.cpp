@@ -3,16 +3,6 @@
 /*! @file
     @brief Scenario create class
 */
-//  2011, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLScenarioConfiguration.cpp
-//
-//  DESCRIPTION :       Scenario create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -44,7 +34,7 @@ using namespace std;
 
 	@param[int,out] dataInstance
 	@param[in] param
-	@return vector<MBEnity *>
+	@return vector<AQLEnity *>
 */
 vector<AQLObject *>
 AQLScenarioConfiguration::createScenarioForeignYield(AQLDataInstance &dataInstance, const AQLScenarioParam &param) const
@@ -209,7 +199,7 @@ AQLScenarioConfiguration::createScenarioForeignYield(AQLDataInstance &dataInstan
 
 	@param[int,out] dataInstance
 	@param[in] param
-	@return vector<MBEnity *>
+	@return vector<AQLEnity *>
 */
 vector<AQLObject *>
 AQLScenarioConfiguration::createScenarioCollateralYield(AQLDataInstance &dataInstance, const AQLScenarioParam &param) const

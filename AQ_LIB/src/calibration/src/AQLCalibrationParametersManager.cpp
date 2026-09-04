@@ -1,16 +1,6 @@
 /*! @file
     @brief AQLCalibrationParametersManager manager class
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrationParametersManager.cpp
-//
-//  DESCRIPTION :       AQLCalibrationParametersManager 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

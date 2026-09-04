@@ -1,16 +1,6 @@
 /*! @file
     @brief Class to regist Vanilla master data
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLModelSetupVanilla.cpp
-//
-//  DESCRIPTION :       Vanilla Master data regist class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -92,7 +82,7 @@
 #include "AQLPriceArbFreeGenerator.h"
 #include "AQLCompoundingFunc.h"
 #include "AQLPriceOptionGenerator.h"
-//#include "LAPriceNDSSwaptionValue.h"
+//#include "AQLPriceNDSSwaptionValue.h"
 #include "AQLPolynomialPS.h"
 
 //====================AQLModelSetupVanilla ==============================
@@ -306,7 +296,7 @@ AQLModelSetupVanilla::registFunctionMaster(AQLDataInstance &dataInstance)
 	AQLPriceIRSwaptionValueFromCashFlow* pswaption2 = new AQLPriceIRSwaptionValueFromCashFlow();
 	fm.setFunction(pswaption2, FN_IR_SWAPTIONVALUEFROMCASHFLOW_STR);
 //#ifndef RH6
-//	LAPriceNDSSwaptionValue* pndsswaption = new LAPriceNDSSwaptionValue();
+//	AQLPriceNDSSwaptionValue* pndsswaption = new AQLPriceNDSSwaptionValue();
 //	fm.setFunction(pndsswaption, FN_IR_NDSSWAPTIONVALUE_STR);
 //#endif
 	fm.setFunction(new AQLPolynomialPS(1), FN_POLYNOMIALPS_STR);

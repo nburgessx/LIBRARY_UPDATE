@@ -6,16 +6,6 @@
 */
 //  2008, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceSZDDIntegralMelstein.cpp
-//
-//  SYNOPSIS    :       AQLPriceSZDDIntegralMelstein
-//  DESCRIPTION :       Source code of ScobelZhu & DD type of fx sde integral class
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -300,8 +290,8 @@ AQLPriceSZDDIntegralMelstein::integral(double ts, double te,
 		//pDrift = dynamic_cast<const AQLPriceDriftFX *>(*drift);
 		//double int_drift =  pDrift->getDriftValue(mVar) * (te - ts);		//drift(IR) is ok!	"(*drift)->operator ()(mVar)" is same as rd-rf !
 
-		//const LAPriceDriftFXForBarrier *pDrift = 0;
-		//pDrift = dynamic_cast<const LAPriceDriftFXForBarrier *>(*drift);
+		//const AQLPriceDriftFXForBarrier *pDrift = 0;
+		//pDrift = dynamic_cast<const AQLPriceDriftFXForBarrier *>(*drift);
 		//double int_drift = pDrift->getDriftValue(mVar) * (te - ts);		//drift(IR) is ok!	"(*drift)->operator ()(mVar)" is same as rd-rf !
 
 		double mu = S_prev * int_drift / tau;	//ok!

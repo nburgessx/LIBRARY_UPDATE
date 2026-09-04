@@ -5,14 +5,6 @@
 // Improved performance & precision by AlgoQuantHub.
 #ifndef AQLProductDistribution_h
 #define AQLProductDistribution_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLProductDistribution.h
-//
-//  DESCRIPTION :       Base class for product distributions (bivariate).
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #else

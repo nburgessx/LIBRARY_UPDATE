@@ -6,16 +6,6 @@
 */
 //  2006, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMaxMethod.cpp
-//
-//  SYNOPSIS    :       AQLMaxMethod
-//  DESCRIPTION :       Source code of class to represent max function
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

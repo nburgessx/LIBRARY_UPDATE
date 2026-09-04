@@ -5,16 +5,6 @@
 
 */
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDriftHW.cpp
-//
-//  SYNOPSIS    :       AQLPriceDriftHW
-//  DESCRIPTION :       Source code of drift function of HW sde
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolCreatorPtberg_h
 #define AQLRiskConfigurationVolCreatorPtberg_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationVolCreatorPtberg.h
-//
-//  DESCRIPTION :        Ptberg(fx) Volatility create class for calc risk 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

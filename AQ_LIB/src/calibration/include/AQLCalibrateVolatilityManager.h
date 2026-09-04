@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLCalibrateVolatilityManager_h
 #define AQLCalibrateVolatilityManager_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateVolatilityManager.h
-//
-//  DESCRIPTION :       AQLCalibrateVolatilityManager 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

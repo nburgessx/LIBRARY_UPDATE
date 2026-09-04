@@ -6,16 +6,6 @@
 */
 //  2008, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceFXDDIntegral.cpp
-//
-//  SYNOPSIS    :       AQLPriceFXDDIntegral
-//  DESCRIPTION :       Source code of displaced diffusion type of fx sde integral class
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

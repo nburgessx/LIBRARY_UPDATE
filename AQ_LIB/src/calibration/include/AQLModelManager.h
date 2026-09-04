@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLMasterRegistManager_h
 #define AQLMasterRegistManager_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMasterRegistManager.h
-//
-//  DESCRIPTION :       AQLModelSetup manger
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

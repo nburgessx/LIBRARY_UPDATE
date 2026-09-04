@@ -201,7 +201,7 @@ namespace etrading
         MATRIX,
         CURVE_DEPRECATED,
         CURVE_BUILD_PROPERTIES,         // not really cached on its own, just for DataSchema in StaticStructureStore
-	    SWAP_OBJECT,                    // SWAP is taken by #define SWAP "SWAP" (MBTemplate...)
+	    SWAP_OBJECT,                    // SWAP is taken by #define SWAP "SWAP" (AQLTemplate...)
         SCHEDULE,         
 	    LEG,
         BOND,

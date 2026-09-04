@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLCalibrateVolatilityPtberg_h
 #define AQLCalibrateVolatilityPtberg_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateVolatilityPtberg.h
-//
-//  DESCRIPTION :         Volatility data create class for lmm
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

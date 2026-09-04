@@ -5,16 +5,6 @@
 
 */
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDriftQuantAdjustment.cpp
-//
-//  SYNOPSIS    :       AQLPriceDriftQuantAdjustment
-//  DESCRIPTION :       Source code of drift function of quant adjustment
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

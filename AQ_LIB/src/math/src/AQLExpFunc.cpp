@@ -6,15 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLExpMethod.h
-//
-//  SYNOPSIS    :       AQLExpMethod
-//  DESCRIPTION :       Source code of class to represent exponential function
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

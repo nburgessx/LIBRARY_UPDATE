@@ -5,14 +5,6 @@
 // Improved performance & precision by AlgoQuantHub.
 #ifndef AQLBivariateCopula_h
 #define AQLBivariateCopula_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBivariateCopula.h
-//
-//  DESCRIPTION :       Base class for bivariate copulas.
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #else

@@ -6,15 +6,6 @@
 */
 //  2007, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathFXAdjuster.h
-//
-//  SYNOPSIS    :       AQLMathFXAdjuster
-//  DESCRIPTION :       Source code of class  to adjust FX value
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

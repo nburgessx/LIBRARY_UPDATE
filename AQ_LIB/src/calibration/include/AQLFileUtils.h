@@ -6,15 +6,6 @@
 #ifndef AQLFileUtils_h
 #define AQLFileUtils_h
 
-///X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMarketData.h
-//
-//  DESCRIPTION :       M-Library Market Data util class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma interface
 #endif

@@ -15,7 +15,7 @@
 #include <AQLMathDateCalculations.h>
 #include "ConstantDeclarations.h"
 #include "AQLMathCapFloorSABR.h"
-//#include "LAMathAnalyticalBlack.h"
+//#include "AQLMathAnalyticalBlack.h"
 #include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathCurveFuncUtility.h"
 

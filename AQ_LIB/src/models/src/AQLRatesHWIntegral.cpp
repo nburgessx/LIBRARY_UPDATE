@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesHWIntegral.cpp
-//
-//  SYNOPSIS    :       AQLRatesHWIntegral
-//  DESCRIPTION :       Source code of Euler-Maruyama sde integral class
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

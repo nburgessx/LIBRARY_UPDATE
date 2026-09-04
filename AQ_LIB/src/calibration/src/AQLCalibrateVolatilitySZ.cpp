@@ -2,16 +2,6 @@
 /*! @file
     @brief Volatility data create class for SZ
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateVolatilitySZ.cpp
-//
-//  DESCRIPTION :      Volatility data create class for SZ
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -1,16 +1,6 @@
 /*! @file
     @brief  IR Delta setup class
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationFXShiftYieldBasisDelta.cpp
-//
-//  DESCRIPTION :       FX Shift Basis Delta setup class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -131,7 +121,7 @@ AQLRiskConfigurationFXShiftYieldBasisDelta::getBaseSpotVal(const AQLString &ccy,
 	const unsigned int shiftSize = shiftVals.size();
 	if (index < 0 || index >= static_cast<int>(shiftSize))
 	{
-		throw AQLCoreInvalidData("LARiskConfigurationFXShiftBasisDelta::getBaseShifts index is less than zero or over shift grid.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("AQLRiskConfigurationFXShiftBasisDelta::getBaseShifts index is less than zero or over shift grid.", __FILE__, __LINE__);
 	}
 	return shiftVals[index];
 }

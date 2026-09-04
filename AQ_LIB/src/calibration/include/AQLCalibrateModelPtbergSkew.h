@@ -4,16 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLCalibrateModelPtbergSkew_h
 #define AQLCalibrateModelPtbergSkew_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateModelPtbergSkew.h
-//
-//  DESCRIPTION :       Ptberg SDE generator
-//                      Create SDE which includes skew
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

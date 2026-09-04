@@ -6,15 +6,6 @@
 */
 //  2007, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathVolFuncIRSABR.h
-//
-//  SYNOPSIS    :       AQLMathVolFuncIRSABR
-//  DESCRIPTION :       Source code of class  to represent volatility of FX
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

@@ -1,16 +1,6 @@
 /*! @file
     @brief   AQLPtbergUtils util class
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPtbergUtils.cpp
-//
-//  DESCRIPTION :       LMM(Libor market model) util class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

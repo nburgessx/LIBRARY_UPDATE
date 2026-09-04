@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLDataInstanceConfigurationPV_h
 #define AQLDataInstanceConfigurationPV_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDataInstanceConfigurationPV.h
-//
-//  DESCRIPTION :        DataInstance setup class for calc PV
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

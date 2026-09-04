@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfigurationVolatility_h
 #define AQLScenarioConfigurationVolatility_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLScenarioConfigurationVolatility.h
-//
-//  DESCRIPTION :        Volatility Risk Scenario create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

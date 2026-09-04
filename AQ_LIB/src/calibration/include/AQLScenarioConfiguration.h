@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfiguration_h
 #define AQLScenarioConfiguration_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLScenarioConfiguration.h
-//
-//  DESCRIPTION :        Risk Scenario create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 
 #include "AQLString.h"

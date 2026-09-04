@@ -11,7 +11,7 @@
 /*!
     @brief Class declaration to generate a set of random numbers according to factor model
 
-	This class derives from MMRandoBase.
+	This class derives from AQLRandoBase.
 */
 
 class AQLFactorModel : public AQLRandBase

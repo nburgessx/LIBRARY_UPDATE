@@ -1,16 +1,6 @@
 /*! @file
     @brief AQLCalibrateVolatilityManager manager class
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateVolatilityManager.cpp
-//
-//  DESCRIPTION :       AQLCalibrateVolatilityManager 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

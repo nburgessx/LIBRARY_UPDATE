@@ -5,15 +5,6 @@
 
 #ifndef AQLDefinitionsCalibration_h
 #define AQLDefinitionsCalibration_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       LADefinitionsantCalibration.h
-//
-//  DESCRIPTION :       
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #define STANDARD "standard";
 #define CALIBDATA "Calibdata";

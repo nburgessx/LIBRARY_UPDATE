@@ -23,10 +23,10 @@
     <Filter Include="src\etrading\Date">
       <UniqueIdentifier>{28fba8a7-5d76-48e6-9b16-3f0015d58f77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\Legacy">
+    <Filter Include="src\etrading\AQL Classic">
       <UniqueIdentifier>{f671a952-48c7-4911-bc52-621e9d4d019d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj">
+    <Filter Include="src\etrading\AQObjects">
       <UniqueIdentifier>{79d10c86-d727-4239-b7f0-0c9f360c27ab}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\etrading\Product">
@@ -60,10 +60,10 @@
     <Filter Include="include\etrading\Date">
       <UniqueIdentifier>{a2501e36-62a3-494e-893d-e43790cbd038}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\Legacy">
+    <Filter Include="include\etrading\AQL Classic">
       <UniqueIdentifier>{9fd2edee-82c7-4ee9-9aba-dff12fe690ec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj">
+    <Filter Include="include\etrading\AQObjects">
       <UniqueIdentifier>{86d92014-443b-464a-b4b0-b2c314431606}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\etrading\Product">
@@ -216,7 +216,7 @@
       <Filter>include\etrading\Utility</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqObjects.h">
-      <Filter>include\etrading\AQObj</Filter>
+      <Filter>include\etrading\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqObjBondsCreate.h">
       <Filter>include\etrading\Bonds</Filter>
@@ -255,10 +255,10 @@
       <Filter>include\etrading\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqObjCurves.h">
-      <Filter>include\etrading\AQObj</Filter>
+      <Filter>include\etrading\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqObjToolsGrids.h">
-      <Filter>include\etrading\AQObj</Filter>
+      <Filter>include\etrading\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurvesInterpolationJoinDate.h">
       <Filter>include\etrading\Curve</Filter>
@@ -350,7 +350,7 @@
       <Filter>src\etrading\Utility</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqObjects.cpp">
-      <Filter>src\etrading\AQObj</Filter>
+      <Filter>src\etrading\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqObjBondsCreate.cpp">
       <Filter>src\etrading\Bonds</Filter>
@@ -389,10 +389,10 @@
       <Filter>src\etrading\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqObjCurves.cpp">
-      <Filter>src\etrading\AQObj</Filter>
+      <Filter>src\etrading\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqObjToolsGrids.cpp">
-      <Filter>src\etrading\AQObj</Filter>
+      <Filter>src\etrading\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\swig_Python_wrap.cxx">
       <Filter>resources\Swig Generated Files</Filter>

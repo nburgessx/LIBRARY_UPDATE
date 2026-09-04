@@ -1,16 +1,6 @@
 /*! @file
     @brief AQLLinearRatesVolatility manager class
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLLinearRatesVolatility.cpp
-//
-//  DESCRIPTION :       AQLLinearRatesVolatility 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -83,7 +73,7 @@ AQLPricePlainVolatilityFromDirectInput::setVolatility(AQLDataProvider* dp, AQLOb
 	return;
 }
 
-//================ LAPricePlainVolatilityFromDirectInputOfCahslets ===================================
+//================ AQLPricePlainVolatilityFromDirectInputOfCahslets ===================================
 // constructor
 /*!*/
 AQLPricePlainVolatilityFromDirectInputOfCashlets::AQLPricePlainVolatilityFromDirectInputOfCashlets(void)

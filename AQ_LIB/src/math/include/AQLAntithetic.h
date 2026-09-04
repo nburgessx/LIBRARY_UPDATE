@@ -8,16 +8,6 @@
 
 #ifndef AQLAntithetic_h
 #define AQLAntithetic_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLAntithetic.h
-//
-//  SYNOPSIS    :       AQLAntithetic
-//  DESCRIPTION :       
-//                     
-//                    
-//                      
-//  VERSION     :
-////X///////////////////X///////////////////////////////X///////////////////
 
 
 #include "AQLRandBase.h"

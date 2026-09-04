@@ -1,16 +1,6 @@
 /*! @file
     @brief Volatility setup class for calc parallel shift risk
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationVolParallel.cpp
-//
-//  DESCRIPTION :       Volatility setup class for calc parallel shift risk
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

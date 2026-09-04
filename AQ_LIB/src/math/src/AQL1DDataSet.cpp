@@ -4,16 +4,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQL1DDataSet.cpp
-//
-//  SYNOPSIS    :       AQL1DDataSet
-//  DESCRIPTION :       Class to express functions with data points and interpolation
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

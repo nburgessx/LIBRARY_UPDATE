@@ -1,16 +1,6 @@
 /*! @file
     @brief Ptberg SDE generator class. The SDE includes skew
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateModelPtbergSkew.cpp
-//
-//  DESCRIPTION :       Ptberg SDE generator class. The SDE includes skew 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

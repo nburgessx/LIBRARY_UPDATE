@@ -2,16 +2,6 @@
 /*! @file
     @brief Volatility factor sde generator class
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateModelVolFactor.cpp
-//
-//  DESCRIPTION :        Volatility factor SDE generator 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLObjectConfigurationVanilla_h
 #define AQLObjectConfigurationVanilla_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLObjectConfigurationVanilla.h
-//
-//  DESCRIPTION :        Vanilla object setup class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

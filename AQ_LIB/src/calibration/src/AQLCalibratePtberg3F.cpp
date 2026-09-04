@@ -1,16 +1,6 @@
 /*! @file
     @brief HW calibration request
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibratePtberg3F.cpp
-//
-//  DESCRIPTION :        HW calibration request class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

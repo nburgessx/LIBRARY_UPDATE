@@ -5,14 +5,6 @@
 // Improved performance & precision by AlgoQuantHub.
 #ifndef AQLBivariateGaussianCopula_h
 #define AQLBivariateGaussianCopula_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBivariateGaussianCopula.h
-//
-//  DESCRIPTION :       Bivariate Gaussian copula.
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #else

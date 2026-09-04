@@ -6,15 +6,6 @@
 */
 //  2007, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesDmySDE.h
-//
-//  SYNOPSIS    :       AQLRatesDmySDE
-//  DESCRIPTION :       Class declaration for no simulation SDE
-//						This class derives from AQLRatesSDEBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

@@ -6,16 +6,6 @@
 */
 //   2007,AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesInterSectionFunc.cpp
-//
-//  SYNOPSIS    :       AQLRatesInterSectionFunc
-//  DESCRIPTION :       Source code of class to represent RangeCount function
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

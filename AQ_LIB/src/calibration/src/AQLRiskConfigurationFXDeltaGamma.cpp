@@ -1,16 +1,6 @@
 /*! @file
     @brief FX delta gamma setup class
 */
-//  2016, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationFXDeltaGamma.cpp
-//
-//  DESCRIPTION :        FX delta gamma setup class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma implementation
 #else

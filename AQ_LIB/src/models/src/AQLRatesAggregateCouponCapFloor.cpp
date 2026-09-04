@@ -6,16 +6,6 @@
 */
 //  2007,AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesAggregateCouponCapFloor.cpp
-//
-//  SYNOPSIS    :       AQLRatesAggregateCouponCapFloor
-//  DESCRIPTION :       Source code of class to represent Coupon Cap function
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -3,16 +3,6 @@
 /*! @file
     @brief M-Library Deal util class
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDealUtils.cpp
-//
-//  DESCRIPTION :       Deal util class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -49,7 +39,7 @@
 #include "AQLPriceConvergenceValue.h"
 #include "AQLDefinitionsIRSABR.h"
 #include "AQLPriceIRCapFloorOptionValue.h"
-//#include "LAPriceNDSSwaptionValue.h"
+//#include "AQLPriceNDSSwaptionValue.h"
 #include <algorithm>
 #include <cmath>
 
@@ -778,7 +768,7 @@ AQLDealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 //			{
 //				DoubleVector expiryYears;
 //				DoubleVector tenorYears;
-//				LAPriceNDSSwaptionValue::getVolCalibrationGrid(asOfDate, *tradeEntities[i], expiryYears, tenorYears);
+//				AQLPriceNDSSwaptionValue::getVolCalibrationGrid(asOfDate, *tradeEntities[i], expiryYears, tenorYears);
 //				for (auto i_grid = 0; i_grid < expiryYears.size(); ++i_grid) {
 //					addCalibTargetFlag(ret, expiryYears[i_grid], tenorYears[i_grid], expiryVec, tenorVec);
 //				}

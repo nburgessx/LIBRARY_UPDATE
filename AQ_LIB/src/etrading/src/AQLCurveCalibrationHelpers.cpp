@@ -10,10 +10,10 @@
 #endif
 
 // LA Includes
-#include "AQLCurveCalibrationHelpers.h"  // was #include "LAMathCurveGenerateFuncUti1ity.h"
-#include "AQLDateHelpers.h"              // was #include "LAMathDateCalcUti1ity.h"
-#include "AQLDateScheduleHelpers.h"      // was #include "LAMathDateFuncUti1ity.h"
-#include "AQLCurvePricingObject.h"      // was #include "LAMathYie1dCurve.h"
+#include "AQLCurveCalibrationHelpers.h"  // was #include "AQLMathCurveGenerateFuncUti1ity.h"
+#include "AQLDateHelpers.h"              // was #include "AQLMathDateCalcUti1ity.h"
+#include "AQLDateScheduleHelpers.h"      // was #include "AQLMathDateFuncUti1ity.h"
+#include "AQLCurvePricingObject.h"      // was #include "AQLMathYie1dCurve.h"
 
 // External Includes
 #include <cmath>

@@ -5,15 +5,6 @@
 #ifndef AQLDealUtils_h
 #define AQLDealUtils_h
 
-///X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDealUtils.h
-//
-//  DESCRIPTION :       M-Library Deal util class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

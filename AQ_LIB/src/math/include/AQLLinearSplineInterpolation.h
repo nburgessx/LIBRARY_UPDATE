@@ -23,10 +23,10 @@
 #include "AQLCoreTemplateType.h"
 #include <vector>
 
-// MMLinearInterpolatiaon Function ID
+// AQLLinearInterpolatiaon Function ID
 #define FN_LINEARSPLINEINTERPOLATION	    1010
 
-// MMLinearInterpolatiaon Function Name
+// AQLLinearInterpolatiaon Function Name
 #define FN_LINEARSPLINEINTERPOLATION_STR	"fn_linearsplineinterpolation"
 
 // Alias Name

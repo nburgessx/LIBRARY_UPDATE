@@ -6,17 +6,6 @@
 
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQL1DIntegral.cpp
-//
-//  SYNOPSIS    :       AQL1DIntegral
-//  DESCRIPTION :       Source code of abstract base class for one dimensional integration
-//						This class derives from AQLIntegralBase
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

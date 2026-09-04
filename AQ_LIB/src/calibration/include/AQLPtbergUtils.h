@@ -5,15 +5,6 @@
 #ifndef AQLPtbergUtils_h
 #define AQLPtbergUtils_h
 
-///X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPtbergUtils.h
-//
-//  DESCRIPTION :       FX ptberg model util class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

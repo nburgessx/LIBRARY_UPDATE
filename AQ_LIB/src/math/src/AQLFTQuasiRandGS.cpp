@@ -15,18 +15,6 @@
 #endif
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLFTQuasiRandGS.cpp
-//
-//  SYNOPSIS    :       AQLFTQuasiRandGS
-//  DESCRIPTION :
-//
-//
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLFTQuasiRandGS.h"
 unsigned long AQLFTQuasiRandGS::mIrreduciblePoly[1500]  = {	

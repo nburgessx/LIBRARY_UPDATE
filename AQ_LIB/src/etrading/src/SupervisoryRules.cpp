@@ -7,7 +7,7 @@
 
 namespace etrading
 {
-	/* @brief For details of the LARule Supervisory Formula calculation below please see these URLs:
+	/* @brief For details of the AQLRule Supervisory Formula calculation below please see these URLs:
 	*  https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32013R0575&from=EN
 	*  https://eba.europa.eu/regulation-and-policy/single-rulebook/interactive-single-rulebook/-/interactive-single-rulebook/article-id/1922
 	*/

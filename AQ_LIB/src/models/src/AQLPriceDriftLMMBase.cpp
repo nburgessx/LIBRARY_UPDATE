@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDriftLMMBase.cpp
-//
-//  SYNOPSIS    :       AQLPriceDriftLMMBase
-//  DESCRIPTION :       Source code of abstruct base class of drift function of LMM sde (spot measure)
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

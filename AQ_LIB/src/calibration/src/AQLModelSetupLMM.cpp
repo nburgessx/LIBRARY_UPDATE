@@ -1,16 +1,6 @@
 /*! @file
     @brief Class to regist LMM master data
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLModelSetupLMM.cpp
-//
-//  DESCRIPTION :       LMM Master data regist class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

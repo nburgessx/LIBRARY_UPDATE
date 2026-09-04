@@ -5,14 +5,6 @@
 // Improved performance & precision by AlgoQuantHub.
 #ifndef AQLBivariateStudentTCopula_h
 #define AQLBivariateStudentTCopula_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBivariateStudentTCopula.h
-//
-//  DESCRIPTION :       Bivariate Student t-copula.
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #else

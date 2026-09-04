@@ -5,18 +5,6 @@
 //  2005, Fixed Income Group, AlgoQuantHub.
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMersenneTwister.cpp
-//
-//  SYNOPSIS    :       AQLMersenneTwister
-//  DESCRIPTION :       
-//                      
-//                     
-//                      
-//  SEE ALSO    :       AQLMersenneTwister.h
-//  TYPE        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLMersenneTwister.h"
 

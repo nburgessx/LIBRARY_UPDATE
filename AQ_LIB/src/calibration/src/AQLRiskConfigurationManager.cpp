@@ -1,16 +1,6 @@
 /*! @file
     @brief AQLRiskConfigurationManager factory class
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationManager.cpp
-//
-//  DESCRIPTION :       AQLRiskConfigurationManager 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -10,8 +10,8 @@
 #endif
 
 // This Include
-#include "AQLDateHelpers.h"              // was called #include "LAMathDateCalcUti1ity.h"
-#include "AQLDateScheduleHelpers.h"      // was called #include "LAMathDateFuncUti1ity.h"
+#include "AQLDateHelpers.h"              // was called #include "AQLMathDateCalcUti1ity.h"
+#include "AQLDateScheduleHelpers.h"      // was called #include "AQLMathDateFuncUti1ity.h"
 
 // Internal Includes
 #include "AQLObject.h"

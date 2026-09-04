@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLCalibrateModelPtberg3F_h
 #define AQLCalibrateModelPtberg3F_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateModelPtberg3F.h
-//
-//  DESCRIPTION :       Ptberg SDE generator 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

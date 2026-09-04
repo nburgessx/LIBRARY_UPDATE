@@ -35,7 +35,7 @@ AQLPriceIRSwaptionValueFromCashFlow::AQLPriceIRSwaptionValueFromCashFlow()
 : AQLPriceIRSwaptionValue()
 {}
 
-//AQLPriceIRSwaptionValueFromCashFlow::AQLPriceIRSwaptionValueFromCashFlow(LAPriceIRSwaptionValue2& v)
+//AQLPriceIRSwaptionValueFromCashFlow::AQLPriceIRSwaptionValueFromCashFlow(AQLPriceIRSwaptionValue2& v)
 //: AQLLinearRatesOptionValue(v)
 //{}
 

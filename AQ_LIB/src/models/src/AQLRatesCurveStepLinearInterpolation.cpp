@@ -5,16 +5,6 @@
 */
 //  2007, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesCurveStepLinearInterpolation.cpp
-//
-//  SYNOPSIS    :       AQLRatesCurveStepLinearInterpolation
-//  DESCRIPTION :       Source code of class of steplinear interpolation of curve path element
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

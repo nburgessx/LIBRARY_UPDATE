@@ -149,100 +149,100 @@
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjects.cpp">
-      <Filter>src\etrading\AQObj\Infrastructure</Filter>
+      <Filter>src\etrading\AQObjects\Infrastructure</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjAssetSwap.cpp">
-      <Filter>src\etrading\AQObj\Swap</Filter>
+      <Filter>src\etrading\AQObjects\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesCalibrate.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesCalibrateHedge.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesCreateBasis.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesCreateFXForwards.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesCreateOIS.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesCreateSwap.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesData.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesDiscountFactor.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesDualBootstrap.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesEngineCalibrate.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesForwardRate.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesGenerator.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesJacobianDisplay.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesMarketData.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesUtilities.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjRatesFixingTable.cpp">
-      <Filter>src\etrading\AQObj\FixingTable</Filter>
+      <Filter>src\etrading\AQObjects\FixingTable</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjRatesFra.cpp">
-      <Filter>src\etrading\AQObj\FRA</Filter>
+      <Filter>src\etrading\AQObjects\FRA</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjFX.cpp">
-      <Filter>src\etrading\AQObj\FX</Filter>
+      <Filter>src\etrading\AQObjects\FX</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjToolsGrid.cpp">
-      <Filter>src\etrading\AQObj\Grid</Filter>
+      <Filter>src\etrading\AQObjects\Grid</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjSwapsLeg.cpp">
-      <Filter>src\etrading\AQObj\Swap</Filter>
+      <Filter>src\etrading\AQObjects\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjToolsMultiGrid.cpp">
-      <Filter>src\etrading\AQObj\Grid</Filter>
+      <Filter>src\etrading\AQObjects\Grid</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjSwapsSchedule.cpp">
-      <Filter>src\etrading\AQObj\Schedule</Filter>
+      <Filter>src\etrading\AQObjects\Schedule</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjSwapsCreation.cpp">
-      <Filter>src\etrading\AQObj\Swap</Filter>
+      <Filter>src\etrading\AQObjects\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjSwapsDelta.cpp">
-      <Filter>src\etrading\AQObj\Swap</Filter>
+      <Filter>src\etrading\AQObjects\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjSwapsPricing.cpp">
-      <Filter>src\etrading\AQObj\Swap</Filter>
+      <Filter>src\etrading\AQObjects\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjVols.cpp">
-      <Filter>src\etrading\AQObj\Volatility</Filter>
+      <Filter>src\etrading\AQObjects\Volatility</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCurvesDisplay.cpp">
-      <Filter>src\etrading\AQObj\Curve</Filter>
+      <Filter>src\etrading\AQObjects\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjBondOption.cpp">
-      <Filter>src\etrading\AQObj\Options</Filter>
+      <Filter>src\etrading\AQObjects\Options</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjCapFloor.cpp">
-      <Filter>src\etrading\AQObj\Options</Filter>
+      <Filter>src\etrading\AQObjects\Options</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjSwaption.cpp">
-      <Filter>src\etrading\AQObj\Options</Filter>
+      <Filter>src\etrading\AQObjects\Options</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqObjBonds.cpp">
       <Filter>src\etrading\Bond</Filter>
@@ -448,103 +448,103 @@
       <Filter>include\etrading\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesCalibrate.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesCalibrateHedge.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesCreateBasis.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesCreateFXForwards.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesCreateOIS.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesCreateSwap.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesData.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesDiscountFactor.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesDualBootstrap.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesEngineCalibrate.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesForwardRate.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesGenerator.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesJacobianDisplay.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesMarketData.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesUtilities.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjSwapsCreation.h">
-      <Filter>include\etrading\AQObj\Swap</Filter>
+      <Filter>include\etrading\AQObjects\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjSwapsDelta.h">
-      <Filter>include\etrading\AQObj\Swap</Filter>
+      <Filter>include\etrading\AQObjects\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjSwapsPricing.h">
-      <Filter>include\etrading\AQObj\Swap</Filter>
+      <Filter>include\etrading\AQObjects\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjBonds.h">
       <Filter>include\etrading\Bond</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjects.h">
-      <Filter>include\etrading\AQObj\Infrastructure</Filter>
+      <Filter>include\etrading\AQObjects\Infrastructure</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjAssetSwap.h">
-      <Filter>include\etrading\AQObj\Swap</Filter>
+      <Filter>include\etrading\AQObjects\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjSwapsLeg.h">
-      <Filter>include\etrading\AQObj\Swap</Filter>
+      <Filter>include\etrading\AQObjects\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjToolsGrid.h">
-      <Filter>include\etrading\AQObj\Grid</Filter>
+      <Filter>include\etrading\AQObjects\Grid</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjToolsMultiGrid.h">
-      <Filter>include\etrading\AQObj\Grid</Filter>
+      <Filter>include\etrading\AQObjects\Grid</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjRatesFixingTable.h">
-      <Filter>include\etrading\AQObj\FixingTable</Filter>
+      <Filter>include\etrading\AQObjects\FixingTable</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjRatesFra.h">
-      <Filter>include\etrading\AQObj\FRA</Filter>
+      <Filter>include\etrading\AQObjects\FRA</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjFX.h">
-      <Filter>include\etrading\AQObj\FX</Filter>
+      <Filter>include\etrading\AQObjects\FX</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjSwapsSchedule.h">
-      <Filter>include\etrading\AQObj\Schedule</Filter>
+      <Filter>include\etrading\AQObjects\Schedule</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjVols.h">
-      <Filter>include\etrading\AQObj\Volatility</Filter>
+      <Filter>include\etrading\AQObjects\Volatility</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCurvesDisplay.h">
-      <Filter>include\etrading\AQObj\Curve</Filter>
+      <Filter>include\etrading\AQObjects\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjBondOption.h">
-      <Filter>include\etrading\AQObj\Options</Filter>
+      <Filter>include\etrading\AQObjects\Options</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjCapFloor.h">
-      <Filter>include\etrading\AQObj\Options</Filter>
+      <Filter>include\etrading\AQObjects\Options</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqObjSwaption.h">
-      <Filter>include\etrading\AQObj\Options</Filter>
+      <Filter>include\etrading\AQObjects\Options</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqBondsCurves.h">
       <Filter>include\etrading\Bond</Filter>
@@ -617,40 +617,40 @@
     <Filter Include="include\etrading\Date">
       <UniqueIdentifier>{6bbd4b42-8fa4-4b4f-998e-70eeedd9889f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\Legacy">
+    <Filter Include="include\etrading\AQL Classic">
       <UniqueIdentifier>{1078f902-2c1e-489c-903f-ae310993d952}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj">
+    <Filter Include="include\etrading\AQObjects">
       <UniqueIdentifier>{dd86c134-eae0-44b7-a85e-b24d413f594a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj\Curve">
+    <Filter Include="include\etrading\AQObjects\Curve">
       <UniqueIdentifier>{5f40055b-02c4-4199-988f-a2dc93a76b0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj\Swap">
+    <Filter Include="include\etrading\AQObjects\Swap">
       <UniqueIdentifier>{85acf0a4-3611-4a8f-aed4-761c949612c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj\Infrastructure">
+    <Filter Include="include\etrading\AQObjects\Infrastructure">
       <UniqueIdentifier>{de596bd3-32dc-4a7a-8702-470e4ff7e99b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj\Grid">
+    <Filter Include="include\etrading\AQObjects\Grid">
       <UniqueIdentifier>{4c7bda1a-0a9d-4bc2-817c-b2def87d18e4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj\FixingTable">
+    <Filter Include="include\etrading\AQObjects\FixingTable">
       <UniqueIdentifier>{c3865415-4327-4f35-bc0f-68a33dc07efb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj\FRA">
+    <Filter Include="include\etrading\AQObjects\FRA">
       <UniqueIdentifier>{a7f2d05e-270a-47a8-8b72-09ca91bc581c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj\FX">
+    <Filter Include="include\etrading\AQObjects\FX">
       <UniqueIdentifier>{c45d6289-53da-41e0-b8e6-c63cb7762d4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj\Schedule">
+    <Filter Include="include\etrading\AQObjects\Schedule">
       <UniqueIdentifier>{14eaf83c-619c-47a8-b492-df9d41781098}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj\Volatility">
+    <Filter Include="include\etrading\AQObjects\Volatility">
       <UniqueIdentifier>{4d455c56-2dfb-4c62-9ad8-234664c92a73}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\AQObj\Options">
+    <Filter Include="include\etrading\AQObjects\Options">
       <UniqueIdentifier>{623f3a9c-12b8-4423-8297-cda5f932ca7f}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\etrading\Math">
@@ -680,40 +680,40 @@
     <Filter Include="src\etrading\Date">
       <UniqueIdentifier>{b5dbc5a6-7141-415a-b75e-26d05118dece}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\Legacy">
+    <Filter Include="src\etrading\AQL Classic">
       <UniqueIdentifier>{bfbafe6f-7a9a-4602-ae2f-6666a607c742}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj">
+    <Filter Include="src\etrading\AQObjects">
       <UniqueIdentifier>{1d0b7a41-4e8d-41d2-94b0-9a19daa56ae6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj\Curve">
+    <Filter Include="src\etrading\AQObjects\Curve">
       <UniqueIdentifier>{fa2cac80-1282-4883-93c4-2880f2585cc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj\FixingTable">
+    <Filter Include="src\etrading\AQObjects\FixingTable">
       <UniqueIdentifier>{628763ce-9d84-498f-b2bc-fbba93e622ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj\FRA">
+    <Filter Include="src\etrading\AQObjects\FRA">
       <UniqueIdentifier>{2c611e80-3a2a-44a7-a177-ba0560291814}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj\FX">
+    <Filter Include="src\etrading\AQObjects\FX">
       <UniqueIdentifier>{1982e456-c946-410b-8c8d-3f084fc3c254}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj\Grid">
+    <Filter Include="src\etrading\AQObjects\Grid">
       <UniqueIdentifier>{3b833b30-5b3c-4526-a4aa-31e945fca291}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj\Infrastructure">
+    <Filter Include="src\etrading\AQObjects\Infrastructure">
       <UniqueIdentifier>{1a0d7ef1-43d2-4ecb-b976-60581b42b963}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj\Schedule">
+    <Filter Include="src\etrading\AQObjects\Schedule">
       <UniqueIdentifier>{f63c8457-74ea-4c99-baa2-c3ef2b716ff5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj\Swap">
+    <Filter Include="src\etrading\AQObjects\Swap">
       <UniqueIdentifier>{20d74f9e-8b2b-4c4d-8872-1efabe06d3e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj\Volatility">
+    <Filter Include="src\etrading\AQObjects\Volatility">
       <UniqueIdentifier>{6b07d645-d987-4e53-8b55-e3268b9df536}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\AQObj\Options">
+    <Filter Include="src\etrading\AQObjects\Options">
       <UniqueIdentifier>{096e4748-34ec-4a96-99cb-85883f0b1bfa}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\etrading\Math">

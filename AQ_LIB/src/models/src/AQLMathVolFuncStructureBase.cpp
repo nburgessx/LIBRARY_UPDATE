@@ -6,15 +6,6 @@
 */
 //  2007, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathVolFuncStructureBase.h
-//
-//  SYNOPSIS    :       AQLMathVolFuncStructureBase
-//  DESCRIPTION :       Class declaration to represent base structure volatility function
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

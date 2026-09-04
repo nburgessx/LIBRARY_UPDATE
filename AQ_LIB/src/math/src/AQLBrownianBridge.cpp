@@ -3,18 +3,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBrownianBridge.cpp
-//
-//  SYNOPSIS    :       AQLBrownianBridge.h
-//  DESCRIPTION :       
-//                      
-//                     
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLBrownianBridge.h"
 

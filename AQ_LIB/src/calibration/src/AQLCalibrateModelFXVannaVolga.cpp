@@ -1,16 +1,6 @@
 /*! @file
     @brief FXVannaVolga sde generator class
 */
-//  2011, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateModelFXVannaVolga.cpp
-//
-//  DESCRIPTION :        FXVanilla SDE generator 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

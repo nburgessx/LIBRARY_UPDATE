@@ -46,7 +46,7 @@ public :
 
 };
 /*!
-Parameter base class for MMBlackAnalyticFormula
+Parameter base class for AQLBlackAnalyticFormula
 */
 class AnalyticBKParam : public AnalyticParam
 {
@@ -75,7 +75,7 @@ public :
 //============================================================================
 };
 /*!
-Parameter base class for LAGreekAnalyticFormula
+Parameter base class for AQLGreekAnalyticFormula
 */
 class AnalyticGKParam : public AnalyticParam
 {
@@ -185,7 +185,7 @@ public :
 	virtual AnalyticParam* clone() const { return new AnalyticDBParam(*this);};
 };
 /*!
-Parameter base class for MMAffineModelAnalyticFormula
+Parameter base class for AQLAffineModelAnalyticFormula
 */
 class AnalyticAFFParam : public AnalyticParam
 {

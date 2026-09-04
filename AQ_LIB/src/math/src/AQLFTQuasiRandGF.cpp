@@ -2,18 +2,6 @@
     @brief Generalized Faure
 */
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLFTQuasiRandGF.cpp
-//
-//  SYNOPSIS    :       AQLFTQuasiRandGF
-//  DESCRIPTION :
-//
-//
-//
-//  SEE ALSO    :       
-//  TYPE        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLFTQuasiRandGF.h"
 

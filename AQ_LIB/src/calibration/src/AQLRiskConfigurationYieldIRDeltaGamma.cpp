@@ -1,16 +1,6 @@
 /*! @file
     @brief  Yield delta gamma setup class
 */
-//  2015, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationYieldIRDeltaGamma.cpp
-//
-//  DESCRIPTION :       Yield delta gamma setup class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

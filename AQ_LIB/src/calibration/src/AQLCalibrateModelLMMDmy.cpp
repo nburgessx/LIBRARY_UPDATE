@@ -1,16 +1,6 @@
 /*! @file
     @brief LMM Dmy sde generator class
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateModelLMMDmy.cpp
-//
-//  DESCRIPTION :        LMM Dmy SDE generator 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

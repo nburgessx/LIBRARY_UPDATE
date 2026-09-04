@@ -6,16 +6,6 @@
 */
 //  2008, AlgoQuantHub.. 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDriftHWQuantAdjustment.cpp
-//
-//  SYNOPSIS    :       AQLPriceDriftHWQuantAdjustment
-//  DESCRIPTION :       Source code of drift function of quant adjustment of HW model
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

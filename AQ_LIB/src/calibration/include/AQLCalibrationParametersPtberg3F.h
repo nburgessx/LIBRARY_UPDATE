@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLCalibrationParametersPtberg3F_h
 #define AQLCalibrationParametersPtberg3F_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrationParametersPtberg3F.h
-//
-//  DESCRIPTION :         Calibration info create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 
 #include "AQLCalibrationParametersPtberg.h"

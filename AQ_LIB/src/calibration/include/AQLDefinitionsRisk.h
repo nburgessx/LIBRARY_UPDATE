@@ -5,15 +5,6 @@
 
 #ifndef AQLDefinitionsRisk_h
 #define AQLDefinitionsRisk_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       LADefinitionsantRisk.h
-//
-//  DESCRIPTION :       
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLDefinitions.h"
 

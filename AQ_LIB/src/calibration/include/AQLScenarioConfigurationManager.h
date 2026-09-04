@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfigurationManager_h
 #define AQLScenarioConfigurationManager_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLScenarioConfigurationManager.h
-//
-//  DESCRIPTION :       AQLScenarioConfigurationManager 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

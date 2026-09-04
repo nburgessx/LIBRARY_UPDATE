@@ -7,14 +7,6 @@
 
 #ifndef AQLMathLeastSquareCorrelationLMM_h
 #define AQLMathLeastSquareCorrelationLMM_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathLeastSquareCorrelationLMM.h
-//
-//  SYNOPSIS    :       AQLMathLeastSquareCorrelationLMM
-//  DESCRIPTION :       Cost function for least-square problems
-//
-//  VERSION     :
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLQuantLibCostFunction.h"
 #include "AQLQuantLibDisposable.h"

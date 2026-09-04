@@ -7,14 +7,6 @@
 
 #ifndef AQLMathLeastSquareCorrelationLMMQlib_h
 #define AQLMathLeastSquareCorrelationLMMQlib_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathLeastSquareCorrelationLMMQlib.h
-//
-//  SYNOPSIS    :       AQLMathLeastSquareCorrelationLMMQlib
-//  DESCRIPTION :       Cost function for least-square problems with QuantLib
-//
-//  VERSION     :
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include <ql/math/optimization/costfunction.hpp>
 #include <ql/math/array.hpp>

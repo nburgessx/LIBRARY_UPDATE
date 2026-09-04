@@ -6,16 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCombinationMethod.cpp
-//
-//  SYNOPSIS    :       AQLCombinationMethod
-//  DESCRIPTION :       Source code of class to represent function sums and products
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -27,7 +27,7 @@
 #include "AQLModelDynamicsHW1FCurve.h"
 
 using namespace std;
-//////////////////LAMathRstarFinder
+//////////////////AQLMathRstarFinder
 
 AQLMathJamshidianRStarFinder::AQLMathJamshidianRStarFinder(double strike, double premium, const DoubleVector& grids, 
 													  const DoubleVector& deltas, AQLRatesPathElementCurve* pcurve)

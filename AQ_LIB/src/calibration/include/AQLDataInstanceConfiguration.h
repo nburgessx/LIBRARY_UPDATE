@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLDataInstanceConfiguration_h
 #define AQLDataInstanceConfiguration_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDataInstanceConfiguration.h
-//
-//  DESCRIPTION :        DataInstance setup class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

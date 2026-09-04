@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceVolLMMDisplacedDiffusion.cpp
-//
-//  SYNOPSIS    :       AQLPriceVolLMMDisplacedDiffusion
-//  DESCRIPTION :       Source code of base class of volatility function class
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

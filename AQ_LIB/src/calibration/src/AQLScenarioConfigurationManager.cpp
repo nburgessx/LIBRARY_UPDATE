@@ -1,16 +1,6 @@
 /*! @file
     @brief AQLScenarioConfigurationManager manager class
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLScenarioConfigurationManager.cpp
-//
-//  DESCRIPTION :       AQLScenarioConfigurationManager 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -24,7 +24,7 @@ class AQLZeroForError :public AQLBlackScholesBase
 
 
 
-//LABlackPayOff
+//AQLBlackPayOff
 class AQLBlackPayOffpremCall : public AQLBlackScholesBase
 {
 public :
@@ -41,7 +41,7 @@ public :
 };
 
 
-//LABlack
+//AQLBlack
 class AQLBlackpremCall : public AQLBlackScholesBase
 {
 public :
@@ -142,7 +142,7 @@ public :
 	virtual ~AQLCFvegaPut(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::AQLCFvegaPut(param);}
 };
-//LAGreek
+//AQLGreek
 class AQLGreekpremCall : public AQLBlackScholesBase
 {
 public :

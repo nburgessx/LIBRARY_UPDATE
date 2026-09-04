@@ -5,15 +5,6 @@
 
 #ifndef AQLDefinitionsHW_h
 #define AQLDefinitionsHW_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDefinitionsHW.h
-//
-//  DESCRIPTION :       
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLDefinitions.h"
 

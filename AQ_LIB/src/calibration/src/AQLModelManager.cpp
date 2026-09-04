@@ -1,16 +1,6 @@
 /*! @file
     @brief AQLModelSetup manger class
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMasterRegistManager.cpp
-//
-//  DESCRIPTION :       AQLModelSetup manger
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

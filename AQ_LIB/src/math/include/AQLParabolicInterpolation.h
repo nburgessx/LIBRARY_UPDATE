@@ -10,10 +10,10 @@
 #include "AQLCoreTemplateType.h"
 #include <vector>
 
-// MMLinearInterpolatiaon Function ID
+// AQLLinearInterpolatiaon Function ID
 #define FN_PARABOLICINTERPOLATION           1009
 
-// MMLinearInterpolatiaon Function Name
+// AQLLinearInterpolatiaon Function Name
 #define FN_PARABOLICINTERPOLATION_STR	    "fn_parabolicinterpolation"
 
 // Alias Names

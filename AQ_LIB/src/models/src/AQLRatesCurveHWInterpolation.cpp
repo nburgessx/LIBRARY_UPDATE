@@ -3,16 +3,6 @@
 
 
 */
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesCurveHWInterpolation.cpp
-//
-//  SYNOPSIS    :       AQLRatesCurveHWInterpolation
-//  DESCRIPTION :       Source code of class of linear interpolation of curve path element
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation
@@ -136,7 +126,7 @@ AQLRatesCurveHWInterpolation::init(void)
 	return;
 }
 
-//================ LARatesPathElementHWCurve ===================================
+//================ AQLRatesPathElementHWCurve ===================================
 
 AQLRatesCurveHWInterpolation::AQLRatesCurveForHWInterpolation::AQLRatesCurveForHWInterpolation() 
 : AQLRatesPathElementCurve(), is_cloned(false)

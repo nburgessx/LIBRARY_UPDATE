@@ -1,16 +1,6 @@
 /*! @file
 @brief SZ calibration request
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateSZ.cpp
-//
-//  DESCRIPTION :        SZ calibration request class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -327,7 +317,7 @@ AQLCalibrateSZ::setUp(AQLObjectPool &objPool, const AQLScenarioParam &param, AQL
 		data.AQLObject::remove(PRICING_DATA_INITIALEPSILON);
 		data.AQLObject::add(PRICING_DATA_INITIALEPSILON, new AQLDataDouble(InitialEpsilon));
 	}
-	cout << static_cast<int>(AQLCoreThread::getThreadID()) << " MACalibrationSZ set up end" << endl;
+	cout << static_cast<int>(AQLCoreThread::getThreadID()) << " AQLCalibrationSZ set up end" << endl;
 }
 
 void

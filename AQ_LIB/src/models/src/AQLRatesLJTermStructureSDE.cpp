@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesLJTermStructureSDE.cpp
-//
-//  SYNOPSIS    :       AQLRatesLJTermStructureSDE
-//  DESCRIPTION :       Source code of long-jump version term structure sde class
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

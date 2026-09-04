@@ -53,7 +53,7 @@ AQLScenarioConfigurationYieldCurveZero::~AQLScenarioConfigurationYieldCurveZero(
 
 	@param[int,out] dataInstance
 	@param[in] param
-	@return vector<MBEnity *>
+	@return vector<AQLEnity *>
 */
 vector<AQLObject *>
 AQLScenarioConfigurationYieldCurveZero::createScenario(AQLDataInstance &dataInstance, const AQLScenarioParam &param) const

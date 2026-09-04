@@ -7,7 +7,7 @@
 
 class AQLQuantLibConjugateGradient : public AQLQuantLibOptimizationMethod
 {
-	// TODO: this class should be derived from LAQuantLibLineSearchBasedMethod
+	// TODO: this class should be derived from AQLQuantLibLineSearchBasedMethod
 	//       because ConjugateGradient class in Q-lib is so.
 public:
 	AQLQuantLibConjugateGradient();

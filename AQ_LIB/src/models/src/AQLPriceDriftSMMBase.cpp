@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDriftSMMBase.cpp
-//
-//  SYNOPSIS    :       AQLPriceDriftSMMBase
-//  DESCRIPTION :       Source code of abstruct base class of drift function of SMM sde
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

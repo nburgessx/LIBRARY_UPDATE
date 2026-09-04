@@ -7,18 +7,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLFunctionBase.cpp
-//
-//  SYNOPSIS    :       AQLFunctionBase
-//  DESCRIPTION :       Declaration of base class of Function class
-//                      Declare abstract base class to represent function(y=f(x1,x2,...,xn)).
-//						This class has a pure virtual method "operator()".
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -4,13 +4,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathAttrSDE.cpp
-//
-//  DESCRIPTION :       Source code of class representing a sde data
-//                      
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -1,16 +1,6 @@
 /*! @file
     @brief AQLObjectConfigurationManager factory class
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLObjectConfigurationManager.cpp
-//
-//  DESCRIPTION :       AQLObjectConfigurationManager 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma implementation
 #else

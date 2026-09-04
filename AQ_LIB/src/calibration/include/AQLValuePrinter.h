@@ -5,15 +5,6 @@
 #ifndef AQLValuePrinter_h
 #define AQLValuePrinter_h
 
-///X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLValuePrinter.h
-//
-//  DESCRIPTION :      Value print class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

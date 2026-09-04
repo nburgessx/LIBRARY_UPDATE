@@ -100,7 +100,7 @@ namespace etrading
         static bool haveNextCBDate(const AQLString& centralBankId, const AQLDate& baseDate, bool strictlyAfter);
 
         // get date of next central bank meeting on or after baseDate; 
-        // throw MAAppError after last scheduled meeting
+        // throw AQLAppError after last scheduled meeting
         static AQLDate getNextCBDate(const AQLString& centralBankId, const AQLDate& baseDate, bool strictlyAfter);
 
         // get month from future term

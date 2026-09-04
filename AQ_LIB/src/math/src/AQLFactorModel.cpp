@@ -1,22 +1,9 @@
 /*! @file
     @brief Souce code of class to generate a set of random numbers according to factor model
 
-	This class derives from MMRandoBase.
+	This class derives from AQLRandoBase.
 */
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLFactorModel.cpp
-//
-//  SYNOPSIS    :       AQLFactorModel
-//  DESCRIPTION :		Source code of class to generate a set of random numbers
-//						according to factor model.This class derives from MMRandoBase.
-//
-//
-//
-//  SEE ALSO    :       
-//  TYPE        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLFactorModel.h"
 
@@ -25,7 +12,7 @@ using namespace std;
 /*!
     @brief Source code of class to generate a set of random numbers according to factor model
 	
-	This class derives from MMRandoBase.
+	This class derives from AQLRandoBase.
 */
 
 /*!

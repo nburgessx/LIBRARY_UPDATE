@@ -5,14 +5,6 @@
 // Improved performance & precision by AlgoQuantHub.
 #ifndef AQLBivariatePowerCopula_h
 #define AQLBivariatePowerCopula_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBivariatePowerCopula.h
-//
-//  DESCRIPTION :       Bivariate Power copulas.
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #else

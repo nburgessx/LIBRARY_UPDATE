@@ -5,16 +5,6 @@
 */
 //  2007, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRatesCurveLogLinearInterpolation.cpp
-//
-//  SYNOPSIS    :       AQLRatesCurveLogLinearInterpolation
-//  DESCRIPTION :       Source code of class of linear interpolation of curve path element
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

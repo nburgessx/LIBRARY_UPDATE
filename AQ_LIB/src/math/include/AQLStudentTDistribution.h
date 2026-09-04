@@ -5,14 +5,6 @@
 // Improved performance & precision by AlgoQuantHub.
 #ifndef AQLStudentTDistribution_h
 #define AQLStudentTDistribution_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLStudentTDistribution.h
-//
-//  DESCRIPTION :       Student t-distribution.
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #else

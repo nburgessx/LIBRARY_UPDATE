@@ -1,16 +1,6 @@
 /*! @file
     @brief  FX Vega setup class 
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationVolFXShiftVolFXVega.cpp
-//
-//  DESCRIPTION :         FX Vega setup class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -349,7 +339,7 @@ AQLRiskConfigurationVolFXShiftVolFXVega::getBaseVolVal(const AQLString &ccy, int
 	const unsigned int shiftSize = shiftVolVals.size();
 	if (index < 0 || index >= static_cast<int>(shiftSize))
 	{
-		throw AQLCoreInvalidData("LARiskConfigurationFXVOLShiftFXVega index is less than zero or over shift grid.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("AQLRiskConfigurationFXVOLShiftFXVega index is less than zero or over shift grid.", __FILE__, __LINE__);
 	}
 	return shiftVolVals[index];
 }

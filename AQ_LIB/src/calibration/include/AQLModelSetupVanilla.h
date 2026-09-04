@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef  AQLModelSetupVanilla_h
 #define  AQLModelSetupVanilla_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLModelSetupVanilla.h
-//
-//  DESCRIPTION :       Vanilla Master data regist class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

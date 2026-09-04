@@ -1,16 +1,6 @@
 /*! @file
     @brief  FX atm parallel vega setup class 
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationVolFXATMParallelVega.cpp
-//
-//  DESCRIPTION :        FX atm parallel vega setup class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationFXDeltaGamma_h
 #define AQLRiskConfigurationFXDeltaGamma_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationFXDeltaGamma.h
-//
-//  DESCRIPTION :         FX delta gamma setup class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma interface
 #endif

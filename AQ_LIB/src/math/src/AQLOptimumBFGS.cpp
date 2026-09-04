@@ -6,18 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLOptimumBFGS.cpp
-//
-//  SYNOPSIS    :       AQLOptimumBFGS
-//  DESCRIPTION :       Class definition for function optimization(minimizationi) by BFGS method.
-//						This class realize virtual method in abstract base class.
-//						
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

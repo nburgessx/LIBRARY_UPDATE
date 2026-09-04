@@ -6,15 +6,6 @@
 //  2010, AlgoQuantHub.
 #ifndef AQLBlackScholesDigitalCapletOption_h
 #define AQLBlackScholesDigitalCapletOption_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBlackScholesBaseMethod.h
-//
-//  SYNOPSIS    :       AQLBlackScholesBaseMethod
-//  DESCRIPTION :       Class declaration to represent linear function
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

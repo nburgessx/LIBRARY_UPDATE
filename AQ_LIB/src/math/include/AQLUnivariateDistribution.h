@@ -5,14 +5,6 @@
 // Improved performance & precision by AlgoQuantHub.
 #ifndef AQLUnivariateDistribution_h
 #define AQLUnivariateDistribution_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLUnivariateDistribution.h
-//
-//  DESCRIPTION :       Base class for univariate distributions.
-//  SEE ALSO    :
-//  VIRSION		:
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #else

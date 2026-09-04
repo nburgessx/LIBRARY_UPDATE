@@ -1,13 +1,3 @@
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLQuadraticMethod.cpp
-//
-//  SYNOPSIS    :       AQLQuadraticMethod
-//  DESCRIPTION :       Source code of class to represent quadratic function
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

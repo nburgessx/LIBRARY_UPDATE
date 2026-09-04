@@ -3,16 +3,6 @@
 /*! @file
     @brief DataInstance setup class for calc PV
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDataInstanceConfigurationPV.cpp
-//
-//  DESCRIPTION :       DataInstance setup class for calc PV
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

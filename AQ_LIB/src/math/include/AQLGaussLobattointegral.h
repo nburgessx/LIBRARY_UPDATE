@@ -1,7 +1,7 @@
 /*
 */
 
-/*! \MMGaussLobattointegral.h
+/*! \AQLGaussLobattointegral.h
 \brief
 */
 

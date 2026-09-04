@@ -28,9 +28,9 @@
 #include "AQLMathPathEntity.h"
 #include "AQLMathFXEntity.h"
 
-// LAPriceCouponRainbowMax's function id
+// AQLPriceCouponRainbowMax's function id
 #define FN_CPNSLTOPERATORMAX	10004
-// LAPriceCouponRainbowMax's function name
+// AQLPriceCouponRainbowMax's function name
 #define FN_CPNSLTOPERATORMAX_STR	"fn_cpnsltoperatormax"
 
 

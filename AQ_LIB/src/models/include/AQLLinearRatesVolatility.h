@@ -13,15 +13,6 @@
 #endif
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLLinearRatesVolatility.h
-//
-//  DESCRIPTION :       AQLLinearRatesVolatility 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

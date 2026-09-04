@@ -6,16 +6,6 @@
 */
 //  2010, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBlackScholesBaseMethod.cpp
-//
-//  SYNOPSIS    :       AQLBlackScholesBaseMethod
-//  DESCRIPTION :       Source code of class to represent function led by AQLBlackScholesBase class
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

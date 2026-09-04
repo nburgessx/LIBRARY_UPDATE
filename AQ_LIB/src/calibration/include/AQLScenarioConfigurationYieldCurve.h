@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfigurationYieldCurve_h
 #define AQLScenarioConfigurationYieldCurve_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLScenarioConfigurationYieldCurve.h
-//
-//  DESCRIPTION :        Yield Risk Scenario create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

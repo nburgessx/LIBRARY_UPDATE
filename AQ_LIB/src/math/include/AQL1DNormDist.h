@@ -21,7 +21,7 @@
 /*! 
     @brief Class to represent normal distribution function
 
-    This class derives from MMFunctioinBase
+    This class derives from AQLFunctioinBase
 
 */
 class AQL1DNormDist : public AQLFunctionBase

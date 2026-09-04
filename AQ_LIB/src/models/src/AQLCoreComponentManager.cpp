@@ -128,7 +128,7 @@ AQLCoreComponentManager::getBlackComponentMap()
 	{	
 		//AQLZeroForError
 		blackComponentMap.insert(std::make_pair(AQLString("ERROR"),	new AQLZeroForError()));
-		//LABlack
+		//AQLBlack
 		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(PREM) + AQLString(CALL),	new AQLBlackpremCall()	)	);
 		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(PREM) + AQLString(PUT),	new AQLBlackpremPut()	)	);
 		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(DELTA) + AQLString(CALL), new AQLBlackdeltaCall()	)	);
@@ -139,10 +139,10 @@ AQLCoreComponentManager::getBlackComponentMap()
 		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(GAMMA) + AQLString(PUT),  new AQLBlackgammaPut()	)	);
 		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(VEGA)  + AQLString(PUT),  new AQLBlackvegaPut()	)	);
 		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(THETA) + AQLString(PUT),  new AQLBlackthetaPut()	)	);
-		//LABlackPayOff
+		//AQLBlackPayOff
 		blackComponentMap.insert(std::make_pair(AQLString(BKPAYOFF) + AQLString(PREM) + AQLString(CALL),	new AQLBlackPayOffpremCall()	)	);
 		blackComponentMap.insert(std::make_pair(AQLString(BKPAYOFF) + AQLString(PREM) + AQLString(PUT),	new AQLBlackPayOffpremPut()		)	);
-		//LAGreek
+		//AQLGreek
 		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PREM)	+ AQLString(CALL), new AQLGreekpremCall()	)	);
 		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(DELTA)	+ AQLString(CALL), new AQLGreekdeltaCall() )	);
 		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(GAMMA)	+ AQLString(CALL), new AQLGreekgammaCall() )	);
@@ -161,7 +161,7 @@ AQLCoreComponentManager::getBlackComponentMap()
 		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PHI)	+ AQLString(PUT),	new AQLGreekphiPut()	)	);
 		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VANNA)	+ AQLString(PUT), new AQLGreekvannaPut()	)	);
 		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VOLGA)	+ AQLString(PUT), new AQLGreekvolgaPut()	)	);
-        //MMCapFloor
+        //AQLCapFloor
 		blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(PREM)	+ AQLString(CALL), new AQLCFpremCall()	)	);
 		blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(VEGA)	+ AQLString(CALL), new AQLCFvegaCall() )	);
 		blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(PREM)	+ AQLString(PUT), new AQLCFpremPut()	)	);
@@ -490,14 +490,14 @@ AQLCoreComponentManager::initialize()
 	
 	//AQLZeroForError
 	blackComponentMap.insert(std::make_pair(AQLString("ERROR"),	new AQLZeroForError()));
-	//LABlackPayOff
+	//AQLBlackPayOff
 	blackComponentMap.insert(std::make_pair(AQLString(BKPAYOFF)	+ AQLString(PREM) + AQLString(CALL),	new AQLBlackPayOffpremCall())	);
 	blackComponentMap.insert(std::make_pair(AQLString(BKPAYOFF)	+ AQLString(PREM) + AQLString(PUT),	new AQLBlackPayOffpremPut()	)	);
 	
 	
 	
 	
-	//LABlack
+	//AQLBlack
 	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(PREM) + AQLString(CALL),	new AQLBlackpremCall()	)	);
 	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(PREM) + AQLString(PUT),	new AQLBlackpremPut()	)	);
 	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(DELTA) + AQLString(CALL), new AQLBlackdeltaCall()	)	);
@@ -508,7 +508,7 @@ AQLCoreComponentManager::initialize()
 	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(GAMMA) + AQLString(PUT),  new AQLBlackgammaPut()	)	);
 	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(VEGA)  + AQLString(PUT),  new AQLBlackvegaPut()	)	);
 	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(THETA) + AQLString(PUT),  new AQLBlackthetaPut()	)	);
-	//LAGreek
+	//AQLGreek
 	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PREM)	+ AQLString(CALL), new AQLGreekpremCall()	)	);
 	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(DELTA)	+ AQLString(CALL), new AQLGreekdeltaCall() )	);
 	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(GAMMA)	+ AQLString(CALL), new AQLGreekgammaCall() )	);
@@ -527,7 +527,7 @@ AQLCoreComponentManager::initialize()
 	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PHI)	+ AQLString(PUT),	new AQLGreekphiPut()	)	);
 	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VANNA)	+ AQLString(PUT), new AQLGreekvannaPut()	)	);
 	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VOLGA)	+ AQLString(PUT), new AQLGreekvolgaPut()	)	);
-	//MMCapFloor
+	//AQLCapFloor
 	blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(PREM) + AQLString(CALL), new AQLCFpremCall()));
 	blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(VEGA) + AQLString(CALL), new AQLCFvegaCall()));
 	blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(PREM) + AQLString(PUT), new AQLCFpremPut()));

@@ -1,16 +1,6 @@
 /*! @file
     @brief IRSABR calibration request
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateIRSABR.cpp
-//
-//  DESCRIPTION :        IRSABR calibration request class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

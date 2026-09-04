@@ -1,16 +1,6 @@
 /*! @file
     @brief Class to load excel data
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLFileAccessor.h
-//
-//  DESCRIPTION :       Class to load txt file data
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma implementation
 #else

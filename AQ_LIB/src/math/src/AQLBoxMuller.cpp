@@ -5,18 +5,6 @@
 //  2006, Fixed Income Group, AlgoQuantHub.
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBoxMuller.cpp
-//
-//  SYNOPSIS    :       AQLBoxMuller
-//  DESCRIPTION :       
-//                      
-//                     
-//                      
-//  SEE ALSO    :       AQLBoxMuller.h
-//  TYPE        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLBoxMuller.h"
 

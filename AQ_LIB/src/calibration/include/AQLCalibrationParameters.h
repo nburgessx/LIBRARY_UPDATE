@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLCalibrationParameters_h
 #define AQLCalibrationParameters_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrationParameters.h
-//
-//  DESCRIPTION :         Calibration info create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 
 #include "AQLCoreDataService.h"

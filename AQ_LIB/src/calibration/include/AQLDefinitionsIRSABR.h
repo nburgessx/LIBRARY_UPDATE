@@ -5,15 +5,6 @@
 
 #ifndef AQLDefinitionsIRSABR_h
 #define AQLDefinitionsIRSABR_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDefinitionsIRSABR.h
-//
-//  DESCRIPTION :       
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLDefinitions.h"
 

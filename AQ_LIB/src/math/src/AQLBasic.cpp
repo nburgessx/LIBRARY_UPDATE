@@ -4,14 +4,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMath.cpp
-//
-//  DESCRIPTION :       Define a special function for numeric operations.
-//                      Only static functions are implemented on this class.
-//  SEE ALSO    :       AQLMath.h
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

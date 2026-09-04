@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLModelConfiguration_h
 #define AQLModelConfiguration_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLModelConfiguration.h
-//
-//  DESCRIPTION :       AQLModelConfiguration 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

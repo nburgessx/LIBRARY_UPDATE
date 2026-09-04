@@ -6,7 +6,7 @@
 
 class AQLQuantLibSteepestDescent : public AQLQuantLibOptimizationMethod
 {
-	// TODO: This class should be derived from LAQuantLibLineSearchBasedMethod is
+	// TODO: This class should be derived from AQLQuantLibLineSearchBasedMethod is
 public:
 	AQLQuantLibSteepestDescent();
 

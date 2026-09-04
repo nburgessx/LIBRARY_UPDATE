@@ -6,15 +6,6 @@
 
 #ifndef AQLDefinitionsSZ_h
 #define AQLDefinitionsSZ_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       LADefinitionsantPtberg.h
-//
-//  DESCRIPTION :       
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLDefinitions.h"
 

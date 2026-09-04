@@ -42,7 +42,7 @@ namespace etrading
         boost::mutex::scoped_lock guard(instanceProtector);
 	    if (instance_ == nullptr)
         {
-            // checkIfStaticDataLoaded is an inline function MAStaticDataLoaded.h
+            // checkIfStaticDataLoaded is an inline function AQLStaticDataLoaded.h
 		    instance_ = new InitializeETrading(checkStaticDataLoaded, checkIfCalendarLoaded);
 	    }
         else if(checkStaticDataLoaded)

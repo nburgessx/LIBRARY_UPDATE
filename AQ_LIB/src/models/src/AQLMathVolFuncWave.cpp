@@ -6,15 +6,6 @@
 */
 //  2007, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathVolFuncWave.h
-//
-//  SYNOPSIS    :       AQLMathVolFuncWave
-//  DESCRIPTION :       Class declaration to represent wave structure volatility function
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

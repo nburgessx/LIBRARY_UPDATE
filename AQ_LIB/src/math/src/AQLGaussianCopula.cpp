@@ -1,20 +1,9 @@
 /*! @file
     @brief Class declaration to generate a set of random numbers according to Gaussian Copula
 
-	This class derives from MMRandoBase.
+	This class derives from AQLRandoBase.
 */
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLGaussianCopula.cpp
-//
-//  SYNOPSIS    :       AQLGaussianCopula
-//  DESCRIPTION :		Class declaration to generate a set of random numbers 
-//						according to Gaussian Copula. This class derives from MMRandoBase.
-//
-//  SEE ALSO    :       
-//  TYPE        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include "AQLGaussianCopula.h"
 #include "AQLCholeskyDecompSC.h"
@@ -24,7 +13,7 @@ using namespace std;
 /*!
     @brief Source code of class to generate a set of random numbers according to Gaussian Copula
 	
-	This class derives from MMRandoBase.
+	This class derives from AQLRandoBase.
 */
 
 /*!

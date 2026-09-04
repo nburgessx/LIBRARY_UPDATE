@@ -11,10 +11,10 @@
 #include "AQLCoreTemplateType.h"
 #include <vector>
 
-// Function ID of MMStepInterpolatiaon
+// Function ID of AQLStepInterpolatiaon
 #define FN_STEPINTERPOLATION	1004
 
-// Function Name of MMStepInterpolation
+// Function Name of AQLStepInterpolation
 #define FN_STEPINTERPOLATION_STR				"fn_stepinterpolation"
 #define FN_RIGHTCONTINUOUS_INTERPOLATION_STR	"fn_rightcontinuousinterpolation"
 #define FN_LEFTCONTINUOUS_INTERPOLATION_STR		"fn_leftcontinuousinterpolation"

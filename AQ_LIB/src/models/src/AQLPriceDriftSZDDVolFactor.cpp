@@ -6,16 +6,6 @@
 */
 //  2016, AlgoQuantHub SC Co., Ltd.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDriftSZDDVolFactor.cpp
-//
-//  SYNOPSIS    :       AQLPriceDriftSZDDVolFactor
-//  DESCRIPTION :       Source code of drift function of HW sde
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

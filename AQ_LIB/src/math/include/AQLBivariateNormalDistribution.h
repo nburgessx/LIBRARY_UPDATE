@@ -5,14 +5,6 @@
 // Improved performance & precision by AlgoQuantHub.
 #ifndef AQLBivariateNormalDistribution_h
 #define AQLBivariateNormalDistribution_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBivariateNormalDistribution.h
-//
-//  DESCRIPTION :       Bivariate Normal distribution.
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #else

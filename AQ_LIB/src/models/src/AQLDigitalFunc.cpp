@@ -1,13 +1,3 @@
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDigitalMethod.cpp
-//
-//  SYNOPSIS    :       AQLDigitalMethod
-//  DESCRIPTION :       Source code of class to represent digital function
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

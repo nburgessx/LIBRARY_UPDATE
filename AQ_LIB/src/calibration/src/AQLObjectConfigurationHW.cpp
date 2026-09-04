@@ -1,16 +1,6 @@
 /*! @file
     @brief Object generator class
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLObjectConfigurationHW.cpp
-//
-//  DESCRIPTION :        Object setupper
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -4,15 +4,6 @@
 
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       MMNaturalIntegral.cpp
-//
-//  SYNOPSIS    :       MMNaturalIntegral
-//  DESCRIPTION :       
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -24,7 +15,7 @@
 #include <limits>
 
 
-//================ MMNaturalIntegral ===================================
+//================ AQLNaturalIntegral ===================================
 /*!
 	@brief Constructor
 	@param[in] numberOfPoints divident number in integral region

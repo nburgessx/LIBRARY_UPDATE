@@ -5,18 +5,6 @@
 //  2009, AlgoQuantHub.
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLSobol.cpp
-//
-//  SYNOPSIS    :       AQLSobol
-//  DESCRIPTION :       
-//                      
-//                     
-//                      
-//  SEE ALSO    :       AQLSobol.h
-//  TYPE        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 //
 #include "AQLSobol.h"

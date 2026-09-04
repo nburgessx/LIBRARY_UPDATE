@@ -4,15 +4,6 @@
 //  2011, AlgoQuantHub.
 #ifndef AQLCalibrateModelFXVannaVolga_h
 #define AQLCalibrateModelFXVannaVolga_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateModelFXVannaVolga.h
-//
-//  DESCRIPTION :       FXVanilla SDE generator 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

@@ -10,12 +10,12 @@
 #include "AQLCoreTemplateType.h"
 #include <vector>
 
-// MMLinearInterpolatiaon Function ID
+// AQLLinearInterpolatiaon Function ID
 #define FN_SPLINEINTERPOLATION	            1003
 #define FN_NATURALSPLINEINTERPOLATION	    1007
 #define FN_CLAMPEDSPLINEINTERPOLATION	    1008
 
-// MMLinearInterpolatiaon Function Name
+// AQLLinearInterpolatiaon Function Name
 #define FN_SPLINEINTERPOLATION_STR	        "fn_splineinterpolation"
 #define FN_NATURALSPLINEINTERPOLATION_STR	"fn_naturalsplineinterpolation"
 #define FN_CLAMPEDSPLINEINTERPOLATION_STR	"fn_clampedsplineinterpolation"

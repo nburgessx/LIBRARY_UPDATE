@@ -5,14 +5,6 @@
 // Improved performance & precision by AlgoQuantHub.
 #ifndef AQLBivariateStudentTDistribution_h
 #define AQLBivariateStudentTDistribution_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       LABivariateStudentTDistribution_.h
-//
-//  DESCRIPTION :       Bivariate Student t-distribution.
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #else

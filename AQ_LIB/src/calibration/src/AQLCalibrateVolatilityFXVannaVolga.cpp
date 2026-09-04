@@ -1,16 +1,6 @@
 /*! @file
     @brief Volatility data create class for ptberg
 */
-//  2011, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateVolatilityFXVannaVolga.cpp
-//
-//  DESCRIPTION :      Volatility data create class for ptberg
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

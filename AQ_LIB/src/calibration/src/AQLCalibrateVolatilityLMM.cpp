@@ -1,16 +1,6 @@
 /*! @file
     @brief Volatility data create class for lmm
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateVolatilityLMM.cpp
-//
-//  DESCRIPTION :      Volatility data create class for lmm
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

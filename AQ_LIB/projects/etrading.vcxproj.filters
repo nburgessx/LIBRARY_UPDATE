@@ -13,10 +13,10 @@
     <Filter Include="include\Enums">
       <UniqueIdentifier>{110ca77d-32f2-4e1f-86ee-87cc3f255c27}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\Utilities">
+    <Filter Include="include\Tools">
       <UniqueIdentifier>{889e98ac-ed96-457b-a083-b8e5a85079d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Utilities">
+    <Filter Include="src\Tools">
       <UniqueIdentifier>{7b9db7dc-b24f-4b25-8dc6-141bc8d4a9c4}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\Exception">
@@ -145,34 +145,28 @@
     <Filter Include="src\Swap\StaticData">
       <UniqueIdentifier>{95aa4adc-2554-4b3d-80bf-be5c5224320c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\AQObjInfrastructure">
+    <Filter Include="include\AQObjects">
       <UniqueIdentifier>{9c56f618-cb14-43d7-bda3-8bda40ff705d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\AQObjInfrastructure\MarketQuote">
+    <Filter Include="include\AQObjects\MarketQuote">
       <UniqueIdentifier>{b7219065-c759-4362-b3bf-9749d2b52fb0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\AQObjInfrastructure\DataHolderObjects">
+    <Filter Include="include\AQObjects\DataHolderObjects">
       <UniqueIdentifier>{c647fe3f-894c-4631-9b77-a652a60e7863}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\AQObjInfrastructure\Curves">
+    <Filter Include="include\AQObjects\Curves">
       <UniqueIdentifier>{e7863655-5e0e-4a86-8d96-19070d7a5747}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\AQObjInfrastructure\AQObj">
-      <UniqueIdentifier>{9699c058-2a01-4892-980f-fc415cb23f4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\AQObjInfrastructure">
+    <Filter Include="src\AQObjects">
       <UniqueIdentifier>{28b4d243-ce9f-4e4a-bc9f-140ecc66e94b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\AQObjInfrastructure\AQObj">
-      <UniqueIdentifier>{e2cc09c3-8846-4fa7-9835-ce8380092ae2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\AQObjInfrastructure\DataHolderObjects">
+    <Filter Include="src\AQObjects\DataHolderObjects">
       <UniqueIdentifier>{5cebc981-e12d-4e46-93d2-bf4650fb052b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\AQObjInfrastructure\MarketQuote">
+    <Filter Include="src\AQObjects\MarketQuote">
       <UniqueIdentifier>{39e6f9be-3237-4ab7-a803-d27a28cbccaa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\AQObjInfrastructure\Curves">
+    <Filter Include="src\AQObjects\Curves">
       <UniqueIdentifier>{02d3656a-27f8-4ae0-ba4f-a143f949467a}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\CurveAnalytics\CurveStreaming">
@@ -217,10 +211,10 @@
     <Filter Include="src\Options\Option">
       <UniqueIdentifier>{d887b771-108e-4a6a-95d0-43c0a6eb1f41}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\CurveAnalytics\LACurveHelpers">
+    <Filter Include="src\CurveAnalytics\AQLCurveHelpers">
       <UniqueIdentifier>{767a39f2-cb7b-4ca0-80fa-ac689d0e786b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\CurveAnalytics\LACurveHelpers">
+    <Filter Include="include\CurveAnalytics\AQLCurveHelpers">
       <UniqueIdentifier>{990b79e6-2b69-4db9-a1ea-8f7f0c67d476}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\Dates\AQLDateHelpers">
@@ -307,19 +301,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\etrading\include\DateUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\UserUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\InheritEnum.h">
       <Filter>include\Enums</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\ContainerUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\StatisticsUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\CreateDataFile.h">
       <Filter>include\GoogleTest</Filter>
@@ -355,7 +349,7 @@
       <Filter>include\Enums</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\FileUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\SerializationResult.h">
       <Filter>include\Serialization</Filter>
@@ -367,16 +361,16 @@
       <Filter>include\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\TypeHelpers.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\EnvironmentUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\SerializeInstance.h">
       <Filter>include\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\Interpolation2DUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\LinearInterpolation.h">
       <Filter>include\Interpolation</Filter>
@@ -409,28 +403,28 @@
       <Filter>include\RiskInstruments</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\DataHolder.h">
-      <Filter>include\AQObjInfrastructure\DataHolderObjects</Filter>
+      <Filter>include\AQObjects\DataHolderObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\FreeObject.h">
-      <Filter>include\AQObjInfrastructure\DataHolderObjects</Filter>
+      <Filter>include\AQObjects\DataHolderObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\TableDateDouble.h">
-      <Filter>include\AQObjInfrastructure\DataHolderObjects</Filter>
+      <Filter>include\AQObjects\DataHolderObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\FixingTable.h">
-      <Filter>include\AQObjInfrastructure\DataHolderObjects</Filter>
+      <Filter>include\AQObjects\DataHolderObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\CurveBuildProperties.h">
-      <Filter>include\AQObjInfrastructure\Curves</Filter>
+      <Filter>include\AQObjects\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\ExposedInterface.h">
-      <Filter>include\AQObjInfrastructure\Curves</Filter>
+      <Filter>include\AQObjects\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\AQObjCurve.h">
-      <Filter>include\AQObjInfrastructure\Curves</Filter>
+      <Filter>include\AQObjects\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\AQObjCurveDayAdjustment.h">
-      <Filter>include\AQObjInfrastructure\Curves</Filter>
+      <Filter>include\AQObjects\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\MultiCurveDeltaRiskGenerator.h">
       <Filter>include\RiskEngine</Filter>
@@ -451,10 +445,10 @@
       <Filter>include\Validation</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\AQObjUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\CurveUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\Cashflow.h">
       <Filter>include\Swap\Cashflow</Filter>
@@ -511,16 +505,16 @@
       <Filter>include\Swap\Schedule</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\FixingTableSet.h">
-      <Filter>include\AQObjInfrastructure\DataHolderObjects</Filter>
+      <Filter>include\AQObjects\DataHolderObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\MarketQuote.h">
-      <Filter>include\AQObjInfrastructure\MarketQuote</Filter>
+      <Filter>include\AQObjects\MarketQuote</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\SwapUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\EntityPoolUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\SerializationResultWrapper.h">
       <Filter>include\Serialization</Filter>
@@ -544,10 +538,10 @@
       <Filter>include\Swap\StaticData</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\CurveData.h">
-      <Filter>include\AQObjInfrastructure\MarketQuote</Filter>
+      <Filter>include\AQObjects\MarketQuote</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\HasCurveData.h">
-      <Filter>include\AQObjInfrastructure\MarketQuote</Filter>
+      <Filter>include\AQObjects\MarketQuote</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\LegGenerator.h">
       <Filter>include\Swap\Leg</Filter>
@@ -562,7 +556,7 @@
       <Filter>include\Initialization</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\CurveMarketData.h">
-      <Filter>include\AQObjInfrastructure\Curves</Filter>
+      <Filter>include\AQObjects\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\Bond.h">
       <Filter>include\Bond</Filter>
@@ -592,7 +586,7 @@
       <Filter>include\Initialization</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\CurveGenerator.h">
-      <Filter>include\AQObjInfrastructure\Curves</Filter>
+      <Filter>include\AQObjects\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\Solvers.h">
       <Filter>include\Solvers</Filter>
@@ -751,46 +745,46 @@
       <Filter>include\Swap\Pricing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\Cacheable.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\DataSchema.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\Environment.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\EnvironmentImplementation.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\EnvironmentPool.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\ExampleObjects.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\HasDataHolderConversion.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\HasDataSchemaGenerator.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\HasSchemaObjectConverter.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\HasVariantMatrixAccess.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\IsAQObject.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\ObjectUtilities.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\SchemaObject.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\StaticStructureStore.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\TotalReturnSwap.h">
       <Filter>include\Swap\Pricing</Filter>
@@ -817,10 +811,10 @@
       <Filter>include\Bond</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\PulseObject.h">
-      <Filter>include\AQObjInfrastructure\AQObj</Filter>
+      <Filter>include\AQObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\DataUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\SwaptionPricer.h">
       <Filter>include\Options\Swaption</Filter>
@@ -871,7 +865,7 @@
       <Filter>include\Bond</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\AnyTypeUtilities.h">
-      <Filter>include\Utilities</Filter>
+      <Filter>include\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\FloatBondLeg.h">
       <Filter>include\Swap\Leg</Filter>
@@ -913,16 +907,16 @@
       <Filter>include\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\AQLCurveCalibrationHelpers.h">
-      <Filter>include\CurveAnalytics\LACurveHelpers</Filter>
+      <Filter>include\CurveAnalytics\AQLCurveHelpers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\AQLCurveForwardRateHelpers.h">
-      <Filter>include\CurveAnalytics\LACurveHelpers</Filter>
+      <Filter>include\CurveAnalytics\AQLCurveHelpers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\CurveCalibration.h">
       <Filter>include\CurveAnalytics\SingleCurveCalibration</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\AQLCurveMarketDataHelpers.h">
-      <Filter>include\CurveAnalytics\LACurveHelpers</Filter>
+      <Filter>include\CurveAnalytics\AQLCurveHelpers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\FuturesDates.h">
       <Filter>include\Dates\DatesAndSchedules</Filter>
@@ -976,7 +970,7 @@
       <Filter>include\CurveAnalytics\CurveEngine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\AQLCurvePricingObject.h">
-      <Filter>include\CurveAnalytics\LACurveHelpers</Filter>
+      <Filter>include\CurveAnalytics\AQLCurveHelpers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\Swap.h">
       <Filter>include\Swap\Pricing</Filter>
@@ -1104,10 +1098,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\etrading\src\DateUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\UserUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CreateDataFile.cpp">
       <Filter>src\GoogleTest</Filter>
@@ -1140,7 +1134,7 @@
       <Filter>src\RiskEngine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\FileUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\SerializationResult.cpp">
       <Filter>src\Serialization</Filter>
@@ -1149,10 +1143,10 @@
       <Filter>src\Serialization</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\StatisticsUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\EnvironmentUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\LinearInterpolation.cpp">
       <Filter>src\Interpolation</Filter>
@@ -1173,7 +1167,7 @@
       <Filter>src\Interpolation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\Interpolation2DUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\VanillaInterestRateSwap.cpp">
       <Filter>src\RiskInstruments</Filter>
@@ -1185,34 +1179,34 @@
       <Filter>src\RiskInstruments</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\ContainerUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\DataHolder.cpp">
-      <Filter>src\AQObjInfrastructure\DataHolderObjects</Filter>
+      <Filter>src\AQObjects\DataHolderObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\TableDateDouble.cpp">
-      <Filter>src\AQObjInfrastructure\DataHolderObjects</Filter>
+      <Filter>src\AQObjects\DataHolderObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\FreeObject.cpp">
-      <Filter>src\AQObjInfrastructure\DataHolderObjects</Filter>
+      <Filter>src\AQObjects\DataHolderObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\FixingTable.cpp">
-      <Filter>src\AQObjInfrastructure\DataHolderObjects</Filter>
+      <Filter>src\AQObjects\DataHolderObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CurveBuildProperties.cpp">
-      <Filter>src\AQObjInfrastructure\Curves</Filter>
+      <Filter>src\AQObjects\Curves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\AQObjCurveDayAdjustment.cpp">
-      <Filter>src\AQObjInfrastructure\Curves</Filter>
+      <Filter>src\AQObjects\Curves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\ExposedObject.cpp">
-      <Filter>src\AQObjInfrastructure\Curves</Filter>
+      <Filter>src\AQObjects\Curves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\AQObjCurve.cpp">
-      <Filter>src\AQObjInfrastructure\Curves</Filter>
+      <Filter>src\AQObjects\Curves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\AQObjUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\MultiCurveDeltaRiskGenerator.cpp">
       <Filter>src\RiskEngine</Filter>
@@ -1233,7 +1227,7 @@
       <Filter>src\Validation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CurveUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\Cashflow.cpp">
       <Filter>src\Swap\Cashflow</Filter>
@@ -1293,16 +1287,16 @@
       <Filter>src\Swap\Schedule</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\FixingTableSet.cpp">
-      <Filter>src\AQObjInfrastructure\DataHolderObjects</Filter>
+      <Filter>src\AQObjects\DataHolderObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\MarketQuote.cpp">
-      <Filter>src\AQObjInfrastructure\MarketQuote</Filter>
+      <Filter>src\AQObjects\MarketQuote</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\SwapUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\EntityPoolUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\SerializationUtilities.cpp">
       <Filter>src\Serialization</Filter>
@@ -1323,10 +1317,10 @@
       <Filter>src\Swap\StaticData</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CurveData.cpp">
-      <Filter>src\AQObjInfrastructure\MarketQuote</Filter>
+      <Filter>src\AQObjects\MarketQuote</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\HasCurveData.cpp">
-      <Filter>src\AQObjInfrastructure\MarketQuote</Filter>
+      <Filter>src\AQObjects\MarketQuote</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\LegGenerator.cpp">
       <Filter>src\Swap\Leg</Filter>
@@ -1341,7 +1335,7 @@
       <Filter>src\Initialization</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CurveMarketData.cpp">
-      <Filter>src\AQObjInfrastructure\Curves</Filter>
+      <Filter>src\AQObjects\Curves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\Bond.cpp">
       <Filter>src\Bond</Filter>
@@ -1371,7 +1365,7 @@
       <Filter>src\Initialization</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CurveGenerator.cpp">
-      <Filter>src\AQObjInfrastructure\Curves</Filter>
+      <Filter>src\AQObjects\Curves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\Solvers.cpp">
       <Filter>src\Solvers</Filter>
@@ -1392,7 +1386,7 @@
       <Filter>src\FX</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\DataUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\LabelValueBlock.cpp">
       <Filter>src\DataTypes</Filter>
@@ -1515,34 +1509,34 @@
       <Filter>src\Swap\Pricing</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\Cacheable.cpp">
-      <Filter>src\AQObjInfrastructure\AQObj</Filter>
+      <Filter>src\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\DataSchema.cpp">
-      <Filter>src\AQObjInfrastructure\AQObj</Filter>
+      <Filter>src\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\Environment.cpp">
-      <Filter>src\AQObjInfrastructure\AQObj</Filter>
+      <Filter>src\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\EnvironmentImplementation.cpp">
-      <Filter>src\AQObjInfrastructure\AQObj</Filter>
+      <Filter>src\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\EnvironmentPool.cpp">
-      <Filter>src\AQObjInfrastructure\AQObj</Filter>
+      <Filter>src\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\ExampleObjects.cpp">
-      <Filter>src\AQObjInfrastructure\AQObj</Filter>
+      <Filter>src\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\IsAQObject.cpp">
-      <Filter>src\AQObjInfrastructure\AQObj</Filter>
+      <Filter>src\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\ObjectUtilities.cpp">
-      <Filter>src\AQObjInfrastructure\AQObj</Filter>
+      <Filter>src\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\SchemaObject.cpp">
-      <Filter>src\AQObjInfrastructure\AQObj</Filter>
+      <Filter>src\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\StaticStructureStore.cpp">
-      <Filter>src\AQObjInfrastructure\AQObj</Filter>
+      <Filter>src\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\TotalReturnSwap.cpp">
       <Filter>src\Swap\Pricing</Filter>
@@ -1620,7 +1614,7 @@
       <Filter>src\Bond</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\AnyTypeUtilities.cpp">
-      <Filter>src\Utilities</Filter>
+      <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\FloatBondLeg.cpp">
       <Filter>src\Swap\Leg</Filter>
@@ -1662,16 +1656,16 @@
       <Filter>src\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\AQLCurveCalibrationHelpers.cpp">
-      <Filter>src\CurveAnalytics\LACurveHelpers</Filter>
+      <Filter>src\CurveAnalytics\AQLCurveHelpers</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\AQLCurveForwardRateHelpers.cpp">
-      <Filter>src\CurveAnalytics\LACurveHelpers</Filter>
+      <Filter>src\CurveAnalytics\AQLCurveHelpers</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CurveCalibration.cpp">
       <Filter>src\CurveAnalytics\SingleCurveCalibration</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\AQLCurveMarketDataHelpers.cpp">
-      <Filter>src\CurveAnalytics\LACurveHelpers</Filter>
+      <Filter>src\CurveAnalytics\AQLCurveHelpers</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\AQLDateHelpers.cpp">
       <Filter>src\Dates\AQLDateHelpers</Filter>
@@ -1722,13 +1716,13 @@
       <Filter>src\CurveAnalytics\CurveAQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\PulseObject.cpp">
-      <Filter>src\AQObjInfrastructure\AQObj</Filter>
+      <Filter>src\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CurveEngine.cpp">
       <Filter>src\CurveAnalytics\CurveEngine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\AQLCurvePricingObject.cpp">
-      <Filter>src\CurveAnalytics\LACurveHelpers</Filter>
+      <Filter>src\CurveAnalytics\AQLCurveHelpers</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CommonConstants.cpp">
       <Filter>src\Enums</Filter>

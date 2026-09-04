@@ -6,16 +6,6 @@
 */
 //  2006, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLLinearMethod.cpp
-//
-//  SYNOPSIS    :       AQLLinearMethod
-//  DESCRIPTION :       Source code of class to represent linear function
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -6,15 +6,6 @@
 */
 //  2007, AlgoQuantHub.
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathCorFuncLMM.h
-//
-//  SYNOPSIS    :       AQLMathCorFuncLMM
-//  DESCRIPTION :       Source code of class  to represent correlation of LMM
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

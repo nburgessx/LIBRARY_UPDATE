@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLCalibrationParametersFXStrangleSolver_h
 #define AQLCalibrationParametersFXStrangleSolver_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrationParametersFXStrangleSolver.h
-//
-//  DESCRIPTION :         Calibration info create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 
 #include "AQLCalibrationParameters.h"

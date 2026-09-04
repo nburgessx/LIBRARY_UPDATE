@@ -1,16 +1,6 @@
 /*! @file
     @brief Log manager class
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLLogManager.cpp
-//
-//  DESCRIPTION :       Log manager class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma implementation
 #else

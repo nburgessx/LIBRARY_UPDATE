@@ -4,13 +4,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDataFunctions.cpp
-//
-//  DESCRIPTION :       Source code of data class to hold a function array
-//                      
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

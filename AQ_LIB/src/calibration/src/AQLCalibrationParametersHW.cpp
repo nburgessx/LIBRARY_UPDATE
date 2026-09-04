@@ -1,16 +1,6 @@
 /*! @file
     @brief Calibration method create class for hw
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrationParametersHW.cpp
-//
-//  DESCRIPTION :     Calibration method create class for hw
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

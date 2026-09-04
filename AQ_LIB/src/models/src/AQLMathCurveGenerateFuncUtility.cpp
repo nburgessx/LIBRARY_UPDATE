@@ -41,9 +41,9 @@
 #include "AQLPriceDataFunction.h"
 #include <AQLPriceArbFreeGenerator.h>
 
-//#include <LAPriceArbFreeGeneratorJPYBase.h>
+//#include <AQLPriceArbFreeGeneratorJPYBase.h>
 #include <ConstantDeclarations.h>
-//#include <LAPriceArbFreeGeneratorSTD.h>
+//#include <AQLPriceArbFreeGeneratorSTD.h>
 #include "AQLCoreUtility.h"
 #include <cmath>
 #include <map>

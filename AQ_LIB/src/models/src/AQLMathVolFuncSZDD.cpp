@@ -6,15 +6,6 @@
 */
 //  2008, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathVolFuncSZDD.h
-//
-//  SYNOPSIS    :       AQLMathVolFuncSZDD
-//  DESCRIPTION :       Source code of class  to represent ScobelZhu & DD version of volatility of FX
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

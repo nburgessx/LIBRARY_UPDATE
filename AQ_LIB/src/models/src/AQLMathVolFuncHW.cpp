@@ -5,15 +5,6 @@
 
 */
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathVolFuncHW.h
-//
-//  SYNOPSIS    :       AQLMathVolFuncHW
-//  DESCRIPTION :       Source code of class  to represent volatility of FX
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma implementation

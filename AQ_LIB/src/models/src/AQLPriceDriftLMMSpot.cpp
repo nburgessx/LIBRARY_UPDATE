@@ -6,16 +6,6 @@
 */
 //  2007, AlgoQuantHub..
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLPriceDriftLMMSpot.cpp
-//
-//  SYNOPSIS    :       AQLPriceDriftLMMSpot
-//  DESCRIPTION :       Source code of drift function of LMM sde (spot measure)
-//
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

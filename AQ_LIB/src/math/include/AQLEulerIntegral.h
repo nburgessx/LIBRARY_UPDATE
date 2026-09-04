@@ -12,9 +12,9 @@
 #include <vector>
 using namespace std;
 
-// ID for MMNaturalIntegral
+// ID for AQLNaturalIntegral
 #define FN_EULERINTEGRAL     20090420
-// Function name for MMNaturalIntegral
+// Function name for AQLNaturalIntegral
 #define FN_EULERINTEGRAL_STR	"fn_eulerIntegral"
 
 

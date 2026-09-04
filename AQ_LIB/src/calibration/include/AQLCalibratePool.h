@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLCalibratePool_h
 #define AQLCalibratePool_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibratePool.h
-//
-//  DESCRIPTION :       AQLCalibratePool 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 
 #include <vector>

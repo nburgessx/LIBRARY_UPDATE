@@ -68,9 +68,9 @@ public:
                                 // operator()
     virtual double              operator()(const DoubleArray& x) const;
                                 //======================================
-								// get function class of LAMathHWFunc 
+								// get function class of AQLMathHWFunc 
 	const AQLMathHWFuncMR&			getHWMR(void) const {return *mpHWtool->getHWMR();}
-								// get function class of LAMathHWFunSigma
+								// get function class of AQLMathHWFunSigma
 	const AQLMathHWFuncSigma&		getHWSigma(void) const {return  *mpHWtool->getHWSigma();}
 	
                                 //======================================

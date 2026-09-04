@@ -5,14 +5,6 @@
 // Improved performance & precision by AlgoQuantHub.
 #ifndef AQLNormalDistribution_h
 #define AQLNormalDistribution_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLNormalDistribution.h
-//
-//  DESCRIPTION :       Normal distribution.
-//  SEE ALSO    :
-//  VIRSION		:
-//  STATUS      :       FIX
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #else

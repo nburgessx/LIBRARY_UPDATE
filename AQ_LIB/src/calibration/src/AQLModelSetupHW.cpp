@@ -1,16 +1,6 @@
 /*! @file
     @brief Class to regist HW master data
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLModelSetupHW.cpp
-//
-//  DESCRIPTION :       HW Master data regist class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

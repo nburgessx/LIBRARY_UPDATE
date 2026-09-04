@@ -1,16 +1,6 @@
 /*! @file
     @brief Object generator class
 */
-//  2007, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLObjectConfigurationVanilla.cpp
-//
-//  DESCRIPTION :        Object setupper
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else
@@ -46,7 +36,7 @@
 #include "AQLLinearInterpolation.h"
 #include "AQLPriceConvergenceValue.h"
 #include "AQLMathIRVanillaFuncUtility.h"
-//#include "LAPriceNDSSwaptionValue.h"
+//#include "AQLPriceNDSSwaptionValue.h"
 #include <algorithm>
 
 #define CURRENTINDEX		"CURRENTINDEX"

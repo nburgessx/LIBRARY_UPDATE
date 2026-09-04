@@ -6,15 +6,6 @@ This class derives from AQLBlackScholesBaseMethod
 //  2010, AlgoQuantHub.
 #ifndef AQLBlackShcolesDigitalFloorletOption_h
 #define AQLBlackShcolesDigitalFloorletOption_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLBlackScholesBaseMethod.h
-//
-//  SYNOPSIS    :       AQLBlackScholesBaseMethod
-//  DESCRIPTION :       Class declaration to represent linear function
-//						This class derives from AQLFunctionBase
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

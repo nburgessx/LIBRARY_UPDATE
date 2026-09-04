@@ -6,18 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQL1DNormDist.cpp
-//
-//  SYNOPSIS    :       AQL1DNormDist
-//  DESCRIPTION :       Source code to represent normal distribution function
-//						This class derives from AQLFunctionBase, and implement
-//						pure virtual method "operator()"
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

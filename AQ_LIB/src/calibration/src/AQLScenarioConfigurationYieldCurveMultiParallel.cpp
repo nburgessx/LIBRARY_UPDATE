@@ -1,16 +1,6 @@
 /*! @file
     @brief Yield Risk Scenario create class
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLScenarioConfigurationYieldCurveMultiParallel.cpp
-//
-//  DESCRIPTION :       Yield Risk Scenario create class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma implementation
 #else
@@ -65,7 +55,7 @@ AQLScenarioConfigurationYieldCurveMultiParallel::~AQLScenarioConfigurationYieldC
 
 	@param[int,out] dataInstance
 	@param[in] param
-	@return vector<MBEnity *>
+	@return vector<AQLEnity *>
 */
 vector<AQLObject *>
 AQLScenarioConfigurationYieldCurveMultiParallel::createScenario(AQLDataInstance &dataInstance, const AQLScenarioParam &param) const

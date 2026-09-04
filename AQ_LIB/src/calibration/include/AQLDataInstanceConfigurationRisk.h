@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLDataInstanceConfigurationRisk_h
 #define AQLDataInstanceConfigurationRisk_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLDataInstanceConfigurationRisk.h
-//
-//  DESCRIPTION :        DataInstance setup class for calc Risk
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

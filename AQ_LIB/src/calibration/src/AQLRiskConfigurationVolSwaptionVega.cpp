@@ -1,16 +1,6 @@
 /*! @file
     @brief  Swaption vega setup class 
 */
-//  2008, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLRiskConfigurationVolSwaptionVega.cpp
-//
-//  DESCRIPTION :         Swaption vega setup class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

@@ -6,17 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLIntegralMC.cpp
-//
-//  SYNOPSIS    :       AQLIntegralMC
-//  DESCRIPTION :       Source code for class to integrate with Monte Carlo method
-//						This class derives from AQLIntegralBase
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

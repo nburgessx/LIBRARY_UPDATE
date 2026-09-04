@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLLinearRatesVolatilityManager_h
 #define AQLLinearRatesVolatilityManager_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLLinearRatesVolatilityManager.h
-//
-//  DESCRIPTION :       AQLLinearRatesVolatilityManager 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma interface
 #endif

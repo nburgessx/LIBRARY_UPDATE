@@ -5,14 +5,6 @@
 #ifndef AQLMATHHWFUNCMR_H
 #define AQLMATHHWFUNCMR_H
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathHWFuncMR.h
-//
-//  SYNOPSIS    :       AQLMathHWFuncMR
-//  DESCRIPTION :       Declaration of path element class that represents curve object for HW
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma interface

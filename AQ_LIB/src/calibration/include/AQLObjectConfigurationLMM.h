@@ -4,15 +4,6 @@
 //  2007, AlgoQuantHub.
 #ifndef AQLObjectConfigurationLMM_h
 #define AQLObjectConfigurationLMM_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLObjectConfigurationLMM.h
-//
-//  DESCRIPTION :        LMM object setup class 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

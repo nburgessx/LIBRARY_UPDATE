@@ -5,14 +5,6 @@
 #ifndef AQLMATHHWFUNCSIGMA_H
 #define AQLMATHHWFUNCSIGMA_H
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathHWFuncSigma.h
-//
-//  SYNOPSIS    :       AQLMathHWFuncSigma
-//  DESCRIPTION :       Declaration ofvolatility tool class that represents for HW
-//                      
-//  VERSION		:
-////X///////////////////X///////////////////////////////X///////////////////
 
 #ifdef __GNUG__
 #pragma interface

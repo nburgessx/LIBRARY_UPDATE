@@ -6,17 +6,6 @@
 
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLGaussianQuadrature.cpp
-//
-//  SYNOPSIS    :       AQLGaussianQuadrature
-//  DESCRIPTION :       Source code of abstract base class for Gaussian quadrature integral methods
-//						This class defines pure virtual method "integrate" from abstract class "AQLIntegralBase".
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

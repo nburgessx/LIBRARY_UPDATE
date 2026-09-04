@@ -6,15 +6,6 @@
 ///
 #ifndef AQLMathLeastSquareHybridHWLVProcessQlib_h
 #define AQLMathLeastSquareHybridHWLVProcessQlib_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLMathLeastSquareHybridHWLVProcessQlib.h
-//
-//  DESCRIPTION :      
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 
 #include <AQLCoreUtil.h>
 #include <vector>

@@ -4,15 +4,6 @@
 //  2011, AlgoQuantHub.
 #ifndef AQLCalibrateVolatilityFXVannaVolga_h
 #define AQLCalibrateVolatilityFXVannaVolga_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrateVolatilityFXVannaVolga.h
-//
-//  DESCRIPTION :         Volatility data create class for lmm
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

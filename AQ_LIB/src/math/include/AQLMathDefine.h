@@ -98,19 +98,19 @@
 
 #define	CALIBRATION_DATA_TREEDIVNUM			"TreeDivNum"	// Data TreeDivNum
 
-// For MFSingleCredit
+// For AQLSingleCredit
 //#define CALIBRATION_DATA_DAYCOUNT				"DayCount"		//> Data Name of DayCount
 
 #define CALIBRATION_DATA_HAZARDRATE			"HazardRate"	// Data Name of HazardRate
 
 #define CALIBRATION_DATA_RECOVERYRATE			"RecoveryRate"	// Data Name of RecoveryRate
 
-// For MFCreditPoolMC
+// For AQLCreditPoolMC
 #define CALIBRATION_DATA_RANDGENERATOR		"RandGenerator"	// Data Name of RandGenerator
 
 #define CALIBRATION_DATA_DEFAULTSCENARIO	"DefaultScenario"	// Data Name of DefaultScenario	
 
-// For MFCreditPoolSA
+// For AQLCreditPoolSA
 #define CALIBRATION_DATA_BASECORRELATION		"BaseCorrelation"	// Data Name of 1-factor model base correlation
 
 // For ErrorMessages

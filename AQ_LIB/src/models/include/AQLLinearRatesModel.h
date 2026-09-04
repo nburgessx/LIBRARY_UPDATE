@@ -6,15 +6,6 @@
 #define AQLLinearRatesModel_h
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLLinearRatesModel.h
-//
-//  DESCRIPTION :       AQLLinearRatesModel 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif

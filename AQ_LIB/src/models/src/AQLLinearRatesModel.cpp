@@ -1,16 +1,6 @@
 /*! @file
     @brief AQLLinearRatesModel manager class
 */
-//  2011, AlgoQuantHub.
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLLinearRatesModel.cpp
-//
-//  DESCRIPTION :       AQLLinearRatesModel 
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

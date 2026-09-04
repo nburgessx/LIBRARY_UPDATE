@@ -6,16 +6,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLFindRootBase.cpp
-//
-//  SYNOPSIS    :       AQLFindRootBase
-//  DESCRIPTION :       Definitioin of abstract base class for dataInstance finding.
-//                      
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

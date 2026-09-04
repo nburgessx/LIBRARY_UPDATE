@@ -5,16 +5,6 @@
 */
 
 
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLConstant.cpp
-//
-//  SYNOPSIS    :       AQLConstant
-//  DESCRIPTION :       Source code for class to represent constant function
-//             
-//  SEE ALSO    :       
-//  TYME        :       CLASS
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma implementation
 #else

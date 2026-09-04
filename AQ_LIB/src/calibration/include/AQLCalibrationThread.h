@@ -4,15 +4,6 @@
 //  2008, AlgoQuantHub.
 #ifndef AQLCalibrationThread_h
 #define AQLCalibrationThread_h
-////X///////////////////X///////////////////////////////X///////////////////
-//  NAME        :       AQLCalibrationThread.h
-//
-//  DESCRIPTION :        Thread class
-//                      
-//  SEE ALSO    :       
-//  VIRSION		:
-//  STATUS      :       
-////X///////////////////X///////////////////////////////X///////////////////
 #ifdef __GNUG__
 #pragma interface
 #endif
