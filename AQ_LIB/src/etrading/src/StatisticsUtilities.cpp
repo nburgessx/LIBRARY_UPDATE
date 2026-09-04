@@ -21,7 +21,7 @@ namespace etrading
     {
         if( max < min )
         {
-            boost::swap( min, max );
+            std::swap( min, max );
         }
         boost::random::uniform_int_distribution<int> uniformGenerator( min, max ); // guaranteed unbiased
         return uniformGenerator( statisticsHelpers::mersenneTwister );
@@ -31,7 +31,7 @@ namespace etrading
     {
         if( b < a )
         {
-            boost::swap( a, b );
+            std::swap( a, b );
         }
         boost::random::uniform_real_distribution<> dist( a, b );
         return dist( statisticsHelpers::mersenneTwister );

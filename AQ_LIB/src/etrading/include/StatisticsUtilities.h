@@ -19,7 +19,6 @@
 #include <boost/random/random_device.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/range/numeric.hpp>
-#include <boost/swap.hpp>
 
 // TODO: move to std::accumulate/std::is_arithmetic C++11 VS2015
 // TODO: look at doing the calculations for generic containers (not just std::vector) using std::begin/std::end
