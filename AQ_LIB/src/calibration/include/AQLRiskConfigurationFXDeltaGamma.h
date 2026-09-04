@@ -1,7 +1,6 @@
 /*! @file
     @brief  FX delta setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationFXDeltaGamma_h
 #define AQLRiskConfigurationFXDeltaGamma_h
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)

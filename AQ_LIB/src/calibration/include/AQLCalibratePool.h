@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLCalibratePool manager class 
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibratePool_h
 #define AQLCalibratePool_h
 

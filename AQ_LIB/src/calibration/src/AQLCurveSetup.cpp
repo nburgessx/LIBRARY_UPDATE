@@ -1,7 +1,6 @@
 /*! @file
     @brief  M-Library Excel Addin Wrap class
 */
-//  2007, AlgoQuantHub.
 
 #ifdef __GNUG__
 #pragma implementation

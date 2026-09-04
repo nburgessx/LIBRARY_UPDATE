@@ -1,7 +1,6 @@
 /*! @file
     @brief Constant data declare file
 */
-//  2007, AlgoQuantHub.
 
 #ifndef AQLDefinitionsFXVannaVolga_h
 #define AQLDefinitionsFXVannaVolga_h

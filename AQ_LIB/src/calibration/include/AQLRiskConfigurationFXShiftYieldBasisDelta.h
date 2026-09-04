@@ -1,7 +1,6 @@
 /*! @file
     @brief FX shift Basis Delta setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationFXShiftYieldBasisDelta_h
 #define AQLRiskConfigurationFXShiftYieldBasisDelta_h
 #ifdef __GNUG__

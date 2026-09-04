@@ -620,7 +620,7 @@ AQLUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const AQLString &cu
 		curveCalibrationData = &dynamic_cast<CurveCalibrationData &>(objPool.getObject(curvePropertiesName).get());
 	}
 	curveCalibrationData->getName().convertFromString(curvePropertiesName);
-	bool isArbFree = false;		// London don't use this flag and hence hardcode it to False
+	bool isArbFree = false;		// this flag is not used; hardcoded to false
 	curveCalibrationData->getIsArbFree().set(isArbFree);
 
 	// Get YieldData object (as an data)
@@ -906,7 +906,7 @@ void AQLUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const AQLString &curr
 		curveCalibrationData = &dynamic_cast<CurveCalibrationData &>(objPool.getObject(curvePropertiesName).get());
 	}
 	curveCalibrationData->getName().convertFromString(curvePropertiesName);
-	bool isArbFree = false;		// London don't use this flag and hence hardcode it to False
+	bool isArbFree = false;		// this flag is not used; hardcoded to false
 	curveCalibrationData->getIsArbFree().set(isArbFree);
 
 	// Get YieldData object (as an data)

@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLObjectConfiguration manager class 
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLObjectConfigurationManager_h
 #define AQLObjectConfigurationManager_h
 #ifdef __GNUG__

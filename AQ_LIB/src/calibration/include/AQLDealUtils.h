@@ -1,7 +1,6 @@
 /*! @file
     @brief  M-Library Deal util class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLDealUtils_h
 #define AQLDealUtils_h
 

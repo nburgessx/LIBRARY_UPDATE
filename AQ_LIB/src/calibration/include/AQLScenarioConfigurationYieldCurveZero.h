@@ -1,7 +1,6 @@
 /*! @file
     @brief Yield Risk Scenario create class(zero rate shift)
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfigurationYieldCurveZero_h
 #define AQLScenarioConfigurationYieldCurveZero_h
 #ifdef __GNUG__

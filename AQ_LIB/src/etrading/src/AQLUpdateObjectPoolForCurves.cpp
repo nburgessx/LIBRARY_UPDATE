@@ -634,7 +634,7 @@ AQLUpdateObjectPoolForCurves::generateInitialValueDualBootstrap(const AQLString 
 		basisCurveEngine = &dynamic_cast<BasisCurveCalibration &>(objPool.getObject(yieldProName).get());
 	}
 	basisCurveEngine->getName().convertFromString(yieldProName);
-	bool isArbFree = false;		// London don't use this flag and hence hardcode it to False
+	bool isArbFree = false;		// this flag is not used; hardcoded to false
 	basisCurveEngine->getIsArbFree().set(isArbFree);
 
 	// Get YieldData object (as an data)
@@ -920,7 +920,7 @@ void AQLUpdateObjectPoolForCurves::generateInitialValueGlobalEngineCurves(const 
 		basisCurveEngine = &dynamic_cast<BasisCurveCalibration &>(objPool.getObject(yieldProName).get());
 	}
 	basisCurveEngine->getName().convertFromString(yieldProName);
-	bool isArbFree = false;		// London don't use this flag and hence hardcode it to False
+	bool isArbFree = false;		// this flag is not used; hardcoded to false
 	basisCurveEngine->getIsArbFree().set(isArbFree);
 
 	// Get YieldData object (as an data)

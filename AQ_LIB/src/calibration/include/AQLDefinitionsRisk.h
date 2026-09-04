@@ -1,7 +1,6 @@
 /*! @file
     @brief Risk Constant data declare file
 */
-//  2007, AlgoQuantHub.
 
 #ifndef AQLDefinitionsRisk_h
 #define AQLDefinitionsRisk_h

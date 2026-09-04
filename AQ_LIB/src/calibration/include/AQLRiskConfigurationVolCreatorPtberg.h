@@ -1,7 +1,6 @@
 /*! @file
     @brief Ptberg(fx) Volatility create class for calc risk 
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolCreatorPtberg_h
 #define AQLRiskConfigurationVolCreatorPtberg_h
 #ifdef __GNUG__

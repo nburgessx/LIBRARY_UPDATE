@@ -1,7 +1,6 @@
 /*! @file
     @brief Yield basis setup class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYieldBasis_h
 #define AQLRiskConfigurationYieldBasis_h
 #ifdef __GNUG__

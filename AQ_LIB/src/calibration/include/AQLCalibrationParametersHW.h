@@ -1,7 +1,6 @@
 /*! @file
     @brief  Calibration method create class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibrationParametersHW_h
 #define AQLCalibrationParametersHW_h
 

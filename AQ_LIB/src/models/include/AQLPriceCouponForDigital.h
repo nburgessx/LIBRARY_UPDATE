@@ -2,7 +2,6 @@
     @brief declaration of class of rainbow Temporary type coupon select operator.
 
 */
-//   2007,AlgoQuantHub.
 
 //////////////////////////////////////////////////////////
 //  

@@ -2,7 +2,6 @@
     @brief Class declaration to AQLMathJumpDiffusion.
 
 */
-//  2009, AlgoQuantHub.
 #ifndef __AQLMATHJUMPDIFFUSION_H__
 #define __AQLMATHJUMPDIFFUSION_H__
 

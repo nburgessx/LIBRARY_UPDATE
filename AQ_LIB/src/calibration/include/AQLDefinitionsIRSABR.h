@@ -1,7 +1,6 @@
 /*! @file
     @brief Constant data declare file
 */
-//  2008, AlgoQuantHub.
 
 #ifndef AQLDefinitionsIRSABR_h
 #define AQLDefinitionsIRSABR_h

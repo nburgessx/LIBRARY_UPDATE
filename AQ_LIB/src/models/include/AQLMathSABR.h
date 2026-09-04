@@ -2,7 +2,6 @@
     @brief Class declaration to AQLMathSABR.
 
 */
-//  2009, AlgoQuantHub.
 #ifndef __AQLMATHSABR_H__
 #define __AQLMATHSABR_H__
 

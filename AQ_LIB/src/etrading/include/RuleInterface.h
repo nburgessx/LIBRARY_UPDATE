@@ -1,6 +1,5 @@
 #pragma once
 //
-// @File: RuleInterface.h
 // @Description: This file contains classes that verify whether an instance of a container/variable/object follows a certain rule
 // this is done through the "virtual bool verify(const A& a)  const = 0;" method. All these rules can be chained together randomly to
 // provide for multiple checks through 1 function call.
@@ -13,12 +12,6 @@
 // 		conditionChecker.addEnforcer(BoundaryRule<>(1000.0,2048.16));
 //		bool areTheNumbersInAscendingOrderAndPositiveAndBetweenTwoGivenNumbers = conditionChecker.verify(aVectorOfNumberThatNeedsToFollowCertainRules);
 //	For further examples, verify the TestBusinessObject.RuleInterface test
-// @Created: 27 Feb 2016
-// @Author: Hans Roggeman
-// @Department: ISO Front Office Development
-//
-// The copyright to the computer program(s) herein
-// is the property of AlgoQuantHub.
 
 
 #include <typeinfo>

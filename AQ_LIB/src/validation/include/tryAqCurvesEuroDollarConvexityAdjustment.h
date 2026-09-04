@@ -2,11 +2,6 @@
 
 /*
  * @brief			validation interface for the aqRatesConvexityAdjustment method
- * @Created:		18th October 2016
- * @Author:			Nicholas Burgess
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

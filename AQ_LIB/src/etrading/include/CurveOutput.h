@@ -1,15 +1,8 @@
 #pragma once
 
 //
-// @File: CurveOutput.h
 // @Description: This Class owns the outputs of a Curve object (discount factors, forward rates, settings)
 // in etrading::ContainedEnumType.
-// @Created: 27 Feb 2016
-// @Author: Hans Roggeman
-// @Department: ISO Front Office Development
-//
-// The copyright to the computer program(s) herein
-// is the property of AlgoQuantHub.
 
 #include <string>
 #include <vector>

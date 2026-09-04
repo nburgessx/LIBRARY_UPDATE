@@ -1,11 +1,5 @@
-// @File            BondEnumerations.cpp
 //
 // @Description:    This file as has all the essential enums for Bond Calculation Types
-// @Created:        17th January 2017
-// @Author:         Nicholas Burgess
-// @Department:     Quant Research & Analytics
-//
-//                  The copyright to the computer program(s) herein is the property of AlgoQuantHub.
 
 #include "BondEnumerations.h"
 #include "ETradingException.h"

@@ -1,7 +1,6 @@
 /*! @file
     @brief Vanilla Master data regist class
 */
-//  2008, AlgoQuantHub.
 #ifndef  AQLModelSetupVanilla_h
 #define  AQLModelSetupVanilla_h
 #ifdef __GNUG__

@@ -19921,7 +19921,7 @@ SWIGINTERN PyObject *VecVecString_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObj
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_setUpMLIB__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_setUpAQL__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -19934,10 +19934,10 @@ SWIGINTERN PyObject *_wrap_setUpMLIB__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "setUpMLIB" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "setUpAQL" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "setUpMLIB" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "setUpAQL" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -19945,17 +19945,17 @@ SWIGINTERN PyObject *_wrap_setUpMLIB__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setUpMLIB" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setUpAQL" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "setUpMLIB" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "setUpAQL" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   {
     try
     {
-      result = setUpMLIB((std::string const &)*arg1,(std::string const &)*arg2);
+      result = setUpAQL((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -19973,7 +19973,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_setupMLIB__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_setupAQL__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -19986,10 +19986,10 @@ SWIGINTERN PyObject *_wrap_setupMLIB__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "setupMLIB" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "setupAQL" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "setupMLIB" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "setupAQL" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -19997,17 +19997,17 @@ SWIGINTERN PyObject *_wrap_setupMLIB__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setupMLIB" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setupAQL" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "setupMLIB" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "setupAQL" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   {
     try
     {
-      result = setupMLIB((std::string const &)*arg1,(std::string const &)*arg2);
+      result = setupAQL((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -20025,7 +20025,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_initMLIB__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_initAQL__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -20038,10 +20038,10 @@ SWIGINTERN PyObject *_wrap_initMLIB__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_s
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "initMLIB" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "initAQL" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "initMLIB" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "initAQL" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -20049,17 +20049,17 @@ SWIGINTERN PyObject *_wrap_initMLIB__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_s
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "initMLIB" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "initAQL" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "initMLIB" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "initAQL" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   {
     try
     {
-      result = initMLIB((std::string const &)*arg1,(std::string const &)*arg2);
+      result = initAQL((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -20077,7 +20077,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_setUpMLIB__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
+SWIGINTERN PyObject *_wrap_setUpAQL__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   std::string result;
   
@@ -20085,7 +20085,7 @@ SWIGINTERN PyObject *_wrap_setUpMLIB__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_
   {
     try
     {
-      result = setUpMLIB();
+      result = setUpAQL();
     }
     catch (const std::exception& e)
     {
@@ -20099,16 +20099,16 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_setUpMLIB(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_setUpAQL(PyObject *self, PyObject *args) {
   Py_ssize_t argc;
   PyObject *argv[3] = {
     0
   };
   
-  if (!(argc = SWIG_Python_UnpackTuple(args, "setUpMLIB", 0, 2, argv))) SWIG_fail;
+  if (!(argc = SWIG_Python_UnpackTuple(args, "setUpAQL", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 0) {
-    return _wrap_setUpMLIB__SWIG_1(self, argc, argv);
+    return _wrap_setUpAQL__SWIG_1(self, argc, argv);
   }
   if (argc == 2) {
     int _v;
@@ -20118,21 +20118,21 @@ SWIGINTERN PyObject *_wrap_setUpMLIB(PyObject *self, PyObject *args) {
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_setUpMLIB__SWIG_0(self, argc, argv);
+        return _wrap_setUpAQL__SWIG_0(self, argc, argv);
       }
     }
   }
   
 fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'setUpMLIB'.\n"
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'setUpAQL'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    setUpMLIB(std::string const &,std::string const &)\n"
-    "    setUpMLIB()\n");
+    "    setUpAQL(std::string const &,std::string const &)\n"
+    "    setUpAQL()\n");
   return 0;
 }
 
 
-SWIGINTERN PyObject *_wrap_setupMLIB__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
+SWIGINTERN PyObject *_wrap_setupAQL__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   std::string result;
   
@@ -20140,7 +20140,7 @@ SWIGINTERN PyObject *_wrap_setupMLIB__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_
   {
     try
     {
-      result = setupMLIB();
+      result = setupAQL();
     }
     catch (const std::exception& e)
     {
@@ -20154,16 +20154,16 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_setupMLIB(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_setupAQL(PyObject *self, PyObject *args) {
   Py_ssize_t argc;
   PyObject *argv[3] = {
     0
   };
   
-  if (!(argc = SWIG_Python_UnpackTuple(args, "setupMLIB", 0, 2, argv))) SWIG_fail;
+  if (!(argc = SWIG_Python_UnpackTuple(args, "setupAQL", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 0) {
-    return _wrap_setupMLIB__SWIG_1(self, argc, argv);
+    return _wrap_setupAQL__SWIG_1(self, argc, argv);
   }
   if (argc == 2) {
     int _v;
@@ -20173,21 +20173,21 @@ SWIGINTERN PyObject *_wrap_setupMLIB(PyObject *self, PyObject *args) {
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_setupMLIB__SWIG_0(self, argc, argv);
+        return _wrap_setupAQL__SWIG_0(self, argc, argv);
       }
     }
   }
   
 fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'setupMLIB'.\n"
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'setupAQL'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    setupMLIB(std::string const &,std::string const &)\n"
-    "    setupMLIB()\n");
+    "    setupAQL(std::string const &,std::string const &)\n"
+    "    setupAQL()\n");
   return 0;
 }
 
 
-SWIGINTERN PyObject *_wrap_initMLIB__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
+SWIGINTERN PyObject *_wrap_initAQL__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   std::string result;
   
@@ -20195,7 +20195,7 @@ SWIGINTERN PyObject *_wrap_initMLIB__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_s
   {
     try
     {
-      result = initMLIB();
+      result = initAQL();
     }
     catch (const std::exception& e)
     {
@@ -20209,16 +20209,16 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_initMLIB(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_initAQL(PyObject *self, PyObject *args) {
   Py_ssize_t argc;
   PyObject *argv[3] = {
     0
   };
   
-  if (!(argc = SWIG_Python_UnpackTuple(args, "initMLIB", 0, 2, argv))) SWIG_fail;
+  if (!(argc = SWIG_Python_UnpackTuple(args, "initAQL", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 0) {
-    return _wrap_initMLIB__SWIG_1(self, argc, argv);
+    return _wrap_initAQL__SWIG_1(self, argc, argv);
   }
   if (argc == 2) {
     int _v;
@@ -20228,29 +20228,29 @@ SWIGINTERN PyObject *_wrap_initMLIB(PyObject *self, PyObject *args) {
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_initMLIB__SWIG_0(self, argc, argv);
+        return _wrap_initAQL__SWIG_0(self, argc, argv);
       }
     }
   }
   
 fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'initMLIB'.\n"
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'initAQL'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    initMLIB(std::string const &,std::string const &)\n"
-    "    initMLIB()\n");
+    "    initAQL(std::string const &,std::string const &)\n"
+    "    initAQL()\n");
   return 0;
 }
 
 
-SWIGINTERN PyObject *_wrap_tearDownMLIB(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_tearDownAQL(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string result;
   
-  if (!SWIG_Python_UnpackTuple(args, "tearDownMLIB", 0, 0, 0)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "tearDownAQL", 0, 0, 0)) SWIG_fail;
   {
     try
     {
-      result = tearDownMLIB();
+      result = tearDownAQL();
     }
     catch (const std::exception& e)
     {
@@ -35645,10 +35645,10 @@ static PyMethodDef SwigMethods[] = {
 	 { "delete_VecVecString", _wrap_delete_VecVecString, METH_O, NULL},
 	 { "VecVecString_swigregister", VecVecString_swigregister, METH_O, NULL},
 	 { "VecVecString_swiginit", VecVecString_swiginit, METH_VARARGS, NULL},
-	 { "setUpMLIB", _wrap_setUpMLIB, METH_VARARGS, NULL},
-	 { "setupMLIB", _wrap_setupMLIB, METH_VARARGS, NULL},
-	 { "initMLIB", _wrap_initMLIB, METH_VARARGS, NULL},
-	 { "tearDownMLIB", _wrap_tearDownMLIB, METH_NOARGS, NULL},
+	 { "setUpAQL", _wrap_setUpAQL, METH_VARARGS, NULL},
+	 { "setupAQL", _wrap_setupAQL, METH_VARARGS, NULL},
+	 { "initAQL", _wrap_initAQL, METH_VARARGS, NULL},
+	 { "tearDownAQL", _wrap_tearDownAQL, METH_NOARGS, NULL},
 	 { "echoInt", _wrap_echoInt, METH_O, NULL},
 	 { "echoDouble", _wrap_echoDouble, METH_O, NULL},
 	 { "echoChar", _wrap_echoChar, METH_O, NULL},

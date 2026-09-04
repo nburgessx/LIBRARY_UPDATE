@@ -5,11 +5,6 @@
                     and methodologies on how to calculate a Bond Discount Factor from a Bond Yield. 
                     We manage this logic here
 
- * @Created:		14th February 2017
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

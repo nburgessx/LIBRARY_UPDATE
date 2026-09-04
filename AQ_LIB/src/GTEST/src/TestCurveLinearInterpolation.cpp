@@ -2,11 +2,6 @@
 
 /*
  * @brief			Curve Interpolation Framework Tests
- * @Created:		28th February 2020
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub London Quant Research
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 // Include: Google Test Library

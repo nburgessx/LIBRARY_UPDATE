@@ -1,5 +1,4 @@
 /*!
-    @file AQLMathVolatilityLMMDiscModel.cpp
     @brief Implements Volatility and its related classes.
 */
 
@@ -15,7 +14,6 @@
 
 //
 //---------------------------------------------------------
-//
 AQLMathVolatilityLMMDiscModel::AQLMathVolatilityLMMDiscModel(const DoubleVector& paramV_,
 													   const DoubleVector& paramF_,
 													   const DoubleVector& tenorG_,
@@ -86,7 +84,6 @@ mG(rhs.mG)
 {
 }
 
-//
 double AQLMathVolatilityLMMDiscModel::get(double t, size_t i)
 {
     if ( mT_fix.size() <= i ) return 0.0;
@@ -99,7 +96,6 @@ double AQLMathVolatilityLMMDiscModel::get(double t, size_t i)
     return mCacheVolMatrix[t_idx][i];
 };
 
-//
 void AQLMathVolatilityLMMDiscModel::createCacheVolMatrix(size_t i)//, const DoubleVector& T_fix_special, const DoubleVector& paramV, const DoubleVector& paramF, double G)
 {
     mVol_special[i] = 0.0 < mDividedT_fix_special[0] ? AQLEigenSystems::sigma0( 0.5 * mT_fix_special[0], mT_fix_special[i], mParamV, mParamF, mG[i]) : 0.0;

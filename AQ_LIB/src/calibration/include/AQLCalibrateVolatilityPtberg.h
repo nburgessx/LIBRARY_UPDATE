@@ -1,7 +1,6 @@
 /*! @file
     @brief Volatility data create class for ptberg
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibrateVolatilityPtberg_h
 #define AQLCalibrateVolatilityPtberg_h
 #ifdef __GNUG__

@@ -1,7 +1,6 @@
 /*! @file
     @brief Swaption vega setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolSwaptionVega_h
 #define AQLRiskConfigurationVolSwaptionVega_h
 #ifdef __GNUG__

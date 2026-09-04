@@ -1,5 +1,4 @@
 /*!
-	@file AQLPriceVegaUnderlyingAsset.h
 	@brief Defines three types: AQLPriceIRVegaUnderlyingAsset, AQLPriceOriginalIRSABRUnderlyingAsset and AQLPriceAnotherUnderlyingAsset.
 */
 

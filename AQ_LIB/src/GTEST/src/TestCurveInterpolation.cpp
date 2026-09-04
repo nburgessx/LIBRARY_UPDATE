@@ -2,11 +2,6 @@
 
 /*
  * @brief			Tests to validate the Curve Interpolation Class
- * @Created:		3rd January 2020
- * @Author:			Arthur Wu
- * @Department:		AlgoQuantHub London Quant Research
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 // Include: Google Test Library

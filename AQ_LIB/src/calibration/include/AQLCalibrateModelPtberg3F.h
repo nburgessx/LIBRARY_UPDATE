@@ -1,7 +1,6 @@
 /*! @file
     @brief Ptberg sde generator class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLCalibrateModelPtberg3F_h
 #define AQLCalibrateModelPtberg3F_h
 #ifdef __GNUG__

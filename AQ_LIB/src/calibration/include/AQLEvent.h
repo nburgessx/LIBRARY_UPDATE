@@ -1,7 +1,6 @@
 /*! @file
     @brief Event class (for multi thread)
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLEVENT_h
 #define AQLEVENT_h
 #include "AQLCoreThread.h"

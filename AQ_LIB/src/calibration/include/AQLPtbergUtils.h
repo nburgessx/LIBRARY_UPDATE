@@ -1,7 +1,6 @@
 /*! @file
     @brief  FX ptberg model util class
 */
-//  2012, AlgoQuantHub.
 #ifndef AQLPtbergUtils_h
 #define AQLPtbergUtils_h
 

@@ -1,7 +1,6 @@
 /*! @file
     @brief  LMM object setup class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLObjectConfigurationLMM_h
 #define AQLObjectConfigurationLMM_h
 #ifdef __GNUG__

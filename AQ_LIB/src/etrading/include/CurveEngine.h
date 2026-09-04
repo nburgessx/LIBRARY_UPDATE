@@ -2,11 +2,6 @@
 
 /*
  * @brief			OIS Curve Caalibration Class
- * @Created:		3rd April 2019
- * @Author:			Nicholas Burgess
- * @Department:		Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 #pragma once
 #include <memory>

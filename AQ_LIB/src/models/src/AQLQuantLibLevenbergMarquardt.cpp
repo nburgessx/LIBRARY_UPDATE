@@ -1,5 +1,4 @@
 /*!
-	@file AQLQuantLibLevenbergMarquardt.cpp
 	@brief a class of optimization method : Levenberg Marquardt method
 		   using external library
 

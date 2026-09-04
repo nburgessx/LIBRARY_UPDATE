@@ -1,7 +1,6 @@
 /*! @file
     @brief Yield Risk Scenario create class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfigurationYieldCurveBasis_h
 #define AQLScenarioConfigurationYieldCurveBasis_h
 #ifdef __GNUG__

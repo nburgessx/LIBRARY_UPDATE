@@ -460,7 +460,7 @@ AQLScenarioConfigurationYieldCurveZero::createScenario(AQLDataInstance &dataInst
 	}
 	// set original yield data to yield pro
 	bYieldPro.getYieldData().convertFromString(bYieldDataName);
-	// hirayake data out
+	// data out
 	if (AQLCoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataoutCurve(dataInstance, bYieldPro, ret);

@@ -2,11 +2,6 @@
 
 /*
 * @brief			File to manage the Google Test Case Folder
-* @Created:		    20th February 2017
-* @Author:			Nicholas Burgess
-* @Department:	    Quant Research & Analytics
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
 */
 
 #include "GetGoogleTestFolder.h"
@@ -40,7 +35,6 @@ namespace etrading
 			// GTEST.exe process initializes, even before the main() function is called.
 			//
 			// Write the error message to standard-error and stop the GTEST process cleanly.
-			// 
 			std::cerr << e.getMsg() << std::endl;
 			exit(1);  // Report failure to the caller.
 		}

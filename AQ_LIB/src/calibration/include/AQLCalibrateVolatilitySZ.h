@@ -1,8 +1,6 @@
-// $Id: AQLCalibrateVolatilitySZ.h,v 1.1 2016/10/05 10:51:21 fukuitak Exp $
 /*! @file
     @brief Volatility data create class for Schobel-Zhu
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibrateVolatilitySZ_h
 #define AQLCalibrateVolatilitySZ_h
 #ifdef __GNUG__

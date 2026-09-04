@@ -3,11 +3,6 @@
 /*
  * @brief			Swig Interface file for Bond Curve Fitting
  *					This is used to fit Bond Prices to a curve
- * @Created:		30th August 2018
- * @Author:			Nicholas Burgess
- * @Department:	    AlgoQuantHub Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros

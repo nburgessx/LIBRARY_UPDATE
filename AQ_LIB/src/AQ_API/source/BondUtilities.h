@@ -2,11 +2,6 @@
 
 /* 
  * @brief			Collection of utility methods for Bond Struct Management
- * @Created:		14 March 2016 
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once
@@ -23,7 +18,6 @@ namespace swig
 {
     //
     // Swig utility methods for the Bond Type Methods
-    //
 	swig::NelsonSiegelSvenssonParameters toSwigNelsonSiegelSvenssonParameters( const etrading::NelsonSiegelSvenssonParameters& p );
     etrading::NelsonSiegelSvenssonParameters fromSwigNelsonSiegelSvenssonParameters( const swig::NelsonSiegelSvenssonParameters& p );
 

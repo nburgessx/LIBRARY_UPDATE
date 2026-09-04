@@ -455,7 +455,6 @@
 #define IR_CALIBRATION_DATA_ADDITIONALCALIBGRID	 "AddtionalCalibGrid"		//  data name of IsAffectBaseCurve
 #endif
 
-// The following were merged over from London
 #ifndef IR_CALIBRATION_DATA_EPSILON
 #define IR_CALIBRATION_DATA_EPSILON				"Epsilon"		//  data name of Epsilon
 #endif

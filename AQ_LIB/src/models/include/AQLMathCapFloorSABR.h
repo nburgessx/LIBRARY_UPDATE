@@ -2,7 +2,6 @@
     @brief Class declaration to AQLMathSABR.
 
 */
-//  2009, AlgoQuantHub.
 #ifndef __AQLMATHCAPLETMATRIX_H__
 #define __AQLMATHCAPLETMATRIX_H__
 

@@ -1,7 +1,6 @@
 /*! @file
     @brief Constant data declare file
 */
-//  2007, AlgoQuantHub.
 
 #ifndef AQLDefinitionsFXStrangleSolver_h
 #define AQLDefinitionsFXStrangleSolver_h

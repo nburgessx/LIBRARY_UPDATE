@@ -1,4 +1,3 @@
-// $Id: AQLCalibrateVolatilitySZ.cpp,v 1.2 2008/09/17 23:31:15 hirayake Exp $
 /*! @file
     @brief Volatility data create class for SZ
 */
@@ -27,22 +26,15 @@
 #include "AQLMarketDataHW.h"
 //////////////////////////////////////////////////////// for XLL Plus
 #include "AQLStaticData.h"
-/////////////////////////////////////////////////////////////////////
 
 using namespace std;
 
 // constructor
-/*!
-
-*/
 AQLCalibrateVolatilitySZ::AQLCalibrateVolatilitySZ(void)
 {
 }
 
 // destructor
-/*!
-
-*/
 AQLCalibrateVolatilitySZ::~AQLCalibrateVolatilitySZ(void)
 {
 }

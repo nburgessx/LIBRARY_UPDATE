@@ -1,6 +1,3 @@
-/*!
-    @file AQLMathCorrelationLMMDiscAngle.cpp
-*/
 
 #include "AQLMathCorrelationLMMDiscAngle.h"
 #include "AQLMathCorrelationFuncLMM.h"
@@ -10,14 +7,11 @@
 //
 //////////////////////////////////////////////////////////////////
 ////////// Reduced-rank formulations: Rebonato's angles  /////////
-//////////////////////////////////////////////////////////////////
-//
 AQLMathCorrelationLMMDiscAngle::AQLMathCorrelationLMMDiscAngle()
 : AQLMathCorrelationLMMDisc()
 {
 }
 
-//
 AQLMathCorrelationLMMDiscAngle::AQLMathCorrelationLMMDiscAngle(AQLMathCorrelationFuncLMM*	corr,
 														 const DoubleVector&		T_fix,
 														 size_t						no_factors
@@ -28,7 +22,6 @@ AQLMathCorrelationLMMDisc( corr, T_fix, no_factors )
     if( no_factors > 1 ) mTheta = angleFromFactorLoading(mFactorLoading);
 }
 
-//
 AQLMathCorrelationLMMDiscAngle::AQLMathCorrelationLMMDiscAngle(const DoubleMatrix&	corr_mat_,
 														 const DoubleVector&	T_fix,
 														 size_t					no_factors,
@@ -73,7 +66,6 @@ AQLMathCorrelationLMMDisc( corr_mat_, T_fix, no_factors, full_mat )
     }
 }
 
-//
 AQLMathCorrelationLMMDiscAngle::AQLMathCorrelationLMMDiscAngle(const DoubleMatrix&	factor_loading_,
 														 const DoubleVector&	T_fix,
 														 bool					full_mat
@@ -147,17 +139,13 @@ DoubleMatrix AQLMathCorrelationLMMDiscAngle::angleFromFactorLoading( const Doubl
 		throw AQLCoreInvalidData((msg + msg_file).getCString(), __FILE__, __LINE__);
 	}
 	
-	//
 	double tol = fabs(eps);
 
-	//
 	size_t n = factor_loading_.size();
 	size_t m = factor_loading_[0].size();
 	
-	//
 	DoubleMatrix theta_( n, DoubleVector(m - 1, 0.0) );
 	
-	//
 	for(size_t i = 0; i < n; ++i)
 	{
 		
@@ -172,7 +160,6 @@ DoubleMatrix AQLMathCorrelationLMMDiscAngle::angleFromFactorLoading( const Doubl
 		theta_[i][0] = fabs( mFactorLoading[i][0] ) > 1.0 ? M_PI / 2.0 : acos(mFactorLoading[i][0]);
 		double sin_ = sin(theta_[i][0]);
 		
-		//
 		for(size_t j = 1; j < m - 1; ++j)
 		{
 			if( sin_ == 0.0)
@@ -233,7 +220,6 @@ DoubleMatrix AQLMathCorrelationLMMDiscAngle::angleFromFactorLoading( const Doubl
 
 DoubleMatrix AQLMathCorrelationLMMDiscAngle::factorLoadingFromAngle( const DoubleMatrix& theta_ )
 {
-	//
 	size_t n = theta_.size();
 	size_t m = theta_[0].size();
 

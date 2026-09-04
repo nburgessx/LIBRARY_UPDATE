@@ -2,11 +2,6 @@
 
 /*
  * @brief			Validation of Swap Results
- * @Created:		2nd January 2020
- * @Author:			Nicholas Burgess
- * @Department:		Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 #include "tryAqSwapsResults.h"
 #include "SwapResultsContainer.h"           // incl. SwapResults and SwapResultsContainer

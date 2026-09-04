@@ -1,7 +1,6 @@
 /*! @file
     @brief  Calibration info create class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibrationParametersIRSABR_h
 #define AQLCalibrationParametersIRSABR_h
 

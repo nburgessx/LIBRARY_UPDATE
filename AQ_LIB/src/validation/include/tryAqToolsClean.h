@@ -2,11 +2,6 @@
 
 /*
  * @brief			Functions to clean data to remove rows or columns with blank or error values
- * @Created:		22 September 2017
- * @Author:			Nicholas Burgess
- * @Department:		ISD Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

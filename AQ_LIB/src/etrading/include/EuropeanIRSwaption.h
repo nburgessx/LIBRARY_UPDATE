@@ -2,11 +2,6 @@
 
 /*
 * @brief			European Swaptions
-* @Created:		    5th December 2017
-* @Author:			Nicholas Burgess
-* @Department:	    Quant Research & Analytics
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
 */
 
 #pragma once

@@ -1,8 +1,6 @@
-// $Id: AQLCalibrateModelVolFactor.h,v 1.0 2016/10/11 12:03:18 fukuitak Exp $
 /*! @file
     @brief Volatility factor SDE generator class
 */
-//  2016, AlgoQuantHub.
 #ifndef AQLCalibrateModelVolFactor_h
 #define AQLCalibrateModelVolFactor_h
 #ifdef __GNUG__

@@ -1,7 +1,6 @@
 /*! @file
     @brief Constant data declare file
 */
-//  2007, AlgoQuantHub.
 
 #ifndef AQLDefinitionsLMM_h
 #define AQLDefinitionsLMM_h

@@ -1,7 +1,6 @@
 /*! @file
     @brief LMM Volatility create class for calc risk
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolCreatorLMM_h
 #define AQLRiskConfigurationVolCreatorLMM_h
 #ifdef __GNUG__

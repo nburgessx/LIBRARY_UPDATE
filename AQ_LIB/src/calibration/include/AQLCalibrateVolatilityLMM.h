@@ -1,7 +1,6 @@
 /*! @file
     @brief Volatility data create class for lmm
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibrateVolatilityLMM_h
 #define AQLCalibrateVolatilityLMM_h
 #ifdef __GNUG__

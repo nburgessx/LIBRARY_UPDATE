@@ -2,11 +2,6 @@
 
 /* 
  * @brief			Collection of SetUp Macros and Utilities for the AQ_CLIENT_API
- * @Created:	    21 September 2018
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

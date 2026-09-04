@@ -1,7 +1,6 @@
 /*! @file
     @brief Volatility setup class for calc parallel shift risk 
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolParallel_h
 #define AQLRiskConfigurationVolParallel_h
 #ifdef __GNUG__

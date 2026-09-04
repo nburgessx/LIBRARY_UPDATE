@@ -1,5 +1,4 @@
 /*!
-	@file AQLQuantLibConjugateGradient.cpp
 	@brief a class of optimization method : conjugate gradient method
 		   using external library
 

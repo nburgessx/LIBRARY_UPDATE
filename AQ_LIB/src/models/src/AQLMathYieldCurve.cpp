@@ -1,5 +1,4 @@
 /*!  
-	@file	
     @brief Source code for class to represent YieldCurve.
 
 			Following dataValues are registered automatically to data master<BR>
@@ -1887,7 +1886,6 @@ double AQLMathYieldCurve::getStubRate( const DateVector& fixingDates,
 	*  @param [in]		AQLString			  interpolation
 	*  @param [in]		AQLString			  rollConvention
 	*  @param [in]		AQLString			  slidingRule
-    *
 	*/
 void 
 AQLMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRatePayerSwap,      
@@ -1940,7 +1938,6 @@ AQLMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRat
     //
     // 1. Load Yield Curve Data
     // -------------------------------------------------------------------------------
-    //
     
 
     const AQLObject& YieldData       = getYieldData().get().get();
@@ -1977,7 +1974,6 @@ AQLMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRat
     //
     // 2. Calculate Fixed Leg Vales
     // -------------------------------------------------------------------------------
-    //
     
 
     DoubleArray fixedLegAccrualDateYearFractions( fixedAccrualDates.size() -1 );
@@ -1999,7 +1995,6 @@ AQLMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRat
     //
     // 3. Calculate Floating Leg Values
     // -------------------------------------------------------------------------------
-    //
 	
 
     AQLString            freq_forecast       = ""; 
@@ -2150,7 +2145,6 @@ AQLMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRat
     //
     // 4. PV and Duration Parameters
     // -------------------------------------------------------------------------------
-    //
 	
 
     double fixedLegTimeWeightedPVs                  = 0.0;
@@ -2162,7 +2156,6 @@ AQLMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRat
     //
     // Fixed Leg
     // Note:    All the date vectors have an extra date for the start date, so dates index using i and other parameters i-1
-    //
 
     for( size_t i = 1; i < fixedAccrualDates.size(); i++ ) 
     {
@@ -2187,7 +2180,6 @@ AQLMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRat
     // Float Leg 
     // Note:    All the date vectors have an extra date for the start date, so dates index using j and other parameters j-1
     //          For the Fixing Dates however we need to use j-1 as an index to capture the start date fixing
-    //
 
     for( size_t j = 1; j < floatAccrualDates.size(); j++ )
 	{			
@@ -2214,7 +2206,6 @@ AQLMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRat
     //
     // 5. Calculate Swap Par Rates
     // -------------------------------------------------------------------------------
-    //
     
     swapParRateTrade_                           = ( notional * AnnuityFixed_ == 0.0 ) ? 0.0 : floatLegPV_ / AnnuityFixed_;
     swapParRateMarket_                          = ( notional * AnnuityFixed_ == 0.0 ) ? 0.0 : floatLegPVExcludingSpread_ / AnnuityFixed_;
@@ -2223,14 +2214,12 @@ AQLMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRat
     //
     // 6. Calculate Macaulay's & Modified Duration Values ( by leg )
     // -------------------------------------------------------------------------------
-    //
     
     // Note: Macaulay's Duration Swap excluding Spread is used to evaluate the swap duration which is being priced as
     // Swap PV = Notional * [ ( Fixed Rate - Par Rate ) * Annuity(Fixed) - Spread * Annuity(Float) ]
     //
     // There Macaulay's Duration Swap must evaluate the time adjusted coupons from the fixed leg and float leg (excluding spread)
     // since the floating leg is considered a fixed leg with it's fixed rate being the swap par rate.
-    //
 
     macaulaysDurationSwapExcludingSpread_       = ( fixedLegPV_ - floatLegExcludingSpreadTimeWeightedPVs == 0.0 ) ? 0.0 
         : ( fixedLegTimeWeightedPVs - floatLegExcludingSpreadTimeWeightedPVs ) / ( fixedLegPV_ - floatLegPVExcludingSpread_ );
@@ -2254,7 +2243,6 @@ AQLMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRat
     //
     // 7. Calculate PV & Risk Totals
     // -------------------------------------------------------------------------------
-    //
     
     // payRecIndicator is an indicator function, taking a value of 1 for a receiver swap and -1 for a payer swap
     // i.e. payRecIndicator = 1 when receiving fixed coupons and -1 when paying fixed coupons
@@ -2324,7 +2312,6 @@ AQLMathYieldCurve::getParRate( const DateVector& fixedAccrualDates,
 	
     //
     // Calculate Fixed Leg Annuity value using client specified daycount convention
-    //
     double annuity = getAnnuity( fixedAccrualDates, fixedPaymentDates, fixedLegDaycount );
 	
 	// Calculate the floating coupon accrual periods
@@ -2394,7 +2381,6 @@ AQLMathYieldCurve::getParRate( const DateVector& fixedAccrualDates,
 	{		
 		//
 		// Calculate Floating Leg Value
-		//
 		if (foreCurveName != dfCurveName)
 		{
 			AQLString            freq_forecast = ""; 
@@ -2566,12 +2552,10 @@ AQLMathYieldCurve::getSwapPV( const bool&            isFixedRatePayerSwap,
 	
     //
     // Calculate Fixed Leg Annuity value using client specified daycount convention
-    //
     const double annuity = getAnnuity( fixedAccrualDates, fixedPaymentDates, fixedLegDaycount );
 	
     //
     // Calculate Floating Leg Values
-    //
 	AQLString            freq_forecast       = ""; 
 	AQLPriceDataCalendar      cal_forecast; 
 	AQLPriceDataSlidingRule   sld_forecast; 
@@ -2884,7 +2868,6 @@ AQLMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
     //
     // Calculate Fixed Leg Annuity value using client specified daycount convention
     // Note: We deduct accrued interest when working with a dirty bond price
-    //
 
     // Asset Swap Calculations and Accrued Interest
     // --------------------------------------------
@@ -2894,7 +2877,6 @@ AQLMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
 	
     //
     // Calculate Floating Leg Values
-    //
 	AQLString            freq_forecast       = ""; 
 	AQLPriceDataCalendar      cal_forecast; 
 	AQLPriceDataSlidingRule   sld_forecast; 
@@ -3000,7 +2982,6 @@ AQLMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
 
     //
     // Asset Swap Spread Parameter Specification
-    //
 	double          swapSpread                  = 0.0;
     double          fixedLegPV                  = 0.0;
     double          floatLegPV                  = 0.0;
@@ -3010,12 +2991,10 @@ AQLMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
 
     //
     // Fixed Leg PV
-    //
     fixedLegPV                                  = fixedRate * fixedAnnuity;
 
     //
     // Float Leg PV
-    //
     for( size_t i = 1; i < floatAccrualDates.size(); i++ )
 	{			
 		double floatRate                        = rates[i-1];
@@ -3029,13 +3008,11 @@ AQLMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
 
     //
     // Par Par Adjustment
-    //
     const double Par                            = 100.0;
     parParAdjustmentInPercent                   = ( Par - bondPrice ) / 100.0;
 
     //
     // Asset Swap Spread
-    //
     if ( floatAnnuity == 0 )
         throw AQLCoreInvalidData("#Error: Floating schedule error. The float leg annuity value cannot be zero.", __FILE__, __LINE__ );
 

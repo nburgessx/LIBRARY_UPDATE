@@ -2,11 +2,6 @@
 
 /*
  * @brief			Curve Description Class
- * @Created:		15th July 2019
- * @Author:			Nicholas Burgess
- * @Department:		Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 #include "CurveDescription.h"
 #include "ExceptionMacros.h"

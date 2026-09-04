@@ -1,7 +1,6 @@
 /*! @file
     @brief Cap vega  setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolCapVega_h
 #define AQLRiskConfigurationVolCapVega_h
 #ifdef __GNUG__

@@ -1,8 +1,6 @@
-// $Id: AQLMarketData.h,v 1.5 2008/07/03 12:03:18 hirayake Exp $
 /*! @file
     @brief  M-Library Market util class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLFileUtils_h
 #define AQLFileUtils_h
 

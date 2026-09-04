@@ -1,4 +1,3 @@
-// $Id: AQLMarketData.cpp,v 1.6 2008/07/14 10:42:25 hirayake Exp $
 /*! @file
     @brief M-Library Market data util class
 */
@@ -14,22 +13,15 @@
 #include "AQLCoreDataService.h"
 #include "AQLString.h"
 // constructor
-/*!
-
-*/
 AQLFileUtils::AQLFileUtils(void)
 {
 }
 
 // destructor
-/*!
-
-*/
 AQLFileUtils::~AQLFileUtils(void)
 {
 }
 
-// 
 /*!
     @brief number attached fileName
 

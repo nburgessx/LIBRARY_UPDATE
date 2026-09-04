@@ -1,7 +1,6 @@
 /*! @file
     @brief Yield risk setup class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYield_h
 #define AQLRiskConfigurationYield_h
 #ifdef __GNUG__

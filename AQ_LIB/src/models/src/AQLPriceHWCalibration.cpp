@@ -1,4 +1,3 @@
-//  2008, AlgoQuantHub.
 
 #ifdef __GNUG__
 #pragma implementation

@@ -1,7 +1,6 @@
 /*! @file
     @brief Risk Scenario create class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfiguration_h
 #define AQLScenarioConfiguration_h
 

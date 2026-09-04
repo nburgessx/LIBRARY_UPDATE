@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLCalibrateVolatility manager class 
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibrateVolatilityManager_h
 #define AQLCalibrateVolatilityManager_h
 #ifdef __GNUG__

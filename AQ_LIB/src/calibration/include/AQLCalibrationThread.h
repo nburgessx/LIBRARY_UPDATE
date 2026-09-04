@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLCalibrationThread class 
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibrationThread_h
 #define AQLCalibrationThread_h
 #ifdef __GNUG__

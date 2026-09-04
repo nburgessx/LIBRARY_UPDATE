@@ -1,7 +1,6 @@
 /*! @file
     @brief Risk setup class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfiguration_h
 #define AQLRiskConfiguration_h
 #ifdef __GNUG__

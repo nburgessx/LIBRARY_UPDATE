@@ -8,7 +8,6 @@
 	the data you set just before is destroyed.
 
 */
-//  3rd April 2017 Miuhzo Interational London
 
 #ifdef __GNUG__
 #pragma interface

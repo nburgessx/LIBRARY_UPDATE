@@ -1,5 +1,4 @@
 /*! 
-	@file
     @brief  Class declaration to represent YieldCurve.
 
 */
@@ -544,9 +543,7 @@ public:
     virtual void        remove(const AQLString& dataName);
 	// Initialize this Object.
 	virtual void		reset(void);
-	//	 
 	void				setCurveType(const AQLString &curveType);
-	//	 
 	void				setBasisCurveType(const AQLString &basisCurveType);
 	// !
 	void				setCurveNameAndInterpolation(const AQLString &curveName, const AQLString &interpolation);
@@ -641,7 +638,6 @@ public:
 	*  @param [in]		AQLString			  interpolation
 	*  @param [in]		AQLString			  rollConvention
 	*  @param [in]		AQLString			  slidingRule
-    *
 	*/
     void calculateSwapPriceAndRisk( const bool             isFixedRatePayerSwap,      
                                     const double           notional,                  

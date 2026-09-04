@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLRiskConfigurationVolCreator manager class 
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolCreatorManager_h
 #define AQLRiskConfigurationVolCreatorManager_h
 #ifdef __GNUG__

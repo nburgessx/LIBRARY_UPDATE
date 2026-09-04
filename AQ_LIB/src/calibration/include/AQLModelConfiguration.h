@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLCalibrateModel manager class 
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLModelConfiguration_h
 #define AQLModelConfiguration_h
 #ifdef __GNUG__

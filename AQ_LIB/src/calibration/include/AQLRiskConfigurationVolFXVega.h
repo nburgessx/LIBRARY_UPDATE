@@ -1,7 +1,6 @@
 /*! @file
     @brief FX vega setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolFXVega_h
 #define AQLRiskConfigurationVolFXVega_h
 #ifdef __GNUG__

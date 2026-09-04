@@ -2,11 +2,6 @@
 
 /* 
  * @brief			Swig interface for aqObjBondsPrice... functions
- * @Created:		25th June 2018
- * @Author:			Nicholas Burgess
- * @Department:		Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #include "aqObjBondsPrice.h"

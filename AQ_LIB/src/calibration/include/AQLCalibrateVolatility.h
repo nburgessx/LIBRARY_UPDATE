@@ -1,7 +1,6 @@
 /*! @file
     @brief  Volatility data create class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibrateVolatility_h
 #define AQLCalibrateVolatility_h
 

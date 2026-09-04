@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLLinearRatesVolatilityManager manager class 
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLLinearRatesVolatilityManager_h
 #define AQLLinearRatesVolatilityManager_h
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)

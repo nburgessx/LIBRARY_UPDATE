@@ -2,7 +2,6 @@
     @brief Class declaration to AQLMathDisplacedHeston.
 
 */
-//  2009, AlgoQuantHub.
 
 #ifdef __GNUG__
 #pragma implementation

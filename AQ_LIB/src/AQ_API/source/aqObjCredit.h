@@ -3,11 +3,6 @@
 /*
  * @brief			Swig Interface file for Credit Model
  *					This is used to calibrate credit curves and price CDS / TRS
- * @Created:		19th September 2018
- * @Author:			Nicholas Burgess
- * @Department:	    AlgoQuantHub Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

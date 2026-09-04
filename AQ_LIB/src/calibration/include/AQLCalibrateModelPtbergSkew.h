@@ -1,7 +1,6 @@
 /*! @file
     @brief Ptberg SDE generator class. The SDE includes skew.
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLCalibrateModelPtbergSkew_h
 #define AQLCalibrateModelPtbergSkew_h
 #ifdef __GNUG__

@@ -3,7 +3,6 @@
 
 
 */
-//  2009, AlgoQuantHub.
 
 
 #ifdef __GNUG__

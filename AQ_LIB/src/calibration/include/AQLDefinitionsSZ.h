@@ -1,8 +1,6 @@
-// $Id: AQLDefinitionsSZ.h,v 1.6 2008/07/03 12:03:18 hirayake Exp $
 /*! @file
     @brief Constant data declare file
 */
-//  2007, AlgoQuantHub.
 
 #ifndef AQLDefinitionsSZ_h
 #define AQLDefinitionsSZ_h

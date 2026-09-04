@@ -1,7 +1,6 @@
 /*! @file
     @brief CreditSpreadDelta risk setup class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationCreditSpreadDelta_h
 #define AQLRiskConfigurationCreditSpreadDelta_h
 #ifdef __GNUG__

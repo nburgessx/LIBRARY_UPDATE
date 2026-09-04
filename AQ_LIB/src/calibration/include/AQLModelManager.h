@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLModelSetup manager class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLMasterRegistManager_h
 #define AQLMasterRegistManager_h
 #ifdef __GNUG__

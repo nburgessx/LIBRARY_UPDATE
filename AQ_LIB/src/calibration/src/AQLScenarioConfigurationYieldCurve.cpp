@@ -650,7 +650,7 @@ AQLScenarioConfigurationYieldCurve::createScenario(AQLDataInstance &dataInstance
 
 	bYieldPro.AQLObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
 
-	// hirayake data out
+	// data out
 	if (AQLCoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataoutCurve(dataInstance, bYieldPro, ret);

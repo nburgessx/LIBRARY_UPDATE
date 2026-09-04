@@ -2,11 +2,6 @@
 
 /*
 * @brief			validation interface for European IR Swaption method(s)
-* @Created:		    06 December 2017
-* @Author:			Nicholas Burgess
-* @Department:		ISD Front Office Development
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
 */
 
 #pragma once

@@ -1,7 +1,6 @@
 /*! @file
     @brief FX Risk Scenario create class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfigurationFX_h
 #define AQLScenarioConfigurationFX_h
 #ifdef __GNUG__

@@ -1,12 +1,5 @@
 //
-// @File: CoreEnumerations.h
 // @Description: This file as has all the essential enums for handling objects
-// @Created: 27 Feb 2016
-// @Author: Hans Roggeman
-// @Department: ISO Front Office Development
-//
-// The copyright to the computer program(s) herein
-// is the property of AlgoQuantHub.
 
 #pragma once
 
@@ -626,7 +619,6 @@ namespace etrading
 	// NOTE: Be careful to test if you intend to use negative enums
 	// i.e. enums which do not start at 0.
 	// Testing shows this /should/ work: the enum value is mapped to SIZE_MAX + ( negative value )
-	//
 	struct EnumClassHash
 	{
 		template <typename T>

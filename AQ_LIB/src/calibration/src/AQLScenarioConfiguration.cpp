@@ -181,7 +181,7 @@ AQLScenarioConfiguration::createScenarioForeignYield(AQLDataInstance &dataInstan
 		ret.push_back(cYield);
 	}
 
-	// hirayake data out
+	// data out
 	if (AQLCoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataoutCurve(dataInstance, bYieldPro, ret);
@@ -290,7 +290,7 @@ AQLScenarioConfiguration::createScenarioCollateralYield(AQLDataInstance &dataIns
 			ret.push_back(cYield);
 	}
 
-	// hirayake data out
+	// data out
 	if (AQLCoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataoutCurve(dataInstance, bYieldPro, ret);

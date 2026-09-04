@@ -4,7 +4,6 @@
 This class derives from AQLBlackScholesBaseMethod
 
 */
-//  2010, AlgoQuantHub.
 
 #ifdef __GNUG__
 #pragma implementation

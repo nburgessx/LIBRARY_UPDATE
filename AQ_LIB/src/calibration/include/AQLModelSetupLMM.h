@@ -1,7 +1,6 @@
 /*! @file
     @brief LMM Master data regist class
 */
-//  2007, AlgoQuantHub.
 #ifndef  AQLModelSetupLMM_h
 #define  AQLModelSetupLMM_h
 #ifdef __GNUG__

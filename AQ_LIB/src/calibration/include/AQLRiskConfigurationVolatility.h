@@ -1,7 +1,6 @@
 /*! @file
     @brief   Volatility setup class for calc risk
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolatility_h
 #define AQLRiskConfigurationVolatility_h
 #ifdef __GNUG__

@@ -4,11 +4,6 @@
  * @brief			Method to Test the Utility Methods used to interact with the AQObj InfoBlock
  *                  The InfoBlock is a tuple containing 1) vector of column names 2) vector of column enum types
  *                  e.g. STRING, INTEGER, DOUBLE, VARIANT and a data matrix of type variant.
- * @Created:		20th September 2018
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #include <gTest/gTest.h>            // Google Test Library

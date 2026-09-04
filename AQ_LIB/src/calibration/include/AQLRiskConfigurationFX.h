@@ -1,7 +1,6 @@
 /*! @file
     @brief   FX setup class for calc risk
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationFX_h
 #define AQLRiskConfigurationFX_h
 #ifdef __GNUG__

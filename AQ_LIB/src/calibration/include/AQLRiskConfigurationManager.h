@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLRiskConfiguration manager class 
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationManager_h
 #define AQLRiskConfigurationManager_h
 #ifdef __GNUG__

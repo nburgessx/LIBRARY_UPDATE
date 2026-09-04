@@ -271,9 +271,9 @@ namespace etrading
 	{
 		std::ifstream ifs( CONFIG_FILE_PATH.getCString() );
 		if ( !ifs.is_open() )
-			ifs.open( CONFIG_FILE_PATH2.getCString() ); // Alternative Config File Path for London
+			ifs.open( CONFIG_FILE_PATH2.getCString() ); // Alternative config file path
 		if ( !ifs.is_open() )
-			ifs.open( createFilePath( NULL, &CONFIG_FILE_NAME ).getCString() ); // Alternative Config File Path for London
+			ifs.open( createFilePath( NULL, &CONFIG_FILE_NAME ).getCString() ); // Alternative config file path
 		if ( !ifs.is_open() )
 			return;
 

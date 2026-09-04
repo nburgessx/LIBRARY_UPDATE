@@ -1,7 +1,6 @@
 /*! @file
     @brief  DataInstance setup class for calc PV
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLDataInstanceConfigurationPV_h
 #define AQLDataInstanceConfigurationPV_h
 #ifdef __GNUG__

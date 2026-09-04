@@ -2,11 +2,6 @@
 
 /*
  * @brief			Tests to validate the AQLSplineInterpolation Class
- * @Created:		26th March 2020
- * @Author:			Arthur Wu
- * @Department:		AlgoQuantHub London Quant Research
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 // Include: Google Test Library

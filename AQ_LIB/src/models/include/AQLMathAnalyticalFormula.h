@@ -115,7 +115,6 @@ public:
 			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 
-		//hirayake
 		//if ( stdDev_LN == 0. || mean_LN <= 0 || margin <= 0 )
 		if ( stdDev_LN == 0.0 || (mean_LN <= 0.0 && margin >= 0.0) || (mean_LN >= 0.0 && margin <= 0.0))
 		{

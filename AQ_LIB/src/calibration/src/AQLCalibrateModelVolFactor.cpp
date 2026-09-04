@@ -1,4 +1,3 @@
-// $Id: AQLCalibrateModelVolFactor.cpp,v 1.4 2016/10/11 10:51:51 fukuitak Exp $
 /*! @file
     @brief Volatility factor sde generator class
 */
@@ -23,24 +22,17 @@
 using namespace std;
 
 // constructor
-/*!
-
-*/
 AQLCalibrateModelVolFactor::AQLCalibrateModelVolFactor(void)
 :AQLCalibrateModel()
 {
 }
 
 // destructor
-/*!
-
-*/
 AQLCalibrateModelVolFactor::~AQLCalibrateModelVolFactor(void)
 {
 }
 
 
-// 
 /*!
     @brief create sde instance
 
@@ -79,7 +71,6 @@ AQLCalibrateModelVolFactor::setNumeraire(const AQLString &vola, AQLRatesSDEBase 
 	(void)sde;
 }
 
-// 
 /*!
     @brief set path
 
@@ -93,7 +84,6 @@ AQLCalibrateModelVolFactor::setOutputTemplate(const AQLString &vola, AQLRatesSDE
 	sde.setOutputTemplate(new AQLRatesPathElementScalar());
 }
 
-// 
 /*!
     @brief set setInterpolationMethod
 
@@ -107,7 +97,6 @@ AQLCalibrateModelVolFactor::setInterpolationMethod(const AQLString &vola, AQLRat
 	sde.setInterpolationMethod(new AQLRatesScalarLinearInterpolation());
 }
 
-// 
 /*!
     @brief generate sde market data
 
@@ -135,7 +124,6 @@ cout << "-> time = " << time << endl;
 }
 
 
-// 
 /*!
     @brief get SDE data name
 
@@ -161,8 +149,6 @@ AQLCalibrateModelVolFactor::getSDEAttrName(const AQLString &vola) const
 //	AQLString ccy(getSpotIndex(vola));
 //	return AQLCalibrateModel::isCancelForFunding(ccy);
 //}
-//
-// 
 /*!
     @brief get spot index name function
 

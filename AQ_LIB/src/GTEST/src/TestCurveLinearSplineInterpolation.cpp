@@ -2,11 +2,6 @@
 
 /*
  * @brief			Tests to validate the LinearSplineInterpolation Class
- * @Created:		31st March 2020
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub London Quant Research
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 // Include: Google Test Library

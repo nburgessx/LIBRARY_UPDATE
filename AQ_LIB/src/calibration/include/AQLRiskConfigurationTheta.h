@@ -1,7 +1,6 @@
 /*! @file
     @brief Theta risk setup class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationTheta_h
 #define AQLRiskConfigurationTheta_h
 #ifdef __GNUG__

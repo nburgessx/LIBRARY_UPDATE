@@ -1,7 +1,6 @@
 /*! @file
     @brief IR Delta setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYieldBasisAnalytic_h
 #define AQLRiskConfigurationYieldBasisAnalytic_h
 #ifdef __GNUG__

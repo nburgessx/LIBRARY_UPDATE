@@ -2,11 +2,6 @@
 
 /* 
  * @brief			Swig interface for aqToolsLVB
- * @Created:		27th June 2016
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

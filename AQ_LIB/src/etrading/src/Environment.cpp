@@ -1,11 +1,3 @@
-//
-// @File: Environment.cpp
-// @Created: 27 Feb 2016
-// @Author: Hans Roggeman
-// @Department: ISO Front Office Development
-//
-// The copyright to the computer program(s) herein
-// is the property of AlgoQuantHub.
 
 
 
@@ -42,7 +34,6 @@ namespace etrading
     std::pair<std::string, CachedObjectEnum> Environment::deSerializeFromJSON( const serialize::SerializationTargetEnum targetType,
                                                                                const std::string& jsonStringOrFileName )
     {
-        // 
 
         // Ensure the file extension is included in the targetInfo file name.
         // ------------------------------------------------------------------

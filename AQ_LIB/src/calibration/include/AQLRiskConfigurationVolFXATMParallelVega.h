@@ -1,7 +1,6 @@
 /*! @file
     @brief FX atm parallel vega setup class 
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolFXATMParallelVega_h
 #define AQLRiskConfigurationVolFXATMParallelVega_h
 #ifdef __GNUG__

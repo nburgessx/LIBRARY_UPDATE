@@ -1,7 +1,6 @@
 /*! @file
     @brief HW Master data regist class
 */
-//  2008, AlgoQuantHub.
 #ifndef  AQLModelSetupHW_h
 #define  AQLModelSetupHW_h
 #ifdef __GNUG__

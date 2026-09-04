@@ -1,5 +1,4 @@
 /*!
-    @file AQLMathCorrelationLMM.cpp
     @brief Implements Correlation and its related classes.
 */
 
@@ -7,7 +6,6 @@
 #include "AQLMathCorrelationFuncLMM.h"
 #include "AQLEigenSystems.h"
 
-//
 AQLMathCorrelationLMM::AQLMathCorrelationLMM()
 :
 mCorr(0),
@@ -18,7 +16,6 @@ mCloned( false )
     mUnity.resize( mNoFactors, 1 );
 }
 
-//
 AQLMathCorrelationLMM::AQLMathCorrelationLMM( const vector<double>&	T_fix_,
 										size_t					no_factors_
 										)
@@ -32,7 +29,6 @@ mCloned( false )
     mUnity.resize( mNoFactors, 1 );
 }
 
-//
 AQLMathCorrelationLMM::AQLMathCorrelationLMM( AQLMathCorrelationFuncLMM*	corr_,
 										const vector<double>&	T_fix_,
 										size_t					no_factors_
@@ -45,7 +41,6 @@ mCloned( false )
     mUnity.resize( mNoFactors, 1 );
 }
 
-//
 AQLMathCorrelationLMM::AQLMathCorrelationLMM( const AQLMathCorrelationLMM& rhs )
 : mCorr( rhs.mCorr != 0 ? dynamic_cast<AQLMathCorrelationFuncLMM*>(rhs.mCorr->clone()) : 0 ),
 mT_fix( rhs.mT_fix ),
@@ -55,7 +50,6 @@ mCloned( true )
 {
 }
 
-//
 AQLMathCorrelationLMM::~AQLMathCorrelationLMM()
 {
     if ( mCloned )
@@ -65,7 +59,6 @@ AQLMathCorrelationLMM::~AQLMathCorrelationLMM()
     }
 }
 
-//
 AQLMathCorrelationLMM& AQLMathCorrelationLMM::operator =(const AQLMathCorrelationLMM& rhs)
 {
     if ( this != &rhs )

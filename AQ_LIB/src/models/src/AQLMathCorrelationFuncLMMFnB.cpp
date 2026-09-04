@@ -4,7 +4,6 @@
 	This class derives from AQLMathCorrelationFuncLMM
 
 */
-//  2007, AlgoQuantHub.
 
 
 #ifdef __GNUG__

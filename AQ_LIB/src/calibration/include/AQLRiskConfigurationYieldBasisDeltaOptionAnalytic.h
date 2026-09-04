@@ -1,7 +1,6 @@
 /*! @file
     @brief FX vega setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYieldBasisDeltaOptionAnalytic_h
 #define AQLRiskConfigurationYieldBasisDeltaOptionAnalytic_h
 #ifdef __GNUG__

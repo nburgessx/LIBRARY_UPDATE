@@ -2,7 +2,6 @@
     @brief inplementation of sobol random number
 */
 
-//  2009, AlgoQuantHub.
 
 
 

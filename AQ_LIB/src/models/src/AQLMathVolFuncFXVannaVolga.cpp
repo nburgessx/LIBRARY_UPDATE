@@ -4,7 +4,6 @@
 	This class derives from AQLFunctionBase
 
 */
-//  2011, AlgoQuantHub.
 
 
 #ifdef __GNUG__

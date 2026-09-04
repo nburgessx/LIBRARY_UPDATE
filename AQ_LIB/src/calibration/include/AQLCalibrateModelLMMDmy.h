@@ -1,7 +1,6 @@
 /*! @file
     @brief LMM Dmy sde generator class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLCalibrateModelLMMDmy_h
 #define AQLCalibrateModelLMMDmy_h
 #ifdef __GNUG__

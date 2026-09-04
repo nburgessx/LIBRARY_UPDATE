@@ -44,7 +44,6 @@ namespace google_test
     {
         try
         {
-            // Bert is Ian Castleton's Alter-Ego and a very scary man!
             AQLString myString("BERT");
             size_t totalStringSize = 0;
         

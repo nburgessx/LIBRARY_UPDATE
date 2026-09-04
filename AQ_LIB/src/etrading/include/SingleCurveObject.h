@@ -3,13 +3,7 @@
 #pragma once
 
 /*
- * @File: SingleCurveObject.h
  * @brief: This class represents the curve object used to represent curve inputs which can be stored in the AQObj object cache
- * @Created: 17 July 2017
- * @Author: Ian Castleton
- * @Department: ISO Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 

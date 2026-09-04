@@ -1,7 +1,6 @@
 /*! @file
     @brief FXVanilla sde generator class
 */
-//  2011, AlgoQuantHub.
 #ifndef AQLCalibrateModelFXVannaVolga_h
 #define AQLCalibrateModelFXVannaVolga_h
 #ifdef __GNUG__

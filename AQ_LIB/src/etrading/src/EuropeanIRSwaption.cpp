@@ -2,11 +2,6 @@
 
 /*
 * @brief			European Swaptions
-* @Created:		    5th December 2017
-* @Author:			Nicholas Burgess
-* @Department:	    Quant Research & Analytics
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
 */
 
 #include "EuropeanIRSwaption.h"
@@ -189,7 +184,6 @@ namespace etrading
             // 
             // *** IMPORTANT *** 
             // Must include a dummy parameter before or after the 'this' parameter in the capture list to resolve a msvcc compiler bug relating to lambda functions
-            //
             auto targetFunction = [targetPrice, this]( const double & inputVol )
             {
 			    // When using the toms748 solver we must subtract the targetPrice from the result so that

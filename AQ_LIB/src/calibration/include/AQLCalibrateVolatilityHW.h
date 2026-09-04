@@ -1,7 +1,6 @@
 /*! @file
     @brief Volatility data create class for hw
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibrateVolatilityHW_h
 #define AQLCalibrateVolatilityHW_h
 #ifdef __GNUG__

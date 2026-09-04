@@ -1,5 +1,4 @@
 /*!
-    @file AQLMathCorrelationLMMDisc.cpp
     @brief Implements Correlation and its related classes.
 */
 
@@ -13,7 +12,6 @@ AQLMathCorrelationLMMDisc::AQLMathCorrelationLMMDisc()
 {
 }
 
-//
 AQLMathCorrelationLMMDisc::AQLMathCorrelationLMMDisc(AQLMathCorrelationFuncLMM*	corr,
 											   const DoubleVector&		T_fix,
 											   size_t					no_factors
@@ -24,7 +22,6 @@ mCorrMat( AQLEigenSystems::factorloading2corre( mFactorLoading ) )
 {
 }
 
-//
 AQLMathCorrelationLMMDisc::AQLMathCorrelationLMMDisc(const DoubleMatrix&	corr_mat_,
 											   const DoubleVector&	T_fix,
 											   size_t				no_factors,
@@ -67,7 +64,6 @@ AQLMathCorrelationLMMDisc::AQLMathCorrelationLMMDisc(const DoubleMatrix&	corr_ma
     }
 }
 
-//
 AQLMathCorrelationLMMDisc::AQLMathCorrelationLMMDisc(const DoubleMatrix&	factor_loading_,
 											   const DoubleVector&	T_fix,
 											   bool					full_mat
@@ -107,7 +103,6 @@ mFactorLoading( factor_loading_ )
     }
 }
 
-//
 AQLMathCorrelationLMMDisc::AQLMathCorrelationLMMDisc(const DoubleMatrix& factor_loading_,
 											   const DoubleVector& T_fix
                              )
@@ -121,7 +116,6 @@ mFactorLoading( factor_loading_ )
     mCorrMat = AQLEigenSystems::factorloading2corre( mFactorLoading );
 }
 
-//
 AQLMathCorrelationLMMDisc::AQLMathCorrelationLMMDisc(	const AQLMathCorrelationLMMDisc& rhs )
 : AQLMathCorrelationLMM( rhs ),
 mFactorLoading( rhs.mFactorLoading ),
@@ -129,7 +123,6 @@ mCorrMat( rhs.mCorrMat )
 {
 }
 
-//
 double AQLMathCorrelationLMMDisc::get(double t, size_t p, size_t q)
 {
     if ( mNoFactors == 1 || p == q) return 1;
@@ -137,7 +130,6 @@ double AQLMathCorrelationLMMDisc::get(double t, size_t p, size_t q)
     return get( AQLModelUtilities::getIndex(t, mT_fix), p, q );
 }
 
-//
 DoubleVector AQLMathCorrelationLMMDisc::getFactors(double t, size_t p)
 {
     if ( mNoFactors == 1 ) return mUnity;
@@ -145,7 +137,6 @@ DoubleVector AQLMathCorrelationLMMDisc::getFactors(double t, size_t p)
     return getFactors( AQLModelUtilities::getIndex(t, mT_fix), p );
 }
 
-//
 double AQLMathCorrelationLMMDisc::get(size_t s, size_t p, size_t q)
 {
     if ( mNoFactors == 1 || p == q) return 1;
@@ -161,7 +152,6 @@ double AQLMathCorrelationLMMDisc::get(size_t s, size_t p, size_t q)
     return mCorrMat[p - s][q - s];
 }
 
-//
 DoubleVector AQLMathCorrelationLMMDisc::getFactors(size_t s, size_t p)
 {
     if ( mNoFactors == 1 ) return mUnity;

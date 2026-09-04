@@ -2,7 +2,6 @@
 /*! Implements a cost function using the interface provided by
     the LeastSquareProblem class.
 */
-//  2012, AlgoQuantHub.
 #ifndef AQLMathHybridHWLVUtil_h
 #define AQLMathHybridHWLVUtil_h
 

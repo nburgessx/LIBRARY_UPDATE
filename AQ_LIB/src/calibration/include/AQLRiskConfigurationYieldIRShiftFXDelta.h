@@ -1,7 +1,6 @@
 /*! @file
     @brief  YieldShift FX shift delta setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYieldIRShiftFXDelta_h
 #define AQLRiskConfigurationYieldIRShiftFXDelta_h
 #ifdef __GNUG__

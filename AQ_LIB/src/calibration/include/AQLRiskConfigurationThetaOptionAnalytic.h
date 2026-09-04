@@ -1,7 +1,6 @@
 /*! @file
     @brief  FX delta setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationThetaOptionAnalytic_h
 #define AQLRiskConfigurationThetaOptionAnalytic_h
 #ifdef __GNUG__

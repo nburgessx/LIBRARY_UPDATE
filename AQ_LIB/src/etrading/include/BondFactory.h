@@ -2,11 +2,6 @@
 
 /*
  * @brief			Bond Factory to Create Bond AQObj objects
- * @Created:		3rd February 2017
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

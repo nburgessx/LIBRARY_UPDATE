@@ -1,7 +1,6 @@
 /*! @file
     @brief  sde generator class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLCalibrateModel_h
 #define AQLCalibrateModel_h
 #ifdef __GNUG__

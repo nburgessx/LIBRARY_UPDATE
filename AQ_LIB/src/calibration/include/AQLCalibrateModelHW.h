@@ -1,7 +1,6 @@
 /*! @file
     @brief Hull-White sde generator class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLCalibrateModelHW_h
 #define AQLCalibrateModelHW_h
 #ifdef __GNUG__

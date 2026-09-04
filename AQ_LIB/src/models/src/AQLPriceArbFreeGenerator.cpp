@@ -1,9 +1,7 @@
 /*! 
-	@file
     @brief Class declaration to Generate ArbitrageFreeCurve.
 
 */
-//  2009, AlgoQuantHub.
 #ifdef __GNUG__
 #pragma implementation
 #else

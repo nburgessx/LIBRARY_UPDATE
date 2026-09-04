@@ -1,7 +1,6 @@
 /*! @file
     @brief  Value print class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLValuePrinter_h
 #define AQLValuePrinter_h
 

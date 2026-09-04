@@ -1,12 +1,5 @@
 //
-// @File: DateUtilities.cpp
 // @Description: This is a test program
-// @Created: 27 Feb 2016
-// @Author: Hans Roggeman
-// @Department: ISO Front Office Development
-//
-// The copyright to the computer program(s) herein
-// is the property of AlgoQuantHub.
 
 
 // Includes: Standard Library
@@ -309,7 +302,7 @@ namespace etrading
         {
 
             // this is the incorrect implementation of this day count but we need
-            // an incorrect implementation to match AlgoQuantLib (this was requested with full knowledge of the trading desk, tokyo quants, etc. cfr. Nicholas Burgess)
+            // an incorrect implementation to match AlgoQuantLib
 
             boost::gregorian::date nextYear( input.year() + 1, 1, 1 );
             auto daysToEndOfYear = daysBetween( input, nextYear );
@@ -346,7 +339,7 @@ namespace etrading
 
             /*
             // this is the correct implementation of this day count but we need
-            // an incorrect implementation to match AlgoQuantLib (this was requested with full knowledge of the trading desk, tokyo quants, etc. cfr. Nicholas Burgess)
+            // an incorrect implementation to match AlgoQuantLib
 
             double fractionLeft = yearFraction;
             boost::gregorian::date iteratorDate = input;

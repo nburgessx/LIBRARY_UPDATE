@@ -1,7 +1,6 @@
 /*! @file
     @brief Calibration data declare file
 */
-//  2008, AlgoQuantHub.
 
 #ifndef AQLDefinitionsCalibration_h
 #define AQLDefinitionsCalibration_h

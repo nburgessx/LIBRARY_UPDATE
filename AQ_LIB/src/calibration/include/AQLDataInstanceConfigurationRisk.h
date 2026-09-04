@@ -1,7 +1,6 @@
 /*! @file
     @brief  DataInstance setup class for calc Risk
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLDataInstanceConfigurationRisk_h
 #define AQLDataInstanceConfigurationRisk_h
 #ifdef __GNUG__

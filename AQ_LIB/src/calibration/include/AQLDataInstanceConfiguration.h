@@ -1,7 +1,6 @@
 /*! @file
     @brief  DataInstance setup class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLDataInstanceConfiguration_h
 #define AQLDataInstanceConfiguration_h
 #ifdef __GNUG__

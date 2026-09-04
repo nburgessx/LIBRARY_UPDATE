@@ -2,10 +2,6 @@
 
 /*
  * @brief			Credit Results Class
- * @Created:		9th Jan 2020
- * @Author:			Ian Castleton
- * @Department:		Quant Research and Analytics
- *
  */
 #pragma once
 #include <vector>

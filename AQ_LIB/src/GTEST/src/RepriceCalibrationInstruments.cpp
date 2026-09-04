@@ -2,11 +2,6 @@
 
 /*
  * @brief			Reprice Curve Calibration Instruments
- * @Created:	    24th August 2018
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub London Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #include "RepriceCalibrationInstruments.h"

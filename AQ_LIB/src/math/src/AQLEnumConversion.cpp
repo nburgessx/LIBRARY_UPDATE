@@ -1,12 +1,6 @@
 // AQLEnumConversion.cpp
 
-// @File:				AQLEnumConversion.cpp
 // @Description:		Methods to convert to and from legacy enumerated types
-// @Created:			15th May 2019
-// @Author:				Nicholas Burgess
-// @Department:			Quant Research & Analytics
-//
-// The copyright to the computer program(s) herein is the property of AlgoQuantHub.
 
 #include "AQLEnumConversion.h"
 #include "ExceptionMacros.h"

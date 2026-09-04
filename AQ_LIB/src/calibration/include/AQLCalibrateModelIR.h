@@ -1,7 +1,6 @@
 /*! @file
     @brief IR sde generator class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLCalibrateModelIR_h
 #define AQLCalibrateModelIR_h
 #ifdef __GNUG__

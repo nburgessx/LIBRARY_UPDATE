@@ -1,7 +1,6 @@
 /*! @file
     @brief  Calibration info create class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibrationParametersFXVannaVolga_h
 #define AQLCalibrationParametersFXVannaVolga_h
 #ifndef IR_CALIBRATION_DATA_OPTIONMATURITY

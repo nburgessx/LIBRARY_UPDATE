@@ -1,14 +1,7 @@
 #pragma once
 
 //
-// @File: ObjectUtilities.h
 // @Description: This is a series of functions that help create/convert classes derived from CachedObject or access Objects from the Store (through perhaps other base pointers)
-// @Created: 27 Feb 2016
-// @Author: Hans Roggeman
-// @Department: ISO Front Office Development
-//
-// The copyright to the computer program(s) herein
-// is the property of AlgoQuantHub.
 
 #include <vector>
 #include <map>

@@ -1,7 +1,6 @@
 /*! @file
     @brief Volatility Risk Scenario create class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfigurationVolatility_h
 #define AQLScenarioConfigurationVolatility_h
 #ifdef __GNUG__

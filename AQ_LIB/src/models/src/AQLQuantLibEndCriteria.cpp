@@ -1,5 +1,4 @@
 /*!
-	@file AQLQuantLibEndCriteria.cpp
 	@brief a class of end criteria to complete optimization
 		   using external library
 

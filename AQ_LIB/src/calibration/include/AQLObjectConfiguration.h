@@ -1,7 +1,6 @@
 /*! @file
     @brief  object setup class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLObjectConfiguration_h
 #define AQLObjectConfiguration_h
 #ifdef __GNUG__

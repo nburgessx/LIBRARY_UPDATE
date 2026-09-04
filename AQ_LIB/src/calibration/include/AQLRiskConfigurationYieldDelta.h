@@ -1,7 +1,6 @@
 /*! @file
     @brief Yield delta setup class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYieldDelta_h
 #define AQLRiskConfigurationYieldDelta_h
 #ifdef __GNUG__

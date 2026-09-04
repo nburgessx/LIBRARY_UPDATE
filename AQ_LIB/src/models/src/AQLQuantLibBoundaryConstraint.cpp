@@ -1,5 +1,4 @@
 /*!
-	@file AQLQuantLibBoundaryConstraint.cpp
 	@brief a class of boundary constraint for optimization using external library
 
  */

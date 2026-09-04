@@ -1,7 +1,6 @@
 /*! @file
     @brief Yield Risk Scenario create class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfigurationYieldCurveMultiPara_h
 #define AQLScenarioConfigurationYieldCurveMultiPara_h
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)

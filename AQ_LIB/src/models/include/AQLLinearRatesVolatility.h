@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLLinearRatesVolatility manager class 
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLLinearRatesVolatility_h
 #define AQLLinearRatesVolatility_h
 

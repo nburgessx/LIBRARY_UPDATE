@@ -3,7 +3,6 @@
 
 	This class derives from AQLBlackScholesBaseMethod
 */
-//  2010, AlgoQuantHub.
 #ifndef AQLBlackScholesDigitalCapletOption_h
 #define AQLBlackScholesDigitalCapletOption_h
 #ifdef __GNUG__

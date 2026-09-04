@@ -2,7 +2,6 @@
     @brief Class declaration to AQLMathDisplacedHeston.
 
 */
-//  2009, AlgoQuantHub.
 #ifndef __AQLMATHDISPLACEDHESTON_H__
 #define __AQLMATHDISPLACEDHESTON_H__
 

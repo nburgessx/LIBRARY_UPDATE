@@ -1,4 +1,3 @@
-//  2009, AlgoQuantHub.
 
 //#ifdef VISUAL_STUDIO_2010_ANALYTICS
 // this class is only for vanilla addin

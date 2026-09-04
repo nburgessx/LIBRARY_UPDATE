@@ -1,12 +1,5 @@
 //
-// @File: SerializationResult.h
 // @Description: This is a test program
-// @Created: 27 Feb 2016
-// @Author: Hans Roggeman
-// @Department: ISO Front Office Development
-//
-// The copyright to the computer program(s) herein
-// is the property of AlgoQuantHub.
 
 
 #pragma once

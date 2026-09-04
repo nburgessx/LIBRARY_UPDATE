@@ -1,7 +1,6 @@
 /*! @file
     @brief IR vega setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationVolIRVega_h
 #define AQLRiskConfigurationVolIRVega_h
 #ifdef __GNUG__

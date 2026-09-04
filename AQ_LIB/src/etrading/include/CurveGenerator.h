@@ -2,13 +2,7 @@
 #pragma once
 
 /*
- * @File: CurveGenerator.h
  * @brief: This class holds the configuration used to build a curve
- * @Created: 6 Dec 2016
- * @Author: Ian Castleton
- * @Department: ISO Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #include <unordered_map>

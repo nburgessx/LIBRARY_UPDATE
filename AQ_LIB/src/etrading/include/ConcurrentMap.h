@@ -1,14 +1,7 @@
 
 #pragma once
 //
-// @File: ConcurrentMap.h
 // @Description: this is a C++ implementation of a Concurrent Hashmap; note that it is using mutexes so you are paying up in speed for thread safety
-// @Created: 27 Feb 2016
-// @Author: Hans Roggeman
-// @Department: ISO Front Office Development
-//
-// The copyright to the computer program(s) herein
-// is the property of AlgoQuantHub.
 
 
 

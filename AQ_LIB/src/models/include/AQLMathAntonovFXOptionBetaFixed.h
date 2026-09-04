@@ -2,7 +2,6 @@
     @brief Class declaration to AQLMathAntonovFXOption model.
 
 */
-//  2008, AlgoQuantHub.
 
 #ifndef AQLMathAntonovFXOptionBetaFixed_h
 #define AQLMathAntonovFXOptionBetaFixed_h

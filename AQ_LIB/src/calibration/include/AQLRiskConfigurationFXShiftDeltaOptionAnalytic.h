@@ -1,7 +1,6 @@
 /*! @file
     @brief  FX delta setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationFXShiftDeltaOptionAnalytic_h
 #define AQLRiskConfigurationFXShiftDeltaOptionAnalytic_h
 #ifdef __GNUG__

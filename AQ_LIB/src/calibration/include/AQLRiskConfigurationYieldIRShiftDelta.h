@@ -1,7 +1,6 @@
 /*! @file
     @brief IR Shift Delta setup class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLRiskConfigurationYieldIRShiftDelta_h
 #define AQLRiskConfigurationYieldIRShiftDelta_h
 #ifdef __GNUG__

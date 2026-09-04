@@ -1,7 +1,6 @@
 /*! @file
     @brief  Calibration info create class
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLCalibrationParametersPtberg3F_h
 #define AQLCalibrationParametersPtberg3F_h
 

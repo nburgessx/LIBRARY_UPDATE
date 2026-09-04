@@ -1,7 +1,6 @@
 /*! @file
     @brief IRSABR sde generator class
 */
-//  2007, AlgoQuantHub.
 #ifndef AQLCalibrateModelIRSABR_h
 #define AQLCalibrateModelIRSABR_h
 #ifdef __GNUG__

@@ -1,14 +1,7 @@
 #pragma once
 
 //
-// @File: Singleton.h
 // @Description: This file has couple of template classes that relevant to Singleton and copy behaviour of classes
-// @Created: 27 Feb 2016
-// @Author: Hans Roggeman
-// @Department: ISO Front Office Development
-//
-// The copyright to the computer program(s) herein
-// is the property of AlgoQuantHub.
 
 
 

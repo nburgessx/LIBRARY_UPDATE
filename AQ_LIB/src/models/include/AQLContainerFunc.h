@@ -2,7 +2,6 @@
     @brief Class declaration to AQLMathAntonovFXOption model.
 
 */
-//  2012, AlgoQuantHub.
 #ifndef AQLContainer_h
 #define AQLContainer_h
 

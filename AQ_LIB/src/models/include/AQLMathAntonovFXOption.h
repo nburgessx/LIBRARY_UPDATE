@@ -2,7 +2,6 @@
     @brief Class declaration to AQLMathAntonovFXOption model.
 
 */
-//  2008, AlgoQuantHub.
 
 #ifndef PRICING_DATA_ENDPOSITION
 #define PRICING_DATA_ENDPOSITION					"EndPosition"			//  data name of EndPosition

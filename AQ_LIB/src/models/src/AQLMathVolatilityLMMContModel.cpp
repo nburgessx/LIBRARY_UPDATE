@@ -1,5 +1,4 @@
 /*!
-    @file AQLMathVolatilityLMMContModel.cpp
     @brief Implements Volatility and its related classes.
 */
 
@@ -13,7 +12,6 @@
 #include "AQLEigenSystems.h"
 #include "AQLModelUtilities.h"
 
-//
 AQLMathVolatilityLMMContModel::AQLMathVolatilityLMMContModel(const DoubleVector& paramV_,
 													   const DoubleVector& paramF_,
 													   const DoubleVector& G_,
@@ -25,7 +23,6 @@ AQLMathVolatilityLMMContModel::AQLMathVolatilityLMMContModel(const DoubleVector&
 {
 }
 
-//
 double AQLMathVolatilityLMMContModel::get(double t, size_t i)
 {
     if ( mT_fix.size() <= i ) return 0.0;

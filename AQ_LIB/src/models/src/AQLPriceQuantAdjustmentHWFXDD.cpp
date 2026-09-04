@@ -4,7 +4,6 @@
 
 
 */
-//  2012, AlgoQuantHub.
 
 #ifdef __GNUG__
 #pragma implementation

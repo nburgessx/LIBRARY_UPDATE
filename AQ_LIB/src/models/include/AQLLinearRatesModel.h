@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLLinearRatesModel manager class 
 */
-//  2011, AlgoQuantHub.
 #ifndef AQLLinearRatesModel_h
 #define AQLLinearRatesModel_h
 

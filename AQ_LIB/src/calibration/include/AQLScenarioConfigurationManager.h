@@ -1,7 +1,6 @@
 /*! @file
     @brief AQLScenarioConfigurationManager manager class 
 */
-//  2008, AlgoQuantHub.
 #ifndef AQLScenarioConfigurationManager_h
 #define AQLScenarioConfigurationManager_h
 #ifdef __GNUG__

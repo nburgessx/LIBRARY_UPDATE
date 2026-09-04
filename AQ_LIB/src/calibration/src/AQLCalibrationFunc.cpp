@@ -4,7 +4,6 @@
 	This class derives from AQLFunctionBase
 
 */
-//  2008, AlgoQuantHub.
 
 
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)

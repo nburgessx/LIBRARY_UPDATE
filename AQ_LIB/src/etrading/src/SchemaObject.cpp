@@ -1,12 +1,5 @@
 //
-// @File: SchemaObject.cpp
 // @Description: Implementation of SchemaObject
-// @Created: 04 April 2016
-// @Author: Hans Roggeman
-// @Department: ISO Front Office Development
-//
-// The copyright to the computer program(s) herein
-// is the property of AlgoQuantHub.
 
 #include <boost/format.hpp>
 #include <rapidjson/document.h>
