@@ -2,7 +2,6 @@
 	@file AQLQuantLibSteepestDescent.cpp
 	@brief a class of optimization method : steepest descent method
 		   using external library
-
  */
 
 #include <ql/math/optimization/steepestdescent.hpp>

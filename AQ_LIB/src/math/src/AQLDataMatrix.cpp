@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation of data which represents Matrix type.
-
 */
 
 

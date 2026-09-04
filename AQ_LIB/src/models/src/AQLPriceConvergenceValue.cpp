@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to evaluate trade.
-
 */
 #ifdef __GNUG__
 #pragma implementation

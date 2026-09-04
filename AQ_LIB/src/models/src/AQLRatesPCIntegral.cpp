@@ -1,8 +1,5 @@
 /*! @file
     @brief Source code of Euler-Maruyama sde integral class
-
-
-
 */
 
 #ifdef __GNUG__

@@ -2,7 +2,6 @@
     @brief Source code to represent nomarl distribution function
 	
 	This class derives from AQLFunctionBase, and implement pure virtual method "operator()"
-
 */
 
 

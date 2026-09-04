@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to evaluate trade.
-
 */
 #ifndef AQLPriceConvergenceValue_h
 #define AQLPriceConvergenceValue_h

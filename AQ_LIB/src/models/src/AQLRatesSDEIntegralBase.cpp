@@ -1,10 +1,6 @@
 /*! @file
     @brief Source code of base class of sde integral
-
-
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

@@ -1,9 +1,6 @@
 /*! @file
     @brief Source code of abstruct base class of interpolation of path element
-
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

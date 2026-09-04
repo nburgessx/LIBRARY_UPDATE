@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to AQLMathSABR.
-
 */
 #ifndef __AQLMATHLEASTSQUARESABR_H__
 #define __AQLMATHLEASTSQUARESABR_H__

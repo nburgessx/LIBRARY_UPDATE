@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation of class to generate cashlets and trigger/call schedule
-
 */
 
 #ifdef __GNUG__

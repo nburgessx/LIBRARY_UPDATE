@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation of data for valuation.
-
 */
 
 

@@ -1,6 +1,5 @@
 /*! @file
     @brief Source code for class to express functions with data points and interplaton
-
 */
 
 

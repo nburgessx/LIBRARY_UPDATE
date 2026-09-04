@@ -1,10 +1,6 @@
 /*! @file
     @brief Source code of drift function of SMM sde (annuity measure)
-
-
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

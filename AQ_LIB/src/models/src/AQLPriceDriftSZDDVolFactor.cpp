@@ -1,10 +1,6 @@
 /*! @file
     @brief Declaration of drift function of SZDD volatility factor (similar to HW sde with spot measure)
-
-
-
 */
-//  2016, AlgoQuantHub SC Co., Ltd.
 
 
 #ifdef __GNUG__

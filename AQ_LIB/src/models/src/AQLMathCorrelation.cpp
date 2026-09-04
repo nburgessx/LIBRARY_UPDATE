@@ -18,9 +18,7 @@
 			14.IR_CALIBRATION_DATA_FUNCTIONS(AQLDataFunctions)<BR>
 			15.IR_CALIBRATION_DATA_OPTWEIGHT(AQLDataDoubleMatrix)<BR>
 			16.IR_CALIBRATION_DATA_CORFACTORDATA(AQLDataDoubleMatrix)<BR>
-
 */
-//  2007, AlgoQuantHub..
 
 
 #ifdef __GNUG__

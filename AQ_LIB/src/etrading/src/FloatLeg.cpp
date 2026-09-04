@@ -600,7 +600,7 @@ namespace etrading
            useStubCurveIndex = getMatchingCurveIndex(curveCollection, stubCurveIndex, curveIndices);
         }
 
-        // Default the tolerance to 3D - Requested by Cam Gilbert AlgoQuantHub Euro Swaps Trader 31-Jan-2019
+        // Default the tolerance to 3D
         // This is so that regular swaps with effective dates starting on weekends do not imply a stub rate
         AQLString toleranceTenor = "3D";
 
@@ -660,7 +660,7 @@ namespace etrading
 			useStubCurveIndex = getMatchingCurveIndex(curveCollection, stubCurveIndex, curveIndices);
 		}
 
-		// Default the tolerance to 3D - Requested by Cam Gilbert AlgoQuantHub Euro Swaps Trader 31-Jan-2019
+		// Default the tolerance to 3D
 		// This is so that regular swaps with effective dates starting on weekends do not imply a stub rate
 		AQLString toleranceTenor = "3D";
 

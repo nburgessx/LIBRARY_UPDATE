@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation of base class of the Function class that provides valuation with base date and AQLObject as input.
-
 */
 
 

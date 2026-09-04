@@ -1,8 +1,6 @@
 /*! @file
     @brief source code of trigger action class(extra cf action).
-
 */
-//  2006, AlgoQuantHub..
 ///
 //////////////////////////////////////////////////////////
 //

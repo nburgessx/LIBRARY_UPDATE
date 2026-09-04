@@ -2,7 +2,7 @@
     @brief Class declaration for base class of univariate distributions.
 */
 
-// Improved performance & precision by AlgoQuantHub.
+// Improved performance and precision.
 #ifndef AQLUnivariateDistribution_h
 #define AQLUnivariateDistribution_h
 #ifdef __GNUG__

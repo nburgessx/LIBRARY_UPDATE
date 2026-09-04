@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate Power copulas.
 */
 
-// Improved performance & precision by AlgoQuantHub.
+// Improved performance and precision.
 #ifndef AQLBivariatePowerCopula_h
 #define AQLBivariatePowerCopula_h
 #ifdef __GNUG__

@@ -2,7 +2,6 @@
     @brief Define of Data name
 
     Data name defines the various types. Data names are defined with a name beginning with CALIBRATION_DATA_.
-
 */
 
 

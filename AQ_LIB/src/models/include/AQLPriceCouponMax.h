@@ -1,6 +1,5 @@
 /*! @file
     @brief declaration of class of rainbow Max type coupon select operator.
-
 */
 
 //////////////////////////////////////////////////////////

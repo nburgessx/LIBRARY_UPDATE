@@ -2,7 +2,6 @@
     @brief Source code of class to represent function integrated with respect to one parameter
 
 	This class derives from AQLFunctionBase
-
 */
 
 

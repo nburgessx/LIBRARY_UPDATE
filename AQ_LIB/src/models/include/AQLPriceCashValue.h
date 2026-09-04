@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to evaluate trade.
-
 */
 #ifndef AQLPriceCashValue_h
 #define AQLPriceCashValue_h

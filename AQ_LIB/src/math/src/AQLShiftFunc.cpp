@@ -2,7 +2,6 @@
     @brief Source code of class to represent shift function f(x+a)
 
 	This class derives from AQLFunctionBase
-
 */
 
 

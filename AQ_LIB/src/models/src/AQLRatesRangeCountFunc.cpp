@@ -2,9 +2,7 @@
     @brief Source code of class to represent RangeCount function
 
     This class derives from AQLFunctionBase
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

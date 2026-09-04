@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration of type of template objects
-
 */
 #pragma once
 

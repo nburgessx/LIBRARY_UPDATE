@@ -1,6 +1,5 @@
 /*! @file
     @brief source code of tool class of payoff calculation in range accrue.
-
 */
 
 

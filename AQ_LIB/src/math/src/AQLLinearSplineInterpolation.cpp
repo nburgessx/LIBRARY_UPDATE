@@ -5,9 +5,7 @@
 	returns the value of one-dimensional. Data every time you set the data, \
 	the data you set just before is destroyed. \n
 	Outside is constant interpolation.
-
 */
-//  3rd April 2017, AlgoQuantHub
 
 
 #ifdef __GNUG__

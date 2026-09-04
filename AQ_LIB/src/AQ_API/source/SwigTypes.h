@@ -12,7 +12,6 @@
  * NOTE: This file is parsed by two separate entities:
  * i)  The Visual Studio C++ compiler ( hence the macro SWIG_R )
  * ii) The SWIG preprocessor, which sets macro SWIGR.
- *
  */
 
 #if defined(SWIG_R) || defined(SWIGR)

@@ -1,8 +1,6 @@
 /*! @file
     @brief source code of tool class of index calculation.
-
 */
-//  2006, AlgoQuantHub..
 ///
 #ifdef __GNUG__
 #pragma implementation

@@ -1,10 +1,6 @@
 /*! @file
     @brief Source code of base class of polynomial class
-
-
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

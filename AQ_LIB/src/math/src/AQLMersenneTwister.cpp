@@ -2,7 +2,6 @@
     @brief Implementation to generate MersenneTwister.
 */
 
-//  2005, Fixed Income Group, AlgoQuantHub.
 
 
 

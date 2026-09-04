@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate copulas.
 */
 
-// Improved performance & precision by AlgoQuantHub.
+// Improved performance and precision.
 #ifndef AQLBivariateCopula_h
 #define AQLBivariateCopula_h
 #ifdef __GNUG__

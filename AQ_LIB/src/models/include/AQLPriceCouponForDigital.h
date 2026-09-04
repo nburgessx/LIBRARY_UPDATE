@@ -1,6 +1,5 @@
 /*! @file
     @brief declaration of class of rainbow Temporary type coupon select operator.
-
 */
 
 //////////////////////////////////////////////////////////

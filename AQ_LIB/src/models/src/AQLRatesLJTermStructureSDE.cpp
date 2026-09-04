@@ -1,10 +1,6 @@
 /*! @file
     @brief Source code of long-jump version term structure sde class
-
-
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

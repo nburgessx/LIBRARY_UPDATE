@@ -1,9 +1,6 @@
 /*! @file
     @brief Source code of class of linear regression analysis
-
-
 */
-//  2007, AlgoQuantHub..
 
 
 #ifdef __GNUG__

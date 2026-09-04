@@ -3,7 +3,6 @@
 
     Implement following base Data classes. (AQLDataBools, AQLDataInts, AQLDataDoubles, AQLDataStrings,
     AQLDataDates, AQLDataDateTimes)
-	
 */
 
 

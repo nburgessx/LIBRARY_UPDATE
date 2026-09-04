@@ -2,7 +2,6 @@
     @brief Source code of class to represent IR volatility function
 
 	This class derives from AQLFunctionBase
-
 */
 
 

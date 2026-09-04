@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation of calendar class to expess holiday information.
-
 */
 
 

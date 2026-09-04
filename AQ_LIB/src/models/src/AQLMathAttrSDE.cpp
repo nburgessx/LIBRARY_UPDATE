@@ -1,8 +1,6 @@
 /*! @file
     @brief Source code of class representing a sde data
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

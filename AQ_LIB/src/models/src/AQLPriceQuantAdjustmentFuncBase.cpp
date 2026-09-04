@@ -1,8 +1,5 @@
 /*! @file
     @brief Source code of base class of quanto adjustment function class
-
-
-
 */
 
 #ifdef __GNUG__

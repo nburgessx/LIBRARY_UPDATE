@@ -7,7 +7,6 @@
 		AQLMathObjectValue set Data name automatically as follows <BR>
 		1. CALIBRATION_DATA_NAME(AQLDataString) <BR>
 		2. CALIBRATION_DATA_VALUE(AQLDataValuation)
-
 */
 
 

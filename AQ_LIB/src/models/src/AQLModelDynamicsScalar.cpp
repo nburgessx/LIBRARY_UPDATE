@@ -1,9 +1,6 @@
 /*! @file
     @brief Source code of of path element class that represents SCALAR value
-
-
 */
-//  2007, AlgoQuantHub..
 
 
 #ifdef __GNUG__

@@ -2,7 +2,6 @@
     @brief Source code of class to represent 1D polynomial function
 
     This class derives from AQLFunctionBase
-
 */
 
 

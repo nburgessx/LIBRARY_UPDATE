@@ -2,7 +2,6 @@
     @brief Source code of class to represent function sums and products 
 
 	This class derives from AQLFunctionBase
-
 */
 
 

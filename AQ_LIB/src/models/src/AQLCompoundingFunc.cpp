@@ -2,9 +2,7 @@
     @brief Source code of class to represent linear function
 
     This class derives from AQLFunctionBase
-
 */
-//  2006, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation
@@ -690,7 +688,7 @@ AQLCompoundMethod11::getType() const
 	return FN_COMPOUNDING10;
 }
 
-//Compounding (ISDA) for AlgoQuantHub
+// Compounding (ISDA)
 /*!
     @brief Return function value
 	@param[in] x point

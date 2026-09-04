@@ -1,8 +1,6 @@
 /*! @file
     @brief Class declaration to evaluate trade.
-
 */
-//  2007, AlgoQuantHub..
 #ifndef AQLPriceLSMCTradeValue_h
 #define AQLPriceLSMCTradeValue_h
 

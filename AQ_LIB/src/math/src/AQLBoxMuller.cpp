@@ -2,7 +2,6 @@
     @brief Implementation of the Box-Muller method.
 */
 
-//  2006, Fixed Income Group, AlgoQuantHub.
 
 
 

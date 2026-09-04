@@ -1,9 +1,6 @@
 /*! @file
     @brief Source code of brownian motion class
-
-
 */
-//  2007, AlgoQuantHub..
 
 
 #ifdef __GNUG__

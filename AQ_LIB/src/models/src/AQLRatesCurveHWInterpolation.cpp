@@ -1,7 +1,5 @@
 /*! @file
     @brief Source code of class of linear interpolation of curve path element
-
-
 */
 
 #ifdef __GNUG__

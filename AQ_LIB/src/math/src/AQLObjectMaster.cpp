@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation to master object classes.
-
 */
 
 

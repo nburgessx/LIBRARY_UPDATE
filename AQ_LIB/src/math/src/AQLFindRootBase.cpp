@@ -1,8 +1,5 @@
 /*! @file
     @brief Definition of abstract base class for dataInstance finding.
-
-	   
-
 */
 
 

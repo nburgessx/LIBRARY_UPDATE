@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation of virtual base classes to get data.
-
 */
 
 

@@ -1,8 +1,6 @@
 /*! @file
     @brief source code of abstract base class of trigger action and holder class of trigger action class.
-
 */
-//  2006, AlgoQuantHub..
 ///
 //////////////////////////////////////////////////////////
 // 

@@ -13,9 +13,7 @@
 			9.IR_MODEL_DATA_PATHENTITY(AQLDataReference)<BR>
 			10.IR_MODEL_DATA_FXRATE(AQLDataReference)<BR>
 			11.IR_MODEL_DATA_CACHESIZE(AQLDataInt)<BR>
-
 */
-//  2006, AlgoQuantHub..
 #ifdef __GNUG__
 #pragma implementation
 #else

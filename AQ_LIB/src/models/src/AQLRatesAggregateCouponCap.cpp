@@ -2,7 +2,6 @@
     @brief Source code of class to represent Coupon Cap function
 
     This class derives from AQLFunctionBase
-
 */
 
 #ifdef __GNUG__

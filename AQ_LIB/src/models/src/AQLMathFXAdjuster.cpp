@@ -2,7 +2,6 @@
     @brief Source code of class to adjust FX value
 
 	This class derives from AQLFunctionBase
-
 */
 
 

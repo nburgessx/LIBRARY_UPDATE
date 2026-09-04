@@ -2,7 +2,6 @@
     @brief Class definition for function optimization(minimization) by BFGS method. 
 
     This class realize virtual method in abstract base class.
-
 */
 
 

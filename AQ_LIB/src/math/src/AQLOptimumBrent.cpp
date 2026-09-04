@@ -2,7 +2,6 @@
     @brief Class definition for a 1-D function optimization(minimization) with Brent method. 
 
     This class realize virtual method in abstract base class.
-
 */
 
 

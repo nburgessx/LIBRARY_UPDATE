@@ -1,7 +1,5 @@
 /*! @file
     @brief Source code of brownian motion class
-
-
 */
 
 

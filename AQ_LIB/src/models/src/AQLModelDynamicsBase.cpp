@@ -1,9 +1,6 @@
 /*! @file
     @brief Source code of abstract base class of path element
-
-
 */
-//  2007, AlgoQuantHub..
 
 
 #ifdef __GNUG__

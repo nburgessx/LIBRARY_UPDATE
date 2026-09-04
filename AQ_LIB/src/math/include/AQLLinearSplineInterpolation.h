@@ -6,7 +6,6 @@
     In this class, based on the data set of n pieces of data to be interpolated n \n
 	returns the value of one-dimensional. Data every time you set the data, \
 	the data you set just before is destroyed.
-
 */
 
 #ifdef __GNUG__

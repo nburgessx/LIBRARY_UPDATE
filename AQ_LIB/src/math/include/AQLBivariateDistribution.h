@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate distribution functions.
 */
 
-// Improved performance & precision by AlgoQuantHub.
+// Improved performance and precision.
 #ifndef AQLBivariateDistribution_h
 #define AQLBivariateDistribution_h
 #ifdef __GNUG__

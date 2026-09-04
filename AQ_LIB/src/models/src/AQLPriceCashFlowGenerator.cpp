@@ -1,8 +1,6 @@
 /*! @file
     @brief Implementation of class to generate cashlets and trigger/call schedule
-
 */
-//  2006, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

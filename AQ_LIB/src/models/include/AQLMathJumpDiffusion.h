@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to AQLMathJumpDiffusion.
-
 */
 #ifndef __AQLMATHJUMPDIFFUSION_H__
 #define __AQLMATHJUMPDIFFUSION_H__

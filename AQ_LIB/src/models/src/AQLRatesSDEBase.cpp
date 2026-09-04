@@ -1,10 +1,6 @@
 /*! @file
     @brief Declaration of base class of sde class
-
-
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

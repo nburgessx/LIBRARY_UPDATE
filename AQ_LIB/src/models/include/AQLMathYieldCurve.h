@@ -1,9 +1,7 @@
 /*! 
 	@file
     @brief  Class declaration to represent YieldCurve.
-
 */
-//  2007, AlgoQuantHub..
 
 #ifndef AQLMathYieldCurve_h
 #define AQLMathYieldCurve_h

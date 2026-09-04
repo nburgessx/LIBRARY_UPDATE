@@ -4,7 +4,6 @@
 		   There is ownership of the pointer if mDeleteFlag is true.
 		   The default mDeleteFlag is false. it is able to be selected
 		   by setDeleteFlag(bool).
-
 */
 
 

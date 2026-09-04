@@ -1,8 +1,6 @@
 /*! @file
     @brief source code of trigger action class(notional change action).
-
 */
-//  2006, AlgoQuantHub..
 ///
 //////////////////////////////////////////////////////////
 // 

@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation to register object classes by map.
-
 */
 
 

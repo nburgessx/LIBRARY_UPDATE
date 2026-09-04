@@ -1,6 +1,5 @@
 /*! @file
     @brief Source of data class to hold a function array
-
 */
 
 

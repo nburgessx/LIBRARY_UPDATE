@@ -2,7 +2,6 @@
     @brief Source code of class to represent exponential function
 
 	This class derives from AQLFunctionBase
-
 */
 
 

@@ -2,7 +2,6 @@
     @brief Class definition of integration by Romberg method
 
     This class derives from abstract base class "AQLIntegralBase".
-
 */
 
 

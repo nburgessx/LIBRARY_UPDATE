@@ -11,7 +11,6 @@
 			6.IR_CALIBRATION_DATA_FREQUENCY(AQLDataString)<BR>
 			7.IR_CALIBRATION_DATA_YIELDDATA(AQLDataReference)<BR>
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

@@ -2,7 +2,6 @@
     @brief Class definition for dataInstance finding of a 1-D function with Brent method. 
 
     This class realize virtual method in abstract base class.
-
 */
 
 

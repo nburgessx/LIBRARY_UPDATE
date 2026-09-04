@@ -10,10 +10,7 @@
 			6.IR_MODEL_DATA_CURRENCYS(AQLDataStrings)<BR>
 			7.IR_MODEL_DATA_SPOTRATES(AQLDataDoubles)<BR>
 			8.IR_MODEL_DATA_CALENDARNAMES(AQLDataStrings)<BR>
-
-
 */
-//  2006, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation of the class to hold dataValues.
-    
 */
 
 

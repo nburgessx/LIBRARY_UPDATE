@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation of data to refer a specific class that implements procedure.
-
 */
 
 

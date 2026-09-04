@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to manage the holiday information and the corresponding city name (any string).
-
 	*/
 
 

@@ -2,9 +2,7 @@
     @brief Source code of class to represent linear function
 
     This class derives from AQLFunctionBase
-
 */
-//  2006, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

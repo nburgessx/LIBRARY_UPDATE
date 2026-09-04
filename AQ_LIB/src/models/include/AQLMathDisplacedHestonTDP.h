@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to AQLMathDisplacedHestonTDP.
-
 */
 #ifndef __AQLMATHDISPLACEDHESTONTDP_H__
 #define __AQLMATHDISPLACEDHESTONTDP_H__

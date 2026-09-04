@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to evaluate portfolio.
-
 */
 #ifndef AQLPricePortfolioValue_h
 #define AQLPricePortfolioValue_h

@@ -2,7 +2,6 @@
 	@file AQLQuantLibProblem.cpp
 	@brief a class of problem to be optimized
 		   using external library
-
  */
 
 #include <ql/math/optimization/problem.hpp>

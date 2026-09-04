@@ -2,7 +2,6 @@
     \file AQLMathFXVolatilitySurfaceGenerate.h
     \brief
     \authorb kikuchei
-
 */
 
 #ifndef __AQLMathFXVOLATILITYSURFACEGENERATE_H__

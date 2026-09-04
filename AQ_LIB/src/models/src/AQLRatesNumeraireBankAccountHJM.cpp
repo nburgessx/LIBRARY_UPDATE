@@ -1,10 +1,6 @@
 /*! @file
     @brief Source code of bank account numeraire class for HJM
-
-
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

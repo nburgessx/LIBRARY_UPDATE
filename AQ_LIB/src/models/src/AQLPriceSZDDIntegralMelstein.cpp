@@ -1,10 +1,6 @@
 /*! @file
     @brief Source code of ScobelZhu & DD type of fx sde integral class
-
-
-
 */
-//  2008, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

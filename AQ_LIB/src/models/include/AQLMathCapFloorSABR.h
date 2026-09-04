@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to AQLMathSABR.
-
 */
 #ifndef __AQLMATHCAPLETMATRIX_H__
 #define __AQLMATHCAPLETMATRIX_H__

@@ -2,7 +2,6 @@
     @brief Implementation of a class for a negative correlation method.
 */
 
-//  2005, Fixed Income Group, AlgoQuantHub.
 
 
 

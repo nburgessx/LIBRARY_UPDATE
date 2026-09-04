@@ -1,7 +1,6 @@
 /*! 
 	@file
     @brief Class declaration to Generate ArbitrageFreeCurve.
-
 */
 #ifdef __GNUG__
 #pragma implementation

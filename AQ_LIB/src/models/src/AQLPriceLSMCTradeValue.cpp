@@ -1,8 +1,6 @@
 /*! @file
     @brief Source code for class to evaluate trade.
-
 */
-//  2007, AlgoQuantHub..
 #ifdef __GNUG__
 #pragma implementation
 #endif

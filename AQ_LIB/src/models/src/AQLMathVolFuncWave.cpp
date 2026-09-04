@@ -2,7 +2,6 @@
     @brief Source code of class to represent wave structure volatility function
 
 	This class derives from AQLFunctionBase
-
 */
 
 

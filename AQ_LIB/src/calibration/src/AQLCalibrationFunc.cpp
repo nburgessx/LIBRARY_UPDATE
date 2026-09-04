@@ -2,7 +2,6 @@
     @brief Source code of calibration function
 
 	This class derives from AQLFunctionBase
-
 */
 
 

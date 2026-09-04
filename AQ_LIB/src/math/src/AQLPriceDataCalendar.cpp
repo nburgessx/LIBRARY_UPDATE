@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation to represent holiday information.
-
 */
 
 

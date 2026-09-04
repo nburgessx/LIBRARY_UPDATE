@@ -2,7 +2,6 @@
     @brief Source code of class to represent HW volatility function
 
 	This class derives from AQLFunctionBase
-
 */
 
 

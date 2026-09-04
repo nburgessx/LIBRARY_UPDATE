@@ -4,7 +4,6 @@
  * @brief			Bond Yields are used to calculate Bond Discount Factors. There are many conventions 
                     and methodologies on how to calculate a Bond Discount Factor from a Bond Yield. 
                     We manage this logic here
-
  */
 
 #include "BondYields.h"

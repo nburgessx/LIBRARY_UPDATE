@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to AQLMathSABR.
-
 */
 #ifndef __AQLMATHSWAPTIONSABR_H__
 #define __AQLMATHSWAPTIONSABR_H__

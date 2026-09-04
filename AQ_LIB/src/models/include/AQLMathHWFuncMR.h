@@ -1,6 +1,5 @@
 /*! @file
     @brief Declaration of path element class that represents curve object for HW
-
 */
 #ifndef AQLMATHHWFUNCMR_H
 #define AQLMATHHWFUNCMR_H

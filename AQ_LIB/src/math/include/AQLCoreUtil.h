@@ -1,7 +1,6 @@
 /*!
     \file Utility.h
     \brief Declares and implements various utility functions.
-
 */
 
 #ifndef AQLCoreUtil_h

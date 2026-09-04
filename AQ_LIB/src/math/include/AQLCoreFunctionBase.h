@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration of virtual base class for valuation, intepolation, procedure etc.
-
 */
 
 

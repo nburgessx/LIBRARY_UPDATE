@@ -3,7 +3,6 @@
 
 	Declare abstract base class to represent function(y=f(x1,x2,...,xn)).
 	This class has a pure virtual method "operator()".
-
 */
 
 

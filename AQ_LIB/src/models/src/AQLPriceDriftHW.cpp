@@ -1,8 +1,5 @@
 /*! @file
     @brief Source code of drift function of HW sde
-
-
-
 */
 
 

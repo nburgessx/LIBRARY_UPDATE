@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to evaluate trade.
-
 */
 #ifndef AQLLinearRatesSwapTradeValueForExo_h
 #define AQLLinearRatesSwapTradeValueForExo_h

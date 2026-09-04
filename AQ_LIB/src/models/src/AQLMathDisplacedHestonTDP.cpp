@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to AQLMathDisplacedHeston.
-
 */
 
 #ifdef __GNUG__

@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration of data which represents Matrix type.
-	
 */
 
 

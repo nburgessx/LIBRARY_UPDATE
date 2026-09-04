@@ -1,6 +1,5 @@
 /*! @file
     @brief source code of abstract base class of coupon select operator.
-
 */
 //////////////////////////////////////////////////////////
 //

@@ -2,7 +2,6 @@
     @brief Class declaration to represent volatility function for SZDD volatility factor
 
 	This class derives from AQLMathVolFuncHW
-
 */
 
 #ifdef __GNUG__

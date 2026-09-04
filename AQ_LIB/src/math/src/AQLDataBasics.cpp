@@ -3,7 +3,6 @@
 
     Implement the following atrribute classes(AQLDataBool, AQLDataInt, AQLDataDouble, AQLDataString,
     AQLDataDate, AQLDataDateTime)
-
 */
 
 

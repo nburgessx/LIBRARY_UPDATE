@@ -1,6 +1,5 @@
 /*! @file
     @brief source code of class of coupon rainbow type select operator.
-
 */
 // 
 //////////////////////////////////////////////////////////

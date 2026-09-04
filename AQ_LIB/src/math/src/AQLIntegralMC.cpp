@@ -2,7 +2,6 @@
     @brief Sorce code for class to integrate with Monte Carlo method
 	
 	This class derives from AQLIntegralBase
-
 */
 
 

@@ -38,7 +38,6 @@
 #define FN_COMPOUNDING10 1310
 #define FN_COMPOUNDING10_STR "fn_compounding10"
 
-//for AlgoQuantHub
 #define FN_COMPOUNDING11 1311
 #define FN_COMPOUNDING11_STR "fn_compounding11"
 

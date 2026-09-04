@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate Normal distribution.
 */
 
-// Improved performance & precision by AlgoQuantHub.
+// Improved performance and precision.
 #ifndef AQLBivariateNormalDistribution_h
 #define AQLBivariateNormalDistribution_h
 #ifdef __GNUG__

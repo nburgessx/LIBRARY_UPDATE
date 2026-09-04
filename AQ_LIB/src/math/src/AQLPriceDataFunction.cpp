@@ -1,6 +1,5 @@
 /*! @file
     @brief Source code of class representing a mathmatical function
-
 */
 
 

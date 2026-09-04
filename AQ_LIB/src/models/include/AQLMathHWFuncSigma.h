@@ -1,6 +1,5 @@
 /*! @file
     @brief Declaration of volatility tool class that represents for HW
-
 */
 #ifndef AQLMATHHWFUNCSIGMA_H
 #define AQLMATHHWFUNCSIGMA_H

@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation to register object classes with some references.
-
 */
 
 

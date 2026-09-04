@@ -15,7 +15,7 @@ class AQLCholeskyDecompSC
 public:
 
 								//======================================
-								// CholeskyDecomposition by AlgoQuantHub SC Algorithm
+								// Cholesky decomposition algorithm
 	static	AQLMatrix			choleskyDecompositionSC(const AQLMatrix& mat);
 
 private:

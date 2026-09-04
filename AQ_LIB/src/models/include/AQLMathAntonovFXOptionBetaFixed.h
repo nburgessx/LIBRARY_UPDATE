@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration to AQLMathAntonovFXOption model.
-
 */
 
 #ifndef AQLMathAntonovFXOptionBetaFixed_h

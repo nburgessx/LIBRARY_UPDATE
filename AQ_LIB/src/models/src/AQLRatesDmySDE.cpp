@@ -2,7 +2,6 @@
     @brief Source code of class for no simulation SDE
 
 	This class derives from AQLRatesSDEBase
-
 */
 
 

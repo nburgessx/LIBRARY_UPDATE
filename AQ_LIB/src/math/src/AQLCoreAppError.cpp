@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation of the class to handle errors at the application level
-
 */
 
 

@@ -2,7 +2,6 @@
     @brief Source code of class to represent LMM correlation function
 
 	This class derives from AQLMathCorrelationFuncLMM
-
 */
 
 

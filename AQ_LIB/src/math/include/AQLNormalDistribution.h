@@ -2,7 +2,7 @@
     @brief Class declaration for Normal distribution.
 */
 
-// Improved performance & precision by AlgoQuantHub.
+// Improved performance and precision.
 #ifndef AQLNormalDistribution_h
 #define AQLNormalDistribution_h
 #ifdef __GNUG__

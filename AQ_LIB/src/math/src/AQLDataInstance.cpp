@@ -1,6 +1,5 @@
 /*! @file
     @brief Implementation to manage and hold Object, Data and Function.
-
 */
 
 

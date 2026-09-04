@@ -1,10 +1,6 @@
 /*! @file
     @brief Source code of annuity numeraire class
-
-
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

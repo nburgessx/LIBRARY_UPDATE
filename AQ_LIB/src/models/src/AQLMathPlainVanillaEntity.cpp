@@ -5,8 +5,6 @@
 			1.CALIBRATION_DATA_NAME(AQLDataString)<BR>
 			2.CALIBRATION_DATA_ASOFDATE(AQLDataDate)<BR>
 			10.IR_MODEL_DATA_CORRELATIONMATRIX(AQLDataDoubleMatrix)<BR>
-			
-
 */
 #ifdef __GNUG__
 #pragma implementation

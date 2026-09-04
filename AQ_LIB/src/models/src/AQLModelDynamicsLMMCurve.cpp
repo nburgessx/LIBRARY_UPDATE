@@ -1,7 +1,5 @@
 /*! @file
     @brief Source code of of path element class that represents curve object for libor market model
-
-
 */
 
 

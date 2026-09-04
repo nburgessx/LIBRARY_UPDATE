@@ -2,7 +2,6 @@
     @brief Source code of class to represent linear function
 
     This class derives from AQLBlackScholesBaseMethod
-
 */
 
 #ifdef __GNUG__

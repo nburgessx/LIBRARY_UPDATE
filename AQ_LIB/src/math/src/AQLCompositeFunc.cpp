@@ -2,9 +2,7 @@
     @brief Source code of class to represent composite function of two functions like f(x,y,z) = f1(x,y) * f2(x,z), (f1+f2,f1-f2,f1/f2 are also available)
 
 	This class derives from AQLFunctionBase
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

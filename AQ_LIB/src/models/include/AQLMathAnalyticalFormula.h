@@ -1,7 +1,6 @@
 /*!
     \file AQLMathAnalyticalFormula.h
     \brief Black formula.
-
 */
 
 #ifndef __AQLMATHANALYTICALFORMULA_H__

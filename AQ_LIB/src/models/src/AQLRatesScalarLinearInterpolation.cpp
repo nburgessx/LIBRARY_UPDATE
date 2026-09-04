@@ -1,9 +1,6 @@
 /*! @file
     @brief Source code of class of linear interpolation of scalar path element
-
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

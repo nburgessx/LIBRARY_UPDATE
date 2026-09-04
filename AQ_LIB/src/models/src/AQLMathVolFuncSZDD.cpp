@@ -2,9 +2,7 @@
     @brief Source code of class to represent ScobelZhu & DD version of FX volatility function
 
 	This class derives from AQLFunctionBase
-
 */
-//  2008, AlgoQuantHub..
 
 
 #ifdef __GNUG__

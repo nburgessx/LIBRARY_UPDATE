@@ -2,7 +2,7 @@
     @brief Class declaration to provide distribution functions.
 */
 
-// Improved performance & precision by AlgoQuantHub.
+// Improved performance and precision.
 #ifndef AQLProductDistribution_h
 #define AQLProductDistribution_h
 #ifdef __GNUG__

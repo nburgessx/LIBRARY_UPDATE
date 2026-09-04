@@ -1,7 +1,6 @@
 /*!
 	@file AQLQuantLibArray.cpp
 	@brief array class for math utility using external library
-
  */
 
 #include "AQLQuantLibArray.h"

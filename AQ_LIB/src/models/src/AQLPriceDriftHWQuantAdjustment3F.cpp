@@ -1,10 +1,6 @@
 /*! @file
     @brief Source code of drift function of quant adjustment of HW model
-
-
-
 */
-//  2008, AlgoQuantHub.. 
 
 #ifdef __GNUG__
 #pragma implementation

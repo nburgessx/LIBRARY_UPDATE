@@ -1,6 +1,5 @@
 /*! @file
     @brief Class declaration of data to refer multi entities.
-	
 */
 
 

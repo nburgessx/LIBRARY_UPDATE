@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate Student t-distribution.
 */
 
-// Improved performance & precision by AlgoQuantHub.
+// Improved performance and precision.
 #ifndef AQLBivariateStudentTDistribution_h
 #define AQLBivariateStudentTDistribution_h
 #ifdef __GNUG__

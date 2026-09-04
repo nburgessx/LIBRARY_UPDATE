@@ -1,6 +1,5 @@
 /*! @file
     @brief Source code for class to evaluate portfolio.
-
 */
 #ifdef __GNUG__
 #pragma implementation

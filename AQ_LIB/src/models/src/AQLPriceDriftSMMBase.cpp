@@ -1,10 +1,6 @@
 /*! @file
     @brief Source code of abstruct base class of drift function of SMM sde
-
-
-
 */
-//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation
