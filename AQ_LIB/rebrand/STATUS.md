@@ -1,10 +1,83 @@
-# Rebrand status — pause point 2026-09-05 ~04:00
+# Rebrand status — pause point 2026-09-05
 
-**HEAD: `8e632c65`. Last user-confirmed green build: `5a29a51a` (step 6b).**
-Unbuilt: `ab35bf0b` (7b prose sweep) and `8e632c65` (7c embedded LWO -> AQObj:
-34 GTEST files renamed, 1108 fixture paths + their code strings moved in
-lockstep, 200 project-file refs). Needs a full Rebuild + GTest.
-Tree is clean. `baseline` tag is the pre-rebrand reference for GTest output diffs.
+**HEAD: `9fcdc99f`. Last user-confirmed green build + GTest: `e2f55db9` (step 10b),
+built from a CLEAN CHECKOUT WITH THE LEGACY ENVIRONMENT VARIABLES REMOVED — that
+is what finally proved the tree no longer depends on `.APPLES`.**
+
+## ⇒ RESUME HERE
+
+**1. Build + GTest first.** Five commits are unverified:
+
+| commit | what |
+|---|---|
+| `9fcdc99f` | personal names out of comments (88 files) |
+| `041f26f6` | ownership banners + banner blank-line tidy (273 files) |
+| `25e9d246` | remaining copyright banners (10 files) |
+| `8c7d6ef9` | restored doxygen `@file` tags (fixed a build break) |
+| `ef1349ec` | stale fixture keys `lwo*` → `aqObj*` (fixed 16 failing tests) |
+
+Two of the last three comment-only sweeps caused a real failure — one broke the
+build (`AQLStepInterpolation.cpp`), one broke 16 tests. Comment-only is NOT safe
+by inspection here. Run the guards too:
+
+```
+python rebrand/tools/api_pair_check.py        # exit 0 expected
+python rebrand/tools/fixture_key_check.py     # exit 0 expected
+```
+
+**2. Then the Phase 3 tail — 27 items, one small batch:**
+- `Replay.cpp` — delete the 4 dead `tryMirSetUp*` dispatch keys (already
+  duplicated by the `tryAqCurvesCalibrate*` entries below them; their test
+  `TestCurveReplay` was deleted in step 6b) and the 182 orphaned
+  `*_tryMirSetUp*` fixtures.
+- `validation_api` in 4 Linux Makefiles → `validation` (project renamed long ago).
+- `XllPlus` — 8 dead XLL+ include/lib paths in `AQ_XLL.vcxproj` (CLAUDE.md §3.2
+  says remove when next touched) + 3 commented-out lines.
+- 4 `mir` mentions in comments/error strings (Nicholas deferred these earlier).
+- `lwoer` in `math/AQLFunctionUtilities.cpp` — a typo for "lower", leave it.
+
+**3. Then choose:**
+- **Phase 4** (xlOil XLL port) — the critical path to a shippable product, but
+  BLOCKED on Nicholas's worked examples. `AQ_XLL` is a ~140-line proof of
+  concept against a 653-function port source.
+- **Phase 6 `resources/`** — large, mechanical, unblocked. 5,580 of 13,503 files
+  carry legacy text, 1,310 carry legacy names. Biggest single item: 5,070
+  `generatorFunction` rows naming 133 legacy functions (`tryMeLWOBondCreate`,
+  `tryMirSetUpOISCurve`, …) — provenance only, phase-3 maps already hold the
+  translations.
+- **Phase 5** — regenerate the SWIG wrappers: `swig_R_wrap.cpp` still holds
+  1,617 legacy names, C#/Java 259 each; Python is already regenerated. C#, Java
+  and R remain unverified end-to-end.
+
+## End-state gate — `src/` + `projects/` as of `9fcdc99f`
+
+CLEAN: `Mizuho` (and misspellings), `MLIB`/`mlib`, `me*`/`tryMe*`,
+`LA`/`LB`/`MA`/`MB`/`MM`/`MF`, `AQO`-not-`AQObj`, person names/userids,
+banner metadata (`@Author`, `$Id`, `uthor`).
+
+REMAINING (27, all listed in step 2 above): `mir*` 8, `validation_api` 8,
+`XllPlus` 11, `lwo` 1. Plus `etrading.nuspec`, which legitimately keeps its
+`<copyright>` field.
+
+## ⚠ Carry these forward — they outrank the routine cleanup
+
+1. **Two undeclared third-party components in `src/math`**, both found by
+   accident. `AQLSobol.cpp` (Peter Jaeckel — notice has a PRESERVATION CLAUSE)
+   and `AQLNl2sol.cpp` (NL2SOL, 6,541 lines — Dennis/Welsch/Gay/Peters,
+   NSF-funded, ACM TOMS). **Both are excluded by name from every sweep. Never
+   strip their attribution.** Neither is in the CLAUDE.md §3.3 dependency table.
+   The Phase 6 provenance scan is REQUIRED BEFORE SALE, not advisory.
+2. **Exact-match auditing under-reports.** Five times a "verified clean" result
+   was defeated by a spelling variant: `AlgoQuantHub..` (two dots), `uthor`
+   vs `@Author`, `uthorb` (glued), `hishida` (lower case), `Miuhzo`
+   (transposed). Always re-scan with a looser pattern after a sweep reports zero.
+3. **Fixture keys are stringified C++ parameter names** — renaming a validation
+   parameter breaks tests silently, build still green. `fixture_key_check.py`
+   guards this now.
+4. **`git add -A` will stage the generated `swig_*_wrap.*` files.** They show as
+   phantom-dirty. Restore with
+   `git checkout HEAD -- 'src/AQ_API/source/swig_*_wrap.*'` and never commit them
+   (one commit had to be amended for exactly this).
 
 ---
 
