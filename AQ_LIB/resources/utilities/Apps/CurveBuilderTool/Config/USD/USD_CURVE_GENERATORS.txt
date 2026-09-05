@@ -1,7 +1,0 @@
-# Please specify the Curve generator for each curve.
-# The curves should be listed in build order.
-OIS		USD_OIS
-STD		USD_SWAP_3M
-USD6ML	USD_BASIS_3X6
-USD1ML	USD_BASIS_1X3
-USD12ML USD_BASIS_3X12

@@ -1,6 +1,0 @@
-dyn.load("MLIB_CLIENT_API")
-source("MLIB_CLIENT_API.R")
-getLoadedDLLs()
-setupMLIB()
-meUtilityVersion()
-meDateFromTenor("20170101","6M","","","")

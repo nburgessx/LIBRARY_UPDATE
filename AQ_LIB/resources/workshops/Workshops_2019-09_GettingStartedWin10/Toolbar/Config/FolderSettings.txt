@@ -1,9 +1,0 @@
-BLOOMBERG_FOLDER	,\\fs002\Global\Secure\DIR_MLib_Analytics\Examples\Bloomberg\
-MLIB_FOLDER			,\\fs002\Global\Secure\DIR_MLib_Analytics\Examples\
-SWAP_PRICER			,\\fs002\Global\Secure\DIR_MLib_Analytics\PricingTools\SwapsPricer\SwapsPricerV2.3.xlsm
-CURVE_CALIBRATOR	,\\fs002\Global\Secure\DIR_MLib_Analytics\PricingTools\CurveCalibrationTool\CurveCalibrationTool-13.0.xlsb
-BOND_PRICER			,\\fs002\Global\Secure\DIR_MLib_Analytics\PricingTools\BondPricer\BondPricer-0.3.xlsm
-FX_PRICER			,\\fs002\Global\Secure\DIR_MLib_Analytics\PricingTools\FXPricer\FXPricer-0.1.xlsx
-SCHEDULE_GENERATOR	,\\fs002\Global\Secure\DIR_MLib_Analytics\PricingTools\ScheduleGenerator\ScheduleGenerator-v0.5.xlsb
-RISKBOOK			,\\fs002\Global\Secure\DIR_MLib_Analytics\PricingTools\RiskBook\RiskBook_v0.2.xlsb
-PRICING_FOLDER		,\\fs002\Global\Secure\DIR_MLib_Analytics\PricingTools\

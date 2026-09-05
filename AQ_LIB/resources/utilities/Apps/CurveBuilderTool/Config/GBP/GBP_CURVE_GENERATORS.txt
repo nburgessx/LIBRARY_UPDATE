@@ -1,8 +1,0 @@
-# Please specify the Curve generator for each curve.
-# The curves should be listed in build order.
-OIS		GBP_OIS
-STD		GBP_SWAP_3M
-GBP6ML	GBP_BASIS_3X6
-GBP1ML	GBP_BASIS_1X3
-GBP12ML GBP_BASIS_6X12
-

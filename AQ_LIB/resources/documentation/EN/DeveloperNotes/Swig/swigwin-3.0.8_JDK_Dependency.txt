@@ -1,3 +1,0 @@
-SWIGWIN-3.0.08 DEPENDENCY
--------------------------
-The JDK-8u101-windows-i586 package must be installed to generate the Java JNI API using Swigwin.

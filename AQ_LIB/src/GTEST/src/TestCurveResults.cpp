@@ -44,7 +44,6 @@ namespace google_test
         public:
 
             // Test data has been taken from the example workbook "aqCurvesResults.xlsx"
-            // This file can be found in folder ... %AlgoQuantLib%/resources/examples/AlgoQuantLib_EXAMPLES/Curve/aqCurvesResults.xlsx"
             virtual void SetUp()
             {
                 curveType_          = "OIS";            // OIS_CURVETYPE
