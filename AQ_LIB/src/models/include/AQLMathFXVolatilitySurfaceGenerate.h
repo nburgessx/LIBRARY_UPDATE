@@ -1,7 +1,6 @@
 /*!
     \file AQLMathFXVolatilitySurfaceGenerate.h
     \brief
-    \authorb kikuchei
 */
 
 #ifndef __AQLMathFXVOLATILITYSURFACEGENERATE_H__
@@ -239,7 +238,7 @@ public:
                                     const std::vector<FXOptionData >& x,
                                     std::vector<SmileData >& y );
 
-	//hishida vanna volga
+	// vanna-volga
 	static double GetVolatilityFromMaturityInterp( double termPoint,
                                                     const ATMInterpolationMethod& atmMethod,
 													const std::vector<FXOptionData >& x, 

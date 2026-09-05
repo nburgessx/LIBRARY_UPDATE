@@ -81,11 +81,11 @@
 #define HALF	"1/2"
 #define QUARTER	"1/4"
 //define optiontype 
-//hishida vannavolga
+// vanna-volga
 #define PROB		 "PROB"
 #define TOUCH		 "TOUCH"
 #define NOTOUCH		 "NOTOUCH"
-//hishida vannavolga
+// vanna-volga
 #define PREM		 "PREM"
 #define DELTA	 "DELTA"
 #define GAMMA	 "GAMMA"

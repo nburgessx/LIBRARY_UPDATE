@@ -76,7 +76,7 @@ AQLLinearRatesOptionValue::isTypeOf(function_t id) const
 	return (id == FN_PLAINVANILLAVALUE ? true : AQLCoreValuation::isTypeOf(id));
 }
 
-//hishida vannavolga
+// vanna-volga
 /*
     @brief get option method name
      @return option method name
@@ -299,7 +299,7 @@ AQLLinearRatesOptionValue::value(const AQLDate& basedate, AQLObject& object,
 		AQLLinearRatesModel* pmodel = 
 			AQLLinearRatesVolatilityManager::getInstance()->createPlainVanillaModelGenerator(dataProvider,object,getType(),getOptionPayoffName(),dataProvider->mValueModel);
 
-		//hishida vannavolga
+		// vanna-volga
 		ret = pmodel->calcValue(att,dataProvider,object, getOptionPayoffName());
 	}
 
@@ -357,7 +357,7 @@ AQLLinearRatesOptionValue::value(const AQLDate& basedate, AQLObject& object,
 
 		object.remove(PRICING_DATA_VOLATILITYRESULTOFPREMIUM);
 		double volval = 0.0;
-		//hishida vannavolga temporary
+		// vanna-volga temporary
 		dh = &object.getData("ImplyVolFromVannaVolga",NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 			volval = dynamic_cast<AQLDataDouble &>(dh->get()).get();
@@ -599,7 +599,7 @@ AQLLinearRatesOptionValue::setUpDataProvider(const AQLDate& basedate, AQLObject&
 	//dataProvider->mBlackDayCount.convertFromString("ACT/365");
 	dataProvider->mBlackDayCount.convertFromString("ACT/365_ISDA");
 
-	//hishida vanna volga
+	// vanna-volga
 	//temporary
 	dataProvider->mValueModel = BSVALUEMODEL;
 	const AQLString productname = getOptionPayoffName();

@@ -41,7 +41,7 @@ public :
 		if (actT < 0.0)	throw AQLCoreInvalidData("Actual Term Negative!", __FILE__,__LINE__);
 	}
 
-	//hishida vannavolga
+	// vanna-volga
 	virtual AnalyticParam* clone() const { return new AnalyticParam(*this);};
 
 };
@@ -70,7 +70,7 @@ public :
 		if (Nu < 0.0)					   throw AQLCoreInvalidData("NumeraireRatio(DF) Negative!", __FILE__,__LINE__);
 	}
 	
-	//hishida vannavolga
+	// vanna-volga
 	virtual AnalyticParam* clone() const { return new AnalyticBKParam(*this);};
 //============================================================================
 };
@@ -107,7 +107,7 @@ public :
 		if (DFd < 0.0)					   throw AQLCoreInvalidData("Domestic DF Negative!", __FILE__,__LINE__);
 	}
 
-	//hishida vannavolga
+	// vanna-volga
 	virtual AnalyticParam* clone() const { return new AnalyticGKParam(*this);};
 
 };
@@ -127,7 +127,7 @@ public :
 	unsigned int pos;
 	bool iswithoutfirst;
 
-	//hishida vannavolga
+	// vanna-volga
 	virtual AnalyticParam* clone() const { return new AnalyticCFParam(*this);};
 
 };
@@ -142,7 +142,7 @@ public :
 
 	double Dig;  //payoff of digital option i.e. call digital payoff = (Dig-S)^+;
 
-	//hishida vannavolga
+	// vanna-volga
 	virtual AnalyticParam* clone() const { return new AnalyticDGParam(*this);};
 };
 /*!
@@ -160,7 +160,7 @@ public :
 	int du;		//if down du=1, if up du=-1
 	int ReTime;	//Retime at Barrier Reach ReTime=1, time at DeliveryDate ReTimi =0 (Defalut ReTime==1)
 
-	//hishida vannavolga
+	// vanna-volga
 	virtual AnalyticParam* clone() const { return new AnalyticSBParam(*this);};
 };
 /*!
@@ -181,7 +181,7 @@ public :
 	int RehTime;//Rehtime at Barrier Reach RehTime=1, time at DeliveryDate RehTimi =0 (Defalut ReTime==1)
 	int Num;	//Num is number of sum used for Double Barrier
 
-	//hishida vannavolga
+	// vanna-volga
 	virtual AnalyticParam* clone() const { return new AnalyticDBParam(*this);};
 };
 /*!
@@ -203,7 +203,7 @@ public :
 		if (Poptm < 0.0)					   throw AQLCoreInvalidData("Poptm Negative!", __FILE__,__LINE__);
 	}
 
-	//hishida vannavolga
+	// vanna-volga
 	virtual AnalyticParam* clone() const { return new AnalyticAFFParam(*this);};
 };
 
@@ -329,7 +329,7 @@ Parameter base class for MMCFAnalyticFormula
 	ReTime time at Barrier Reach ReTime=1, time at DeliveryDate ReTime=0 (Defalut ReTime ==1)
 */
 
-	//hishida vannaavolga
+	// vanna-volga
 	static double AQLSBprobUNT (AnalyticParam& param);
 	static double AQLSBprobDNT (AnalyticParam& param);
 

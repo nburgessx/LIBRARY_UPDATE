@@ -632,7 +632,7 @@ using namespace std;
 	ReTime time at Barrier Reach ReTime=1, time at DeliveryDate ReTime=0 (Defalut ReTime ==1)
 */
 
-//hishida vannavolga
+// vanna-volga
 	double AnalyticFormulae::AQLSBprobUNT(AnalyticParam& param)
 	{
 		FORMULAE_BEGIN
@@ -677,7 +677,7 @@ using namespace std;
 	}
 
 
-//hishida vannavolga
+// vanna-volga
 
 
 

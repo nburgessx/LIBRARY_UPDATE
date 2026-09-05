@@ -63,7 +63,7 @@ AQLPriceIRSwaptionValueFromCashFlow::isTypeOf(function_t id) const
 	return (id == FN_IR_SWAPTIONVALUEFROMCASHFLOW ? true : AQLPriceIRSwaptionValue::isTypeOf(id));
 }
 
-//hishida vannavolga
+// vanna-volga
 /*
     @brief get option method name
      @return option method name

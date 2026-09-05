@@ -98,7 +98,7 @@ AQLPriceEventTerminate::doAction(const AQLDate& actiondate,
 									 vector<AQLPriceEventHolder*>& pastaction,
 									 vector<PayOffToolHolderIter>& iter)
 {
-	(void)pastaction; //20070411--Nagase--gcc
+	(void)pastaction; // gcc
 	for (unsigned int i = 0; i < payoff.size(); i++)
 	{
 	/*	for (; iter[i] != payoff[i].end() && iter[i]->getPayOff().getPaymentDate() <= actiondate; iter[i]++)

@@ -66,7 +66,7 @@ AQLPriceFXDigitalCallSpreadSingleBarrierOptionValue::isTypeOf(function_t id) con
 	return (id == FN_FXDIGITALCALLSPREADSINGLEBARRIEROPTIONVALUE ? true : AQLPriceFXSingleBarrierOptionValue::isTypeOf(id));
 }
 
-//hishida vannavolga
+// vanna-volga
 /*
     @brief get option method name
      @return option method name

@@ -99,7 +99,7 @@ AQLCalibrationParametersFXVannaVolga::createCalibrationInfo(AQLObjectPool &objPo
 	AQLString volFile = AQLMarketData::getNumFileName(mpCalibStaticData->getStaticData(keyFX + FX_KEY_CALIB_VOLATILITY_FILE));
 
 
-	//hishida vannavolga get volatility for base strikes
+	// vanna-volga get volatility for base strikes
 	unsigned int strikeSize = baseStrikes.size();
 	if (strikeSize != 3)
 		throw AQLCoreInvalidData("Vanna Volga method needs 3 strikes",__FILE__,__LINE__);
@@ -157,7 +157,7 @@ AQLCalibrationParametersFXVannaVolga::createCalibrationInfo(AQLObjectPool &objPo
 		AQLString lterm = strTerms[i];
 		lterm.toLower();
 
-		//hishida vannavolga warning this must be changed in all of sources
+		// vanna-volga warning this must be changed in all of sources
 		//AQLString tmpdate = AQLMarketData::aqlConvertToTerm(strTerms[i]);
 		AQLString tmpdate = strTerms[i];
 		matuterms[i] = AQLMathDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);

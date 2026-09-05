@@ -104,7 +104,7 @@ AQLPriceEventOption::doAction(const AQLDate& actiondate,
 									 vector<AQLPriceEventHolder*>& pastaction,
 									 vector<PayOffToolHolderIter>& iter)
 {
-	(void)iter; (void)pastaction; (void)futureaction; (void)payoff; //20070411--Nagase--gcc
+	(void)iter; (void)pastaction; (void)futureaction; (void)payoff; // gcc
 	for(unsigned int i = 0; i < mTargetLegNo.size(); i++)
 	{
 		AQLPricePayOffToolHolder ph(new AQLPricePayOffTool());

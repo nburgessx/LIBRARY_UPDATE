@@ -547,10 +547,10 @@ AQLCoreComponentManager::initialize()
 	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(THETA)	+ AQLString(PUT),	new AQLDGthetaPut()	)	);
 	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(RHO)	+ AQLString(PUT),	new AQLDGrhoPut()	)	);
 	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(PHI)	+ AQLString(PUT),	new AQLDGphiPut()	)	);
-	//hishida vannavolga
+	// vanna-volga
 	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PROB)	+ AQLString(SBUP) + AQLString(NOTOUCH), new AQLSBprobUNT() ));
 	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PROB)	+ AQLString(SBDOWN) + AQLString(NOTOUCH), new AQLSBprobDNT() ));
-	//hishida vannavolga
+	// vanna-volga
 	//MMSB
 	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new AQLSBpremDIC() ));
 	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new AQLSBpremDIP() ));

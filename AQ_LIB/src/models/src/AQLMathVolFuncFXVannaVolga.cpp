@@ -168,7 +168,6 @@ AQLMathVolFuncFXVannaVolga::setUpVannaVolgaMatrix(AnalyticGKParam* gkParam, AQLD
 	double highvol = AQLMathFXVolatilitySurfaceGenerate::GetVolatilityFromMaturityInterp(termpoint,mAtmMethod,mOpData,mSmileData, 2);
 	
 	double lowstrike = AQLMath::exp(AQLMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(-0.25, lowvol, -1, tmpData ) ) * tmpData.F;
-	//hishida 
 	//double atmstrikeTemporary = AQLMath::exp(AQLMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(0.50, atmvol, 1, tmpData ) ) * tmpData.F;
 	//double atmstrikeWatchDiff = AQLMathFXVolatilitySurfaceGenerate::GetATMStrike(atmvol,tmpData);
 	double atmstrike = tmpData.F * AQLMath::exp(-0.5*atmvol*atmvol*tmpData.T);

@@ -33,7 +33,7 @@
 #include "AQLCalibrateModelFXVanilla.h"
 #include "AQLCalibrateModelFXStrangleSolver.h"
 #include "AQLCalibrateModelIRSABR.h"
-//hishida vannavolga
+// vanna-volga
 #include "AQLCalibrateModelFXVannaVolga.h"
 #include "AQLCalibrateModelSZ.h"
 
@@ -110,7 +110,7 @@ AQLModelConfiguration::createSDEGenerator(const AQLString &model) const
 	{
 		return new AQLCalibrateModelFXStrangleSolver();
 	}
-	//hishida vannavolga
+	// vanna-volga
 	else if (tmpModel == MODEL_FXVANNAVOLGA)
 	{
 		return new AQLCalibrateModelFXVannaVolga();

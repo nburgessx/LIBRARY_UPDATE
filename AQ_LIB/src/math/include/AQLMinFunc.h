@@ -104,7 +104,7 @@ public:
 
 	                            //==========================================
 								// check x is in domain of this function or not.
-	virtual	bool				isInDomain(const DoubleArray& x) const { (void)x; //20061017--David--Remove warning:C4100 20070411--Nagase--gcc
+	virtual	bool				isInDomain(const DoubleArray& x) const { (void)x; // suppress warning C4100 (unused parameter); gcc
 												return true;};
 								//==========================================
 	                            // check derivable or not.

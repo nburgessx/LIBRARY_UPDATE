@@ -17,7 +17,7 @@
 #include "AQLCalibrateVolatilityIRSABR.h"
 #include "AQLDefinitions.h"
 #include "AQLDefinitionsRisk.h"
-//hishida vannavolga
+// vanna-volga
 #include "AQLCalibrateVolatilityFXVannaVolga.h"
 
 
@@ -90,7 +90,7 @@ AQLCalibrateVolatilityManager::createVolCreator(const AQLString &model) const
 	{
 		return new AQLCalibrateVolatilityFXStrangleSolver();
 	}
-	//hishida vannavolga
+	// vanna-volga
 	else if (tmpModel == MODEL_FXVANNAVOLGA)
 	{
 		return new AQLCalibrateVolatilityFXVannaVolga();

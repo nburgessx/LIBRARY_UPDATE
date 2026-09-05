@@ -86,7 +86,7 @@ AQLPriceIndexToolBase::setUp(const AQLDate& basedate,
 							const AQLObject& indexinfo,
 							const AQLPricePayOff& payoff)
 {
-	(void)payoff; (void)trade; (void)basedate; (void)paydate; //20070411--Nagase--gcc
+	(void)payoff; (void)trade; (void)basedate; (void)paydate; // gcc
 	const AQLDataHolder* dh;
 	//round function
 	dh = &(indexinfo.getData(PRICING_DATA_ROUNDFUNCTION, NOCHECK));
@@ -1757,7 +1757,7 @@ AQLPriceIndexToolCpn::setUpCapandFloor(const AQLObject& trade,
 				 const AQLDate& fixingdate,
 				 const AQLPricePayOff& payoff)
 {
-	(void)payoff; //20070411--Nagase--gcc
+	(void)payoff; // gcc
 	mLatestPos = -1;
 	for (unsigned int i = 0; i < mPayOff->getPayOff()[mLegNo].size(); i++)
 	{
@@ -2025,7 +2025,7 @@ AQLPriceIndexToolCpnCF::setUpCapandFloor(const AQLObject& trade,
 				 const AQLDate& fixingdate,
 				 const AQLPricePayOff& payoff)
 {
-	(void)payoff; //20070411--Nagase--gcc
+	(void)payoff; // gcc
 	mLatestPos = -1;
 	for (unsigned int i = 0; i < mPayOff->getPayOff()[mLegNo].size(); i++)
 	{

@@ -370,7 +370,7 @@ public :
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGphiPut(param);}
 };
 
-//hishida vannavolga
+// vanna-volga
 
 class AQLSBprobUNT : public AQLBlackScholesBase
 {
@@ -386,7 +386,7 @@ public :
 	virtual ~AQLSBprobDNT(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::AQLSBprobDNT(param);}
 };
-//hishida vannavolga
+// vanna-volga
 
 
 //MMSB

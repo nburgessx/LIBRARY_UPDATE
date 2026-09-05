@@ -299,7 +299,7 @@ public:
 								// set factor
 	virtual void				setFactor(unsigned int factor) { mFactor = factor; }
 
-	//20061016--David--Remove warning:C4512
+	// suppress warning C4512
 	AQLSobol & operator=( const AQLSobol & ) { return *this; }
 
 //  OPERATION

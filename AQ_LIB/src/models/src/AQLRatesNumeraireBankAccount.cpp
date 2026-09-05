@@ -13,7 +13,7 @@
 #include "AQLModelDynamicsCurve.h"
 #include "AQLAlgorithm.h"
 
-//#ifdef _MSC_VER 	//20070409--Nagase--g++(g++stdext)
+//#ifdef _MSC_VER 	// g++ (stdext)
 //using namespace stdext;
 //#else
 using namespace std;
@@ -190,7 +190,7 @@ AQLRatesNumeraireBankAccount::calcNumeraire(void) const
 	//mTimeGrid.clear();
 	mNumeraireArray.resize(mCurves.size());
 	//mTimeGrid.resize(mCurves.size());
-//#ifdef _MSC_VER 	//20070409--Nagase--g++(g++stdext)
+//#ifdef _MSC_VER 	// g++ (stdext)
 //	hash_map<double, const AQLRatesPathElementCurve*>::const_iterator it = mCurves.begin();
 //	hash_map<double, const AQLRatesPathElementCurve*>::const_iterator it2;
 //#else

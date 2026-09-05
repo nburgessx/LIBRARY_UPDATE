@@ -41,7 +41,7 @@ private :
 	mutable DoubleVector mMatuTerms365;
 	
 
-	//hishida vannavolga
+	// vanna-volga
 	class AQLATM : public AQLFunctionBase
 	{
 	public:

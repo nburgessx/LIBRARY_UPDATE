@@ -1075,7 +1075,7 @@ double
 AQLPricePortfolioValue::value(const AQLDate& basedate, AQLObject& object,
 					const AQLDataValuation& att) const
 {
-	(void)att; //20061018--David--Fix warning:C4100 20070411--Nagase--gcc
+	(void)att; // fix warning C4100 (unused parameter); gcc
 
 	AQLDataHolder* dh;
 	//value type

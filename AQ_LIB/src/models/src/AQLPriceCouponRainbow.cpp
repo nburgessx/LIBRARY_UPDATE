@@ -109,7 +109,7 @@ AQLPriceCouponRainbow::registerData(AQLPriceDataManager& dm) const
 void
 AQLPriceCouponRainbow::setUp(const AQLDate& basedate, const AQLObject& trade, unsigned int legNo, const AQLObject& cashlet) 
 {
-	(void)basedate;	(void)legNo; //20070411--Nagase--gcc
+	(void)basedate;	(void)legNo; // gcc
 	mpFX_for_Notional = NULL;
 	mpFX_for_Coupons.clear();
 	mCouponsCur.clear();

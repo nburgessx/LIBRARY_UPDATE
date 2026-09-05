@@ -1204,7 +1204,7 @@ AQLPriceCashFlowGenerator::calibrateModel(const AQLDate& basedate,
 										const AQLDataProcedure& att) const
 {
 
-	(void)basedate; (void)att; //20070411--Nagase--gcc
+	(void)basedate; (void)att; // gcc
 	//setup leg maturity
 	setUpLegMaturity(object);
 

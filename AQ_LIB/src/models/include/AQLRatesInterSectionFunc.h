@@ -33,7 +33,7 @@ public:
 	// destructor
 	virtual ~AQLRatesInterSectionFunc();
 
-	//20061017--David--Remove warning:C4512
+	// suppress warning C4512
 	AQLRatesInterSectionFunc & operator=( const AQLRatesInterSectionFunc & ) { return *this; }
 
 

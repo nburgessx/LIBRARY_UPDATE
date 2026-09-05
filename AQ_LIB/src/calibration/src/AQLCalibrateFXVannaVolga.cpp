@@ -583,7 +583,7 @@ AQLCalibrateFXVannaVolga::setUp(AQLObjectPool &objPool,  const AQLScenarioParam 
 				throw AQLCoreInvalidData("VannaVola BaseStrikes Error",__FILE__,__LINE__);
 		}
 
-		//hishida vannavolga 
+		// vanna-volga
 			//this is complicated case. In case of FORWARDATM, or SPOTATM, we must adjust atmvolatility
 			//because vannavolgamethods always needs DeltaNeutral ATK strikes
 		if (mFxParams[i].atmType == FORWARDATM || mFxParams[i].atmType == SPOTATM)

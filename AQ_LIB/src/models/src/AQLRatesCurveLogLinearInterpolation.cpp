@@ -49,7 +49,7 @@ AQLRatesCurveLogLinearInterpolation::~AQLRatesCurveLogLinearInterpolation()
 */
 AQLCoreFunctionBase*	
 AQLRatesCurveLogLinearInterpolation::clone() const
-		//20070410--Nagase--g++ throw
+		// g++ throw
 {
     try 
 	{
@@ -185,7 +185,7 @@ AQLRatesCurveLogLinearInterpolation::AQLRatesCurveForLogLinearInterpolation::get
 */
 AQLRatesPathElementBase*	
 AQLRatesCurveLogLinearInterpolation::AQLRatesCurveForLogLinearInterpolation::clone() const
-		//20070410--Nagase--g++ throw
+		// g++ throw
 {
     try 
 	{

@@ -17,7 +17,7 @@
 #include "AQLGaussLegendre.h"
 
 
-//#ifdef _MSC_VER 	//20070409--Nagase--g++(g++stdext)
+//#ifdef _MSC_VER 	// g++ (stdext)
 //using namespace stdext;
 //#else
 using namespace std;

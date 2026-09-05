@@ -129,7 +129,7 @@ AQLPriceAccruedInterest::calcAccruedInterest(const AQLDate& basedate, unsigned i
 void	            
 AQLPriceAccruedInterest::setUp(const AQLDate& basedate, AQLObject& trade, const AQLDataValuation& att) 
 {
-	(void)basedate; (void)trade; (void)att; //20070411--Nagase--gcc
+	(void)basedate; (void)trade; (void)att; // gcc
 	if (att.isNullDataProvider())
 	{
 		//error

@@ -659,7 +659,7 @@ typedef EntityHolderVec::const_iterator CEntityHolItr;
 #define MODEL_IRVANILLA "IRVANILLA"
 #define MODEL_FXVANILLA "FXVANILLA"
 #define MODEL_FXSTRGLSLV "FXSTRGLSLV"
-//hishida vannavolga
+// vanna-volga
 #define MODEL_FXVANNAVOLGA "FXVANNAVOLGA"
 #define MODEL_IRSABR "IRSABR"
 

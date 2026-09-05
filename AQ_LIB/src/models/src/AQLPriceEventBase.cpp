@@ -97,7 +97,7 @@ AQLPriceEventBase::setUp(const AQLDate& basedate,
 	if (isCall) return;
 
 
-	(void)payoff; (void)basedate; //20070411--Nagase--gcc
+	(void)payoff; (void)basedate; // gcc
 	const AQLDataHolder* dh;
 	//leg object
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));

@@ -32,7 +32,7 @@ public:
 	// destructor
 	virtual ~AQLRatesAggregateCouponCapFloor();
 
-	//20061017--David--Remove warning:C4512
+	// suppress warning C4512
 	AQLRatesAggregateCouponCapFloor & operator=( const AQLRatesAggregateCouponCapFloor & ) { return *this; };
 
 

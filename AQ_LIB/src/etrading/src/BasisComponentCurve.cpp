@@ -209,7 +209,7 @@ void BasisComponentCurve::initialise()
 
 
 	//==============================================================================================================
-	// Joseph: To review the usage of mBCurveGenMap
+	// TODO: review the usage of mBCurveGenMap
 	//==============================================================================================================
 
 	//dh = &getData(IR_CALIBRATION_CALIBRATION_DATAOGENERATEDFS, NOCHECK);

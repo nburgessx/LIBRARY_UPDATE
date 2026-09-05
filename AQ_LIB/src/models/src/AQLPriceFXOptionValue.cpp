@@ -64,7 +64,7 @@ AQLPriceFXOptionValue::isTypeOf(function_t id) const
 	return (id == FN_FXOPTIONVALUE ? true : AQLLinearRatesOptionValue::isTypeOf(id));
 }
 
-//hishida vannavolga
+// vanna-volga
 /*
     @brief get option method name
      @return option method name

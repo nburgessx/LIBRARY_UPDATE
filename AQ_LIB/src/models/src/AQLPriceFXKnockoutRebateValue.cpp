@@ -64,7 +64,7 @@ AQLPriceFXKnockoutRebateValue::isTypeOf(function_t id) const
 	return (id == FN_FXKNOCKOUTREBATEVALUE ? true : AQLPriceFXOptionValue::isTypeOf(id));
 }
 
-//hishida vannavolga
+// vanna-volga
 /*
     @brief get option method name
      @return option method name

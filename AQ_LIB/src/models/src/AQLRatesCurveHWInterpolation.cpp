@@ -47,7 +47,7 @@ AQLRatesCurveHWInterpolation::~AQLRatesCurveHWInterpolation()
 */
 AQLCoreFunctionBase*	
 AQLRatesCurveHWInterpolation::clone() const
-		//20070410--Nagase--g++ throw
+		// g++ throw
 {
     try 
 	{
@@ -171,7 +171,7 @@ AQLRatesCurveHWInterpolation::AQLRatesCurveForHWInterpolation::getType() const
 */
 AQLRatesPathElementBase*	
 AQLRatesCurveHWInterpolation::AQLRatesCurveForHWInterpolation::clone() const
-		//20070410--Nagase--g++ throw
+		// g++ throw
 {
     try 
 	{

@@ -34,7 +34,7 @@ public:
 	// destructor
 	virtual ~AQLRatesCpnCapFloorFuncForTARN();
 
-	//20061017--David--Remove warning:C4512
+	// suppress warning C4512
 	AQLRatesCpnCapFloorFuncForTARN & operator=( const AQLRatesCpnCapFloorFuncForTARN & ) { return *this; }
 
 
@@ -103,16 +103,16 @@ public:
 
 	                            //==========================================
 								// check x is in domain of this function or not.
-	virtual	bool				isInDomain(const DoubleArray& x) const { (void)x; //20061017--David--Remove warning:C4100 20070411--Nagase--gcc
+	virtual	bool				isInDomain(const DoubleArray& x) const { (void)x; // suppress warning C4100 (unused parameter); gcc
 												return true;};
 								//==========================================
 	                            // check derivable or not.
                             // check derivable or not.
-	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int pos) const { (void)x; (void)pos; //20061017--David--Remove warning:C4100 20070411--Nagase--gcc
+	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int pos) const { (void)x; (void)pos; // suppress warning C4100 (unused parameter); gcc
 												return true;};
 								//==========================================
 	                            // check double derivable or not.	
-	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi, unsigned int posj) const { (void)x; (void)posi; (void)posj; //20061017--David--Remove warning:C4100 20070411--Nagase--gcc
+	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi, unsigned int posj) const { (void)x; (void)posi; (void)posj; // suppress warning C4100 (unused parameter); gcc
 												return true;};
 
 

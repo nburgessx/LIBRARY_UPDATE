@@ -6,7 +6,7 @@
  */
 
 
-///Hishida 0313 unsolved problem /////////////////////////
+// TODO: unsolved problem
 #ifndef PRICING_DATA_SPOTDATE
 #define PRICING_DATA_SPOTDATE				"SpotDate"
 #endif

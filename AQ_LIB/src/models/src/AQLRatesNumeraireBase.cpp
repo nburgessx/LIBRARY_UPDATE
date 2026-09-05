@@ -19,7 +19,7 @@
 
 #include <limits>
 
-//#ifdef _MSC_VER 	//20070409--Nagase--g++(g++stdext)
+//#ifdef _MSC_VER 	// g++ (stdext)
 //using namespace stdext;
 //#else
 using namespace std;
@@ -223,7 +223,7 @@ AQLRatesNumeraireBase::clear()
 	mUpdateFlag = true;
 }
 
-//20070406--Nagase--g++(cpp)
+// g++ (cpp)
 //======================================
 // set curve
 /*!
@@ -239,7 +239,7 @@ AQLRatesNumeraireBase::setCurve(double t, const AQLRatesPathElementCurve* pcurve
 }
 
 
-//20070406--Nagase--g++(cpp)
+// g++ (cpp)
 //==========================================
 // set interpolation class
 /*!

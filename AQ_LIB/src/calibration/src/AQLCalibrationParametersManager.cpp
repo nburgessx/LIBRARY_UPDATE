@@ -17,7 +17,7 @@
 #include "AQLCalibrationParametersLMM.h"
 #include "AQLCalibrationParametersFXStrangleSolver.h"
 #include "AQLCalibrationParametersIRSABR.h"
-//hishida vannavolga
+// vanna-volga
 #include "AQLCalibrationParametersFXVannaVolga.h"
 #include "AQLDefinitions.h"
 #include "AQLDefinitionsPtberg.h"
@@ -108,7 +108,7 @@ AQLCalibrationParametersManager::createCalibInfoCreator(const AQLString &model) 
 	{
 		return new AQLCalibrationParametersIRSABR();
 	}
-	//hishida vannavolga
+	// vanna-volga
 	else if (tmpModel == MODEL_FXVANNAVOLGA)
 	{
 		return new AQLCalibrationParametersFXVannaVolga();

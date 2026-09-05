@@ -122,7 +122,7 @@ public:
 									const AQLPricePayOff& payoff,
 									bool isCall)
 								{
-									(void)payoff; (void)triggerinfo; (void)trade; (void)basedate; //20070411--Nagase--gcc
+									(void)payoff; (void)triggerinfo; (void)trade; (void)basedate; // gcc
 									mIsCall = isCall;
 									if (isCall) ;//mX.resize(mIndex.size() + 1);
 									else mX.resize(mIndex.size());

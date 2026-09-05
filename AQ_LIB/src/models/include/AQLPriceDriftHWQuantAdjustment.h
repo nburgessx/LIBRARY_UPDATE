@@ -95,7 +95,7 @@ public:
 	                            // return function value
 	virtual double				operator()(const DoubleArray& x) const {return operator()(x[0]);}
 
-	//20061017--David--Remove warning:C4512
+	// suppress warning C4512
 	AQLHWQAdjInnerFunc1 & operator=( const AQLHWQAdjInnerFunc1 & ) { return *this; }
 
 	virtual double				operator()(double x) const
@@ -128,7 +128,7 @@ public:
 	                            // return function value
 	virtual double				operator()(const DoubleArray& x) const {return operator()(x[0]);}
 
-	//20061017--David--Remove warning:C4512
+	// suppress warning C4512
 	AQLHWQAdjInnerFunc2 & operator=( const AQLHWQAdjInnerFunc2 & ) { return *this; }
 
 	virtual double				operator()(double x) const
@@ -162,7 +162,7 @@ public:
 	                            // return function value
 	virtual double				operator()(const DoubleArray& x) const {return operator()(x[0]);}
 
-	//20061017--David--Remove warning:C4512
+	// suppress warning C4512
 	AQLHWQAdjInnerFunc3 & operator=( const AQLHWQAdjInnerFunc3 & ) { return *this; }
 
 	virtual double				operator()(double x) const

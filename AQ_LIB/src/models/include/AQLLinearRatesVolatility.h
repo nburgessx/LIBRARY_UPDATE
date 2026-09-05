@@ -86,7 +86,7 @@ public:
 private:
 };
 
-//hishida vannavolga
+// vanna-volga
 class AQLPriceFXVannaVolgaVolatility : public AQLLinearRatesVolatility
 {
 public:

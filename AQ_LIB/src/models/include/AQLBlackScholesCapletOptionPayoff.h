@@ -34,7 +34,7 @@ public:
 	// destructor
 	virtual ~AQLBlackScholesCapletOption();
 
-	//20061017--David--Remove warning:C4512
+	// suppress warning C4512
 	AQLBlackScholesCapletOption & operator=( const AQLBlackScholesCapletOption & ) { return *this; }
 
 

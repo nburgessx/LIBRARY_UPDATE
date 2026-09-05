@@ -34,7 +34,7 @@ public:
 	// destructor
 	virtual ~AQLBlackScholesFloorletOption();
 
-	//20061017--David--Remove warning:C4512
+	// suppress warning C4512
 	AQLBlackScholesFloorletOption & operator=( const AQLBlackScholesFloorletOption & ) { return *this; }
 
 

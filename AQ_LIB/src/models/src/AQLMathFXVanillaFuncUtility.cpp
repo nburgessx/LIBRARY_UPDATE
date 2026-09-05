@@ -47,7 +47,7 @@ AQLMathFXVanillaFuncUtility::gkOption(AQLString& optiontype, AQLString& buysell,
 	upper(callput);
 	upper(buysell);
 	AQLString daycount(AC_365I);
-	//hishida vannavolga
+	// vanna-volga
 	AQLString blackdaycount(AC_365I);
 
 	///////////setup///////////////////////////
@@ -58,7 +58,7 @@ AQLMathFXVanillaFuncUtility::gkOption(AQLString& optiontype, AQLString& buysell,
 	param.rf = foreignrate;
 	param.rd = localrate;
 	param.Td = AQLMathDateUtilities::getTerm(spotdate,deliverydate,daycount,false);
-	//hishida vannavolga
+	// vanna-volga
 	//param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,daycount, true);
 	param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,blackdaycount, true);
 	param.ErrorCheck();
@@ -100,7 +100,7 @@ AQLMathFXVanillaFuncUtility::gkOptionIV(AQLString& buysell,
 	upper(callput);
 	upper(buysell);
 	AQLString daycount(AC_365I);
-	//hishida vannavolga
+	// vanna-volga
 	AQLString blackdaycount(AC_365I);
 
 	//Setup
@@ -109,7 +109,7 @@ AQLMathFXVanillaFuncUtility::gkOptionIV(AQLString& buysell,
 	param.K	  = strike;
 	param.rd  = localrate;
 	param.rf  = foreignrate;
-	//hishida vannavolga
+	// vanna-volga
 	//param.Te  = AQLMathDateUtilities::getTerm(basedate,expirydate,   daycount, true);
 	param.Te  = AQLMathDateUtilities::getTerm(basedate,expirydate,   blackdaycount, true);
 	param.Td  = AQLMathDateUtilities::getTerm(spotdate,deliverydate, daycount, true);
@@ -145,7 +145,7 @@ AQLMathFXVanillaFuncUtility::digitalOption(AQLString& optiontype, AQLString& buy
 	upper(callput);
 	upper(buysell);
 	AQLString daycount(AC_365I);
-	//hishida vannavolga
+	// vanna-volga
 	AQLString blackdaycount(AC_365I);
 
 	/////////////setup////////////////////////////
@@ -158,7 +158,7 @@ AQLMathFXVanillaFuncUtility::digitalOption(AQLString& optiontype, AQLString& buy
 	param.rf = foreignrate;
 	param.rd = localrate;
 	param.Td = AQLMathDateUtilities::getTerm(spotdate,deliverydate, daycount, true);
-	//hishida vannavolga
+	// vanna-volga
 	//param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate, daycount, true);
 	param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate, blackdaycount, true);
 	param.ErrorCheck();
@@ -195,7 +195,7 @@ AQLMathFXVanillaFuncUtility::singleBarrierOption(AQLString& optiontype, AQLStrin
 	upper(downup);
 	upper(callput);
 	AQLString daycount(AC_365I);
-	//hishida vannavolga
+	// vanna-volga
 	AQLString blackdaycount(AC_365I);
 
 	/////////////setup////////////////////////////
@@ -206,7 +206,7 @@ AQLMathFXVanillaFuncUtility::singleBarrierOption(AQLString& optiontype, AQLStrin
 	param.K	= strike;
 	param.Vol = vol;
 	param.Td = AQLMathDateUtilities::getTerm(spotdate,deliverydate,daycount, true);
-	//hishida vannavolga
+	// vanna-volga
 	//param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,daycount, true);
 	param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,blackdaycount, true);
 	param.rf = foreignrate;
@@ -302,7 +302,7 @@ AQLMathFXVanillaFuncUtility::doubleBarrierOption(AQLString& optiontype, AQLStrin
 	upper(buysell);
 	upper(rebatetype);
 	AQLString daycount(AC_365I);
-	//hishida vannavolga
+	// vanna-volga
 	AQLString blackdaycount(AC_365I);
 
 	/////////////setup////////////////////////////
@@ -311,7 +311,7 @@ AQLMathFXVanillaFuncUtility::doubleBarrierOption(AQLString& optiontype, AQLStrin
 	param.K = strike;
 	param.Vol = vol;
 	param.Td = AQLMathDateUtilities::getTerm(spotdate,deliverydate,daycount, true);
-	//hishida vannavolga
+	// vanna-volga
 	//param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,daycount, true);
 	param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,blackdaycount, true);
 	param.Ll = limitlow;

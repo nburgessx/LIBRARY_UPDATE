@@ -138,7 +138,7 @@ AQLCalibrationParametersFXStrangleSolver::createCalibrationInfo(AQLObjectPool &o
 		AQLString lterm = strTerms[i];
 		lterm.toLower();
 
-		//hishida vannavolga warning this must be changed in all of sources
+		// vanna-volga warning this must be changed in all of sources
 		//AQLString tmpdate = AQLMarketData::aqlConvertToTerm(strTerms[i]);
 //		AQLString tmpdate = strTerms[i];
 //		terms[i] = AQLMathDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);

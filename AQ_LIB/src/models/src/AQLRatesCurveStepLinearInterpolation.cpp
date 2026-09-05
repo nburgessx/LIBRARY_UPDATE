@@ -45,7 +45,7 @@ AQLRatesCurveStepLinearInterpolation::~AQLRatesCurveStepLinearInterpolation()
 */
 AQLCoreFunctionBase*	
 AQLRatesCurveStepLinearInterpolation::clone() const
-		//20070410--Nagase--g++ throw
+		// g++ throw
 {
     try 
 	{
@@ -148,7 +148,7 @@ AQLRatesCurveStepLinearInterpolation::AQLRatesCurveForStepLinearInterpolation::g
 */
 AQLRatesPathElementBase*	
 AQLRatesCurveStepLinearInterpolation::AQLRatesCurveForStepLinearInterpolation::clone() const
-		//20070410--Nagase--g++ throw
+		// g++ throw
 {
     try 
 	{

@@ -28,7 +28,7 @@
 #define PRICING_DATA_OPTIONTYPEATM "OptionTypeATM"
 #define PRICING_DATA_OPTIONTYPE25DH "OptionType25DH"
 #define PRICING_DATA_OPTIONTYPE10DH "OptionType10DH"
-//hishida vannavolga
+// vanna-volga
 #define PRICING_DATA_BASESTRIKES "BaseStrikes"
 
 #define PRICING_DATA_WEIGHT10DL "Weight10DL"

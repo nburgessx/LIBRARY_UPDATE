@@ -519,7 +519,7 @@ AQLPriceEventExtraCF::calcExtraCF(const AQLDate& actiondate,
 								   vector<PayOffToolHolderIter>& iter,
 								   AQLPricePayOffToolHolder& ph) const
 {
-	(void)actiontime; (void)pastaction; (void)futureaction; //20070411--Nagase--gcc
+	(void)actiontime; (void)pastaction; (void)futureaction; // gcc
 	double extracf = 0;
 	////product index
 	//std::map<AQLDate, std::vector<AQLPriceIndexToolBase*> >::const_iterator it = mIndexMap.begin();

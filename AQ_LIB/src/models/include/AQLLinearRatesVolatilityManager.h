@@ -15,7 +15,7 @@ class AQLString;
 class AQLLinearRatesVolatility;
 class AQLObject;
 class AQLDataProvider;
-//hishida vannavolga
+// vanna-volga
 class AQLLinearRatesModel;
 
 using namespace std;
@@ -55,7 +55,7 @@ private:
 	AQLLinearRatesVolatilityManager &operator=(const AQLLinearRatesVolatilityManager &rhs);
 	
 	static std::map<AQLString, AQLLinearRatesVolatility*> mVolatilityMap;
-	//hishida vannavolga
+	// vanna-volga
 	static std::map<AQLString, AQLLinearRatesModel*> mModelMap;
 	static AQLLinearRatesVolatilityManager *mpInstance; // single instance
 #ifdef __HAS_MIC__

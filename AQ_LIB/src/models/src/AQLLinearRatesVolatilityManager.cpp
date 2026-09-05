@@ -25,7 +25,7 @@
 common_lib::StaticMutex AQLLinearRatesVolatilityManager::mMutex;
 #endif
 std::map<AQLString, AQLLinearRatesVolatility*> AQLLinearRatesVolatilityManager::mVolatilityMap;
-//hishida vannavolga
+// vanna-volga
 std::map<AQLString, AQLLinearRatesModel*> AQLLinearRatesVolatilityManager::mModelMap;
 AQLLinearRatesVolatilityManager *AQLLinearRatesVolatilityManager::mpInstance = 0;
 //================ AQLLinearRatesVolatilityManager ===================================
@@ -129,7 +129,7 @@ AQLLinearRatesVolatilityManager::createPlainVanillaVolatiltyGenerator(AQLDataPro
 			return pvol;
 		}
 
-		//hishida vannavolga
+		// vanna-volga
 		bool isfxproduct = (productname.findString("fn_fx") != -1);
 		if (isfxproduct)
 		{
@@ -190,7 +190,7 @@ AQLLinearRatesVolatilityManager::createPlainVanillaVolatiltyGenerator(AQLDataPro
 }
 
 
-//hishida vanna volga
+// vanna-volga
 // 
 /*!
     @brief create AQLLinearRatesModel
@@ -252,7 +252,7 @@ AQLLinearRatesVolatilityManager::finalize(void)
 		}
 		mVolatilityMap.clear();
 
-		//hishida vanna volga
+		// vanna-volga
 		std::map<AQLString, AQLLinearRatesModel*>::iterator itmodel = mModelMap.begin();
 		while (itmodel != mModelMap.end())
 		{

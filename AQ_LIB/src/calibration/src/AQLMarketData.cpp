@@ -1555,7 +1555,7 @@ AQLMarketData::getVolInputType(const AQLString &model, const AQLString &ccy, con
 	{
 		return INPUT_FUNC_SCALAR;
 	}
-	//hishida vannavolga
+	// vanna-volga
 	else if (tmpModel == MODEL_FXVANNAVOLGA)
 	{
 		return INPUT_FUNC_SCALAR;

@@ -65,7 +65,7 @@ AQLPriceFXDigitalCallSpreadOptionValue::isTypeOf(function_t id) const
 	return (id == FN_FXDIGITALCALLSPREADOPTIONVALUE ? true : AQLPriceFXOptionValue::isTypeOf(id));
 }
 
-//hishida vannavolga
+// vanna-volga
 /*
     @brief get option method name
      @return option method name

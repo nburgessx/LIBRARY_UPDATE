@@ -313,6 +313,9 @@ The phase-3 maps already hold the translations.
 
 ## !! THIRD-PARTY CODE FOUND IN src/math -- licence obligation !!
 
+**TWO components so far, both undeclared. Both are EXCLUDED from every comment,
+banner and name sweep. Do not strip their attribution.**
+
 `src/math/src/AQLSobol.cpp` is **not ours**. It carries:
 
     2002 Peter Jkel "Monte Carlo Methods in Finance".
@@ -336,9 +339,28 @@ Two follow-ups for Phase 6:
    36bffcc1, so no rebrand step caused it. Repairing an attribution we are
    contractually required to preserve is worth doing properly.
 
-Given ~20% of this code came from contractors (CLAUDE.md 7), other unattributed
-third-party code may be present. A provenance scan of `math` / `models` /
-`calibration` belongs in the Phase 6 licence work, before sale.
+### 2. `src/math/src/AQLNl2sol.cpp` -- NL2SOL (6,541 lines)
+Found while removing personal names from comments: the "coded by david m. gay"
+comments are **not** a colleague's attribution, they are the provenance of
+**NL2SOL**, the standard nonlinear least-squares solver:
+
+    john dennis designed much of this routine ... roy welsch suggested the
+    model switching strategy. david gay and stephen peters cast this
+    subroutine into a more portable form (winter 1977) ...
+    this subroutine was written in connection with research supported by the
+    national science foundation under grants mcs-7600324, dcr75-10143, ...
+
+Published via ACM TOMS; the file also cites Dennis/Gay/Welsch and Rabinowitz.
+Attribution and the NSF funding acknowledgement must be preserved, and NL2SOL
+needs a THIRD_PARTY_LICENSES.md entry alongside the Sobol/Jaeckel code.
+
+### Provenance scan is now a MUST, not a nice-to-have
+Two undeclared third-party components turned up incidentally, in one project,
+while looking for something else. ~20% of this code came from contractors
+(CLAUDE.md 7). A deliberate provenance scan of `math` / `models` /
+`calibration` -- looking for academic citations, funding acknowledgements,
+"coded by", "adapted from", ACM/Netlib/Numerical Recipes markers -- belongs in
+Phase 6 **before sale**, and is the kind of question a solicitor will ask.
 
 ---
 

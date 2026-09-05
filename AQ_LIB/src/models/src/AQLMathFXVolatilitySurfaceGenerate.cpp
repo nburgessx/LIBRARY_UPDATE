@@ -414,7 +414,7 @@ double AQLMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( double 
     {
         if( sub_func( upper )  > 0.000001 ) upper *= 2.;
         //else if( AQLMath::abs( sub_func( upper ) ) <= 0.000001 || AQLTime::isError( sub_func( upper )  ) == ERMATHNAN_ ) upper /= 1.5;
-		//20170515 - David - Fixed INF Error
+		// fixed INF error
 		else if( AQLMath::abs( sub_func( upper ) ) <= 0.000001 || AQLTime::isError( sub_func( upper )  ) == ERMATHNAN_ || AQLTime::isError( sub_func( upper )  ) == ERMATHINF_ ) upper /= 1.5;
         else break;
     }
@@ -423,7 +423,7 @@ double AQLMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( double 
     {
         if( sub_func( lower )  < -0.000001  )  lower *= 2.;
         //else if( AQLMath::abs( sub_func( lower ) ) <= 0.000001 || AQLTime::isError( sub_func( upper ) ) == ERMATHNAN_ ) lower /= 1.5;
-		//20170515 - David - Fixed INF Error
+		// fixed INF error
 		else if( AQLMath::abs( sub_func( lower ) ) <= 0.000001 || AQLTime::isError( sub_func( upper ) ) == ERMATHNAN_ || AQLTime::isError( sub_func( upper ) ) == ERMATHINF_ ) lower /= 1.5;
         else break;
     }
@@ -2320,7 +2320,7 @@ double AQLMathFXVolatilitySurfaceGenerate::GetATMVolatility( double termPoint,
 		atmpoint = 2;
 	else if (3 == y[0].vols.size())
 		atmpoint = 1;
-	//hishida vannavolga
+	// vanna-volga
 	else 
 		throw AQLCoreInvalidData("Volatility Setting Error",__FILE__,__LINE__);
 
@@ -2415,7 +2415,7 @@ double AQLMathFXVolatilitySurfaceGenerate::GetATMVolatility( double termPoint,
     return atmVol;
 };
 
-//hishida vannavolga
+// vanna-volga
 double AQLMathFXVolatilitySurfaceGenerate::GetVolatilityFromMaturityInterp( double termPoint,
                                                         const ATMInterpolationMethod& atmMethod,
 														const std::vector<FXOptionData >& x,

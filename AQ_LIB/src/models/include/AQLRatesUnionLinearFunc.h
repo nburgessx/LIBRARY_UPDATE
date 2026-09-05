@@ -33,7 +33,7 @@ public:
 	// destructor
 	virtual ~AQLRatesUnionLinearFunc();
 
-	//20061017--David--Remove warning:C4512
+	// suppress warning C4512
 	AQLRatesUnionLinearFunc & operator=( const AQLRatesUnionLinearFunc & ) { return *this; }
 
 

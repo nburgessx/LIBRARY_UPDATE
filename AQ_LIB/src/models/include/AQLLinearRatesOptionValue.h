@@ -252,7 +252,7 @@ public:
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
-								//hishida vannavolga
+								// vanna-volga
 								//======================================
 								// Return option method name 
 	virtual AQLString			getOptionPayoffName() const;

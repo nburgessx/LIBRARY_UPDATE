@@ -5,7 +5,7 @@
 #endif
 
 
-//hishida vannavolga
+// vanna-volga
 #ifndef BSVALUEMODEL
 #define BSVALUEMODEL "BSValueModel"
 #endif
@@ -111,7 +111,7 @@ public:
 	bool mIsCashSettlementAdjust;
 	AQLString mCashSettlementCurrency;
 
-	//hishida vannavolga
+	// vanna-volga
 	AQLString mValueModel;
 
 	

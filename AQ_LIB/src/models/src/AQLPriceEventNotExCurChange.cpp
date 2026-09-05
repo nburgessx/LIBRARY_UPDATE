@@ -103,7 +103,7 @@ AQLPriceEventNotExCurChange::doAction(const AQLDate& actiondate,
 										vector<AQLPriceEventHolder*>& pastaction,
 										vector<PayOffToolHolderIter>& iter)
 {
-	(void)actiontime; (void)pastaction; (void)futureaction; //20070411--Nagase--gcc
+	(void)actiontime; (void)pastaction; (void)futureaction; // gcc
 	PayOffToolHolderIter it;
 	AQLDate fixingdate;
 	if (mIsFixingDate)

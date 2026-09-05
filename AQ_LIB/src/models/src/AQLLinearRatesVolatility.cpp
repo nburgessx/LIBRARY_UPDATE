@@ -12,7 +12,7 @@
 #include "AQLObject.h"
 #include "AQLLinearRatesVolatility.h"
 #include "AQLMathVolFuncFXStrangleSolver.h"
-//hishida vannavolga
+// vanna-volga
 #include "AQLMathVolFuncFXVannaVolga.h"
 #include "AQLLinearRatesOptionValueDataProvider.h"
 #include "AQLDataVector.h"
@@ -166,7 +166,7 @@ AQLPriceFXStrangleSolverVolatility::setVolatility(AQLDataProvider* dp, AQLObject
 		if (interpatm == TermWeighted || TermNoWeighted)
 		{
 			//volvec[1]= gkparam[i]->actT;
-			//hishida vannavolga
+			// vanna-volga
 			volvec[1]= gkparam[i]->Te;
 		}
 		else
@@ -216,7 +216,7 @@ AQLPriceFXStrangleSolverATMVolatility::setVolatility(AQLDataProvider* dp, AQLObj
 		if (interpatm == TermWeighted || TermNoWeighted)
 		{
 			//volvec[0]= gkparam[i]->actT;
-			//hishida vannavolga
+			// vanna-volga
 			volvec[0]= gkparam[i]->Te;
 		}
 		else
@@ -227,7 +227,7 @@ AQLPriceFXStrangleSolverATMVolatility::setVolatility(AQLDataProvider* dp, AQLObj
 	return;
 }
 
-//hishida vannavolga
+// vanna-volga
 //================ AQLPriceFXStrangleSolverVolatility ===================================
 // constructor
 /*!
