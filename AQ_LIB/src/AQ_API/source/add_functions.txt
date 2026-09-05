@@ -1,6 +1,6 @@
 
 Add the declaration in the header and implementation in the cpp. Do not use namespaces or non standard types on the function signature. 
-Forward the implementation to the validation_api layer.
+Forward the implementation to the validation layer.
 
 All POD types are supported
 

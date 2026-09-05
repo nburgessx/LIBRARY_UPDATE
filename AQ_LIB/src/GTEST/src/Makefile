@@ -4,7 +4,7 @@ TOPDIR = ../..
 include $(TOPDIR)/make.header
 
 INCLUDE += -I$(TOPDIR)/GTEST/include
-INCLUDE += -I$(TOPDIR)/validation_api/include
+INCLUDE += -I$(TOPDIR)/validation/include
 INCLUDE += -I$(TOPDIR)/etrading/include
 
 THIRD_PARTY=/workspace/svc_quant_dev/library
@@ -34,7 +34,7 @@ CFLAGS += $(DEBUG)
 OUTPUT = $(TOPDIR)/lib
 
 ## AQ library dependencies
-LIBS += -lvalidation_api -letrading -lmodels -lmath
+LIBS += -lvalidation -letrading -lmodels -lmath
 
 ## QuantLib: Resolve any further dependencies from etrading
 LIBS += $(QLIB_LIB)

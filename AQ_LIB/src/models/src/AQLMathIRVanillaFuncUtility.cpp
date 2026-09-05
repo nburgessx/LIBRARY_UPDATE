@@ -1790,7 +1790,6 @@ getSABRConvexityAdjust2(double S0,
 
 	double theta = 1. - tau * S0 / (1. + tau * S0) * ( delta / tau + num_swap / (pow(1. + tau * S0,num_swap) - 1.) );
 
-	/*vector<double> int_cond = XllPlusTips::getDoubleVector(int_cond_);*/
 	double int_lb = int_cond[0]; double int_ub = int_cond[1]; double int_step = int_cond[2];
 
 	const double integralStep = 1.0 / int_step;
@@ -2006,7 +2005,6 @@ getSABRConvexityAdjust(	double S0,
 
 	double theta = 1. - tau * S0 / (1. + tau * S0) * ( delta / tau + num_swap / (pow(1. + tau * S0,num_swap) - 1.) );
 
-	/*vector<double> int_cond = XllPlusTips::getDoubleVector(int_cond_);*/
 	double int_lb = int_cond[0]; double int_ub = int_cond[1]; double int_step = int_cond[2];
 
 	const double integralStep = 1.0 / int_step;

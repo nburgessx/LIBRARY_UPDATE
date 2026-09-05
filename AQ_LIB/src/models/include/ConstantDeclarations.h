@@ -170,7 +170,7 @@
 #define BASISSTEP					"BASISSTEP"
 #define MONOTONECONVEX				"MONOTONECONVEX"
 
-//define curvegenerate type and rate type mirGetRate  
+//define curvegenerate type and rate type  
 #define MONEY	 "MONEY"
 #define LIBOR	 "LIBOR"
 #define SWAP		 "SWAP"

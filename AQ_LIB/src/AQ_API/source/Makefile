@@ -2,7 +2,7 @@ TOPDIR = ../..
 
 include $(TOPDIR)/make.header
 
-INCLUDE += -I$(TOPDIR)/validation_api/include
+INCLUDE += -I$(TOPDIR)/validation/include
 INCLUDE += -I$(TOPDIR)/etrading/include
 
 THIRD_PARTY=/workspace/svc_quant_dev/library
@@ -40,7 +40,7 @@ CFLAGS += $(DEBUG)
 OUTPUT = $(TOPDIR)/lib
 
 ## AQ library dependencies
-LIBS += -lvalidation_api -letrading -lcalibration -lmodels -lmath
+LIBS += -lvalidation -letrading -lcalibration -lmodels -lmath
 
 ## Boost Library dependencies
 LIBS += -L$(BOOST_HOME)/linux_x86_64/lib -lboost_chrono -lboost_atomic -lboost_filesystem -lboost_program_options

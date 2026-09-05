@@ -140,7 +140,7 @@ namespace google_test
         EXPECT_TRUE( allFixingTables.has( "EUR_6M_FIXINGS_20101010" ) );
 
         auto& fixTable = allFixingTables.access( "EUR_6M_FIXINGS_20101010" );
-        auto variantMatrix = fixTable.getVariantMatrix();  // XllPlusTips::populateExcelArrayWithVariantMatrixByColumn gives easy population in excel
+        auto variantMatrix = fixTable.getVariantMatrix();
 
         std::cout << variantMatrix.size() << std::endl;
 

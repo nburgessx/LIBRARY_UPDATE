@@ -32,7 +32,7 @@ namespace etrading
 
     InitializeETrading::~InitializeETrading()
     {
-	    // from mirClearEntityPoolAndReadProperty
+	    // from the legacy entity-pool/property reader
 	    dataInstance_->getObjectPool().clear();
 	    AQLCoreDataService::finalize();
     }

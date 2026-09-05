@@ -47,10 +47,6 @@ namespace etrading
             // List functions here
             // -------------------------------------------------------------------------
 
-            functionList[ AQLString( "tryMirSetUpOISCurve" ) ]             = etrading::replayCurveOIS;
-            functionList[ AQLString( "tryMirSetUpSwapCurve" ) ]            = etrading::replayCurveSTD;
-            functionList[ AQLString( "tryMirSetUpBasisSwapCurve" ) ]       = etrading::replayCurveBasis;
-            functionList[ AQLString( "tryMirSetUpFwdFXConstantCurve" ) ]   = etrading::replayCurveFwdFX;
 
             functionList[ AQLString( "tryAqCurvesCalibrateOIS" ) ]          = etrading::replayCurveOIS;
             functionList[ AQLString( "tryAqCurvesCalibrateSwap" ) ]            = etrading::replayCurveSTD;

@@ -3,7 +3,7 @@ TOPDIR = ../..
 
 include $(TOPDIR)/make.header
 
-INCLUDE += -I$(TOPDIR)/validation_api/include
+INCLUDE += -I$(TOPDIR)/validation/include
 INCLUDE += -I$(TOPDIR)/etrading/include
 
 THIRD_PARTY=/workspace/svc_quant_dev/library
@@ -28,7 +28,7 @@ CFLAGS += -fopenmp
 CFLAGS += $(DEBUG)
 
 OUTPUT = $(TOPDIR)/lib
-LIBA = libvalidation_api.a
+LIBA = libvalidation.a
 
 include $(TOPDIR)/make.footer
 
