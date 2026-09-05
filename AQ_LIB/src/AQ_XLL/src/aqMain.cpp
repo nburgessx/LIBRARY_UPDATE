@@ -1,4 +1,4 @@
-#include <aqXllMain.h>
+#include <aqMain.h>
 
 // IMPORTANT: Only include this in one source file per addin, otherwise you will get multiple function definitions.
 #include <xloil/XllEntryPoint.h> 

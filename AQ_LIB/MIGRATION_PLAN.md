@@ -468,6 +468,12 @@ canonical marshalling / handle-I/O / array-return / error-convention pattern.
   → `validation` wrapper → `GTEST` case → tick the inventory row. Build +
   run suite per category.
 - ☐ **4.8 Generator + config wiring** — see **Phase 4b**.
+- ☐ **4.11 `AQ_XLL` file naming** (Nicholas, 2026-09-06): every file is
+  `aq<Category>.{cpp,h}` — `aqDates.cpp`, `aqMath.cpp`, `aqTools.cpp`,
+  `aqMain.{cpp,h}` — with **one exception**, `aqXllTools.{h,cpp}`, the shared
+  Excel-side helper library (marshalling + AQObj handle decoration). The `Xll`
+  infix is what distinguishes the helper library from the `Tools` *category*
+  file, which is `aqTools.cpp`.
 - ☐ **4.9 Record / playback / rebase on EVERY validation function**  (Nicholas,
   2026-09-06). The infrastructure already exists and is proven — `RecordMacros.h`
   (`RECORD_INPUTS_n` / `RECORD_OUTPUTS`), `CreateDataFile::recordEnabled()`,

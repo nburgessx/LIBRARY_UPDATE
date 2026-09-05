@@ -14,7 +14,7 @@
  *          names already published by AQ_API and validation.
  */
 
-#include <aqXllMain.h>
+#include <aqMain.h>
 #include "aqXllTools.h"
 
 #include "tryAqDates.h"

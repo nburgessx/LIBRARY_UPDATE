@@ -357,14 +357,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqXllDates.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqXllMain.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqXllMath.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqXllToolsFunctions.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqDates.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqMain.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqMath.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqTools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\AQ_XLL\include\aqXllTools.h" />
-    <ClInclude Include="..\src\AQ_XLL\include\aqXllMain.h" />
+    <ClInclude Include="..\src\AQ_XLL\include\aqMain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
