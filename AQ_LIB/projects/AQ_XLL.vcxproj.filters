@@ -19,6 +19,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\AQ_XLL\src\aqDates.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\dates.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -33,6 +39,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\AQ_XLL\include\aqXllTools.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\AQ_XLL\include\main.h">
       <Filter>include</Filter>
     </ClInclude>
