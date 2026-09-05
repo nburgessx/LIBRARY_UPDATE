@@ -29,9 +29,33 @@
 #include "AQLString.h"
 #include "AQLCoreTemplateType.h"   // DateVector
 #include "CoreEnumerations.h"       // etrading::CachedObjectEnum
+#include "StructuredExceptionHandler.h"
 
 namespace aq_xll
 {
+    // ---------------------------------------------------------------------
+    //  Structured exception handling
+    // ---------------------------------------------------------------------
+    //
+    //  An access violation, stack overflow or divide-by-zero inside a worksheet
+    //  function is a Windows structured exception, not a C++ one. Left alone it
+    //  unwinds straight through Excel and takes the process down with it.
+    //
+    //  etrading::StructuredExceptionHandler installs a _set_se_translator for
+    //  the lifetime of the object, turning those into C++ exceptions that
+    //  xlOil's XLO_FUNC_START/END can catch and return to the cell as an error
+    //  string. It is per-thread and needs /EHa, which every project already
+    //  uses (<ExceptionHandling>Async).
+    //
+    //  validation already does this via VALID_EXCEPTION_START, so anything
+    //  inside a tryAq* call is covered. This guard extends the same protection
+    //  over the MARSHALLING either side of that call - reading a bad Excel
+    //  range, or building the result array - which validation never sees.
+    //
+    //  Put AQ_XLL_GUARD as the first line of every AQ_XLL worksheet function.
+
+    #define AQ_XLL_GUARD  etrading::StructuredExceptionHandler aqXllSehGuard_;
+
     // ---------------------------------------------------------------------
     //  Marshalling: Excel  ->  AQ
     // ---------------------------------------------------------------------

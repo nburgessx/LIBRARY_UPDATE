@@ -468,8 +468,47 @@ canonical marshalling / handle-I/O / array-return / error-convention pattern.
   → `validation` wrapper → `GTEST` case → tick the inventory row. Build +
   run suite per category.
 - ☐ **4.8 Generator + config wiring** — see **Phase 4b**.
+- ☐ **4.9 Record / playback / rebase on EVERY validation function**  (Nicholas,
+  2026-09-06). The infrastructure already exists and is proven — `RecordMacros.h`
+  (`RECORD_INPUTS_n` / `RECORD_OUTPUTS`), `CreateDataFile::recordEnabled()`,
+  `ReadDataFile::Load`, and the rebase switch `CreateDataFile::setRebaseResultsFlag()`
+  / `rebaseResultsEnabled()` which overwrites the stored outputs instead of
+  comparing to them, so a test set can be reset on demand. What is missing is
+  **coverage**: the macros were applied to some functions and not others.
+  - **Rule going forward: every `validation` function gets `RECORD_DECORATED_INPUTS`
+    / `RECORD_INPUTS_n` and `RECORD_OUTPUTS`. No new `tryAq*` lands without them.**
+  - Audit the existing `tryAq*` surface and add the macros where they are absent;
+    that is what turns a recorded workbook into a `GTEST` case for free, and it is
+    the mechanism behind the whole fixture suite.
+  - ⚠ **The recorded key is the STRINGIFIED C++ PARAMETER NAME** —
+    `WRITE_PARAMETER(P)` expands to `file.write("P", P)`. Renaming a parameter
+    silently breaks every fixture that records it: the build stays green and the
+    test fails at run time with `ReadDataFile::Load: unknown key`. This bit us in
+    step 8B. Guard: `rebrand/tools/fixture_key_check.py`, run after any rename
+    that touches validation parameters.
+- ☐ **4.10 Structured exception handling across `AQ_XLL`**  (Nicholas, 2026-09-06).
+  An access violation, stack overflow or divide-by-zero inside a worksheet
+  function is a Windows structured exception, not a C++ one; unhandled it takes
+  Excel down with it. `etrading::StructuredExceptionHandler` installs a
+  `_set_se_translator` for its lifetime and turns those into C++ exceptions that
+  xlOil's `XLO_FUNC_START/END` returns to the cell as an error string.
+  - `validation` is already covered — `VALID_EXCEPTION_START` installs the
+    handler (plus a `ThreadGuard`) on every `tryAq*` call.
+  - The gap was the **marshalling** either side of the validation call, which
+    `validation` never sees: reading a malformed Excel range, or building the
+    result array.
+  - **Rule going forward: `AQ_XLL_GUARD` (in `aqXllTools.h`) is the first line of
+    every AQ_XLL worksheet function.** Applied to `aqDatesFromTenor` and
+    `aqDatesFromYearFraction` as the reference pattern.
+  - Requires `/EHa`; all projects already set `<ExceptionHandling>Async`. Do not
+    change that — the translator silently stops working under `/EHsc`.
+  - Note `ThreadGuard` is deliberately NOT used at the XLL boundary: it throws if
+    two threads enter, which is validation's single-threaded contract, and xlOil
+    may call `.threadsafe()` functions concurrently. validation applies it itself.
 
 **Exit:** every "keep" row in the inventory is ported, wrapped and tested;
+every ported function carries `AQ_XLL_GUARD` and its `validation` wrapper carries
+the record/playback macros;
 `AlgoQuantLib.xll` loads and every category returns correct values against the
 baseline; dropped functions are recorded with a reason; editions gate correctly;
 generators load from the shipped `config` folder.

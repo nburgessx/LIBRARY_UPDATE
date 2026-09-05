@@ -38,7 +38,7 @@ namespace aq_xll
 
         const std::string& counterDelimiter()
         {
-            return etrading::AQOBJ_OBJECT_COUNTER_DELIMITER;
+            return etrading::AQOBJ_KEY::AQOBJ_OBJECT_COUNTER_DELIMITER;
         }
     }
 
@@ -108,7 +108,7 @@ namespace aq_xll
         size_t count = cells.size();
         if ( skipTrailingBlanks )
         {
-            while ( count > 0 && cells[count - 1]->isType( xloil::ExcelType::Missing | xloil::ExcelType::Nil ) )
+            while ( count > 0 && !cells[count - 1]->isNonEmpty() )
             {
                 --count;
             }

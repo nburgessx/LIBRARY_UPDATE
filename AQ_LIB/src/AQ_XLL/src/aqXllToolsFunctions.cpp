@@ -1,4 +1,4 @@
-#include <main.h>
+#include <aqXllMain.h>
 
 // Test Function
 XLO_FUNC_START(aqToolsEcho(const ExcelObj* arg))

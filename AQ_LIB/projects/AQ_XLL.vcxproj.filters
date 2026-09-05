@@ -19,22 +19,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\AQ_XLL\src\aqDates.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\dates.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\aqXllDates.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\main.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\aqXllMain.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\tools.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\aqXllToolsFunctions.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\math.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\aqXllMath.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -42,7 +39,7 @@
     <ClInclude Include="..\src\AQ_XLL\include\aqXllTools.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_XLL\include\main.h">
+    <ClInclude Include="..\src\AQ_XLL\include\aqXllMain.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

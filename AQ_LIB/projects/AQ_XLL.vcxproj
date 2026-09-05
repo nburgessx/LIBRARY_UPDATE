@@ -356,16 +356,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\AQ_XLL\src\aqDates.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\dates.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\main.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\math.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\tools.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqXllDates.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqXllMain.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqXllMath.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqXllToolsFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\AQ_XLL\include\aqXllTools.h" />
-    <ClInclude Include="..\src\AQ_XLL\include\main.h" />
+    <ClInclude Include="..\src\AQ_XLL\include\aqXllMain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,5 @@
-#include <main.h>
+#include <aqXllMain.h>
+#include "aqXllTools.h"
 
 // include
 #include "CoreEnumerations.h"
