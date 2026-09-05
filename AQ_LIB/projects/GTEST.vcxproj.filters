@@ -268,6 +268,9 @@
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapEURUSDXccySwapFixedFloat.cpp">
       <Filter>src\etrading\Swaps\XccySwaps</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\GTEST\src\TestStructuredExceptionHandler.cpp">
+      <Filter>src\etrading\Tools</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestExceptionMacros.cpp">
       <Filter>src\etrading\Tools</Filter>
     </ClCompile>

@@ -137,6 +137,7 @@
     <ClCompile Include="..\src\GTEST\src\InitializeGoogleTest.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestBondPricesGermanBunds.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestDebugMacros.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestStructuredExceptionHandler.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestExceptionMacros.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestHelperUtilities.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAQObjCurve.cpp" />
