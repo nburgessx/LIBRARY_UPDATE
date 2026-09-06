@@ -252,7 +252,7 @@ namespace validation
 		}
 
 		// Recording of outputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(swapObjectName, std::string(), aswSpread );
+		AQ_RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(swapObjectName, std::string(), aswSpread );
 
 		VALID_EXCEPTION_END
     }
@@ -304,7 +304,7 @@ namespace validation
 		const double aswSpread = assetSwapSpread(swapObjectName, bond, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		// Recording of outputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(swapObjectName, std::string(), aswSpread );
+		AQ_RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(swapObjectName, std::string(), aswSpread );
 
 		VALID_EXCEPTION_END
     }
@@ -351,7 +351,7 @@ namespace validation
 		const double fixedRate = etrading::calculateFloatingBondAssetSwapFixedEqvCoupon(bondCleanPrice, swapFixedLeg, swapFloatLeg, valuationSettingsLVB, fixingTableNames);
 
 		// Recording of outputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(swapObjectName, std::string(), fixedRate);
+		AQ_RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(swapObjectName, std::string(), fixedRate);
 
 		VALID_EXCEPTION_END
 	}
@@ -378,7 +378,7 @@ namespace validation
 		const double aswSpread = etrading::calculateFloatingBondAssetSwapSpreadFromFixedEqvCoupon(fixedEqvCoupon, swapFixedLeg, swapFloatLeg, valuationSettingsLVB, fixingTableNames);
 
 		// Recording of outputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(swapObjectName, std::string(), aswSpread);
+		AQ_RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(swapObjectName, std::string(), aswSpread);
 
 		VALID_EXCEPTION_END
 	}
@@ -444,7 +444,7 @@ namespace validation
 		}
 
 		// Recording of outputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(swapObjectName, std::string(), bondCleanPrice );
+		AQ_RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(swapObjectName, std::string(), bondCleanPrice );
 
 		VALID_EXCEPTION_END
     }

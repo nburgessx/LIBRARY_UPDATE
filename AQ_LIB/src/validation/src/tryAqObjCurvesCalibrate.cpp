@@ -64,7 +64,7 @@ namespace validation
 		std::string curveIndex = curveObject.getCurveIndexName();
 
         // Record Outputs for logs, tests and playback - Note the first argument is the decorated file prefix and second the suffix
-        RECORD_DECORATED_OUTPUTS( objectName, "", curveIndex );
+        AQ_RECORD_DECORATED_OUTPUTS( objectName, "", curveIndex );
 		
         return curveIndex;
 

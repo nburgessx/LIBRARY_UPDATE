@@ -105,7 +105,7 @@ namespace validation
 		std::string result = tableName;
 
 		// Recording of outputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(tableName, std::string(), result);
+		AQ_RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(tableName, std::string(), result);
 
 		VALID_EXCEPTION_END
 	}
