@@ -1003,37 +1003,65 @@ namespace
         file.write( ss.str().c_str() ); }
 
 // Macro to record a function's output to a file and decorate the file name with a prefix and suffix	
-#define AQ_RECORD_DECORATED_OUTPUTS(PREFIX, SUFFIX, result) \
+#define RECORD_DECORATED_OUTPUTS_3(PREFIX, SUFFIX, result) \
 	if ( CreateDataFile::recordEnabled() ) { \
     	FUNCTION_NAME \
-		std::string decoratedOutputFunction = functionName + "_outputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedOutputFunction = "_" + decoratedOutputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedOutputFunction = decoratedOutputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedOutputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_outputs", PREFIX, SUFFIX ); \
 		CreateDataFile outputFile( AQLString( fileName.c_str() ) ); \
 		outputFile.write( "output", (result) ); }
 
 
-// Macro to record a function's output to a file and decorate the file name with a prefix and suffix	
-#define AQ_RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(PREFIX, SUFFIX, result) \
+// As above, but writing the result to a given number of significant figures.
+// The hand-written blocks this replaces called file.write( "output", ret, 12 ),
+// so the precision has to survive the conversion or the recorded fixture value
+// changes and the generated test no longer matches.
+#define RECORD_DECORATED_OUTPUTS_4(PREFIX, SUFFIX, result, PRECISION) \
 	if ( CreateDataFile::recordEnabled() ) { \
     	FUNCTION_NAME \
-		std::string decoratedOutputFunction = functionName + "_outputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedOutputFunction = "_" + decoratedOutputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedOutputFunction = decoratedOutputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedOutputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_outputs", PREFIX, SUFFIX ); \
+		CreateDataFile outputFile( AQLString( fileName.c_str() ) ); \
+		outputFile.write( "output", (result), PRECISION ); }
+
+
+// Selects the 3- or 4-argument form above according to how many arguments the
+// caller passed. Same __VA_ARGS__ trick as GET_MACRO_NAME, just narrower.
+#define GET_DECORATED_OUTPUTS_MACRO_NAME( _1, _2, _3, _4, NAME, ... ) NAME
+
+#define AQ_RECORD_DECORATED_OUTPUTS(...) EXPAND( GET_DECORATED_OUTPUTS_MACRO_NAME( __VA_ARGS__, \
+                                                                                   RECORD_DECORATED_OUTPUTS_4, \
+                                                                                   RECORD_DECORATED_OUTPUTS_3, , )( __VA_ARGS__ ) )
+
+
+// Macro to record a function's output to a file and decorate the file name with a prefix and suffix	
+#define RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT_3(PREFIX, SUFFIX, result) \
+	if ( CreateDataFile::recordEnabled() ) { \
+    	FUNCTION_NAME \
+        const AQLString fileName = decorateFilename( functionName + "_outputs", PREFIX, SUFFIX ); \
 		CreateDataFile outputFile( AQLString( fileName.c_str() ) ); \
 		outputFile.write( "output", (result) ); } \
     return result;
+
+
+// As above, with an explicit significant-figure count on the recorded result.
+#define RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT_4(PREFIX, SUFFIX, result, PRECISION) \
+	if ( CreateDataFile::recordEnabled() ) { \
+    	FUNCTION_NAME \
+        const AQLString fileName = decorateFilename( functionName + "_outputs", PREFIX, SUFFIX ); \
+		CreateDataFile outputFile( AQLString( fileName.c_str() ) ); \
+		outputFile.write( "output", (result), PRECISION ); } \
+    return result;
+
+
+#define AQ_RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT(...) EXPAND( GET_DECORATED_OUTPUTS_MACRO_NAME( __VA_ARGS__, \
+                                                       RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT_4, \
+                                                       RECORD_DECORATED_OUTPUTS_AND_RETURN_RESULT_3, , )( __VA_ARGS__ ) )
 
 
 // Macro to record a function's input parameters to a file, which we decorate with a prefix	and suffix
 #define RECORD_DECORATED_INPUTS_1(PREFIX) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        std::string fileName = PREFIX + decoratedInputFunction; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX ); \
         CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); }
 
@@ -1042,10 +1070,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_2(PREFIX, SUFFIX) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); }
 
@@ -1053,10 +1078,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_3(PREFIX, SUFFIX, P1) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) }
@@ -1065,10 +1087,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_4(PREFIX, SUFFIX, P1, P2) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1078,10 +1097,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_5(PREFIX, SUFFIX, P1, P2, P3) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1092,10 +1108,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_6(PREFIX, SUFFIX, P1, P2, P3, P4) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1107,10 +1120,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_7(PREFIX, SUFFIX, P1, P2, P3, P4, P5) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1123,10 +1133,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_8(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1140,10 +1147,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_9(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1158,10 +1162,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_10(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1177,10 +1178,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_11(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1197,10 +1195,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_12(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1218,10 +1213,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_13(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1240,10 +1232,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_14(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1263,10 +1252,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_15(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1287,10 +1273,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_16(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1312,10 +1295,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_17(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1338,10 +1318,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_18(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1365,10 +1342,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_19(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1393,10 +1367,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_20(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1422,10 +1393,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_21(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -1452,10 +1420,7 @@ namespace
 #define RECORD_DECORATED_INPUTS_22(PREFIX, SUFFIX, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20) \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
-        std::string decoratedInputFunction = functionName + "_inputs"; \
-        if ( AQLString( PREFIX ).size() > 0 ) decoratedInputFunction = "_" + decoratedInputFunction; \
-        if ( AQLString( SUFFIX ).size() > 0 ) decoratedInputFunction = decoratedInputFunction + "_"; \
-        std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
+        const AQLString fileName = decorateFilename( functionName + "_inputs", PREFIX, SUFFIX ); \
 		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \

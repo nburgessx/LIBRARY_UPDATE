@@ -8,7 +8,7 @@
 
 
 // Black-Scholes Price Method
-XLO_FUNC_START(aqMathBlackScholesPrice(
+XLO_FUNC_START( aqMathBlackScholesPrice(
     const ExcelObj& callOrPut,
     const ExcelObj& spot,
     const ExcelObj& strike,
@@ -16,28 +16,34 @@ XLO_FUNC_START(aqMathBlackScholesPrice(
     const ExcelObj& time,
     const ExcelObj& rate,
     const ExcelObj& carry,
-    const ExcelObj& shift))
+    const ExcelObj& shift ) )
 {
-    // Carry and Shift are optional and default to zero when omitted
-    const double carryArg = carry.isMissing() ? 0.0 : carry.get<double>();
-    const double shiftArg = shift.isMissing() ? 0.0 : shift.get<double>();
+	// Carry and Shift are optional and default to zero when omitted
+	const double carryArg =
+	    carry.isMissing() ? 0.0 : carry.get<double>();
 
-    CallOrPutEnum cp = etrading::toCallOrPutEnum(aq_xll::toNarrowString(callOrPut));
+	const double shiftArg =
+	    shift.isMissing() ? 0.0 : shift.get<double>();
 
-    double result = validation::tryAqMathBlackScholesPrice(
-        cp,
-        spot.get<double>(),
-        strike.get<double>(),
-        vol.get<double>(),
-        time.get<double>(),
-        rate.get<double>(),
-        carryArg,
-        shiftArg);
+	const CallOrPutEnum cp =
+	    etrading::toCallOrPutEnum(
+	        aq_xll::toNarrowString( callOrPut ) );
 
-    return returnValue(result);
+	const double result =
+	    validation::tryAqMathBlackScholesPrice(
+	        cp,
+	        spot.get<double>(),
+	        strike.get<double>(),
+	        vol.get<double>(),
+	        time.get<double>(),
+	        rate.get<double>(),
+	        carryArg,
+	        shiftArg );
+
+	return returnValue( result );
 }
-XLO_FUNC_END(aqMathBlackScholesPrice)
-.help(L"Function to calculate the Black-Scholes Price")
+XLO_FUNC_END( aqMathBlackScholesPrice )
+    .help(L"Function to calculate the Black-Scholes Price")
 .arg(L"CallOrPut", L"Call or Put")
 .arg(L"Spot", L"Spot")
 .arg(L"Strike", L"Strike")

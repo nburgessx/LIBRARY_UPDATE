@@ -76,17 +76,20 @@ XLO_FUNC_START( aqDatesFromTenor(
     const ExcelObj& calendar,
     const ExcelObj& rollConvention ) )
 {
-    AQ_XLL_GUARD
+	AQ_XLL_GUARD
 
-    const DateVector starts = toDateVector( startDates, true, "StartDates" );
+	const DateVector starts =
+	    toDateVector( startDates, true, "StartDates" );
 
-    const DateVector ends = validation::tryAqDatesFromTenor( starts,
-                                                             toAQLString( tenor ),
-                                                             toAQLString( businessDayAdj ),
-                                                             toAQLString( calendar ),
-                                                             toAQLString( rollConvention ) );
+	const DateVector ends =
+	    validation::tryAqDatesFromTenor(
+	        starts,
+	        toAQLString( tenor ),
+	        toAQLString( businessDayAdj ),
+	        toAQLString( calendar ),
+	        toAQLString( rollConvention ) );
 
-    return returnValue( toExcelDateColumn( ends ) );
+	return returnValue( toExcelDateColumn( ends ) );
 }
 XLO_FUNC_END( aqDatesFromTenor )
     .help( L"Return the end date(s) based on StartDate(s) + Tenor. Format the cells as dates." )
@@ -107,8 +110,8 @@ XLO_FUNC_START( aqDatesFromYearFraction(
     AQ_XLL_GUARD
 
     const AQLDate end = validation::tryAqDatesFromYearFraction( toAQLDate( startDate ),
-                                                                yearFraction.get< double >(),
-                                                                toAQLString( dayCount ) );
+	                                                            yearFraction.get<double>(),
+	                                                            toAQLString( dayCount ) );
 
     return returnValue( toExcelDate( end ) );
 }
