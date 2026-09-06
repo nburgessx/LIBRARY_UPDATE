@@ -1,83 +1,102 @@
-# Rebrand status — pause point 2026-09-05
+# Rebrand status — pause point 2026-09-06
 
-**HEAD: `9fcdc99f`. Last user-confirmed green build + GTest: `e2f55db9` (step 10b),
-built from a CLEAN CHECKOUT WITH THE LEGACY ENVIRONMENT VARIABLES REMOVED — that
-is what finally proved the tree no longer depends on `.APPLES`.**
+**HEAD: `8957142b`. Last user-confirmed green build + tests: `456a1997`.**
 
 ## ⇒ RESUME HERE
 
-**1. Build + GTest first.** Five commits are unverified:
+**1. Build first — two commits are unverified and the last one is a FIX for a
+build failure I caused:**
 
 | commit | what |
 |---|---|
-| `9fcdc99f` | personal names out of comments (88 files) |
-| `041f26f6` | ownership banners + banner blank-line tidy (273 files) |
-| `25e9d246` | remaining copyright banners (10 files) |
-| `8c7d6ef9` | restored doxygen `@file` tags (fixed a build break) |
-| `ef1349ec` | stale fixture keys `lwo*` → `aqObj*` (fixed 16 failing tests) |
+| `8957142b` | fixes pass (a): reverted a corrupted conversion + 3 missing includes |
+| `b28e67ac` | pass (a) itself — hand-rolled recording blocks → `AQ_RECORD_*` |
 
-Two of the last three comment-only sweeps caused a real failure — one broke the
-build (`AQLStepInterpolation.cpp`), one broke 16 tests. Comment-only is NOT safe
-by inspection here. Run the guards too:
+If it still fails, the likely areas are the six converted validation files
+(`tryAqCurvesFrequency`, `tryAqDates`, `tryAqDatesCentralBank`, `tryAqDatesIMM`,
+`tryAqToolsInterpolation`, `tryAqToolsPCA`). Guards to run after:
 
 ```
 python rebrand/tools/api_pair_check.py        # exit 0 expected
 python rebrand/tools/fixture_key_check.py     # exit 0 expected
 ```
 
-**2. Then the Phase 3 tail — 27 items, one small batch:**
-- `Replay.cpp` — delete the 4 dead `tryMirSetUp*` dispatch keys (already
-  duplicated by the `tryAqCurvesCalibrate*` entries below them; their test
-  `TestCurveReplay` was deleted in step 6b) and the 182 orphaned
-  `*_tryMirSetUp*` fixtures.
-- `validation_api` in 4 Linux Makefiles → `validation` (project renamed long ago).
-- `XllPlus` — 8 dead XLL+ include/lib paths in `AQ_XLL.vcxproj` (CLAUDE.md §3.2
-  says remove when next touched) + 3 commented-out lines.
-- 4 `mir` mentions in comments/error strings (Nicholas deferred these earlier).
-- `lwoer` in `math/AQLFunctionUtilities.cpp` — a typo for "lower", leave it.
+**2. Then continue the validation recording rollout (plan 4.9).** Pass (a) is
+done: 32 conversions in 6 files. What remains, in the order I would do it:
 
-**3. Then choose:**
-- **Phase 4** (xlOil XLL port) — the critical path to a shippable product, but
-  BLOCKED on Nicholas's worked examples. `AQ_XLL` is a ~140-line proof of
-  concept against a 653-function port source.
-- **Phase 6 `resources/`** — large, mechanical, unblocked. 5,580 of 13,503 files
-  carry legacy text, 1,310 carry legacy names. Biggest single item: 5,070
-  `generatorFunction` rows naming 133 legacy functions (`tryMeLWOBondCreate`,
-  `tryMirSetUpOISCurve`, …) — provenance only, phase-3 maps already hold the
-  translations.
-- **Phase 5** — regenerate the SWIG wrappers: `swig_R_wrap.cpp` still holds
-  1,617 legacy names, C#/Java 259 each; Python is already regenerated. C#, Java
-  and R remain unverified end-to-end.
+- **Fix the misleading comment in `RecordMacros.h`** (cheap, do it first). Its
+  worked example shows a `decorateFilename(...)` block being replaced by plain
+  `AQ_RECORD_INPUTS`. That is WRONG — `AQ_RECORD_INPUTS` does not decorate, it
+  always yields `<function>_inputs`, so following the comment silently renames
+  the fixture file and breaks the test at run time with a green build.
+- **99 decorated blocks** → `AQ_RECORD_DECORATED_INPUTS`. First confirm how that
+  macro maps prefix/suffix onto `decorateFilename(name, prefix)`.
+- **81 variable-filename blocks** — need reading individually.
+- **18 key≠parameter-name recordings** (pass b) — listed in plan 4.9. Converting
+  these mechanically WOULD break fixtures; rename the parameter to match the key
+  instead, then re-run `fixture_key_check.py`.
+- **Functions with no recording at all** (pass c) — largest, needs new fixtures.
 
-## End-state gate — `src/` + `projects/` as of `9fcdc99f`
+**⚠ Two hard rules for the converter tool, learned the expensive way:**
+1. Verify the replaced span is exactly the `if (recordEnabled()) { ... }` block
+   and nothing more. One bad boundary ate a live statement
+   (`double result = ...` became `double rAQ_RECORD_OUTPUTS( ... );`).
+2. Verify the file includes `RecordMacros.h` before rewriting it. Three files
+   had only hand-rolled recording and so never included it.
 
-CLEAN: `Mizuho` (and misspellings), `MLIB`/`mlib`, `me*`/`tryMe*`,
-`LA`/`LB`/`MA`/`MB`/`MM`/`MF`, `AQO`-not-`AQObj`, person names/userids,
-banner metadata (`@Author`, `$Id`, `uthor`).
+**3. Then the other open Phase 4 items:** 4.12 (SEH for `AQ_API` —
+`AQ_API_START` is a bare `try{}`, so the bindings' own marshalling can still
+kill the host process), 4.10 (`AQ_XLL_GUARD` on every new XLL function), and
+the next tranche of XLL functions.
 
-REMAINING (27, all listed in step 2 above): `mir*` 8, `validation_api` 8,
-`XllPlus` 11, `lwo` 1. Plus `etrading.nuspec`, which legitimately keeps its
-`<copyright>` field.
+## Where the XLL port stands
 
-## ⚠ Carry these forward — they outrank the routine cleanup
+`aqDatesFromTenor` and `aqDatesFromYearFraction` are ported, building, and
+working in Excel. `src/AQ_XLL` is now:
+
+    include/  aqMain.h   aqXllTools.h
+    src/      aqDates.cpp  aqMain.cpp  aqMath.cpp  aqTools.cpp  aqXllTools.cpp
+
+Convention (plan 4.11): every file is `aq<Category>.{cpp,h}`; the single
+exception is `aqXllTools.{h,cpp}`, the shared Excel-side helper library
+(marshalling + AQObj handle decoration). `aqTools.cpp` is the Tools *category*.
+
+`XllPlusTips*.cpp` were NOT copied — 4,629 lines built on XLL+ types. Behaviour
+was ported instead. The AQObj handle logic (instance counter, cell address,
+create-vs-modify guard) is in `aqXllTools`; the core framework was already in
+`src/etrading`.
+
+SEH: `TestStructuredExceptionHandler` gives it automated coverage for the first
+time. **If the translator ever stops working those tests do not fail, they
+CRASH the runner** — a vanished test run is the signal.
+
+## Phase 3 — complete
+
+`src/` and `projects/` contain zero `Mizuho`, `MLIB`, `me*`, `mir*`,
+`LA*`/`MA*`/`MB*`, `validation_api`, `XllPlus`, person names, or copyright
+banners. `resources/` reduced to `config`, `test`, `setup` (3,522 files deleted);
+legacy-named paths there fell from 1,310 to 126.
+
+## ⚠ Carry these forward — they outrank routine cleanup
 
 1. **Two undeclared third-party components in `src/math`**, both found by
-   accident. `AQLSobol.cpp` (Peter Jaeckel — notice has a PRESERVATION CLAUSE)
+   accident: `AQLSobol.cpp` (Peter Jaeckel — notice has a PRESERVATION CLAUSE)
    and `AQLNl2sol.cpp` (NL2SOL, 6,541 lines — Dennis/Welsch/Gay/Peters,
-   NSF-funded, ACM TOMS). **Both are excluded by name from every sweep. Never
-   strip their attribution.** Neither is in the CLAUDE.md §3.3 dependency table.
-   The Phase 6 provenance scan is REQUIRED BEFORE SALE, not advisory.
-2. **Exact-match auditing under-reports.** Five times a "verified clean" result
-   was defeated by a spelling variant: `AlgoQuantHub..` (two dots), `uthor`
-   vs `@Author`, `uthorb` (glued), `hishida` (lower case), `Miuhzo`
-   (transposed). Always re-scan with a looser pattern after a sweep reports zero.
-3. **Fixture keys are stringified C++ parameter names** — renaming a validation
-   parameter breaks tests silently, build still green. `fixture_key_check.py`
-   guards this now.
-4. **`git add -A` will stage the generated `swig_*_wrap.*` files.** They show as
-   phantom-dirty. Restore with
-   `git checkout HEAD -- 'src/AQ_API/source/swig_*_wrap.*'` and never commit them
-   (one commit had to be amended for exactly this).
+   NSF-funded, ACM TOMS). **Excluded by name from every sweep. Never strip their
+   attribution.** Neither is in the CLAUDE.md §3.3 dependency table. The Phase 6
+   provenance scan is REQUIRED BEFORE SALE.
+2. **Recorded fixture keys are stringified C++ parameter names.** Renaming a
+   validation parameter breaks tests silently, build still green.
+   `fixture_key_check.py` guards it.
+3. **Pre-existing bug:** `tryAqObjRatesFixingTable.cpp` writes
+   `file.write("fixingValues", fixingDates)` and
+   `file.write("fixingDates", fixingValues)` — the keys are swapped. Fix code
+   and rebase those fixtures TOGETHER, never separately.
+4. **`git add -A` stages the generated `swig_*_wrap.*` files.** Restore with
+   `git checkout HEAD -- 'src/AQ_API/source/swig_*_wrap.*'`; never commit them.
+5. **Exact-match auditing under-reports** — five times a "clean" result was
+   defeated by a spelling variant. Re-scan loosely after any sweep reports zero.
+6. **No test exercises `tryAqToolsReplay`** — untested public API, Phase 5 gap.
 
 ---
 
