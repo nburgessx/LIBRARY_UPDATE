@@ -633,13 +633,13 @@ namespace etrading
 
     AQLDate toAQLDateFromGregorianDate( const boost::gregorian::date& gregorian_date )
     {
-        AQLDate laDate;
-		laDate.setYear( gregorian_date.year() );
-		laDate.setMonth( gregorian_date.month() );
-		laDate.setDay( gregorian_date.day() );
-		laDate.dateToJulius();
+        AQLDate aqDate;
+		aqDate.setYear( gregorian_date.year() );
+		aqDate.setMonth( gregorian_date.month() );
+		aqDate.setDay( gregorian_date.day() );
+		aqDate.dateToJulius();
 
-        return laDate;
+        return aqDate;
     };
 
     std::vector<AQLDate> toAQLDatesFromGregorianDates( const std::vector<boost::gregorian::date>& gregorian_dates )
