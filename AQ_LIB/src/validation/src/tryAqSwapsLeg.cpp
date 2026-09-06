@@ -67,13 +67,7 @@ namespace validation
 		AQLString curveCollection = legLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB);
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqSwapsLegPV_inputs", curveCollection));
-			file.write("generatorFunction", "tryAqSwapsLegPV");
-			file.write("legLVB", legLVB);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( curveCollection, "", legLVB, validateKeys );
 
 		AQLString legName = legLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
 		etrading::validateKeysForLVB(tryAqSwapsLegLVBKeys(legName), legLVB.getKeys(), validateKeys);
@@ -86,11 +80,7 @@ namespace validation
 
 		double ret = leg->pv( dataProvider);
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqSwapsLegPV_outputs", curveCollection));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( curveCollection, "", ret );
 
 		return ret;
 
@@ -110,13 +100,7 @@ namespace validation
 		AQLString curveCollection = legLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB);
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqSwapsLegAnnuity_inputs", curveCollection));
-			file.write("generatorFunction", "tryAqSwapsLegAnnuity");
-			file.write("legLVB", legLVB);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( curveCollection, "", legLVB, validateKeys );
 
 		AQLString legName = legLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
 		etrading::validateKeysForLVB(tryAqSwapsLegLVBKeys(legName), legLVB.getKeys(), validateKeys);
@@ -129,11 +113,7 @@ namespace validation
 
 		double ret = leg->annuityWithNotional(dataProvider);
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqSwapsLegAnnuity_outputs", curveCollection));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( curveCollection, "", ret );
 
 		return ret;
 

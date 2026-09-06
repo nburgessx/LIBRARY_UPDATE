@@ -101,17 +101,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsCreateFromLegLVBs_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsCreateFromLegLVBs");
-			file.write("swapName", swapName);
-			file.write("leg1LVB", leg1LVB);
-			file.write("leg2LVB", leg2LVB);
-			file.write("swapPropertiesLVB", swapPropertiesLVB);
-			file.write("isXccySwap", isXccySwap);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( swapName.c_str(), "", swapName, leg1LVB, leg2LVB, swapPropertiesLVB, isXccySwap, validateKeys );
     	
         const std::string inputLVB = "swapLVB";
         AQLString leg1Name = leg1LVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
@@ -130,11 +120,7 @@ namespace validation
 
         std::string ret = swapName;
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsCreateFromLegLVBs_outputs", swapName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( swapName.c_str(), "", ret );
 
 		return ret;
 
@@ -156,16 +142,7 @@ namespace validation
         AQ_REQUIRE( !swapLVB.empty(), "The swap label Value Block is empty or contains errors" )
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsCreate_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsCreate");
-			file.write("swapName", swapName);
-			file.write("swapLVB", swapLVB);
-			file.write("swapPropertiesLVB", swapPropertiesLVB);
-			file.write("isXccySwap", isXccySwap);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( swapName.c_str(), "", swapName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 
 		std::vector<LabelValueBlock> legsLVB = etrading::buildMultiLabelValueBlock(swapLVB);
 
@@ -196,11 +173,7 @@ namespace validation
 
         std::string ret = swapName;
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsCreate_outputs", swapName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( swapName.c_str(), "", ret );
 
 		return ret;
 
@@ -220,13 +193,7 @@ namespace validation
 		const std::string inputLVB = "swapLVB";
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsCreateBackToBack_inputs", toSwapName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsCreateBackToBack");
-			file.write("fromSwapName", fromSwapName);
-			file.write("toSwapName", toSwapName);
-		}
+		AQ_RECORD_DECORATED_INPUTS( toSwapName.c_str(), "", fromSwapName, toSwapName );
 
 		auto originalSwap = etrading::getSwap(fromSwapName);
 
@@ -236,11 +203,7 @@ namespace validation
 
         std::string ret = toSwapName;
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsCreateBackToBack_outputs", toSwapName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( toSwapName.c_str(), "", ret );
 
 		return ret;
 
@@ -265,19 +228,7 @@ namespace validation
 
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsCreateFromSchedule_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsCreateFromSchedule");
-			file.write("swapName", swapName);
-			file.write("schedule1Name", schedule1Name);
-			file.write("schedule2Name", schedule2Name);
-			file.write("leg1LVB", leg1LVB);
-			file.write("leg2LVB", leg2LVB);
-			file.write("swapPropertiesLVB", swapPropertiesLVB);
-			file.write("isXccySwap", isXccySwap);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( swapName.c_str(), "", swapName, schedule1Name, schedule2Name, leg1LVB, leg2LVB, swapPropertiesLVB, isXccySwap, validateKeys );
 
 		std::shared_ptr<Schedule> schedule1 = etrading::getSchedule(schedule1Name);
 		std::shared_ptr<Schedule> schedule2 = etrading::getSchedule(schedule2Name);
@@ -299,11 +250,7 @@ namespace validation
 
         std::string ret = swapName;
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsCreateFromSchedule_outputs", swapName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( swapName.c_str(), "", ret );
 
 		return ret;
 
@@ -320,12 +267,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsDisplay_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsDisplay");
-			file.write("swapName", swapName);
-		}
+		AQ_RECORD_DECORATED_INPUTS( swapName.c_str(), "", swapName );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -358,13 +300,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsAddLeg_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsAddLeg");
-			file.write("swapName", swapName);
-			file.write("legObjectName", legObjectName);
-		}
+		AQ_RECORD_DECORATED_INPUTS( swapName.c_str(), "", swapName, legObjectName );
 
 		auto swap = etrading::getSwap(swapName);
 		auto leg = etrading::getLeg(legObjectName);
@@ -373,11 +309,7 @@ namespace validation
    		etrading::registerToCache<etrading::Swap>(swap);
         std::string ret = swapName;
 
-        if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsAddLeg_outputs", swapName.c_str()));
-			file.write("output", ret);
-		}
+        AQ_RECORD_DECORATED_OUTPUTS( swapName.c_str(), "", ret );
 
 		return ret;
 
@@ -395,13 +327,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsAddFee_inputs", swapName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsAddFee");
-			file.write("swapName", swapName);
-			file.write("feeName", feeName);
-		}
+		AQ_RECORD_DECORATED_INPUTS( swapName.c_str(), "", swapName, feeName );
 
 		auto swap = etrading::getSwap(swapName);
 		auto leg = etrading::getLeg(feeName);
@@ -415,11 +341,7 @@ namespace validation
    		etrading::registerToCache<etrading::Swap>(swap);
         std::string ret = swapName;
 
-        if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsAddFee_outputs", swapName.c_str()));
-			file.write("output", ret);
-		}
+        AQ_RECORD_DECORATED_OUTPUTS( swapName.c_str(), "", ret );
 
 		return ret;
 
@@ -439,14 +361,7 @@ namespace validation
         AQ_REQUIRE( !swapGeneratorLVB.empty(), "The swap generator label Value Block is empty or contains errors" )
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsGeneratorCreate_inputs", swapGeneratorName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsGeneratorCreate");
-			file.write("swapGeneratorName", swapGeneratorName);
-			file.write("swapGeneratorLVB", swapGeneratorLVB);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( swapGeneratorName.c_str(), "", swapGeneratorName, swapGeneratorLVB, validateKeys );
 
 		std::vector<LabelValueBlock> legsLVB = etrading::buildMultiLabelValueBlock(swapGeneratorLVB);
 
@@ -467,11 +382,7 @@ namespace validation
 
         std::string ret = swapGeneratorName;
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsGeneratorCreate_outputs", swapGeneratorName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( swapGeneratorName.c_str(), "", ret );
 
 		return ret;
 
@@ -487,21 +398,12 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsGeneratorDisplay_inputs", swapGeneratorName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsGeneratorDisplay");
-			file.write("swapGeneratorName", swapGeneratorName);
-		}
+		AQ_RECORD_DECORATED_INPUTS( swapGeneratorName.c_str(), "", swapGeneratorName );
 
 		auto swapGen = etrading::getSwapGenerator(swapGeneratorName);
 		auto ret = swapGen->viewInputParameters();
 		
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsGeneratorDisplay_outputs", swapGeneratorName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( swapGeneratorName.c_str(), "", ret );
 
 		return ret;
 

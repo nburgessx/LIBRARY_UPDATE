@@ -1,5 +1,6 @@
 #include "tryAqCurvesCompoundRate.h"
 
+#include "RecordMacros.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
@@ -55,26 +56,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( decorateFilename( "tryAqCurvesCompoundRate_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryAqCurvesCompoundRate" );
-            file.write( "startDates", startDates );
-            file.write( "endDates", endDates );
-            file.write( "curveCollection", curveCollection );
-            file.write( "forecastCurveIndex", forecastCurveIndex );
-            file.write( "frequency", frequency );
-            file.write( "spread", spread );
-            file.write( "stubType", stubType );
-            file.write( "rollDayInput", rollDayInput );
-            file.write( "calendar", calendar );
-            file.write( "businessDayAdj", businessDayAdj );
-            file.write( "dayCount", dayCount );
-            file.write( "interpolation", interpolation );
-            file.write( "compoundType", compoundType );
-            file.write( "firstStubDate", firstStubDate );
-            file.write( "lastStubDate", lastStubDate );
-        }
+        AQ_RECORD_DECORATED_INPUTS( curveCollection, "", startDates, endDates, curveCollection, forecastCurveIndex, frequency, spread, stubType, rollDayInput, calendar, businessDayAdj, dayCount, interpolation, compoundType, firstStubDate, lastStubDate );
 
         if( startDates.size() == 0 || endDates.size() == 0 )
         {
@@ -144,12 +126,7 @@ namespace validation
         }
 
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-
-            CreateDataFile file( decorateFilename( "tryAqCurvesCompoundRate_outputs", curveCollection ) );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_DECORATED_OUTPUTS( curveCollection, "", ret );
 
         return ret;
 
@@ -262,28 +239,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( decorateFilename( "tryAqCurvesCompoundRateWithFixingTable_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryAqCurvesCompoundRateWithFixingTable" );
-            file.write( "startDates", startDates );
-            file.write( "endDates", endDates );
-            file.write( "curveCollection", curveCollection );
-            file.write( "forecastCurveIndex", forecastCurveIndex );
-            file.write( "frequency", frequency );
-            file.write( "spread", spread );
-            file.write( "stubType", stubType );
-            file.write( "rollDayInput", rollDayInput );
-            file.write( "calendar", calendar );
-            file.write( "businessDayAdj", businessDayAdj );
-            file.write( "dayCount", dayCount );
-            file.write( "interpolation", interpolation );
-            file.write( "compoundType", compoundType );
-            file.write( "firstStubDate", firstStubDate );
-            file.write( "lastStubDate", lastStubDate );
-            file.write( "fixingTableName", fixingTableName );
-            file.write( "annualized", annualized );
-        }
+        AQ_RECORD_DECORATED_INPUTS( curveCollection, "", startDates, endDates, curveCollection, forecastCurveIndex, frequency, spread, stubType, rollDayInput, calendar, businessDayAdj, dayCount, interpolation, compoundType, firstStubDate, lastStubDate, fixingTableName, annualized );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, forecastCurveIndex );
@@ -309,12 +265,7 @@ namespace validation
 										fixingTable,
                                          annualized);
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-
-            CreateDataFile file( decorateFilename( "tryAqCurvesCompoundRateWithFixingTable_outputs", curveCollection ) );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_DECORATED_OUTPUTS( curveCollection, "", ret );
 
         return ret;
 

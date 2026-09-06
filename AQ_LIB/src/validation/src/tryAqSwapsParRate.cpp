@@ -1,5 +1,6 @@
 #include "tryAqSwapsParRate.h"
 
+#include "RecordMacros.h"
 #include "CurveInstrumentPricing.h"
 
 #include "CreateDataFile.h"
@@ -51,12 +52,7 @@ namespace validation
         const std::string inputLVB = "SwapLVB";
         AQLString curveCollection = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( decorateFilename( "tryAqSwapsParRate_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryAqSwapsParRate" );
-            file.write( "swapLVB", swapLVB );
-        }
+        AQ_RECORD_DECORATED_INPUTS( curveCollection, "", swapLVB );
 
         AQLString forecastCurveIndex	= swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
         AQLString discountCurveIndex = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
@@ -114,11 +110,7 @@ namespace validation
                      floatSpread,
                      useFwdData
                                                      );
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( decorateFilename( "tryAqSwapsParRate_outputs", curveCollection ) );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_DECORATED_OUTPUTS( curveCollection, "", ret );
 
         return ret;
 

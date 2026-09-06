@@ -25,14 +25,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsScheduleCreate_inputs", scheduleName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsScheduleCreate");
-			file.write("scheduleName", scheduleName);
-			file.write("swapScheduleLVB", swapScheduleLVB);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( scheduleName.c_str(), "", scheduleName, swapScheduleLVB, validateKeys );
 
 		AQLString scheduleType = swapScheduleLVB.getOptionalValueAsAQLString( etrading::IRS_KEY::SCHEDULE_TYPE);
 		etrading::validateKeysForLVB(etrading::getScheduleLVBKeys(scheduleType), swapScheduleLVB.getKeys(), validateKeys );
@@ -43,11 +36,7 @@ namespace validation
 
 		std::string ret = scheduleName;
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsScheduleCreate_outputs", scheduleName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( scheduleName.c_str(), "", ret );
 
 		return ret;
 
@@ -92,15 +81,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsScheduleCreateBespoke_inputs", scheduleName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsScheduleCreateBespoke");
-			file.write("scheduleName", scheduleName);
-			file.write("bespokeScheduleProperties", bespokeScheduleProperties);
-			file.write("bespokeScheduleLVB", bespokeScheduleLVB);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( scheduleName.c_str(), "", scheduleName, bespokeScheduleProperties, bespokeScheduleLVB, validateKeys );
 
 		etrading::validateKeysForLVB(Schedule::bespokeLVBKeys(etrading::BESPOKE_SCHEDULE_WITH_PROPERTIES), bespokeScheduleProperties.getKeys(), validateKeys );
         std::vector<LabelValueBlock> cashflowLVBs = etrading::buildMultiLabelValueBlock(bespokeScheduleLVB);
@@ -110,11 +91,7 @@ namespace validation
 
 		std::string ret = scheduleName;
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsScheduleCreateBespoke_outputs", scheduleName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( scheduleName.c_str(), "", ret );
 
 		return ret;
 
@@ -133,15 +110,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled())
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsScheduleCreateBespokeFromCashflows_inputs", scheduleObjectName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsScheduleCreateBespokeFromCashflows");
-			file.write("scheduleObjectName", scheduleObjectName);
-			file.write("bespokeScheduleProperties", bespokeScheduleProperties);
-			file.write("bespokeCashflowsLVB", bespokeCashflowsLVB);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( scheduleObjectName.c_str(), "", scheduleObjectName, bespokeScheduleProperties, bespokeCashflowsLVB, validateKeys );
 
 		std::vector<LabelValueBlock> cashflowLVBs = etrading::buildMultiLabelValueBlock(bespokeCashflowsLVB);
 		etrading::validateKeysForLVB(Schedule::bespokeLVBKeys(etrading::BESPOKE_SCHEDULE), bespokeScheduleProperties.getKeys(), validateKeys);
@@ -154,11 +123,7 @@ namespace validation
 
 		std::string ret = scheduleObjectName;
 
-		if (CreateDataFile::recordEnabled())
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsScheduleCreateBespokeFromCashflows_outputs", scheduleObjectName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( scheduleObjectName.c_str(), "", ret );
 
 		return ret;
 
@@ -176,14 +141,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjCreditFeeScheduleCreate_inputs", scheduleName.c_str()));
-			file.write("generatorFunction", "tryAqObjCreditFeeScheduleCreate");
-			file.write("scheduleName", scheduleName);
-			file.write("feeScheduleLVB", feeScheduleLVB);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( scheduleName.c_str(), "", scheduleName, feeScheduleLVB, validateKeys );
 
         AQLStringVector keys;
         for (size_t i = 0; i < feeScheduleLVB.size(); ++i)
@@ -201,11 +159,7 @@ namespace validation
 
 		std::string ret = scheduleName;
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjCreditFeeScheduleCreate_outputs", scheduleName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( scheduleName.c_str(), "", ret );
 
 		return ret;
 

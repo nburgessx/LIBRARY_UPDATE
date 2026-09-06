@@ -1,5 +1,6 @@
 #include "tryAqAssetSwapSpread.h"
 
+#include "RecordMacros.h"
 #include "CurveInstrumentPricing.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
@@ -90,14 +91,7 @@ namespace validation
         AQLString curveCollection = assetSwapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( decorateFilename( "tryAqAssetSwapSpread_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryAqAssetSwapSpread" );
-            file.write( "bondPrice", bondPrice );
-            file.write( "assetSwapLVB", assetSwapLVB );
-            file.write( "validateKeys", validateKeys );
-        }
+        AQ_RECORD_DECORATED_INPUTS( curveCollection, "", bondPrice, assetSwapLVB, validateKeys );
 
         //----------------------------------------------------------------------------------
         // Validate non-cash flow related parameters
@@ -178,11 +172,7 @@ namespace validation
                      isCleanPrice,
                      settlementDate );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file1( decorateFilename( "tryAqAssetSwapSpread_outputs", curveCollection ) );
-            file1.write( "output", ret );
-        }
+        AQ_RECORD_DECORATED_OUTPUTS( curveCollection, "", ret );
 
         return ret;
 

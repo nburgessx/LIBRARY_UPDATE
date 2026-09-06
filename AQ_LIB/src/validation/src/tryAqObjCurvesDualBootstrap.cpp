@@ -80,11 +80,7 @@ namespace validation
 		std::string curveIndex_ois = curveObject.getOISCurveIndexNames();
 		std::string curveIndex_swap = curveObject.getSwapCurveIndexNames();
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjCurvesDualBootstrap_outputs", objectName.c_str()));
-			file.write("output", (boost::format("OIS: \"%s\" Swap: \"%s\"") % curveIndex_ois % curveIndex_swap).str().c_str());
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( objectName.c_str(), "", (boost::format("OIS: \"%s\" Swap: \"%s\"") % curveIndex_ois % curveIndex_swap).str().c_str() );
 
 		std::map<std::string, std::string> ret;
 		ret["OIS"] = curveIndex_ois;

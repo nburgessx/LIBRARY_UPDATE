@@ -1,6 +1,7 @@
 #include "tryAqObjCurvesData.h"
 
 
+#include "RecordMacros.h"
 #include "CurveData.h"
 #include "Environment.h"
 #include "ContainerUtilities.h"
@@ -22,20 +23,11 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjCurvesDataDisplay_inputs", mdcName.c_str()));
-			file.write("generatorFunction", "tryAqObjCurvesDataDisplay");
-			file.write("mdcName", mdcName);
-		}
+		AQ_RECORD_DECORATED_INPUTS( mdcName.c_str(), "", mdcName );
 
         auto result = etrading::Environment::defaultEnv().accessObject<etrading::CurveData>(mdcName)->getVariantMatrix();
     
-        if ( CreateDataFile::recordEnabled() )
-        {
-			CreateDataFile file(decorateFilename("tryAqObjCurvesDataDisplay_outputs", mdcName.c_str()));
-			file.write("output", mdcName);
-        }
+        AQ_RECORD_DECORATED_OUTPUTS( mdcName.c_str(), "", mdcName );
 
         return result;
     
@@ -62,24 +54,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjCurvesDataCreate_inputs", mdcName.c_str()));
-			file.write("generatorFunction", "tryAqObjCurvesDataCreate");
-			file.write("mdcName", mdcName);
-			file.write("currency", currency);
-			file.write("tenorString", tenorString);
-			file.write("swapType", swapType);
-			file.write("swapStringBlock", swapStringBlock);
-			file.write("toTenorString", toTenorString);
-			file.write("fraStringBlock", fraStringBlock);
-			file.write("irFuturesStringBlock", irFuturesStringBlock);
-			file.write("centralBankTypeString", centralBankTypeString);
-			file.write("centralBankStringBlock", centralBankStringBlock);
-			file.write("fxStringBlock", fxStringBlock);
-			file.write("unitCurrency", unitCurrency);
-			file.write("isInvertedFX", isInvertedFX);
-		}
+		AQ_RECORD_DECORATED_INPUTS( mdcName.c_str(), "", mdcName, currency, tenorString, swapType, swapStringBlock, toTenorString, fraStringBlock, irFuturesStringBlock, centralBankTypeString, centralBankStringBlock, fxStringBlock, unitCurrency, isInvertedFX );
 
 		auto ccy = etrading::toCCYEnum(currency);
 		auto curveTenorEnum = etrading::toCurveTenorEnum(tenorString);
@@ -179,21 +154,13 @@ namespace validation
 
         if( ptrToMDC != nullptr )
         {
-            if ( CreateDataFile::recordEnabled() )
-            {
-				CreateDataFile file(decorateFilename("tryAqObjCurvesDataCreate_outputs", mdcName.c_str()));
-				file.write("output", mdcName);
-            }
+            AQ_RECORD_DECORATED_OUTPUTS( mdcName.c_str(), "", mdcName );
             return mdcName.c_str();
         }
         else
         {
             std::string errString =  ( boost::format( "Unable to create AQObjCurveData named %s" ) % mdcName.c_str() ).str();
-            if ( CreateDataFile::recordEnabled() )
-            {
-				CreateDataFile file( decorateFilename( "tryAqObjCurvesDataCreate_outputs", mdcName.c_str() ) );
-                file.write( "output", errString.c_str() );
-            }
+            AQ_RECORD_DECORATED_OUTPUTS( mdcName.c_str(), "", errString.c_str() );
             AQ_THROW( errString );
         }
 

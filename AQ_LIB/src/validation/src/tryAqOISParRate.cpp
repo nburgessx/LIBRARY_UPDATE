@@ -1,5 +1,6 @@
 #include "tryAqOISParRate.h"
 
+#include "RecordMacros.h"
 #include "CurveInstrumentPricing.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
@@ -52,12 +53,7 @@ namespace validation
         AQLString curveCollection = oisLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( decorateFilename( "tryAqOISParRate_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryAqOISParRate" );
-            file.write( "oisLVB", oisLVB );
-        }
+        AQ_RECORD_DECORATED_INPUTS( curveCollection, "", oisLVB );
 
 
         //----------------------------------------------------------------------------------
@@ -130,11 +126,7 @@ namespace validation
                      floatAccrualCalendar,
                      floatAccrualBusinessDayAdjustment,
                      floatLegRollDayString );
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( decorateFilename( "tryAqOISParRate_outputs", curveCollection ) );
-            file.write( "output", ret, 12 );
-        }
+        AQ_RECORD_DECORATED_OUTPUTS( curveCollection, "", ret, 12 );
 
         return ret;
 

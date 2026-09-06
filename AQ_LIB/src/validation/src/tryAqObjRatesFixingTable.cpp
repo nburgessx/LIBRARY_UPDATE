@@ -59,21 +59,13 @@ namespace validation
         // Return the Object Name if it has been created successfuly on the cache
         if ( ptrCachedObject != nullptr )
         {
-            if ( CreateDataFile::recordEnabled() )
-            {
-				CreateDataFile file(decorateFilename("tryAqObjRatesFixingTableCreate_outputs", tableName.c_str()));
-				file.write("output", tableName);
-            }
+            AQ_RECORD_DECORATED_OUTPUTS( tableName.c_str(), "", tableName );
             return tableName.c_str();
         }
         else
         {
             std::string errString =  ( boost::format( "Unable to create AQObj Fixing Table named %s" ) % tableName.c_str() ).str();
-            if ( CreateDataFile::recordEnabled() )
-            {
-				CreateDataFile file( decorateFilename( "tryAqObjRatesFixingTableCreate_outputs", tableName.c_str() ) );
-                file.write( "output", errString.c_str() );
-            }
+            AQ_RECORD_DECORATED_OUTPUTS( tableName.c_str(), "", errString.c_str() );
             AQ_THROW( errString );
         }
         
@@ -124,12 +116,7 @@ namespace validation
          VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-		if (etrading::CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjRatesFixingTableDisplay_inputs", tableName.c_str()));
-			file.write("generatorFunction", "tryAqObjRatesFixingTableDisplay");
-			file.write("tableName", tableName);
-		}
+		AQ_RECORD_DECORATED_INPUTS( tableName.c_str(), "", tableName );
         
         // Check Object exists on the cache
         auto ptrCachedObject = etrading::Environment::defaultEnv().accessObject<etrading::FixingTable>( tableName );
@@ -160,11 +147,7 @@ namespace validation
         else
         {
             std::string errString =  ( boost::format( "Fixing table %s does not exist" ) % tableName.c_str() ).str();
-            if ( CreateDataFile::recordEnabled() )
-            {
-				CreateDataFile file( decorateFilename( "tryAqObjRatesFixingTableDisplay_outputs", tableName.c_str() ) );
-                file.write( "output", errString.c_str() );
-            }
+            AQ_RECORD_DECORATED_OUTPUTS( tableName.c_str(), "", errString.c_str() );
             AQ_THROW( errString );
         }
         
@@ -177,13 +160,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-		if (etrading::CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjRatesFixingTableValue_inputs", tableName.c_str() ) );
-			file.write("generatorFunction", "tryAqObjRatesFixingTableValue");
-			file.write("tableName", tableName);
-            file.write("fixingDate", fixingDate);
-		}
+		AQ_RECORD_DECORATED_INPUTS( tableName.c_str(), "", tableName, fixingDate );
         
         // Check Object exists on the cache
         auto ptrCachedObject = etrading::Environment::defaultEnv().accessObject<etrading::FixingTable>( tableName );
@@ -194,11 +171,7 @@ namespace validation
 
             auto fixingValue = ptrCachedObject->getFixingValue( fixingDate );
 
-            if ( CreateDataFile::recordEnabled() )
-            {
-				CreateDataFile file( decorateFilename("tryAqObjRatesFixingTableValue_outputs", tableName.c_str() ) );
-                file.write( "output", fixingValue );
-            }
+            AQ_RECORD_DECORATED_OUTPUTS( tableName.c_str(), "", fixingValue );
             return fixingValue;
         }
         else
@@ -276,11 +249,7 @@ namespace validation
 
             auto fixingValues = ptrCachedObject->getFixingValues( fixingTableCurrency, fixingTableCurveTenor, fixingDates );
 
-            if ( CreateDataFile::recordEnabled() )
-            {
-				CreateDataFile file( decorateFilename("tryAqObjRatesFixingTableValues_outputs", tableName.c_str() ) );
-                file.write( "output", fixingValues );
-            }
+            AQ_RECORD_DECORATED_OUTPUTS( tableName.c_str(), "", fixingValues );
             return fixingValues;
         }
         else

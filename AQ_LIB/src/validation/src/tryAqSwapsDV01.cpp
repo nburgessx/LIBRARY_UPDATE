@@ -1,5 +1,6 @@
 #include "tryAqSwapsDV01.h"
 
+#include "RecordMacros.h"
 #include "CurveInstrumentPricing.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
@@ -55,12 +56,7 @@ namespace validation
         AQLString curveCollection = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( decorateFilename( "tryAqSwapsDV01_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryAqSwapsDV01" );
-            file.write( "swapLVB", swapLVB );
-        }
+        AQ_RECORD_DECORATED_INPUTS( curveCollection, "", swapLVB );
 
 
         //----------------------------------------------------------------------------------
@@ -134,11 +130,7 @@ namespace validation
                      useLastFixing,
                      floatLastFix );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( decorateFilename( "tryAqSwapsDV01_outputs", curveCollection ) );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_DECORATED_OUTPUTS( curveCollection, "", ret );
 
         return ret;
 

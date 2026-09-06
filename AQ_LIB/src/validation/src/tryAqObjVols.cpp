@@ -91,11 +91,7 @@ namespace validation
 
 		etrading::copyToCache<etrading::SabrMarketData>(sabrMarketData);
 
-		if (CreateDataFile::recordEnabled())
-		{
-			CreateDataFile file(decorateFilename("tryAqObjVolsSabrMarketDataCreate_outputs", objectName.c_str()));
-			file.write("output", objectName);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( objectName.c_str(), "", objectName );
 
 		return objectName;
 
@@ -151,11 +147,7 @@ namespace validation
 		// ..  and store in the cache
 		etrading::copyToCache<etrading::SabrModel>(sabrModel);
 
-		if (CreateDataFile::recordEnabled())
-		{
-			CreateDataFile file(decorateFilename("tryAqObjVolsSabrModelCalibrate_outputs", objectName.c_str()));
-			file.write("output", objectName);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( objectName.c_str(), "", objectName );
 
 		return objectName;
 

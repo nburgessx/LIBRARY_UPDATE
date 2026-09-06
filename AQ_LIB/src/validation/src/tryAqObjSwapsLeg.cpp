@@ -33,14 +33,7 @@ namespace validation
 		const std::string inputLVB = "swapLVB";
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsLegCreate_inputs", legObjectName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsLegCreate");
-			file.write("legObjectName", legObjectName);
-			file.write("legLVB", legLVB);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( legObjectName.c_str(), "", legObjectName, legLVB, validateKeys );
 
         AQLString legName = legLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE);
         etrading::validateSwapLegLVBKeys(legName, legLVB.getKeys(), validateKeys);
@@ -49,11 +42,7 @@ namespace validation
 		etrading::registerToCache<etrading::Leg>( myLeg );
 
         std::string ret = legObjectName;
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsLegCreate_outputs", legObjectName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( legObjectName.c_str(), "", ret );
 
 		return ret;
 
@@ -74,15 +63,7 @@ namespace validation
 		const std::string inputLVB = "swapLVB";
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjCreditFeeLegCreate_inputs", legObjectName.c_str()));
-			file.write("generatorFunction", "tryAqObjCreditFeeLegCreate");
-			file.write("legObjectName", legObjectName);
-			file.write("feeProperties", feeProperties);
-			file.write("feeScheduleLVB", feeScheduleLVB);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( legObjectName.c_str(), "", legObjectName, feeProperties, feeScheduleLVB, validateKeys );
 
 		AQLString legName = feeProperties.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE);
         std::vector<LabelValueBlock> cashflowLVBs = etrading::buildMultiLabelValueBlock(feeScheduleLVB);
@@ -101,11 +82,7 @@ namespace validation
 
         std::string ret = legObjectName;
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjCreditFeeLegCreate_outputs", legObjectName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( legObjectName.c_str(), "", ret );
 
 		return ret;
 
@@ -127,15 +104,7 @@ namespace validation
 		const std::string inputLVB = "swapLVB";
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsLegCreateFromSchedule_inputs", legObjectName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsLegCreateFromSchedule");
-			file.write("legObjectName", legObjectName);
-			file.write("scheduleName", scheduleName);
-			file.write("legLVB", legLVB);
-			file.write("validateKeys", validateKeys);
-		}
+		AQ_RECORD_DECORATED_INPUTS( legObjectName.c_str(), "", legObjectName, scheduleName, legLVB, validateKeys );
 
 		AQLString legName = legLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE);
 		etrading::validateSwapLegLVBKeys(legName, legLVB.getKeys(), validateKeys, false);
@@ -148,11 +117,7 @@ namespace validation
 
         std::string ret = legObjectName;
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsLegCreateFromSchedule_outputs", legObjectName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( legObjectName.c_str(), "", ret );
 
 		return ret;
 
@@ -170,14 +135,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsLegPV_inputs", legObjectName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsLegPV");
-			file.write("legObjectName", legObjectName);
-			file.write("valuationSettingsLVB", valuationSettingsLVB);
-			file.write("fixingTableName", fixingTableName);
-		}
+		AQ_RECORD_DECORATED_INPUTS( legObjectName.c_str(), "", legObjectName, valuationSettingsLVB, fixingTableName );
 
 		auto leg = etrading::getLeg(legObjectName);
   
@@ -185,11 +143,7 @@ namespace validation
 
 		double ret = leg->pv( dataProvider, true);
 
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsLegPV_outputs", legObjectName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( legObjectName.c_str(), "", ret );
 
 		return ret;
 
@@ -205,21 +159,12 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for playback
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsLegDisplay_inputs", legObjectName.c_str()));
-			file.write("generatorFunction", "tryAqObjSwapsLegDisplay");
-			file.write("legObjectName", legObjectName);
-		}
+		AQ_RECORD_DECORATED_INPUTS( legObjectName.c_str(), "", legObjectName );
 
 		auto leg = etrading::getLeg(legObjectName);
 		auto ret = leg->getInputParameters().toAQLStringMatrix();
 		
-		if (CreateDataFile::recordEnabled()) 
-		{
-			CreateDataFile file(decorateFilename("tryAqObjSwapsLegDisplay_outputs", legObjectName.c_str()));
-			file.write("output", ret);
-		}
+		AQ_RECORD_DECORATED_OUTPUTS( legObjectName.c_str(), "", ret );
 
 		return ret;
 

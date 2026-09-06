@@ -1,4 +1,5 @@
 #include "tryAqSwapsPV01.h"
+#include "RecordMacros.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
@@ -50,12 +51,7 @@ namespace validation
         AQLString curveCollection = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( decorateFilename( "tryAqSwapsPV01_inputs", curveCollection ) );
-            file.write( "generatorFunction", "tryAqSwapsPV01" );
-            file.write( "swapLVB", swapLVB );
-        }
+        AQ_RECORD_DECORATED_INPUTS( curveCollection, "", swapLVB );
 
         AQLString forecastCurveIndex	= swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
         AQLString discountCurveIndex = swapLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
@@ -93,11 +89,7 @@ namespace validation
                                                                   forecastCurveIndex,
                                                                   discountCurveIndex );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( decorateFilename( "tryAqSwapsPV01_outputs", curveCollection ) );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_DECORATED_OUTPUTS( curveCollection, "", ret );
 
         return ret;
 
