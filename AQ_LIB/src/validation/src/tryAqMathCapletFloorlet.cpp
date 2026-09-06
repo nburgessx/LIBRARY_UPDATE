@@ -36,7 +36,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( capletOrFloorlet, annuityFactor, liborRate, strike, vol, time, shift, volatilityType );
+        AQ_RECORD_INPUTS( capletOrFloorlet, annuityFactor, liborRate, strike, vol, time, shift, volatilityType );
 
         CapletFloorletEnum capletOrFloorletEnum = etrading::toCapletFloorletEnum( capletOrFloorlet );
         VolatilityTypeEnum volatilityTypeEnum = etrading::toVolatilityTypeEnum( volatilityType );
@@ -46,7 +46,7 @@ namespace validation
         const double result = capletFloorlet.price();
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -127,7 +127,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( price, capletOrFloorlet, annuityFactor, liborRate, strike, time, shift );
+        AQ_RECORD_INPUTS( price, capletOrFloorlet, annuityFactor, liborRate, strike, time, shift );
 
         CapletFloorletEnum capletOrFloorletEnum = etrading::toCapletFloorletEnum( capletOrFloorlet );
         VolatilityTypeEnum volatilityTypeEnum = etrading::toVolatilityTypeEnum( volatilityType );
@@ -142,7 +142,7 @@ namespace validation
         const double result = capFloorOption.calculateImpliedVol( price );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }

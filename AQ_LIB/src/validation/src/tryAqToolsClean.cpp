@@ -34,12 +34,12 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( inputMatrix, cleanByRow, checkRowColNumber, removeBlanks, removeErrors );
+        AQ_RECORD_INPUTS( inputMatrix, cleanByRow, checkRowColNumber, removeBlanks, removeErrors );
 
         VariantMatrix result = cleanVariantMatrix( inputMatrix, cleanByRow, checkRowColNumber, removeBlanks, removeErrors );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }

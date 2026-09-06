@@ -34,7 +34,7 @@ namespace validation
 
 		const std::string inputLVB = "LegLVB";
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( legLVB, validateKeys, showColumnHeaders, columnList );
+        AQ_RECORD_INPUTS( legLVB, validateKeys, showColumnHeaders, columnList );
 
 		AQLString legName = legLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
 		etrading::validateKeysForLVB(tryAqSwapsLegLVBKeys(legName), legLVB.getKeys(), validateKeys);
@@ -49,7 +49,7 @@ namespace validation
 		auto result = leg->view(dataProvider, showColumnHeaders, etrading::toCashflowHeaderEnumSet(columnList));
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}

@@ -31,14 +31,14 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
+        AQ_RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
 
         // Calculation
         BlackScholes bs( callOrPut, spot, strike, vol, time, rate, carry, shift );
         const double result = bs.price();
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -114,7 +114,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( price, callOrPut, spot, strike, time, rate, carry, shift );
+        AQ_RECORD_INPUTS( price, callOrPut, spot, strike, time, rate, carry, shift );
 
         // Manaster and Koehler Seed Value
 		const double lowerBoundOnVolatilityEstimate = 0.1;
@@ -125,7 +125,7 @@ namespace validation
         const double result = bs.calculateImpliedVol( price );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -207,14 +207,14 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
+        AQ_RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
 
         // Calculation
         BlackScholes bs( callOrPut, spot, strike, vol, time, rate, carry, shift );
         const double result = bs.deltaForward();
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -233,14 +233,14 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
+        AQ_RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
 
         // Calculation
         BlackScholes bs( callOrPut, spot, strike, vol, time, rate, carry, shift );
         const double result = bs.deltaSpot();
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -259,14 +259,14 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
+        AQ_RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
 
         // Calculation
         BlackScholes bs( callOrPut, spot, strike, vol, time, rate, carry, shift );
         const double result = bs.gamma();
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -284,14 +284,14 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
+        AQ_RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
 
         // Calculation
         BlackScholes bs( callOrPut, spot, strike, vol, time, rate, carry, shift );
         const double result = bs.vega();
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -309,14 +309,14 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
+        AQ_RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
 
         // Calculation
         BlackScholes bs( callOrPut, spot, strike, vol, time, rate, carry, shift );
         const double result = bs.theta();
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END;
     }
@@ -334,14 +334,14 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
+        AQ_RECORD_INPUTS( callOrPut, spot, strike, vol, time, rate, carry, shift );
 
         // Calculation
         BlackScholes bs( callOrPut, spot, strike, vol, time, rate, carry, shift );
         const double result = bs.rho();
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }

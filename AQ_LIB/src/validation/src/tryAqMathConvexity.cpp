@@ -21,13 +21,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( lognormalVol, underlyingRate );
+        AQ_RECORD_INPUTS( lognormalVol, underlyingRate );
 
         // Calculation
         const double result = etrading::Convexity::toNormalVolFromLognormalVol( lognormalVol, underlyingRate );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -40,13 +40,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( normalVol, underlyingRate );
+        AQ_RECORD_INPUTS( normalVol, underlyingRate );
 
         // Calculation
         const double result = etrading::Convexity::toLognormalVolFromNormalVol( normalVol, underlyingRate );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -59,13 +59,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( lognormalVol, underlyingRate, shiftSize );
+        AQ_RECORD_INPUTS( lognormalVol, underlyingRate, shiftSize );
 
         // Calculation
         const double result = etrading::Convexity::toShiftedLognormalVolFromLognormalVol( lognormalVol, underlyingRate, shiftSize );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -78,13 +78,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( shiftedLognormalVol, underlyingRate, shiftSize );
+        AQ_RECORD_INPUTS( shiftedLognormalVol, underlyingRate, shiftSize );
 
         // Calculation
         const double result = etrading::Convexity::toLognormalVolFromShiftedLognormalVol( shiftedLognormalVol, underlyingRate, shiftSize );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -97,13 +97,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( normalVol, underlyingRate, shiftSize );
+        AQ_RECORD_INPUTS( normalVol, underlyingRate, shiftSize );
 
         // Calculation
         const double result = etrading::Convexity::toShiftedLognormalVolFromNormalVol( normalVol, underlyingRate, shiftSize );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -116,13 +116,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( shiftedLognormalVol, underlyingRate, shiftSize );
+        AQ_RECORD_INPUTS( shiftedLognormalVol, underlyingRate, shiftSize );
 
         // Calculation
         const double result = etrading::Convexity::toNormalVolFromShiftedLognormalVol( shiftedLognormalVol, underlyingRate, shiftSize );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -144,7 +144,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( liborRate, couponYearFraction, timeToMaturity, volatility, volatilityType, volatilityShift );
+        AQ_RECORD_INPUTS( liborRate, couponYearFraction, timeToMaturity, volatility, volatilityType, volatilityShift );
 
         etrading::Convexity::VolatilityParameters volInputs( volatility, volatilityType, volatilityShift );
         etrading::ConvexityModel convexityModel( volInputs );
@@ -152,7 +152,7 @@ namespace validation
         const double result = convexityModel.liborConvexityAdjustmentInArrears( liborRate, couponYearFraction, timeToMaturity, useHullApproximation );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -173,7 +173,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( liborRate, couponYearFraction, timeToMaturity, volatility, volatilityType, volatilityShift );
+        AQ_RECORD_INPUTS( liborRate, couponYearFraction, timeToMaturity, volatility, volatilityType, volatilityShift );
 
         etrading::Convexity::VolatilityParameters volInputs( volatility, volatilityType, volatilityShift );
         etrading::ConvexityModel convexityModel( volInputs );
@@ -181,7 +181,7 @@ namespace validation
         const double result = convexityModel.liborRateInArrears( liborRate, couponYearFraction, timeToMaturity, useHullApproximation );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -204,7 +204,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( liborRate, couponYearFraction, timeToMaturity, volatility, volatilityType, volatilityShift );
+        AQ_RECORD_INPUTS( liborRate, couponYearFraction, timeToMaturity, volatility, volatilityType, volatilityShift );
 
         etrading::Convexity::VolatilityParameters volInputs( volatility, volatilityType, volatilityShift );
         etrading::ConvexityModel convexityModel( volInputs );
@@ -212,7 +212,7 @@ namespace validation
         const double result = convexityModel.liborConvexityAdjustmentForArbitraryFixingDate( liborRate, couponYearFraction, timeToMaturity, fixingDateYearFraction, startDiscountFactor, endDiscountFactor, useHullApproximation  );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -235,7 +235,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( liborRate, couponYearFraction, timeToMaturity, volatility, volatilityType, volatilityShift );
+        AQ_RECORD_INPUTS( liborRate, couponYearFraction, timeToMaturity, volatility, volatilityType, volatilityShift );
 
         etrading::Convexity::VolatilityParameters volInputs( volatility, volatilityType, volatilityShift );
         etrading::ConvexityModel convexityModel( volInputs );
@@ -243,7 +243,7 @@ namespace validation
         const double result = convexityModel.liborRateForArbitraryFixingDate( liborRate, couponYearFraction, timeToMaturity, fixingDateYearFraction, startDiscountFactor, endDiscountFactor, useHullApproximation );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }

@@ -282,12 +282,12 @@ namespace validation
     {
         VALID_EXCEPTION_START
         
-        RECORD_INPUTS( swapLVB, curveIndices, curveTenors, tenorCurveFixings, validateKeys );
+        AQ_RECORD_INPUTS( swapLVB, curveIndices, curveTenors, tenorCurveFixings, validateKeys );
 
         const double stubRate = getStubRateAndFixingDate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, validateKeys ).stubRate_;
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( stubRate );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( stubRate );
 
         VALID_EXCEPTION_END
     }
@@ -308,12 +308,12 @@ namespace validation
     {
         VALID_EXCEPTION_START
         
-        RECORD_INPUTS( swapLVB, validateKeys );
+        AQ_RECORD_INPUTS( swapLVB, validateKeys );
 
         const AQLDate stubFixingDate = getStubRateAndFixingDate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, validateKeys ).fixingDate_;
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( stubFixingDate );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( stubFixingDate );
 
         VALID_EXCEPTION_END
     }

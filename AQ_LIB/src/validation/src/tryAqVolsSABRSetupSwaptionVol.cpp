@@ -23,7 +23,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(gridID, volMat, strikeMat, signMat);
+		AQ_RECORD_INPUTS(gridID, volMat, strikeMat, signMat);
 		
 		AQLMathSwaptionVolUtility::setUpSwaptionVol(etrading::InitializeETrading::instance().dataInstance(), gridID, volMat, strikeMat, signMat);
 

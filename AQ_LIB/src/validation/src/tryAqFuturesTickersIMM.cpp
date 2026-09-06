@@ -28,13 +28,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( valuationDate, includeToday, showYearWithTwoDigits );
+        AQ_RECORD_INPUTS( valuationDate, includeToday, showYearWithTwoDigits );
 
         // Calculation
         const std::string result = etrading::currentIMMFuturesTicker( valuationDate, includeToday, "", "NO_CHANGE", showYearWithTwoDigits );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -49,13 +49,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( referenceDate, showYearWithTwoDigits );
+        AQ_RECORD_INPUTS( referenceDate, showYearWithTwoDigits );
 
         // Calculation
         const std::string result = etrading::nextIMMFuturesTicker( referenceDate, "", "NO_CHANGE", showYearWithTwoDigits );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -70,13 +70,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( referenceDate, showYearWithTwoDigits );
+        AQ_RECORD_INPUTS( referenceDate, showYearWithTwoDigits );
 
         // Calculation
         const std::string result = etrading::previousIMMFuturesTicker( referenceDate, "", "NO_CHANGE", showYearWithTwoDigits );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -93,13 +93,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( valuationDate, nthIMM, includeToday, showYearWithTwoDigits );
+        AQ_RECORD_INPUTS( valuationDate, nthIMM, includeToday, showYearWithTwoDigits );
 
         // Calculation
         const std::string result = etrading::nthIMMFuturesTicker( valuationDate, nthIMM, includeToday, "", "NO_CHANGE", showYearWithTwoDigits );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }

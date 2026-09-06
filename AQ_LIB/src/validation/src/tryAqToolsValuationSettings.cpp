@@ -25,13 +25,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-        //RECORD_INPUTS( rawInput );
+        //AQ_RECORD_INPUTS( rawInput );
 
 		etrading::ValuationSettings valuationSettings( rawInput );
 		StandardStringMatrix result = valuationSettings.getValuationSettingsLVB().toStandardStringMatrix();
 		
 		// Record Outputs AND Return the Result for logs, tests and playback
-        // RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        // AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 		return result;
 
 		VALID_EXCEPTION_END

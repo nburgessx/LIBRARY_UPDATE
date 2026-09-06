@@ -21,13 +21,13 @@ namespace validation
     {
         VALID_EXCEPTION_START
 
-		RECORD_INPUTS( curveCollection, curveIndex, interpolation )
+		AQ_RECORD_INPUTS( curveCollection, curveIndex, interpolation )
 		
 		AQ_REQUIRE( etrading::isHybridInterpolation( interpolation.c_str() ), "Invalid Interpolation Method: '" + interpolation + "' is not a hybrid/mixed interpolation method" )
 		
 		const AQLDate joinDate = etrading::getLinearSplineJoinDate(curveCollection, curveIndex);
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( joinDate )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( joinDate )
 		
         VALID_EXCEPTION_END
     }

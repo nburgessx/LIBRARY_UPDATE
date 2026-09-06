@@ -46,7 +46,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( terms, values, interpolationType, joinDateAsDouble, lowerBounds, upperBounds, nSteps );
+        AQ_RECORD_INPUTS( terms, values, interpolationType, joinDateAsDouble, lowerBounds, upperBounds, nSteps );
 
         // Calculation
         // ------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ namespace validation
         // ------------------------------------------------------------------------------
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( results );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( results );
 
 		VALID_EXCEPTION_END
     }

@@ -21,7 +21,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(conventionID, convData);
+		AQ_RECORD_INPUTS(conventionID, convData);
 		
 		AQLMathSwaptionVolUtility::setUpConvention(etrading::InitializeETrading::instance().dataInstance(), conventionID, convData);
 

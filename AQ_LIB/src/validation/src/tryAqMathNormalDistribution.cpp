@@ -23,13 +23,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( z );
+        AQ_RECORD_INPUTS( z );
 
         // Calculation
         const double phi = etrading::standardNormalDistribution( z );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( phi );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( phi );
 
 		VALID_EXCEPTION_END
     }
@@ -44,13 +44,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( z );
+        AQ_RECORD_INPUTS( z );
 
         // Calculation
         const double PDF = etrading::standardNormalDistributionPDF( z );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( PDF );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( PDF );
 
 		VALID_EXCEPTION_END
     }
@@ -65,13 +65,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( phi );
+        AQ_RECORD_INPUTS( phi );
 
         // Calculation
         const double z = etrading::standardNormalDistributionInverse( phi );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( z );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( z );
 
 		VALID_EXCEPTION_END
     }
@@ -88,13 +88,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( x, mean, variance );
+        AQ_RECORD_INPUTS( x, mean, variance );
 
         // Calculation
         const double phi = etrading::normalDistribution( x, mean, variance );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( phi );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( phi );
 
 		VALID_EXCEPTION_END
     }
@@ -111,13 +111,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( x, mean, variance );
+        AQ_RECORD_INPUTS( x, mean, variance );
 
         // Calculation
         const double PDF = etrading::normalDistributionPDF( x, mean, variance );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( PDF );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( PDF );
 
 		VALID_EXCEPTION_END
     }
@@ -134,13 +134,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( phi, mean, variance );
+        AQ_RECORD_INPUTS( phi, mean, variance );
 
         // Calculation
         const double x = etrading::normalDistributionInverse( phi, mean, variance );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( x );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( x );
 
 		VALID_EXCEPTION_END
     }

@@ -34,7 +34,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
-		RECORD_INPUTS( fixingDate, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
+		AQ_RECORD_INPUTS( fixingDate, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
@@ -43,7 +43,7 @@ namespace validation
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const double forwardRate = curveModule.forwardRate( fixingDate );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( forwardRate )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( forwardRate )
 		
 		VALID_EXCEPTION_END
 	}
@@ -67,7 +67,7 @@ namespace validation
 		VALID_EXCEPTION_START
 		
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
-		RECORD_INPUTS( fixingDates, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
+		AQ_RECORD_INPUTS( fixingDates, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
@@ -76,7 +76,7 @@ namespace validation
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const std::vector<double> forwardRates = curveModule.forwardRates( fixingDates );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( forwardRates )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( forwardRates )
 		
 		VALID_EXCEPTION_END
 	}
@@ -100,7 +100,7 @@ namespace validation
 		VALID_EXCEPTION_START
 		
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
-		RECORD_INPUTS( paymentDate, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
+		AQ_RECORD_INPUTS( paymentDate, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
 		AQ_REQUIRE( joinDate == AQLDate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
@@ -108,7 +108,7 @@ namespace validation
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const double discountFactor = curveModule.discountFactor( paymentDate );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( discountFactor )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( discountFactor )
 		
 		VALID_EXCEPTION_END
 	}
@@ -137,7 +137,7 @@ namespace validation
 		VALID_EXCEPTION_START
 		
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
-		RECORD_INPUTS( paymentDates, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
+		AQ_RECORD_INPUTS( paymentDates, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
@@ -146,7 +146,7 @@ namespace validation
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const std::vector<double> discountFactors = curveModule.discountFactors( paymentDates );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( discountFactors )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( discountFactors )
 		
 		VALID_EXCEPTION_END
 	}
@@ -172,7 +172,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
-		RECORD_INPUTS( fixingDate, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
+		AQ_RECORD_INPUTS( fixingDate, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
@@ -204,7 +204,7 @@ namespace validation
 
 		const double forwardRate = curveModule.forwardRate( fixingDate, useForwardInterpolation );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( forwardRate )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( forwardRate )
 		
 		VALID_EXCEPTION_END
 	}
@@ -230,7 +230,7 @@ namespace validation
 		VALID_EXCEPTION_START
 		
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
-		RECORD_INPUTS( fixingDates, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
+		AQ_RECORD_INPUTS( fixingDates, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
@@ -262,7 +262,7 @@ namespace validation
 
 		const std::vector<double> forwardRates = curveModule.forwardRates( fixingDates, useForwardInterpolation );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( forwardRates )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( forwardRates )
 		
 		VALID_EXCEPTION_END
 	}
@@ -288,7 +288,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
-		RECORD_INPUTS( paymentDate, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
+		AQ_RECORD_INPUTS( paymentDate, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
@@ -320,7 +320,7 @@ namespace validation
 
 		const double discountFactor = curveModule.discountFactor( paymentDate );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( discountFactor )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( discountFactor )
 		
 		VALID_EXCEPTION_END
 	}
@@ -346,7 +346,7 @@ namespace validation
 		VALID_EXCEPTION_START
 		
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
-		RECORD_INPUTS( paymentDates, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
+		AQ_RECORD_INPUTS( paymentDates, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
@@ -378,7 +378,7 @@ namespace validation
 
 		const std::vector<double> discountFactors = curveModule.discountFactors( paymentDates );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( discountFactors )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( discountFactors )
 		
 		VALID_EXCEPTION_END
 	}

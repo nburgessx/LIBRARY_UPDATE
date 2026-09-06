@@ -28,7 +28,7 @@ namespace validation
         VALID_EXCEPTION_START
         
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS(objectName, volLVB, validateKeys );
+        AQ_RECORD_INPUTS(objectName, volLVB, validateKeys );
 
 		std::shared_ptr<etrading::Volatility> optionPtr = etrading::createVolatility(objectName, volLVB, validateKeys);
 
@@ -38,7 +38,7 @@ namespace validation
         std::string result = objectName;
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
         
         VALID_EXCEPTION_END
     }
@@ -175,14 +175,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(volSurfaceName, expiry, tenor, strike, forward);
+		AQ_RECORD_INPUTS(volSurfaceName, expiry, tenor, strike, forward);
 
 		auto sabrModel = etrading::getSabrModel(volSurfaceName);
 
 		double ret = sabrModel->getVol(expiry, tenor, strike, forward);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
 
 		return ret;
 
@@ -200,14 +200,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(volSurfaceName, expiry, tenor, paramName);
+		AQ_RECORD_INPUTS(volSurfaceName, expiry, tenor, paramName);
 
 		auto sabrModel = etrading::getSabrModel(volSurfaceName);
 
 		auto ret = sabrModel->getParam(expiry, tenor, etrading::toSabrParamEnum(paramName));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
 
 		return ret;
 
@@ -225,7 +225,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(marketDataObjectName, marketDataKey);
+		AQ_RECORD_INPUTS(marketDataObjectName, marketDataKey);
 
 		auto sabrMarketData = etrading::getSabrMarketData(marketDataObjectName);
 
@@ -245,7 +245,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(modelObjectName, modelKey);
+		AQ_RECORD_INPUTS(modelObjectName, modelKey);
 
 		auto sabrModel = etrading::getSabrModel(modelObjectName);
 

@@ -27,7 +27,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName, tradeLVB, validateKeys);
+		AQ_RECORD_INPUTS(objectName, tradeLVB, validateKeys);
 
 		std::shared_ptr<etrading::Option> optionPtr = etrading::createCapFloor(objectName, tradeLVB, validateKeys);
 
@@ -37,7 +37,7 @@ namespace validation
 		std::string result = objectName;
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -51,13 +51,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName);
+		AQ_RECORD_INPUTS(objectName);
 
 		auto option = etrading::getOption(objectName);
 		auto result = option->inputParameters().toAnyTypeMatrix();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -76,7 +76,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName, volObjectName, curveCollection, fixingTableName, showColumnHeaders, columnList);
+		AQ_RECORD_INPUTS(objectName, volObjectName, curveCollection, fixingTableName, showColumnHeaders, columnList);
 
 		const auto& option = etrading::getOption(objectName);
 
@@ -91,7 +91,7 @@ namespace validation
 		auto result = pricer.view(showColumnHeaders, etrading::toCashflowHeaderEnumSet(columnList));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -108,7 +108,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName, volObjectName, curveCollection, fixingTableName);
+		AQ_RECORD_INPUTS(objectName, volObjectName, curveCollection, fixingTableName);
 
 		const auto& option = etrading::getOption(objectName);
 
@@ -123,7 +123,7 @@ namespace validation
 		auto result = pricer.pv();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -141,7 +141,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName, volObjectName, curveCollection, fixingTableName, showColumnHeaders);
+		AQ_RECORD_INPUTS(objectName, volObjectName, curveCollection, fixingTableName, showColumnHeaders);
 
 		const auto& option = etrading::getOption(objectName);
 
@@ -157,7 +157,7 @@ namespace validation
 		const auto result = pricer.viewGreeks(etrading::ANALYTICAL_GREEK_TYPE, 0.0, 0.0, 0.0, 0.0, showColumnHeaders); //bumpSize = 0.0
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -181,7 +181,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName, volObjectName, curveCollection, deltaBump, gammaBump, vegaBump, thetaBump, fixingTableName, showColumnHeaders);
+		AQ_RECORD_INPUTS(objectName, volObjectName, curveCollection, deltaBump, gammaBump, vegaBump, thetaBump, fixingTableName, showColumnHeaders);
 
 		const auto& option = etrading::getOption(objectName);
 
@@ -196,7 +196,7 @@ namespace validation
 		const auto result = pricer.viewGreeks(etrading::NUMERICAL_GREEK_TYPE, deltaBump, gammaBump, vegaBump, thetaBump, showColumnHeaders);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -216,7 +216,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName, volObjectName, rateData, showColumnHeaders, columnList);
+		AQ_RECORD_INPUTS(objectName, volObjectName, rateData, showColumnHeaders, columnList);
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& volObject = etrading::getVolatility(volObjectName);
@@ -233,7 +233,7 @@ namespace validation
 		auto result = pricer.view(showColumnHeaders, etrading::toCashflowHeaderEnumSet(columnList));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -251,7 +251,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName, volObjectName, rateData, showColumnHeaders);
+		AQ_RECORD_INPUTS(objectName, volObjectName, rateData, showColumnHeaders);
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& volObject = etrading::getVolatility(volObjectName);
@@ -269,7 +269,7 @@ namespace validation
 		const auto result = pricer.viewGreeks(etrading::ANALYTICAL_GREEK_TYPE, 0.0, 0.0, 0.0, 0.0, showColumnHeaders); //bumpSize = 0.0
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -292,7 +292,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 			// Record Inputs for logs, tests and playback
-			RECORD_INPUTS(objectName, volObjectName, rateData, deltaBump, gammaBump, vegaBump, thetaBump, showColumnHeaders);
+			AQ_RECORD_INPUTS(objectName, volObjectName, rateData, deltaBump, gammaBump, vegaBump, thetaBump, showColumnHeaders);
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& volObject = etrading::getVolatility(volObjectName);
@@ -310,7 +310,7 @@ namespace validation
 		const auto result = pricer.viewGreeks(etrading::NUMERICAL_GREEK_TYPE, deltaBump, gammaBump, vegaBump, thetaBump, showColumnHeaders);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -326,7 +326,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName, volObjectName, rateData);
+		AQ_RECORD_INPUTS(objectName, volObjectName, rateData);
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& volObject = etrading::getVolatility(volObjectName);
@@ -343,7 +343,7 @@ namespace validation
 		auto result = pricer.pv();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}

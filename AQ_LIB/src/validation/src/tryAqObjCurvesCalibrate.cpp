@@ -40,7 +40,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback - Note the first argument is the decorated file prefix and the second the suffix
-        RECORD_DECORATED_INPUTS( objectName, "", objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+        AQ_RECORD_DECORATED_INPUTS( objectName, "", objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 
 		// Perform initial basic sanity checks
 		if ( aqObjCurveGeneratorName.size() == 0 )

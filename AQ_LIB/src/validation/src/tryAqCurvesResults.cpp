@@ -27,7 +27,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs
-        RECORD_INPUTS( enable )
+        AQ_RECORD_INPUTS( enable )
 
 		// *** No Enable Guard Required Here ***
 
@@ -41,7 +41,7 @@ namespace validation
 			result = "Curve Results: ENABLED";
 		}
 
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 		
 		VALID_EXCEPTION_END
 	}
@@ -52,7 +52,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs
-        RECORD_INPUTS_NO_ARGUMENTS()
+        AQ_RECORD_INPUTS_NO_ARGUMENTS()
 		
 		// *** No Enable Guard Required Here ***
 
@@ -65,7 +65,7 @@ namespace validation
 			result = "Curve Results: ENABLED";
 		}
 
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 		
 		VALID_EXCEPTION_END
 	}
@@ -82,7 +82,7 @@ namespace validation
         const AQLStringMatrix trimmedDiscountFactors = validation::trimAQLStringMatrix( discountFactorLVB );
 
 		// Record Inputs
-        RECORD_INPUTS( curveLVB, parameterLVB, trimmedDiscountFactors ) // forwardAdjustments // TODO: Fix me! - Record Inputs does not support StandardStringMatrix
+        AQ_RECORD_INPUTS( curveLVB, parameterLVB, trimmedDiscountFactors ) // forwardAdjustments // TODO: Fix me! - Record Inputs does not support StandardStringMatrix
 		
 		// Check if Curve Results Enabled
 		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
@@ -105,7 +105,7 @@ namespace validation
         
         // Record Outputs and Return the Result
         std::string result = curveCollection + ":" + curveIndex;
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 		
 		VALID_EXCEPTION_END
 
@@ -117,7 +117,7 @@ namespace validation
         VALID_EXCEPTION_START
 	
 		// Record Inputs
-        RECORD_INPUTS( curveCollection, curveIndex )
+        AQ_RECORD_INPUTS( curveCollection, curveIndex )
 
 		// Check if Curve Results Enabled
 		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
@@ -131,7 +131,7 @@ namespace validation
         // Get Curve Results
         const etrading::VariantMatrix results = etrading::CurveResultsContainer::getInstance().getCurveResults( curveCollection, curveIndex )->discountFactorResults()->paymentDatesAndDiscountFactors();
 
-        RECORD_OUTPUTS_AND_RETURN_RESULT( results )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( results )
 		
 		VALID_EXCEPTION_END
     }
@@ -142,7 +142,7 @@ namespace validation
         VALID_EXCEPTION_START
 	
 		// Record Inputs
-        RECORD_INPUTS( curveCollection, curveIndex, paymentDates )
+        AQ_RECORD_INPUTS( curveCollection, curveIndex, paymentDates )
 
 		// Check if Curve Results Enabled
 		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
@@ -156,7 +156,7 @@ namespace validation
         // Get Curve Results
         const DoubleVector results = etrading::CurveResultsContainer::getInstance().getCurveResults( curveCollection, curveIndex )->discountFactorResults()->getDiscountFactors( paymentDates );
 
-        RECORD_OUTPUTS_AND_RETURN_RESULT( results )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( results )
 		
 		VALID_EXCEPTION_END
     }
@@ -167,7 +167,7 @@ namespace validation
         VALID_EXCEPTION_START
 	
 		// Record Inputs
-        RECORD_INPUTS( curveCollection, curveIndex )
+        AQ_RECORD_INPUTS( curveCollection, curveIndex )
 
 		// *** No Enable Guard Required Here ***
 
@@ -185,7 +185,7 @@ namespace validation
             result = "Curve Results for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist";
         }
         
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 		
 		VALID_EXCEPTION_END
     }
@@ -220,7 +220,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs
-        RECORD_INPUTS( curveCollection, curveIndex, fixingDates, isFwdInter )
+        AQ_RECORD_INPUTS( curveCollection, curveIndex, fixingDates, isFwdInter )
 
 		// Check if Curve Results Enabled
 		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
@@ -236,7 +236,7 @@ namespace validation
 		
 		results = etrading::CurveResultsContainer::getInstance().getCurveResults( curveCollection, curveIndex )->discountFactorResults()->implyForwardRates( fixingDates, fixingBusinessDayAdj, fixingCalendar, isFwdInter, etrading::SIMPLE_COMPOUNDING );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( results )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( results )
 		
 		VALID_EXCEPTION_END
     }
@@ -255,7 +255,7 @@ namespace validation
         // Trim Jacobian
         const AQLStringMatrix trimmedJacobian = validation::trimAQLStringMatrix( jacobianMatrix );
 
-        RECORD_INPUTS( curveLVB, discountFactorParameterLVB, discountFactors, jacobianParameterLVB, marketDataShiftSizeInPercent, trimmedJacobian );
+        AQ_RECORD_INPUTS( curveLVB, discountFactorParameterLVB, discountFactors, jacobianParameterLVB, marketDataShiftSizeInPercent, trimmedJacobian );
         
 		// Check if Curve Results Enabled
 		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
@@ -393,7 +393,7 @@ namespace validation
         // Record Outputs and Return the Result
         std::string result = curveCollection + ":" + curveIndex;
         
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 		
 		VALID_EXCEPTION_END
     }
@@ -404,7 +404,7 @@ namespace validation
         VALID_EXCEPTION_START
 	
 		// Record Inputs
-        RECORD_INPUTS( curveCollection, curveIndex );
+        AQ_RECORD_INPUTS( curveCollection, curveIndex );
 
 		// Check if Curve Results Enabled
 		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
@@ -428,7 +428,7 @@ namespace validation
             AQ_THROW("Invalid Jacobian: ShiftType must be 'FLAT-SHIFT' or 'PERTURBED'.")
         }
         
-        RECORD_OUTPUTS_AND_RETURN_RESULT( displayResults )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( displayResults )
 
         VALID_EXCEPTION_END
     }
@@ -439,7 +439,7 @@ namespace validation
 		VALID_EXCEPTION_START
 		
 		// Record Inputs
-        RECORD_INPUTS( curveCollection, curveIndex )
+        AQ_RECORD_INPUTS( curveCollection, curveIndex )
 
 		// Check if Curve Results Enabled
 		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
@@ -466,7 +466,7 @@ namespace validation
 				thisRow[1]          = flatShiftJacobian[i] / gradientShiftSize;		// Column 2 - Divide by the gradient shift size to get the unitless delta, which is more useful
 				ResultsMatrix[i]    = thisRow;										// Results Row
 			}
-			RECORD_OUTPUTS_AND_RETURN_RESULT( ResultsMatrix )
+			AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ResultsMatrix )
         }
         else if ( jacobianResults->shiftType() == etrading::PERTURBED_SHIFT_TYPE )
         {
@@ -492,7 +492,7 @@ namespace validation
 				
 				ResultsMatrix[i] = thisRow;	// Results Row
 			}
-			RECORD_OUTPUTS_AND_RETURN_RESULT( ResultsMatrix )
+			AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ResultsMatrix )
         }
 
 		AQ_THROW("Invalid Jacobian: ShiftType must be 'FLAT-SHIFT' or 'PERTURBED'.")
@@ -506,7 +506,7 @@ namespace validation
         VALID_EXCEPTION_START
 		
 		// Record Inputs
-        RECORD_INPUTS( curveCollection, curveIndex )
+        AQ_RECORD_INPUTS( curveCollection, curveIndex )
 
 		// Check if Curve Results Enabled
 		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
@@ -543,7 +543,7 @@ namespace validation
             ResultsMatrix[i]    = thisRow;          // Results Row
         }
 
-        RECORD_OUTPUTS_AND_RETURN_RESULT( ResultsMatrix )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ResultsMatrix )
 
         VALID_EXCEPTION_END
     }
@@ -554,7 +554,7 @@ namespace validation
         VALID_EXCEPTION_START
 	
 		// Record Inputs
-        RECORD_INPUTS( curveCollection, curveIndex )
+        AQ_RECORD_INPUTS( curveCollection, curveIndex )
 		
 		// Check if Curve Results Enabled
 		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
@@ -584,7 +584,7 @@ namespace validation
             ResultsMatrix[i]    = thisRow;                  // Results Row
         }
 
-        RECORD_OUTPUTS_AND_RETURN_RESULT( ResultsMatrix )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ResultsMatrix )
 
         VALID_EXCEPTION_END
     }
@@ -599,7 +599,7 @@ namespace validation
 		boost::to_upper( groupNameUppercase ); 
 
         // Record Inputs
-        RECORD_INPUTS( groupNameUppercase, curveHandles )
+        AQ_RECORD_INPUTS( groupNameUppercase, curveHandles )
 		
 		// Check if Curve Results Enabled
 		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
@@ -614,7 +614,7 @@ namespace validation
         etrading::CurveResultsContainer::getInstance().addCurveResults( groupNameUppercase, "", curveResults );
         
         // Record Outputs and Return the Result
-        RECORD_OUTPUTS_AND_RETURN_RESULT( groupNameUppercase )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( groupNameUppercase )
 		
 		VALID_EXCEPTION_END
     }
@@ -629,7 +629,7 @@ namespace validation
 		boost::to_upper( groupNameUppercase ); 
 
         // Record Inputs
-        RECORD_INPUTS( groupNameUppercase )
+        AQ_RECORD_INPUTS( groupNameUppercase )
 		
 		// Check if Curve Results Enabled
 		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
@@ -642,7 +642,7 @@ namespace validation
 
         // Get the Curve Collection
         const std::string curveCollectionName = etrading::CurveResultsContainer::getInstance().getCurveResults( groupNameUppercase, "" )->curveGroup()->curveCollection();
-		RECORD_OUTPUTS_AND_RETURN_RESULT( curveCollectionName )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( curveCollectionName )
 		
 		VALID_EXCEPTION_END
 	}

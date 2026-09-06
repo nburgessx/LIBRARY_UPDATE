@@ -28,7 +28,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName, tradeLVB, validateKeys);
+		AQ_RECORD_INPUTS(objectName, tradeLVB, validateKeys);
 
 		std::shared_ptr<etrading::Option> optionPtr = etrading::createOption(objectName, tradeLVB, validateKeys);
 
@@ -38,7 +38,7 @@ namespace validation
 		std::string result = objectName;
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -52,13 +52,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName);
+		AQ_RECORD_INPUTS(objectName);
 
 		auto option = etrading::getOption(objectName);
 		auto result = option->inputParameters().toAnyTypeMatrix();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -73,7 +73,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( objectName, valuationSettingsLVB );
+		AQ_RECORD_INPUTS( objectName, valuationSettingsLVB );
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
@@ -83,7 +83,7 @@ namespace validation
         auto result = pricer.pv();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -99,7 +99,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( objectName, valuationSettingsLVB );
+		AQ_RECORD_INPUTS( objectName, valuationSettingsLVB );
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
@@ -109,7 +109,7 @@ namespace validation
         auto result = pricer.impliedVol( price );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
     }
@@ -124,7 +124,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( objectName, valuationSettingsLVB );
+		AQ_RECORD_INPUTS( objectName, valuationSettingsLVB );
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
@@ -134,7 +134,7 @@ namespace validation
         auto result = pricer.delta();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
     }
@@ -149,7 +149,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( objectName, valuationSettingsLVB );
+		AQ_RECORD_INPUTS( objectName, valuationSettingsLVB );
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
@@ -159,7 +159,7 @@ namespace validation
         auto result = pricer.gamma();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
     }
@@ -174,7 +174,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( objectName, valuationSettingsLVB );
+		AQ_RECORD_INPUTS( objectName, valuationSettingsLVB );
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
@@ -184,7 +184,7 @@ namespace validation
         auto result = pricer.vega();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
     }
@@ -199,7 +199,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( objectName, valuationSettingsLVB );
+		AQ_RECORD_INPUTS( objectName, valuationSettingsLVB );
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
@@ -209,7 +209,7 @@ namespace validation
         auto result = pricer.theta();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
     }

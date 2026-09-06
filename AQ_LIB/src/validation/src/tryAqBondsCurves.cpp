@@ -40,7 +40,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback - Note the first argument is the decorated file prefix and the second the suffix
-        RECORD_INPUTS( initialGuess.beta0_, initialGuess.beta1_, initialGuess.beta2_, initialGuess.lambda1_, maxIterations, maxStationaryStateIterations, lowerBounds, upperBounds, bondMaturities, bondYields );
+        AQ_RECORD_INPUTS( initialGuess.beta0_, initialGuess.beta1_, initialGuess.beta2_, initialGuess.lambda1_, maxIterations, maxStationaryStateIterations, lowerBounds, upperBounds, bondMaturities, bondYields );
 
 		// Use the default lower bound, unless user supplied an appropriate lower bound vector
 		DoubleVector lowBounds = { -50.0, -50.0, -50.0, 0.0 };  // beta0, beta1, beta2, lambda
@@ -114,7 +114,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback - Note the first argument is the decorated file prefix and the second the suffix
-        RECORD_INPUTS( initialGuess.beta0_, initialGuess.beta1_, initialGuess.beta2_, initialGuess.beta3_, initialGuess.lambda1_, initialGuess.lambda2_, maxIterations, maxStationaryStateIterations, lowerBounds, upperBounds, bondMaturities, bondYields )
+        AQ_RECORD_INPUTS( initialGuess.beta0_, initialGuess.beta1_, initialGuess.beta2_, initialGuess.beta3_, initialGuess.lambda1_, initialGuess.lambda2_, maxIterations, maxStationaryStateIterations, lowerBounds, upperBounds, bondMaturities, bondYields )
 
 		// Use the default lower bound, unless user supplied an appropriate lower bound vector
 		DoubleVector lowBounds = { -50.0, -50.0, -50.0, -50.0, 0.0, 0.0 };  // beta0, beta1, beta2, beta3, lambda1, lambda2
@@ -192,7 +192,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback - Note the first argument is the decorated file prefix and the second the suffix
-        RECORD_INPUTS( polynomialOrder, bondMaturities, bondYields, maxIterations, maxStationaryStateIterations, lowerBound, upperBound );
+        AQ_RECORD_INPUTS( polynomialOrder, bondMaturities, bondYields, maxIterations, maxStationaryStateIterations, lowerBound, upperBound );
 
 		AQ_REQUIRE( bondYields.size() == bondMaturities.size(), "Number of bond yields should match the number of bond maturities. ");
 
@@ -209,7 +209,7 @@ namespace validation
 
 		// Record outputs for logs, tests and playback
 		DoubleVector coefficients = calibrationResult.coefficients_;
-		RECORD_OUTPUTS ( coefficients );
+		AQ_RECORD_OUTPUTS ( coefficients );
 
 		return calibrationResult;
 
@@ -296,14 +296,14 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 
-		RECORD_INPUTS( bondCurveName )
+		AQ_RECORD_INPUTS( bondCurveName )
 
 		auto bondCurve = etrading::getBondCurve( bondCurveName );
 
 		AnyTypeMatrix result = bondCurve->displayBondCurve();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 
 		VALID_EXCEPTION_END
 	}
@@ -316,13 +316,13 @@ namespace validation
 	{
 	 VALID_EXCEPTION_START
 
-	  RECORD_INPUTS(bondCurveName);
+	  AQ_RECORD_INPUTS(bondCurveName);
 
 	 auto bondCurve = etrading::getBondCurve(bondCurveName);
 	 const double yield = bondCurve->getYield( referenceDate );
 	 
 	 // Record Outputs AND Return the Result for logs, tests and playback
-	 RECORD_OUTPUTS_AND_RETURN_RESULT(yield)
+	 AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(yield)
 
 	 VALID_EXCEPTION_END
 
@@ -338,7 +338,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, bondCurveName )
+		AQ_RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, bondCurveName )
 
 		const etrading::BondPtr bondObject      = etrading::getBond( bondObjectName );
 		const etrading::BondCurvePtr bondCurve  = etrading::getBondCurve( bondCurveName );
@@ -361,7 +361,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, bondCurveName )
+		AQ_RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, bondCurveName )
 
 		const etrading::BondPtr bondObject      = etrading::getBond( bondObjectName );
 		const etrading::BondCurvePtr bondCurve  = etrading::getBondCurve( bondCurveName );
@@ -391,7 +391,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback - Note the first argument is the decorated file prefix and the second the suffix
-        RECORD_INPUTS( beta0, beta1, beta2, lambda, bondMaturities )
+        AQ_RECORD_INPUTS( beta0, beta1, beta2, lambda, bondMaturities )
 
 		etrading::NelsonSiegelSvenssonParameters parameters;
 		parameters.beta0_ = beta0;
@@ -409,7 +409,7 @@ namespace validation
 		}
 
 		// Record outputs for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT( yields )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( yields )
 
 		VALID_EXCEPTION_END
 	}
@@ -435,7 +435,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback - Note the first argument is the decorated file prefix and the second the suffix
-        RECORD_INPUTS( beta0, beta1, beta2, beta3, lambda1, lambda2, bondMaturities )
+        AQ_RECORD_INPUTS( beta0, beta1, beta2, beta3, lambda1, lambda2, bondMaturities )
 
 		etrading::NelsonSiegelSvenssonParameters parameters;
 		parameters.beta0_   = beta0;
@@ -455,7 +455,7 @@ namespace validation
 		}
 
 		// Record outputs for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT( yields )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( yields )
 
 		VALID_EXCEPTION_END
 	}
@@ -470,7 +470,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback - Note the first argument is the decorated file prefix and the second the suffix
-        RECORD_INPUTS( coefficients, bondMaturities )
+        AQ_RECORD_INPUTS( coefficients, bondMaturities )
 
 		size_t nMaturities = bondMaturities.size();
 		DoubleVector yields( nMaturities );
@@ -482,7 +482,7 @@ namespace validation
 		}
 
 		// Record outputs for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT( yields )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( yields )
 
 		VALID_EXCEPTION_END
 	}

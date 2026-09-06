@@ -439,7 +439,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-		RECORD_INPUTS( curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency );
+		AQ_RECORD_INPUTS( curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency );
 
 		if ( curveCollection.size() == 0 )
 		{
@@ -492,7 +492,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( paymentDates, curveCollection, curveIndex, spread, fixingTableName );
+		AQ_RECORD_INPUTS( paymentDates, curveCollection, curveIndex, spread, fixingTableName );
 
 		AQ_REQUIRE( paymentDates.size() > 0, "No payment dates have been provided." );
 		AQ_REQUIRE( curveCollection.size() > 0, "No curve collection have been provided." );
@@ -504,7 +504,7 @@ namespace validation
 		AQ_REQUIRE( discountFactors.size() == paymentDates.size(), "Incorrect number of discount factors returned.");
         
 		// Record Outputs and Return the result
-        RECORD_OUTPUTS_AND_RETURN_RESULT( discountFactors );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( discountFactors );
 			
 		VALID_EXCEPTION_END
 	}

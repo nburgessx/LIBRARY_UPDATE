@@ -28,12 +28,12 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-		RECORD_INPUTS( asOfDate, terms );
+		AQ_RECORD_INPUTS( asOfDate, terms );
 
         DateVector result = etrading::convertCurveTermsToDates( asOfDate, terms );
 
         // Record Outputs and Return the result
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -48,12 +48,12 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-		RECORD_INPUTS( asOfDate, paymentDates );
+		AQ_RECORD_INPUTS( asOfDate, paymentDates );
 
         DoubleVector result = etrading::convertCurveDatesToTerms( asOfDate, paymentDates );
 
         // Record Outputs and Return the result
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }

@@ -79,7 +79,7 @@ namespace validation
 		etrading::copyToCache<etrading::InflationCurve>( inflationCurve );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT( objectName );
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( objectName );
 
 		VALID_EXCEPTION_END
 	}
@@ -92,14 +92,14 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 
-		RECORD_INPUTS( inflationCurveName );
+		AQ_RECORD_INPUTS( inflationCurveName );
 
 		auto inflationCurve = etrading::getInflationCurve( inflationCurveName );
 
 		AnyTypeMatrix result = inflationCurve->getCalibrationParameters();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -121,7 +121,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(swapName, valuationSettingsLVB, baseIndex, resetIndex, legName);
+		AQ_RECORD_INPUTS(swapName, valuationSettingsLVB, baseIndex, resetIndex, legName);
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -133,7 +133,7 @@ namespace validation
 		double result = inflationSwap->pvFromInflationIndex(valuationSettingsLVB, baseIndex, resetIndex, legName);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -153,7 +153,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( swapName, inflationCurveName, valuationSettingsLVB, legName );
+		AQ_RECORD_INPUTS( swapName, inflationCurveName, valuationSettingsLVB, legName );
 
 		auto swap = etrading::getSwap( swapName );
 
@@ -167,7 +167,7 @@ namespace validation
 		double result = inflationSwap->pvFromInflationCurve( valuationSettingsLVB, *inflationCurve, legName);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -189,7 +189,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 			// Record Inputs for logs, tests and playback
-			RECORD_INPUTS(swapName, valuationSettingsLVB, baseIndex, resetIndex);
+			AQ_RECORD_INPUTS(swapName, valuationSettingsLVB, baseIndex, resetIndex);
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -201,7 +201,7 @@ namespace validation
 		double result = inflationSwap->parRateFromInflationIndex(valuationSettingsLVB, baseIndex, resetIndex);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -220,7 +220,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( swapName, inflationCurveName, valuationSettingsLVB );
+		AQ_RECORD_INPUTS( swapName, inflationCurveName, valuationSettingsLVB );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -234,7 +234,7 @@ namespace validation
 		double result = inflationSwap->parRateFromInflationCurve( valuationSettingsLVB, *inflationCurve );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -253,7 +253,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( inflationCurveName, date, inflationResetType, lag );
+		AQ_RECORD_INPUTS( inflationCurveName, date, inflationResetType, lag );
 
 		auto inflationCurve = etrading::getInflationCurve( inflationCurveName );
 		auto inflationResetTypeEnum = etrading::toInflationResetTypeEnum( inflationResetType );
@@ -261,7 +261,7 @@ namespace validation
 		double result = inflationCurve->getInflationIndexForDate( date, inflationResetTypeEnum, lag );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}

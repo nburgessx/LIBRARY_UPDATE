@@ -28,7 +28,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName );
+        AQ_RECORD_INPUTS( objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName );
 
 		// Perform initial basic sanity checks
 		if ( aqObjCurveGeneratorName.size() == 0 )
@@ -80,7 +80,7 @@ namespace validation
         etrading::copyToCache<etrading::FXCurve>( fxCurve );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( objectName);
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( objectName);
 
 		VALID_EXCEPTION_END
 
@@ -106,14 +106,14 @@ namespace validation
 		VALID_EXCEPTION_START
 	    
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( objectName, settleDatesOrTenors, baseCurveCollection, termCurveCollection, showColumnHeaders, columnList);
+        AQ_RECORD_INPUTS( objectName, settleDatesOrTenors, baseCurveCollection, termCurveCollection, showColumnHeaders, columnList);
 
         auto fxCurve = etrading::getFxCurve(objectName);
 
         auto ret = etrading::outputFxPrice(fxCurve->getFxForwardsFromDiscountCurves(settleDatesOrTenors, baseCurveCollection, termCurveCollection), showColumnHeaders, etrading::toFXPriceEnumSet(columnList));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( ret);
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ret);
 
 		VALID_EXCEPTION_END
 
@@ -134,14 +134,14 @@ namespace validation
 		VALID_EXCEPTION_START
 	    
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( objectName, settleDatesOrTenors, showColumnHeaders, columnList);
+        AQ_RECORD_INPUTS( objectName, settleDatesOrTenors, showColumnHeaders, columnList);
 
         auto fxCurve = etrading::getFxCurve(objectName);
         
         auto ret = etrading::outputFxPrice(fxCurve->getFxForwardsFromFxCurve(settleDatesOrTenors), showColumnHeaders, etrading::toFXPriceEnumSet(columnList));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( ret);
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ret);
 
 		VALID_EXCEPTION_END
 
@@ -171,14 +171,14 @@ namespace validation
 		VALID_EXCEPTION_START
 	    
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( objectName, nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, baseCurveCollection, termCurveCollection, outputFarLeg, showColumnHeaders, columnList);
+        AQ_RECORD_INPUTS( objectName, nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, baseCurveCollection, termCurveCollection, outputFarLeg, showColumnHeaders, columnList);
 
         auto fxCurve = etrading::getFxCurve(objectName);
         
         auto ret = etrading::outputFxPrice(fxCurve->getFxSwapFromDiscountCurves(nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, baseCurveCollection, termCurveCollection, outputFarLeg), showColumnHeaders, etrading::toFXPriceEnumSet(columnList));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( ret);
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ret);
 
 		VALID_EXCEPTION_END
 
@@ -203,14 +203,14 @@ namespace validation
 		VALID_EXCEPTION_START
 	    
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( objectName, nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, outputFarLeg, showColumnHeaders, columnList);
+        AQ_RECORD_INPUTS( objectName, nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, outputFarLeg, showColumnHeaders, columnList);
 
         auto fxCurve = etrading::getFxCurve(objectName);
         
         auto ret = etrading::outputFxPrice(fxCurve->getFxSwapFromFxCurve(nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, outputFarLeg), showColumnHeaders, etrading::toFXPriceEnumSet(columnList));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( ret);
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ret);
 
 		VALID_EXCEPTION_END
 
@@ -237,7 +237,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(xccyCurveObjectName, settleDatesOrTenors, xccyCurveSwapRateBumpSize, showColumnHeaders, columnList);
+		AQ_RECORD_INPUTS(xccyCurveObjectName, settleDatesOrTenors, xccyCurveSwapRateBumpSize, showColumnHeaders, columnList);
 
 		auto& env = etrading::Environment::defaultEnv();
 		auto curveObject = etrading::getSingleCurveObject(xccyCurveObjectName);
@@ -247,7 +247,7 @@ namespace validation
 		auto ret = etrading::outputFxPrice(etrading::calculateFxForwardsFromDiscountCurves(settleDatesOrTenors, curveFxInfo, xccyCurveSwapRateBumpSize), showColumnHeaders, etrading::toFXPriceEnumSet(columnList));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
 
 		VALID_EXCEPTION_END
 
@@ -281,14 +281,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(baseCurveCollection, baseCurveIndex, termCurveCollection, termCurveIndex, fxSpotRate, pipSize, xccyCurveSwapRateBumpSize, settleDatesOrTenors, showColumnHeaders, columnList);
+		AQ_RECORD_INPUTS(baseCurveCollection, baseCurveIndex, termCurveCollection, termCurveIndex, fxSpotRate, pipSize, xccyCurveSwapRateBumpSize, settleDatesOrTenors, showColumnHeaders, columnList);
 
 		auto curveFxInfo = etrading::populateCurveFxFwdDataProvider(baseCurveCollection, baseCurveIndex, termCurveCollection, termCurveIndex, fxSpotRate, pipSize);
 
 		auto ret = etrading::outputFxPrice(etrading::calculateFxForwardsFromDiscountCurves(settleDatesOrTenors, curveFxInfo, xccyCurveSwapRateBumpSize), showColumnHeaders, etrading::toFXPriceEnumSet(columnList));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
 
 		VALID_EXCEPTION_END
 
@@ -313,7 +313,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(xccyCurveObjectName, nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, outputFarLeg, showColumnHeaders, columnList);
+		AQ_RECORD_INPUTS(xccyCurveObjectName, nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, outputFarLeg, showColumnHeaders, columnList);
 
 		auto& env = etrading::Environment::defaultEnv();
 		auto curveObject = etrading::getSingleCurveObject(xccyCurveObjectName);
@@ -323,7 +323,7 @@ namespace validation
 		auto ret = etrading::outputFxPrice(etrading::calculateFxSwapFromDiscountCurves(nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, curveFxInfo, outputFarLeg), showColumnHeaders, etrading::toFXPriceEnumSet(columnList));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
 
 		VALID_EXCEPTION_END
 
@@ -359,14 +359,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(baseCurveCollection, baseCurveIndex, termCurveCollection, termCurveIndex, fxSpotRate, pipSize, nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, outputFarLeg, showColumnHeaders, columnList);
+		AQ_RECORD_INPUTS(baseCurveCollection, baseCurveIndex, termCurveCollection, termCurveIndex, fxSpotRate, pipSize, nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, outputFarLeg, showColumnHeaders, columnList);
 
 		auto curveFxInfo = etrading::populateCurveFxFwdDataProvider(baseCurveCollection, baseCurveIndex, termCurveCollection, termCurveIndex, fxSpotRate, pipSize);
 
 		auto ret = etrading::outputFxPrice(etrading::calculateFxSwapFromDiscountCurves(nearLegSettlementDatesOrTenors, farLegSettlementDatesOrTenors, curveFxInfo, outputFarLeg), showColumnHeaders, etrading::toFXPriceEnumSet(columnList));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
 
 		VALID_EXCEPTION_END
 
@@ -386,12 +386,12 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(fxSpot, fxSpotDate, baseCurveCollection, baseDiscountCurveIndex, termCurveCollection, termDiscountCurveIndex);
+		AQ_RECORD_INPUTS(fxSpot, fxSpotDate, baseCurveCollection, baseDiscountCurveIndex, termCurveCollection, termDiscountCurveIndex);
 
 		double ret = etrading::fxRateFromSpotToAsOfDate(fxSpot, fxSpotDate, baseCurveCollection, baseDiscountCurveIndex, termCurveCollection, termDiscountCurveIndex);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
 
 		VALID_EXCEPTION_END
 	}
@@ -410,12 +410,12 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(fxAsOfDateRate, fxSpotDate, baseCurveCollection, baseDiscountCurveIndex, termCurveCollection, termDiscountCurveIndex);
+		AQ_RECORD_INPUTS(fxAsOfDateRate, fxSpotDate, baseCurveCollection, baseDiscountCurveIndex, termCurveCollection, termDiscountCurveIndex);
 
 		double ret = etrading::fxRateFromAsOfDateToSpot(fxAsOfDateRate, fxSpotDate, baseCurveCollection, baseDiscountCurveIndex, termCurveCollection, termDiscountCurveIndex);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
 
 		VALID_EXCEPTION_END
 	}

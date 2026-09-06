@@ -98,7 +98,7 @@ namespace validation
 		VALID_EXCEPTION_START;
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(tableName, std::string(), tableName, parameterLVB, fixingDates, fixingValues );
+		AQ_RECORD_DECORATED_INPUTS(tableName, std::string(), tableName, parameterLVB, fixingDates, fixingValues );
 
 		// Create a fixing table object
 		etrading::FixingTable fixingTable(tableName, fixingDates, fixingValues, parameterLVB );
@@ -222,7 +222,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
         
-        RECORD_INPUTS ( tableName, fixingDates )
+        AQ_RECORD_INPUTS ( tableName, fixingDates )
         
         // Create Pointer to the Fixing Table Object in the Cache and throw if a null pointer
         auto fixingTable = etrading::Environment::defaultEnv().accessObject<etrading::FixingTable>( tableName );
@@ -235,7 +235,7 @@ namespace validation
             fixingValues[i] = fixingTable->getFixingValue( fixingDates[i] );
         }
 
-        RECORD_OUTPUTS_AND_RETURN_RESULT( fixingValues )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( fixingValues )
 
         VALID_EXCEPTION_END
     }
@@ -305,7 +305,7 @@ namespace validation
 	{
 		VALID_EXCEPTION_START;
 
-		RECORD_INPUTS(tableName, fixingDates)
+		AQ_RECORD_INPUTS(tableName, fixingDates)
 
 		// Create Pointer to the Fixing Table Object in the Cache and throw if a null pointer
 		auto fixingTable = etrading::Environment::defaultEnv().accessObject<etrading::FixingTable>( tableName );
@@ -314,7 +314,7 @@ namespace validation
 		// Generate a Vector of Fixing Values
 		auto fixingValues = fixingTable->getFixingValues( parameterLVB, fixingDates );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( fixingValues );
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( fixingValues );
 
 		VALID_EXCEPTION_END
 	}

@@ -38,7 +38,7 @@ namespace validation
 		VALID_EXCEPTION_START
 		
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(expiryPoint, tenorPoint, strike, forwardID, alphaID, betaID, nuID, rhoID, approxMethod, shift, volType);
+		AQ_RECORD_INPUTS(expiryPoint, tenorPoint, strike, forwardID, alphaID, betaID, nuID, rhoID, approxMethod, shift, volType);
 		
 		AQLString sabrMethod = approxMethod;
 		if (sabrMethod.size() == 0)
@@ -62,7 +62,7 @@ namespace validation
 														isLognormal);
 		
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(ret);
 
 		return ret;
 

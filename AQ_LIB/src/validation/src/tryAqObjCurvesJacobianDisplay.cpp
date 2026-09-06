@@ -29,7 +29,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS(curveEngineObject, displayLabels, displayInverseMatrix);
+        AQ_RECORD_INPUTS(curveEngineObject, displayLabels, displayInverseMatrix);
 		
 		if (curveCollection.size() == 0)
 		{
@@ -65,7 +65,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(curveCollection, curveName, displayInverseMatrix);
+		AQ_RECORD_INPUTS(curveCollection, curveName, displayInverseMatrix);
 
 		if (curveCollection.size() == 0)
 		{

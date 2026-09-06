@@ -201,7 +201,7 @@ namespace validation
 	    VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(swapObjectName, std::string(), bondPrice, bondAccrualStartDate, isCleanPrice, swapObjectName, valuationSettingsLVB, fixingTableNames);
+		AQ_RECORD_DECORATED_INPUTS(swapObjectName, std::string(), bondPrice, bondAccrualStartDate, isCleanPrice, swapObjectName, valuationSettingsLVB, fixingTableNames);
 
         auto swap = etrading::getSwap( swapObjectName );
 		auto swapFixedLeg = etrading::getFixedLeg(swap);
@@ -297,7 +297,7 @@ namespace validation
 	    VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(swapObjectName, std::string(), swapObjectName, bondObjectName, bondPrice, valuationSettingsLVB,  fixingTableNames);
+		AQ_RECORD_DECORATED_INPUTS(swapObjectName, std::string(), swapObjectName, bondObjectName, bondPrice, valuationSettingsLVB,  fixingTableNames);
 
 		auto bond = etrading::getBond(bondObjectName);
 
@@ -322,7 +322,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(swapObjectName, std::string(), swapObjectName, bondObjectName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		AQ_RECORD_DECORATED_INPUTS(swapObjectName, std::string(), swapObjectName, bondObjectName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		auto bond = etrading::getBond(bondObjectName);
 
@@ -369,7 +369,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(swapObjectName, std::string(), swapObjectName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
+		AQ_RECORD_DECORATED_INPUTS(swapObjectName, std::string(), swapObjectName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
 
 		auto swap = etrading::getSwap(swapObjectName);
 		auto swapFixedLeg = etrading::getFixedLeg(swap);
@@ -421,7 +421,7 @@ namespace validation
 	    VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(swapObjectName, std::string(), swapObjectName, assetSwapParParSpread, valuationSettingsLVB,  fixingTableNames);
+		AQ_RECORD_DECORATED_INPUTS(swapObjectName, std::string(), swapObjectName, assetSwapParParSpread, valuationSettingsLVB,  fixingTableNames);
 
         auto swap = etrading::getSwap( swapObjectName );
 

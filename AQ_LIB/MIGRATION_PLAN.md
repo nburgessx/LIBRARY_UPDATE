@@ -483,6 +483,30 @@ canonical marshalling / handle-I/O / array-return / error-convention pattern.
   **coverage**: the macros were applied to some functions and not others.
   - **Rule going forward: every `validation` function gets `RECORD_DECORATED_INPUTS`
     / `RECORD_INPUTS_n` and `RECORD_OUTPUTS`. No new `tryAq*` lands without them.**
+  - **The macros exist and are named `AQ_RECORD_INPUTS(...)` / `AQ_RECORD_OUTPUTS(result)`**
+    (variadic, up to 20 args; `AQ_RECORD_DECORATED_INPUTS` for object functions
+    that need a filename prefix/suffix). `__FUNCTION__` supplies the file name and
+    the `generatorFunction` field, so nothing is hand-written.
+  - **Rebase is a TEST-side concern, not a validation one.** `validation` only
+    records; `GTEST/ResultsProcessor.cpp` decides whether to compare against the
+    stored outputs or overwrite them, keyed off
+    `CreateDataFile::rebaseResultsEnabled()` (set by `RunTests.cpp`). So
+    `AQ_RECORD_OUTPUTS` needs no rebase logic — do not add any.
+  - Coverage today: 57 of 101 validation source files use the macros, ~52 carry
+    hand-rolled `if (CreateDataFile::recordEnabled()) { ... }` blocks, and some
+    functions have neither.
+  - ⚠ **18 hand-rolled INPUT recordings use a key that is NOT the parameter name**
+    (`key=staticDataTable, expr=curveName`; `key=convexityAdjConv,
+    expr=tenorBasisConv`; ...). Converting those to the macro silently changes
+    the fixture key and breaks the test at run time, build still green. Convert
+    them by hand, or rename the parameter to match the key, and re-run
+    `rebrand/tools/fixture_key_check.py`. The other ~453 hand-rolled pairs
+    already agree and convert mechanically.
+  - 🐞 Found while auditing: `tryAqObjRatesFixingTable.cpp` writes
+    `file.write("fixingValues", fixingDates)` and
+    `file.write("fixingDates", fixingValues)` — **the two keys are swapped**.
+    Pre-existing; the recorded fixtures have dates under the values key. Fix the
+    code and rebase those fixtures together, never separately.
   - Audit the existing `tryAq*` surface and add the macros where they are absent;
     that is what turns a recorded workbook into a `GTEST` case for free, and it is
     the mechanism behind the whole fixture suite.
@@ -492,6 +516,16 @@ canonical marshalling / handle-I/O / array-return / error-convention pattern.
     test fails at run time with `ReadDataFile::Load: unknown key`. This bit us in
     step 8B. Guard: `rebrand/tools/fixture_key_check.py`, run after any rename
     that touches validation parameters.
+- ☐ **4.12 Structured exception handling for `AQ_API` too** (Nicholas asked
+  2026-09-06 whether SEH covers the API as well as Excel — it does not, fully).
+  `VALID_EXCEPTION_START` installs the handler on every `tryAq*`, so **any**
+  caller — XLL, Python, C#, Java, R, GTEST — is protected for the part that runs
+  inside `validation`. But `AQ_API_START` (`src/AQ_API/source/APISetUp.h`) is a
+  bare `try {`: **no `StructuredExceptionHandler`**. So a fault in AQ_API's own
+  marshalling — SWIG conversion, building result vectors — is unprotected and
+  will take down the host process (the Python interpreter, the CLR, the JVM).
+  Fix symmetrically with `AQ_XLL_GUARD`: add the handler to `AQ_API_START`.
+  Note `AQ_API` must build `/EHa` for this to work — check before relying on it.
 - ☐ **4.10 Structured exception handling across `AQ_XLL`**  (Nicholas, 2026-09-06).
   An access violation, stack overflow or divide-by-zero inside a worksheet
   function is a Windows structured exception, not a C++ one; unhandled it takes

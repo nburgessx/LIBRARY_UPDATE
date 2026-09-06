@@ -242,7 +242,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-		RECORD_INPUTS( curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency, fwdInterps);
+		AQ_RECORD_INPUTS( curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency, fwdInterps);
 
 		if ( curveCollection.size() == 0 )
 		{

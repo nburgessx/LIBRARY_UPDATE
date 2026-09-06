@@ -83,22 +83,22 @@
       <Filter>src\etrading\Product</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolsInterpolation.cpp">
-      <Filter>src\etrading\Utility</Filter>
+      <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolsLVB.cpp">
-      <Filter>src\etrading\Utility</Filter>
+      <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolsPCA.cpp">
-      <Filter>src\etrading\Utility</Filter>
+      <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolsRecord.cpp">
-      <Filter>src\etrading\Utility</Filter>
+      <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolsReplay.cpp">
-      <Filter>src\etrading\Utility</Filter>
+      <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolsSetup.cpp">
-      <Filter>src\etrading\Utility</Filter>
+      <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\VersionNumber.cpp">
       <Filter>src\SETUP</Filter>
@@ -113,13 +113,13 @@
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolsClean.cpp">
-      <Filter>src\etrading\Utility</Filter>
+      <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolsAppend.cpp">
-      <Filter>src\etrading\Utility</Filter>
+      <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolsDataFilter.cpp">
-      <Filter>src\etrading\Utility</Filter>
+      <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqCurvesVasicek.cpp">
       <Filter>src\etrading\Curve</Filter>
@@ -143,7 +143,7 @@
       <Filter>src\etrading\Date</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolsDate.cpp">
-      <Filter>src\etrading\Utility</Filter>
+      <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqMathIntegrate.cpp">
       <Filter>src\etrading\Math</Filter>
@@ -287,7 +287,7 @@
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolsValuationSettings.cpp">
-      <Filter>src\etrading\Utility</Filter>
+      <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqCurvesInterpolation.cpp">
       <Filter>src\etrading\Curve</Filter>
@@ -382,22 +382,22 @@
       <Filter>include\etrading\Product</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolsSetup.h">
-      <Filter>include\etrading\Utility</Filter>
+      <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolsInterpolation.h">
-      <Filter>include\etrading\Utility</Filter>
+      <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolsLVB.h">
-      <Filter>include\etrading\Utility</Filter>
+      <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolsPCA.h">
-      <Filter>include\etrading\Utility</Filter>
+      <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolsRecord.h">
-      <Filter>include\etrading\Utility</Filter>
+      <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolsReplay.h">
-      <Filter>include\etrading\Utility</Filter>
+      <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\VersionNumber.h">
       <Filter>include\SETUP</Filter>
@@ -412,13 +412,13 @@
       <Filter>include\etrading\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolsClean.h">
-      <Filter>include\etrading\Utility</Filter>
+      <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolsAppend.h">
-      <Filter>include\etrading\Utility</Filter>
+      <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolsDataFilter.h">
-      <Filter>include\etrading\Utility</Filter>
+      <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqCurvesVasicek.h">
       <Filter>include\etrading\Curve</Filter>
@@ -442,7 +442,7 @@
       <Filter>include\etrading\Date</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolsDate.h">
-      <Filter>include\etrading\Utility</Filter>
+      <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqMathIntegrate.h">
       <Filter>include\etrading\Math</Filter>
@@ -586,7 +586,7 @@
       <Filter>include\etrading\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolsValuationSettings.h">
-      <Filter>include\etrading\Utility</Filter>
+      <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqCurvesInterpolation.h">
       <Filter>include\etrading\Curve</Filter>
@@ -662,7 +662,7 @@
     <Filter Include="include\etrading\Swap">
       <UniqueIdentifier>{998ac3e9-f935-46a1-982d-c2810ce28f85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\etrading\Utility">
+    <Filter Include="include\etrading\Tools">
       <UniqueIdentifier>{4d80a60e-7da4-4880-bf88-2e19f9ed2a79}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\etrading\Vols">
@@ -725,7 +725,7 @@
     <Filter Include="src\etrading\Swap">
       <UniqueIdentifier>{36f4e25b-ad36-4014-bbe0-b86f60f6c9be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\Utility">
+    <Filter Include="src\etrading\Tools">
       <UniqueIdentifier>{fe125902-8792-48c0-a90e-b2d65f970292}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\etrading\Vols">

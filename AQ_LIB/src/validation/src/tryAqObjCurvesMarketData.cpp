@@ -102,13 +102,13 @@ namespace validation
     {
         VALID_EXCEPTION_START
        
-		RECORD_INPUTS( objectName );
+		AQ_RECORD_INPUTS( objectName );
         
         // Attempt to retrieve AQObjCurveMarketData object from the AQObj object cache
 		auto curveMarketData = etrading::getCurveMarketData( objectName );
         curveMarketData->clearMarketDataLocalCache();
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( objectName )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( objectName )
 
         VALID_EXCEPTION_END
     }
@@ -123,7 +123,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
        
-		RECORD_INPUTS( objectName, marketDataType, bumpSize );
+		AQ_RECORD_INPUTS( objectName, marketDataType, bumpSize );
         
         // Get Market Data, Clear Existing Bumps then Apply New Bump
 		auto curveMarketData = etrading::getCurveMarketData( objectName );
@@ -135,7 +135,7 @@ namespace validation
 
         curveMarketData->bumpMarketData( bumpSize, marketDataType, false, true ); // false = onlyBumpOutrights, true = throwOnError
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( objectName )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( objectName )
 
         VALID_EXCEPTION_END
     }
@@ -151,7 +151,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
        
-		RECORD_INPUTS( objectName );
+		AQ_RECORD_INPUTS( objectName );
         
         auto& env = etrading::Environment::defaultEnv();
         auto curveObject = env.accessObject<etrading::SingleCurveObject>( objectName );
@@ -171,7 +171,7 @@ namespace validation
         curveObject->calibrateCurve();
         etrading::copyToCache<etrading::SingleCurveObject>( *curveObject );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( objectName )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( objectName )
 
         VALID_EXCEPTION_END
     }
@@ -186,12 +186,12 @@ namespace validation
     {
         VALID_EXCEPTION_START
        
-		RECORD_INPUTS( objectName, bumpSize, onlyBumpOutrightInstruments );
+		AQ_RECORD_INPUTS( objectName, bumpSize, onlyBumpOutrightInstruments );
         
 		auto curveMarketData = etrading::getCurveMarketData( objectName );
         curveMarketData->bumpAllMarketData( bumpSize, onlyBumpOutrightInstruments );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( objectName )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( objectName )
 
         VALID_EXCEPTION_END
     }
@@ -206,7 +206,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
        
-		RECORD_INPUTS( objectName );
+		AQ_RECORD_INPUTS( objectName );
         
         auto& env = etrading::Environment::defaultEnv();
         auto curveObject = env.accessObject<etrading::SingleCurveObject>( objectName );
@@ -220,7 +220,7 @@ namespace validation
         curveObject->calibrateCurve();
         etrading::copyToCache<etrading::SingleCurveObject>( *curveObject );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( objectName )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( objectName )
 
         VALID_EXCEPTION_END
     }

@@ -240,7 +240,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( legObjectName, valuationSettingsLVB, fixingTableName, showColumnHeaders, columnList );
+        AQ_RECORD_INPUTS( legObjectName, valuationSettingsLVB, fixingTableName, showColumnHeaders, columnList );
 
 		auto leg = etrading::getLeg(legObjectName);
 
@@ -249,7 +249,7 @@ namespace validation
         auto result = leg->view(dataProvider, showColumnHeaders, etrading::toCashflowHeaderEnumSet(columnList));
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}

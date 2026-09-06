@@ -64,7 +64,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
 
-		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor, xccyFXSpotRates );
+		AQ_RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor, xccyFXSpotRates );
 
         // Trim Inputs then Check if they are empty
         AQLStringVector trimmedSwapNames = validation::trimAQLStringVector( swapNames );
@@ -227,7 +227,7 @@ namespace validation
 	{
         VALID_EXCEPTION_START
 
-		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor, xccyFXSpotRates );
+		AQ_RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor, xccyFXSpotRates );
 
         // Trim Inputs then Check if they are empty
         AQLStringVector trimmedSwapNames = validation::trimAQLStringVector( swapNames );
@@ -436,7 +436,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
 
-		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, groupRiskBy, aggregateRisks, reportInLegCCY, xccyFXSpotRates );
+		AQ_RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, groupRiskBy, aggregateRisks, reportInLegCCY, xccyFXSpotRates );
 
 		// Trim Inputs then Check if they are empty
         AQLStringVector trimmedSwapNames = validation::trimAQLStringVector( swapNames );

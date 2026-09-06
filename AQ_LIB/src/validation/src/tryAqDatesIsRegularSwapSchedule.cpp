@@ -33,7 +33,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        RECORD_INPUTS( swapStart, swapMaturity, isMaturityAdjusted, frequency, busDayAdj, calendar, rollDay, rollConvention );
+        AQ_RECORD_INPUTS( swapStart, swapMaturity, isMaturityAdjusted, frequency, busDayAdj, calendar, rollDay, rollConvention );
 
         // Validation
         AQ_REQUIRE( swapMaturity >= swapStart, "Invalid Swap Dates sepcified - Swap Maturity cannot be before the Swap Start date." );
@@ -43,7 +43,7 @@ namespace validation
         const bool result = etrading::isRegularSwapSchedule( swapStart, swapMaturity, isMaturityAdjusted, frequency, busDayAdj, calendar, rollDay, rollConvention );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }

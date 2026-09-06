@@ -21,12 +21,12 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(curveAsOfDate, futuresStartDate, futuresEndDate, meanReversion, volatility);
+		AQ_RECORD_INPUTS(curveAsOfDate, futuresStartDate, futuresEndDate, meanReversion, volatility);
      
         double convexityAdjustment = etrading::getCurveEuroDollarConvexityAdjustment(curveAsOfDate, futuresStartDate, futuresEndDate, meanReversion, volatility);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(convexityAdjustment);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(convexityAdjustment);
 
         VALID_EXCEPTION_END
     }

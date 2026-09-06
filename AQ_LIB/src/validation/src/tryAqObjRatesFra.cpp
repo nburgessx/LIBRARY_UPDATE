@@ -70,7 +70,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(fraObjectName, valuationSettingsLVB);
+		AQ_RECORD_INPUTS(fraObjectName, valuationSettingsLVB);
 
 		auto leg = etrading::getLeg(fraObjectName);
 
@@ -83,7 +83,7 @@ namespace validation
 		auto result = fraObject->fraRate(valuationSettingsLVB);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 
@@ -101,7 +101,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(fraObjectName, valuationSettingsLVB, meanReversion, volatility);
+		AQ_RECORD_INPUTS(fraObjectName, valuationSettingsLVB, meanReversion, volatility);
 
 		auto leg = etrading::getLeg(fraObjectName);
 
@@ -114,7 +114,7 @@ namespace validation
 		double result = fraObject->fraRateToFuturePrice(valuationSettingsLVB, meanReversion, volatility);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -132,7 +132,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(fraObjectName, valuationSettingsLVB, convexityAdjustment);
+		AQ_RECORD_INPUTS(fraObjectName, valuationSettingsLVB, convexityAdjustment);
 
 		auto leg = etrading::getLeg(fraObjectName);
 
@@ -145,7 +145,7 @@ namespace validation
 		double result = fraObject->fraRateToFuturePrice(valuationSettingsLVB, convexityAdjustment);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 

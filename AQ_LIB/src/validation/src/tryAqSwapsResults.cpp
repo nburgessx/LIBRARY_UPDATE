@@ -28,7 +28,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs
-        RECORD_INPUTS( enable )
+        AQ_RECORD_INPUTS( enable )
 
 		// *** No Enable Guard Required Here ***
 
@@ -42,7 +42,7 @@ namespace validation
 			result = "Swap Results: ENABLED";
 		}
 
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 		
 		VALID_EXCEPTION_END
 	}
@@ -53,7 +53,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs
-        RECORD_INPUTS_NO_ARGUMENTS()
+        AQ_RECORD_INPUTS_NO_ARGUMENTS()
 		
 		// *** No Enable Guard Required Here ***
 
@@ -66,7 +66,7 @@ namespace validation
 			result = "Swap Results: ENABLED";
 		}
 
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 		
 		VALID_EXCEPTION_END
 	}
@@ -88,7 +88,7 @@ namespace validation
 		const AQLStringMatrix trimmedForwardRisk = validation::trimAQLStringMatrix( forwardRiskLVB );
 
 		// Record Inputs
-        RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk, trimmedForwardRisk )
+        AQ_RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk, trimmedForwardRisk )
 		
 		// Check if Swap Results Enabled
 		AQ_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
@@ -116,7 +116,7 @@ namespace validation
         
         // Record Outputs and Return the Result
         const std::string result = swapHandleUpperCase;
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 		
 		VALID_EXCEPTION_END
 	}
@@ -136,7 +136,7 @@ namespace validation
         const AQLStringMatrix trimmedDiscountRisk = validation::trimAQLStringMatrix( discountRiskLVB );
 
 		// Record Inputs
-        RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk )
+        AQ_RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk )
 		
 		// Check if Swap Results Enabled
 		AQ_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
@@ -159,7 +159,7 @@ namespace validation
         
         // Record Outputs and Return the Result
         const std::string result = swapHandleUpperCase;
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 		
 		VALID_EXCEPTION_END
 	}
@@ -179,7 +179,7 @@ namespace validation
         const AQLStringMatrix trimmedForwardRisk = validation::trimAQLStringMatrix( forwardRiskLVB );
 
 		// Record Inputs
-        RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedForwardRisk )
+        AQ_RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedForwardRisk )
 		
 		// Check if Swap Results Enabled
 		AQ_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
@@ -202,7 +202,7 @@ namespace validation
         
         // Record Outputs and Return the Result
         const std::string result = swapHandleUpperCase;
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 		
 		VALID_EXCEPTION_END
 	}
@@ -217,7 +217,7 @@ namespace validation
 		boost::to_upper( swapHandleUpperCase );
 
 		// Record Inputs
-        RECORD_INPUTS( swapHandleUpperCase )
+        AQ_RECORD_INPUTS( swapHandleUpperCase )
 
 		// *** No Enable Guard Required Here ***
 
@@ -235,7 +235,7 @@ namespace validation
             result = "Swap Results for Swap '" + swapHandleUpperCase + "' do not exist";
         }
         
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result )
 		
 		VALID_EXCEPTION_END
 	}
@@ -269,7 +269,7 @@ namespace validation
 		boost::to_upper( swapHandleUpperCase );
 
 		// Record Inputs
-        RECORD_INPUTS( swapHandleUpperCase, riskType )
+        AQ_RECORD_INPUTS( swapHandleUpperCase, riskType )
 
 		// Check if Swap Results Enabled
 		AQ_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
@@ -304,7 +304,7 @@ namespace validation
 			}
 		}
         
-        RECORD_OUTPUTS_AND_RETURN_RESULT( results )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( results )
 		
 		VALID_EXCEPTION_END
 	}
@@ -319,12 +319,12 @@ namespace validation
 		boost::to_upper( swapHandleUpperCase );
 
 		// Record Inputs
-        RECORD_INPUTS( swapHandleUpperCase )
+        AQ_RECORD_INPUTS( swapHandleUpperCase )
 
 		AQ_THROW("Not Implemented")
 		etrading::VariantMatrix results;
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( results )
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( results )
 
 		VALID_EXCEPTION_END
 

@@ -59,13 +59,13 @@ namespace validation
 	double validationUtilitySwapPV( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const AQLString& legName, const LabelValueBlock& fixingTableNames )
 	{
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, legName, fixingTableNames);
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, legName, fixingTableNames);
 
 		auto swap           = etrading::getSwap(swapName);
         double result       = swap->pv(valuationSettingsLVB, fixingTableNames, legName);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 	}
 
     // END OF HELPER UTILITIES
@@ -166,7 +166,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, fixingTableNames);
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, fixingTableNames);
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -176,7 +176,7 @@ namespace validation
 		double ret = swap->pv01(valuationLVBusingCurveCollection, fixingTableNames);
 		
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( ret );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ret );
 
 		VALID_EXCEPTION_END
 	}
@@ -193,7 +193,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, fixingTableNames, legName );
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, fixingTableNames, legName );
 
 		auto swap = etrading::getSwap(swapName);
 		
@@ -220,7 +220,7 @@ namespace validation
         }
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -236,13 +236,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, legName);
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, legName);
 
 		auto swap = etrading::getSwap(swapName);
 		double ret = swap->annuity(valuationSettingsLVB, legName);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( ret );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ret );
 
 		VALID_EXCEPTION_END
 	}
@@ -259,7 +259,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, fixingTableNames, spreadLegName);
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, fixingTableNames, spreadLegName);
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -269,7 +269,7 @@ namespace validation
         double ret = swap->spread(valuationLVBusingCurveCollection, fixingTableNames, false, spreadLegName);
       
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( ret );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ret );
 
 		VALID_EXCEPTION_END
 	}
@@ -286,7 +286,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, fixingTableNames, spreadLegName);
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, fixingTableNames, spreadLegName);
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -296,7 +296,7 @@ namespace validation
 		double ret = swap->spread(valuationLVBusingCurveCollection, fixingTableNames, true, spreadLegName);
       
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( ret );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( ret );
 
 		VALID_EXCEPTION_END
 	}
@@ -321,7 +321,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, modelNames, legName, fixingTableNames, showColumnHeaders, columnList );
+        AQ_RECORD_INPUTS( swapName, modelNames, legName, fixingTableNames, showColumnHeaders, columnList );
 
 		auto swap = etrading::getSwap(swapName); 
         
@@ -353,14 +353,14 @@ namespace validation
 	    VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, legName, fixingTableNames);
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, legName, fixingTableNames);
 
 		auto swap = etrading::getSwap(swapName);
 
 		double result = swap->accruedInterest(valuationSettingsLVB, legName, fixingTableNames);
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -380,7 +380,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, hazardRate, recoveryRate, legName, includeAccruedInterest );
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, hazardRate, recoveryRate, legName, includeAccruedInterest );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -397,7 +397,7 @@ namespace validation
 		double result = cds->pvFromHazardRate( valuationSettingsLVB, hazardRate, recoveryRate, legName, includeAccruedInterest );
 		        
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -415,7 +415,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, creditModelName, legName );
+        AQ_RECORD_INPUTS( swapName, creditModelName, legName );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -434,7 +434,7 @@ namespace validation
 		double result = cds->pv( *creditModel, legName );
 		        
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	
@@ -458,7 +458,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, creditModelName, legName, numberOfIntegrationPoints, evaluateInParallel, payDefaultCashflowsOnNextCouponDate );
+        AQ_RECORD_INPUTS( swapName, creditModelName, legName, numberOfIntegrationPoints, evaluateInParallel, payDefaultCashflowsOnNextCouponDate );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -477,7 +477,7 @@ namespace validation
 		double result = cds->pvByIntegration( *creditModel, legName, numberOfIntegrationPoints, evaluateInParallel, payDefaultCashflowsOnNextCouponDate );
 		        
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -501,7 +501,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, creditModelName, legName, mcParametersLVB, payDefaultCashflowsOnNextCouponDate );
+        AQ_RECORD_INPUTS( swapName, creditModelName, legName, mcParametersLVB, payDefaultCashflowsOnNextCouponDate );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -520,7 +520,7 @@ namespace validation
 		double result = cds->pvByMonteCarlo( *creditModel, legName, mcParametersLVB, payDefaultCashflowsOnNextCouponDate, standardError );
 		        
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -540,7 +540,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, hazardRate, recoveryRate, legName, includeAccruedInterest );
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, hazardRate, recoveryRate, legName, includeAccruedInterest );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -553,7 +553,7 @@ namespace validation
 		double result = cds->riskyAnnuityFromHazardRate(valuationSettingsLVB, hazardRate, recoveryRate, legName, includeAccruedInterest );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -570,7 +570,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, creditModelName, legName );
+        AQ_RECORD_INPUTS( swapName, creditModelName, legName );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -585,7 +585,7 @@ namespace validation
 		double result = cds->riskyAnnuity( *creditModel, legName );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -604,7 +604,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( swapName, creditModelName, toDate, legName );
+		AQ_RECORD_INPUTS( swapName, creditModelName, toDate, legName );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -619,7 +619,7 @@ namespace validation
 		double result = cds->accruedYearFraction( *creditModel, toDate, legName);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -636,7 +636,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, creditModelName, legName );
+        AQ_RECORD_INPUTS( swapName, creditModelName, legName );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -652,7 +652,7 @@ namespace validation
 		double result = cds->riskyAnnuity( *creditModel, legName ) * oneBasisPoint;
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -673,7 +673,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, hazardRate, recoveryRate, premiumLegName, protectionLegName, includeAccruedInterest );
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, hazardRate, recoveryRate, premiumLegName, protectionLegName, includeAccruedInterest );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -686,7 +686,7 @@ namespace validation
 		double result = cds->parSpreadFromHazardRate( valuationSettingsLVB, hazardRate, recoveryRate, premiumLegName, protectionLegName, includeAccruedInterest );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -704,7 +704,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, creditModelName, premiumLegName, protectionLegName );
+        AQ_RECORD_INPUTS( swapName, creditModelName, premiumLegName, protectionLegName );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -719,7 +719,7 @@ namespace validation
 		double result = cds->parSpread( *creditModel, premiumLegName, protectionLegName );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -740,7 +740,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, parSpread, recoveryRate, premiumLegName, protectionLegName, includeAccruedInterest );
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, parSpread, recoveryRate, premiumLegName, protectionLegName, includeAccruedInterest );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -753,7 +753,7 @@ namespace validation
 		double result = cds->hazardRateFromParSpread( valuationSettingsLVB, parSpread, recoveryRate, premiumLegName, protectionLegName, includeAccruedInterest );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -771,7 +771,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, creditModelName, parSpread, premiumLegName, protectionLegName );
+        AQ_RECORD_INPUTS( swapName, creditModelName, parSpread, premiumLegName, protectionLegName );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -786,7 +786,7 @@ namespace validation
 		double result = cds->hazardRateFromParSpread( parSpread, *creditModel, premiumLegName, protectionLegName );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -872,12 +872,12 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 	
-		RECORD_INPUTS( creditModelName );
+		AQ_RECORD_INPUTS( creditModelName );
 	
 		auto creditModel = etrading::getCreditModel( creditModelName );
 		AQLDate result = creditModel->getAsOfDate();
 
-	    RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+	    AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -890,14 +890,14 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 	
-		RECORD_INPUTS( creditModelName );
+		AQ_RECORD_INPUTS( creditModelName );
 
 		auto creditModel = etrading::getCreditModel( creditModelName );
 
 		AnyTypeMatrix result = creditModel->getCalibrationParameters();
 
 		 // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -906,14 +906,14 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 	
-		RECORD_INPUTS( creditModelName, paymentDate );
+		AQ_RECORD_INPUTS( creditModelName, paymentDate );
 
 		auto creditModel = etrading::getCreditModel( creditModelName );
 
 		double result = creditModel->getHazardRate( paymentDate );
 
 		 // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -922,7 +922,7 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 	
-		RECORD_INPUTS( creditModelName, toDate, fromDate );
+		AQ_RECORD_INPUTS( creditModelName, toDate, fromDate );
 
 		auto creditModel = etrading::getCreditModel( creditModelName );
 
@@ -935,7 +935,7 @@ namespace validation
 		double result = creditModel->getSurvivalProbability( toDate, fromDate );
 
 		 // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -945,7 +945,7 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 	
-		RECORD_INPUTS( creditBasketModelName, toDate, fromDate );
+		AQ_RECORD_INPUTS( creditBasketModelName, toDate, fromDate );
 
 		auto creditBasketModel = etrading::getCreditBasketModel( creditBasketModelName );
 
@@ -958,7 +958,7 @@ namespace validation
 		double result = creditBasketModel->getFirstToDefaultHomogeneousBasketSurvivalProbability( toDate, fromDate );
 
 		 // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -968,7 +968,7 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 	
-		RECORD_INPUTS( creditModelName, toDate, fromDate );
+		AQ_RECORD_INPUTS( creditModelName, toDate, fromDate );
 
 		auto creditModel = etrading::getCreditModel( creditModelName );
 
@@ -981,7 +981,7 @@ namespace validation
 		double result = creditModel->getDefaultProbability( toDate, fromDate );
 
 		 // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -998,7 +998,7 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 	
-		RECORD_INPUTS( creditModelName, survivalProbability );
+		AQ_RECORD_INPUTS( creditModelName, survivalProbability );
 
 		auto creditModel = etrading::getCreditModel( creditModelName );
 
@@ -1019,7 +1019,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        RECORD_INPUTS( creditModelName, paymentDates )
+        AQ_RECORD_INPUTS( creditModelName, paymentDates )
 
         // Validate PaymentDate vector Size
         AQ_REQUIRE( paymentDates.size() > 0, "No payment dates specified.")
@@ -1071,7 +1071,7 @@ namespace validation
         }
 
          // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( riskyDiscountFactors );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( riskyDiscountFactors );
 
 		VALID_EXCEPTION_END
 	}
@@ -1091,13 +1091,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(creditModelName, startDate, endDate);
+		AQ_RECORD_INPUTS(creditModelName, startDate, endDate);
 
 		auto creditModel    = etrading::getCreditModel( creditModelName );
 		const double result = creditModel->getForwardSpread( startDate, endDate );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -1107,13 +1107,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( creditModelName, startDate, endDate );
+		AQ_RECORD_INPUTS( creditModelName, startDate, endDate );
 
 		auto creditModel = etrading::getCreditModel( creditModelName );
 		const double result = creditModel->getIndexForwardSpread( startDate, endDate );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -1136,7 +1136,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(creditModelName, payerReceiver, strike, optionExpiryDate, cdsMaturityDate, volatility );
+		AQ_RECORD_INPUTS(creditModelName, payerReceiver, strike, optionExpiryDate, cdsMaturityDate, volatility );
 
 		auto creditModel = etrading::getCreditModel(creditModelName);
 
@@ -1145,7 +1145,7 @@ namespace validation
 		const double result = creditModel->getSingleNameKnockoutOptionValue( payerReceiverSwaptionEnum, strike, optionExpiryDate, cdsMaturityDate, volatility );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -1169,7 +1169,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(creditModelName, payerReceiver, strike, optionExpiryDate, cdsStartDate, cdsMaturityDate, volatility, forwardSpread );
+		AQ_RECORD_INPUTS(creditModelName, payerReceiver, strike, optionExpiryDate, cdsStartDate, cdsMaturityDate, volatility, forwardSpread );
 
 		auto creditModel = etrading::getCreditModel(creditModelName);
 
@@ -1178,7 +1178,7 @@ namespace validation
 		const double result = creditModel->getOptionValueFromForward( payerReceiverSwaptionEnum, strike, optionExpiryDate, cdsStartDate, cdsMaturityDate, volatility, forwardSpread );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -1196,14 +1196,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(creditModelName, optionLVB );
+		AQ_RECORD_INPUTS(creditModelName, optionLVB );
 
 		auto creditModel = etrading::getCreditModel(creditModelName);
 
 		const double result = creditModel->getIndexOptionValue( optionLVB );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -1221,14 +1221,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(creditModelName, optionLVB );
+		AQ_RECORD_INPUTS(creditModelName, optionLVB );
 
 		auto creditModel = etrading::getCreditModel( creditModelName );
 
 		const double result = creditModel->getIndexOptionImpliedVol( optionLVB );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -1247,14 +1247,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(creditModelName, optionLVB, volatilityBump );
+		AQ_RECORD_INPUTS(creditModelName, optionLVB, volatilityBump );
 
 		auto creditModel = etrading::getCreditModel(creditModelName);
 
 		const double result = creditModel->getIndexOptionVega( optionLVB, volatilityBump );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -1272,14 +1272,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(creditModelName, optionLVB);
+		AQ_RECORD_INPUTS(creditModelName, optionLVB);
 
 		auto creditModel = etrading::getCreditModel(creditModelName);
 
 		const double result = creditModel->getIndexOptionCS01( optionLVB );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 
@@ -1298,14 +1298,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(creditModelName, optionLVB);
+		AQ_RECORD_INPUTS(creditModelName, optionLVB);
 
 		auto creditModel = etrading::getCreditModel(creditModelName);
 
 		const double result = creditModel->getIndexOptionTheta( optionLVB );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -1327,7 +1327,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( creditModelName, payerReceiver, strike, optionExpiryDate, cdsMaturityDate, targetOptionValue );
+		AQ_RECORD_INPUTS( creditModelName, payerReceiver, strike, optionExpiryDate, cdsMaturityDate, targetOptionValue );
 
 		auto creditModel = etrading::getCreditModel(creditModelName);
 
@@ -1336,7 +1336,7 @@ namespace validation
 		const double result = creditModel->getImpliedVol( payerReceiverSwaptionEnum, strike, optionExpiryDate, cdsMaturityDate, targetOptionValue );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -1360,7 +1360,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(creditModelName, payerReceiver, strike, optionExpiryDate, cdsStartDate, cdsMaturityDate, targetOptionValue, forwardSpread);
+		AQ_RECORD_INPUTS(creditModelName, payerReceiver, strike, optionExpiryDate, cdsStartDate, cdsMaturityDate, targetOptionValue, forwardSpread);
 
 		auto creditModel = etrading::getCreditModel(creditModelName);
 
@@ -1369,7 +1369,7 @@ namespace validation
 		const double result = creditModel->getImpliedVolFromForward( payerReceiverSwaptionEnum, strike, optionExpiryDate, cdsStartDate, cdsMaturityDate, targetOptionValue, forwardSpread );
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -1465,7 +1465,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, convexityAdjustment, legName, fixingTableNames );
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, convexityAdjustment, legName, fixingTableNames );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -1482,7 +1482,7 @@ namespace validation
 		double result = cms->pvUsingConvexityAdjustment( valuationSettingsLVB, convexityAdjustment, fixingTableNames, legName);
 		        
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END	
 	}
@@ -1501,7 +1501,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, valuationSettingsLVB, convexityAdjustment, fixingTableNames );
+        AQ_RECORD_INPUTS( swapName, valuationSettingsLVB, convexityAdjustment, fixingTableNames );
 
 		auto swap = etrading::getSwap(swapName);
 
@@ -1518,7 +1518,7 @@ namespace validation
 		double result = cms->parRateUsingConvexityAdjustment( valuationSettingsLVB, convexityAdjustment, fixingTableNames);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END	
 	
@@ -1538,7 +1538,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, creditModelName, legName, fixingTableNames );
+        AQ_RECORD_INPUTS( swapName, creditModelName, legName, fixingTableNames );
 
 		auto swap = etrading::getSwap( swapName );
 
@@ -1555,7 +1555,7 @@ namespace validation
 		double result = trs->pv( creditModelName, fixingTableNames, legName);
 		        
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -1572,7 +1572,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, creditModelName, fixingTableNames );
+        AQ_RECORD_INPUTS( swapName, creditModelName, fixingTableNames );
 
 		auto swap = etrading::getSwap( swapName );
 
@@ -1589,7 +1589,7 @@ namespace validation
 		double result = trs->parRate( creditModelName, fixingTableNames);
 		        
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -1606,7 +1606,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, creditModelName, fixingTableNames );
+        AQ_RECORD_INPUTS( swapName, creditModelName, fixingTableNames );
 
 		auto swap = etrading::getSwap( swapName );
 
@@ -1623,7 +1623,7 @@ namespace validation
 		double result = trs->spread( creditModelName, fixingTableNames);
 		        
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -1641,7 +1641,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( swapName, creditModelName, legName );
+        AQ_RECORD_INPUTS( swapName, creditModelName, legName );
 
 		auto swap = etrading::getSwap( swapName );
 
@@ -1658,7 +1658,7 @@ namespace validation
 		double result = trs->annuity( creditModelName, legName );
 		        
 		// Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}

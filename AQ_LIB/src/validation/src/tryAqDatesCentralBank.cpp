@@ -159,13 +159,13 @@ namespace validation
 		VALID_EXCEPTION_START
 		
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(asOfDate, n);
+		AQ_RECORD_INPUTS(asOfDate, n);
 
 		// Calculation
 		const AQLDate result = etrading::AQLDateHelpers::getNthECBMeetingDate(asOfDate, n);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -180,13 +180,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(asOfDate, n);
+		AQ_RECORD_INPUTS(asOfDate, n);
 
 		// Calculation
 		const AQLDate result = etrading::AQLDateHelpers::getNthECBSwapStartDate(asOfDate, n);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -201,13 +201,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(asOfDate, n);
+		AQ_RECORD_INPUTS(asOfDate, n);
 
 		// Calculation
 		const AQLDate result = etrading::AQLDateHelpers::getNthECBSwapEndDate(asOfDate, n);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -221,13 +221,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(meetingDate);
+		AQ_RECORD_INPUTS(meetingDate);
 
 		// Calculation
 		const AQLDate result = etrading::AQLDateHelpers::getNextECBMeetingDate(meetingDate);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -241,13 +241,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(swapStartDate);
+		AQ_RECORD_INPUTS(swapStartDate);
 
 		// Calculation
 		const AQLDate result = etrading::AQLDateHelpers::getNextECBSwapStartDate(swapStartDate);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -261,13 +261,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(swapEndDate);
+		AQ_RECORD_INPUTS(swapEndDate);
 
 		// Calculation
 		const AQLDate result = etrading::AQLDateHelpers::getNextECBSwapEndDate(swapEndDate);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}

@@ -15,14 +15,14 @@ namespace
 //    To create MACROS to simplify and standardize the recording of Google Test inputs and outputs for test, logging and replay purposes
 //
 // SYNPOSIS
-//    The RECORD_INPUTS nad RECORD_OUTPUTS macros records the input and output parameters for a given function, see examples below.
+//    The AQ_RECORD_INPUTS nad AQ_RECORD_OUTPUTS macros records the input and output parameters for a given function, see examples below.
 //    IMPORTANT NOTE: The record ouputs macro will also return the test result
 //    
 //      Example 1. - Recording Function Inputs
 //      --------------------------------------
 //      
 //      Use 
-//      RECORD_INPUTS( swapName, curveCollections, fixingTableNames )
+//      AQ_RECORD_INPUTS( swapName, curveCollections, fixingTableNames )
 //
 //      Instead of ...
 //        
@@ -40,7 +40,7 @@ namespace
 //      ---------------------------------------
 //
 //      Use
-//      RECORD_OUTPUTS_AND_RETURN_RESULT( resultValue )
+//      AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( resultValue )
 //
 //      Instead of ...
 //
@@ -72,7 +72,7 @@ namespace
 
 
 // Macro to record a function's output to a file	
-#define RECORD_OUTPUTS(result) \
+#define AQ_RECORD_OUTPUTS(result) \
 	if ( CreateDataFile::recordEnabled() ) { \
     	FUNCTION_NAME \
 		std::string fileName = functionName; \
@@ -82,7 +82,7 @@ namespace
 
 
 // Macro to record a function's output to a file	
-#define RECORD_OUTPUTS_AND_RETURN_RESULT(result) \
+#define AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result) \
 	if ( CreateDataFile::recordEnabled() ) { \
     	FUNCTION_NAME \
 		std::string fileName = functionName; \
@@ -93,7 +93,7 @@ namespace
 
 
 // Macro to record a function's input parameters to a file	
-#define RECORD_INPUTS_NO_ARGUMENTS() \
+#define AQ_RECORD_INPUTS_NO_ARGUMENTS() \
     if ( CreateDataFile::recordEnabled() ) { \
         FUNCTION_NAME \
         std::string fileName = functionName; \
@@ -504,7 +504,7 @@ namespace
 
 // Define a macro to record a functions's input parameters to a file
 // This macro dynamically records up to 20 input parameters.
-#define RECORD_INPUTS(...) EXPAND( GET_MACRO_NAME( __VA_ARGS__,       \
+#define AQ_RECORD_INPUTS(...) EXPAND( GET_MACRO_NAME( __VA_ARGS__,       \
                                                    RECORD_INPUTS_20,  \
                                                    RECORD_INPUTS_19,  \
                                                    RECORD_INPUTS_18,  \
@@ -1460,7 +1460,7 @@ namespace
 
 #define GET_MACRO_NAME_UPTO_22_ARGS( _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, NAME, ... ) NAME
 
-#define RECORD_DECORATED_INPUTS(...) EXPAND( GET_MACRO_NAME_UPTO_22_ARGS( __VA_ARGS__,       \
+#define AQ_RECORD_DECORATED_INPUTS(...) EXPAND( GET_MACRO_NAME_UPTO_22_ARGS( __VA_ARGS__,       \
                                                                           RECORD_DECORATED_INPUTS_22,  \
                                                                           RECORD_DECORATED_INPUTS_21,  \
                                                                           RECORD_DECORATED_INPUTS_20,  \

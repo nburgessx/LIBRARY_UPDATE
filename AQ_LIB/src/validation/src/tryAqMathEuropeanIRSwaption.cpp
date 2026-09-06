@@ -43,7 +43,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( payerReceiver, annuity, swapRate, strike, vol, time, shift, volatilityType );
+        AQ_RECORD_INPUTS( payerReceiver, annuity, swapRate, strike, vol, time, shift, volatilityType );
 
         // Calculation
         PayerReceiverSwaptionEnum payerReceiverEnum = etrading::toPayerReceiverSwaptionEnum( payerReceiver );
@@ -51,7 +51,7 @@ namespace validation
         const double result = EuropeanIRSwaption::price( payerReceiverEnum, annuity, swapRate, strike, vol, time, shift, VolatilityTypeEnum );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -130,7 +130,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( price, payerReceiver, annuity, swapRate, strike, time, shift, volatilityType );
+        AQ_RECORD_INPUTS( price, payerReceiver, annuity, swapRate, strike, time, shift, volatilityType );
 
         // Manaster and Koehler Seed Value
 		// Set a lower bound for the volatility estimate of 10% for LOGNORMAL, 1% for NORMAL.
@@ -144,7 +144,7 @@ namespace validation
         const double result = euroSwaption->calculateImpliedVol( price );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -247,7 +247,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( payerReceiver, annuity, swapRate, strike, vol, time, shift, volatilityType );
+        AQ_RECORD_INPUTS( payerReceiver, annuity, swapRate, strike, vol, time, shift, volatilityType );
 
         // Calculation
         PayerReceiverSwaptionEnum payerReceiverEnum = etrading::toPayerReceiverSwaptionEnum( payerReceiver );
@@ -255,7 +255,7 @@ namespace validation
         const double result = EuropeanIRSwaption::delta( payerReceiverEnum, annuity, swapRate, strike, vol, time, shift, VolatilityTypeEnum );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -273,7 +273,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( payerReceiver, annuity, swapRate, strike, vol, time, shift, volatilityType );
+        AQ_RECORD_INPUTS( payerReceiver, annuity, swapRate, strike, vol, time, shift, volatilityType );
 
         // Calculation
         PayerReceiverSwaptionEnum payerReceiverEnum = etrading::toPayerReceiverSwaptionEnum( payerReceiver );
@@ -281,7 +281,7 @@ namespace validation
         const double result = EuropeanIRSwaption::gamma( payerReceiverEnum, annuity, swapRate, strike, vol, time, shift, VolatilityTypeEnum );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -299,7 +299,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( payerReceiver, annuity, swapRate, strike, vol, time, shift, volatilityType );
+        AQ_RECORD_INPUTS( payerReceiver, annuity, swapRate, strike, vol, time, shift, volatilityType );
 
         // Calculation
         PayerReceiverSwaptionEnum payerReceiverEnum = etrading::toPayerReceiverSwaptionEnum( payerReceiver );
@@ -307,7 +307,7 @@ namespace validation
         const double result = EuropeanIRSwaption::vega( payerReceiverEnum, annuity, swapRate, strike, vol, time, shift, VolatilityTypeEnum );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -325,7 +325,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( payerReceiver, annuity, swapRate, strike, vol, time, shift, volatilityType );
+        AQ_RECORD_INPUTS( payerReceiver, annuity, swapRate, strike, vol, time, shift, volatilityType );
 
         // Calculation
         PayerReceiverSwaptionEnum payerReceiverEnum = etrading::toPayerReceiverSwaptionEnum( payerReceiver );
@@ -333,7 +333,7 @@ namespace validation
         const double result = EuropeanIRSwaption::theta( payerReceiverEnum, annuity, swapRate, strike, vol, time, shift, VolatilityTypeEnum );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }

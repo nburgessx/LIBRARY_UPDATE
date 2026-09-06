@@ -43,7 +43,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( objectName, curveCollection, swapCurveGeneratorName, oisCurveGeneratorName, aqObjSwapMarketObj, aqObjOISMarketObj, commonParams);
+        AQ_RECORD_INPUTS( objectName, curveCollection, swapCurveGeneratorName, oisCurveGeneratorName, aqObjSwapMarketObj, aqObjOISMarketObj, commonParams);
 
         // AQObj Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
         AQ_CLEAR_CURVE_RESULTS_CACHE

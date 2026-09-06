@@ -37,7 +37,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( valuationDate, fixingDates, targetForwardRates, curveCollection, curveIndex, initialTheta, initialSigma, alpha, rt, valuationDate, showColumnHeaders);
+        AQ_RECORD_INPUTS( valuationDate, fixingDates, targetForwardRates, curveCollection, curveIndex, initialTheta, initialSigma, alpha, rt, valuationDate, showColumnHeaders);
 
 		const AQLDate curveAsOfDate = etrading::getCurveAsOfDate( curveCollection.c_str() );
 
@@ -70,7 +70,7 @@ namespace validation
 	    result.push_back(body);
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -92,7 +92,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( fixingDates, curveCollection, curveIndex, theta, sigma, alpha, rt, valuationDate);
+        AQ_RECORD_INPUTS( fixingDates, curveCollection, curveIndex, theta, sigma, alpha, rt, valuationDate);
 
 		etrading::VasicekModel vkModel(alpha, theta, sigma);
 
@@ -104,7 +104,7 @@ namespace validation
 		auto result = vkModel.forwardRatesAnalytical( fixingDates, curveCollection, curveIndex, shortRate, futureValuation);
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }

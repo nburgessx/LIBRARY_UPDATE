@@ -26,7 +26,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName, optionLVB, validateKeys);
+		AQ_RECORD_INPUTS(objectName, optionLVB, validateKeys);
 
 		std::shared_ptr<etrading::Option> optionPtr = etrading::createOption(objectName, optionLVB, validateKeys);
 
@@ -36,7 +36,7 @@ namespace validation
 		std::string result = objectName;
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -50,13 +50,13 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName);
+		AQ_RECORD_INPUTS(objectName);
 
 		auto option = etrading::getOption(objectName);
 		auto result = option->inputParameters().toAnyTypeMatrix();
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -76,7 +76,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS( objectName, valuationSettings, bondPrice, repoRate, repoDaycount, discountRate, discountDayCount);
+		AQ_RECORD_INPUTS( objectName, valuationSettings, bondPrice, repoRate, repoDaycount, discountRate, discountDayCount);
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& bondOption = std::dynamic_pointer_cast<etrading::BondOption>( option );
@@ -88,7 +88,7 @@ namespace validation
 		auto result = pricer.spotOptionPrice(bondPrice, repoRate, etrading::toDayCountEnum(repoDaycount));
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -106,7 +106,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(objectName, valuationSettings, bondFuturePrice, discountRate, discountDayCount);
+		AQ_RECORD_INPUTS(objectName, valuationSettings, bondFuturePrice, discountRate, discountDayCount);
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& bondOption = std::dynamic_pointer_cast<etrading::BondOption>(option);
@@ -118,7 +118,7 @@ namespace validation
 		auto result = pricer.forwardOptionPrice(bondFuturePrice);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -143,7 +143,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(greekType, objectName, valuationSettings, bondFuturePrice, discountRate, discountDayCount, deltaBump, gammaBump, vegaBump, thetaBump, rhoBump, showColumnHeaders);
+		AQ_RECORD_INPUTS(greekType, objectName, valuationSettings, bondFuturePrice, discountRate, discountDayCount, deltaBump, gammaBump, vegaBump, thetaBump, rhoBump, showColumnHeaders);
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& bondOption = std::dynamic_pointer_cast<etrading::BondOption>(option);
@@ -163,7 +163,7 @@ namespace validation
 		const auto result = etrading::viewGreeks(greeks, showColumnHeaders);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}
@@ -190,7 +190,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(greekType, objectName, valuationSettings, bondSpotPrice, repoRate, repoDaycount, discountRate, discountDayCount, deltaBump, gammaBump, vegaBump, thetaBump, rhoBump, showColumnHeaders);
+		AQ_RECORD_INPUTS(greekType, objectName, valuationSettings, bondSpotPrice, repoRate, repoDaycount, discountRate, discountDayCount, deltaBump, gammaBump, vegaBump, thetaBump, rhoBump, showColumnHeaders);
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& bondOption = std::dynamic_pointer_cast<etrading::BondOption>(option);
@@ -210,7 +210,7 @@ namespace validation
 		const auto result = etrading::viewGreeks(greeks, showColumnHeaders);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}

@@ -32,7 +32,7 @@ namespace validation
         VALID_EXCEPTION_START
         
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, bondLVB, scheduleLVB, validateKeys );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, bondLVB, scheduleLVB, validateKeys );
 
         // Use the Bond Factory to validate and create the bond
         etrading::BondPtr bondPtr = etrading::createBond( bondObjectName, bondLVB, scheduleLVB, validateKeys ); // bondSchedule = nullptr; The schedule class will build the schedule object if null. Note sometimes the end-user will want to provide the schedule
@@ -60,7 +60,7 @@ namespace validation
 	    VALID_EXCEPTION_START
         
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, bondGeneratorName, expressionLVB, validateKeys );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, bondGeneratorName, expressionLVB, validateKeys );
 		
 		etrading::validateKeysForLVB( etrading::BondGenerator::bond_expression_lvbKeys(), expressionLVB.getKeys(), validateKeys );
 
@@ -88,7 +88,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName );
 
 		auto bond = etrading::getBond( bondObjectName );
         auto result = bond->getInputParameters().toAnyTypeMatrix();
@@ -109,7 +109,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, showColumnHeaders );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, showColumnHeaders );
 
 		auto bond = etrading::getBond( bondObjectName );
 
@@ -138,7 +138,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDate, yield, showColumnHeaders, yieldCalculationType);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDate, yield, showColumnHeaders, yieldCalculationType);
 
         auto bond   = etrading::getBond( bondObjectName );
 
@@ -165,7 +165,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
 
         if ( settlementDates.size() != yields.size() )
         {
@@ -202,7 +202,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates );
 
         auto bond                                   = etrading::getBond( bondObjectName );
 
@@ -216,7 +216,7 @@ namespace validation
         }
 
          // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( results );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( results );
 
 		VALID_EXCEPTION_END
     }
@@ -231,7 +231,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates );
 
         auto bond                           = etrading::getBond( bondObjectName );
 
@@ -268,7 +268,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, valuationSettingsLVB );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, valuationSettingsLVB );
 
         auto bond = etrading::getBond( bondObjectName );
 
@@ -298,7 +298,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
 
         if ( yields.size() == 0 )
         {
@@ -343,7 +343,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
 
         if ( settlementDates.size() != yields.size() )
         {
@@ -382,7 +382,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
+		AQ_RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
 
         if ( settlementDates.size() != yields.size() )
         {
@@ -483,7 +483,7 @@ namespace validation
         VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, prices, yieldCalculationType , optimizePerformance );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, prices, yieldCalculationType , optimizePerformance );
 
         if( settlementDates.size() != prices.size() )
         {
@@ -541,7 +541,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, valuationSettingsLVB, price, yieldCalculationType );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, valuationSettingsLVB, price, yieldCalculationType );
 
 		auto bondObject = etrading::getBond( bondObjectName );
 		auto yieldCalcType = bondObject->getYieldCalulationType(yieldCalculationType);
@@ -570,7 +570,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, valuationSettingsLVB, price, yieldCalculationType, tickSize );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, valuationSettingsLVB, price, yieldCalculationType, tickSize );
 
 		auto bondObject = etrading::getBond( bondObjectName );
 		auto yieldCalcType = bondObject->getYieldCalulationType(yieldCalculationType);
@@ -602,7 +602,7 @@ namespace validation
       	VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, prices, yieldCalculationType  );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, prices, yieldCalculationType  );
 
         if ( settlementDates.size() != prices.size() )
         {
@@ -647,7 +647,7 @@ namespace validation
 	    VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType  );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType  );
 
 		double bumpAmount = ( bumpSize == 0.0 ) ? 0.01 : bumpSize;
 		AQLString bumpType = ( bumpMode == "" )  ? "UP" : bumpMode;
@@ -691,7 +691,7 @@ namespace validation
 	    VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType  );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType  );
 
         if ( settlementDates.size() != yields.size() )
         {
@@ -732,7 +732,7 @@ namespace validation
 	    VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType  );
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType  );
 
         if ( settlementDates.size() != yields.size() )
         {
@@ -805,7 +805,7 @@ namespace validation
 	    VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(marketObjectName, std::string(), marketObjectName, bondObjectName, bondYield);
+		AQ_RECORD_DECORATED_INPUTS(marketObjectName, std::string(), marketObjectName, bondObjectName, bondYield);
 
         auto marketObject = etrading::getCurveMarketData( marketObjectName );
 
@@ -948,7 +948,7 @@ namespace validation
 	    VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates);
 
 		auto bond = etrading::getBond( bondObjectName );
 
@@ -980,7 +980,7 @@ namespace validation
 	    VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, valuationSettingsLVB, dirtyPrice);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, valuationSettingsLVB, dirtyPrice);
 
 		etrading::ValuationSettings valuationSettings( valuationSettingsLVB );
 		etrading::DataProvider dataProvider( valuationSettings );
@@ -1006,7 +1006,7 @@ namespace validation
 	     VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, valuationSettingsLVB, cleanPrice);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, valuationSettingsLVB, cleanPrice);
 
 		etrading::ValuationSettings valuationSettings( valuationSettingsLVB );
 		etrading::DataProvider dataProvider( valuationSettings );
@@ -1031,7 +1031,7 @@ namespace validation
 		VALID_EXCEPTION_START
 	
 		// Recording of inputs for testing and playback
-		RECORD_INPUTS( bondObjectName, settlementDate, creditModelName );
+		AQ_RECORD_INPUTS( bondObjectName, settlementDate, creditModelName );
 
 		auto bond = etrading::getBond( bondObjectName );
 		auto creditModel = etrading::getCreditModel( creditModelName );
@@ -1039,7 +1039,7 @@ namespace validation
 		const double price = bond->priceFromCreditModel( settlementDate, *creditModel );
 
 		// Recording of outputs for testing and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT( price );
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( price );
 
 		VALID_EXCEPTION_END
 	}
@@ -1138,7 +1138,7 @@ namespace validation
 		VALID_EXCEPTION_START
 			        
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( objectName, propertyKey );
+        AQ_RECORD_INPUTS( objectName, propertyKey );
 		
 		// Attempt to retrieve AQObjCurveGenerator object from the AQObj object cache
 		auto bondGenerator = etrading::getBondGenerator( objectName );
@@ -1160,7 +1160,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, bondLVB, validateKeys);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, bondLVB, validateKeys);
 
 		// Use the Bond Factory to validate and create the bond
 		etrading::BondPtr bondPtr = etrading::createBondFromSingleLVB(bondObjectName, bondLVB, validateKeys);
@@ -1191,7 +1191,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDate, bondPrice, curveCollection, forecastCurve, continuouslyCompounding);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDate, bondPrice, curveCollection, forecastCurve, continuouslyCompounding);
 
 		auto bond = etrading::getBond(bondObjectName);
 		
@@ -1254,7 +1254,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDate, bondPrice, zeroRates, continuouslyCompounding);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDate, bondPrice, zeroRates, continuouslyCompounding);
 
 		auto bond = etrading::getBond(bondObjectName);
 
@@ -1286,7 +1286,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, forwardSettleDate, price, repoRate, repoDayCount);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, forwardSettleDate, price, repoRate, repoDayCount);
 
 		auto bond = etrading::getBond(bondObjectName);
 
@@ -1312,7 +1312,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, forwardSettleDate, price, repoRate, repoDayCount);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, forwardSettleDate, price, repoRate, repoDayCount);
 
 		auto bond = etrading::getBond(bondObjectName);
 
@@ -1338,7 +1338,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, forwardSettleDate, price, forwardPrice, repoDayCount);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, forwardSettleDate, price, forwardPrice, repoDayCount);
 
 		auto bond = etrading::getBond(bondObjectName);
 
@@ -1365,7 +1365,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, deliveryDate, price, futurePrice, conversionFactor, repoDayCount);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, deliveryDate, price, futurePrice, conversionFactor, repoDayCount);
 
 		auto bond = etrading::getBond(bondObjectName);
 
@@ -1392,7 +1392,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, deliveryDate, bondPrice, repoRate, repoDayCount, conversionFactor);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, deliveryDate, bondPrice, repoRate, repoDayCount, conversionFactor);
 
 		auto bond = etrading::getBond(bondObjectName);
 
@@ -1415,7 +1415,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the object name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, firstFutureSettleDate, notionalBondCouponRate);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, firstFutureSettleDate, notionalBondCouponRate);
 
 		auto bond = etrading::getBond(bondObjectName);
 
@@ -1441,7 +1441,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, price, futurePrice, conversionFactor);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, price, futurePrice, conversionFactor);
 
 		auto bond = etrading::getBond(bondObjectName);
 
@@ -1468,7 +1468,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, deliveryDate, bondPrice, actualRepoRate, repoDayCount, futurePrice, conversionFactor);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, deliveryDate, bondPrice, actualRepoRate, repoDayCount, futurePrice, conversionFactor);
 
 		auto bond = etrading::getBond(bondObjectName);
 
@@ -1497,7 +1497,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback
-		RECORD_INPUTS(futurePrice, settleDate, deliveryDate, repoDayCount, bondObjectNames, bondPrices, conversionFactors);
+		AQ_RECORD_INPUTS(futurePrice, settleDate, deliveryDate, repoDayCount, bondObjectNames, bondPrices, conversionFactors);
 
 		const size_t expectedSize = bondObjectNames.size();
 		AQ_REQUIRE(expectedSize != 0, "At least one underlying bond object is required");
@@ -1532,7 +1532,7 @@ namespace validation
 		const std::string cheapestToDeliverBondName = bondObjectNames[ctdIndex];
 
 		// Recording of outputs for testing and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(cheapestToDeliverBondName);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(cheapestToDeliverBondName);
 
 		VALID_EXCEPTION_END
 
@@ -1554,7 +1554,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback
-		RECORD_INPUTS(futurePrice, settleDate, deliveryDate, repoDayCount, bondObjectNames, bondPrices, conversionFactors, actualRepoRates);
+		AQ_RECORD_INPUTS(futurePrice, settleDate, deliveryDate, repoDayCount, bondObjectNames, bondPrices, conversionFactors, actualRepoRates);
 
 		const size_t expectedSize = bondObjectNames.size();
 		AQ_REQUIRE(expectedSize != 0, "At least one underlying bond object is required");
@@ -1592,7 +1592,7 @@ namespace validation
 		const std::string cheapestToDeliverBondName = bondObjectNames[ctdIndex];
 
 		// Recording of outputs for testing and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(cheapestToDeliverBondName);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(cheapestToDeliverBondName);
 
 		VALID_EXCEPTION_END
 
@@ -1615,7 +1615,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, maturityDate, couponRate, payReceive, calendar, frequency, dayCount, bondQuoteConv);
+		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settleDate, maturityDate, couponRate, payReceive, calendar, frequency, dayCount, bondQuoteConv);
 
         StandardStringVector keys(17);
         keys[0]  = etrading::BOND_KEY::ISSUE_DATE;
@@ -1680,7 +1680,7 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 
-		RECORD_INPUTS(underlyingBondYields);
+		AQ_RECORD_INPUTS(underlyingBondYields);
 
 		const double expectedSize = underlyingBondYields.size();
 
@@ -1688,7 +1688,7 @@ namespace validation
 
 		const double averageYield = std::accumulate(underlyingBondYields.begin(), underlyingBondYields.end(), 0.0) / expectedSize;
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT(averageYield);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(averageYield);
 
 		VALID_EXCEPTION_END
 	}
@@ -1701,11 +1701,11 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 
-		RECORD_INPUTS(futurePrice);
+		AQ_RECORD_INPUTS(futurePrice);
 
 		const double notionalBondYield = 1.0 - futurePrice / 100.0;
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT(notionalBondYield);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(notionalBondYield);
 
 		VALID_EXCEPTION_END
 	}
@@ -1730,7 +1730,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, discountMargin, assumedRate, indexToNextCoupon, annualizedNextCouponRate )
+		AQ_RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, discountMargin, assumedRate, indexToNextCoupon, annualizedNextCouponRate )
 
 		etrading::BondPtr bondPtr = etrading::getBond(bondObjectName);
 
@@ -1765,7 +1765,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, yield, assumedRate, indexToNextCoupon, annualizedNextCouponRate )
+		AQ_RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, yield, assumedRate, indexToNextCoupon, annualizedNextCouponRate )
 
 		etrading::BondPtr bondPtr = etrading::getBond(bondObjectName);
 
@@ -1800,7 +1800,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, price, assumedRate, indexToNextCoupon, annualizedNextCouponRate )
+		AQ_RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, price, assumedRate, indexToNextCoupon, annualizedNextCouponRate )
 
 		etrading::BondPtr bondPtr = etrading::getBond(bondObjectName);
 
@@ -1835,7 +1835,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, price, assumedRate, indexToNextCoupon, annualizedNextCouponRate )
+		AQ_RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDate, price, assumedRate, indexToNextCoupon, annualizedNextCouponRate )
 
 		etrading::BondPtr bondPtr = etrading::getBond(bondObjectName);
 

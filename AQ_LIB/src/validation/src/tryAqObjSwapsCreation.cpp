@@ -56,7 +56,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-		RECORD_DECORATED_INPUTS(swapName, std::string(), swapName, legObjectNames, swapPropertiesLVB, isXccySwap, validateKeys)
+		AQ_RECORD_DECORATED_INPUTS(swapName, std::string(), swapName, legObjectNames, swapPropertiesLVB, isXccySwap, validateKeys)
 	
 		AQ_REQUIRE(legObjectNames.size() >= 2, "The swap should have at least two legs.")
 
@@ -524,7 +524,7 @@ namespace validation
         AQ_REQUIRE( expressionLVB.size() != 0, "The swap expression label Value Block is empty or contains errors" )
 
         // Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
-        RECORD_DECORATED_INPUTS(swapName, std::string(), swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys)
+        AQ_RECORD_DECORATED_INPUTS(swapName, std::string(), swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys)
         
         // Validate the swap inputs
         etrading::validateKeysForLVB(etrading::SwapGenerator::expressionLvbKeys(), expressionLVB.getKeys(), validateKeys);

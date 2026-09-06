@@ -32,7 +32,7 @@ namespace validation
         const std::string inputLVB = "BondScheduleLVB";
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( bondScheduleLVB, validateKeys, showColumnHeaders, columnList );
+        AQ_RECORD_INPUTS( bondScheduleLVB, validateKeys, showColumnHeaders, columnList );
 
         etrading::validateKeysForLVB( tryAqBondsScheduleLVBKeys(), bondScheduleLVB.getKeys(), validateKeys );
 
@@ -41,7 +41,7 @@ namespace validation
 		AQLStringMatrix result = schedule.display(showColumnHeaders, etrading::toCashflowHeaderEnumSet(columnList));
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }

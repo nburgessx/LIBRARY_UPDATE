@@ -66,7 +66,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( scheduleName, showBespokeProperties, showColumnHeaders, columnList );
+        AQ_RECORD_INPUTS( scheduleName, showBespokeProperties, showColumnHeaders, columnList );
 
 		auto schedule = etrading::getSchedule(scheduleName);
 
@@ -75,7 +75,7 @@ namespace validation
 		auto result = etrading::mergeHeaderAndBodyPair(headerBodyPair);
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
     }
@@ -224,7 +224,7 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(showColumnHeaders, swapScheduleLVB, validateKeys, columnList);
+		AQ_RECORD_INPUTS(showColumnHeaders, swapScheduleLVB, validateKeys, columnList);
 
 		const std::string inputLVB = "SwapScheduleLVB";
 
@@ -236,7 +236,7 @@ namespace validation
 		auto result = etrading::mergeHeaderAndBodyPair(headerBody);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(result);
 
 		VALID_EXCEPTION_END
 	}

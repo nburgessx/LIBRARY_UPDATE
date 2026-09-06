@@ -125,7 +125,7 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 
-		RECORD_INPUTS( newObjectName, baseObjectName, modifiedValues );
+		AQ_RECORD_INPUTS( newObjectName, baseObjectName, modifiedValues );
 
 		// Attempt to retrieve the existing CurveGenerator object from the AQObj object cache
 		auto baseCurveGenerator = etrading::getCurveGenerator( baseObjectName );
@@ -136,7 +136,7 @@ namespace validation
 		// Store the new CurveGenerator in the AQObj object cache
         etrading::copyToCache<etrading::CurveGenerator>( newCurveGenerator );
 
-		RECORD_OUTPUTS_AND_RETURN_RESULT( newObjectName );
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( newObjectName );
 
 		VALID_EXCEPTION_END
 	}

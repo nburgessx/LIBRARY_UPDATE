@@ -115,7 +115,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
 		
-		RECORD_INPUTS( asOfDate, fixingLag, fixingCalendar, fixingBusDayAdj, paymentLag, paymentCalendar, paymentBusDayAdj )
+		AQ_RECORD_INPUTS( asOfDate, fixingLag, fixingCalendar, fixingBusDayAdj, paymentLag, paymentCalendar, paymentBusDayAdj )
         
         // Parameter Validation
         AQLString fixingLag_                 = fixingLag;
@@ -129,7 +129,7 @@ namespace validation
 
         const AQLDate spotDate = etrading::getShiftedSpotDate( asOfDate, fixingLag_, fixingCalendar, fixingBusDayAdj_, paymentLag_, paymentCalendar, paymentBusDayAdj_ );
         
-        RECORD_OUTPUTS_AND_RETURN_RESULT( spotDate )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( spotDate )
 
         VALID_EXCEPTION_END
     }
@@ -151,7 +151,7 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 		
-		RECORD_INPUTS( curveAsOfDate, spotLag, fixingCalendar, paymentCalendar, businessDayAdj, rollConvention )
+		AQ_RECORD_INPUTS( curveAsOfDate, spotLag, fixingCalendar, paymentCalendar, businessDayAdj, rollConvention )
         
         // Parameter Validation
         AQLString spotLag_               = spotLag;
@@ -161,7 +161,7 @@ namespace validation
             
         const AQLDate spotDate = etrading::getCurveUSDSpotDate( curveAsOfDate, spotLag_, fixingCalendar, paymentCalendar, businessDayAdj_, rollConvention );
         
-        RECORD_OUTPUTS_AND_RETURN_RESULT( spotDate )
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( spotDate )
 
         VALID_EXCEPTION_END
 	}

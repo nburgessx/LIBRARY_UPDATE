@@ -36,7 +36,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
 
-		RECORD_INPUTS( oisCurveObjectName, swapCurveObjectName, pricingCurveCollection, hedgeCurveCollection, oisCurveGeneratorName, oisCurveMarketDataName, swapCurveGeneratorName, swapCurveMarketDataName, swapGeneratorName );
+		AQ_RECORD_INPUTS( oisCurveObjectName, swapCurveObjectName, pricingCurveCollection, hedgeCurveCollection, oisCurveGeneratorName, oisCurveMarketDataName, swapCurveGeneratorName, swapCurveMarketDataName, swapGeneratorName );
 
 		if (oisCurveObjectName.empty() )
 		{
@@ -63,7 +63,7 @@ namespace validation
         hedgeCurveInfoVector.push_back( hedgeResults.oisCurveIndex );
         hedgeCurveInfoVector.push_back( hedgeResults.swapCurveName );
         hedgeCurveInfoVector.push_back( hedgeResults.swapCurveIndex );
-        RECORD_OUTPUTS( hedgeCurveInfoVector );
+        AQ_RECORD_OUTPUTS( hedgeCurveInfoVector );
         
         // Return the HedgeCurveInfo struct result
         return hedgeResults;

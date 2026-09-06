@@ -754,7 +754,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-		RECORD_INPUTS( curveCollection, curveIndex, fixingDates, forwardRates, setCorrespondingDiscountFactors );
+		AQ_RECORD_INPUTS( curveCollection, curveIndex, fixingDates, forwardRates, setCorrespondingDiscountFactors );
 
         // Validate Inputs
 		etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
@@ -764,7 +764,7 @@ namespace validation
         AQLString result = etrading::setCurveForwardRates( curveCollection, curveIndex, fixingDates, forwardRates, setCorrespondingDiscountFactors ); // setCorrespondingDiscountFactors for STD curves only
 
         // Record Outputs and Return the result
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -785,7 +785,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-		RECORD_INPUTS( curveCollection, curveIndex, paymentDates, discountFactors, setCorrespondingForwards );
+		AQ_RECORD_INPUTS( curveCollection, curveIndex, paymentDates, discountFactors, setCorrespondingForwards );
 
         // Validate Inputs
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
@@ -795,7 +795,7 @@ namespace validation
         AQLString result = etrading::setCurveDiscountFactors( curveCollection, curveIndex, paymentDates, discountFactors, setCorrespondingForwards ); // setCorrespondingForwards for STD curves only
 
         // Record Outputs and Return the result
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -809,7 +809,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-		RECORD_INPUTS( curveCollection, curveIndex );
+		AQ_RECORD_INPUTS( curveCollection, curveIndex );
 
         // Validate Inputs
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
@@ -818,7 +818,7 @@ namespace validation
         AQLString result = etrading::setCurveDiscountFactorsToOne( curveCollection, curveIndex );
 
         // Record Outputs and Return the result
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -836,7 +836,7 @@ namespace validation
         const std::string filePrefix = curveCollection.getCString() + std::string("_") + curveIndex.getCString();
         const std::string fileSuffix = "";
 
-        RECORD_DECORATED_INPUTS( filePrefix, fileSuffix, curveCollection, curveIndex )
+        AQ_RECORD_DECORATED_INPUTS( filePrefix, fileSuffix, curveCollection, curveIndex )
 
         // Validate Inputs
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
@@ -869,13 +869,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-		RECORD_INPUTS( curveCollection, terms );
+		AQ_RECORD_INPUTS( curveCollection, terms );
 
         etrading::checkIfCurveExists( etrading::getDataInstance(), curveCollection );
         DateVector result = etrading::convertCurveTermsToDates( curveCollection, terms );
 
         // Record Outputs and Return the result
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -890,13 +890,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-		RECORD_INPUTS( curveCollection, paymentDates );
+		AQ_RECORD_INPUTS( curveCollection, paymentDates );
 
         etrading::checkIfCurveExists( etrading::getDataInstance(), curveCollection );
         DoubleVector result = etrading::convertCurveDatesToTerms( curveCollection, paymentDates );
 
         // Record Outputs and Return the result
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }

@@ -23,14 +23,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(futurePrice, curveAsOfDate, futuresStartDate, futuresEndDate, meanReversion, volatility);
+		AQ_RECORD_INPUTS(futurePrice, curveAsOfDate, futuresStartDate, futuresEndDate, meanReversion, volatility);
 
 		double convexityAdjustment = etrading::getCurveEuroDollarConvexityAdjustment(curveAsOfDate, futuresStartDate, futuresEndDate, meanReversion, volatility);
 
 		double fraRate = etrading::fromFuturePriceToFraRate(futurePrice, convexityAdjustment);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(fraRate);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(fraRate);
 
 		VALID_EXCEPTION_END
 
@@ -47,12 +47,12 @@ namespace validation
 		VALID_EXCEPTION_START
 
 		// Record Inputs for logs, tests and playback
-		RECORD_INPUTS(futurePrice, convexityAdjustment);
+		AQ_RECORD_INPUTS(futurePrice, convexityAdjustment);
 		 
 		double fraRate = etrading::fromFuturePriceToFraRate(futurePrice, convexityAdjustment);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
-		RECORD_OUTPUTS_AND_RETURN_RESULT(fraRate);
+		AQ_RECORD_OUTPUTS_AND_RETURN_RESULT(fraRate);
 
 		VALID_EXCEPTION_END
 

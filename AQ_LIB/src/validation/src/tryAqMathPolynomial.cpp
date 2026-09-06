@@ -26,14 +26,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( xValues, yValues, degree, x );
+        AQ_RECORD_INPUTS( xValues, yValues, degree, x );
 
         // Calculation
 		etrading::PolynomialInterpolation polynomial( xValues, yValues, degree );
         const double result = polynomial.interpolate( x );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -49,14 +49,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( xValues, yValues, degree, x );
+        AQ_RECORD_INPUTS( xValues, yValues, degree, x );
 
         // Calculation
 		etrading::PolynomialInterpolation polynomial( xValues, yValues, degree );
         const std::vector<double> results = polynomial.interpolate( x );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( results );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( results );
 
 		VALID_EXCEPTION_END
 	}
@@ -73,14 +73,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( xValues, yValues, degree, lowerBound, upperBound );
+        AQ_RECORD_INPUTS( xValues, yValues, degree, lowerBound, upperBound );
 
         // Calculation
 		etrading::PolynomialInterpolation polynomial( xValues, yValues, degree );
         const double result = polynomial.integrate( lowerBound, upperBound );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
 		VALID_EXCEPTION_END
 	}
@@ -97,14 +97,14 @@ namespace validation
 		VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( xValues, yValues, degree, lowerBounds, upperBounds );
+        AQ_RECORD_INPUTS( xValues, yValues, degree, lowerBounds, upperBounds );
 
         // Calculation
 		etrading::PolynomialInterpolation polynomial( xValues, yValues, degree );
         const std::vector<double> results = polynomial.integrate( lowerBounds, upperBounds );
         
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( results );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( results );
 
 		VALID_EXCEPTION_END
 	}

@@ -152,13 +152,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( valuationDate, includeToday );
+        AQ_RECORD_INPUTS( valuationDate, includeToday );
 
         // Calculation
         const AQLDate result = etrading::currentIMMDate( valuationDate, includeToday );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -172,13 +172,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( referenceDate );
+        AQ_RECORD_INPUTS( referenceDate );
 
         // Calculation
         const AQLDate result = etrading::nextIMMDate( referenceDate );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -192,13 +192,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( referenceDate );
+        AQ_RECORD_INPUTS( referenceDate );
 
         // Calculation
         const AQLDate result = etrading::previousIMMDate( referenceDate );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
@@ -214,13 +214,13 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
-        RECORD_INPUTS( valuationDate, nthIMM, includeToday );
+        AQ_RECORD_INPUTS( valuationDate, nthIMM, includeToday );
 
         // Calculation
         const AQLDate result = etrading::nthIMMDate( valuationDate, nthIMM, includeToday );
 
         // Record Outputs AND Return the Result for logs, tests and playback
-        RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
 
         VALID_EXCEPTION_END
     }
