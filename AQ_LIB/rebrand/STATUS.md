@@ -1,27 +1,12 @@
 # Rebrand status — pause point 2026-09-06
 
-**HEAD: `8957142b`. Last user-confirmed green build + tests: `456a1997`.**
+**HEAD: `61795829`. Build + GoogleTest CONFIRMED GREEN here by Nicholas
+(2026-09-06), including pass (a) and its fixes. Nothing is outstanding —
+tomorrow can start straight on the work below.**
 
 ## ⇒ RESUME HERE
 
-**1. Build first — two commits are unverified and the last one is a FIX for a
-build failure I caused:**
-
-| commit | what |
-|---|---|
-| `8957142b` | fixes pass (a): reverted a corrupted conversion + 3 missing includes |
-| `b28e67ac` | pass (a) itself — hand-rolled recording blocks → `AQ_RECORD_*` |
-
-If it still fails, the likely areas are the six converted validation files
-(`tryAqCurvesFrequency`, `tryAqDates`, `tryAqDatesCentralBank`, `tryAqDatesIMM`,
-`tryAqToolsInterpolation`, `tryAqToolsPCA`). Guards to run after:
-
-```
-python rebrand/tools/api_pair_check.py        # exit 0 expected
-python rebrand/tools/fixture_key_check.py     # exit 0 expected
-```
-
-**2. Then continue the validation recording rollout (plan 4.9).** Pass (a) is
+**1. Continue the validation recording rollout (plan 4.9).** Pass (a) is
 done: 32 conversions in 6 files. What remains, in the order I would do it:
 
 - **Fix the misleading comment in `RecordMacros.h`** (cheap, do it first). Its
@@ -44,7 +29,7 @@ done: 32 conversions in 6 files. What remains, in the order I would do it:
 2. Verify the file includes `RecordMacros.h` before rewriting it. Three files
    had only hand-rolled recording and so never included it.
 
-**3. Then the other open Phase 4 items:** 4.12 (SEH for `AQ_API` —
+**2. Then the other open Phase 4 items:** 4.12 (SEH for `AQ_API` —
 `AQ_API_START` is a bare `try{}`, so the bindings' own marshalling can still
 kill the host process), 4.10 (`AQ_XLL_GUARD` on every new XLL function), and
 the next tranche of XLL functions.
