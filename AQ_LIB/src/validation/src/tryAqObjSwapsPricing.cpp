@@ -978,10 +978,7 @@ namespace validation
 			AQ_THROW( "Please specify a valid toDate.");
 		}
 
-		double result = creditModel->getDefaultProbability( toDate, fromDate );
-
-		 // Record Outputs AND Return the Result for logs, tests and playback
-        AQ_RECORD_OUTPUTS_AND_RETURN_RESULT( result );
+		double rAQ_RECORD_OUTPUTS( survivalDate );
 
 		VALID_EXCEPTION_END
 	}

@@ -26,24 +26,11 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqToolsInterpolation_inputs" );
-            file.write( "generatorFunction", "tryAqToolsInterpolation" );
-            file.write( "xValues", xValues );
-            file.write( "yValues", yValues );
-            file.write( "xPoint",	xPoint );
-            file.write( "interpolation", interpolation );
-			file.write( "joinXValue", joinXValue);
-        }
+        AQ_RECORD_INPUTS( xValues, yValues, xPoint, interpolation, joinXValue );
 
         const double ret = etrading::interpolate( xValues, yValues, xPoint, etrading::toInterpolationEnum( interpolation.c_str() ), joinXValue);
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqToolsInterpolation_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 

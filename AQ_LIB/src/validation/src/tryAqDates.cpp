@@ -66,16 +66,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesFromTenor_inputs" );
-            file.write( "generatorFunction",    "tryAqDatesFromTenor" );
-            file.write( "startDates",		    startDates );
-            file.write( "tenor",				tenor );
-            file.write( "businessDayAdj",	    businessDayAdj );
-            file.write( "calendar",			    calendar );
-            file.write( "rollConvention",		rollConvention );
-        }
+        AQ_RECORD_INPUTS( startDates, tenor, businessDayAdj, calendar, rollConvention );
         
         DateVector ret = etrading::getDateFromTenor(startDates,
                                                     tenor,
@@ -83,12 +74,7 @@ namespace validation
                                                     calendar,
                                                     rollConvention);
         
-        if ( CreateDataFile::recordEnabled() )
-        {
-
-            CreateDataFile file( "tryAqDatesFromTenor_outputs" );
-            file.write( "output", ret );
-        }
+                                                    AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 
@@ -179,14 +165,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesFromYearFraction_inputs" );
-            file.write( "generatorFunction", "tryAqDatesFromYearFraction" );
-            file.write( "startDate",	    startDate );
-            file.write( "yearFraction",		yearFraction );
-            file.write( "dayCount",			dayCount );
-        }
+        AQ_RECORD_INPUTS( startDate, yearFraction, dayCount );
 
         AQLDate ret;
         const etrading::DayCountEnum dayCounter = etrading::toDayCountEnum( dayCount.getCString() );
@@ -201,11 +180,7 @@ namespace validation
             ret = etrading::getDateFromYearFraction( startDate, yearFraction, etrading::toDayCountEnum(dayCount.getCString()) );
         }
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesFromYearFraction_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
         return ret;
 
         VALID_EXCEPTION_END
@@ -226,23 +201,11 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesYearFraction_inputs" );
-            file.write( "generatorFunction", "tryAqDatesYearFraction" );
-            file.write( "fromDate", fromDate );
-            file.write( "toDate", toDate );
-            file.write( "dayCount", dayCount );
-            file.write( "includeLast", includeLast );
-        }
+        AQ_RECORD_INPUTS( fromDate, toDate, dayCount, includeLast );
 
         double ret = etrading::getYearFraction( fromDate, toDate, etrading::toDayCountEnum(dayCount.getCString()), includeLast );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesYearFraction_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 
@@ -263,14 +226,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesBusinessDays_inputs" );
-            file.write( "generatorFunction", "tryAqDatesBusinessDays" );
-            file.write( "fromDate", fromDate );
-            file.write( "toDate", toDate );
-            file.write( "calendar", calendar );
-        }
+        AQ_RECORD_INPUTS( fromDate, toDate, calendar );
 
         AQLPriceDataCalendar cal;
         cal.convertFromString( calendar );
@@ -286,11 +242,7 @@ namespace validation
 
         ret = ret - 1;
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesBusinessDays_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 
@@ -308,13 +260,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesIsWorkingDay_inputs" );
-            file.write( "generatorFunction", "tryAqDatesIsWorkingDay" );
-            file.write( "date",             date );
-            file.write( "holidayCentre",    holidayCentre );
-        }
+        AQ_RECORD_INPUTS( date, holidayCentre );
 
         DateVector startDateVector;
         startDateVector.push_back( date );
@@ -338,11 +284,7 @@ namespace validation
             isWorkingDay = false;
         }
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesIsWorkingDay_outputs" );
-            file.write( "output", isWorkingDay );
-        }
+        AQ_RECORD_OUTPUTS( isWorkingDay );
 
         return isWorkingDay;
 
@@ -361,13 +303,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesIsHoliday_inputs" );
-            file.write( "generatorFunction", "tryAqDatesIsHoliday" );
-            file.write( "date",             date );
-            file.write( "holidayCentre",    holidayCentre );
-        }
+        AQ_RECORD_INPUTS( date, holidayCentre );
 
         bool isHoliday = false;
 
@@ -399,11 +335,7 @@ namespace validation
             }
         }
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesIsHoliday_outputs" );
-            file.write( "output", isHoliday );
-        }
+        AQ_RECORD_OUTPUTS( isHoliday );
 
         return isHoliday;
 
@@ -419,21 +351,12 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesIsWeekend_inputs" );
-            file.write( "generatorFunction", "tryAqDatesIsWeekend" );
-            file.write( "date",             date );
-        }
+        AQ_RECORD_INPUTS( date );
 
         // Check if the original date specified is a weekend
         const bool dateIsWeekend = ( date.dayOfWeek() == 0 || date.dayOfWeek() == 6 ); // Sunday = 0, Saturday = 6
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesIsWeekend_outputs" );
-            file.write( "output", dateIsWeekend );
-        }
+        AQ_RECORD_OUTPUTS( dateIsWeekend );
 
         return dateIsWeekend;
 
@@ -449,21 +372,12 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesIsWeekday_inputs" );
-            file.write( "generatorFunction", "tryAqDatesIsWeekday" );
-            file.write( "date",             date );
-        }
+        AQ_RECORD_INPUTS( date );
 
         // Check if the original date specified is a weekend
         const bool dateIsWeekday = ( date.dayOfWeek() != 0 && date.dayOfWeek() != 6 ); // Sunday = 0, Saturday = 6
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesIsWeekday_outputs" );
-            file.write( "output", dateIsWeekday );
-        }
+        AQ_RECORD_OUTPUTS( dateIsWeekday );
 
         return dateIsWeekday;
 
@@ -489,11 +403,7 @@ namespace validation
         // Get the futures start date for the specified futures contract
         const AQLDate futureStartDate = etrading::futureStartDate( futuresTicker );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesFuturesContract_outputs" );
-            file.write( "output", futureStartDate );
-        }
+        AQ_RECORD_OUTPUTS( futureStartDate );
 
         return futureStartDate;
 

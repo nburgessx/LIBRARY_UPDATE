@@ -24,21 +24,11 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqCurvesFrequency_inputs" );
-            file.write( "generatorFunction", "tryAqCurvesFrequency" );
-            file.write( "curveCollection", curveCollection );
-            file.write( "curveIndex", curveIndex );
-        }
+        AQ_RECORD_INPUTS( curveCollection, curveIndex );
 
         AQLString curveFrequency = etrading::validateCurveAndGetCurveFrequency( curveCollection, curveIndex );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqCurvesFrequency_outputs" );
-            file.write( "output", curveFrequency );
-        }
+        AQ_RECORD_OUTPUTS( curveFrequency );
 
         return curveFrequency.getCString();
 

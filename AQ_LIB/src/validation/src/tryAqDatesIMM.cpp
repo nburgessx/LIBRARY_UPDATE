@@ -30,15 +30,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesIMMFromMonth_inputs" );
-            file.write( "generatorFunction", "tryAqDatesIMMFromMonth" );
-            file.write( "year",				year );
-            file.write( "month",				month );
-            file.write( "calendar",			calendar );
-            file.write( "businessDayAdj",		businessDayAdj );
-        }
+        AQ_RECORD_INPUTS( year, month, calendar, businessDayAdj );
 
         etrading::validateStringEmptiness( calendar, "#Error: 'Calendar' must be specified." );
         AQLString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
@@ -46,11 +38,7 @@ namespace validation
 		AQLString calendarCopy( calendar );
         AQLDate ret = etrading::AQLDateScheduleHelpers::getIMMDate1( year, month, calendarCopy, bdAdj );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesIMMFromMonth_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 
@@ -73,26 +61,14 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesNthIMM_inputs" );
-            file.write( "generatorFunction", "tryAqDatesNthIMM" );
-            file.write( "year",				year );
-            file.write( "nth",				nth );
-            file.write( "calendar",			calendar );
-            file.write( "businessDayAdj",		businessDayAdj );
-        }
+        AQ_RECORD_INPUTS( year, nth, calendar, businessDayAdj );
 
         etrading::validateStringEmptiness( calendar, "#Error: 'Calendar' must be specified." );
         AQLString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
 		AQLString calendarCopy( calendar );
         AQLDate ret = etrading::AQLDateScheduleHelpers::getIMMDate2( year, nth, calendarCopy, bdAdj );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesNthIMM_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 
@@ -115,26 +91,14 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesNthIMMFromStartDate_inputs" );
-            file.write( "generatorFunction", "tryAqDatesNthIMMFromStartDate" );
-            file.write( "startDate",				startDate );
-            file.write( "nth",				    nth );
-            file.write( "calendar",				calendar );
-            file.write( "businessDayAdj",			businessDayAdj );
-        }
+        AQ_RECORD_INPUTS( startDate, nth, calendar, businessDayAdj );
 
         etrading::validateStringEmptiness( calendar, "#Error: 'Calendar' must be specified." );
         AQLString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
 		AQLString calendarCopy( calendar );
         AQLDate ret = etrading::AQLDateScheduleHelpers::getIMMDate3( startDate, nth, calendarCopy, bdAdj );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesNthIMMFromStartDate_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 

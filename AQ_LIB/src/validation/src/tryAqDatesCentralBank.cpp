@@ -22,22 +22,11 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesCentralBank_inputs" );
-            file.write( "generatorFunction", "tryAqDatesCentralBank" );
-            file.write( "centralBankId", centralBankId );
-            file.write( "date", date );
-            file.write( "strictlyAfter", strictlyAfter );
-        }
+        AQ_RECORD_INPUTS( centralBankId, date, strictlyAfter );
 
         AQLDate ret = etrading::AQLDateHelpers::getNextCBDate( centralBankId, date, strictlyAfter );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesCentralBank_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 
@@ -55,21 +44,11 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesECB_inputs" );
-            file.write( "generatorFunction", "tryAqDatesECB" );
-            file.write( "date", date );
-            file.write( "strictlyAfter", strictlyAfter );
-        }
+        AQ_RECORD_INPUTS( date, strictlyAfter );
 
         AQLDate ret = etrading::AQLDateHelpers::getNextECBDate( date, strictlyAfter );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesECB_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 
@@ -85,12 +64,7 @@ namespace validation
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesECBSwapStart_inputs" );
-            file.write( "generatorFunction", "tryAqDatesECBSwapStart" );
-            file.write( "date", date );
-        }
+        AQ_RECORD_INPUTS( date );
 
         //Get the ECB date
         AQLDate ecbDate = tryAqDatesECB( date, false );
@@ -98,11 +72,7 @@ namespace validation
         //Get the swap start date based on the ECB date
         AQLDate ret = etrading::AQLDateHelpers::getECBStartDate( ecbDate );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesECBSwapStart_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 
@@ -119,12 +89,7 @@ namespace validation
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesECBSwapEnd_inputs" );
-            file.write( "generatorFunction", "tryAqDatesECBSwapEnd" );
-            file.write( "date", date );
-        }
+        AQ_RECORD_INPUTS( date );
 
         //Get the first ECB date based on the input date, always Thursday
         AQLDate firstEcbDate = tryAqDatesECB( date, false );
@@ -138,11 +103,7 @@ namespace validation
         //Always Tuesday
         ret.addDays( -1 );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqDatesECBSwapEnd_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 

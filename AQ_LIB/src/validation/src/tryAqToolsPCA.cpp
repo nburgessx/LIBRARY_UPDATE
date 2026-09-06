@@ -100,15 +100,7 @@ namespace validation
         VALID_EXCEPTION_START
 
         // Recording of inputs for playback
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqToolsPCA_inputs" );
-            file.write( "generatorFunction", "tryAqToolsPCA" );
-            file.write( "key", key );
-            file.write( "data", data );
-            file.write( "useCorrelationMatrix", useCorrelationMatrix );
-            file.write( "nFactors", nFactors );
-        }
+        AQ_RECORD_INPUTS( key, data, useCorrelationMatrix, nFactors );
 
         DoubleArray mean;
         DoubleMatrix coVar;
@@ -149,11 +141,7 @@ namespace validation
 
         AQLStringMatrix ret = getPCAResults( key );
 
-        if ( CreateDataFile::recordEnabled() )
-        {
-            CreateDataFile file( "tryAqToolsPCA_outputs" );
-            file.write( "output", ret );
-        }
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 
