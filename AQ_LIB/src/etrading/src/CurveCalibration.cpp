@@ -3309,15 +3309,15 @@ AQLString CurveCalibration::getDFCurvename( AQLCurveStaticDataHolder & staticDat
 }
 
 // Virtual Method to Calibrate the Curve Model
-void CurveCalibration::calibrateModel( const AQLDate& asOfDate, AQLObject& dataObject, const AQLDataProcedure& laAttributeData ) const
+void CurveCalibration::calibrateModel( const AQLDate& asOfDate, AQLObject& dataObject, const AQLDataProcedure& aqAttributeData ) const
 {
-	calibrateOISAndSwapCurve( asOfDate, dataObject, laAttributeData, "", "" ); 
+	calibrateOISAndSwapCurve( asOfDate, dataObject, aqAttributeData, "", "" ); 
 }
 
 // Virtual Method to Calibrate the Curve Model for OIS and Swap Curve with additional Curve Collection and Curve Index Info
 void CurveCalibration::calibrateOISAndSwapCurve( const AQLDate& asOfDate,
                                                  AQLObject& dataObject,
-                                                 const AQLDataProcedure& laAttributeData,
+                                                 const AQLDataProcedure& aqAttributeData,
                                                  const AQLString & curveCollection,
                                                  const AQLString & curveIndex ) const
 {
@@ -3326,7 +3326,7 @@ void CurveCalibration::calibrateOISAndSwapCurve( const AQLDate& asOfDate,
 	CurveProperties curveProperties( curveData );
 
 	// 2.	Initialize Curve Object
-	AQLCurveStaticDataHolder staticDataObj( dataObject, curveData, curveProperties, laAttributeData, curveCollection, curveIndex );
+	AQLCurveStaticDataHolder staticDataObj( dataObject, curveData, curveProperties, aqAttributeData, curveCollection, curveIndex );
 	
 	// 3.	Initialize Calibration Interpolators and Results
 	CalibrationResults resultsObj( staticDataObj, asOfDate );

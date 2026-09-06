@@ -553,19 +553,19 @@ namespace etrading
 	    AQLString	CurveIDManager		= curveID + CURVETYPE_ARBFREE + MANAGER;
 
 	    // Curve Object Manager (curve, grids, curve information)
-	    AQLObject* laCurveObject = NULL;
+	    AQLObject* aqCurveObject = NULL;
 	    if(!objPool.getObject(CurveIDManager).isDefined())
 	    {	
-		    laCurveObject = new AQLObject;
-		    objPool.set(CurveIDManager,laCurveObject);
+		    aqCurveObject = new AQLObject;
+		    objPool.set(CurveIDManager,aqCurveObject);
 	    }
 	    else
 	    {
 		    objPool.getObject(CurveIDManager).get().clear();
-		    laCurveObject = &objPool.getObject(CurveIDManager).get();
+		    aqCurveObject = &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
-	    laCurveObject->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
+	    aqCurveObject->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
+	    aqCurveObject->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
     };
 
 	
@@ -1237,19 +1237,19 @@ namespace etrading
 	    AQLString	CurveIDManager		= curveID + marketName + MANAGER;
 	    
         // LA Curve Object Build Manager
-	    AQLObject* laCurveObject = NULL;
+	    AQLObject* aqCurveObject = NULL;
 	    if( !objPool.getObject(CurveIDManager).isDefined() )
 	    {	
-		    laCurveObject = new AQLObject;
-		    objPool.set( CurveIDManager, laCurveObject );
+		    aqCurveObject = new AQLObject;
+		    objPool.set( CurveIDManager, aqCurveObject );
 	    }
 	    else
 	    {
 		    objPool.getObject(CurveIDManager).get().clear();
-		    laCurveObject = &objPool.getObject(CurveIDManager).get();
+		    aqCurveObject = &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",			      new AQLDataString() ).convertFromString(AQLString(AQLTime::now()));
-	    laCurveObject->add(CALIBRATION_DATA_NAME, new AQLDataString() ).convertFromString(CurveIDManager);
+	    aqCurveObject->add("Time",			      new AQLDataString() ).convertFromString(AQLString(AQLTime::now()));
+	    aqCurveObject->add(CALIBRATION_DATA_NAME, new AQLDataString() ).convertFromString(CurveIDManager);
 
 	}
 
@@ -1862,19 +1862,19 @@ namespace etrading
 	    AQLString CurveIDManager	= curveID + marketName + MANAGER;
 
 	    // Curve Object Manager (curve, grids, curve information)
-	    AQLObject* laCurveObject = NULL;
+	    AQLObject* aqCurveObject = NULL;
 	    if(!objPool.getObject(CurveIDManager).isDefined())
 	    {	
-		    laCurveObject = new AQLObject;
-		    objPool.set(CurveIDManager,laCurveObject);
+		    aqCurveObject = new AQLObject;
+		    objPool.set(CurveIDManager,aqCurveObject);
 	    }
 	    else
 	    {
 		    objPool.getObject(CurveIDManager).get().clear();
-		    laCurveObject	= &objPool.getObject(CurveIDManager).get();
+		    aqCurveObject	= &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",					new AQLDataString()	).convertFromString(AQLString(AQLTime::now()));
-	    laCurveObject->add(CALIBRATION_DATA_NAME,	new AQLDataString()	).convertFromString(CurveIDManager);	
+	    aqCurveObject->add("Time",					new AQLDataString()	).convertFromString(AQLString(AQLTime::now()));
+	    aqCurveObject->add(CALIBRATION_DATA_NAME,	new AQLDataString()	).convertFromString(CurveIDManager);	
 	}
 
 
@@ -2425,19 +2425,19 @@ namespace etrading
 	    AQLString	CurveIDManager		= curveID + marketName + MANAGER;
 	    
         // Curve Object Build Manager (curve, grids, curve information)
-	    AQLObject* laCurveObject = NULL;
+	    AQLObject* aqCurveObject = NULL;
 	    if(!objPool.getObject(CurveIDManager).isDefined())
 	    {	
-		    laCurveObject = new AQLObject;
-		    objPool.set(CurveIDManager,laCurveObject);
+		    aqCurveObject = new AQLObject;
+		    objPool.set(CurveIDManager,aqCurveObject);
 	    }
 	    else
 	    {
 		    objPool.getObject(CurveIDManager).get().clear();
-		    laCurveObject = &objPool.getObject(CurveIDManager).get();
+		    aqCurveObject = &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",					new AQLDataString()	).convertFromString(AQLString(AQLTime::now()));
-	    laCurveObject->add(CALIBRATION_DATA_NAME,	new AQLDataString()	).convertFromString(CurveIDManager);
+	    aqCurveObject->add("Time",					new AQLDataString()	).convertFromString(AQLString(AQLTime::now()));
+	    aqCurveObject->add(CALIBRATION_DATA_NAME,	new AQLDataString()	).convertFromString(CurveIDManager);
 
 	}
 

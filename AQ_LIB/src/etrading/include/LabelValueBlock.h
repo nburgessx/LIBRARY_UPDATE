@@ -91,7 +91,7 @@ namespace etrading
         void initializefromStandardStringMatrix( const StandardStringMatrix & input, const bool& makeAllKeysUppercase = true );
 
         // Accessible via the toLaStringMatrix and to toStandardStringMatrix methods
-        AQLStringMatrix laStringMatrix_;         
+        AQLStringMatrix aqStringMatrix_;         
         StandardStringMatrix standardStringMatrix_;
 
     };
@@ -112,10 +112,10 @@ namespace etrading
     // Helper Methods - Vector and Matrix Conversion to and from LA- and Standard- string types
     // --------------------------------------------------------------------------------
     
-    StandardStringVector convertToStandardStringVector( const AQLStringVector& laStringVector );
+    StandardStringVector convertToStandardStringVector( const AQLStringVector& aqStringVector );
     AQLStringVector convertToAQLStringVector( const StandardStringVector& standardStringVector );
     
-    StandardStringMatrix convertToStandardStringMatrix( const AQLStringMatrix & laStringMatrix );
+    StandardStringMatrix convertToStandardStringMatrix( const AQLStringMatrix & aqStringMatrix );
     AQLStringMatrix convertToAQLStringMatrix( const StandardStringMatrix & standardStringMatrix );
 
     StandardStringMatrix combineStandardStringMatrices( const StandardStringMatrix & matrix1, const StandardStringMatrix & matrix2 );

@@ -105,7 +105,7 @@ namespace etrading
 					  const std::string & curveIndex,
 					  const InterpolationEnum interpolationEnum,
 					  const StateVariableEnum stateVariableEnum,
-					  const std::shared_ptr<AQLInterpolationBase> & laInterpolationPtr,
+					  const std::shared_ptr<AQLInterpolationBase> & aqInterpolationPtr,
 					  const DayCountEnum accrualDaycount,
 					  const std::string & curveFrequencyTenor,
 					  const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -116,7 +116,7 @@ namespace etrading
 		Interpolator( const AQLDate & asOfDate,
 					  const InterpolationEnum interpolationEnum,
 					  const StateVariableEnum stateVariableEnum,
-					  const std::shared_ptr<AQLInterpolationBase> & laInterpolationPtr,
+					  const std::shared_ptr<AQLInterpolationBase> & aqInterpolationPtr,
 					  const DayCountEnum accrualDaycount,
 					  const std::string & curveFrequencyTenor,
 					  const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -149,7 +149,7 @@ namespace etrading
 		// For Backwards Compatibility we allow the user to specify if rates are piecewise constant between cashflows and ...
 		// use the legacy interpolation classes. Piecewise constant is undesirable.
 		bool assumePiecewiseConstant_;
-		std::shared_ptr<AQLInterpolationBase> laInterpolationPtr_;
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationPtr_;
 		std::string curveFrequencyTenor_;
 		
 
@@ -174,7 +174,7 @@ namespace etrading
 				   const std::string & curveIndex,
 				   const InterpolationEnum interpolationEnum,
 				   const StateVariableEnum stateVariableEnum,
-				   const std::shared_ptr<AQLInterpolationBase> & laInterpolationObject,
+				   const std::shared_ptr<AQLInterpolationBase> & aqInterpolationObject,
 				   const DayCountEnum accrualDaycount,
 				   const std::string & curveFrequencyTenor,
 				   const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -228,7 +228,7 @@ namespace etrading
 							const std::string & curveIndex,
 							const InterpolationEnum interpolationEnum,
 							const StateVariableEnum stateVariableEnum,
-							const std::shared_ptr<AQLInterpolationBase> & laInterpolationObject,
+							const std::shared_ptr<AQLInterpolationBase> & aqInterpolationObject,
 							const DayCountEnum accrualDaycount,
 							const std::string & curveFrequencyTenor,
 							const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -239,7 +239,7 @@ namespace etrading
 		CurveInterpolation( const AQLDate & asOfDate,
 							const InterpolationEnum interpolationEnum,
 							const StateVariableEnum stateVariableEnum,
-							const std::shared_ptr<AQLInterpolationBase> & laInterpolationObject,
+							const std::shared_ptr<AQLInterpolationBase> & aqInterpolationObject,
 							const DayCountEnum accrualDaycount,
 							const std::string & curveFrequencyTenor,
 							const BusinessDayAdjustmentEnum fixingBusDayAdj,

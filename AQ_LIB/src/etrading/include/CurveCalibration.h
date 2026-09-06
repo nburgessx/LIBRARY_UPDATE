@@ -892,12 +892,12 @@ public:
 	// ********************************************************************
 
 	// Virtual Method to Calibrate the Curve Model
-    virtual void				calibrateModel( const AQLDate& asOfDate, AQLObject& dataObject, const AQLDataProcedure& laAttributeData ) const;
+    virtual void				calibrateModel( const AQLDate& asOfDate, AQLObject& dataObject, const AQLDataProcedure& aqAttributeData ) const;
 
     // Virtual Method to Calibrate the Curve Model with Curve Collection and Curve Index Info
     virtual void				calibrateOISAndSwapCurve( const AQLDate& asOfDate,
                                                           AQLObject& dataObject,
-                                                          const AQLDataProcedure& laAttributeData,
+                                                          const AQLDataProcedure& aqAttributeData,
                                                           const AQLString & curveCollection,
                                                           const AQLString & curveIndex ) const;
 

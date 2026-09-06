@@ -172,8 +172,8 @@ namespace etrading
 	LabelValueBlock SabrMarketData::toLabelValueBlock( const std::string& marketDataKey, const bool trimBlankRows ) const
     {
         // Reuse the above toAQLStringMtrix() method
-        const AQLStringMatrix laStringMatrix = getAQLStringMatrixFromFreeObject(freeObject_, marketDataKey, trimBlankRows); 
-        const LabelValueBlock LVB( laStringMatrix );
+        const AQLStringMatrix aqStringMatrix = getAQLStringMatrixFromFreeObject(freeObject_, marketDataKey, trimBlankRows); 
+        const LabelValueBlock LVB( aqStringMatrix );
 		return LVB;
     }
 

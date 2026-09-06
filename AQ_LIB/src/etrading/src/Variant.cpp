@@ -58,20 +58,20 @@ namespace etrading
 	}
 
     // Converts an AQLStringMatrix to a JSON VariantMatrix, note transposes by default to match the default JSON schema convention
-    VariantMatrix toVariantMatrixFromAQLStringMatrix( const AQLStringMatrix & laStringMatrix, const bool & transpose )
+    VariantMatrix toVariantMatrixFromAQLStringMatrix( const AQLStringMatrix & aqStringMatrix, const bool & transpose )
     {
-        AQ_REQUIRE( !laStringMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
-        AQ_REQUIRE( !laStringMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
+        AQ_REQUIRE( !aqStringMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
+        AQ_REQUIRE( !aqStringMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
         
         if ( transpose )
         {
-            VariantMatrix variantMatrix( laStringMatrix[0].size() );
-            for ( size_t col = 0; col < laStringMatrix[0].size(); ++col )
+            VariantMatrix variantMatrix( aqStringMatrix[0].size() );
+            for ( size_t col = 0; col < aqStringMatrix[0].size(); ++col )
             {
-                VariantVector thisCol( laStringMatrix.size() );
-                for ( size_t row = 0; row < laStringMatrix.size(); ++row )
+                VariantVector thisCol( aqStringMatrix.size() );
+                for ( size_t row = 0; row < aqStringMatrix.size(); ++row )
                 {
-                    thisCol[row] = laStringMatrix[row][col];
+                    thisCol[row] = aqStringMatrix[row][col];
                 }
                 variantMatrix[col] = thisCol;
             }
@@ -79,13 +79,13 @@ namespace etrading
         }
         else
         {
-            VariantMatrix variantMatrix( laStringMatrix.size() );
-            for ( size_t row = 0; row < laStringMatrix.size(); ++row )
+            VariantMatrix variantMatrix( aqStringMatrix.size() );
+            for ( size_t row = 0; row < aqStringMatrix.size(); ++row )
             {
-                VariantVector thisRow( laStringMatrix[row].size() );
-                for ( size_t col = 0; col < laStringMatrix[row].size(); ++col )
+                VariantVector thisRow( aqStringMatrix[row].size() );
+                for ( size_t col = 0; col < aqStringMatrix[row].size(); ++col )
                 {
-                    thisRow[col] = laStringMatrix[row][col];
+                    thisRow[col] = aqStringMatrix[row][col];
                 }
                 variantMatrix[row] = thisRow;
             }
@@ -137,7 +137,7 @@ namespace etrading
        
         if ( transpose )
         {
-            AQLStringMatrix laStringMatrix( variantMatrix[0].size() );
+            AQLStringMatrix aqStringMatrix( variantMatrix[0].size() );
             for ( size_t col = 0; col < variantMatrix[0].size(); ++col )
             {
                 AQLStringVector thisCol( variantMatrix.size() );
@@ -145,13 +145,13 @@ namespace etrading
                 {
                     thisCol[row] = variantMatrix[row][col].getValueAsString().c_str();
                 }
-                laStringMatrix[col] = thisCol;
+                aqStringMatrix[col] = thisCol;
             }
-            return laStringMatrix;
+            return aqStringMatrix;
         }
         else
         {
-            AQLStringMatrix laStringMatrix( variantMatrix.size() );
+            AQLStringMatrix aqStringMatrix( variantMatrix.size() );
             for ( size_t row = 0; row < variantMatrix.size(); ++row )
             {
                 AQLStringVector thisRow( variantMatrix[row].size() );
@@ -159,9 +159,9 @@ namespace etrading
                 {
                     thisRow[col] = variantMatrix[row][col].getValueAsString().c_str();
                 }
-                laStringMatrix[row] = thisRow;
+                aqStringMatrix[row] = thisRow;
             }
-            return laStringMatrix;
+            return aqStringMatrix;
          }
     }
 

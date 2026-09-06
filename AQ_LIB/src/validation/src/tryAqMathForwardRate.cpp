@@ -183,7 +183,7 @@ namespace validation
 		std::vector<double> xValuesAsDouble = etrading::convertCurveDatesToTerms( asOfDate, xValues );
 
 		// Build Legacy Interpolator Object
-		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationObject
 			= AQLMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,
@@ -195,7 +195,7 @@ namespace validation
 														curveIndex,
 														interpolationEnum,
 														stateVariableEnum,
-														laInterpolationObject,
+														aqInterpolationObject,
 														accrualDaycount, 
 														curveFrequencyTenor,
 														fixingBusinessDayAdjustment,
@@ -241,7 +241,7 @@ namespace validation
 		std::vector<double> xValuesAsDouble = etrading::convertCurveDatesToTerms( asOfDate, xValues );
 
 		// Build Legacy Interpolator Object
-		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationObject
 			= AQLMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,
@@ -253,7 +253,7 @@ namespace validation
 														curveIndex,
 														interpolationEnum,
 														stateVariableEnum,
-														laInterpolationObject,
+														aqInterpolationObject,
 														accrualDaycount, 
 														curveFrequencyTenor,
 														fixingBusinessDayAdjustment,
@@ -299,7 +299,7 @@ namespace validation
 		std::vector<double> xValuesAsDouble = etrading::convertCurveDatesToTerms( asOfDate, xValues );
 
 		// Build Legacy Interpolator Object
-		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationObject
 			= AQLMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,
@@ -311,7 +311,7 @@ namespace validation
 														curveIndex,
 														interpolationEnum,
 														stateVariableEnum,
-														laInterpolationObject,
+														aqInterpolationObject,
 														accrualDaycount, 
 														curveFrequencyTenor,
 														fixingBusinessDayAdjustment,
@@ -357,7 +357,7 @@ namespace validation
 		std::vector<double> xValuesAsDouble = etrading::convertCurveDatesToTerms( asOfDate, xValues );
 
 		// Build Legacy Interpolator Object
-		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationObject
 			= AQLMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,
@@ -369,7 +369,7 @@ namespace validation
 														curveIndex,
 														interpolationEnum,
 														stateVariableEnum,
-														laInterpolationObject,
+														aqInterpolationObject,
 														accrualDaycount, 
 														curveFrequencyTenor,
 														fixingBusinessDayAdjustment,

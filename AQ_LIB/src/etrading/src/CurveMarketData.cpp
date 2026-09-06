@@ -667,8 +667,8 @@ namespace etrading
 	StandardStringMatrix CurveMarketData::toStandardStringMatrix( const std::string& marketDataKey, const bool trimBlankRows ) const
     {
         // Reuse the above toAQLStringMtrix() method
-        const AQLStringMatrix laStringMatrix = toAQLStringMatrix( marketDataKey, trimBlankRows );
-        const StandardStringMatrix standardStringMatrix( convertToStandardStringMatrix( laStringMatrix ) );
+        const AQLStringMatrix aqStringMatrix = toAQLStringMatrix( marketDataKey, trimBlankRows );
+        const StandardStringMatrix standardStringMatrix( convertToStandardStringMatrix( aqStringMatrix ) );
 		return standardStringMatrix;
     }
 
@@ -680,8 +680,8 @@ namespace etrading
 	LabelValueBlock CurveMarketData::toLabelValueBlock( const std::string& marketDataKey, const bool trimBlankRows ) const
     {
         // Reuse the above toAQLStringMtrix() method
-        const AQLStringMatrix laStringMatrix = toAQLStringMatrix( marketDataKey, trimBlankRows );
-        const LabelValueBlock LVB( laStringMatrix );
+        const AQLStringMatrix aqStringMatrix = toAQLStringMatrix( marketDataKey, trimBlankRows );
+        const LabelValueBlock LVB( aqStringMatrix );
 		return LVB;
     }
 

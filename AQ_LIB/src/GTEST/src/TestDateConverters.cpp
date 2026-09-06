@@ -94,18 +94,18 @@ namespace google_test
     TEST( TestDateConverters, UNIT_toYYYYMMDDFromDate )
     {
         // 09-Aug-2019
-        AQLDate laDate("20190809");
+        AQLDate aqDate("20190809");
         std::string expectedDate("20190809");
-        std::string actualDate = etrading::toYYYYMMDDFromDate( laDate );
+        std::string actualDate = etrading::toYYYYMMDDFromDate( aqDate );
         EXPECT_EQ( expectedDate, actualDate );
     }
     
     TEST( TestDateConverters, UNIT_toGregorianDateFromAQLDate )
     {
         // 09-Aug-2019
-        AQLDate laDate("20190809");
+        AQLDate aqDate("20190809");
         boost::gregorian::date expectedDate( 2019, 8, 9 );
-        boost::gregorian::date actualDate = etrading::toGregorianDateFromAQLDate( laDate );
+        boost::gregorian::date actualDate = etrading::toGregorianDateFromAQLDate( aqDate );
         EXPECT_EQ( expectedDate, actualDate );
     }
 

@@ -231,8 +231,8 @@ namespace etrading
     */
     boost::gregorian::date validateAndConvertStringToGregorianDate( const AQLString & inDate, const AQLString& err )
     {
-        AQLDate laDate = stringToDate( inDate, err );
-        boost::gregorian::date gregorianDate = toGregorianDateFromAQLDate( laDate );
+        AQLDate aqDate = stringToDate( inDate, err );
+        boost::gregorian::date gregorianDate = toGregorianDateFromAQLDate( aqDate );
         return gregorianDate;
     }
 

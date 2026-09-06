@@ -243,14 +243,14 @@ namespace etrading
 								const std::string & curveIndex,
 								const InterpolationEnum interpolationEnum,
 								const StateVariableEnum stateVariableEnum,
-								const std::shared_ptr<AQLInterpolationBase> & laInterpolationPtr,
+								const std::shared_ptr<AQLInterpolationBase> & aqInterpolationPtr,
 								const DayCountEnum accrualDaycount,
 								const std::string & curveFrequencyTenor,
 								const BusinessDayAdjustmentEnum fixingBusDayAdj,
 								const std::string & fixingCalendar )
 	{
 		// Private Constructor Helper
-		init( asOfDate, curveCollection, curveIndex, interpolationEnum, stateVariableEnum, laInterpolationPtr, accrualDaycount, curveFrequencyTenor, fixingBusDayAdj, fixingCalendar );
+		init( asOfDate, curveCollection, curveIndex, interpolationEnum, stateVariableEnum, aqInterpolationPtr, accrualDaycount, curveFrequencyTenor, fixingBusDayAdj, fixingCalendar );
 	}
 
 	// Constructor for Legacy Interpolators & Backwards Compatibility - *** Piecewise Constant = TRUE ***
@@ -258,14 +258,14 @@ namespace etrading
 	Interpolator::Interpolator( const AQLDate & asOfDate,
 								const InterpolationEnum interpolationEnum,
 								const StateVariableEnum stateVariableEnum,
-								const std::shared_ptr<AQLInterpolationBase> & laInterpolationPtr,
+								const std::shared_ptr<AQLInterpolationBase> & aqInterpolationPtr,
 								const DayCountEnum accrualDaycount,
 								const std::string & curveFrequencyTenor,
 								const BusinessDayAdjustmentEnum fixingBusDayAdj,
 								const std::string & fixingCalendar )
 	{
 		// Private Constructor Helper
-		init( asOfDate, "", "", interpolationEnum, stateVariableEnum, laInterpolationPtr, accrualDaycount, curveFrequencyTenor, fixingBusDayAdj, fixingCalendar );
+		init( asOfDate, "", "", interpolationEnum, stateVariableEnum, aqInterpolationPtr, accrualDaycount, curveFrequencyTenor, fixingBusDayAdj, fixingCalendar );
 	}
 
 	double Interpolator::joinDateAsDouble( const AQLDate& asOfDate, const AQLDate& joinDate )
@@ -335,7 +335,7 @@ namespace etrading
 							 const std::string & curveIndex,
 							 const InterpolationEnum interpolationEnum,
 							 const StateVariableEnum stateVariableEnum,
-							 const std::shared_ptr<AQLInterpolationBase> & laInterpolationPtr,
+							 const std::shared_ptr<AQLInterpolationBase> & aqInterpolationPtr,
 							 const DayCountEnum accrualDaycount,
 					         const std::string & curveFrequencyTenor,
 					         const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -346,8 +346,8 @@ namespace etrading
 		curveIndex_						= curveIndex;
 		interpolationEnum_				= interpolationEnum;
 		stateVariableEnum_				= stateVariableEnum;
-		xValues_						= laInterpolationPtr->interpolationData()->xValues_;
-		yValues_						= laInterpolationPtr->interpolationData()->xValues_;
+		xValues_						= aqInterpolationPtr->interpolationData()->xValues_;
+		yValues_						= aqInterpolationPtr->interpolationData()->xValues_;
 		accrualDaycount_				= accrualDaycount;
 		curveFrequencyTenor_			= curveFrequencyTenor;
 		fixingBusDayAdj_				= fixingBusDayAdj;
@@ -358,7 +358,7 @@ namespace etrading
 
 		// For Backward Compatibility
 		assumePiecewiseConstant_		= true;
-		laInterpolationPtr_				= laInterpolationPtr;
+		aqInterpolationPtr_				= aqInterpolationPtr;
 
 		// *** IMPORTANT *** Calculate xVaules in the accrual daycount basis not the internal curve Act/365 daycount basis
 		xValuesAccrualDaycountBasis_ = xValues_;
@@ -446,7 +446,7 @@ namespace etrading
 											const std::string & curveIndex,
 											const InterpolationEnum interpolationEnum,
 											const StateVariableEnum stateVariableEnum,
-											const std::shared_ptr<AQLInterpolationBase> & laInterpolationObject,
+											const std::shared_ptr<AQLInterpolationBase> & aqInterpolationObject,
 											const DayCountEnum accrualDaycount,
 											const std::string & curveFrequencyTenor,
 											const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -459,7 +459,7 @@ namespace etrading
 																		 curveIndex,
 																		 interpolationEnum,
 																		 stateVariableEnum,
-																		 laInterpolationObject,
+																		 aqInterpolationObject,
 																		 accrualDaycount,
 																		 curveFrequencyTenor,
 																		 fixingBusDayAdj,
@@ -473,7 +473,7 @@ namespace etrading
 	CurveInterpolation::CurveInterpolation( const AQLDate & asOfDate,
 											const InterpolationEnum interpolationEnum,
 											const StateVariableEnum stateVariableEnum,
-											const std::shared_ptr<AQLInterpolationBase> & laInterpolationObject,
+											const std::shared_ptr<AQLInterpolationBase> & aqInterpolationObject,
 											const DayCountEnum accrualDaycount,
 											const std::string & curveFrequencyTenor,
 											const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -486,7 +486,7 @@ namespace etrading
 																		 "",
 																		 interpolationEnum,
 																		 stateVariableEnum,
-																		 laInterpolationObject,
+																		 aqInterpolationObject,
 																		 accrualDaycount,
 																		 curveFrequencyTenor,
 																		 fixingBusDayAdj,
@@ -553,7 +553,7 @@ namespace etrading
 						}
 						else
 						{
-							discountFactors[i] = getInterpolatedDiscountfactor( *interpolator_->laInterpolationPtr_,
+							discountFactors[i] = getInterpolatedDiscountfactor( *interpolator_->aqInterpolationPtr_,
 																				paymentDatesAsTerms[i],
 																				interpolator_->stateVariableEnum_,
 																				interpolator_->asOfDate_,
@@ -772,7 +772,7 @@ namespace etrading
 							
 								forwardRates[i] = getForwardRate( startTerm,
 																  endTerm,
-																  *interpolator_->laInterpolationPtr_,
+																  *interpolator_->aqInterpolationPtr_,
 																  interpolator_->stateVariableEnum_,
 																  interpolator_->asOfDate_,
 																  interpolator_->accrualDaycount_,
@@ -793,7 +793,7 @@ namespace etrading
 						}
 						else
 						{
-							forwardRates[i] = interpolator_->laInterpolationPtr_->value( fixingDatesAsTerms[i] );
+							forwardRates[i] = interpolator_->aqInterpolationPtr_->value( fixingDatesAsTerms[i] );
 						}
 					}
 					break;

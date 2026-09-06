@@ -15,7 +15,7 @@ namespace google_test
 {
     TEST( TestLVBHelpers, UNIT_LVB_ConvertToAQLStringMatrix )
     {
-        AQLStringMatrix laStringMatrix 
+        AQLStringMatrix aqStringMatrix 
         {
             {"A", "B", "C"},
             {"D", "E", "F"},
@@ -31,20 +31,20 @@ namespace google_test
 
         AQLStringMatrix actualStringMatrix = etrading::convertToAQLStringMatrix( standardStringMatrix );
         
-        ASSERT_EQ( actualStringMatrix.size(), laStringMatrix.size() );
+        ASSERT_EQ( actualStringMatrix.size(), aqStringMatrix.size() );
         for ( size_t i = 0; i < actualStringMatrix.size(); ++i )
         {
-            ASSERT_EQ( actualStringMatrix[i].size(), laStringMatrix[i].size() );
+            ASSERT_EQ( actualStringMatrix[i].size(), aqStringMatrix[i].size() );
             for( size_t j = 0; j < actualStringMatrix[i].size(); ++j )
             {
-                EXPECT_EQ( laStringMatrix[i][j], actualStringMatrix[i][j] );
+                EXPECT_EQ( aqStringMatrix[i][j], actualStringMatrix[i][j] );
             }
         }
     }
 
     TEST( TestLVBHelpers, UNIT_LVB_ConvertToStandardStringMatrix )
     {
-        AQLStringMatrix laStringMatrix 
+        AQLStringMatrix aqStringMatrix 
         {
             {"A", "B", "C"},
             {"D", "E", "F"},
@@ -58,7 +58,7 @@ namespace google_test
             {"G", "H", "I"}
         };
 
-        StandardStringMatrix actualStringMatrix = etrading::convertToStandardStringMatrix( laStringMatrix );
+        StandardStringMatrix actualStringMatrix = etrading::convertToStandardStringMatrix( aqStringMatrix );
         
         ASSERT_EQ( actualStringMatrix.size(), standardStringMatrix.size() );
         for ( size_t i = 0; i < actualStringMatrix.size(); ++i )
@@ -117,20 +117,20 @@ namespace google_test
 
     TEST( TestLVBMethod, UNIT_LVB_toAQLStringMatrix )
     {
-        AQLStringMatrix laStringMatrix 
+        AQLStringMatrix aqStringMatrix 
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"},
             {"KEY3", "VALUE3"}
         };
 
-        LabelValueBlock LVB( laStringMatrix );
+        LabelValueBlock LVB( aqStringMatrix );
 
         // *** The LVB is an unordered map so the string matrix from the LVB may be in a different order to the original string matrix ***
         AQLStringMatrix actualStringMatrix = LVB.toAQLStringMatrix();
 
         // String Matrix Dimensions must be the same
-        ASSERT_EQ( actualStringMatrix.size(), laStringMatrix.size() );
+        ASSERT_EQ( actualStringMatrix.size(), aqStringMatrix.size() );
         
         // Check the Output Matches LVB
         for ( size_t i = 0; i < actualStringMatrix.size(); ++i )
@@ -146,13 +146,13 @@ namespace google_test
         }
 
         // Check the Input Matches LVB
-        for ( size_t i = 0; i < laStringMatrix.size(); ++i )
+        for ( size_t i = 0; i < aqStringMatrix.size(); ++i )
         {
             // String Matrix must have 2 columns
-            ASSERT_EQ( laStringMatrix[i].size(), 2 );
+            ASSERT_EQ( aqStringMatrix[i].size(), 2 );
             
-            AQLString thisKey         = laStringMatrix[i][0]; // Column 1
-            AQLString actualValue     = laStringMatrix[i][1]; // Column 2
+            AQLString thisKey         = aqStringMatrix[i][0]; // Column 1
+            AQLString actualValue     = aqStringMatrix[i][1]; // Column 2
             AQLString expectedValue   = LVB.getCompulsoryValueAsAQLString( thisKey.c_str() );
         
             EXPECT_EQ( expectedValue, actualValue );
@@ -375,13 +375,13 @@ namespace google_test
 
     TEST( TestLVBConstructors, UNIT_LVB_AppendLVB )
     {
-        AQLStringMatrix laStringMatrix1
+        AQLStringMatrix aqStringMatrix1
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"}
         };
 
-        AQLStringMatrix laStringMatrix2
+        AQLStringMatrix aqStringMatrix2
         {
             {"KEY3", "VALUE3"},
             {"KEY4", "VALUE4"}
@@ -396,8 +396,8 @@ namespace google_test
         };
 
         // Create LVBs
-        LabelValueBlock LVB1( laStringMatrix1 );
-        LabelValueBlock LVB2( laStringMatrix2 );
+        LabelValueBlock LVB1( aqStringMatrix1 );
+        LabelValueBlock LVB2( aqStringMatrix2 );
         
         LabelValueBlock actualLVB( LVB1, LVB2 );
         LabelValueBlock expectedLVB( expectedStringMatrix );
@@ -419,13 +419,13 @@ namespace google_test
 
     TEST( TestLVBConstructors, UNIT_LVB_AppendLVB_CamelCaseKeys )
     {
-        AQLStringMatrix laStringMatrix1
+        AQLStringMatrix aqStringMatrix1
         {
             {"CamelCaseKey1", "Value1"},
             {"CamelCaseKey2", "Value2"}
         };
 
-        AQLStringMatrix laStringMatrix2
+        AQLStringMatrix aqStringMatrix2
         {
             {"CamelCaseKey3", "Value3"},
             {"CamelCaseKey4", "Value4"}
@@ -440,8 +440,8 @@ namespace google_test
         };
 
         // Create LVBs
-        LabelValueBlock LVB1( laStringMatrix1, false );  // Make All Keys Upper Case = false
-        LabelValueBlock LVB2( laStringMatrix2 , false );  // Make All Keys Upper Case = false
+        LabelValueBlock LVB1( aqStringMatrix1, false );  // Make All Keys Upper Case = false
+        LabelValueBlock LVB2( aqStringMatrix2 , false );  // Make All Keys Upper Case = false
         
         LabelValueBlock actualLVB( LVB1, LVB2, false ); // Make All Keys Upper Case = false
         LabelValueBlock expectedLVB( expectedStringMatrix, false ); // Make All Keys Uppercase = false

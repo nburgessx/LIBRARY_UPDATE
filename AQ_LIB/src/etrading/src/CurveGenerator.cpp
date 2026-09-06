@@ -445,8 +445,8 @@ namespace etrading
 	 */
 	StandardStringMatrix CurveGenerator::toStandardStringMatrix( const std::string& propertyKey, const bool trimBlankRows ) const
     {
-        const AQLStringMatrix laStringMatrix =  toAQLStringMatrix( propertyKey, trimBlankRows );
-        const StandardStringMatrix standardStringMatrix = convertToStandardStringMatrix( laStringMatrix );
+        const AQLStringMatrix aqStringMatrix =  toAQLStringMatrix( propertyKey, trimBlankRows );
+        const StandardStringMatrix standardStringMatrix = convertToStandardStringMatrix( aqStringMatrix );
         return standardStringMatrix;
     }
 
@@ -457,8 +457,8 @@ namespace etrading
 	 */
 	LabelValueBlock CurveGenerator::toLabelValueBlock( const std::string& propertyKey, const bool trimBlankRows ) const
     {
-        const AQLStringMatrix laStringMatrix =  toAQLStringMatrix( propertyKey, trimBlankRows );
-        const LabelValueBlock LVB( laStringMatrix );
+        const AQLStringMatrix aqStringMatrix =  toAQLStringMatrix( propertyKey, trimBlankRows );
+        const LabelValueBlock LVB( aqStringMatrix );
         return LVB;
     }
 

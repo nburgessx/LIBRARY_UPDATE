@@ -749,8 +749,8 @@ namespace etrading
     AQLDate toAQLDateFromREGEX( const std::string& inString )
     {
         boost::gregorian::date gregorianDate = toGregorianDateFromREGEX( inString );
-        AQLDate laDate = toAQLDateFromGregorianDate( gregorianDate );
-        return laDate;
+        AQLDate aqDate = toAQLDateFromGregorianDate( gregorianDate );
+        return aqDate;
     }
 
     // http://www.codeproject.com/Articles/2750/Excel-serial-date-to-Day-Month-Year-and-vise-versa

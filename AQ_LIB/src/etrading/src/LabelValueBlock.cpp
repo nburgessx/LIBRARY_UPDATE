@@ -52,8 +52,8 @@ namespace etrading
         stringMatrix[0] = stringVector;
 
         // Call Native Constructor/Initializer
-        AQLStringMatrix laStringMatrix  = convertToAQLStringMatrix( stringMatrix );
-        initializefromAQLStringMatrix( laStringMatrix, makeAllKeysUppercase );
+        AQLStringMatrix aqStringMatrix  = convertToAQLStringMatrix( stringMatrix );
+        initializefromAQLStringMatrix( aqStringMatrix, makeAllKeysUppercase );
     }
 
     LabelValueBlock::LabelValueBlock( const AQLStringVector & keys, const AQLStringVector & values, const bool& makeAllKeysUppercase )
@@ -213,20 +213,20 @@ namespace etrading
 	// Convert a LabelValueBlock to a AQLStringMatrix
     AQLStringMatrix LabelValueBlock::toAQLStringMatrix() const
     {
-        return laStringMatrix_;
+        return aqStringMatrix_;
 
-        // AQLStringMatrix laStringMatix( objectMap_.size() );
+        // AQLStringMatrix aqStringMatix( objectMap_.size() );
         // size_t index = 0;
         // for( auto iter = objectMap_.begin(); iter != objectMap_.end(); ++iter )
         // {
         //     // Label Value Blocks always have 2 Columns
-        //     AQLStringVector laStringVector(2);
-        //     laStringVector[0] = iter->first.c_str();
-        //     laStringVector[1] = iter->second.c_str();
-        //     laStringMatix[index] = laStringVector;
+        //     AQLStringVector aqStringVector(2);
+        //     aqStringVector[0] = iter->first.c_str();
+        //     aqStringVector[1] = iter->second.c_str();
+        //     aqStringMatix[index] = aqStringVector;
         //     ++index;
         // }
-        // return laStringMatix;
+        // return aqStringMatix;
     }
 
 
@@ -781,7 +781,7 @@ namespace etrading
     void LabelValueBlock::initializefromAQLStringMatrix( const AQLStringMatrix & input, const bool& makeAllKeysUppercase )
     {
         // Update Matrix Member Data
-        laStringMatrix_         = input;
+        aqStringMatrix_         = input;
         standardStringMatrix_   = convertToStandardStringMatrix( input );
         
         // Build Label Value Block
@@ -821,7 +821,7 @@ namespace etrading
     void LabelValueBlock::initializefromStandardStringMatrix( const StandardStringMatrix & input, const bool& makeAllKeysUppercase )
     {
         // Update Matrix Member Data
-        laStringMatrix_         = convertToAQLStringMatrix( input );
+        aqStringMatrix_         = convertToAQLStringMatrix( input );
         standardStringMatrix_   = input;
         
         // Build Label Value Block
@@ -941,12 +941,12 @@ namespace etrading
     // Helper Methods - Matrix & Vector Conversion 
     // --------------------------------------------------------------------------------
 
-    StandardStringVector convertToStandardStringVector( const AQLStringVector& laStringVector )
+    StandardStringVector convertToStandardStringVector( const AQLStringVector& aqStringVector )
     {
-        StandardStringVector resultVector( laStringVector.size());
-        for ( size_t i = 0; i < laStringVector.size(); ++i )
+        StandardStringVector resultVector( aqStringVector.size());
+        for ( size_t i = 0; i < aqStringVector.size(); ++i )
         {
-            resultVector[i] = laStringVector[i].c_str();
+            resultVector[i] = aqStringVector[i].c_str();
         }
         return resultVector;
     }
@@ -962,12 +962,12 @@ namespace etrading
     }
 
     // Method to convert a AQLStringMatrix to a StandardStringMatrix 
-    StandardStringMatrix convertToStandardStringMatrix( const AQLStringMatrix & laStringMatrix )
+    StandardStringMatrix convertToStandardStringMatrix( const AQLStringMatrix & aqStringMatrix )
     {
-        StandardStringMatrix standardStringMatrix( laStringMatrix.size() );
-        for( size_t i = 0; i < laStringMatrix.size(); ++i)
+        StandardStringMatrix standardStringMatrix( aqStringMatrix.size() );
+        for( size_t i = 0; i < aqStringMatrix.size(); ++i)
         {
-            standardStringMatrix[i] = convertToStandardStringVector( laStringMatrix[i] );
+            standardStringMatrix[i] = convertToStandardStringVector( aqStringMatrix[i] );
         }
         return standardStringMatrix;
     }
@@ -975,12 +975,12 @@ namespace etrading
     // Method to convert a StandardStringMatrix to a AQLStringMatrix
     AQLStringMatrix convertToAQLStringMatrix( const StandardStringMatrix & standardStringMatrix )
     {
-        AQLStringMatrix laStringMatrix( standardStringMatrix.size() );
+        AQLStringMatrix aqStringMatrix( standardStringMatrix.size() );
         for( size_t i = 0; i < standardStringMatrix.size(); ++i)
         {
-            laStringMatrix[i] = convertToAQLStringVector( standardStringMatrix[i] );
+            aqStringMatrix[i] = convertToAQLStringVector( standardStringMatrix[i] );
         }
-        return laStringMatrix;
+        return aqStringMatrix;
     }
 
     // Method to concatinate two Standard String Matrices

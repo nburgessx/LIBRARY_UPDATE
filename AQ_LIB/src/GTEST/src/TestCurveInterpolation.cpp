@@ -338,14 +338,14 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
-		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
-		laInterpolationTable->set( terms, values );
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationTable( new AQLSplineInterpolation() );
+		aqInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig
 			= std::shared_ptr<etrading::Interpolator>( new etrading::Interpolator( asOfDate,
 																				   interpolationEnum,
 																				   stateVariableEnum,
-																				   laInterpolationTable,
+																				   aqInterpolationTable,
 																				   accrualDaycount,
 																				   "12M",
 																				   etrading::MOD_FOLLOWING,
@@ -379,14 +379,14 @@ namespace google_test
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
 		// Hybrid Set Method requires the joinDate
-		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLLinearSplineInterpolation() );
-		laInterpolationTable->set( terms, values, joinDateAsDouble ); 
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationTable( new AQLLinearSplineInterpolation() );
+		aqInterpolationTable->set( terms, values, joinDateAsDouble ); 
 
 		etrading::InterpolationPtr interpolationConfig
 			= std::shared_ptr<etrading::Interpolator>( new etrading::Interpolator( asOfDate,
 																				   interpolationEnum,
 																				   stateVariableEnum,
-																				   laInterpolationTable,
+																				   aqInterpolationTable,
 																				   accrualDaycount,
 																				   "12M",
 																				   etrading::MOD_FOLLOWING,
@@ -418,14 +418,14 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
-		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
-		laInterpolationTable->set( terms, values );
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationTable( new AQLSplineInterpolation() );
+		aqInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig
 			= std::shared_ptr<etrading::Interpolator>( new etrading::Interpolator( asOfDate,
 																				   interpolationEnum,
 																				   stateVariableEnum,
-																				   laInterpolationTable,
+																				   aqInterpolationTable,
 																				   accrualDaycount,
 																				   "12M",
 																				   etrading::MOD_FOLLOWING,
@@ -457,14 +457,14 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
-		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
-		laInterpolationTable->set( terms, values );
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationTable( new AQLSplineInterpolation() );
+		aqInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig
 			= std::shared_ptr<etrading::Interpolator>( new etrading::Interpolator( asOfDate,
 																				   interpolationEnum,
 																				   stateVariableEnum,
-																				   laInterpolationTable,
+																				   aqInterpolationTable,
 																				   accrualDaycount,
 																				   "12M",
 																				   etrading::MOD_FOLLOWING,
@@ -498,14 +498,14 @@ namespace google_test
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
 		// Hybrid Set Method requires the joinDate
-		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLLinearSplineInterpolation() );
-		laInterpolationTable->set( terms, values, joinDateAsDouble ); 
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationTable( new AQLLinearSplineInterpolation() );
+		aqInterpolationTable->set( terms, values, joinDateAsDouble ); 
 
 		etrading::InterpolationPtr interpolationConfig
 			= std::shared_ptr<etrading::Interpolator>( new etrading::Interpolator( asOfDate,
 																				   interpolationEnum,
 																				   stateVariableEnum,
-																				   laInterpolationTable,
+																				   aqInterpolationTable,
 																				   accrualDaycount,
 																				   "12M",
 																				   etrading::MOD_FOLLOWING,
@@ -537,14 +537,14 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
-		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
-		laInterpolationTable->set( terms, values );
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationTable( new AQLSplineInterpolation() );
+		aqInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig
 			= std::shared_ptr<etrading::Interpolator>( new etrading::Interpolator( asOfDate,
 																				   interpolationEnum,
 																				   stateVariableEnum,
-																				   laInterpolationTable,
+																				   aqInterpolationTable,
 																				   accrualDaycount,
 																				   "12M",
 																				   etrading::MOD_FOLLOWING,
@@ -575,14 +575,14 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 0.02, 0.02, 0.02, 0.02, 0.02, 0.02 };
 		
-		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
-		laInterpolationTable->set( terms, values );
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationTable( new AQLSplineInterpolation() );
+		aqInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig
 			= std::shared_ptr<etrading::Interpolator>( new etrading::Interpolator( asOfDate,
 																				   interpolationEnum,
 																				   stateVariableEnum,
-																				   laInterpolationTable,
+																				   aqInterpolationTable,
 																				   accrualDaycount,
 																				   "12M",
 																				   etrading::MOD_FOLLOWING,
@@ -616,14 +616,14 @@ namespace google_test
 		std::vector<double> values = { 0.02, 0.02, 0.02, 0.02, 0.02, 0.02 };
 		
 		// Hybrid Set Method requires the joinDate
-		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLLinearSplineInterpolation() );
-		laInterpolationTable->set( terms, values, joinDateAsDouble ); 
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationTable( new AQLLinearSplineInterpolation() );
+		aqInterpolationTable->set( terms, values, joinDateAsDouble ); 
 
 		etrading::InterpolationPtr interpolationConfig
 			= std::shared_ptr<etrading::Interpolator>( new etrading::Interpolator( asOfDate,
 																				   interpolationEnum,
 																				   stateVariableEnum,
-																				   laInterpolationTable,
+																				   aqInterpolationTable,
 																				   accrualDaycount,
 																				   "12M",
 																				   etrading::MOD_FOLLOWING,
@@ -655,14 +655,14 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 0.02, 0.02, 0.02, 0.02, 0.02, 0.02 };
 		
-		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
-		laInterpolationTable->set( terms, values );
+		std::shared_ptr<AQLInterpolationBase> aqInterpolationTable( new AQLSplineInterpolation() );
+		aqInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig
 			= std::shared_ptr<etrading::Interpolator>( new etrading::Interpolator( asOfDate,
 																				   interpolationEnum,
 																				   stateVariableEnum,
-																				   laInterpolationTable,
+																				   aqInterpolationTable,
 																				   accrualDaycount,
 																				   "12M",
 																				   etrading::MOD_FOLLOWING,

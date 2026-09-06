@@ -159,8 +159,8 @@ namespace swig
 
 		for( size_t i = 0; i < fromStringVector.size(); ++i )
 		{
-			AQLDate laDate( etrading::stringToDate( fromStringVector[i] ) );
-			toDateVector.push_back(laDate);
+			AQLDate aqDate( etrading::stringToDate( fromStringVector[i] ) );
+			toDateVector.push_back(aqDate);
 		}
 	}
 
@@ -270,10 +270,10 @@ namespace swig
 	*  @param [in]		AQLStringMatrix	a AQLStringMatrix object
 	*  @output			output a matrix of strings
 	*/
-	SWIG_STRINGMATRIX fromStringMatrixToMatrixOfString( const AQLStringMatrix& laStringMatrix )
+	SWIG_STRINGMATRIX fromStringMatrixToMatrixOfString( const AQLStringMatrix& aqStringMatrix )
 	{
 		const bool checkForEmptyMatrix = true;
-		const size_t maxColumnSize = getMatrixMaxColumnDimension( laStringMatrix, checkForEmptyMatrix );
+		const size_t maxColumnSize = getMatrixMaxColumnDimension( aqStringMatrix, checkForEmptyMatrix );
 	
 		// String Matrices Require Special Treatment for R API
 		// ---------------------------------------------------
@@ -288,11 +288,11 @@ namespace swig
 			// 2) Populate data, padding spaces with blank strings
 			for (size_t j = 0; j < maxColumnSize; ++j)
 			{
-				for (size_t i = 0; i < laStringMatrix.size(); ++i)
+				for (size_t i = 0; i < aqStringMatrix.size(); ++i)
 				{
-					if (j < laStringMatrix[i].size())
+					if (j < aqStringMatrix[i].size())
 					{
-						result.push_back( laStringMatrix[i][j].getCString() );
+						result.push_back( aqStringMatrix[i][j].getCString() );
 					}
 					else
 					{
@@ -307,14 +307,14 @@ namespace swig
 			SWIG_STRINGMATRIX result;
 
 			// 2) Populate data, padding spaces with blank strings
-			for (size_t i = 0; i < laStringMatrix.size(); ++i)
+			for (size_t i = 0; i < aqStringMatrix.size(); ++i)
 			{
 				std::vector<std::string> thisRow( maxColumnSize );
 				for (size_t j = 0; j < maxColumnSize; ++j)
 				{
-					if (j < laStringMatrix[i].size())
+					if (j < aqStringMatrix[i].size())
 					{
-						thisRow[j] = laStringMatrix[i][j].getCString();
+						thisRow[j] = aqStringMatrix[i][j].getCString();
 					}
 				}
 				result.push_back( thisRow );

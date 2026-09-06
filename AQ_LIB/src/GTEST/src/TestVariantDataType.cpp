@@ -11,7 +11,7 @@ namespace google_test
     
     TEST( TestVariantDataType, UNIT_toVariantMatrixFromAQLStringMatrix_NoTranspose )
     {
-        const AQLStringMatrix laStringMatrix =
+        const AQLStringMatrix aqStringMatrix =
         {
             { "A", "B", "C" },
             { "D", "E", "F" },
@@ -24,7 +24,7 @@ namespace google_test
         };
 
         // Call Underlying Function without transposing
-        const etrading::VariantMatrix actualVariantMatrix = etrading::toVariantMatrixFromAQLStringMatrix( laStringMatrix, false ); // false = don't transpose
+        const etrading::VariantMatrix actualVariantMatrix = etrading::toVariantMatrixFromAQLStringMatrix( aqStringMatrix, false ); // false = don't transpose
 
         // Dimension Check - Assume Rectangular Matrix i.e. not jagged
         ASSERT_EQ( actualVariantMatrix.size(), expectedVariantMatrix.size() );
@@ -42,7 +42,7 @@ namespace google_test
 
     TEST( TestVariantDataType, UNIT_toVariantMatrixFromAQLStringMatrix_WithTranspose )
     {
-        const AQLStringMatrix laStringMatrix =
+        const AQLStringMatrix aqStringMatrix =
         {
             { "A", "B", "C" },
             { "D", "E", "F" },
@@ -56,7 +56,7 @@ namespace google_test
         };
 
         // Call Underlying Function applying transpose
-        const etrading::VariantMatrix actualVariantMatrix = etrading::toVariantMatrixFromAQLStringMatrix( laStringMatrix, true ); // true = apply transpose
+        const etrading::VariantMatrix actualVariantMatrix = etrading::toVariantMatrixFromAQLStringMatrix( aqStringMatrix, true ); // true = apply transpose
 
         // Dimension Check - Assume Rectangular Matrix i.e. not jagged
         ASSERT_EQ( actualVariantMatrix.size(), expectedVariantMatrix.size() );
