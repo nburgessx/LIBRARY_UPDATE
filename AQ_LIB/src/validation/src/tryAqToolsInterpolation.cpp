@@ -1,6 +1,7 @@
 #include "tryAqToolsInterpolation.h"
 #include "CurveUtilities.h"
 #include "CreateDataFile.h"
+#include "RecordMacros.h"
 #include "StructuredExceptionHandler.h"
 
 using etrading::CreateDataFile;

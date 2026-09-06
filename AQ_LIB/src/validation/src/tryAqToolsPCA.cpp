@@ -2,6 +2,7 @@
 
 #include "AQLUpdateStaticDataManager.h"
 #include "CreateDataFile.h"
+#include "RecordMacros.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
 #include "ScheduleValidation.h"

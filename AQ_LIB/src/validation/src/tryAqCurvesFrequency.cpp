@@ -1,5 +1,6 @@
 #include "tryAqCurvesFrequency.h"
 #include "CreateDataFile.h"
+#include "RecordMacros.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
