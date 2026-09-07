@@ -22,14 +22,18 @@
 #include <xloil/xlOil.h>
 #include <xloil/Caller.h>
 
+#include <cstdint>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "AQLDate.h"
 #include "AQLString.h"
-#include "AQLCoreTemplateType.h"   // DateVector
+#include "AQLCoreTemplateType.h"   // DateVector, AQLStringMatrix, AnyTypeMatrix
 #include "CoreEnumerations.h"       // etrading::CachedObjectEnum
 #include "StructuredExceptionHandler.h"
+#include "InitializeETrading.h"     // etrading::InitializeETrading
+#include "LabelValueBlock.h"        // etrading::LabelValueBlock
 
 namespace aq_xll
 {
@@ -55,6 +59,35 @@ namespace aq_xll
     //  Put AQ_XLL_GUARD as the first line of every AQ_XLL worksheet function.
 
     #define AQ_XLL_GUARD  etrading::StructuredExceptionHandler aqXllSehGuard_;
+
+    // ---------------------------------------------------------------------
+    //  Library initialisation guard
+    // ---------------------------------------------------------------------
+    //
+    //  The add-in brings the library up once in the AlgoQuantLib constructor
+    //  (xlAutoOpen). AQ_INITIALIZE is a cheap per-function belt-and-braces
+    //  check - the analogue of checkIfStaticDataLoaded() inside the legacy
+    //  MLIB_START_AND_CHECK_LICENCE macro. InitializeETrading::instance() with
+    //  no arguments is idempotent: once the singleton exists it is a mutex
+    //  lock plus a null check, and it does NOT reload. Add it after
+    //  AQ_XLL_GUARD in any function that reaches calendar or static data and
+    //  might plausibly be called before xlAutoOpen has completed.
+
+    #define AQ_INITIALIZE  ::etrading::InitializeETrading::instance();
+
+    // ---------------------------------------------------------------------
+    //  Array-vs-scalar output
+    // ---------------------------------------------------------------------
+    //
+    //  AQ_IS_ARRAY_OUTPUT is true when the calling formula occupies more than one
+    //  cell (the user pressed Ctrl+Shift+Enter over a range). Use it to return
+    //  just the headline value on a plain Enter and the full array on CSE:
+    //
+    //      if ( !AQ_IS_ARRAY_OUTPUT )
+    //          return returnValue( summary );
+    //      return returnValue( toExcelColumn( allRows ) );
+
+    #define AQ_IS_ARRAY_OUTPUT  ( ::aq_xll::isArrayOutput() )
 
     // ---------------------------------------------------------------------
     //  Marshalling: Excel  ->  AQ
@@ -84,6 +117,43 @@ namespace aq_xll
                              bool skipTrailingBlanks = true,
                              const std::string& nameOfVariable = "date" );
 
+    /* @brief   Read an optional boolean argument.
+    *  @param [in] obj            The Excel cell. Missing / empty / blank yields the default.
+    *  @param [in] defaultValue   Returned when the cell carries no value.
+    *           TRUE/FALSE, a non-zero number, and the words "true"/"false" are all accepted.
+    */
+    bool toBool( const xloil::ExcelObj& obj, bool defaultValue );
+
+    /* @brief   Convert an Excel cell or range to an AQLStringMatrix (every cell
+    *           stringified). A single cell becomes a 1x1 matrix. Fully-blank
+    *           trailing rows are dropped so a user can over-select a block.
+    */
+    AQLStringMatrix toAQLStringMatrix( const xloil::ExcelObj& obj );
+
+    /* @brief   Build a LabelValueBlock from a two-column (key, value) Excel range.
+    *           Thin wrapper over toAQLStringMatrix + the LabelValueBlock ctor;
+    *           this is how every AQObj *Create function takes its LVB arguments.
+    */
+    etrading::LabelValueBlock toLabelValueBlock( const xloil::ExcelObj& obj );
+
+    // ---------------------------------------------------------------------
+    //  Marshalling: AQ  ->  Excel  (matrices)
+    // ---------------------------------------------------------------------
+
+    /* @brief   Convert an AnyTypeMatrix (the type every AQObj *Display function
+    *           returns) to an Excel array, preserving numbers, booleans and
+    *           strings as their native Excel types. An empty matrix returns #N/A.
+    */
+    xloil::ExcelObj toExcelMatrix( const AnyTypeMatrix& matrix );
+
+    /* @brief   Reshape a range into numRows x numCols, row by row. Short cells
+    *           are blank-filled, surplus source cells are dropped. Backs
+    *           aqToolsResize.
+    */
+    xloil::ExcelObj reshapeToSize( const xloil::ExcelObj& obj,
+                                   uint32_t numRows,
+                                   uint32_t numCols );
+
     // ---------------------------------------------------------------------
     //  Marshalling: AQ  ->  Excel
     // ---------------------------------------------------------------------
@@ -93,6 +163,9 @@ namespace aq_xll
 
     /* @brief   Convert a vector of AQLDates to a column of Excel date serials. */
     xloil::ExcelObj toExcelDateColumn( const DateVector& dates );
+
+    /* @brief   Convert a list of strings to a single Excel column. Empty -> #N/A. */
+    xloil::ExcelObj toExcelColumn( const std::vector<std::string>& values );
 
     // ---------------------------------------------------------------------
     //  AQObj handles - the instance counter
@@ -141,6 +214,28 @@ namespace aq_xll
     *           not a worksheet cell (a macro or a VBA call, for instance).
     */
     std::string getExcelLocationAsString();
+
+    /* @brief   Rows x columns the calling formula occupies.
+    *           {1, 1} for a normal single-cell entry (and whenever the caller
+    *           is not a worksheet cell). Larger when the user committed the
+    *           formula over a multi-cell selection with Ctrl+Shift+Enter.
+    *           Lets a function return a scalar on Enter and a full array on CSE.
+    */
+    std::pair<uint32_t, uint32_t> callerRangeSize();
+
+    /* @brief   True when the calling formula spans more than one cell, i.e. the
+    *           user wants an array back (Ctrl+Shift+Enter). Use via the
+    *           IS_ARRAY_OUTPUT macro below.
+    */
+    bool isArrayOutput();
+
+    /* @brief   Make an object name unique to the calling cell.
+    *           When address decoration is enabled, returns
+    *           "<objectName>@<cell>"; otherwise returns objectName unchanged.
+    *           This is the analogue of the legacy appendExcelLocation and is
+    *           the first step of every AQObj *Create function.
+    */
+    std::string decorateWithExcelLocation( const std::string& objectName );
 
     /* @brief   Guard for create-vs-modify behaviour.
     *           When allowUpdate is false and the object already exists, this

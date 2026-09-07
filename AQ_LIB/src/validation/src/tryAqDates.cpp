@@ -74,7 +74,7 @@ namespace validation
                                                     calendar,
                                                     rollConvention);
         
-                                                    AQ_RECORD_OUTPUTS( ret );
+        AQ_RECORD_OUTPUTS( ret );
 
         return ret;
 

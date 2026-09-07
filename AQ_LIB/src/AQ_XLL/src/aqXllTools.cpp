@@ -6,16 +6,25 @@
 
 #include <xloil/ExcelArray.h>
 #include <xloil/ArrayBuilder.h>
+#include <xloil/ExcelCall.h>
+#include <xloil/XlCallSlim.h>
 
 #include <algorithm>
+#include <cctype>
+#include <memory>
 #include <mutex>
+#include <string>
 #include <unordered_map>
+
+#include <boost/variant/apply_visitor.hpp>
+#include <boost/variant/static_visitor.hpp>
 
 #include "CommonConstants.h"
 #include "DateUtilities.h"
 #include "AQLDateScheduleHelpers.h"
 #include "Environment.h"
 #include "AQLCoreAppError.h"
+#include "Variant.h"                // etrading::canStringConvertToNumber
 
 namespace aq_xll
 {
@@ -155,6 +164,297 @@ namespace aq_xll
         return builder.toExcelObj();
     }
 
+    xloil::ExcelObj toExcelColumn( const std::vector<std::string>& values )
+    {
+        if ( values.empty() )
+        {
+            return xloil::ExcelObj( xloil::CellError::NA );
+        }
+
+        size_t totalStringLength = 0;
+        for ( const std::string& value : values )
+        {
+            totalStringLength += value.size();
+        }
+
+        // No padTo2DimArray: an N x 1 column must stay N x 1. Padding it to a
+        // 2-D minimum leaves an uninitialised second column, which Excel then
+        // renders by repeating the first value down the caller range.
+        xloil::ExcelArrayBuilder builder( static_cast<uint32_t>( values.size() ), 1,
+                                          totalStringLength );
+        for ( uint32_t i = 0; i < values.size(); ++i )
+        {
+            builder( i, 0 ) = xloil::ExcelObj( std::wstring( values[i].begin(), values[i].end() ) );
+        }
+        return builder.toExcelObj();
+    }
+
+    // -------------------------------------------------------------------------
+    //  Marshalling helpers: Excel -> AQ  (scalars, matrices, LVBs)
+    // -------------------------------------------------------------------------
+
+    bool toBool( const xloil::ExcelObj& obj, bool defaultValue )
+    {
+        if ( obj.isMissing() || !obj.isNonEmpty() )
+        {
+            return defaultValue;
+        }
+
+        if ( obj.isType( xloil::ExcelType::Bool ) )
+        {
+            return obj.get<bool>();
+        }
+
+        if ( obj.isType( xloil::ExcelType::Num ) || obj.isType( xloil::ExcelType::Int ) )
+        {
+            return obj.get<double>() != 0.0;
+        }
+
+        // Fall back to a text reading: "true"/"false", "yes"/"no", "1"/"0".
+        std::string text = toNarrowString( obj );
+        std::transform( text.begin(), text.end(), text.begin(),
+                        []( unsigned char c ){ return static_cast<char>( std::tolower( c ) ); } );
+
+        if ( text == "true" || text == "yes" || text == "1" )  return true;
+        if ( text == "false" || text == "no" || text == "0" || text.empty() ) return false;
+
+        return defaultValue;
+    }
+
+    AQLStringMatrix toAQLStringMatrix( const xloil::ExcelObj& obj )
+    {
+        AQLStringMatrix matrix;
+
+        if ( !obj.isType( xloil::ExcelType::Multi ) )
+        {
+            // A single cell is a 1x1 block.
+            AQLStringVector row;
+            row.push_back( AQLString( toNarrowString( obj ).c_str() ) );
+            matrix.push_back( row );
+            return matrix;
+        }
+
+        xloil::ExcelArray array( obj, false /* keep the caller's shape, trim below */ );
+
+        for ( size_t r = 0; r < array.nRows(); ++r )
+        {
+            AQLStringVector row;
+            row.reserve( array.nCols() );
+
+            bool rowIsAllBlank = true;
+            for ( size_t c = 0; c < array.nCols(); ++c )
+            {
+                const xloil::ExcelObj& cell = array( r, c );
+
+                if ( cell.isType( xloil::ExcelType::Err ) )
+                {
+                    throw AQLCoreInvalidData( "#Error: cell contains an error value", __FILE__, __LINE__ );
+                }
+
+                const std::string text = cell.isNonEmpty() ? toNarrowString( cell ) : std::string();
+                if ( !text.empty() )
+                {
+                    rowIsAllBlank = false;
+                }
+                row.push_back( AQLString( text.c_str() ) );
+            }
+
+            // Defer fully-blank rows; only keep them if a later row has content,
+            // so an over-selected block does not carry a tail of empty pairs.
+            if ( rowIsAllBlank )
+            {
+                continue;
+            }
+            matrix.push_back( row );
+        }
+
+        return matrix;
+    }
+
+    etrading::LabelValueBlock toLabelValueBlock( const xloil::ExcelObj& obj )
+    {
+        return etrading::LabelValueBlock( toAQLStringMatrix( obj ) );
+    }
+
+    // -------------------------------------------------------------------------
+    //  Marshalling helpers: AQ -> Excel  (matrices)
+    // -------------------------------------------------------------------------
+
+    namespace
+    {
+        // A cell that arrives as text but reads as a number is returned to Excel
+        // as a number, so it can be formatted (currency, date serial, decimals).
+        // Anything that is not cleanly numeric stays as text. This mirrors the
+        // legacy populateExcelArrayWithAnyMatrix behaviour - LabelValueBlock
+        // stores every value as a std::string, so without this every displayed
+        // rate, notional and price would land in Excel as un-formattable text.
+        xloil::ExcelObj numericAwareStringToExcel( const std::string& text )
+        {
+            if ( !text.empty() && etrading::canStringConvertToNumber( text ) )
+            {
+                try
+                {
+                    size_t consumed = 0;
+                    const double number = std::stod( text, &consumed );
+                    if ( consumed == text.size() )
+                    {
+                        return xloil::ExcelObj( number );
+                    }
+                }
+                catch ( ... )
+                {
+                    // Fall through and return the original text.
+                }
+            }
+            return xloil::ExcelObj( std::wstring( text.begin(), text.end() ) );
+        }
+
+        // Turn one AnyType (boost::variant) cell into an ExcelObj, keeping the
+        // native Excel type. Strings are collected as wide strings; the caller
+        // has already reserved room for them in the ArrayBuilder.
+        struct AnyTypeToExcel : boost::static_visitor<xloil::ExcelObj>
+        {
+            xloil::ExcelObj operator()( int value ) const        { return xloil::ExcelObj( static_cast<double>( value ) ); }
+            xloil::ExcelObj operator()( double value ) const      { return xloil::ExcelObj( value ); }
+            xloil::ExcelObj operator()( bool value ) const        { return xloil::ExcelObj( value ); }
+            xloil::ExcelObj operator()( const std::string& value ) const
+            {
+                return numericAwareStringToExcel( value );
+            }
+            xloil::ExcelObj operator()( const AQLString& value ) const
+            {
+                return numericAwareStringToExcel( value.getCString() );
+            }
+            xloil::ExcelObj operator()( const char* value ) const
+            {
+                return numericAwareStringToExcel( value != nullptr ? value : "" );
+            }
+        };
+
+        size_t wideLengthOfAnyType( const AnyType& value )
+        {
+            struct LengthVisitor : boost::static_visitor<size_t>
+            {
+                size_t operator()( int ) const                    { return 0; }
+                size_t operator()( double ) const                 { return 0; }
+                size_t operator()( bool ) const                   { return 0; }
+                size_t operator()( const std::string& s ) const   { return s.size(); }
+                size_t operator()( const AQLString& s ) const     { return std::string( s.getCString() ).size(); }
+                size_t operator()( const char* s ) const          { return s != nullptr ? std::char_traits<char>::length( s ) : 0; }
+            };
+            return boost::apply_visitor( LengthVisitor(), value );
+        }
+    }
+
+    xloil::ExcelObj toExcelMatrix( const AnyTypeMatrix& matrix )
+    {
+        if ( matrix.empty() || matrix[0].empty() )
+        {
+            return xloil::ExcelObj( xloil::CellError::NA );
+        }
+
+        const uint32_t nRows = static_cast<uint32_t>( matrix.size() );
+        uint32_t nCols = 0;
+        size_t totalStringLength = 0;
+        for ( const auto& row : matrix )
+        {
+            nCols = std::max( nCols, static_cast<uint32_t>( row.size() ) );
+            for ( const AnyType& cell : row )
+            {
+                totalStringLength += wideLengthOfAnyType( cell );
+            }
+        }
+
+        xloil::ExcelArrayBuilder builder( nRows, nCols, totalStringLength, true /* pad to 2D */ );
+        const AnyTypeToExcel toExcel;
+
+        for ( uint32_t r = 0; r < nRows; ++r )
+        {
+            for ( uint32_t c = 0; c < nCols; ++c )
+            {
+                if ( c < matrix[r].size() )
+                {
+                    builder( r, c ) = boost::apply_visitor( toExcel, matrix[r][c] );
+                }
+                else
+                {
+                    builder( r, c ) = xloil::ExcelObj( xloil::CellError::NA );
+                }
+            }
+        }
+
+        return builder.toExcelObj();
+    }
+
+    xloil::ExcelObj reshapeToSize( const xloil::ExcelObj& obj,
+                                   uint32_t numRows,
+                                   uint32_t numCols )
+    {
+        if ( numRows == 0 || numCols == 0 )
+        {
+            return xloil::ExcelObj( xloil::CellError::NA );
+        }
+
+        // Address the source by its own (row, column) position - the reshape is
+        // a positional clip / pad, NOT a row-major reflow. Cell (r, c) of the
+        // result is source (r, c) when that exists; rows or columns beyond the
+        // source are blank-filled, and a source larger than the requested shape
+        // is truncated.
+        size_t srcRows = 1;
+        size_t srcCols = 1;
+
+        // A range: take its real dimensions. A single value: a 1x1 source.
+        std::unique_ptr<xloil::ExcelArray> sourceArray;
+        if ( obj.isType( xloil::ExcelType::Multi ) )
+        {
+            sourceArray.reset( new xloil::ExcelArray( obj, false ) );
+            srcRows = sourceArray->nRows();
+            srcCols = sourceArray->nCols();
+        }
+
+        auto at = [&]( size_t r, size_t c ) -> const xloil::ExcelObj&
+        {
+            if ( sourceArray )
+            {
+                return ( *sourceArray )( r, c );
+            }
+            return obj;
+        };
+
+        // Reserve string room for the cells that actually survive the clip.
+        size_t totalStringLength = 0;
+        for ( size_t r = 0; r < srcRows && r < numRows; ++r )
+        {
+            for ( size_t c = 0; c < srcCols && c < numCols; ++c )
+            {
+                const xloil::ExcelObj& cell = at( r, c );
+                if ( cell.isType( xloil::ExcelType::Str ) )
+                {
+                    totalStringLength += cell.toString().size();
+                }
+            }
+        }
+
+        xloil::ExcelArrayBuilder builder( numRows, numCols, totalStringLength, true );
+
+        for ( uint32_t r = 0; r < numRows; ++r )
+        {
+            for ( uint32_t c = 0; c < numCols; ++c )
+            {
+                if ( r < srcRows && c < srcCols )
+                {
+                    builder( r, c ) = at( r, c );
+                }
+                else
+                {
+                    builder( r, c ) = xloil::ExcelObj( std::wstring() );
+                }
+            }
+        }
+
+        return builder.toExcelObj();
+    }
+
     // -------------------------------------------------------------------------
     //  AQObj handles - the instance counter
     // -------------------------------------------------------------------------
@@ -281,6 +581,59 @@ namespace aq_xll
         }
 
         return etrading::trim_to_upper( std::string( address.begin(), address.end() ) );
+    }
+
+    std::pair<uint32_t, uint32_t> callerRangeSize()
+    {
+        // Ask Excel for the calling cell / range. xlfCaller returns a single
+        // sheet reference (SRef) for the common case and a multi-area
+        // reference (Ref) when the formula was committed over a block with
+        // Ctrl+Shift+Enter; CallerInfo::sheetRef() only decodes the SRef form,
+        // so read the XLOPER directly and cover both.
+        xloil::ExcelObj caller;
+        if ( xloil::callExcelRaw( msxll::xlfCaller, &caller ) != msxll::xlretSuccess )
+        {
+            return { 1u, 1u };
+        }
+
+        const msxll::XLREF12* ref = nullptr;
+        if ( caller.isType( xloil::ExcelType::SRef ) )
+        {
+            ref = &caller.val.sref.ref;
+        }
+        else if ( caller.isType( xloil::ExcelType::Ref )
+                  && caller.val.mref.lpmref != nullptr
+                  && caller.val.mref.lpmref->count > 0 )
+        {
+            ref = &caller.val.mref.lpmref->reftbl[0];
+        }
+
+        if ( ref == nullptr )
+        {
+            // Not a worksheet cell (a macro / VBA call), or Excel could not
+            // report the caller - treat as a plain single-cell entry.
+            return { 1u, 1u };
+        }
+
+        const uint32_t rows = static_cast<uint32_t>( ref->rwLast  - ref->rwFirst  + 1 );
+        const uint32_t cols = static_cast<uint32_t>( ref->colLast - ref->colFirst + 1 );
+        return { rows, cols };
+    }
+
+    bool isArrayOutput()
+    {
+        const std::pair<uint32_t, uint32_t> size = callerRangeSize();
+        return size.first > 1 || size.second > 1;
+    }
+
+    std::string decorateWithExcelLocation( const std::string& objectName )
+    {
+        const std::string location = getExcelLocationAsString();
+        if ( location.empty() )
+        {
+            return objectName;
+        }
+        return objectName + "@" + location;
     }
 
     bool allowAQObjUpdates( bool allowUpdate,
