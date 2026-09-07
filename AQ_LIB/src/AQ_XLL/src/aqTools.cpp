@@ -106,3 +106,26 @@ XLO_FUNC_END( aqToolsResize )
     .arg( L"InputArray", L"The range to reshape" )
     .arg( L"NumRows",    L"Number of rows in the result" )
     .arg( L"NumCols",    L"Number of columns in the result" );
+
+
+/* @brief   Diagnostic: what Excel reports as the calling range.
+*
+*           Returns "<rows> x <cols>  (array=<0|1>)" using the same detection
+*           AQ_IS_ARRAY_OUTPUT relies on. Enter it plain, then enter it again
+*           over a multi-cell selection with Ctrl+Shift+Enter, and compare -
+*           if both say "1 x 1" then this build of Excel does not report the
+*           array range to the add-in and the Enter-vs-CSE split cannot work.
+*/
+XLO_FUNC_START( aqToolsCallerInfo() )
+{
+    AQ_XLL_GUARD
+
+    const std::pair<uint32_t, uint32_t> size = aq_xll::callerRangeSize();
+
+    std::string message = std::to_string( size.first ) + " x " + std::to_string( size.second )
+                        + "  (array=" + ( aq_xll::isArrayOutput() ? "1" : "0" ) + ")";
+
+    return returnValue( message );
+}
+XLO_FUNC_END( aqToolsCallerInfo )
+    .help( L"Diagnostic: the calling range dimensions Excel reports to the add-in." );

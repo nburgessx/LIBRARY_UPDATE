@@ -1,10 +1,76 @@
-# Rebrand status — pause point 2026-09-06
+# Rebrand status — pause point 2026-09-07
 
-**HEAD: `61795829`. Build + GoogleTest CONFIRMED GREEN here by Nicholas
-(2026-09-06), including pass (a) and its fixes. Nothing is outstanding —
-tomorrow can start straight on the work below.**
+**HEAD: `e5c57046` ("aq_xll added function templates"). Two files
+uncommitted on top of it — `src/AQ_XLL/src/aqObj.cpp` and `aqTools.cpp`
+(the `AsArray` override + `aqToolsCallerInfo` diagnostic below); not yet
+built or committed.** Last GoogleTest-green tag remains `61795829`; the
+AQ_XLL work since has been verified by Nicholas in Excel, not by a GTest run.
 
-## ⇒ RESUME HERE
+Two workstreams are open in parallel:
+- **A. AQ_XLL xlOil port (active this session)** — see "⇒ RESUME HERE — AQ_XLL
+  port" immediately below.
+- **B. validation recording rollout (plan 4.9)** — see "⇒ RESUME HERE —
+  recording rollout" further down. Untouched this session.
+
+---
+
+## ⇒ RESUME HERE — AQ_XLL port (2026-09-07)
+
+**What works in Excel now (Nicholas-verified):**
+- `aqToolsInitialize` — loads config, prints the resolved `Calendar.csv` path.
+  Library auto-inits in the `AlgoQuantLib` add-in constructor (xlAutoOpen);
+  `AQ_INITIALIZE` macro is the per-function lazy guard.
+- `aqDatesFromTenor` / `aqDatesFromYearFraction` — calendars usable.
+- `aqObjBondsCreate` / `aqObjBondsDisplay` (new `aqBonds.cpp`).
+- `aqObjExists` / `aqObjLoad` / `aqObjSave` (new `aqObj.cpp`).
+- `aqToolsResize` — positional clip/pad reshape (respects source dims;
+  pad blanks / truncate). Row-major reflow bug fixed.
+- Numeric-string cells in `Display`/matrix output now returned as real numbers
+  (formattable), mirroring the legacy `canStringConvertToNumber` path.
+
+**OPEN — blocking the multi-row `aqObjSave` output:**
+`AQ_IS_ARRAY_OUTPUT` (macro → `aq_xll::isArrayOutput()` → `callerRangeSize()`
+via raw `xlfCaller`, handles SRef + Ref) returns false even under
+Ctrl+Shift+Enter on Nicholas's Excel, so `aqObjSave` returns the scalar and
+Excel repeats it across the selection. Likely cause: modern Excel intercepts
+CSE and never reports the array range to the add-in, so Enter-vs-CSE cannot be
+distinguished at all.
+- **Mitigation already coded (uncommitted):** `aqObjSave` 4th optional arg
+  `AsArray` — TRUE forces the 3-row column, FALSE forces the message, omitted =
+  auto. Plus `aqToolsCallerInfo()` diagnostic returning `"<r> x <c> (array=<0|1>)"`.
+- **Next step:** build; run `=aqToolsCallerInfo()` plain vs CSE-over-3-cells.
+  - both `1 x 1` → auto-detect is impossible on this Excel; keep `AsArray`,
+    strip the auto-detect from other multi-output funcs (don't fake it).
+  - CSE shows `3 x 1` → detection works, dig into why `aqObjSave` still
+    scalars (array build path itself is proven — bond display uses the same
+    `ExcelArrayBuilder` + `returnValue` and works).
+
+**Then continue the port in the agreed order** — Dates → Tools → Curves →
+Swaps → Products → Models. `rebrand/xll_function_inventory.csv` (653 rows) is
+the driver; decision columns (`proposed_new_category`, `keep_drop_merge`,
+new name) still need filling per file, starting with `meDates` (36 fns).
+`~460` me*/meLWO* functions in the etrading filter to port; `LAXL.cpp` (161
+`mir*`) deprecate-or-`aql*`; `msc*`/client (~29) delete.
+
+**Carry forward (AQ_XLL specifics):**
+- `AQ_API` has NO auto-init — bindings callers must call `setUpAQL()` /
+  `setupAQL()` / `initAQL()` (all → `validation::trySetupAQL`). Only Python
+  verified. `AQ_API_START` is still a bare `try{}` (plan 4.12).
+- `aqObjSave` deliberately no longer upper-cases the file path (legacy did;
+  breaks case-sensitive FS / Linux). Name + type still upper-cased.
+- Naming calls made this session, matching the `tryAq*` wrappers + pairing
+  check, NOT the literal ask: `Bonds` (plural, not `Bond`), `aqObj*` (not
+  `aqObject*`). Nicholas has accepted these so far.
+- New marshalling helpers in `aqXllTools.{h,cpp}`: `toBool`,
+  `toAQLStringMatrix`, `toLabelValueBlock`, `toExcelMatrix` (numeric-aware),
+  `toExcelColumn` (no pad — an N×1 must stay N×1), `reshapeToSize`,
+  `decorateWithExcelLocation`, `callerRangeSize`, `isArrayOutput`.
+- Dead XLL+ include/lib paths still in `projects/AQ_XLL.vcxproj` — remove when
+  next touching it (plan carry-over).
+
+---
+
+## ⇒ RESUME HERE — recording rollout
 
 **1. Continue the validation recording rollout (plan 4.9).** Pass (a) is
 done: 32 conversions in 6 files. What remains, in the order I would do it:
@@ -36,15 +102,21 @@ the next tranche of XLL functions.
 
 ## Where the XLL port stands
 
-`aqDatesFromTenor` and `aqDatesFromYearFraction` are ported, building, and
-working in Excel. `src/AQ_XLL` is now:
+As of 2026-09-07 (`e5c57046` + 2 uncommitted files) `src/AQ_XLL` is:
 
     include/  aqMain.h   aqXllTools.h
-    src/      aqDates.cpp  aqMain.cpp  aqMath.cpp  aqTools.cpp  aqXllTools.cpp
+    src/      aqBonds.cpp  aqDates.cpp  aqMain.cpp  aqMath.cpp
+              aqObj.cpp    aqTools.cpp  aqXllTools.cpp
+
+Ported and working in Excel: `aqToolsInitialize`, `aqToolsResize`,
+`aqToolsCallerInfo` (diag), `aqDatesFromTenor`, `aqDatesFromYearFraction`,
+`aqObjBondsCreate`, `aqObjBondsDisplay`, `aqObjExists`, `aqObjLoad`,
+`aqObjSave` (multi-row output still blocked — see RESUME HERE — AQ_XLL port).
 
 Convention (plan 4.11): every file is `aq<Category>.{cpp,h}`; the single
 exception is `aqXllTools.{h,cpp}`, the shared Excel-side helper library
-(marshalling + AQObj handle decoration). `aqTools.cpp` is the Tools *category*.
+(marshalling + AQObj handle decoration). `aqTools.cpp` is the Tools *category*;
+`aqObj.cpp` holds the `aqObj<Lifecycle>` functions (no category word).
 
 `XllPlusTips*.cpp` were NOT copied — 4,629 lines built on XLL+ types. Behaviour
 was ported instead. The AQObj handle logic (instance counter, cell address,
@@ -89,6 +161,9 @@ legacy-named paths there fell from 1,310 to 126.
 
 | commit | what |
 |---|---|
+| _(uncommitted)_ | `aqObjSave` gains optional `AsArray` arg (force column / force message / auto); new `aqToolsCallerInfo()` diagnostic. Mitigation for the CSE-detection problem. **Not built yet.** |
+| `e5c57046` | **AQ_XLL port tranche 1** — `aqMain.cpp` auto-inits the library in the add-in ctor; `AQ_INITIALIZE` + `AQ_IS_ARRAY_OUTPUT` macros; new `aqBonds.cpp` (`aqObjBondsCreate/Display`), `aqObj.cpp` (`aqObjExists/Load/Save`); `aqToolsInitialize`, `aqToolsResize` (positional clip/pad), path slash-normalisation; marshalling helpers in `aqXllTools` (`toBool`, `toAQLStringMatrix`, `toLabelValueBlock`, `toExcelMatrix` numeric-aware, `toExcelColumn`, `reshapeToSize`, `callerRangeSize`, `isArrayOutput`). vcxproj/.filters updated. Verified in Excel by Nicholas, not by GTest. |
+| `68ca1ceb` / `bf2cb765` | earlier AQ_XLL updates + step-2 build fixes (RecordMacros `AQLString`). |
 | `2d7eb95c` | **Phase 3 step 5** — calendar holiday-centre delimiter `:` → `+`. New `CALENDAR_CENTRE_DELIMITER`/`splitCalendarCentres()` in `math/AQLPriceDataCalendar.{h,cpp}`; routed ~18 parse/build sites (convertFrom/ToString, 16 curve-helper `toToken(':')`, NYB-strip). Input still accepts `:`; output always `+`. New test `Calendars.UNIT_CentreDelimiter_PlusAndColonEquivalent`. |
 | `530e764e` | **B-fixtures** — 7,960 `resources/test/inputs` fixture paths + 152 src files (TEST_DIR strings, `generatorFunction` labels, `decorateCurvename/Filename` prefixes, `UNIT_TestMe*` labels, comments) renamed `me/tryMe → aq/tryAq`. `me/tryMeUtilityClearLWOCache → aq/tryAqObjClearCache`. |
 | `756d9bb8` | **B-LWO** — `meLWO*/tryMeLWO* → aqObjects*/tryAqObjects*` (496 ids, 85 files). Map A "by product" rejected (21 collisions with the stateless names); Map B `LWO→Objects` adopted. Code only. |

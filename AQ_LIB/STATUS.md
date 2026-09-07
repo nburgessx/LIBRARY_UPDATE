@@ -1,6 +1,6 @@
 # AlgoQuantLib — project status
 
-**As at 2026-09-06.** Overview of where the rebrand stands and what is left.
+**As at 2026-09-07.** Overview of where the rebrand stands and what is left.
 
 - The **phase-by-phase plan** is `MIGRATION_PLAN.md`.
 - The **detailed running record** of the rebrand (per-commit, per-step) is
@@ -11,9 +11,9 @@
 
 ## 1. Headline
 
-**Roughly 55% through the plan by effort.** The hard, risky part — the mass
+**Roughly 55–60% through the plan by effort.** The hard, risky part — the mass
 identifier rebrand — is done. The largest single piece of remaining work is the
-XLL port, which is barely started.
+XLL port; its harness and first tranche now work in Excel.
 
 | Phase | Scope | State |
 |---|---|---|
@@ -22,7 +22,7 @@ XLL port, which is barely started.
 | 2 | Category taxonomy (20 categories, locked) | **done** |
 | 3 | Identifier rebrand + calendar delimiter | **done** |
 | 3c | Retire `mir*` | **done** (deleted wholesale) |
-| 4 | xlOil XLL port | **~10%** — see §3 |
+| 4 | xlOil XLL port | **~15%** — harness + Dates/Tools/Bonds/Obj tranche live in Excel; see §3.1 |
 | 4a | Editions & manifest gating | not started |
 | 4b | Config folder & generators audit | not started |
 | 5 | Bindings (C#/Java/R) & test coverage | not started |
@@ -37,19 +37,23 @@ XLL port, which is barely started.
 
 ## 2. State of the working tree right now
 
-**HEAD is `bf2cb765`. There are uncommitted changes, from two different
-sources — read this before building.**
+**HEAD is `e5c57046` ("aq_xll added function templates"). Two files
+uncommitted — read this before building.**
 
 | File | Whose | State |
 |---|---|---|
-| `src/etrading/include/RecordMacros.h` | Claude | Fix for the `AQLString`/`std::string` build break. **`validation` verified compiling clean** (headless MSBuild, Release x64). Not yet committed. |
-| `src/AQ_XLL/src/aqDates.cpp` | Nicholas | `ExcelObj` args changed to `const std::string&` / `double`. **Does not compile** against xlOil 0.19.0 — see §6. |
-| `src/AQ_XLL/src/aqMath.cpp` | Nicholas | Same change, same failure. |
+| `src/AQ_XLL/src/aqObj.cpp` | Claude | `aqObjSave` gains optional `AsArray` arg (force column / message / auto). **Not built.** |
+| `src/AQ_XLL/src/aqTools.cpp` | Claude | New `aqToolsCallerInfo()` diagnostic for the CSE-detection problem. **Not built.** |
 | `projects/AQ_XLL.vcxproj.user` | — | Local debug settings, not tracked content. |
 
+The `ExcelObj`-argument question (old §6) is **resolved**: on the static
+`XLO_FUNC_START` path every arg must be `const ExcelObj&` and be unpacked in
+the body (`.get<double>()`, `.isMissing()`, `toAQLString(...)`). All AQ_XLL
+functions ported since follow this.
+
 Last **fully confirmed-green** state (build + GoogleTest, verified by Nicholas)
-was `61795829`. Everything after that has been built but not yet had a full
-GoogleTest run confirmed.
+was `61795829`. The AQ_XLL work since (`68ca1ceb`, `e5c57046`) is verified by
+Nicholas **in Excel**, not by a GoogleTest run.
 
 ---
 
@@ -58,32 +62,45 @@ GoogleTest run confirmed.
 ### 3.1 Phase 4 — xlOil XLL port  ← the critical path
 
 The port source is `.APPLES\APPLE\src\MLIBQ_ADDIN`: 40 files, ~82k lines,
-**653 exported Excel functions**. Present state of `src/AQ_XLL`:
+**653 exported Excel functions** (`rebrand/xll_function_inventory.csv` — 653
+rows, decision columns still to fill per file). ~460 are `me*`/`meLWO*` in the
+etrading filter (the port set); `LAXL.cpp` has 161 `mir*` (deprecate or `aql*`);
+~29 `msc*`/client (delete).
+
+**State of `src/AQ_XLL` (2026-09-07, `e5c57046`):**
 
     include/  aqMain.h  aqXllTools.h
-    src/      aqDates.cpp  aqMain.cpp  aqMath.cpp  aqTools.cpp  aqXllTools.cpp
+    src/      aqBonds.cpp  aqDates.cpp  aqMain.cpp  aqMath.cpp
+              aqObj.cpp    aqTools.cpp  aqXllTools.cpp
 
-**8 `XLO_FUNC_START` functions exist.** Of those, two are real ported library
-functions (`aqDatesFromTenor`, `aqDatesFromYearFraction`); the rest are
-`aqDatesToday`/`aqDatesNow` and proof-of-concept maths.
+Working in Excel (Nicholas-verified): `aqToolsInitialize`, `aqToolsResize`,
+`aqToolsCallerInfo`, `aqDatesFromTenor`, `aqDatesFromYearFraction`,
+`aqObjBondsCreate`, `aqObjBondsDisplay`, `aqObjExists`, `aqObjLoad`, `aqObjSave`.
+Library auto-inits in the add-in constructor; `AQ_INITIALIZE` is the per-function
+lazy guard. Marshalling helpers (LVB, AnyTypeMatrix, numeric-aware string→number,
+column/matrix builders, caller-range) live in `aqXllTools`.
 
 Outstanding:
 
-- [ ] **Port the remaining function tranches**, in the agreed order:
-      Dates → Tools → Curves → Swaps → Products → Models. Dates is the natural
-      continuation and is partly done.
-- [ ] **4.10 — `AQ_XLL_GUARD` on every new XLL function.** The macro exists and
-      is proven by test; it just has to be applied as functions land.
-- [ ] **4.11 — file naming.** Convention holds: every file is
-      `aq<Category>.{cpp,h}`, sole exception `aqXllTools.{h,cpp}`.
+- [ ] **`aqObjSave` multi-row output blocked** — `AQ_IS_ARRAY_OUTPUT` returns
+      false even under Ctrl+Shift+Enter (Excel not reporting the array range).
+      `AsArray` explicit override + `aqToolsCallerInfo` diagnostic coded,
+      uncommitted. Build, run the diagnostic, then decide: keep auto-detect or
+      go explicit-only across all multi-output functions. See
+      `rebrand/STATUS.md` → "RESUME HERE — AQ_XLL port".
+- [ ] **Port the remaining tranches**, agreed order Dates → Tools → Curves →
+      Swaps → Products → Models. Fill the inventory decision columns per file,
+      starting `meDates` (36).
+- [ ] **4.10 — `AQ_XLL_GUARD` + `AQ_INITIALIZE` on every new XLL function.**
+      Held so far.
+- [ ] **4.11 — file naming.** `aq<Category>.{cpp,h}`; exceptions
+      `aqXllTools.{h,cpp}` (helpers) and `aqObj.cpp` (`aqObj<Lifecycle>`).
 - [ ] **4.12 — SEH for `AQ_API`.** `AQ_API_START` in
-      `src/AQ_API/source/APISetUp.h` is a bare `try {`. The bindings' own
-      marshalling can therefore still take the host process down, exactly the
-      failure `AQ_XLL_GUARD` prevents on the Excel side. **Not yet fixed.**
+      `src/AQ_API/source/APISetUp.h` is a bare `try {`. **Not yet fixed.**
+      Also: `AQ_API` has no auto-init — callers must call `setUpAQL()`.
 - [ ] Remove the dead XLL+ include/library paths still listed in
       `projects/AQ_XLL.vcxproj`.
-- [ ] Decide the xlOil argument-type question in §6 — it blocks further
-      function signatures.
+- [ ] GoogleTest run to re-confirm green (last green tag `61795829`).
 
 ### 3.2 Phase 4.9 — validation recording rollout
 
