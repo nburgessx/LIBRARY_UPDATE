@@ -452,7 +452,7 @@ namespace TestDrive
             // User Log folder
             if (textBox6.Text == "")
             {
-                textBox6.Text = "%AQ%\\resources\\apps\\TestDrive\\errorlogs";
+                textBox6.Text = "%AQ%\\resources\\test\\testdrive\\errorlogs";
             }
 
             // Parse the architecture and build user settings
