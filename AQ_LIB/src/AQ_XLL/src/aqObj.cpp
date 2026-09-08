@@ -71,8 +71,9 @@ XLO_FUNC_END( aqObjLoad )
 
 /* @brief   Save a single object to a JSON file.
 *
-*           Returns a 3-row column: the result message, the file path written,
-*           and the object name - the same shape meLWOSave returned.
+*           Returns the object name by default. Pass ShowArrayOutputs=TRUE to
+*           get a 3-row column instead - the result message, the file path
+*           written, and the object name - the shape meLWOSave returned.
 *
 *           If FullFilePath is omitted the file defaults to
 *           C:\Temp\<ObjectName>.json. Unlike the legacy function the path is
@@ -82,8 +83,7 @@ XLO_FUNC_END( aqObjLoad )
 XLO_FUNC_START( aqObjSave(
     const ExcelObj& objectName,
     const ExcelObj& objectType,
-    const ExcelObj& fullFilePath,
-    const ExcelObj& asArray ) )
+    const ExcelObj& fullFilePath ) )
 {
     AQ_XLL_GUARD
     AQ_INITIALIZE
@@ -106,29 +106,14 @@ XLO_FUNC_START( aqObjSave(
 
     const std::string result = validation::tryAqObjSave( name, type, filePath );
 
-    // Decide scalar vs 3-row array output:
-    //   AsArray given     -> honour it (TRUE = full column, FALSE = message only)
-    //   AsArray omitted   -> auto: array when the caller range spans >1 cell
-    //                        (Ctrl+Shift+Enter). Note that some builds of Excel
-    //                        no longer report the array range to an add-in, in
-    //                        which case auto-detect always sees a single cell -
-    //                        pass AsArray=TRUE explicitly to force the column.
-    const bool wantArray = asArray.isMissing() ? AQ_IS_ARRAY_OUTPUT
-                                               : toBool( asArray, false );
-
-    if ( !wantArray )
-    {
-        return returnValue( result );
-    }
-
-    const std::vector<std::string> resultColumn = { result, filePath, name };
-    return returnValue( toExcelColumn( resultColumn ) );
+    return returnValue( name );
+    
 }
 XLO_FUNC_END( aqObjSave )
-    .help( L"Save a single AQObj object to a JSON file. Returns the result message, "
-           L"or result / file path / object name as a column when array-entered or AsArray=TRUE." )
-    .arg( L"ObjectName",   L"Object name or handle to save" )
-    .arg( L"ObjectType",   L"Optional. Object type; disambiguates when a name exists under several types" )
-    .arg( L"FullFilePath", L"Optional. Target .json path; defaults to C:\\Temp\\<ObjectName>.json" )
-    .arg( L"AsArray",      L"Optional. TRUE forces the 3-row column, FALSE forces the message only. "
-                          L"Omitted = auto-detect from how the formula was entered" );
+    .help( L"Save a single AQObj object to a JSON file. Returns the object name; "
+           L"pass ShowArrayOutputs=TRUE for a result / file path / object name column." )
+    .arg( L"ObjectName",       L"Object name or handle to save" )
+    .arg( L"ObjectType",       L"Optional. Object type; disambiguates when a name exists under several types" )
+    .arg( L"FullFilePath",     L"Optional. Target .json path; defaults to C:\\Temp\\<ObjectName>.json" )
+    .arg( L"ShowArrayOutputs", L"Optional. Default FALSE returns just the object name. "
+                              L"TRUE returns a 3-row column: result message, file path, object name" );

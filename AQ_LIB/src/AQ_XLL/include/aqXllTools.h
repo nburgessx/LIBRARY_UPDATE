@@ -76,20 +76,6 @@ namespace aq_xll
     #define AQ_INITIALIZE  ::etrading::InitializeETrading::instance();
 
     // ---------------------------------------------------------------------
-    //  Array-vs-scalar output
-    // ---------------------------------------------------------------------
-    //
-    //  AQ_IS_ARRAY_OUTPUT is true when the calling formula occupies more than one
-    //  cell (the user pressed Ctrl+Shift+Enter over a range). Use it to return
-    //  just the headline value on a plain Enter and the full array on CSE:
-    //
-    //      if ( !AQ_IS_ARRAY_OUTPUT )
-    //          return returnValue( summary );
-    //      return returnValue( toExcelColumn( allRows ) );
-
-    #define AQ_IS_ARRAY_OUTPUT  ( ::aq_xll::isArrayOutput() )
-
-    // ---------------------------------------------------------------------
     //  Marshalling: Excel  ->  AQ
     // ---------------------------------------------------------------------
 
@@ -214,20 +200,6 @@ namespace aq_xll
     *           not a worksheet cell (a macro or a VBA call, for instance).
     */
     std::string getExcelLocationAsString();
-
-    /* @brief   Rows x columns the calling formula occupies.
-    *           {1, 1} for a normal single-cell entry (and whenever the caller
-    *           is not a worksheet cell). Larger when the user committed the
-    *           formula over a multi-cell selection with Ctrl+Shift+Enter.
-    *           Lets a function return a scalar on Enter and a full array on CSE.
-    */
-    std::pair<uint32_t, uint32_t> callerRangeSize();
-
-    /* @brief   True when the calling formula spans more than one cell, i.e. the
-    *           user wants an array back (Ctrl+Shift+Enter). Use via the
-    *           IS_ARRAY_OUTPUT macro below.
-    */
-    bool isArrayOutput();
 
     /* @brief   Make an object name unique to the calling cell.
     *           When address decoration is enabled, returns

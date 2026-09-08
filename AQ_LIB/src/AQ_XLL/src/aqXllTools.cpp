@@ -583,49 +583,6 @@ namespace aq_xll
         return etrading::trim_to_upper( std::string( address.begin(), address.end() ) );
     }
 
-    std::pair<uint32_t, uint32_t> callerRangeSize()
-    {
-        // Ask Excel for the calling cell / range. xlfCaller returns a single
-        // sheet reference (SRef) for the common case and a multi-area
-        // reference (Ref) when the formula was committed over a block with
-        // Ctrl+Shift+Enter; CallerInfo::sheetRef() only decodes the SRef form,
-        // so read the XLOPER directly and cover both.
-        xloil::ExcelObj caller;
-        if ( xloil::callExcelRaw( msxll::xlfCaller, &caller ) != msxll::xlretSuccess )
-        {
-            return { 1u, 1u };
-        }
-
-        const msxll::XLREF12* ref = nullptr;
-        if ( caller.isType( xloil::ExcelType::SRef ) )
-        {
-            ref = &caller.val.sref.ref;
-        }
-        else if ( caller.isType( xloil::ExcelType::Ref )
-                  && caller.val.mref.lpmref != nullptr
-                  && caller.val.mref.lpmref->count > 0 )
-        {
-            ref = &caller.val.mref.lpmref->reftbl[0];
-        }
-
-        if ( ref == nullptr )
-        {
-            // Not a worksheet cell (a macro / VBA call), or Excel could not
-            // report the caller - treat as a plain single-cell entry.
-            return { 1u, 1u };
-        }
-
-        const uint32_t rows = static_cast<uint32_t>( ref->rwLast  - ref->rwFirst  + 1 );
-        const uint32_t cols = static_cast<uint32_t>( ref->colLast - ref->colFirst + 1 );
-        return { rows, cols };
-    }
-
-    bool isArrayOutput()
-    {
-        const std::pair<uint32_t, uint32_t> size = callerRangeSize();
-        return size.first > 1 || size.second > 1;
-    }
-
     std::string decorateWithExcelLocation( const std::string& objectName )
     {
         const std::string location = getExcelLocationAsString();
