@@ -141,6 +141,16 @@ validates the path before writing.
 - **Dead XLL+ paths.** `projects\AQ_XLL.vcxproj` still lists
   `XllPlus\7.0\VS14.0\include` and `...\lib\x64` on its include/library paths.
   Remove when touching that project.
+- **AQ_XLL: every xlOil function must have exactly as many `.arg()` calls as the
+  `XLO_FUNC_START` signature has parameters.** One extra `.arg()` makes
+  `xlAutoOpen` throw `xloil::Exception<std::runtime_error>` ("Too many args for
+  function"), which Excel surfaces as an unhandled C++ exception and the whole
+  add-in fails to load — the XLL itself is a valid binary, so this looks like a
+  "corrupt / unsupported version" problem but is not. It builds green (the
+  mismatch is a runtime registration check, not a compile error). When the add-in
+  will not load, audit param-vs-`.arg()` counts across `src/AQ_XLL/src/*.cpp`
+  first. (Hit once: `aqObjSave` shipped with 3 params and 4 `.arg()` in commit
+  `a8b50b47`.)
 - **C++17 fixes already applied elsewhere and expected again in ports:**
   `_HAS_STD_BYTE` / `byte` ambiguity, `register` keyword, `auto_ptr`→`unique_ptr`,
   `Disposable` removal, `mem_fun_ref` / `bind2nd`→lambdas, and an ICE in
@@ -208,9 +218,12 @@ bypasses it. It (1) validates inputs once so every language returns identical
 results, and (2) records inputs/outputs, from which `GTEST` cases are
 generated.
 
-Functions here carry a `try` prefix: `try` + library + category + function, e.g.
-`tryAqDatesYearFraction`. (Today they are `tryMe…` in namespace `validation_api`
-— both change in the rebrand.)
+Functions here carry a `try` prefix: `try` + the exact public name, e.g.
+`tryAqDateYearFraction` pairs with `aqDateYearFraction`,
+`tryAqBondObjectDirtyPrice` with `aqBondObjectDirtyPrice`. The `validation`,
+`AQ_XLL` and `AQ_API` names are identical bar the `try` prefix — keep them in
+sync. (Today they are `tryMe…` in namespace `validation_api` — both change in
+the rebrand.)
 
 An `etrading` function is **not public** until it has a `validation` wrapper. Do
 not expose `etrading` symbols directly to `AQ_API` or `AQ_XLL`.
@@ -236,7 +249,7 @@ customisation surface:
   is ~90% of a booking; a generator carries the conventions so a user books a USD
   swap from `notional, effective, maturity, rate, pay/receive` (or a UST from
   `notional, issue/settle, maturity, coupon`) instead of hand-building
-  conventions. Consumed by the AQObj object layer: generator + overrides → handle.
+  conventions. Consumed by the object layer: generator + overrides → handle.
   Seeds: `resources\config\{SWAP,BOND,CURVE}_GENERATOR`.
 
 Generator JSON and calendar config get rebranded like code (legacy names,
@@ -249,7 +262,7 @@ language, **gated at runtime**, not per-edition builds. Working design (Phase 4a
 one binary; `config\editions.json` maps edition → categories; `config\licence.json`
 (or a key) names the entitlement, read behind one function so enforcement can
 harden later without touching registration; at `xlAutoOpen` / import, register
-only the entitled categories; `aqToolsEdition()` reports the active edition.
+only the entitled categories; `aqToolEdition()` reports the active edition.
 Editions cut **across** categories, so the gate is category-level.
 
 ---
@@ -258,47 +271,51 @@ Editions cut **across** categories, so the gate is category-level.
 
 ### 5.1 Public API functions
 
-`library prefix + Category + FunctionName` — `aq` + `Dates` + `YearFraction`
-→ **`aqDatesYearFraction`**. Gives an IntelliSense-style grouped feel in Excel and
-in every binding: type `aqDates` and the date functions surface together.
+`library prefix + Category + FunctionName` — `aq` + `Date` + `YearFraction`
+→ **`aqDateYearFraction`**. Gives an IntelliSense-style grouped feel in Excel and
+in every binding: type `aqDate` and the date functions surface together.
+
+**Categories are SINGULAR.** `aqDate`, not `aqDates`; `aqSwap`, not `aqSwaps`.
 
 **Canonical category list — LOCKED (20):**
 
-`Dates`, `Curves`, `FX`, `Inflation`, `Vols`, `Rates`, `Swaps`, `AssetSwap`,
+`Date`, `Curve`, `FX`, `Inflation`, `Vol`, `Rate`, `Swap`, `AssetSwap`,
 `ConstantMaturitySwap`, `TotalReturnSwap`, `CapFloor`, `Swaption`, `BondOption`,
-`BondFutureOption`, `Bonds`, `Credit`, `Math`, `Models`, `Generators`, `Tools`
+`BondFutureOption`, `Bond`, `Credit`, `Math`, `Model`, `Generator`, `Tool`
 
-`Curves` is the rates yield-curve framework only — *not* bond or credit curves;
-`Bonds` includes bond-curve fitting, `Credit` includes hazard/survival curves.
+`Curve` is the rates yield-curve framework only — *not* bond or credit curves;
+`Bond` includes bond-curve fitting, `Credit` includes hazard/survival curves.
 `Math` is low-level building blocks for own-calculation / result replication.
-`Models` may be sparse initially. **No** `Products` category.
+`Model` may be sparse initially. **No** `Product` category.
 
-- **No `Options` category.** An option product is its own category —
+- **No `Option` category.** An option product is its own category —
   `CapFloor`, `Swaption`, `BondOption`, `BondFutureOption`. Same principle for
   swaps: `AssetSwap`, `ConstantMaturitySwap` and `TotalReturnSwap` are their own
-  categories, not members of `Swaps`; `Swaps` is the vanilla swap plus its legs
-  and schedules. `Inflation` is likewise its own category, not part of `Curves`.
+  categories, not members of `Swap`; `Swap` is the vanilla swap plus its legs
+  and schedules. `Inflation` is likewise its own category, not part of `Curve`.
   A user reaches for the product, not the umbrella.
 
 Use these 20, identically in `validation` / `AQ_XLL` / `AQ_API` / `GTEST`.
 Detail: `MIGRATION_PLAN.md` §2.2.
 
-`Objects` is **no longer a category** either — the handle API is distinguished by the
-`aqObj` *prefix* instead, so the same product categories serve both surfaces:
+**Stateless vs object (stateful).** Most product functions take a cached object
+name; a minority are stateless (data in, value out). The two surfaces share the
+category list and are told apart by the word `Object`:
 
 | Form | Meaning | Example |
 |---|---|---|
-| `aq<Category><Function>` | stateless — data in, value out | `aqSwapsParRate` |
-| `aqObj<Category><Function>` | handle API — object handle in | `aqObjSwapsParRate` |
-| `aqObj<Lifecycle>` | handle lifecycle, no category word | `aqObjLoad`, `aqObjSave`, `aqObjClearCache` |
+| `aq<Category><Function>` | stateless — data in, value out | `aqBondScheduleKeys` |
+| `aq<Category>Object<Function>` | operates on a cached instance of the category's product | `aqBondObjectDirtyPrice`, `aqSwapObjectParRate` |
+| `aq<Category><SubObject><Function>` | operates on a cached *named* sub-object (Curve, Generator, MarketData, Model, FixingTable); the sub-object already denotes an object, so `Object` is not repeated | `aqBondCurveYield`, `aqBondGeneratorCreate`, `aqRateFixingTableValues` |
+| `aqObject<Lifecycle>` | generic handle lifecycle, no category | `aqObjectLoad`, `aqObjectSave`, `aqObjectExists`, `aqObjectClearCache` |
 
-`FX` is its own category (not folded into `Curves`): FX forwards and FX swaps are
+`FX` is its own category (not folded into `Curve`): FX forwards and FX swaps are
 derived from discount / xccy curves, but `FX` is what a user reaches for, and
 discoverability wins over taxonomy here.
 
 ### 5.2 Two orthogonal groupings — do not conflate
 
-- **Discoverability** = category prefix (`aqCurves…`, `aqSwaps…`).
+- **Discoverability** = category prefix (`aqCurve…`, `aqSwap…`).
 - **Gating** = shipped edition (Swaps / Bonds / Credit / Full). Editions cut
   *across* categories and are enforced by a **runtime edition manifest with gated
   registration** (§4.4), not separate builds. Protection is light by design — the
@@ -324,8 +341,8 @@ discoverability wins over taxonomy here.
 | `LA`, `LB` ("Legacy Analytics" type/object prefixes) | **`AQL`** ("AQ Legacy") — marks legacy-to-deprecate, greppable vs new `AQ*` |
 | `MA`, `MB` (type/object prefixes) | `AQ` — confirm per project (`math` had zero real ones) |
 | `MLIB_*` macros | `AQ_*` |
-| LWO (light-weight objects) — **C++ classes** | **`AQObj`** prefix: `AQObjCurve`, `AQObjUtilities`, `AQObjCurveDayAdjustment`, `AQObjHandleEnums`; screaming-snake macros take `AQOBJ_` (`AQOBJ_KEY`); free predicate `isLWOObject → isAQObject`. Matches the public `aqObj` prefix. |
-| LWO — **public function names** (`meLWO…`) | `aqObj` + the **same** category as the stateless twin: `aqObjSwapsPV`, `aqObjCurvesMarketDataDisplay`. Lifecycle ops drop the category: `aqObjLoad`, `aqObjSave`, `aqObjClearCache`. The prefix — not a separate `Objects` category — is what separates the two surfaces. |
+| LWO (light-weight objects) — **C++ classes** | **`AQObj`** prefix: `AQObjCurve`, `AQObjUtilities`, `AQObjCurveDayAdjustment`, `AQObjHandleEnums`; screaming-snake macros take `AQOBJ_` (`AQOBJ_KEY`); free predicate `isLWOObject → isAQObject`. |
+| LWO — **public function names** (`meLWO…`) | `aq<Category>Object<Function>` — the `Object` word after the singular category is what separates the handle API from the stateless twin: `aqSwapObjectPV`, `aqBondObjectDirtyPrice`. Named sub-objects don't repeat it: `aqCurveMarketDataDisplay`. Generic lifecycle ops: `aqObjectLoad`, `aqObjectSave`, `aqObjectClearCache`. |
 | `mir*` (whole stack: `AQ_API\mir*` 58 files, `validation\tryMir*` ~35, `LAXL.cpp` 156 fns) | **delete wholesale** — self-contained, no inbound `aq`/`me` deps (0.5 call-graph) |
 | `msc*`, `LoanCalculations`, `SupervisoryRules`, `CashflowClient` + securitisation cluster | **delete — client-specific**; keep only what `Credit` genuinely needs (0.6 removal map) |
 | project `AQ_BINDINGS` | **`AQ_API`** (agreed) — update `.vcxproj`/`.filters`/`.user`, `.sln`, folder, SWIG `.i`, the 8 `generate*`/`deploy*` batch files, and the pre/post-build `<Command>` lines |
@@ -366,7 +383,7 @@ codebase in ways that compile.
 
 ### 5.6 Renaming Excel functions — clean break
 
-`meDatesYearFraction` → `aqDatesYearFraction` turns every saved sheet into
+`meDatesYearFraction` → `aqDateYearFraction` turns every saved sheet into
 `#NAME?`. **Decided:** clean break — no `me*` spelling survives, no forwarding
 aliases (hidden or otherwise). Fresh product, fresh clients, no old workbooks to
 protect. As you rename, collect the removed public names into a `RELEASE_NOTES`
@@ -416,7 +433,7 @@ genuinely-ours bits: `AQDate`/`AQString`/`Variant` conversions, the handle I/O
 
 ### 6.2 Porting order
 
-Dates → Tools → Curves → Swaps → Products → Models. Each ported function needs a
+Date → Tool → Curve → Swap → products → Model. Each ported function needs a
 `validation` wrapper (§4.1) **and** a GoogleTest case before it counts as done.
 
 ---
@@ -487,6 +504,14 @@ Priority coverage to add:
 
 - Be direct. Say when something is unknown rather than guessing.
 - Surface tensions and disagreements explicitly.
+
+**Migration record**
+
+- **Always update `rebrand\STATUS.md` during this migration project.** Every time
+  code is ported, renamed, deleted or a decision is taken, record it in
+  `STATUS.md` in the same session — what changed, what is verified, what is
+  deferred. `STATUS.md` is the live running record; a change that is not in it
+  did not happen as far as the next session is concerned.
 
 ---
 

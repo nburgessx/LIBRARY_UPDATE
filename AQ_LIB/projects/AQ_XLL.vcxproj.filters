@@ -22,19 +22,19 @@
     <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqBonds.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\aqBond.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqDates.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\aqDate.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqMain.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqObj.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\aqObject.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqTools.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\aqTool.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqMath.cpp">

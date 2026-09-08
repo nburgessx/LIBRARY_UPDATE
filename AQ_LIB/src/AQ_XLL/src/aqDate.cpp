@@ -1,25 +1,14 @@
 /*
- * @brief   Dates category - Excel worksheet functions.
- *
- *          Ported from .APPLES\APPLE\src\MLIBQ_ADDIN\src\meDates.cpp. The XLL+
- *          registration blob and the _4/_12 export wrappers are gone: xlOil
- *          generates those from XLO_FUNC_START/END, and owns the structured
- *          exception handling that MLIB_START/END used to provide. Only the
- *          _Impl body carries across, and it routes through the validation
- *          layer exactly as the original did.
- *
- *          Renamed for the clean break (CLAUDE.md 5.6): meDateFromTenor and
- *          meDateFromYearFraction become aqDatesFromTenor and
- *          aqDatesFromYearFraction - the Dates category, plural, matching the
- *          names already published by AQ_API and validation.
+ * Date category - xlOil worksheet functions. Each routes through the
+ * validation layer; marshalling is the aq_xll helpers in aqXllTools.h.
  */
 
 #include <aqMain.h>
 #include <ctime>
 #include <cmath>
 
-#include "aqXllTools.h"
-#include "tryAqDates.h"
+#include <aqXllTools.h>
+#include <tryAqDates.h>
 
 using namespace aq_xll;
 
@@ -50,26 +39,25 @@ namespace
 }
 
 // Non-Volatile Today Method
-XLO_FUNC_START( aqDatesToday() )
+XLO_FUNC_START( aqDateToday() )
 {
 	return returnValue( std::floor( excelLocalSerial() ) );
 }
-XLO_FUNC_END( aqDatesToday )
+XLO_FUNC_END( aqDateToday )
     .help( L"Today's date as a non-volatile date serial. Format the cell as a date." );
 
 
 // Non-Volatile Now Method
-XLO_FUNC_START( aqDatesNow() )
+XLO_FUNC_START( aqDateNow() )
 {
 	return returnValue( excelLocalSerial() );
 }
-XLO_FUNC_END( aqDatesNow )
+XLO_FUNC_END( aqDateNow )
     .help( L"Current date and time, non-volatile. Format the cell as date/time." );
 
 
-/* @brief   End date(s) from a start date (or range of start dates) plus a tenor.
-*/
-XLO_FUNC_START( aqDatesFromTenor(
+// End date(s) from a start date (or range of start dates) plus a tenor.
+XLO_FUNC_START( aqDateFromTenor(
     const ExcelObj& startDates,
     const ExcelObj& tenor,
     const ExcelObj& businessDayAdj,
@@ -91,7 +79,7 @@ XLO_FUNC_START( aqDatesFromTenor(
 
 	return returnValue( toExcelDateColumn( ends ) );
 }
-XLO_FUNC_END( aqDatesFromTenor )
+XLO_FUNC_END( aqDateFromTenor )
     .help( L"Return the end date(s) based on StartDate(s) + Tenor. Format the cells as dates." )
     .arg( L"StartDates",     L"A single start date or a range of start dates" )
     .arg( L"Tenor",          L"Tenor, e.g. 3M, 5Y, 1W" )
@@ -100,9 +88,8 @@ XLO_FUNC_END( aqDatesFromTenor )
     .arg( L"RollConvention", L"Normal, IMM, EOM, Lunar, etc" );
 
 
-/* @brief   End date from a start date plus a year fraction, under a day count.
-*/
-XLO_FUNC_START( aqDatesFromYearFraction(
+// End date from a start date plus a year fraction, under a day count.
+XLO_FUNC_START( aqDateFromYearFraction(
     const ExcelObj& startDate,
     const ExcelObj& yearFraction,
     const ExcelObj& dayCount ) )
@@ -115,7 +102,7 @@ XLO_FUNC_START( aqDatesFromYearFraction(
 
     return returnValue( toExcelDate( end ) );
 }
-XLO_FUNC_END( aqDatesFromYearFraction )
+XLO_FUNC_END( aqDateFromYearFraction )
     .help( L"Return the end date implied by a start date plus a year fraction. Format the cell as a date." )
     .arg( L"StartDate",    L"The start date" )
     .arg( L"YearFraction", L"The year fraction to advance by" )

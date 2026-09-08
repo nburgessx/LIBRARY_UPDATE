@@ -2,9 +2,9 @@
 
 #include <algorithm>
 
-#include "aqXllTools.h"
-#include "FolderConfig.h"          // etrading::FolderConfig
-#include "AQLString.h"
+#include <aqXllTools.h>
+#include <FolderConfig.h>          // etrading::FolderConfig
+#include <AQLString.h>
 
 using namespace aq_xll;
 
@@ -22,22 +22,20 @@ namespace
 }
 
 
-/* @brief   Load (and verify) the AlgoQuantLib configuration: holiday calendars,
-*           IR static data and the optional startup config.
-*
-*           The add-in already does this in its constructor when Excel opens it,
-*           so under normal use this function is not needed. It exists to test
-*           and diagnose that path: it re-runs the setup with the loud checks
-*           enabled - a missing or wrong config folder throws here and the error
-*           lands in the calling cell - and on success it reports which
-*           Calendar.csv the library resolved to.
-*
-*           Resolution order for the config folder is:
-*             1. .\config\                     (Excel's working directory)
-*             2. %AQ%\resources\config\        (the AQ environment variable)
-*             3. <folder of the .xll>\config\  (business-user layout)
-*/
-XLO_FUNC_START( aqToolsInitialize() )
+/*
+ * Load and verify the AlgoQuantLib configuration (holiday calendars, IR static
+ * data, optional startup config). The add-in already does this when Excel opens
+ * it, so this function is only for testing and diagnosis: it re-runs the setup
+ * with the loud checks enabled - a missing or wrong config folder throws here
+ * and the error lands in the calling cell - and on success reports which
+ * Calendar.csv the library resolved to.
+ *
+ * Resolution order for the config folder:
+ *   1. .\config\                     (Excel's working directory)
+ *   2. %AQ%\resources\config\        (the AQ environment variable)
+ *   3. <folder of the .xll>\config\  (business-user layout)
+ */
+XLO_FUNC_START( aqToolInitialize() )
 {
     AQ_XLL_GUARD
 
@@ -54,41 +52,39 @@ XLO_FUNC_START( aqToolsInitialize() )
 
     return returnValue( message );
 }
-XLO_FUNC_END( aqToolsInitialize )
+XLO_FUNC_END( aqToolInitialize )
     .help( L"Load and verify the AlgoQuantLib configuration (holiday calendars, IR static data). "
            L"Runs automatically when the add-in opens; call it manually to re-check the setup "
            L"or to see which config path was used." );
 
 
 // Test Function
-XLO_FUNC_START(aqToolsEcho(const ExcelObj* arg))
+XLO_FUNC_START(aqToolEcho(const ExcelObj* arg))
 {
     return returnValue(arg->toString());
 }
-XLO_FUNC_END(aqToolsEcho).threadsafe()
+XLO_FUNC_END(aqToolEcho).threadsafe()
 .help(L"Returns the argument provided")
 .arg(L"Value", L"Any value");
 
 
 // Build Version Time Stamp Method
-XLO_FUNC_START(aqToolsBuildTime())
+XLO_FUNC_START(aqToolBuildTime())
 {
     return returnValue(L"AQ_ADDIN built " L"" __DATE__ L" " __TIME__);
 }
-XLO_FUNC_END(aqToolsBuildTime)
+XLO_FUNC_END(aqToolBuildTime)
 .help(L"Build date and time of the loaded add-in.");
 
 
-/* @brief   Reshape a range into NumRows x NumCols.
-*
-*           Ported from meUtilityResize (.APPLES\...\MLIBQ_ADDIN\src\meUtilities.cpp),
-*           renamed to the Tools category. The input cells are read row by row
-*           and laid back out row by row into the requested shape; cells beyond
-*           the source are filled with blanks and any surplus source cells are
-*           dropped. Enter as an array formula (Ctrl+Shift+Enter) over the target
-*           block, or rely on dynamic-array spill.
-*/
-XLO_FUNC_START( aqToolsResize(
+/*
+ * Reshape a range into NumRows x NumCols. Input cells are read row by row and
+ * laid back out row by row into the requested shape; cells beyond the source
+ * are filled with blanks and any surplus source cells are dropped. Enter as an
+ * array formula (Ctrl+Shift+Enter) over the target block, or rely on
+ * dynamic-array spill.
+ */
+XLO_FUNC_START( aqToolResize(
     const ExcelObj& inputArray,
     const ExcelObj& numRows,
     const ExcelObj& numCols ) )
@@ -100,7 +96,7 @@ XLO_FUNC_START( aqToolsResize(
 
     return returnValue( aq_xll::reshapeToSize( inputArray, rows, cols ) );
 }
-XLO_FUNC_END( aqToolsResize )
+XLO_FUNC_END( aqToolResize )
     .help( L"Reshape a range into NumRows x NumCols, reading and writing row by row. "
            L"Short cells are blank-filled; surplus input cells are dropped." )
     .arg( L"InputArray", L"The range to reshape" )

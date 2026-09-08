@@ -357,12 +357,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqBonds.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqDates.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqBond.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqDate.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqMain.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqMath.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqObj.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqTools.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqObject.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqTool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\AQ_XLL\include\aqXllTools.h" />

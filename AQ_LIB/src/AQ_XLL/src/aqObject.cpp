@@ -1,15 +1,8 @@
 /*
- * @brief   AQObj handle lifecycle worksheet functions for the AQ xlOil add-in.
- *
- *          Ported from .APPLES\APPLE\src\MLIBQ_ADDIN\src\meUtilities.cpp
- *          (meLWOExists, meLWOLoad, meLWOSave). These are lifecycle operations
- *          on the object cache, not product functions, so per the naming
- *          convention they take the aqObj<Lifecycle> form with no category
- *          word - aqObjExists / aqObjLoad / aqObjSave - matching the
- *          tryAqObj* wrappers in validation/tryAqObjects.h.
- *
- *          xlOil replaces the XLL+ registration blob, the _4/_12 exports and
- *          the CXlOper marshalling; the call into validation is unchanged.
+ * Object lifecycle worksheet functions. These act on the object cache rather
+ * than a product, so they take the aqObject<Lifecycle> form with no category
+ * word (aqObjectExists / aqObjectLoad / aqObjectSave) and route through the
+ * matching validation wrappers.
  */
 
 #include <aqMain.h>
@@ -18,14 +11,13 @@
 #include <string>
 #include <vector>
 
-#include "aqXllTools.h"
-#include "tryAqObjects.h"      // validation::tryAqObjExists / tryAqObjLoad / tryAqObjSave
+#include <aqXllTools.h>
+#include <tryAqObjects.h>      // validation::tryAqObjExists / tryAqObjLoad / tryAqObjSave
 
 using namespace aq_xll;
 
 
-/* @brief   TRUE if an object of the given type and name is in the cache. */
-XLO_FUNC_START( aqObjExists(
+XLO_FUNC_START( aqObjectExists(
     const ExcelObj& objectName,
     const ExcelObj& objectType ) )
 {
@@ -40,14 +32,13 @@ XLO_FUNC_START( aqObjExists(
 
     return returnValue( exists );
 }
-XLO_FUNC_END( aqObjExists )
+XLO_FUNC_END( aqObjectExists )
     .help( L"TRUE if an object of the given type and name exists in the cache." )
-    .arg( L"ObjectName", L"Object name or a handle returned by an aqObj*Create function" )
+    .arg( L"ObjectName", L"Object name or a handle returned by an aq*ObjectCreate function" )
     .arg( L"ObjectType", L"Object type to check, e.g. BOND, CURVE, SWAP" );
 
 
-/* @brief   Load a single object from a JSON file; returns its handle. */
-XLO_FUNC_START( aqObjLoad(
+XLO_FUNC_START( aqObjectLoad(
     const ExcelObj& fileNameJson ) )
 {
     AQ_XLL_GUARD
@@ -64,26 +55,23 @@ XLO_FUNC_START( aqObjLoad(
     // Decorated handle - the counter suffix makes Excel re-fire dependents.
     return returnValue( appendInstanceCounter( objectName ) );
 }
-XLO_FUNC_END( aqObjLoad )
+XLO_FUNC_END( aqObjectLoad )
     .help( L"Load a single AQObj object from a JSON file and return its handle." )
-    .arg( L"FileNameJSON", L"Full path to the .json file written by aqObjSave" );
+    .arg( L"FileNameJSON", L"Full path to the .json file written by aqObjectSave" );
 
 
-/* @brief   Save a single object to a JSON file.
-*
-*           Returns the object name by default. Pass ShowArrayOutputs=TRUE to
-*           get a 3-row column instead - the result message, the file path
-*           written, and the object name - the shape meLWOSave returned.
-*
-*           If FullFilePath is omitted the file defaults to
-*           C:\Temp\<ObjectName>.json. Unlike the legacy function the path is
-*           NOT upper-cased (that broke case-sensitive filesystems and the
-*           Linux build); only the object name and type are.
-*/
-XLO_FUNC_START( aqObjSave(
+/*
+ * Save a single object to a JSON file. Returns the object name by default;
+ * ShowArrayOutputs=TRUE returns a 3-row column: result message, file path,
+ * object name. If FullFilePath is omitted the file defaults to
+ * C:\Temp\<ObjectName>.json. The path is not upper-cased (only the object name
+ * and type are), so it is safe on case-sensitive filesystems and on Linux.
+ */
+XLO_FUNC_START( aqObjectSave(
     const ExcelObj& objectName,
     const ExcelObj& objectType,
-    const ExcelObj& fullFilePath ) )
+    const ExcelObj& fullFilePath,
+    const ExcelObj& showArrayOutputs ) )
 {
     AQ_XLL_GUARD
     AQ_INITIALIZE
@@ -106,10 +94,17 @@ XLO_FUNC_START( aqObjSave(
 
     const std::string result = validation::tryAqObjSave( name, type, filePath );
 
+    // Default: return just the object name. ShowArrayOutputs=TRUE returns a
+    // 3-row column: result message, file path, object name.
+    if ( toBool( showArrayOutputs, false ) )
+    {
+        return returnValue( toExcelColumn( { result, filePath, name } ) );
+    }
+
     return returnValue( name );
-    
+
 }
-XLO_FUNC_END( aqObjSave )
+XLO_FUNC_END( aqObjectSave )
     .help( L"Save a single AQObj object to a JSON file. Returns the object name; "
            L"pass ShowArrayOutputs=TRUE for a result / file path / object name column." )
     .arg( L"ObjectName",       L"Object name or handle to save" )

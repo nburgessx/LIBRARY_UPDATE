@@ -70,12 +70,19 @@ etrading filter (the port set); `LAXL.cpp` has 161 `mir*` (deprecate or `aql*`);
 **State of `src/AQ_XLL` (2026-09-07, `e5c57046`):**
 
     include/  aqMain.h  aqXllTools.h
-    src/      aqBonds.cpp  aqDates.cpp  aqMain.cpp  aqMath.cpp
-              aqObj.cpp    aqTools.cpp  aqXllTools.cpp
+    src/      aqBond.cpp   aqDate.cpp   aqMain.cpp  aqMath.cpp
+              aqObject.cpp aqTool.cpp   aqXllTools.cpp
 
-Working in Excel (Nicholas-verified): `aqToolsInitialize`, `aqToolsResize`,
-`aqToolsCallerInfo`, `aqDatesFromTenor`, `aqDatesFromYearFraction`,
-`aqObjBondsCreate`, `aqObjBondsDisplay`, `aqObjExists`, `aqObjLoad`, `aqObjSave`.
+Naming scheme (step 11): categories SINGULAR; handle API is `aq<Category>Object<Fn>`
+(named sub-object skips `Object`); lifecycle `aqObject<Lifecycle>`. AQ_XLL renamed;
+`validation` / `AQ_API` / `GTEST` test names to follow (MIGRATION_PLAN 2.6).
+
+Working in Excel (Nicholas-verified, pre-rename names): `aqToolsInitialize`,
+`aqToolsResize`, `aqDatesFromTenor`, `aqDatesFromYearFraction`, `aqObjBondsCreate`,
+`aqObjBondsDisplay`, `aqObjExists`, `aqObjLoad`, `aqObjSave` — now
+`aqToolInitialize`, `aqToolResize`, `aqDateFromTenor`, `aqDateFromYearFraction`,
+`aqBondObjectCreate`, `aqBondObjectDisplay`, `aqObjectExists`, `aqObjectLoad`,
+`aqObjectSave`.
 Library auto-inits in the add-in constructor; `AQ_INITIALIZE` is the per-function
 lazy guard. Marshalling helpers (LVB, AnyTypeMatrix, numeric-aware string→number,
 column/matrix builders, caller-range) live in `aqXllTools`.
@@ -88,13 +95,14 @@ Outstanding:
       uncommitted. Build, run the diagnostic, then decide: keep auto-detect or
       go explicit-only across all multi-output functions. See
       `rebrand/STATUS.md` → "RESUME HERE — AQ_XLL port".
-- [ ] **Port the remaining tranches**, agreed order Dates → Tools → Curves →
-      Swaps → Products → Models. Fill the inventory decision columns per file,
+- [ ] **Port the remaining tranches**, agreed order Date → Tool → Curve →
+      Swap → products → Model. Fill the inventory decision columns per file,
       starting `meDates` (36).
 - [ ] **4.10 — `AQ_XLL_GUARD` + `AQ_INITIALIZE` on every new XLL function.**
       Held so far.
-- [ ] **4.11 — file naming.** `aq<Category>.{cpp,h}`; exceptions
-      `aqXllTools.{h,cpp}` (helpers) and `aqObj.cpp` (`aqObj<Lifecycle>`).
+- [x] **4.11 — file naming.** `aq<Category>.{cpp,h}` (`aqBond.cpp`, `aqDate.cpp`,
+      `aqObject.cpp`, `aqTool.cpp`, `aqMath.cpp`); `aqXllTools.{h,cpp}` is the
+      XLL-layer utility (not a category).
 - [ ] **4.12 — SEH for `AQ_API`.** `AQ_API_START` in
       `src/AQ_API/source/APISetUp.h` is a bare `try {`. **Not yet fixed.**
       Also: `AQ_API` has no auto-init — callers must call `setUpAQL()`.

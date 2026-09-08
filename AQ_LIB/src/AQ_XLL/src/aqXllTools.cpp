@@ -1,8 +1,8 @@
 /*
- * @brief   Excel-side helpers for the AQ xlOil add-in. See aqXllTools.h.
+ * Excel-side helpers for the AQ xlOil add-in. See aqXllTools.h.
  */
 
-#include "aqXllTools.h"
+#include <aqXllTools.h>
 
 #include <xloil/ExcelArray.h>
 #include <xloil/ArrayBuilder.h>
@@ -19,26 +19,26 @@
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/variant/static_visitor.hpp>
 
-#include "CommonConstants.h"
-#include "DateUtilities.h"
-#include "AQLDateScheduleHelpers.h"
-#include "Environment.h"
-#include "AQLCoreAppError.h"
-#include "Variant.h"                // etrading::canStringConvertToNumber
+#include <CommonConstants.h>
+#include <DateUtilities.h>
+#include <AQLDateScheduleHelpers.h>
+#include <Environment.h>
+#include <AQLCoreAppError.h>
+#include <Variant.h>                // etrading::canStringConvertToNumber
 
 namespace aq_xll
 {
     namespace
     {
-        // Handle behaviour switches. Both default to the legacy add-in's settings.
+        // Handle behaviour switches.
         bool instanceCountNames_            = true;
         bool decorateNamesWithExcelAddress_ = false;
 
         // objectName -> current instance counter
         std::unordered_map< std::string, int > namesToCounter_;
 
-        // The legacy map was unguarded. xlOil can register thread-safe worksheet
-        // functions, so the map is guarded here.
+        // xlOil can register thread-safe worksheet functions, so the map is
+        // mutex-guarded.
         std::mutex counterMutex_;
 
         // The counter wraps at 100 so it never grows without bound, and never
@@ -102,8 +102,8 @@ namespace aq_xll
             cells.push_back( &obj );
         }
 
-        // An error value anywhere is a hard failure - the same rule the legacy
-        // add-in applied, so a #REF! in the input never silently becomes a date.
+        // An error value anywhere is a hard failure, so a #REF! in the input
+        // never silently becomes a date.
         for ( const xloil::ExcelObj* cell : cells )
         {
             if ( cell->isType( xloil::ExcelType::Err ) )
@@ -131,6 +131,141 @@ namespace aq_xll
         }
 
         return dates;
+    }
+
+    std::vector<double> toDoubleVector( const xloil::ExcelObj& obj,
+                                       bool skipTrailingBlanks,
+                                       const std::string& nameOfVariable )
+    {
+        // Flatten a single cell or a range into a list of cells, row by row -
+        // the same shape handling as toDateVector.
+        std::vector< const xloil::ExcelObj* > cells;
+
+        if ( obj.isType( xloil::ExcelType::Multi ) )
+        {
+            xloil::ExcelArray array( obj, false /* do not trim, handled below */ );
+            cells.reserve( array.size() );
+            for ( size_t row = 0; row < array.nRows(); ++row )
+            {
+                for ( size_t col = 0; col < array.nCols(); ++col )
+                {
+                    cells.push_back( &array( row, col ) );
+                }
+            }
+        }
+        else
+        {
+            cells.push_back( &obj );
+        }
+
+        // An error value anywhere is a hard failure, so a #REF! in the input
+        // never silently becomes a number.
+        for ( const xloil::ExcelObj* cell : cells )
+        {
+            if ( cell->isType( xloil::ExcelType::Err ) )
+            {
+                const std::string message = "#Error: Invalid Vector Input: " + nameOfVariable + " numeric input required";
+                throw AQLCoreInvalidData( message.c_str(), __FILE__, __LINE__ );
+            }
+        }
+
+        // Trailing blanks are dropped so a user can select a whole column.
+        size_t count = cells.size();
+        if ( skipTrailingBlanks )
+        {
+            while ( count > 0 && !cells[count - 1]->isNonEmpty() )
+            {
+                --count;
+            }
+        }
+
+        std::vector<double> values;
+        values.reserve( count );
+        for ( size_t i = 0; i < count; ++i )
+        {
+            const xloil::ExcelObj& cell = *cells[i];
+
+            if ( cell.isType( xloil::ExcelType::Num ) || cell.isType( xloil::ExcelType::Int ) )
+            {
+                values.push_back( cell.get<double>() );
+                continue;
+            }
+
+            if ( !cell.isNonEmpty() )
+            {
+                // An interior blank counts as zero.
+                values.push_back( 0.0 );
+                continue;
+            }
+
+            // A text cell that reads cleanly as a number is accepted; anything
+            // else is rejected the same way an error cell is.
+            const std::string text = toNarrowString( cell );
+            bool parsed = false;
+            try
+            {
+                size_t consumed = 0;
+                const double number = std::stod( text, &consumed );
+                if ( consumed == text.size() )
+                {
+                    values.push_back( number );
+                    parsed = true;
+                }
+            }
+            catch ( ... )
+            {
+                // Fall through to the failure below.
+            }
+
+            if ( !parsed )
+            {
+                const std::string message = "#Error: Invalid Vector Input: " + nameOfVariable + " numeric input required";
+                throw AQLCoreInvalidData( message.c_str(), __FILE__, __LINE__ );
+            }
+        }
+
+        return values;
+    }
+
+    std::vector<std::string> toStringVector( const xloil::ExcelObj& obj,
+                                             bool skipTrailingBlanks )
+    {
+        std::vector< const xloil::ExcelObj* > cells;
+
+        if ( obj.isType( xloil::ExcelType::Multi ) )
+        {
+            xloil::ExcelArray array( obj, false );
+            cells.reserve( array.size() );
+            for ( size_t row = 0; row < array.nRows(); ++row )
+            {
+                for ( size_t col = 0; col < array.nCols(); ++col )
+                {
+                    cells.push_back( &array( row, col ) );
+                }
+            }
+        }
+        else
+        {
+            cells.push_back( &obj );
+        }
+
+        size_t count = cells.size();
+        if ( skipTrailingBlanks )
+        {
+            while ( count > 0 && !cells[count - 1]->isNonEmpty() )
+            {
+                --count;
+            }
+        }
+
+        std::vector<std::string> values;
+        values.reserve( count );
+        for ( size_t i = 0; i < count; ++i )
+        {
+            values.push_back( cells[i]->isNonEmpty() ? toNarrowString( *cells[i] ) : std::string() );
+        }
+
+        return values;
     }
 
     // -------------------------------------------------------------------------
@@ -186,6 +321,49 @@ namespace aq_xll
         {
             builder( i, 0 ) = xloil::ExcelObj( std::wstring( values[i].begin(), values[i].end() ) );
         }
+        return builder.toExcelObj();
+    }
+
+    xloil::ExcelObj toExcelDoubleColumn( const std::vector<double>& values )
+    {
+        if ( values.empty() )
+        {
+            return xloil::ExcelObj( xloil::CellError::NA );
+        }
+
+        // A single result is returned as a scalar so it does not need array entry.
+        if ( values.size() == 1 )
+        {
+            return xloil::ExcelObj( values[0] );
+        }
+
+        xloil::ExcelArrayBuilder builder( static_cast< uint32_t >( values.size() ), 1 );
+        for ( size_t i = 0; i < values.size(); ++i )
+        {
+            builder( static_cast< uint32_t >( i ), 0 ) = values[i];
+        }
+
+        return builder.toExcelObj();
+    }
+
+    xloil::ExcelObj toExcelIntColumn( const std::vector<int>& values )
+    {
+        if ( values.empty() )
+        {
+            return xloil::ExcelObj( xloil::CellError::NA );
+        }
+
+        if ( values.size() == 1 )
+        {
+            return xloil::ExcelObj( static_cast< double >( values[0] ) );
+        }
+
+        xloil::ExcelArrayBuilder builder( static_cast< uint32_t >( values.size() ), 1 );
+        for ( size_t i = 0; i < values.size(); ++i )
+        {
+            builder( static_cast< uint32_t >( i ), 0 ) = static_cast< double >( values[i] );
+        }
+
         return builder.toExcelObj();
     }
 
@@ -276,6 +454,92 @@ namespace aq_xll
         return etrading::LabelValueBlock( toAQLStringMatrix( obj ) );
     }
 
+    namespace
+    {
+        AQLStringMatrix transposeStringMatrix( const AQLStringMatrix& matrix )
+        {
+            if ( matrix.empty() )
+            {
+                return matrix;
+            }
+
+            size_t cols = 0;
+            for ( const AQLStringVector& row : matrix )
+            {
+                cols = std::max( cols, row.size() );
+            }
+
+            AQLStringMatrix result( cols, AQLStringVector( matrix.size() ) );
+            for ( size_t r = 0; r < matrix.size(); ++r )
+            {
+                for ( size_t c = 0; c < matrix[r].size(); ++c )
+                {
+                    result[c][r] = matrix[r][c];
+                }
+            }
+            return result;
+        }
+    }
+
+    etrading::LabelValueBlock toLabelValueBlock( const xloil::ExcelObj& obj, bool keysAreVertical )
+    {
+        const AQLStringMatrix matrix = toAQLStringMatrix( obj );
+        return etrading::LabelValueBlock( keysAreVertical ? matrix : transposeStringMatrix( matrix ) );
+    }
+
+    std::tuple< std::vector<std::string>,
+                std::vector<etrading::ContainedTypeEnum>,
+                etrading::VariantMatrix >
+        toTableInfo( const xloil::ExcelObj& obj )
+    {
+        // Read the range column by column. A single cell is a 1x1 range.
+        std::unique_ptr<xloil::ExcelArray> array;
+        size_t rows = 1;
+        size_t cols = 1;
+        if ( obj.isType( xloil::ExcelType::Multi ) )
+        {
+            array.reset( new xloil::ExcelArray( obj, false ) );
+            rows = array->nRows();
+            cols = array->nCols();
+        }
+
+        auto at = [&]( size_t r, size_t c ) -> const xloil::ExcelObj&
+        {
+            return array ? ( *array )( r, c ) : obj;
+        };
+
+        etrading::VariantMatrix dataByColumn;
+        dataByColumn.reserve( cols );
+        for ( size_t c = 0; c < cols; ++c )
+        {
+            etrading::VariantVector column;
+            column.reserve( rows );
+            for ( size_t r = 0; r < rows; ++r )
+            {
+                const xloil::ExcelObj& cell = at( r, c );
+                if ( cell.isType( xloil::ExcelType::Err ) )
+                {
+                    throw AQLCoreInvalidData( "#Error: generator block contains an error value", __FILE__, __LINE__ );
+                }
+                const std::string text = cell.isNonEmpty() ? toNarrowString( cell ) : std::string();
+                column.push_back( etrading::Variant( text.c_str() ) );
+            }
+            dataByColumn.push_back( column );
+        }
+
+        std::vector<std::string> columnNames;
+        columnNames.reserve( cols );
+        for ( size_t c = 0; c < cols; ++c )
+        {
+            columnNames.push_back( "COL_" + std::to_string( c + 1 ) );
+        }
+
+        const std::vector<etrading::ContainedTypeEnum> columnTypes =
+            etrading::Variant::getContainedTypeInfo( dataByColumn );
+
+        return std::make_tuple( columnNames, columnTypes, dataByColumn );
+    }
+
     // -------------------------------------------------------------------------
     //  Marshalling helpers: AQ -> Excel  (matrices)
     // -------------------------------------------------------------------------
@@ -284,8 +548,7 @@ namespace aq_xll
     {
         // A cell that arrives as text but reads as a number is returned to Excel
         // as a number, so it can be formatted (currency, date serial, decimals).
-        // Anything that is not cleanly numeric stays as text. This mirrors the
-        // legacy populateExcelArrayWithAnyMatrix behaviour - LabelValueBlock
+        // Anything that is not cleanly numeric stays as text. LabelValueBlock
         // stores every value as a std::string, so without this every displayed
         // rate, notional and price would land in Excel as un-formattable text.
         xloil::ExcelObj numericAwareStringToExcel( const std::string& text )
@@ -380,6 +643,39 @@ namespace aq_xll
                 {
                     builder( r, c ) = xloil::ExcelObj( xloil::CellError::NA );
                 }
+            }
+        }
+
+        return builder.toExcelObj();
+    }
+
+    xloil::ExcelObj toExcelMatrix( const AQLStringMatrix& matrix )
+    {
+        if ( matrix.empty() || matrix[0].empty() )
+        {
+            return xloil::ExcelObj( xloil::CellError::NA );
+        }
+
+        const uint32_t nRows = static_cast<uint32_t>( matrix.size() );
+        uint32_t nCols = 0;
+        size_t totalStringLength = 0;
+        for ( const auto& row : matrix )
+        {
+            nCols = std::max( nCols, static_cast<uint32_t>( row.size() ) );
+            for ( const AQLString& cell : row )
+            {
+                totalStringLength += std::string( cell.getCString() ).size();
+            }
+        }
+
+        xloil::ExcelArrayBuilder builder( nRows, nCols, totalStringLength, true /* pad to 2D */ );
+        for ( uint32_t r = 0; r < nRows; ++r )
+        {
+            for ( uint32_t c = 0; c < nCols; ++c )
+            {
+                builder( r, c ) = ( c < matrix[r].size() )
+                    ? numericAwareStringToExcel( std::string( matrix[r][c].getCString() ) )
+                    : xloil::ExcelObj( xloil::CellError::NA );
             }
         }
 

@@ -1,22 +1,11 @@
 #pragma once
 
 /*
- * @brief   Excel-side helpers for the AQ xlOil add-in.
- *
- *          Two responsibilities:
- *
- *          1. Marshalling  - convert between xlOil ExcelObj values and the
- *                            AQ types the validation layer expects.
- *
- *          2. AQObj handles - the instance-counter decoration that makes the
- *                            object framework work inside Excel. See below.
- *
- *          This replaces XllPlusTips.cpp / XllPlusTipsForETrading.cpp from the
- *          legacy XLL+ add-in. Those files were NOT copied across: they are
- *          built on the XLL+ framework types (CXlOper, COper, CXlStringArg),
- *          which is the paid third-party framework xlOil replaces. Only the
- *          behaviour we actually need has been ported, expressed in xlOil
- *          primitives.
+ * Excel-side helpers for the AQ xlOil add-in. Two jobs:
+ *   1. Marshalling  - convert between xlOil ExcelObj values and the AQ types the
+ *                     validation layer expects.
+ *   2. AQObj handles - the instance-counter decoration that makes the object
+ *                     framework work inside Excel (see below).
  */
 
 #include <xloil/xlOil.h>
@@ -24,16 +13,18 @@
 
 #include <cstdint>
 #include <string>
+#include <tuple>
 #include <utility>
 #include <vector>
 
-#include "AQLDate.h"
-#include "AQLString.h"
-#include "AQLCoreTemplateType.h"   // DateVector, AQLStringMatrix, AnyTypeMatrix
-#include "CoreEnumerations.h"       // etrading::CachedObjectEnum
-#include "StructuredExceptionHandler.h"
-#include "InitializeETrading.h"     // etrading::InitializeETrading
-#include "LabelValueBlock.h"        // etrading::LabelValueBlock
+#include <AQLDate.h>
+#include <AQLString.h>
+#include <AQLCoreTemplateType.h>   // DateVector, AQLStringMatrix, AnyTypeMatrix
+#include <CoreEnumerations.h>       // etrading::CachedObjectEnum
+#include <StructuredExceptionHandler.h>
+#include <InitializeETrading.h>     // etrading::InitializeETrading
+#include <LabelValueBlock.h>        // etrading::LabelValueBlock
+#include <Variant.h>                // etrading::Variant, VariantMatrix, ContainedTypeEnum
 
 namespace aq_xll
 {
@@ -66,12 +57,10 @@ namespace aq_xll
     //
     //  The add-in brings the library up once in the AlgoQuantLib constructor
     //  (xlAutoOpen). AQ_INITIALIZE is a cheap per-function belt-and-braces
-    //  check - the analogue of checkIfStaticDataLoaded() inside the legacy
-    //  MLIB_START_AND_CHECK_LICENCE macro. InitializeETrading::instance() with
-    //  no arguments is idempotent: once the singleton exists it is a mutex
-    //  lock plus a null check, and it does NOT reload. Add it after
-    //  AQ_XLL_GUARD in any function that reaches calendar or static data and
-    //  might plausibly be called before xlAutoOpen has completed.
+    //  check: InitializeETrading::instance() with no arguments is idempotent -
+    //  once the singleton exists it is a mutex lock plus a null check, and it
+    //  does NOT reload. Add it after AQ_XLL_GUARD in any function that reaches
+    //  calendar or static data and might be called before xlAutoOpen completes.
 
     #define AQ_INITIALIZE  ::etrading::InitializeETrading::instance();
 
@@ -79,63 +68,73 @@ namespace aq_xll
     //  Marshalling: Excel  ->  AQ
     // ---------------------------------------------------------------------
 
-    /* @brief   Convert an Excel wide string to the narrow strings the AQ API uses.
-    *           Safe for the ASCII keywords the API accepts (Call, Put, Following, ...).
-    */
     std::string toNarrowString( const xloil::ExcelObj& obj );
 
-    /* @brief   Convert an Excel value to an AQLString. */
     AQLString toAQLString( const xloil::ExcelObj& obj );
 
-    /* @brief   Convert a single Excel cell to an AQLDate.
-    *           Accepts an Excel date serial (a number) or any date string the
-    *           library's date parser understands (YYYYMMDD, DD-MMM-YYYY, ...).
-    */
+    // Accepts an Excel date serial (a number) or any date string the library's
+    // date parser understands (YYYYMMDD, DD-MMM-YYYY, ...).
     AQLDate toAQLDate( const xloil::ExcelObj& obj );
 
-    /* @brief   Convert an Excel cell or range to a vector of AQLDates.
-    *  @param [in] obj                  A single cell or a one/two dimensional range.
-    *  @param [in] skipTrailingBlanks   Drop empty trailing cells, so a user can
-    *                                   select a whole column without padding the result.
-    *  @param [in] nameOfVariable       Argument name, used in the error message.
-    */
+    // A single cell or a range -> a vector. skipTrailingBlanks drops empty
+    // trailing cells so a user can select a whole column; nameOfVariable is used
+    // in the error message. An error cell anywhere is a hard failure.
     DateVector toDateVector( const xloil::ExcelObj& obj,
                              bool skipTrailingBlanks = true,
                              const std::string& nameOfVariable = "date" );
 
-    /* @brief   Read an optional boolean argument.
-    *  @param [in] obj            The Excel cell. Missing / empty / blank yields the default.
-    *  @param [in] defaultValue   Returned when the cell carries no value.
-    *           TRUE/FALSE, a non-zero number, and the words "true"/"false" are all accepted.
-    */
+    // As toDateVector; a text cell that reads cleanly as a number is accepted.
+    std::vector<double> toDoubleVector( const xloil::ExcelObj& obj,
+                                        bool skipTrailingBlanks = true,
+                                        const std::string& nameOfVariable = "value" );
+
+    // As toDateVector, one string per cell. Does NOT strip an AQObj instance
+    // counter (getNamesWithoutCounter does) - use it for plain string lists.
+    std::vector<std::string> toStringVector( const xloil::ExcelObj& obj,
+                                             bool skipTrailingBlanks = true );
+
+    // Optional boolean: missing / empty / blank yields defaultValue. TRUE/FALSE,
+    // a non-zero number, and the words "true"/"false" are all accepted.
     bool toBool( const xloil::ExcelObj& obj, bool defaultValue );
 
-    /* @brief   Convert an Excel cell or range to an AQLStringMatrix (every cell
-    *           stringified). A single cell becomes a 1x1 matrix. Fully-blank
-    *           trailing rows are dropped so a user can over-select a block.
-    */
+    // Every cell stringified. A single cell becomes a 1x1 matrix; fully-blank
+    // trailing rows are dropped so a user can over-select a block.
     AQLStringMatrix toAQLStringMatrix( const xloil::ExcelObj& obj );
 
-    /* @brief   Build a LabelValueBlock from a two-column (key, value) Excel range.
-    *           Thin wrapper over toAQLStringMatrix + the LabelValueBlock ctor;
-    *           this is how every AQObj *Create function takes its LVB arguments.
-    */
+    // Build a LabelValueBlock from a two-column (key, value) range. This is how
+    // every AQObj *Create function takes its LVB arguments.
     etrading::LabelValueBlock toLabelValueBlock( const xloil::ExcelObj& obj );
+
+    // As above, choosing orientation: keysAreVertical TRUE reads two columns
+    // (key, value) per row; FALSE reads two rows (keys, then values) and
+    // transposes before building the block.
+    etrading::LabelValueBlock toLabelValueBlock( const xloil::ExcelObj& obj, bool keysAreVertical );
+
+    // Read a rectangular range into the tuple the generator / market-data Create
+    // functions expect: column names (COL_1, COL_2, ...), column types
+    // (Variant::getContainedTypeInfo), and a column-major VariantMatrix of
+    // string Variants.
+    std::tuple< std::vector<std::string>,
+                std::vector<etrading::ContainedTypeEnum>,
+                etrading::VariantMatrix >
+        toTableInfo( const xloil::ExcelObj& obj );
 
     // ---------------------------------------------------------------------
     //  Marshalling: AQ  ->  Excel  (matrices)
     // ---------------------------------------------------------------------
 
-    /* @brief   Convert an AnyTypeMatrix (the type every AQObj *Display function
-    *           returns) to an Excel array, preserving numbers, booleans and
-    *           strings as their native Excel types. An empty matrix returns #N/A.
-    */
+    // An AnyTypeMatrix (what every AQObj *Display function returns) -> an Excel
+    // array, keeping numbers, booleans and strings as their native Excel types.
+    // An empty matrix returns #N/A.
     xloil::ExcelObj toExcelMatrix( const AnyTypeMatrix& matrix );
 
-    /* @brief   Reshape a range into numRows x numCols, row by row. Short cells
-    *           are blank-filled, surplus source cells are dropped. Backs
-    *           aqToolsResize.
-    */
+    // An AQLStringMatrix -> an Excel array. Each cell that reads cleanly as a
+    // number is returned as a real (formattable) number; everything else stays
+    // text. An empty matrix returns #N/A.
+    xloil::ExcelObj toExcelMatrix( const AQLStringMatrix& matrix );
+
+    // Reshape a range into numRows x numCols, row by row. Short cells are
+    // blank-filled, surplus source cells are dropped. Backs aqToolResize.
     xloil::ExcelObj reshapeToSize( const xloil::ExcelObj& obj,
                                    uint32_t numRows,
                                    uint32_t numCols );
@@ -144,14 +143,16 @@ namespace aq_xll
     //  Marshalling: AQ  ->  Excel
     // ---------------------------------------------------------------------
 
-    /* @brief   Convert an AQLDate to an Excel date serial. */
     double toExcelDate( const AQLDate& date );
 
-    /* @brief   Convert a vector of AQLDates to a column of Excel date serials. */
     xloil::ExcelObj toExcelDateColumn( const DateVector& dates );
 
-    /* @brief   Convert a list of strings to a single Excel column. Empty -> #N/A. */
     xloil::ExcelObj toExcelColumn( const std::vector<std::string>& values );
+
+    // A vector of doubles / ints -> a single Excel column. One value is returned
+    // as a scalar so it needs no array entry; an empty vector returns #N/A.
+    xloil::ExcelObj toExcelDoubleColumn( const std::vector<double>& values );
+    xloil::ExcelObj toExcelIntColumn( const std::vector<int>& values );
 
     // ---------------------------------------------------------------------
     //  AQObj handles - the instance counter
@@ -165,56 +166,38 @@ namespace aq_xll
     //  cells would keep stale values.
     //
     //  The counter wraps at 100 and never returns to 0 after the first
-    //  increment, so a handle is always visibly "used".
-    //
-    //  Ported from XllPlusTipsForETrading; behaviour is unchanged. The one
-    //  addition is a mutex, because xlOil can register thread-safe functions
-    //  and the legacy map was not guarded.
+    //  increment, so a handle is always visibly "used". The map is mutex-guarded
+    //  because xlOil can register thread-safe functions.
 
-    /* @brief   Append (and by default advance) the instance counter for an object.
-    *  @param [in] objectName     The undecorated object name.
-    *  @param [in] updateCounter  False to read the current counter without advancing it.
-    *  @return  The decorated handle, or objectName unchanged if counting is disabled.
-    */
+    // Append (and by default advance) the instance counter for an object.
+    // updateCounter=false reads the current counter without advancing it.
+    // Returns the decorated handle, or objectName unchanged if counting is off.
     std::string appendInstanceCounter( const std::string& objectName, bool updateCounter = true );
     std::string appendInstanceCounter( const AQLString& objectName, bool updateCounter = true );
 
-    /* @brief   The current counter suffix for an object, or "" if it is not counted. */
     std::string getInstanceCounterAsString( const std::string& objectName );
 
-    /* @brief   Stop counting an object, e.g. when it is deleted.
-    *  @return  True if the name was being counted, false if it was not known.
-    */
+    // Stop counting an object, e.g. when it is deleted. Returns true if the name
+    // was being counted.
     bool stopCountingName( const std::string& objectName );
 
-    /* @brief   Strip the instance counter from a handle, giving the object name. */
     std::string getNameWithoutCounter( const std::string& handle );
     std::string getNameWithoutCounter( const xloil::ExcelObj& handle );
 
-    /* @brief   Strip the instance counter from every handle in a range. */
     std::vector<std::string> getNamesWithoutCounter( const xloil::ExcelObj& handles );
 
-    /* @brief   The calling cell as "[Book]Sheet!$A$1", upper-cased.
-    *           Used to give an object a name unique to the cell that created it.
-    *           Returns "" when address decoration is disabled or the caller is
-    *           not a worksheet cell (a macro or a VBA call, for instance).
-    */
+    // The calling cell as "[Book]Sheet!$A$1", upper-cased. Returns "" when
+    // address decoration is disabled or the caller is not a worksheet cell.
     std::string getExcelLocationAsString();
 
-    /* @brief   Make an object name unique to the calling cell.
-    *           When address decoration is enabled, returns
-    *           "<objectName>@<cell>"; otherwise returns objectName unchanged.
-    *           This is the analogue of the legacy appendExcelLocation and is
-    *           the first step of every AQObj *Create function.
-    */
+    // Make an object name unique to the calling cell: "<objectName>@<cell>" when
+    // address decoration is enabled, otherwise objectName unchanged. The first
+    // step of every AQObj *Create function.
     std::string decorateWithExcelLocation( const std::string& objectName );
 
-    /* @brief   Guard for create-vs-modify behaviour.
-    *           When allowUpdate is false and the object already exists, this
-    *           returns false and writes the existing decorated handle into
-    *           result, so the caller can return it unchanged.
-    *  @return  True if the caller may go ahead and create or overwrite.
-    */
+    // Create-vs-modify guard. When allowUpdate is false and the object already
+    // exists, returns false and writes the existing decorated handle into
+    // result so the caller can return it unchanged; otherwise returns true.
     bool allowAQObjUpdates( bool allowUpdate,
                             std::string& result,
                             const std::string& objectName,
@@ -224,14 +207,11 @@ namespace aq_xll
     //  Handle behaviour switches
     // ---------------------------------------------------------------------
 
-    /* @brief   Whether handles carry an instance counter. On by default;
-    *           turning it off makes handles stable but breaks recalculation
-    *           of dependent cells.
-    */
+    // Whether handles carry an instance counter. On by default; turning it off
+    // makes handles stable but breaks recalculation of dependent cells.
     void setInstanceCountNames( bool on );
     bool instanceCountNames();
 
-    /* @brief   Whether object names are decorated with the caller's cell address. */
     void setDecorateNamesWithExcelAddress( bool on );
     bool decorateNamesWithExcelAddress();
 }

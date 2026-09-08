@@ -16,13 +16,13 @@ import subprocess, re, os, sys, csv, collections
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.chdir(ROOT)
 
-# LOCKED (20). Product sub-types are their own category -- there is no Options
-# umbrella. Longest-first matching matters: BondFutureOption before BondOption,
-# TotalReturnSwap/AssetSwap/ConstantMaturitySwap before Swaps.
-CATEGORIES = ["Dates", "Curves", "FX", "Inflation", "Vols", "Rates",
-              "Swaps", "AssetSwap", "ConstantMaturitySwap", "TotalReturnSwap",
+# LOCKED (20), SINGULAR. Product sub-types are their own category -- there is no
+# Options umbrella. Longest-first matching matters: BondFutureOption before
+# BondOption, TotalReturnSwap/AssetSwap/ConstantMaturitySwap before Swap.
+CATEGORIES = ["Date", "Curve", "FX", "Inflation", "Vol", "Rate",
+              "Swap", "AssetSwap", "ConstantMaturitySwap", "TotalReturnSwap",
               "CapFloor", "Swaption", "BondOption", "BondFutureOption",
-              "Bonds", "Credit", "Math", "Models", "Generators", "Tools"]
+              "Bond", "Credit", "Math", "Model", "Generator", "Tool"]
 
 def files(spec):
     return [p for p in subprocess.check_output(["git", "ls-files", spec], text=True).split()
@@ -71,9 +71,10 @@ for p in files("src/validation/include/*.h"):
         wrap.setdefault(m.group(1), p)
 
 def category(n):
+    # aqDateFromTenor / aqBondObjectPrice / aqBondCurveYield / aqObjectLoad
     b = n[5:] if n.startswith("tryAq") else n[2:]
-    if b.startswith("Obj"):
-        b = b[3:]
+    if b.startswith("Object"):
+        return "(lifecycle)"
     for c in sorted(CATEGORIES, key=len, reverse=True):
         if b.startswith(c):
             return c
@@ -108,7 +109,7 @@ if "--write" in sys.argv:
         p, calls, _ = impl_calls.get(n, (pub[n], [], False))
         w = "tryAq" + n[2:]
         rows.append([n, category(n),
-                     "aqObj" if n.startswith("aqObj") else "stateless",
+                     "object" if "Object" in n[2:] else "stateless",
                      w if w in wrap else (calls[0] if calls else ""),
                      pub[n], wrap.get(w, "")])
     os.makedirs("docs", exist_ok=True)

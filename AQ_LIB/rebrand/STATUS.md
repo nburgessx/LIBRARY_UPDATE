@@ -1,10 +1,104 @@
-# Rebrand status — pause point 2026-09-07
+# Rebrand status — pause point 2026-09-08
 
-**HEAD: `e5c57046` ("aq_xll added function templates"). Two files
-uncommitted on top of it — `src/AQ_XLL/src/aqObj.cpp` and `aqTools.cpp`
-(the `AsArray` override + `aqToolsCallerInfo` diagnostic below); not yet
-built or committed.** Last GoogleTest-green tag remains `61795829`; the
-AQ_XLL work since has been verified by Nicholas in Excel, not by a GTest run.
+**HEAD: `e5c57046` ("aq_xll added function templates"). Uncommitted on top
+of it — `src/AQ_XLL/src/aqObj.cpp` and `aqTools.cpp` (the `AsArray` override
++ `aqToolsCallerInfo` diagnostic below); plus the bond-port tranche (a)
+below: `src/AQ_XLL/src/aqBonds.cpp`, `src/AQ_XLL/src/aqXllTools.cpp`,
+`src/AQ_XLL/include/aqXllTools.h`. Not yet built or committed.** Last
+GoogleTest-green tag remains `61795829`; the AQ_XLL work since has been
+verified by Nicholas in Excel, not by a GTest run.
+
+## ⇒ RESUME HERE — meLWOBond port (2026-09-08)
+
+Porting `meLWOBond*` from `.APPLES\...\MLIBQ_ADDIN\src\meLWO.cpp` into
+`src/AQ_XLL/src/aqBonds.cpp`, renamed `meLWOBond* → aqObjBonds*` (plural
+`Bonds`, the locked category — NOT the literal `aqObjBond*` first asked for;
+plural is what pairs with the `tryAqObjBonds*` wrappers and the
+`api_pair_check` gate). Two-part plan agreed with Nicholas.
+
+**Part (a) — DONE (uncommitted, NOT BUILT):** 11 functions added to
+`aqBonds.cpp` — `aqObjBondsDisplaySchedule`, `aqObjBondsDisplayCashflows`,
+`aqObjBondsDirtyPrice`, `aqObjBondsAccruedInterestDays`,
+`aqObjBondsCleanPrice`, `aqObjBondsAccruedInterest`, `aqObjBondsYield`,
+`aqObjBondsCompoundYield`, `aqObjBondsPrice`, `aqObjBondsDV01`,
+`aqObjBondsDV01Numerical`. (`meLWOBondDisplay`/`meLWOBondCreate` were already
+ported in `e5c57046` as `aqObjBondsDisplay`/`aqObjBondsCreate`.)
+New marshalling helpers in `aqXllTools.{h,cpp}`: `toDoubleVector`,
+`toExcelDoubleColumn`, `toExcelIntColumn`.
+`aqObjBondsCompoundYield` calls the plural-spelled wrapper
+`tryAqObjBondsCompoundYields` (pre-existing wrapper quirk).
+No vcxproj change — `aqBonds.cpp` / `aqXllTools.cpp` already listed.
+**Next: build all configs; then GoogleTest / Excel-verify.**
+
+**Part (b) — batch b1 DONE (uncommitted, NOT BUILT).** 24 functions added to
+`aqBonds.cpp`: `aqObjBondsModifiedDuration`, `aqObjBondsOisSpread`,
+`aqObjBondsLastCouponDate`, `aqObjBondsPriceFromDirtyToClean`,
+`aqObjBondsPriceFromCleanToDirty`, `aqObjBondsZSpreadFromRates`,
+`aqObjBondsZSpread` (→ plural wrapper `tryAqObjBondsZSpreads`),
+`aqObjBondsForwardPrice`, `aqObjBondsRepoRate`, `aqObjBondsRepoRateFromFuture`,
+`aqObjBondsFuturePrice`, `aqObjBondsConversionFactor`, `aqObjBondsGrossBasis`,
+`aqObjBondsNetBasis`, `aqObjBondsCheapestToDeliver`,
+`aqObjBondsCheapestToDeliverByNetBasis`, `aqObjBondsFRNPriceFromDiscountMargin`,
+`aqObjBondsFRNPriceFromYield`, `aqObjBondsFRNYieldFromPrice`,
+`aqObjBondsFRNDiscountMarginFromPrice`, `aqObjBondsPriceFromCreditModel`,
+`aqObjBondsBPVPerTick`, plus the two stateless `aqBondsAverageYield` /
+`aqBondsYieldFromFuturePrice` (B4 decision: `aqBonds*` in `aqBonds.cpp`; they
+call `validation::tryAqToolsBond*`, so `api_pair_check` will flag an
+`aqBonds*`↔`tryAqToolsBond*` drift — deferred wrapper rename, same class as the
+existing 5 advisories). New helper `toStringVector` in `aqXllTools.{h,cpp}`.
+Whole-file param-vs-`.arg()` audit: 37/37 match (0 mismatches).
+**Next: build all configs; verify in Excel.**
+
+**Part (b) — batch b2a DONE (uncommitted, NOT BUILT).** 3 create functions added
+to `aqBonds.cpp`, each with the `aqObjBondsCreate` create-vs-modify guard
+(`decorateWithExcelLocation` + `allowAQObjUpdates` + `appendInstanceCounter`):
+- `aqObjBondsCreateFromLVB` — keeps the legacy `VerticalLVBKeys` arg; new
+  `toLabelValueBlock(obj, keysAreVertical)` overload in `aqXllTools` transposes
+  the string matrix when FALSE.
+- `aqObjBondsCreateFromGenerator` (legacy `meLWOBondCreateFromGeneratorLVB` — the
+  `LVB` suffix is dropped to match `tryAqObjBondsCreateFromGenerator`).
+- `aqObjBondsCreateAUDNotionalBond` — 10 Excel args, wrapper takes 9 (the 10th,
+  `AllowUpdates`, drives the create guard only).
+Whole-file audit: 40/40 param-vs-`.arg()` match. **Next: build; verify.**
+
+**Part (b) — batch b2b DONE (uncommitted, NOT BUILT).** The 2 bond-generator
+functions added to `aqBonds.cpp`:
+- `aqObjBondsGeneratorCreate` — new `aqXllTools::toTableInfo(obj)` reads a range
+  column-major into `tuple<COL_1.. names, Variant::getContainedTypeInfo types,
+  column-major VariantMatrix of string Variants>` (the `validation::TableInfo`
+  shape); `key2`/`value2` optional. No create-vs-modify guard (matches the
+  source), just decorate + call + `appendInstanceCounter`.
+- `aqObjBondsGeneratorDisplay` — `validation::tryAqObjBondsGeneratorDisplay`
+  returns `etrading::VariantMatrix`; rendered via
+  `etrading::toAQLStringMatrixFromVariantMatrix(result, false)` into the new
+  `toExcelMatrix(const AQLStringMatrix&)` overload (numeric-aware, same cell
+  path as `toExcelMatrix(AnyTypeMatrix)`). **Display orientation (transpose
+  flag) is a guess — verify visually in Excel.**
+
+**meLWO.cpp bond port — COMPLETE** (parts a + b1 + b2a + b2b): 42 XLO_FUNC in
+`aqBonds.cpp` (2 pre-existing + 40 ported this session), whole-file
+param-vs-`.arg()` audit 42/42. Remaining `meLWO.cpp`
+items are the 5 `meLWOFixingTable*` (Rates category, a later `aqRates.cpp`) and
+the 2 in the separate `meLWOBonds.cpp`.
+
+**AQ_XLL comment / include cleanup (uncommitted, NOT BUILT).** Per Nicholas:
+all 8 `src/AQ_XLL/{src,include}` files scrubbed of `.APPLES` paths, legacy
+function/type names (`meLWO*`, `meUtility*`, `CXlOper`, `XllPlus*`,
+`getDataByColumnAndDescription`, `populateExcelArrayWith*`, `MLIB_START*`,
+`checkIfStaticDataLoaded`, `appendExcelLocation`, ...) and the word "legacy" in
+comments; `@brief` markers removed; every `#include "x"` → `#include <x>` (all
+resolve through the project `/I` dirs, so the form change is safe). No code
+behaviour change. Grep for the legacy tokens over `src/AQ_XLL` now returns clean.
+
+**Also fixed this session:** `aqObjSave` (`aqObj.cpp`) had 3 params / 4 `.arg()`
+from commit `a8b50b47` — that was the "corrupt XLL / unhandled xloil::Exception"
+at load, NOT the LTCG theory and NOT the bond port. Added the 4th param
+`showArrayOutputs` + implemented the TRUE → 3-row column behaviour.
+
+**Out of scope for `aqBonds.cpp`:** the 5 `meLWOFixingTable*` in `meLWO.cpp` are
+the `Rates` category (`tryAqObjRatesFixingTable*` wrappers) — a later `aqRates.cpp`.
+`meLWOBondQuote` / `meLWOBondForwardReinvestedCoupon` live in `meLWOBonds.cpp`,
+not `meLWO.cpp`.
 
 Two workstreams are open in parallel:
 - **A. AQ_XLL xlOil port (active this session)** — see "⇒ RESUME HERE — AQ_XLL
@@ -161,6 +255,9 @@ legacy-named paths there fell from 1,310 to 126.
 
 | commit | what |
 |---|---|
+| _(uncommitted)_ | **Step 11 — category naming scheme + AQ_XLL rebrand.** Categories now SINGULAR; handle marker moved from `aqObj<Category>` prefix to `aq<Category>Object<Fn>`; named sub-objects skip `Object` (`aqBondCurveYield`); lifecycle `aqObject<Lifecycle>`; `Vols`→`Vol`. Docs: `CLAUDE.md` (both), `MIGRATION_PLAN.md` §2.2/§2.5/§2.6/D14/D15/D16/D18/Phase 3.2/3.5/4.7/4.11, `rebrand/STATUS.md`, `rebrand/tools/api_pair_check.py` (CATEGORIES + `category()`). **AQ_XLL code:** `git mv` `aqBonds/aqDates/aqObj/aqTools.cpp` → `aqBond/aqDate/aqObject/aqTool.cpp`; 53 functions renamed (42 bond + 4 date + 3 object + 4 tool); comments + `AQ_XLL.vcxproj`/`.filters` updated. Param/`.arg()` audit `aqBond.cpp` 42/42. `aqMath.cpp` / `aqMain.cpp` / `aqXllTools.{h,cpp}` unchanged names (Math already singular; XllTools is a utility, not a category). **`validation::tryAqObj…` call sites in AQ_XLL still use the OLD wrapper names** — temporary desync until MIGRATION_PLAN 2.6 renames `validation` / `AQ_API` / `GTEST` test names / fixtures. **NOT BUILT.** |
+| _(uncommitted)_ | **AQ_XLL fails to load in Excel — ROOT CAUSE FOUND + FIXED.** `xlAutoOpen` threw `xloil::Exception<std::runtime_error>` ("unhandled C++ exception in Excel.EXE"). Cause: `src/AQ_XLL/src/aqObj.cpp` `aqObjSave` had **3 parameters but 4 `.arg()` descriptions** (the `ShowArrayOutputs` arg text was added in commit `a8b50b47` "AqObjSave update" without the matching 4th parameter). xlOil's `.arg(i>=nParams)` throws "Too many args for function" at registration. Introduced by `a8b50b47`, which post-dates the last Excel-verified commit `e5c57046`, so it was never caught. Fix: added the 4th param `showArrayOutputs` and implemented the documented TRUE → 3-row `{result, filePath, name}` column / else → name behaviour (uses existing `toBool` + `toExcelColumn`). **Not related to LTCG or to the tranche-(a) bond port** (all 11 new funcs audited: param/arg counts match). The earlier `AQ_XLL.vcxproj` LTCG edit was reverted — project settings unchanged from HEAD. `targets/64/{Release,Debug,ReleaseProfiler}/AQ_XLL` were deleted (build output only). **Next: rebuild AQ_XLL, verify it loads, then verify tranche (a).** |
+| _(uncommitted)_ | **meLWOBond port tranche (a)** — 11 `meLWOBond*` functions ported from `.APPLES\...\meLWO.cpp` into `src/AQ_XLL/src/aqBonds.cpp` as `aqObjBonds*` (DisplaySchedule, DisplayCashflows, DirtyPrice, AccruedInterestDays, CleanPrice, AccruedInterest, Yield, CompoundYield, Price, DV01, DV01Numerical). New helpers `toDoubleVector` / `toExcelDoubleColumn` / `toExcelIntColumn` in `aqXllTools.{h,cpp}`. CLAUDE.md §9 gains an "always update STATUS.md" rule. **Not built yet.** |
 | _(uncommitted)_ | `aqObjSave` gains optional `AsArray` arg (force column / force message / auto); new `aqToolsCallerInfo()` diagnostic. Mitigation for the CSE-detection problem. **Not built yet.** |
 | `e5c57046` | **AQ_XLL port tranche 1** — `aqMain.cpp` auto-inits the library in the add-in ctor; `AQ_INITIALIZE` + `AQ_IS_ARRAY_OUTPUT` macros; new `aqBonds.cpp` (`aqObjBondsCreate/Display`), `aqObj.cpp` (`aqObjExists/Load/Save`); `aqToolsInitialize`, `aqToolsResize` (positional clip/pad), path slash-normalisation; marshalling helpers in `aqXllTools` (`toBool`, `toAQLStringMatrix`, `toLabelValueBlock`, `toExcelMatrix` numeric-aware, `toExcelColumn`, `reshapeToSize`, `callerRangeSize`, `isArrayOutput`). vcxproj/.filters updated. Verified in Excel by Nicholas, not by GTest. |
 | `68ca1ceb` / `bf2cb765` | earlier AQ_XLL updates + step-2 build fixes (RecordMacros `AQLString`). |
@@ -286,29 +383,37 @@ Folder the `validation` `tryAq*` wrappers by category (`src/validation/Curves/`,
 
 ---
 
-## Step 8 — public API naming scheme (done, 2026-09-04)
+## Public API naming scheme — CURRENT (step 11, 2026-09-08)
 
-The handle API and the stateless API are two surfaces over the same products.
-Excel cannot overload, so they need distinct names. The interim `aqObjects*`
-scheme forced the object API into its own `Objects` category; step 8 replaces
-that with an `aqObj` **prefix**, so both surfaces share one category list.
+Categories are **SINGULAR**. The handle API is the word `Object` after the
+category; a named sub-object (Curve, Generator, MarketData, Model, FixingTable)
+already denotes an object and does not repeat it.
 
 | Form | Meaning | Example |
 |---|---|---|
-| `aq<Category><Function>` | stateless — data in, value out | `aqSwapsParRate` |
-| `aqObj<Category><Function>` | handle API — handle in | `aqObjSwapsParRate` |
-| `aqObj<Lifecycle>` | lifecycle, no category word | `aqObjLoad`, `aqObjClearCache` |
-| `AQObj*` / `AQOBJ_*` | internal C++ classes / macros | `AQObjCurve`, `AQOBJ_KEY` |
+| `aq<Category><Function>` | stateless — data in, value out | `aqBondScheduleKeys` |
+| `aq<Category>Object<Function>` | handle API on the category's product | `aqBondObjectDirtyPrice`, `aqSwapObjectParRate` |
+| `aq<Category><SubObject><Function>` | handle API on a named sub-object | `aqBondCurveYield`, `aqBondGeneratorCreate` |
+| `aqObject<Lifecycle>` | generic handle lifecycle | `aqObjectLoad`, `aqObjectSave`, `aqObjectClearCache` |
+| `AQObj*` / `AQOBJ_*` | internal C++ classes / macros (unchanged) | `AQObjCurve`, `AQOBJ_KEY` |
 
-- **8A** `7fd00c7c` — 774 renames (`aqObjects*`→`aqObj<Category>*`,
-  `tryAqObjects*`→`tryAqObj<Category>*`, `aqSwap*`→`aqSwaps*`). 108 src files and
-  7,300 fixture files moved in the same commit as their path-strings.
-- **8B** `30fc5505` — internal `AQO`→`AQObj` (140 tokens, 40 src files, 1,107
-  resource paths, 64 VS filter labels).
-- **8C** — docs + `docs/api_map.csv` + `rebrand/tools/api_pair_check.py`.
+`validation` (`try` + identical name), `AQ_API` and `GTEST` **test names** all
+use these forms. Do not use the earlier `aqObjects*` or `aqObj<Category>*`
+prefixes or plural categories anywhere.
 
-**Category list changed: `Objects` dropped, `FX` added — still 13.** `FX` is its
-own category (Nicholas, this session), *not* folded into `Curves`.
+**Applied so far:** `AQ_XLL` only (step 11, this session — file renames
+`aqBonds/aqDates/aqObj/aqTools.cpp` → `aqBond/aqDate/aqObject/aqTool.cpp`, 53
+functions renamed, `.vcxproj`/`.filters` updated). Its `validation::tryAqObj…`
+call sites still use the OLD wrapper names — `validation` / `AQ_API` / `GTEST` /
+`resources\test` fixtures are the pending sync (MIGRATION_PLAN task 2.6, its own
+branch + green-diff gate).
+
+### History (commits — descriptions only, do not follow the old scheme)
+- **step 8** `7fd00c7c` / `30fc5505` — introduced `aqObjects*` → `aqObj<Category>*`
+  (774 renames, 7,300 fixtures) + internal `AQO`→`AQObj`. Superseded by step 11.
+- **step 9** `db980842` — Options umbrella removed, sub-types promoted. Still holds.
+- **step 11** (this session) — plural → singular, `aqObj<Cat>` → `aq<Cat>Object`,
+  `Vols`→`Vol`. AQ_XLL done; rest pending.
 
 ### Two exclusions that must survive any future AQO/AQObj pass
 `AQObjects` (fixture path segment), `IsAQObject`, `isAQObject` — these already
