@@ -5,8 +5,8 @@
 #include "GetGoogleTestFolder.h"
 #include "RecordMacros.h"						// Logfile Macros
 #include "ResultsProcessor.h"					// Test Rebase Methods
-#include "tryAqObjects.h"							// AQObj Curve Loading et al.
-#include "tryAqObjCurvesMarketData.h"			// Curve Market Data Bumping Method(s)
+#include "tryAqObject.h"							// AQObj Curve Loading et al.
+#include "tryAqCurveMarketData.h"			// Curve Market Data Bumping Method(s)
 #include "CurveMarketData.h"					// Method to clean market data - checkDimensionsAndRemoveUnusedData
 
 #include "ReadDataFile.h"
@@ -45,12 +45,12 @@ namespace google_test
 	TEST_F( TestCurveMarketDataUseParameter, UNIT_LoadOisCurve_DisableAllData )
 	{
 		// Load Curve Market Data
-		const std::string loadMarketData = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + oisMarket_NoData, etrading::JSON );
+		const std::string loadMarketData = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + oisMarket_NoData, etrading::JSON );
 
 		// Get Market Data
-		etrading::VariantMatrix results1 = validation::tryAqObjCurvesMarketDataDisplay( emptyData_OIS, "OIS" );
-		etrading::VariantMatrix results2 = validation::tryAqObjCurvesMarketDataDisplay( emptyData_OIS, "LIBOROISBASISSPREADS" );
-		etrading::VariantMatrix results3 = validation::tryAqObjCurvesMarketDataDisplay( emptyData_OIS, "SWAPS" );
+		etrading::VariantMatrix results1 = validation::tryAqCurveMarketDataDisplay( emptyData_OIS, "OIS" );
+		etrading::VariantMatrix results2 = validation::tryAqCurveMarketDataDisplay( emptyData_OIS, "LIBOROISBASISSPREADS" );
+		etrading::VariantMatrix results3 = validation::tryAqCurveMarketDataDisplay( emptyData_OIS, "SWAPS" );
 	
 		// Expecting Empty Data Results			
 		EXPECT_EQ( 0, results1.size() );
@@ -61,12 +61,12 @@ namespace google_test
 	TEST_F( TestCurveMarketDataUseParameter, UNIT_LoadOisCurve_EnableSingleDataPoint )
 	{
 		// Load Curve Market Data
-		const std::string loadMarketData = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + oisMarket_SinglePoint, etrading::JSON );
+		const std::string loadMarketData = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + oisMarket_SinglePoint, etrading::JSON );
 
 		// Get Market Data
-		etrading::VariantMatrix results1 = validation::tryAqObjCurvesMarketDataDisplay( singleDataPoint_OIS, "OIS" );
-		etrading::VariantMatrix results2 = validation::tryAqObjCurvesMarketDataDisplay( singleDataPoint_OIS, "LIBOROISBASISSPREADS" );
-		etrading::VariantMatrix results3 = validation::tryAqObjCurvesMarketDataDisplay( singleDataPoint_OIS, "SWAPS" );
+		etrading::VariantMatrix results1 = validation::tryAqCurveMarketDataDisplay( singleDataPoint_OIS, "OIS" );
+		etrading::VariantMatrix results2 = validation::tryAqCurveMarketDataDisplay( singleDataPoint_OIS, "LIBOROISBASISSPREADS" );
+		etrading::VariantMatrix results3 = validation::tryAqCurveMarketDataDisplay( singleDataPoint_OIS, "SWAPS" );
 
 		// Expecting Single Data Point Results			
 		EXPECT_EQ( 1, results1.size() );
@@ -77,11 +77,11 @@ namespace google_test
 	TEST_F( TestCurveMarketDataUseParameter, UNIT_LoadSwapCurve_DisableAllData )
 	{
 		// Load Curve Market Data
-		const std::string loadMarketData	= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + swapMarket_NoData, etrading::JSON );
+		const std::string loadMarketData	= validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + swapMarket_NoData, etrading::JSON );
 
 		// Get Market Data
-		etrading::VariantMatrix results1 = validation::tryAqObjCurvesMarketDataDisplay( emptyData_Swap, "FUTURES" );
-		etrading::VariantMatrix results2 = validation::tryAqObjCurvesMarketDataDisplay( emptyData_Swap, "SWAPS" );
+		etrading::VariantMatrix results1 = validation::tryAqCurveMarketDataDisplay( emptyData_Swap, "FUTURES" );
+		etrading::VariantMatrix results2 = validation::tryAqCurveMarketDataDisplay( emptyData_Swap, "SWAPS" );
 	
 		// Expecting Empty Data Results			
 		EXPECT_EQ( 0, results1.size() );
@@ -91,11 +91,11 @@ namespace google_test
 	TEST_F( TestCurveMarketDataUseParameter, UNIT_LoadSwapCurve_EnableSingleDataPoint )
 	{
 		// Load Curve Market Data
-		const std::string loadMarketData = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + swapMarket_SinglePoint, etrading::JSON );
+		const std::string loadMarketData = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + swapMarket_SinglePoint, etrading::JSON );
 
 		// Get Market Data
-		etrading::VariantMatrix results1 = validation::tryAqObjCurvesMarketDataDisplay( singleDataPoint_Swap, "FUTURES" );
-		etrading::VariantMatrix results2 = validation::tryAqObjCurvesMarketDataDisplay( singleDataPoint_Swap, "SWAPS" );
+		etrading::VariantMatrix results1 = validation::tryAqCurveMarketDataDisplay( singleDataPoint_Swap, "FUTURES" );
+		etrading::VariantMatrix results2 = validation::tryAqCurveMarketDataDisplay( singleDataPoint_Swap, "SWAPS" );
 
 		// Expecting Single Data Point Results			
 		EXPECT_EQ( 1, results1.size() );
@@ -105,10 +105,10 @@ namespace google_test
 	TEST_F( TestCurveMarketDataUseParameter, UNIT_LoadTenorBasisCurve_DisableAllData )
 	{
 		// Load Curve Market Data
-		const std::string loadMarketData	= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + tenorBasisMarket_NoData, etrading::JSON );
+		const std::string loadMarketData	= validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + tenorBasisMarket_NoData, etrading::JSON );
 
 		// Get Market Data
-		etrading::VariantMatrix results1 = validation::tryAqObjCurvesMarketDataDisplay( emptyData_TenorBasis, "BASISSWAPS" );
+		etrading::VariantMatrix results1 = validation::tryAqCurveMarketDataDisplay( emptyData_TenorBasis, "BASISSWAPS" );
 	
 		// Expecting Empty Data Results			
 		EXPECT_EQ( 0, results1.size() );
@@ -117,10 +117,10 @@ namespace google_test
 	TEST_F( TestCurveMarketDataUseParameter, UNIT_LoadTenorBasisCurve_EnableSingleDataPoint )
 	{
 		// Load Curve Market Data
-		const std::string loadMarketData = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + tenorBasisMarket_SinglePoint, etrading::JSON );
+		const std::string loadMarketData = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + tenorBasisMarket_SinglePoint, etrading::JSON );
 
 		// Get Market Data
-		etrading::VariantMatrix results1 = validation::tryAqObjCurvesMarketDataDisplay( singleDataPoint_TenorBasis, "BASISSWAPS" );
+		etrading::VariantMatrix results1 = validation::tryAqCurveMarketDataDisplay( singleDataPoint_TenorBasis, "BASISSWAPS" );
 
 		// Expecting Single Data Point Results			
 		EXPECT_EQ( 1, results1.size() );
@@ -129,11 +129,11 @@ namespace google_test
 	TEST_F( TestCurveMarketDataUseParameter, UNIT_LoadXccyCurve_DisableAllData )
 	{
 		// Load Curve Market Data
-		const std::string loadMarketData	= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + xccyMarket_NoData, etrading::JSON );
+		const std::string loadMarketData	= validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + xccyMarket_NoData, etrading::JSON );
 
 		// Get Market Data
-		etrading::VariantMatrix results1 = validation::tryAqObjCurvesMarketDataDisplay( emptyData_Xccy, "FXFWDS" );
-		etrading::VariantMatrix results2 = validation::tryAqObjCurvesMarketDataDisplay( emptyData_Xccy, "XCCYSWAPS" );
+		etrading::VariantMatrix results1 = validation::tryAqCurveMarketDataDisplay( emptyData_Xccy, "FXFWDS" );
+		etrading::VariantMatrix results2 = validation::tryAqCurveMarketDataDisplay( emptyData_Xccy, "XCCYSWAPS" );
 
 		// Expecting Empty Data Results			
 		EXPECT_EQ( 0, results1.size() );
@@ -143,11 +143,11 @@ namespace google_test
 	TEST_F( TestCurveMarketDataUseParameter, UNIT_LoadXccyCurve_EnableSingleDataPoint )
 	{
 		// Load Curve Market Data
-		const std::string loadMarketData = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + xccyMarket_SinglePoint, etrading::JSON );
+		const std::string loadMarketData = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + xccyMarket_SinglePoint, etrading::JSON );
 
 		// Get Market Data
-		etrading::VariantMatrix results1 = validation::tryAqObjCurvesMarketDataDisplay( singleDataPoint_Xccy, "FXFWDS" );
-		etrading::VariantMatrix results2 = validation::tryAqObjCurvesMarketDataDisplay( singleDataPoint_Xccy, "XCCYSWAPS" );
+		etrading::VariantMatrix results1 = validation::tryAqCurveMarketDataDisplay( singleDataPoint_Xccy, "FXFWDS" );
+		etrading::VariantMatrix results2 = validation::tryAqCurveMarketDataDisplay( singleDataPoint_Xccy, "XCCYSWAPS" );
 
 		// Expecting Single Data Point Results			
 		EXPECT_EQ( 1, results1.size() );

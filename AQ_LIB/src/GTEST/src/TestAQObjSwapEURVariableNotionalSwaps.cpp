@@ -1,8 +1,8 @@
 // TestAQObjSwapEURVariableNotionalSwaps.cpp
 
-#include "tryAqObjSwapsSchedule.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectSchedule.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 
 
 #include "Dependency.h"
@@ -39,18 +39,18 @@ namespace
     //
     // curve input files
     //
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
-    extern const char EURYC_1M[]			    = TEST_DIR "EURYC_1M3M_tryAqCurvesCalibrateBasis_inputs";
-    extern const char EURYC_3M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
-    extern const char EURYC_6M[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
-    extern const char EURYC_12M[]			    = TEST_DIR "EURYC_6M12MBasis_tryAqCurvesCalibrateBasis_inputs";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs";
+    extern const char EURYC_1M[]			    = TEST_DIR "EURYC_1M3M_tryAqCurveCalibrateBasis_inputs";
+    extern const char EURYC_3M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurveCalibrateBasis_inputs";
+    extern const char EURYC_6M[]			    = TEST_DIR "EURYC_STD_tryAqCurveCalibrateSwap_inputs";
+    extern const char EURYC_12M[]			    = TEST_DIR "EURYC_6M12MBasis_tryAqCurveCalibrateBasis_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char fixedSchedulePath[]	    = TEST_DIR "EUR_FIXEDSCHEDULE"; // Test files require a suffix. Format :=  EUR_FIXEDSCHEDULE + '_tryAqObjSwapsScheduleCreateBespoke_inputs/outputs' + Index
-    extern const char floatSchedulePath[]       = TEST_DIR "EUR_FLOATSCHEDULE"; // Test files require a suffix. Format :=  EUR_FLOATSCHEDULE + '_tryAqObjSwapsScheduleCreateBespoke_inputs/outputs' + Index
-    extern const char vnsPath[]                 = TEST_DIR "EUR_VNS";           // Test files require a suffix. Format :=  EUR_VNS + '_tryAqObjSwapsCreateFromSchedule_inputs/outputs' + Index
+    extern const char fixedSchedulePath[]	    = TEST_DIR "EUR_FIXEDSCHEDULE"; // Test files require a suffix. Format :=  EUR_FIXEDSCHEDULE + '_tryAqSwapObjectScheduleCreateBespoke_inputs/outputs' + Index
+    extern const char floatSchedulePath[]       = TEST_DIR "EUR_FLOATSCHEDULE"; // Test files require a suffix. Format :=  EUR_FLOATSCHEDULE + '_tryAqSwapObjectScheduleCreateBespoke_inputs/outputs' + Index
+    extern const char vnsPath[]                 = TEST_DIR "EUR_VNS";           // Test files require a suffix. Format :=  EUR_VNS + '_tryAqSwapObjectCreateFromSchedule_inputs/outputs' + Index
 }
 
 namespace google_test
@@ -73,8 +73,8 @@ namespace google_test
         try
         {
             // Load the input files : i.e. the fixed and floating schedules
-            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_inputs.csv" );
-            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_inputs.csv" );
+            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_inputs.csv" );
+            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_inputs.csv" );
             
             const ReadDataFile::Load fixedScheduleInputFile( fixedScheduleInputFilePath );
             const ReadDataFile::Load floatScheduleInputFile( floatScheduleInputFilePath );
@@ -84,17 +84,17 @@ namespace google_test
             std::string     fixedScheduleName       = fixedScheduleInputFile["scheduleName"];
             AQLStringMatrix    fixedScheduleProperties = fixedScheduleInputFile["bespokeScheduleProperties"];
             AQLStringMatrix    fixedScheduleDates      = fixedScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     fixedScheduleResult     = validation::tryAqObjSwapsScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
+	        std::string     fixedScheduleResult     = validation::tryAqSwapObjectScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
 
             // Recreate the Float Schedule
             std::string     floatScheduleName       = floatScheduleInputFile["scheduleName"];
             AQLStringMatrix    floatScheduleProperties = floatScheduleInputFile["bespokeScheduleProperties"];
             AQLStringMatrix    floatScheduleDates      = floatScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     floatScheduleResult     = validation::tryAqObjSwapsScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
+	        std::string     floatScheduleResult     = validation::tryAqSwapObjectScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
 
             // Load the Saved Schedules
-            AQLString fixedScheduleOutputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_outputs.csv" );
-            AQLString floatScheduleOutputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_outputs.csv" );
+            AQLString fixedScheduleOutputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_outputs.csv" );
+            AQLString floatScheduleOutputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_outputs.csv" );
                 
             const ReadDataFile::Load fixedScheduleOutputFile( fixedScheduleOutputFilePath );
             const ReadDataFile::Load floatScheduleOutputFile( floatScheduleOutputFilePath );
@@ -125,8 +125,8 @@ namespace google_test
         try
         {
             // 1. Load the fixed and float Schedules
-            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_inputs.csv" );
-            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_inputs.csv" );
+            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_inputs.csv" );
+            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_inputs.csv" );
                 
             const ReadDataFile::Load fixedScheduleInputFile( fixedScheduleInputFilePath );
             const ReadDataFile::Load floatScheduleInputFile( floatScheduleInputFilePath );
@@ -135,18 +135,18 @@ namespace google_test
             std::string     fixedScheduleName       = fixedScheduleInputFile["scheduleName"];
             AQLStringMatrix    fixedScheduleProperties = fixedScheduleInputFile["bespokeScheduleProperties"];
             AQLStringMatrix    fixedScheduleDates      = fixedScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFixedSchedule       = validation::tryAqObjSwapsScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
+	        std::string     loadFixedSchedule       = validation::tryAqSwapObjectScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
 
             // Recreate the Float Schedule
             std::string     floatScheduleName       = floatScheduleInputFile["scheduleName"];
             AQLStringMatrix    floatScheduleProperties = floatScheduleInputFile["bespokeScheduleProperties"];
             AQLStringMatrix    floatScheduleDates      = floatScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFloatSchedule       = validation::tryAqObjSwapsScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
+	        std::string     loadFloatSchedule       = validation::tryAqSwapObjectScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
 
 
 
             // 2. Load the Variable Notional Swap, which requires the fixed and float schedules to be loaded first
-            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjSwapsCreateFromSchedule_inputs.csv" );
+            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqSwapObjectCreateFromSchedule_inputs.csv" );
             const ReadDataFile::Load vnsInputFile( vnsInputFilePath );
                 
             // Recreate the Variable Notional Swap
@@ -157,7 +157,7 @@ namespace google_test
             AQLStringMatrix    vnsFloatScheduleParams  = vnsInputFile["leg2LVB"];
             bool            validateKeys            = vnsInputFile["validateKeys"];
 	            
-            std::string     vnsResult = validation::tryAqObjSwapsCreateFromSchedule( vnsName,
+            std::string     vnsResult = validation::tryAqSwapObjectCreateFromSchedule( vnsName,
                                                                                         vnsFixedScheduleName,
                                                                                         vnsFloatScheduleName,
                                                                                         vnsFixedScheduleParams,
@@ -168,7 +168,7 @@ namespace google_test
 
 
             // 3. Load the Expected Result
-            AQLString vnsOutputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjSwapsCreateFromSchedule_outputs.csv" );
+            AQLString vnsOutputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqSwapObjectCreateFromSchedule_outputs.csv" );
             const ReadDataFile::Load vnsOutputFile( vnsOutputFilePath );
 
             // Get the expected result
@@ -196,8 +196,8 @@ namespace google_test
         try
         {
             // 1. Load the fixed and float Schedules
-            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_inputs.csv" );
-            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_inputs.csv" );
+            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_inputs.csv" );
+            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_inputs.csv" );
                 
             const ReadDataFile::Load fixedScheduleInputFile( fixedScheduleInputFilePath );
             const ReadDataFile::Load floatScheduleInputFile( floatScheduleInputFilePath );
@@ -206,18 +206,18 @@ namespace google_test
             std::string     fixedScheduleName       = fixedScheduleInputFile["scheduleName"];
             AQLStringMatrix    fixedScheduleProperties = fixedScheduleInputFile["bespokeScheduleProperties"];
             AQLStringMatrix    fixedScheduleDates      = fixedScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFixedSchedule       = validation::tryAqObjSwapsScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
+	        std::string     loadFixedSchedule       = validation::tryAqSwapObjectScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
 
             // Recreate the Float Schedule
             std::string     floatScheduleName       = floatScheduleInputFile["scheduleName"];
             AQLStringMatrix    floatScheduleProperties = floatScheduleInputFile["bespokeScheduleProperties"];
             AQLStringMatrix    floatScheduleDates      = floatScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFloatSchedule       = validation::tryAqObjSwapsScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
+	        std::string     loadFloatSchedule       = validation::tryAqSwapObjectScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
 
 
 
             // 2. Load the Variable Notional Swap, which requires the fixed and float schedules to be loaded first
-            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjSwapsCreateFromSchedule_inputs.csv" );
+            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqSwapObjectCreateFromSchedule_inputs.csv" );
             const ReadDataFile::Load vnsInputFile( vnsInputFilePath );
                 
             // Recreate the Variable Notional Swap
@@ -228,7 +228,7 @@ namespace google_test
             AQLStringMatrix    vnsFloatScheduleParams  = vnsInputFile["leg2LVB"];
             bool            validateKeys            = vnsInputFile["validateKeys"];
 	            
-            std::string     loadVNS = validation::tryAqObjSwapsCreateFromSchedule( vnsName,
+            std::string     loadVNS = validation::tryAqSwapObjectCreateFromSchedule( vnsName,
                                                                                       vnsFixedScheduleName,
                                                                                       vnsFloatScheduleName,
                                                                                       vnsFixedScheduleParams,
@@ -238,7 +238,7 @@ namespace google_test
 
 
             // 3. Get the Swap PV
-            AQLString vnsPVInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjSwapsPV_inputs.csv" );
+            AQLString vnsPVInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqSwapObjectPV_inputs.csv" );
             const ReadDataFile::Load vnsPVInputFile( vnsPVInputFilePath );
 
             // Get the PV Parameters
@@ -246,16 +246,16 @@ namespace google_test
 			etrading::LabelValueBlock        vnsPVCurve  = etrading::fromStringToLVB(vnsPVInputFile["curveCollection"]);
 
             // Price the Variable Notional Swap
-            double          vnsPVResult = validation::tryAqObjSwapsPV( vnsPVName, vnsPVCurve );
+            double          vnsPVResult = validation::tryAqSwapObjectPV( vnsPVName, vnsPVCurve );
 
 
 
             // 4. Load the Expected Result and Compare
             const double tolerance = 0.01;  // Notional of trades is 10MM
 			#if defined(GTEST32)
-            CheckTestResultsAndRebaseOnRequest( vnsPVResult, TEST_DIR, vnsPath, "_tryAqObjSwapsPV_outputs_32bit", tolerance );
+            CheckTestResultsAndRebaseOnRequest( vnsPVResult, TEST_DIR, vnsPath, "_tryAqSwapObjectPV_outputs_32bit", tolerance );
 			#else
-			CheckTestResultsAndRebaseOnRequest( vnsPVResult, TEST_DIR, vnsPath, "_tryAqObjSwapsPV_outputs_64bit", tolerance );
+			CheckTestResultsAndRebaseOnRequest( vnsPVResult, TEST_DIR, vnsPath, "_tryAqSwapObjectPV_outputs_64bit", tolerance );
 			#endif
         }
         catch( const AQLCoreError& m )
@@ -277,8 +277,8 @@ namespace google_test
         try
         {
             // 1. Load the fixed and float Schedules
-            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_inputs.csv" );
-            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_inputs.csv" );
+            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_inputs.csv" );
+            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_inputs.csv" );
                 
             const ReadDataFile::Load fixedScheduleInputFile( fixedScheduleInputFilePath );
             const ReadDataFile::Load floatScheduleInputFile( floatScheduleInputFilePath );
@@ -287,18 +287,18 @@ namespace google_test
             std::string     fixedScheduleName       = fixedScheduleInputFile["scheduleName"];
             AQLStringMatrix    fixedScheduleProperties = fixedScheduleInputFile["bespokeScheduleProperties"];
             AQLStringMatrix    fixedScheduleDates      = fixedScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFixedSchedule       = validation::tryAqObjSwapsScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
+	        std::string     loadFixedSchedule       = validation::tryAqSwapObjectScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
 
             // Recreate the Float Schedule
             std::string     floatScheduleName       = floatScheduleInputFile["scheduleName"];
             AQLStringMatrix    floatScheduleProperties = floatScheduleInputFile["bespokeScheduleProperties"];
             AQLStringMatrix    floatScheduleDates      = floatScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFloatSchedule       = validation::tryAqObjSwapsScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
+	        std::string     loadFloatSchedule       = validation::tryAqSwapObjectScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
 
 
 
             // 2. Load the Variable Notional Swap, which requires the fixed and float schedules to be loaded first
-            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjSwapsCreateFromSchedule_inputs.csv" );
+            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqSwapObjectCreateFromSchedule_inputs.csv" );
             const ReadDataFile::Load vnsInputFile( vnsInputFilePath );
                 
             // Recreate the Variable Notional Swap
@@ -309,7 +309,7 @@ namespace google_test
             AQLStringMatrix    vnsFloatScheduleParams  = vnsInputFile["leg2LVB"];
             bool            validateKeys            = vnsInputFile["validateKeys"];
 	            
-            std::string     loadVNS = validation::tryAqObjSwapsCreateFromSchedule( vnsName,
+            std::string     loadVNS = validation::tryAqSwapObjectCreateFromSchedule( vnsName,
                                                                                       vnsFixedScheduleName,
                                                                                       vnsFloatScheduleName,
                                                                                       vnsFixedScheduleParams,
@@ -320,7 +320,7 @@ namespace google_test
 
 
             // 3. Get the Swap Par Rate
-            AQLString vnsParRateInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjSwapsParRate_inputs.csv" );
+            AQLString vnsParRateInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqSwapObjectParRate_inputs.csv" );
             const ReadDataFile::Load vnsParRateInputFile( vnsParRateInputFilePath );
 
             // Get the PV Parameters
@@ -328,13 +328,13 @@ namespace google_test
 			etrading::LabelValueBlock        vnsParRateCurve  = etrading::fromStringToLVB(vnsParRateInputFile["curveCollection"]);
 
             // Price the Variable Notional Swap
-            double          vnsParRateResult = validation::tryAqObjSwapsParRate( vnsParRateName, vnsParRateCurve );
+            double          vnsParRateResult = validation::tryAqSwapObjectParRate( vnsParRateName, vnsParRateCurve );
 
 
 
             // 4. Load the Expected Result and Compare
             const double tolerance = 1e-008;
-            CheckTestResultsAndRebaseOnRequest( vnsParRateResult, TEST_DIR, vnsPath, "_tryAqObjSwapsParRate_outputs", tolerance );
+            CheckTestResultsAndRebaseOnRequest( vnsParRateResult, TEST_DIR, vnsPath, "_tryAqSwapObjectParRate_outputs", tolerance );
         }
         catch( const AQLCoreError& m )
         {
@@ -355,8 +355,8 @@ namespace google_test
         try
         {
             // 1. Load the fixed and float Schedules
-            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_inputs.csv" );
-            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqObjSwapsScheduleCreateBespoke_inputs.csv" );
+            AQLString fixedScheduleInputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_inputs.csv" );
+            AQLString floatScheduleInputFilePath = etrading::decorateFilename( floatSchedulePath, "", "tryAqSwapObjectScheduleCreateBespoke_inputs.csv" );
                 
             const ReadDataFile::Load fixedScheduleInputFile( fixedScheduleInputFilePath );
             const ReadDataFile::Load floatScheduleInputFile( floatScheduleInputFilePath );
@@ -365,18 +365,18 @@ namespace google_test
             std::string     fixedScheduleName       = fixedScheduleInputFile["scheduleName"];
             AQLStringMatrix    fixedScheduleProperties = fixedScheduleInputFile["bespokeScheduleProperties"];
             AQLStringMatrix    fixedScheduleDates      = fixedScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFixedSchedule       = validation::tryAqObjSwapsScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
+	        std::string     loadFixedSchedule       = validation::tryAqSwapObjectScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
 
             // Recreate the Float Schedule
             std::string     floatScheduleName       = floatScheduleInputFile["scheduleName"];
             AQLStringMatrix    floatScheduleProperties = floatScheduleInputFile["bespokeScheduleProperties"];
             AQLStringMatrix    floatScheduleDates      = floatScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFloatSchedule       = validation::tryAqObjSwapsScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
+	        std::string     loadFloatSchedule       = validation::tryAqSwapObjectScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
 
 
 
             // 2. Load the Variable Notional Swap, which requires the fixed and float schedules to be loaded first
-            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjSwapsCreateFromSchedule_inputs.csv" );
+            AQLString vnsInputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqSwapObjectCreateFromSchedule_inputs.csv" );
             const ReadDataFile::Load vnsInputFile( vnsInputFilePath );
                 
             // Recreate the Variable Notional Swap
@@ -387,7 +387,7 @@ namespace google_test
             AQLStringMatrix    vnsFloatScheduleParams  = vnsInputFile["leg2LVB"];
             bool            validateKeys            = vnsInputFile["validateKeys"];
 	            
-            std::string     loadVNS = validation::tryAqObjSwapsCreateFromSchedule( vnsName,
+            std::string     loadVNS = validation::tryAqSwapObjectCreateFromSchedule( vnsName,
                                                                                       vnsFixedScheduleName,
                                                                                       vnsFloatScheduleName,
                                                                                       vnsFixedScheduleParams,
@@ -398,7 +398,7 @@ namespace google_test
 
 
             // 3. Get the Swap PV01
-            AQLString vnsPV01InputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqObjSwapsPV01_inputs.csv" );
+            AQLString vnsPV01InputFilePath = etrading::decorateFilename( vnsPath, "", "tryAqSwapObjectPV01_inputs.csv" );
             const ReadDataFile::Load vnsPV01InputFile( vnsPV01InputFilePath );
 
             // Get the PV Parameters
@@ -406,13 +406,13 @@ namespace google_test
 			etrading::LabelValueBlock        vnsPV01Curve  = etrading::fromStringToLVB(vnsPV01InputFile["curveCollection"]);
 
             // Price the Variable Notional Swap
-            double          vnsPV01Result = validation::tryAqObjSwapsPV01( vnsPV01Name, vnsPV01Curve );
+            double          vnsPV01Result = validation::tryAqSwapObjectPV01( vnsPV01Name, vnsPV01Curve );
 
 
 
             // 4. Load the Expected Result and Compare
             const double tolerance = 1e-008;
-            CheckTestResultsAndRebaseOnRequest( vnsPV01Result, TEST_DIR, vnsPath, "_tryAqObjSwapsPV01_outputs", tolerance );
+            CheckTestResultsAndRebaseOnRequest( vnsPV01Result, TEST_DIR, vnsPath, "_tryAqSwapObjectPV01_outputs", tolerance );
         }
         catch( const AQLCoreError& m )
         {

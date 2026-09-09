@@ -3,7 +3,7 @@
 #include "TryAqCurvesTenorBasis.h"
 #include "TryAqCurvesXccyBasis.h"
 
-#include "tryAqCurvesDisplay.h"
+#include "tryAqCurveDisplay.h"
 #include "ResultsProcessor.h"
 #include "BindFileToClassConstructor.h"
 #include "Dependency.h"
@@ -42,19 +42,19 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			= TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs";
-    extern const char USDYC_STD[]			= TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs";
-    extern const char GBPYC_OIS[]			= TEST_DIR "GBPYC_OIS_tryAqCurvesCalibrateOIS_inputs";
-    extern const char GBPYC_STD[]			= TEST_DIR "GBPYC_STD_tryAqCurvesCalibrateSwap_inputs";
-    extern const char GBPYC_3M6M[]			= TEST_DIR "GBPYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
-    extern const char GBPYC_XCCY[]			= TEST_DIR "GBPYC_XCCY_tryAqCurvesCalibrateBasis_inputs";
+    extern const char USDYC_OIS[]			= TEST_DIR "USDYC_OIS_tryAqCurveCalibrateOIS_inputs";
+    extern const char USDYC_STD[]			= TEST_DIR "USDYC_STD_tryAqCurveCalibrateSwap_inputs";
+    extern const char GBPYC_OIS[]			= TEST_DIR "GBPYC_OIS_tryAqCurveCalibrateOIS_inputs";
+    extern const char GBPYC_STD[]			= TEST_DIR "GBPYC_STD_tryAqCurveCalibrateSwap_inputs";
+    extern const char GBPYC_3M6M[]			= TEST_DIR "GBPYC_3M6M_tryAqCurveCalibrateBasis_inputs";
+    extern const char GBPYC_XCCY[]			= TEST_DIR "GBPYC_XCCY_tryAqCurveCalibrateBasis_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char curveDisplayInputs[]				= TEST_DIR "GBPYC_XCCY_tryAqCurvesDisplay_inputs.csv";
-    extern const char curveDisplayOutputs_32bit[]		= TEST_DIR "GBPYC_XCCY_tryAqCurvesDisplay_outputs_32bit.csv";
-	extern const char curveDisplayOutputs_64bit[]		= TEST_DIR "GBPYC_XCCY_tryAqCurvesDisplay_outputs_64bit.csv";
+    extern const char curveDisplayInputs[]				= TEST_DIR "GBPYC_XCCY_tryAqCurveDisplay_inputs.csv";
+    extern const char curveDisplayOutputs_32bit[]		= TEST_DIR "GBPYC_XCCY_tryAqCurveDisplay_outputs_32bit.csv";
+	extern const char curveDisplayOutputs_64bit[]		= TEST_DIR "GBPYC_XCCY_tryAqCurveDisplay_outputs_64bit.csv";
 
 }
 
@@ -126,7 +126,7 @@ namespace google_test
     {
         const ReadDataFile::Load inputFile( curveDisplayInputs );
         const DoubleArray results
-            = validation::tryAqCurvesDisplay(
+            = validation::tryAqCurveDisplay(
                   inputFile["curveCollection"],
                   inputFile["curveIndex"] );
 

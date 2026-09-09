@@ -1,9 +1,9 @@
  // Curves
-#include "tryAqObjects.h"
+#include "tryAqObject.h"
 
 // API functions
-#include "tryAqObjInflationPricing.h"
-#include "tryAqObjSwapsCreation.h"
+#include "tryAqInflationObjectPricing.h"
+#include "tryAqSwapObjectCreation.h"
 
 // Helper to extract par rates from a curve
 #include "ExtractCurveCalibrationData.h"
@@ -54,8 +54,8 @@ namespace
 
 
 	// API methods
-	const std::string api_ZC_INFLATIONSWAP_CREATE_TEMPLATE	= TEST_DIR + "GBP_SWAP1@79_tryAqObjSwapsCreateFromGenerator_inputs.csv"; // This template has no maturity date
-	const std::string api_ZC_INFLATIONSWAP_PAR_RATE			= TEST_DIR + "tryAqObjInflationZCSwapParRate_inputs.csv";
+	const std::string api_ZC_INFLATIONSWAP_CREATE_TEMPLATE	= TEST_DIR + "GBP_SWAP1@79_tryAqSwapObjectCreateFromGenerator_inputs.csv"; // This template has no maturity date
+	const std::string api_ZC_INFLATIONSWAP_PAR_RATE			= TEST_DIR + "tryAqInflationObjectZCSwapParRate_inputs.csv";
 
 	// Utility functions
 	std::vector<AQLDate> calculateLaggedDates( const std::vector<AQLDate>& dates, const std::string& tenor )
@@ -143,7 +143,7 @@ namespace
 	void checkCurveCalibrationParameters( const size_t nExpectedRows, const std::string& inflationFixingsHandle, const std::string& inflationCurveHandle )
 	{
 
-		AnyTypeMatrix results = validation::tryAqObjInflationCurveCalibrationParameters( inflationCurveHandle );
+		AnyTypeMatrix results = validation::tryAqInflationCurveCalibrationParameters( inflationCurveHandle );
 
 		const size_t nRows = results.size();
 		EXPECT_EQ(nExpectedRows, nRows) << "#Error: Expected " << nExpectedRows << " rows of calibration results";  // One row per calibration point
@@ -199,9 +199,9 @@ namespace google_test
 
 	TEST_F(TestInflationCurve, TestCalibrationSingleInstrument )
     {
-		auto loadGBPOIS				= validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
-		auto inflationFixingsHandle = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
-		auto inflationCurveHandle	= validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_SINGLE_SWAP, etrading::JSON);
+		auto loadGBPOIS				= validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
+		auto inflationFixingsHandle = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
+		auto inflationCurveHandle	= validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_SINGLE_SWAP, etrading::JSON);
 
 		/* Check the calibration points. We expect two points in total:
 			1. A point corresponding to the asOf date -2M lag, obtained from the fixing table
@@ -214,9 +214,9 @@ namespace google_test
 
 	TEST_F(TestInflationCurve, TestCalibrationManyInstruments)
 	{
-		auto loadGBPOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
-		auto inflationFixingsHandle = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
-		auto inflationCurveHandle	= validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
+		auto loadGBPOIS = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
+		auto inflationFixingsHandle = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
+		auto inflationCurveHandle	= validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
 
 		/* Check the calibration points. We expect 18 points in total:
 			1. A point corresponding to the asOf date -2M lag, obtained from the fixing table
@@ -228,16 +228,16 @@ namespace google_test
 
 	TEST_F(TestInflationCurve, TestCalibrationFirstYear)
 	{
-		auto loadGBPOIS				= validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
-		auto inflationFixingsHandle = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
-		auto inflationCurveHandle	= validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_FIRST_YEAR, etrading::JSON);
+		auto loadGBPOIS				= validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
+		auto inflationFixingsHandle = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
+		auto inflationCurveHandle	= validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_FIRST_YEAR, etrading::JSON);
 
 		/* Check the calibration points. We expect 13 points in total:
 			1. A point corresponding to the asOf date -2M lag, obtained from the fixing table
 			2. 11 "First year" CPI points: 1M, 2M, ... 11M
 			3. A point in 1 year -2M, corresponding to the single ZeroCouponInflationSwap calibration instrument
 		*/
-		AnyTypeMatrix results = validation::tryAqObjInflationCurveCalibrationParameters( inflationCurveHandle );
+		AnyTypeMatrix results = validation::tryAqInflationCurveCalibrationParameters( inflationCurveHandle );
 
 		const size_t nExpectedRows = 13;
 		const size_t nRows = results.size();
@@ -265,9 +265,9 @@ namespace google_test
 
 	TEST_F(TestInflationCurve, TestZCInflationSwapRepricing)
 	{
-		auto loadGBPOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
-		auto inflationFixingsHandle = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
-		auto inflationCurveHandle = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
+		auto loadGBPOIS = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
+		auto inflationFixingsHandle = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
+		auto inflationCurveHandle = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
 
 		// Parameters for creating a ZC Inflation Swap
 		etrading::ReadDataFile::Load createSwap = etrading::ReadDataFile::Load( api_ZC_INFLATIONSWAP_CREATE_TEMPLATE );
@@ -306,9 +306,9 @@ namespace google_test
 			std::string maturityString = std::to_string( maturityExcelDate );
 
 			LabelValueBlock expressionLVB( expressionTemplateLVB, "MATURITYDATE", maturityString );
-			auto swapHandle = validation::tryAqObjSwapsCreateFromGenerator( "dummySwapName", swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccy, validateKeys );
+			auto swapHandle = validation::tryAqSwapObjectCreateFromGenerator( "dummySwapName", swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccy, validateKeys );
 
-			const double calculatedParRate = validation::tryAqObjInflationZCSwapParRate( swapHandle, inflationCurveHandle, valuationSettingsLVB );
+			const double calculatedParRate = validation::tryAqInflationObjectZCSwapParRate( swapHandle, inflationCurveHandle, valuationSettingsLVB );
 			EXPECT_NEAR( swapQuote.instrumentQuote, calculatedParRate, tolerance );
 
 		}
@@ -316,11 +316,11 @@ namespace google_test
 
 	TEST_F( TestInflationCurve, TestAqObjCurvesInflationCPI_OnPillarDates )
 	{
-		auto loadGBPOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
-		auto inflationFixingsHandle = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
-		auto inflationCurveHandle = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
+		auto loadGBPOIS = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
+		auto inflationFixingsHandle = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
+		auto inflationCurveHandle = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
 
-		AnyTypeMatrix calibrationResults = validation::tryAqObjInflationCurveCalibrationParameters(inflationCurveHandle);
+		AnyTypeMatrix calibrationResults = validation::tryAqInflationCurveCalibrationParameters(inflationCurveHandle);
 		
 		/* Check the calibration points. We expect 18 points in total:
 		1. A point corresponding to the asOf date -2M lag, obtained from the fixing table
@@ -388,7 +388,7 @@ namespace google_test
 			const double calibrationValue = boost::get<double>(calibrationResults[i][1]);
 
 			const AQLDate pillarDate = pillarDates[i];
-			const double interpolatedValue = validation::tryAqObjInflationCPI( inflationCurveHandle, pillarDate, inflationResetType, fixLag );
+			const double interpolatedValue = validation::tryAqInflationObjectCPI( inflationCurveHandle, pillarDate, inflationResetType, fixLag );
 				
 			EXPECT_NEAR( calibrationValue, interpolatedValue, tolerance );
 		}
@@ -415,7 +415,7 @@ namespace google_test
 	TEST_F( TestInflationCurve, TestGetCPI )
 	{
 
-		// Check aqObjInflationCPI
+		// Check aqInflationObjectCPI
 		// - on anchor
 		// - on 1yr point and compare against calibration points
 		// - Check with different days of month

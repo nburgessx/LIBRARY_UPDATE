@@ -4,7 +4,7 @@
 #include "TryAqCurvesOis.h"
 #include "TryAqCurvesStd.h"
 #include "TryAqCurvesTenorBasis.h"
-#include "tryAqSwapsStubRate.h"
+#include "tryAqSwapStubRate.h"
 
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;
@@ -24,11 +24,11 @@ namespace
     //
     // Curve input files.
     //
-    extern const char Test1_DIR_EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
-    extern const char Test1_DIR_EURYC_1M[]			= TEST_DIR "EURYC_1M3M_tryAqCurvesCalibrateBasis_inputs";
-    extern const char Test1_DIR_EURYC_3M[]			= TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
-    extern const char Test1_DIR_EURYC_6M[]			= TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
-    extern const char Test1_DIR_EURYC_12M[]			= TEST_DIR "EURYC_3M12MBasis_tryAqCurvesCalibrateBasis_inputs";
+    extern const char Test1_DIR_EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs";
+    extern const char Test1_DIR_EURYC_1M[]			= TEST_DIR "EURYC_1M3M_tryAqCurveCalibrateBasis_inputs";
+    extern const char Test1_DIR_EURYC_3M[]			= TEST_DIR "EURYC_3M6M_tryAqCurveCalibrateBasis_inputs";
+    extern const char Test1_DIR_EURYC_6M[]			= TEST_DIR "EURYC_STD_tryAqCurveCalibrateSwap_inputs";
+    extern const char Test1_DIR_EURYC_12M[]			= TEST_DIR "EURYC_3M12MBasis_tryAqCurveCalibrateBasis_inputs";
 
     extern const char Test2_DIR_EURYC_OIS[]			= TEST_DIR "OIS_inputs";
     extern const char Test2_DIR_EURYC_1M[]			= TEST_DIR "1M_inputs";
@@ -36,32 +36,32 @@ namespace
     extern const char Test2_DIR_EURYC_6M[]			= TEST_DIR "SwapCurve_inputs";
     extern const char Test2_DIR_EURYC_12M[]			= TEST_DIR "12M_inputs";
 
-    extern const char Test3_DIR_EURYC_OIS[]			= TEST_DIR "Test3_EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
-    extern const char Test3_DIR_EURYC_1M[]			= TEST_DIR "Test3_EURYC_1M3M_tryAqCurvesCalibrateBasis_inputs";
-    extern const char Test3_DIR_EURYC_3M[]			= TEST_DIR "Test3_EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
-    extern const char Test3_DIR_EURYC_6M[]			= TEST_DIR "Test3_EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
-    extern const char Test3_DIR_EURYC_12M[]			= TEST_DIR "Test3_EURYC_6M12MBasis_tryAqCurvesCalibrateBasis_inputs";
+    extern const char Test3_DIR_EURYC_OIS[]			= TEST_DIR "Test3_EURYC_OIS_tryAqCurveCalibrateOIS_inputs";
+    extern const char Test3_DIR_EURYC_1M[]			= TEST_DIR "Test3_EURYC_1M3M_tryAqCurveCalibrateBasis_inputs";
+    extern const char Test3_DIR_EURYC_3M[]			= TEST_DIR "Test3_EURYC_3M6M_tryAqCurveCalibrateBasis_inputs";
+    extern const char Test3_DIR_EURYC_6M[]			= TEST_DIR "Test3_EURYC_STD_tryAqCurveCalibrateSwap_inputs";
+    extern const char Test3_DIR_EURYC_12M[]			= TEST_DIR "Test3_EURYC_6M12MBasis_tryAqCurveCalibrateBasis_inputs";
 
-    extern const char Test4_DIR_EURYC_OIS[]			= TEST_DIR "Test4_EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
-    extern const char Test4_DIR_EURYC_1M[]			= TEST_DIR "Test4_EURYC_1M3M_tryAqCurvesCalibrateBasis_inputs";
-    extern const char Test4_DIR_EURYC_3M[]			= TEST_DIR "Test4_EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
-    extern const char Test4_DIR_EURYC_6M[]			= TEST_DIR "Test4_EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
-    extern const char Test4_DIR_EURYC_12M[]			= TEST_DIR "Test4_EURYC_6M12MBasis_tryAqCurvesCalibrateBasis_inputs";
+    extern const char Test4_DIR_EURYC_OIS[]			= TEST_DIR "Test4_EURYC_OIS_tryAqCurveCalibrateOIS_inputs";
+    extern const char Test4_DIR_EURYC_1M[]			= TEST_DIR "Test4_EURYC_1M3M_tryAqCurveCalibrateBasis_inputs";
+    extern const char Test4_DIR_EURYC_3M[]			= TEST_DIR "Test4_EURYC_3M6M_tryAqCurveCalibrateBasis_inputs";
+    extern const char Test4_DIR_EURYC_6M[]			= TEST_DIR "Test4_EURYC_STD_tryAqCurveCalibrateSwap_inputs";
+    extern const char Test4_DIR_EURYC_12M[]			= TEST_DIR "Test4_EURYC_6M12MBasis_tryAqCurveCalibrateBasis_inputs";
     
     //
     // test call input and reference files
     //
-    extern const char Test1_getStubRateInputs[]		= TEST_DIR "EURYC_tryAqSwapsStubRate_inputs";
-    extern const char Test1_getStubRateOutputs[]	= TEST_DIR "EURYC_tryAqSwapsStubRate_outputs";
+    extern const char Test1_getStubRateInputs[]		= TEST_DIR "EURYC_tryAqSwapStubRate_inputs";
+    extern const char Test1_getStubRateOutputs[]	= TEST_DIR "EURYC_tryAqSwapStubRate_outputs";
 
     extern const char Test2_getStubRateInputs[]		= TEST_DIR "Test2_MeProductSwapStubRate_inputs";
     extern const char Test2_getStubRateOutputs[]	= TEST_DIR "Test2_MeProductSwapStubRate_outputs";
 
-    extern const char Test3_getStubRateInputs[]		= TEST_DIR "Test3_EURYC_tryAqSwapsStubRate_inputs";
-    extern const char Test3_getStubRateOutputs[]	= TEST_DIR "Test3_EURYC_tryAqSwapsStubRate_outputs";
+    extern const char Test3_getStubRateInputs[]		= TEST_DIR "Test3_EURYC_tryAqSwapStubRate_inputs";
+    extern const char Test3_getStubRateOutputs[]	= TEST_DIR "Test3_EURYC_tryAqSwapStubRate_outputs";
 
-    extern const char Test4_getStubRateInputs[]		= TEST_DIR "Test4_EURYC_tryAqSwapsStubRate_inputs";
-    extern const char Test4_getStubRateOutputs[]	= TEST_DIR "Test4_EURYC_tryAqSwapsStubRate_outputs";
+    extern const char Test4_getStubRateInputs[]		= TEST_DIR "Test4_EURYC_tryAqSwapStubRate_inputs";
+    extern const char Test4_getStubRateOutputs[]	= TEST_DIR "Test4_EURYC_tryAqSwapStubRate_outputs";
 }
 
 
@@ -93,7 +93,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation::tryAqSwapsStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, true );
+                double stubRate = validation::tryAqSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, true );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test1_getStubRateOutputs, tolerance, i );
             }
@@ -141,7 +141,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation::tryAqSwapsStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
+                double stubRate = validation::tryAqSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test2_getStubRateOutputs, tolerance, i );
             }
@@ -188,7 +188,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation::tryAqSwapsStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
+                double stubRate = validation::tryAqSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test3_getStubRateOutputs, tolerance, i );
             }
@@ -235,7 +235,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation::tryAqSwapsStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
+                double stubRate = validation::tryAqSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test4_getStubRateOutputs, tolerance, i );
             }

@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryAqToolsSetup.h"
+#include "tryAqToolSetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
 #include "CommonConstants.h"
@@ -22,11 +22,11 @@
 #include "TryAqCurvesXccyBasis.h"
 
 // "Generator" API
-#include "tryAqObjCurvesMarketData.h"
-#include "tryAqObjCurvesCalibrate.h"
+#include "tryAqCurveMarketData.h"
+#include "tryAqCurveObjectCalibrate.h"
 
 // Forward Rates Table
-#include "tryAqCurvesForwardRate.h"
+#include "tryAqCurveForwardRate.h"
 
 using etrading::ReadDataFile;
 
@@ -47,112 +47,112 @@ namespace
 	
     // NEW EUR Tests
     // -------------
-    const char ME_USD_OIS_CURVE2[]				= TEST_DIR "USDME_OIS_tryAqCurvesCalibrateOIS_inputs2.csv";
-	const char ME_USD_STD_CURVE2[]				= TEST_DIR "USDME_STD_tryAqCurvesCalibrateSwap_inputs2.csv";
+    const char ME_USD_OIS_CURVE2[]				= TEST_DIR "USDME_OIS_tryAqCurveCalibrateOIS_inputs2.csv";
+	const char ME_USD_STD_CURVE2[]				= TEST_DIR "USDME_STD_tryAqCurveCalibrateSwap_inputs2.csv";
     
-    const char ME_EUR_OIS_CURVE2[]				= TEST_DIR "EURME_OIS_tryAqCurvesCalibrateOIS_inputs2.csv";
-	const char ME_EUR_STD_CURVE2[]				= TEST_DIR "EURME_STD_tryAqCurvesCalibrateSwap_inputs2.csv";
+    const char ME_EUR_OIS_CURVE2[]				= TEST_DIR "EURME_OIS_tryAqCurveCalibrateOIS_inputs2.csv";
+	const char ME_EUR_STD_CURVE2[]				= TEST_DIR "EURME_STD_tryAqCurveCalibrateSwap_inputs2.csv";
 
-    const char GEN_USD_OIS_MARKETDATA2[]		= TEST_DIR "USDGEN_OIS_tryAqObjCurvesMarketDataCreate_inputs2.csv";
-	const char GEN_USD_STD_MARKETDATA2[]		= TEST_DIR "USDGEN_STD_tryAqObjCurvesMarketDataCreate_inputs2.csv";
+    const char GEN_USD_OIS_MARKETDATA2[]		= TEST_DIR "USDGEN_OIS_tryAqCurveMarketDataCreate_inputs2.csv";
+	const char GEN_USD_STD_MARKETDATA2[]		= TEST_DIR "USDGEN_STD_tryAqCurveMarketDataCreate_inputs2.csv";
 
-    const char GEN_EUR_OIS_MARKETDATA2[]		= TEST_DIR "EURGEN_OIS_tryAqObjCurvesMarketDataCreate_inputs2.csv";
-	const char GEN_EUR_STD_MARKETDATA2[]		= TEST_DIR "EURGEN_STD_tryAqObjCurvesMarketDataCreate_inputs2.csv";
+    const char GEN_EUR_OIS_MARKETDATA2[]		= TEST_DIR "EURGEN_OIS_tryAqCurveMarketDataCreate_inputs2.csv";
+	const char GEN_EUR_STD_MARKETDATA2[]		= TEST_DIR "EURGEN_STD_tryAqCurveMarketDataCreate_inputs2.csv";
 
-    const char GEN_USD_OIS_CURVE2[]				= TEST_DIR "USDGEN_OIS_tryAqObjCurvesCalibrate_inputs2.csv";
-	const char GEN_USD_STD_CURVE2[]				= TEST_DIR "USDGEN_STD_tryAqObjCurvesCalibrate_inputs2.csv";
+    const char GEN_USD_OIS_CURVE2[]				= TEST_DIR "USDGEN_OIS_tryAqCurveObjectCalibrate_inputs2.csv";
+	const char GEN_USD_STD_CURVE2[]				= TEST_DIR "USDGEN_STD_tryAqCurveObjectCalibrate_inputs2.csv";
 
-    const char GEN_EUR_OIS_CURVE2[]				= TEST_DIR "EURGEN_OIS_tryAqObjCurvesCalibrate_inputs2.csv";
-	const char GEN_EUR_STD_CURVE2[]				= TEST_DIR "EURGEN_STD_tryAqObjCurvesCalibrate_inputs2.csv";
+    const char GEN_EUR_OIS_CURVE2[]				= TEST_DIR "EURGEN_OIS_tryAqCurveObjectCalibrate_inputs2.csv";
+	const char GEN_EUR_STD_CURVE2[]				= TEST_DIR "EURGEN_STD_tryAqCurveObjectCalibrate_inputs2.csv";
 
 
 	// Curve recording files build using the ME interface
-	const char ME_USD_OIS_CURVE[]				= TEST_DIR "USDME_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-	const char ME_USD_STD_CURVE[]				= TEST_DIR "USDME_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-	const char ME_USD_3X6BASIS_CURVE[]			= TEST_DIR "USDME_3X6BASIS_tryAqCurvesCalibrateBasis_inputs.csv";
-	const char ME_USD_1X3BASIS_CURVE[]			= TEST_DIR "USDME_1X3BASIS_tryAqCurvesCalibrateBasis_inputs.csv";
-	const char ME_USD_3X12BASIS_CURVE[]			= TEST_DIR "USDME_3X12BASIS_tryAqCurvesCalibrateBasis_inputs.csv";
+	const char ME_USD_OIS_CURVE[]				= TEST_DIR "USDME_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+	const char ME_USD_STD_CURVE[]				= TEST_DIR "USDME_STD_tryAqCurveCalibrateSwap_inputs.csv";
+	const char ME_USD_3X6BASIS_CURVE[]			= TEST_DIR "USDME_3X6BASIS_tryAqCurveCalibrateBasis_inputs.csv";
+	const char ME_USD_1X3BASIS_CURVE[]			= TEST_DIR "USDME_1X3BASIS_tryAqCurveCalibrateBasis_inputs.csv";
+	const char ME_USD_3X12BASIS_CURVE[]			= TEST_DIR "USDME_3X12BASIS_tryAqCurveCalibrateBasis_inputs.csv";
 
-    const char ME_EUR_OIS_CURVE[]				= TEST_DIR "EURME_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-	const char ME_EUR_STD_CURVE[]				= TEST_DIR "EURME_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-	const char ME_EUR_3X6BASIS_CURVE[]			= TEST_DIR "EURME_3X6BASIS_tryAqCurvesCalibrateBasis_inputs.csv";
-	const char ME_EUR_XCCY_CURVE[]				= TEST_DIR "EURME_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
+    const char ME_EUR_OIS_CURVE[]				= TEST_DIR "EURME_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+	const char ME_EUR_STD_CURVE[]				= TEST_DIR "EURME_STD_tryAqCurveCalibrateSwap_inputs.csv";
+	const char ME_EUR_3X6BASIS_CURVE[]			= TEST_DIR "EURME_3X6BASIS_tryAqCurveCalibrateBasis_inputs.csv";
+	const char ME_EUR_XCCY_CURVE[]				= TEST_DIR "EURME_XCCY_tryAqCurveCalibrateBasis_inputs.csv";
 
-	const char ME_JPY_OIS_CURVE[]				= TEST_DIR "JPYME_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-	const char ME_JPY_JSCC_SWAP_CURVE[]			= TEST_DIR "JPYME_JSCC_SWAP_tryAqCurvesCalibrateSwap_inputs.csv";
-	const char ME_JPY_JSCC_3X6BASIS_CURVE[]		= TEST_DIR "JPYME_JSCC_3X6BASIS_tryAqCurvesCalibrateBasis_inputs.csv";
-	const char ME_JPY_JSCC_1X6BASIS_CURVE[]		= TEST_DIR "JPYME_JSCC_1X6BASIS_tryAqCurvesCalibrateBasis_inputs.csv";
+	const char ME_JPY_OIS_CURVE[]				= TEST_DIR "JPYME_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+	const char ME_JPY_JSCC_SWAP_CURVE[]			= TEST_DIR "JPYME_JSCC_SWAP_tryAqCurveCalibrateSwap_inputs.csv";
+	const char ME_JPY_JSCC_3X6BASIS_CURVE[]		= TEST_DIR "JPYME_JSCC_3X6BASIS_tryAqCurveCalibrateBasis_inputs.csv";
+	const char ME_JPY_JSCC_1X6BASIS_CURVE[]		= TEST_DIR "JPYME_JSCC_1X6BASIS_tryAqCurveCalibrateBasis_inputs.csv";
 
-	const char ME_JPY_LCH_SWAP_CURVE[]			= TEST_DIR "JPYME_LCH_SWAP_tryAqCurvesCalibrateSwap_inputs.csv";
-	const char ME_JPY_LCH_3X6BASIS_CURVE[]		= TEST_DIR "JPYME_LCH_3X6BASIS_tryAqCurvesCalibrateBasis_inputs.csv";
-	const char ME_JPY_LCH_1X6BASIS_CURVE[]		= TEST_DIR "JPYME_LCH_1X6BASIS_tryAqCurvesCalibrateBasis_inputs.csv";
+	const char ME_JPY_LCH_SWAP_CURVE[]			= TEST_DIR "JPYME_LCH_SWAP_tryAqCurveCalibrateSwap_inputs.csv";
+	const char ME_JPY_LCH_3X6BASIS_CURVE[]		= TEST_DIR "JPYME_LCH_3X6BASIS_tryAqCurveCalibrateBasis_inputs.csv";
+	const char ME_JPY_LCH_1X6BASIS_CURVE[]		= TEST_DIR "JPYME_LCH_1X6BASIS_tryAqCurveCalibrateBasis_inputs.csv";
 
-	const char ME_JPY_XCCY_CURVE[]				= TEST_DIR "JPYME_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
+	const char ME_JPY_XCCY_CURVE[]				= TEST_DIR "JPYME_XCCY_tryAqCurveCalibrateBasis_inputs.csv";
 
-    const char ME_JPY_TIBOR_SWAP_CURVE[]		= TEST_DIR "JPYME_TIBOR_SWAP_tryAqCurvesCalibrateSwap_inputs.csv";
-	const char ME_JPY_TIBOR_6M_BASIS_CURVE[]	= TEST_DIR "JPYME_TIBOR_6M_BASIS_tryAqCurvesCalibrateBasis_inputsNEW.csv";
-	const char ME_JPY_TIBOR_3X6BASIS_CURVE[]	= TEST_DIR "JPYME_TIBOR_3X6BASIS_tryAqCurvesCalibrateBasis_inputsNEW.csv";
-	const char ME_JPY_TIBOR_1X6BASIS_CURVE[]	= TEST_DIR "JPYME_TIBOR_1X6BASIS_tryAqCurvesCalibrateBasis_inputsNEW.csv";
+    const char ME_JPY_TIBOR_SWAP_CURVE[]		= TEST_DIR "JPYME_TIBOR_SWAP_tryAqCurveCalibrateSwap_inputs.csv";
+	const char ME_JPY_TIBOR_6M_BASIS_CURVE[]	= TEST_DIR "JPYME_TIBOR_6M_BASIS_tryAqCurveCalibrateBasis_inputsNEW.csv";
+	const char ME_JPY_TIBOR_3X6BASIS_CURVE[]	= TEST_DIR "JPYME_TIBOR_3X6BASIS_tryAqCurveCalibrateBasis_inputsNEW.csv";
+	const char ME_JPY_TIBOR_1X6BASIS_CURVE[]	= TEST_DIR "JPYME_TIBOR_1X6BASIS_tryAqCurveCalibrateBasis_inputsNEW.csv";
 
 	// -------------------------------------------------------------
 
 	// Curve market data files for use with CurveGenerators
-	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USDGEN_OIS_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_USD_STD_MARKETDATA[]			= TEST_DIR "USDGEN_STD_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_USD_3X6BASIS_MARKETDATA[]	= TEST_DIR "USDGEN_3X6BASIS_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_USD_1X3BASIS_MARKETDATA[]	= TEST_DIR "USDGEN_1X3BASIS_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_USD_3X12BASIS_MARKETDATA[]	= TEST_DIR "USDGEN_3X12BASIS_tryAqObjCurvesMarketDataCreate_inputs.csv";
+	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USDGEN_OIS_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_STD_MARKETDATA[]			= TEST_DIR "USDGEN_STD_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_3X6BASIS_MARKETDATA[]	= TEST_DIR "USDGEN_3X6BASIS_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_1X3BASIS_MARKETDATA[]	= TEST_DIR "USDGEN_1X3BASIS_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_3X12BASIS_MARKETDATA[]	= TEST_DIR "USDGEN_3X12BASIS_tryAqCurveMarketDataCreate_inputs.csv";
 
-	const char GEN_EUR_OIS_MARKETDATA[]			= TEST_DIR "EURGEN_OIS_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_EUR_STD_MARKETDATA[]			= TEST_DIR "EURGEN_STD_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_EUR_3X6BASIS_MARKETDATA[]	= TEST_DIR "EURGEN_3X6BASIS_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_EUR_XCCY_MARKETDATA[]		= TEST_DIR "EURGEN_XCCY_tryAqObjCurvesMarketDataCreate_inputs.csv";
+	const char GEN_EUR_OIS_MARKETDATA[]			= TEST_DIR "EURGEN_OIS_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_EUR_STD_MARKETDATA[]			= TEST_DIR "EURGEN_STD_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_EUR_3X6BASIS_MARKETDATA[]	= TEST_DIR "EURGEN_3X6BASIS_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_EUR_XCCY_MARKETDATA[]		= TEST_DIR "EURGEN_XCCY_tryAqCurveMarketDataCreate_inputs.csv";
 
-	const char GEN_JPY_OIS_MARKETDATA[]			= TEST_DIR "JPYGEN_OIS_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_JPY_JSCC_SWAP_MARKETDATA[]	= TEST_DIR "JPYGEN_JSCC_SWAP_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_JPY_JSCC_3X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_JSCC_3X6BASIS_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_JPY_JSCC_1X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_JSCC_1X6BASIS_tryAqObjCurvesMarketDataCreate_inputs.csv";
+	const char GEN_JPY_OIS_MARKETDATA[]			= TEST_DIR "JPYGEN_OIS_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_JPY_JSCC_SWAP_MARKETDATA[]	= TEST_DIR "JPYGEN_JSCC_SWAP_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_JPY_JSCC_3X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_JSCC_3X6BASIS_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_JPY_JSCC_1X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_JSCC_1X6BASIS_tryAqCurveMarketDataCreate_inputs.csv";
 
-	const char GEN_JPY_LCH_SWAP_MARKETDATA[]	= TEST_DIR "JPYGEN_LCH_SWAP_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_JPY_LCH_3X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_LCH_3X6BASIS_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_JPY_LCH_1X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_LCH_1X6BASIS_tryAqObjCurvesMarketDataCreate_inputs.csv";
+	const char GEN_JPY_LCH_SWAP_MARKETDATA[]	= TEST_DIR "JPYGEN_LCH_SWAP_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_JPY_LCH_3X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_LCH_3X6BASIS_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_JPY_LCH_1X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_LCH_1X6BASIS_tryAqCurveMarketDataCreate_inputs.csv";
 	
-	const char GEN_JPY_XCCY_MARKETDATA[]		= TEST_DIR "JPYGEN_XCCY_tryAqObjCurvesMarketDataCreate_inputs.csv";
+	const char GEN_JPY_XCCY_MARKETDATA[]		= TEST_DIR "JPYGEN_XCCY_tryAqCurveMarketDataCreate_inputs.csv";
 
-    const char GEN_JPY_TIBOR_SWAP_MARKETDATA[]	    = TEST_DIR "JPYGEN_TIBOR_SWAP_tryAqObjCurvesMarketDataCreate_inputs.csv";
-	const char GEN_JPY_TIBOR_6M_BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_TIBOR_6M_BASIS_tryAqObjCurvesMarketDataCreate_inputsNEW.csv";
-	const char GEN_JPY_TIBOR_3X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_TIBOR_3X6BASIS_tryAqObjCurvesMarketDataCreate_inputsNEW.csv";
-	const char GEN_JPY_TIBOR_1X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_TIBOR_1X6BASIS_tryAqObjCurvesMarketDataCreate_inputsNEW.csv";
+    const char GEN_JPY_TIBOR_SWAP_MARKETDATA[]	    = TEST_DIR "JPYGEN_TIBOR_SWAP_tryAqCurveMarketDataCreate_inputs.csv";
+	const char GEN_JPY_TIBOR_6M_BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_TIBOR_6M_BASIS_tryAqCurveMarketDataCreate_inputsNEW.csv";
+	const char GEN_JPY_TIBOR_3X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_TIBOR_3X6BASIS_tryAqCurveMarketDataCreate_inputsNEW.csv";
+	const char GEN_JPY_TIBOR_1X6BASIS_MARKETDATA[]	= TEST_DIR "JPYGEN_TIBOR_1X6BASIS_tryAqCurveMarketDataCreate_inputsNEW.csv";
 
 	// -------------------------------------------------------------
 
 	// Curves built from generator and market data
-	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USDGEN_OIS_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_USD_STD_CURVE[]				= TEST_DIR "USDGEN_STD_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_USD_3X6BASIS_CURVE[]			= TEST_DIR "USDGEN_3X6BASIS_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_USD_1X3BASIS_CURVE[]			= TEST_DIR "USDGEN_1X3BASIS_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_USD_3X12BASIS_CURVE[]			= TEST_DIR "USDGEN_3X12BASIS_tryAqObjCurvesCalibrate_inputs.csv";
+	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USDGEN_OIS_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_USD_STD_CURVE[]				= TEST_DIR "USDGEN_STD_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_USD_3X6BASIS_CURVE[]			= TEST_DIR "USDGEN_3X6BASIS_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_USD_1X3BASIS_CURVE[]			= TEST_DIR "USDGEN_1X3BASIS_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_USD_3X12BASIS_CURVE[]			= TEST_DIR "USDGEN_3X12BASIS_tryAqCurveObjectCalibrate_inputs.csv";
 
-	const char GEN_EUR_OIS_CURVE[]				= TEST_DIR "EURGEN_OIS_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_EUR_STD_CURVE[]				= TEST_DIR "EURGEN_STD_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_EUR_3X6BASIS_CURVE[]			= TEST_DIR "EURGEN_3X6BASIS_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_EUR_XCCY_CURVE[]				= TEST_DIR "EURGEN_XCCY_tryAqObjCurvesCalibrate_inputs.csv";
+	const char GEN_EUR_OIS_CURVE[]				= TEST_DIR "EURGEN_OIS_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_EUR_STD_CURVE[]				= TEST_DIR "EURGEN_STD_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_EUR_3X6BASIS_CURVE[]			= TEST_DIR "EURGEN_3X6BASIS_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_EUR_XCCY_CURVE[]				= TEST_DIR "EURGEN_XCCY_tryAqCurveObjectCalibrate_inputs.csv";
 
-	const char GEN_JPY_OIS_CURVE[]				= TEST_DIR "JPYGEN_OIS_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_JPY_JSCC_SWAP_CURVE[]		= TEST_DIR "JPYGEN_JSCC_SWAP_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_JPY_JSCC_3X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_JSCC_3X6BASIS_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_JPY_JSCC_1X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_JSCC_1X6BASIS_tryAqObjCurvesCalibrate_inputs.csv";
+	const char GEN_JPY_OIS_CURVE[]				= TEST_DIR "JPYGEN_OIS_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_JPY_JSCC_SWAP_CURVE[]		= TEST_DIR "JPYGEN_JSCC_SWAP_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_JPY_JSCC_3X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_JSCC_3X6BASIS_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_JPY_JSCC_1X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_JSCC_1X6BASIS_tryAqCurveObjectCalibrate_inputs.csv";
 	
-	const char GEN_JPY_LCH_SWAP_CURVE[]		= TEST_DIR "JPYGEN_LCH_SWAP_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_JPY_LCH_3X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_LCH_3X6BASIS_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_JPY_LCH_1X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_LCH_1X6BASIS_tryAqObjCurvesCalibrate_inputs.csv";
+	const char GEN_JPY_LCH_SWAP_CURVE[]		= TEST_DIR "JPYGEN_LCH_SWAP_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_JPY_LCH_3X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_LCH_3X6BASIS_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_JPY_LCH_1X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_LCH_1X6BASIS_tryAqCurveObjectCalibrate_inputs.csv";
 	
-	const char GEN_JPY_XCCY_CURVE[]				= TEST_DIR "JPYGEN_XCCY_tryAqObjCurvesCalibrate_inputs.csv";
+	const char GEN_JPY_XCCY_CURVE[]				= TEST_DIR "JPYGEN_XCCY_tryAqCurveObjectCalibrate_inputs.csv";
 
-    const char GEN_JPY_TIBOR_SWAP_CURVE[]		= TEST_DIR "JPYGEN_TIBOR_SWAP_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_JPY_TIBOR_6M_BASIS_CURVE[]	= TEST_DIR "JPYGEN_TIBOR_6M_BASIS_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_JPY_TIBOR_3X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_TIBOR_3X6BASIS_tryAqObjCurvesCalibrate_inputs.csv";
-	const char GEN_JPY_TIBOR_1X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_TIBOR_1X6BASIS_tryAqObjCurvesCalibrate_inputs.csv";
+    const char GEN_JPY_TIBOR_SWAP_CURVE[]		= TEST_DIR "JPYGEN_TIBOR_SWAP_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_JPY_TIBOR_6M_BASIS_CURVE[]	= TEST_DIR "JPYGEN_TIBOR_6M_BASIS_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_JPY_TIBOR_3X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_TIBOR_3X6BASIS_tryAqCurveObjectCalibrate_inputs.csv";
+	const char GEN_JPY_TIBOR_1X6BASIS_CURVE[]	= TEST_DIR "JPYGEN_TIBOR_1X6BASIS_tryAqCurveObjectCalibrate_inputs.csv";
 }
 
 namespace google_test
@@ -173,7 +173,7 @@ namespace google_test
 		
 		std::string objectName = aqObjCurveGeneratorName;
 
-		validation::tryAqObjCurvesCalibrate(	objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqCurveObjectCalibrate(	objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -254,7 +254,7 @@ namespace google_test
 		const AQLString rollConvention    = "NORMAL";
 		const AQLString frequency         = "Monthly";
 
-		validation::tryAqObjCurvesForwardRatesTable( fixingDates, forwardRates, curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency );
+		validation::tryAqCurveObjectForwardRatesTable( fixingDates, forwardRates, curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency );
 	}
 
 	/* @brief			Check forward rate consistency between ME and Generator curves
@@ -272,7 +272,7 @@ namespace google_test
 		DoubleMatrix genForwardRates;
 		getForwardRatesForCollection( genCurveCollection, curveIndices, genFixingDates, genForwardRates );
 
-		// First some basic sanity checks on the result of calling tryAqObjCurvesForwardRatesTable()
+		// First some basic sanity checks on the result of calling tryAqCurveObjectForwardRatesTable()
 		if ( aqRatesFixingDates.size() != genFixingDates.size() )
 		{
 			FAIL() << "aqRatesFixingDates has different number of dates to genFixingDates: " << aqRatesFixingDates.size() << " vs " << genFixingDates.size() << std::endl;
@@ -315,7 +315,7 @@ namespace google_test
 			}
 		}
 
-		validation::tryAqToolsClearEntityPool();
+		validation::tryAqToolClearEntityPool();
 	}
 
 	TEST_F( TestCurveGeneratorForwardRates, CONSISTENCY_AqVsAQObjCurveForwardRatesFor25Y_USD )

@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "AQLCoreError.h"
 #include "InitializeETrading.h"
-#include "tryAqObjSwapsCreation.h"
+#include "tryAqSwapObjectCreation.h"
 
 #include <gTest/gTest.h>
 using etrading::ReadDataFile;
@@ -23,7 +23,7 @@ namespace google_test
     std::string createSwapFromGenerator( std::string tradePrefix )
     {
         // FilePath
-        const std::string filePath = TEST_DIR + tradePrefix + "_tryAqObjSwapsCreateFromGenerator_inputs.csv";
+        const std::string filePath = TEST_DIR + tradePrefix + "_tryAqSwapObjectCreateFromGenerator_inputs.csv";
         
         // Load File
         const ReadDataFile::Load inputFile( filePath.c_str() );
@@ -37,7 +37,7 @@ namespace google_test
         bool validateKeys                                   = inputFile["validateKeys"];
         
         // Create Swap
-        std::string swapNameResult = validation::tryAqObjSwapsCreateFromGenerator( swapName,
+        std::string swapNameResult = validation::tryAqSwapObjectCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock(expressionLVB),
                                                                                       etrading::LabelValueBlock(swapPropertiesLVB),
@@ -50,7 +50,7 @@ namespace google_test
     std::string createSwapFromGeneratorRepeat2( std::string tradePrefix )
     {
         // FilePath
-        const std::string filePath = TEST_DIR + tradePrefix + "_tryAqObjSwapsCreateFromGenerator_inputs.csv";
+        const std::string filePath = TEST_DIR + tradePrefix + "_tryAqSwapObjectCreateFromGenerator_inputs.csv";
         
         // Load File
         const ReadDataFile::Load inputFile( filePath.c_str() );
@@ -64,14 +64,14 @@ namespace google_test
         bool validateKeys                                   = inputFile["validateKeys"];
         
         // Create Swap
-        std::string swapNameResult = validation::tryAqObjSwapsCreateFromGenerator( swapName,
+        std::string swapNameResult = validation::tryAqSwapObjectCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock(expressionLVB),
                                                                                       etrading::LabelValueBlock(swapPropertiesLVB),
                                                                                       isXccySwap,
                                                                                       validateKeys );
 
-        swapNameResult = validation::tryAqObjSwapsCreateFromGenerator( swapName,
+        swapNameResult = validation::tryAqSwapObjectCreateFromGenerator( swapName,
                                                                           swapGeneratorName,
                                                                           etrading::LabelValueBlock(expressionLVB),
                                                                           etrading::LabelValueBlock(swapPropertiesLVB),

@@ -5,7 +5,7 @@
  */
 
 #pragma once
-#include "tryAqObjCurvesMarketData.h"
+#include "tryAqCurveMarketData.h"
 
 namespace google_test
 {

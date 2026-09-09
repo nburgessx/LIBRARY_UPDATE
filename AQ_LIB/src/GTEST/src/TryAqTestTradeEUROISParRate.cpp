@@ -2,8 +2,8 @@
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
 #include "TryAqCurvesOis.h"
-#include "tryAqOISParRate.h"
-#include "tryAqOISPV.h"
+#include "tryAqOisParRate.h"
+#include "tryAqOisPV.h"
 
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;
@@ -32,16 +32,16 @@ namespace
     //
     // Curve input files.
     //
-    extern const char DIR_EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char DIR_EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char getParRateInputs[]     = TEST_DIR "EURYC_tryAqOISParRate_inputs";
-    extern const char getParRateOutputs[]	 = TEST_DIR "EURYC_tryAqOISParRate_outputs";
+    extern const char getParRateInputs[]     = TEST_DIR "EURYC_tryAqOisParRate_inputs";
+    extern const char getParRateOutputs[]	 = TEST_DIR "EURYC_tryAqOisParRate_outputs";
 
-    extern const char getPVInputs[]			 = TEST_DIR "EURYC_tryAqOISPV_inputs";
-    extern const char getPVOutputs[]		 = TEST_DIR "EURYC_tryAqOISPV_outputs";
+    extern const char getPVInputs[]			 = TEST_DIR "EURYC_tryAqOisPV_inputs";
+    extern const char getPVOutputs[]		 = TEST_DIR "EURYC_tryAqOisPV_outputs";
 }
 
 
@@ -71,7 +71,7 @@ namespace google_test
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getParRateInputs, i ) );
 
                 AQLStringMatrix oisLVB = inputFile["oisLVB"];
-                double parRate = validation::tryAqOISParRate( oisLVB, true );
+                double parRate = validation::tryAqOisParRate( oisLVB, true );
 
                 if ( etrading::CreateDataFile::rebaseResultsEnabled() )
                 {
@@ -121,7 +121,7 @@ namespace google_test
 
                 AQLStringMatrix oisLVB = inputFile["oisLVB"];
 
-                double pv = validation::tryAqOISPV( oisLVB, true );
+                double pv = validation::tryAqOisPV( oisLVB, true );
 
                 CheckTestResultsAndRebaseOnRequest( pv, TEST_DIR, getPVOutputs, pvTolerance, i );
             }

@@ -86,10 +86,10 @@
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapDelta_ARR.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapFromBespokeSchedule.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapFromStructuredBespokeSchedule.cpp" />
-    <ClCompile Include="..\src\GTEST\src\TestAqDatesECB.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestAqDateECB.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAqMathConvexity.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAqMathVolatility.cpp" />
-    <ClCompile Include="..\src\GTEST\src\TestAqToolsLVB.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestAqToolLVB.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestBondCurves.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestBondPricesUKGilt.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestBondSpreads.cpp" />
@@ -103,7 +103,7 @@
     <ClCompile Include="..\src\GTEST\src\TestLiborOisBasisSwaps.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapDeltaDualBootstrap.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapGenerator.cpp" />
-    <ClCompile Include="..\src\GTEST\src\TestAqObjCurvesCalibrate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestAqCurveObjectCalibrate.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAqMathEuropeanIRSwaption.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestLeakChecker.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAQObjFra.cpp" />
@@ -174,8 +174,8 @@
     <ClCompile Include="..\src\GTEST\src\TestAqCurvesCheapestToDeliver_USD_SEK.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAqCurvesGroupingJPY.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAqCurvesOisAUD.cpp" />
-    <ClCompile Include="..\src\GTEST\src\TestAqDatesFuturesContract.cpp" />
-    <ClCompile Include="..\src\GTEST\src\TestAqDatesYearFraction.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestAqDateFuturesContract.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestAqDateYearFraction.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestMirDateFunctions.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAqMathNormalDistribution.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestRiskSwapDeltaLadder.cpp" />

@@ -12,9 +12,9 @@
 #include "GetGoogleTestFolder.h"
 #include "ResultsProcessor.h"
 #include "CoreEnumerations.h"
-#include "tryAqObjects.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqObject.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "RepriceCalibrationInstruments.h"
@@ -36,7 +36,7 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectZAR3MJ_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameZAR3MJ, etrading::JSON );
+        const std::string curveObjectZAR3MJ_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameZAR3MJ, etrading::JSON );
     };
 
 
@@ -86,7 +86,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20200416", swapTerms[i] ); // Effective Date = 20200416
-            const double actualResult                    = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqSwapObjectParRate( swapObject, curveLVB );
             const double expectedResult                  = parRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );

@@ -3,7 +3,7 @@
 #include "TryAqCurvesTenorBasis.h"
 #include "TryAqCurvesXccyBasis.h"
 #include "TryAqCurvesFwdFxConst.h"
-#include "tryAqCurvesDisplay.h"
+#include "tryAqCurveDisplay.h"
 #include "ResultsProcessor.h"
 #include "BindFileToClassConstructor.h"
 #include "Dependency.h"
@@ -35,20 +35,20 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			= TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs";
-    extern const char USDYC_STD[]			= TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs";
-    extern const char EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
-    extern const char EURYC_STD[]			= TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
-    extern const char EURYC_3M6M[]			= TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
-    extern const char EURYC_XCCY[]			= TEST_DIR "EURYC_XCCY_tryAqCurvesCalibrateBasis_inputs";
-    extern const char USDYC_FWDEUR[]		= TEST_DIR "USDYC_FWDEUR_tryAqCurvesCalibrateFXForwards_inputs";
+    extern const char USDYC_OIS[]			= TEST_DIR "USDYC_OIS_tryAqCurveCalibrateOIS_inputs";
+    extern const char USDYC_STD[]			= TEST_DIR "USDYC_STD_tryAqCurveCalibrateSwap_inputs";
+    extern const char EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs";
+    extern const char EURYC_STD[]			= TEST_DIR "EURYC_STD_tryAqCurveCalibrateSwap_inputs";
+    extern const char EURYC_3M6M[]			= TEST_DIR "EURYC_3M6M_tryAqCurveCalibrateBasis_inputs";
+    extern const char EURYC_XCCY[]			= TEST_DIR "EURYC_XCCY_tryAqCurveCalibrateBasis_inputs";
+    extern const char USDYC_FWDEUR[]		= TEST_DIR "USDYC_FWDEUR_tryAqCurveCalibrateFXForwards_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char curveDisplayInputs[]				= TEST_DIR "USDYC_USDDF_EURCSA_tryAqCurvesDisplay_inputs";
-    extern const char curveDisplayOutputs_32bit[]				= TEST_DIR "USDYC_USDDF_EURCSA_tryAqCurvesDisplay_outputs_32bit";
-	extern const char curveDisplayOutputs_64bit[]				= TEST_DIR "USDYC_USDDF_EURCSA_tryAqCurvesDisplay_outputs_64bit";
+    extern const char curveDisplayInputs[]				= TEST_DIR "USDYC_USDDF_EURCSA_tryAqCurveDisplay_inputs";
+    extern const char curveDisplayOutputs_32bit[]				= TEST_DIR "USDYC_USDDF_EURCSA_tryAqCurveDisplay_outputs_32bit";
+	extern const char curveDisplayOutputs_64bit[]				= TEST_DIR "USDYC_USDDF_EURCSA_tryAqCurveDisplay_outputs_64bit";
 }
 
 namespace google_test
@@ -113,7 +113,7 @@ namespace google_test
     {
         const ReadDataFile::Load inputFile( curveDisplayInputs );
         const DoubleArray results
-            = validation::tryAqCurvesDisplay(
+            = validation::tryAqCurveDisplay(
                   inputFile["curveCollection"],
                   inputFile["curveIndex"] );
 

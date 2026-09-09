@@ -2,8 +2,8 @@
 #include "BindFileToClassConstructor.h"
 #include "Dependency.h"
 #include "ReadDataFile.h"
-#include "tryAqCurvesDiscountFactor.h"
-#include "tryAqCurvesForwardRate.h"
+#include "tryAqCurveDiscountFactor.h"
+#include "tryAqCurveForwardRate.h"
 #include "ResultsProcessor.h"
 #include <gTest/gTest.h>
 
@@ -20,16 +20,16 @@ namespace
     const double tolerance = 1e-8;
 
     // curve input file
-    extern const char CurveOisInputs[]					= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
+    extern const char CurveOisInputs[]					= TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
 
     //
     // test call input and reference files
     //
-    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "EURYC_OIS_tryAqCurvesDiscountFactorsFromYearFractions_inputs.csv";
-    extern const char CheckDiscountFactorsOutputs[]		= TEST_DIR "EURYC_OIS_tryAqCurvesDiscountFactorsFromYearFractions_outputs.csv";
+    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "EURYC_OIS_tryAqCurveDiscountFactorsFromYearFractions_inputs.csv";
+    extern const char CheckDiscountFactorsOutputs[]		= TEST_DIR "EURYC_OIS_tryAqCurveDiscountFactorsFromYearFractions_outputs.csv";
 
-    extern const char CheckForwardRatesInputs[]			= TEST_DIR "EURYC_OIS_tryAqCurvesForwardRates_inputs.csv";
-    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "EURYC_OIS_tryAqCurvesForwardRates_outputs.csv";
+    extern const char CheckForwardRatesInputs[]			= TEST_DIR "EURYC_OIS_tryAqCurveForwardRates_inputs.csv";
+    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "EURYC_OIS_tryAqCurveForwardRates_outputs.csv";
 }
 
 namespace google_test
@@ -57,7 +57,7 @@ namespace google_test
 
         const DoubleArray yearFractions = inputFile["yearFractions"];
 
-        DoubleArray results = validation::tryAqCurvesDiscountFactorsFromYearFractions( yearFractions,
+        DoubleArray results = validation::tryAqCurveDiscountFactorsFromYearFractions( yearFractions,
                               inputFile["dayCount"],
                               inputFile["curveCollection"],
                               inputFile["curveIndex"] );
@@ -75,7 +75,7 @@ namespace google_test
         DateVector fromDateVector = inputFile["fromDates"];
         DateVector toDateVector = inputFile["toDates"];
 
-        const DoubleArray results = validation::tryAqCurvesForwardRatesFromForwardDates( fromDateVector,
+        const DoubleArray results = validation::tryAqCurveForwardRatesFromForwardDates( fromDateVector,
                                     toDateVector,
                                     inputFile["curveCollection"],
                                     inputFile["curveIndex"] );

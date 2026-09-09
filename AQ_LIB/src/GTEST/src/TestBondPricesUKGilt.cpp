@@ -8,8 +8,8 @@
 #include "ResultsProcessor.h"
 #include "GetGoogleTestFolder.h"
 
-#include "tryAqObjBonds.h"
-#include "tryAqObjects.h"
+#include "tryAqBondObject.h"
+#include "tryAqObject.h"
 
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;
@@ -28,10 +28,10 @@ namespace
 
 	const std::string bondFile = TEST_DIR + "BOND";
 
-	const std::string priceFunctionInput     = "tryAqObjBondsPrice_inputs";
-    const std::string priceFunctionOutput    = "tryAqObjBondsPrice_outputs";
-	const std::string yieldFunctionInput	 = "tryAqObjBondsYield_inputs";
-	const std::string yieldfunctionOuput	 = "tryAqObjBondsYield_outputs";
+	const std::string priceFunctionInput     = "tryAqBondObjectPrice_inputs";
+    const std::string priceFunctionOutput    = "tryAqBondObjectPrice_outputs";
+	const std::string yieldFunctionInput	 = "tryAqBondObjectYield_inputs";
+	const std::string yieldfunctionOuput	 = "tryAqBondObjectYield_outputs";
 
 }
 
@@ -56,12 +56,12 @@ namespace google_test
 				 const std::string priceOutputFilename = bondFileName + "_" + priceFunctionOutput + ".csv";
 
 				// Load Bond
-				auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + bondInputFilename, etrading::JSON);
+				auto loadBond = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + bondInputFilename, etrading::JSON);
 
 				//1) Check Price Matching
 				const ReadDataFile::Load priceInputFile(priceInputFilename.c_str());
 
-				auto actualPrices = validation::tryAqObjBondsPrice(priceInputFile["bondObjectName"], priceInputFile["settlementDates"], priceInputFile["yields"]);
+				auto actualPrices = validation::tryAqBondObjectPrice(priceInputFile["bondObjectName"], priceInputFile["settlementDates"], priceInputFile["yields"]);
 				CheckTestResultsAndRebaseOnRequest(actualPrices, TEST_DIR.c_str(), priceOutputFilename.c_str(), priceTolerance);
 
              }
@@ -97,7 +97,7 @@ namespace google_test
 				const std::string yieldOutputFilename = bondFileName + "_" + yieldfunctionOuput + ".csv";
 
 				// Load Bond
-				auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + bondInputFilename, etrading::JSON);
+				auto loadBond = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + bondInputFilename, etrading::JSON);
 
 				//2) Check Yield Matching
 				const ReadDataFile::Load yieldInputFile(yieldInputFilename.c_str());
@@ -105,8 +105,8 @@ namespace google_test
 				std::vector< AQLDate > settlementDates = yieldInputFile["settlementDates"];
 				std::vector< double > prices = yieldInputFile["prices"];
 
-				auto actualYields = validation::tryAqObjBondsYield(bondObjectName, settlementDates, prices);
-				auto compoundYields = validation::tryAqObjBondsCompoundYields(bondObjectName, settlementDates, prices);
+				auto actualYields = validation::tryAqBondObjectYield(bondObjectName, settlementDates, prices);
+				auto compoundYields = validation::tryAqBondObjectCompoundYield(bondObjectName, settlementDates, prices);
 
 				CheckTestResultsAndRebaseOnRequest(actualYields, TEST_DIR.c_str(), yieldOutputFilename.c_str(), yieldTolerance);
 				CheckTestResultsAndRebaseOnRequest(compoundYields, TEST_DIR.c_str(), yieldOutputFilename.c_str(), yieldTolerance);

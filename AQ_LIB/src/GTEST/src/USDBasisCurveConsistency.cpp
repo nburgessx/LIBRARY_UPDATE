@@ -12,9 +12,9 @@
 #include "GetGoogleTestFolder.h"
 #include "ResultsProcessor.h"
 #include "CoreEnumerations.h"
-#include "tryAqObjects.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqObject.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "DataUtilities.h" // AQ_TO_STRING macros
@@ -40,11 +40,11 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectUSDOIS_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string curveObjectUSD3ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string curveObjectUSD6ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
-        const std::string curveObjectUSD1ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD1ML, etrading::JSON );
-        const std::string curveObjectUSD12ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD12ML, etrading::JSON );
+        const std::string curveObjectUSDOIS_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string curveObjectUSD3ML_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string curveObjectUSD6ML_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string curveObjectUSD1ML_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD1ML, etrading::JSON );
+        const std::string curveObjectUSD12ML_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD12ML, etrading::JSON );
     };
 
     
@@ -82,7 +82,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180814", basisTerms[i] ); // Effective Date = 20180814
-            const double actualResult                    = validation::tryAqObjSwapsSpread( swapObject, curveLVB ) / 10000; // Basis Points
+            const double actualResult                    = validation::tryAqSwapObjectSpread( swapObject, curveLVB ) / 10000; // Basis Points
             const double expectedResult                  = basisSpreads[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );
@@ -123,7 +123,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180814", basisTerms[i] ); // Effective Date = 20180814
-            const double actualResult                    = validation::tryAqObjSwapsSpread( swapObject, curveLVB ) / 10000; // Basis Points
+            const double actualResult                    = validation::tryAqSwapObjectSpread( swapObject, curveLVB ) / 10000; // Basis Points
             const double expectedResult                  = basisSpreads[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );
@@ -165,7 +165,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180814", basisTerms[i] ); // Effective Date = 20180814
-            const double actualResult                    = validation::tryAqObjSwapsSpread( swapObject, curveLVB ) / 10000; // Basis Points
+            const double actualResult                    = validation::tryAqSwapObjectSpread( swapObject, curveLVB ) / 10000; // Basis Points
             const double expectedResult                  = basisSpreads[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );

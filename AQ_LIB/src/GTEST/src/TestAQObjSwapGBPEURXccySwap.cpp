@@ -8,8 +8,8 @@
 #include "TryAqCurvesFwdFxConst.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -37,26 +37,26 @@ namespace
     // curve input files
     //
     
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
-    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
-    extern const char GBPYC_OIS[]			    = TEST_DIR "GBPYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char GBPYC_STD[]			    = TEST_DIR "GBPYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    extern const char GBPYC_3M6M[]			    = TEST_DIR "GBPYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
-    extern const char GBPYC_XCCY[]			    = TEST_DIR "GBPYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
-    extern const char GBPYC_FWDEUR[]		    = TEST_DIR "GBPYC_FWDEUR_tryAqCurvesCalibrateFXForwards_inputs.csv";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurveCalibrateBasis_inputs.csv";
+    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryAqCurveCalibrateBasis_inputs.csv";
+    extern const char GBPYC_OIS[]			    = TEST_DIR "GBPYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char GBPYC_STD[]			    = TEST_DIR "GBPYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    extern const char GBPYC_3M6M[]			    = TEST_DIR "GBPYC_3M6M_tryAqCurveCalibrateBasis_inputs.csv";
+    extern const char GBPYC_XCCY[]			    = TEST_DIR "GBPYC_XCCY_tryAqCurveCalibrateBasis_inputs.csv";
+    extern const char GBPYC_FWDEUR[]		    = TEST_DIR "GBPYC_FWDEUR_tryAqCurveCalibrateFXForwards_inputs.csv";
 
     //
     // test call input and reference files
     //
     
-    extern const char xccySwapInputs[]	        = TEST_DIR "XCCY3@2_tryAqObjSwapsCreate_inputs";
-    extern const char parSpreadInputs[]	        = TEST_DIR "XCCY3@2_tryAqObjSwapsParSpread_inputs";
-    extern const char parSpreadOutputs[]	    = TEST_DIR "XCCY3@2_tryAqObjSwapsParSpread_outputs";
-    extern const char parSpreadOutputs64[]	    = TEST_DIR "XCCY3@2_tryAqObjSwapsParSpread_outputs64_";
+    extern const char xccySwapInputs[]	        = TEST_DIR "XCCY3@2_tryAqSwapObjectCreate_inputs";
+    extern const char parSpreadInputs[]	        = TEST_DIR "XCCY3@2_tryAqSwapObjectParSpread_inputs";
+    extern const char parSpreadOutputs[]	    = TEST_DIR "XCCY3@2_tryAqSwapObjectParSpread_outputs";
+    extern const char parSpreadOutputs64[]	    = TEST_DIR "XCCY3@2_tryAqSwapObjectParSpread_outputs64_";
 
 
 }
@@ -101,7 +101,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqSwapObjectCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the Par Spread Inputs & the Basis Spreads
                 std::string swapName            = parSpreadInputFile["swapName"];
@@ -109,7 +109,7 @@ namespace google_test
                 AQLStringMatrix fixingTableLVB     = parSpreadInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 auto spreadLegName              = parSpreadInputFile["spreadLegName"];
                 
-                double actualBasisSpread        = validation::tryAqObjSwapsParSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName );
+                double actualBasisSpread        = validation::tryAqSwapObjectParSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualBasisSpread, TEST_DIR, parSpreadOutputsFilename, basisSpreadTolerance );

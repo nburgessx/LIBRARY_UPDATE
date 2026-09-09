@@ -4,9 +4,9 @@
 
 #include "TryAqCurvesOis.h"
 #include "TryAqCurvesStd.h"
-#include "tryAqObjects.h"
-#include "tryAqCurvesForwardRate.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqObject.h"
+#include "tryAqCurveForwardRate.h"
+#include "tryAqSwapObjectPricing.h"
 
 #include <gTest/gTest.h>
 
@@ -34,14 +34,14 @@ namespace
 	//
     // test call input and reference files
     //
-    extern const char Contiguous_ForwardRatesInputs[]				= TEST_DIR "Contiguous_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
-    extern const char Contiguous_ForwardRatesOutputs[]				= TEST_DIR "Contiguous_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
+    extern const char Contiguous_ForwardRatesInputs[]				= TEST_DIR "Contiguous_EURYC_EUR6ML_tryAqCurveForwardRatesFromForwardDates_inputs.csv";
+    extern const char Contiguous_ForwardRatesOutputs[]				= TEST_DIR "Contiguous_EURYC_EUR6ML_tryAqCurveForwardRatesFromForwardDates_outputs.csv";
 
-	extern const char SerialRate_ForwardRatesInputs[]				= TEST_DIR "SerialRate_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
-	extern const char SerialRate_ForwardRatesOutputs[]				= TEST_DIR "SerialRate_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
+	extern const char SerialRate_ForwardRatesInputs[]				= TEST_DIR "SerialRate_EURYC_EUR6ML_tryAqCurveForwardRatesFromForwardDates_inputs.csv";
+	extern const char SerialRate_ForwardRatesOutputs[]				= TEST_DIR "SerialRate_EURYC_EUR6ML_tryAqCurveForwardRatesFromForwardDates_outputs.csv";
 
-	extern const char SerialDF_ForwardRatesInputs[]					= TEST_DIR "SerialDF_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
-	extern const char SerialDF_ForwardRatesOutputs[]				= TEST_DIR "SerialDF_EURYC_EUR6ML_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
+	extern const char SerialDF_ForwardRatesInputs[]					= TEST_DIR "SerialDF_EURYC_EUR6ML_tryAqCurveForwardRatesFromForwardDates_inputs.csv";
+	extern const char SerialDF_ForwardRatesOutputs[]				= TEST_DIR "SerialDF_EURYC_EUR6ML_tryAqCurveForwardRatesFromForwardDates_outputs.csv";
 
 	// curve input files
 	//
@@ -59,15 +59,15 @@ namespace google_test
 
     TEST_F(TryAqTestCurveStdSerialFRA, SNAPSHOT_CheckForwardRates_Contiguous)
     {
-		validation::tryAqObjLoad(EURYC_OIS);
-		validation::tryAqObjLoad(Contiguous_EURYC_STD);
+		validation::tryAqObjectLoad(EURYC_OIS);
+		validation::tryAqObjectLoad(Contiguous_EURYC_STD);
 
 		const ReadDataFile::Load inputFile(Contiguous_ForwardRatesInputs);
 
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation::tryAqCurvesForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryAqCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, Contiguous_ForwardRatesOutputs, tolerance);
     }
@@ -75,30 +75,30 @@ namespace google_test
 	TEST_F(TryAqTestCurveStdSerialFRA, SNAPSHOT_CheckForwardRates_SerialRate)
 	{
 
-		validation::tryAqObjLoad(EURYC_OIS);
-		validation::tryAqObjLoad(SerialRate_EURYC_STD);
+		validation::tryAqObjectLoad(EURYC_OIS);
+		validation::tryAqObjectLoad(SerialRate_EURYC_STD);
 
 		const ReadDataFile::Load inputFile(SerialRate_ForwardRatesInputs);
 
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation::tryAqCurvesForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryAqCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, SerialRate_ForwardRatesOutputs, tolerance);
 	}
 
 	TEST_F(TryAqTestCurveStdSerialFRA, SNAPSHOT_CheckForwardRates_SerialDF)
 	{
-		validation::tryAqObjLoad(EURYC_OIS);
-		validation::tryAqObjLoad(SerialDF_EURYC_STD);
+		validation::tryAqObjectLoad(EURYC_OIS);
+		validation::tryAqObjectLoad(SerialDF_EURYC_STD);
 
 		const ReadDataFile::Load inputFile(SerialDF_ForwardRatesInputs);
 
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation::tryAqCurvesForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryAqCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, SerialDF_ForwardRatesOutputs, tolerance);
 	}

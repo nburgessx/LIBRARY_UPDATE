@@ -5,8 +5,8 @@
 #include "TryAqCurvesXccyBasis.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -33,20 +33,20 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
-    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurveCalibrateBasis_inputs.csv";
+    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryAqCurveCalibrateBasis_inputs.csv";
 
     //
     // test call input and reference files
     //
-    extern const char zeroCouponSwapInputs[]	= TEST_DIR "XCCYFIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjSwapsCreate_inputs";
-    extern const char pvInputs[]	        = TEST_DIR "XCCYFIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjSwapsPV_inputs";
-    extern const char pvOutputs[]	    = TEST_DIR "XCCYFIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjSwapsPV_outputs";
-    extern const char pvOutputs64[]	    = TEST_DIR "XCCYFIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjSwapsPV_outputs64_";
+    extern const char zeroCouponSwapInputs[]	= TEST_DIR "XCCYFIXEDFIXEDZEROCOUPONSWAP@1_tryAqSwapObjectCreate_inputs";
+    extern const char pvInputs[]	        = TEST_DIR "XCCYFIXEDFIXEDZEROCOUPONSWAP@1_tryAqSwapObjectPV_inputs";
+    extern const char pvOutputs[]	    = TEST_DIR "XCCYFIXEDFIXEDZEROCOUPONSWAP@1_tryAqSwapObjectPV_outputs";
+    extern const char pvOutputs64[]	    = TEST_DIR "XCCYFIXEDFIXEDZEROCOUPONSWAP@1_tryAqSwapObjectPV_outputs64_";
 
 }
 
@@ -88,12 +88,12 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryAqObjSwapsCreate( swapName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqSwapObjectCreate( swapName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 AQLStringMatrix curveCollectionLVB = pvInputFile["curveCollections"];
                 AQLStringMatrix fixingTableLVB     = pvInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 
-                double actualPV = validation::tryAqObjSwapsPV( swapName, curveCollectionLVB, "", fixingTableLVB);
+                double actualPV = validation::tryAqSwapObjectPV( swapName, curveCollectionLVB, "", fixingTableLVB);
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualPV, TEST_DIR, pvOutputFileName, tolerance );

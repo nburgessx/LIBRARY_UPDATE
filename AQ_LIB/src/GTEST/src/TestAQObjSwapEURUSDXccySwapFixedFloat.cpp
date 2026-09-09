@@ -5,8 +5,8 @@
 #include "TryAqCurvesXccyBasis.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -33,31 +33,31 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
-    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurveCalibrateBasis_inputs.csv";
+    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryAqCurveCalibrateBasis_inputs.csv";
 
     //
     // test call input and reference files
     //
-    extern const char fixedLegSpreadSwapInputs[]				= TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjSwapsCreate_inputs";
-    extern const char fixedLegSpreadSwapParSpreadInputs[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjSwapsParSpread_inputs";
-    extern const char fixedLegSpreadSwapParSpreadOutputs[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjSwapsParSpread_outputs";
-    extern const char fixedLegSpreadSwapParSpreadOutputs64[]	= TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjSwapsParSpread_outputs64_";
-    extern const char fixedLegSpreadSwapSpreadInputs[]	        = TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjSwapsSpread_inputs";
-    extern const char fixedLegSpreadSwapSpreadOutputs[]			= TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjSwapsSpread_outputs";
-    extern const char fixedLegSpreadSwapSpreadOutputs64[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryAqObjSwapsSpread_outputs64_";
+    extern const char fixedLegSpreadSwapInputs[]				= TEST_DIR "FIXEDLEGSPREAD@15_tryAqSwapObjectCreate_inputs";
+    extern const char fixedLegSpreadSwapParSpreadInputs[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryAqSwapObjectParSpread_inputs";
+    extern const char fixedLegSpreadSwapParSpreadOutputs[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryAqSwapObjectParSpread_outputs";
+    extern const char fixedLegSpreadSwapParSpreadOutputs64[]	= TEST_DIR "FIXEDLEGSPREAD@15_tryAqSwapObjectParSpread_outputs64_";
+    extern const char fixedLegSpreadSwapSpreadInputs[]	        = TEST_DIR "FIXEDLEGSPREAD@15_tryAqSwapObjectSpread_inputs";
+    extern const char fixedLegSpreadSwapSpreadOutputs[]			= TEST_DIR "FIXEDLEGSPREAD@15_tryAqSwapObjectSpread_outputs";
+    extern const char fixedLegSpreadSwapSpreadOutputs64[]	    = TEST_DIR "FIXEDLEGSPREAD@15_tryAqSwapObjectSpread_outputs64_";
 
-    extern const char floatLegSpreadSwapInputs[]				= TEST_DIR "FLOATLEGSPREAD@15_tryAqObjSwapsCreate_inputs";
-    extern const char floatLegSpreadSwapParSpreadInputs[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryAqObjSwapsParSpread_inputs";
-    extern const char floatLegSpreadSwapParSpreadOutputs[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryAqObjSwapsParSpread_outputs";
-    extern const char floatLegSpreadSwapParSpreadOutputs64[]	= TEST_DIR "FLOATLEGSPREAD@15_tryAqObjSwapsParSpread_outputs64_";
-    extern const char floatLegSpreadSwapSpreadInputs[]	        = TEST_DIR "FLOATLEGSPREAD@15_tryAqObjSwapsSpread_inputs";
-    extern const char floatLegSpreadSwapSpreadOutputs[]			= TEST_DIR "FLOATLEGSPREAD@15_tryAqObjSwapsSpread_outputs";
-    extern const char floatLegSpreadSwapSpreadOutputs64[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryAqObjSwapsSpread_outputs64_";
+    extern const char floatLegSpreadSwapInputs[]				= TEST_DIR "FLOATLEGSPREAD@15_tryAqSwapObjectCreate_inputs";
+    extern const char floatLegSpreadSwapParSpreadInputs[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryAqSwapObjectParSpread_inputs";
+    extern const char floatLegSpreadSwapParSpreadOutputs[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryAqSwapObjectParSpread_outputs";
+    extern const char floatLegSpreadSwapParSpreadOutputs64[]	= TEST_DIR "FLOATLEGSPREAD@15_tryAqSwapObjectParSpread_outputs64_";
+    extern const char floatLegSpreadSwapSpreadInputs[]	        = TEST_DIR "FLOATLEGSPREAD@15_tryAqSwapObjectSpread_inputs";
+    extern const char floatLegSpreadSwapSpreadOutputs[]			= TEST_DIR "FLOATLEGSPREAD@15_tryAqSwapObjectSpread_outputs";
+    extern const char floatLegSpreadSwapSpreadOutputs64[]	    = TEST_DIR "FLOATLEGSPREAD@15_tryAqSwapObjectSpread_outputs64_";
 
 }
 
@@ -95,7 +95,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqSwapObjectCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = inputFile["swapName"];
@@ -103,7 +103,7 @@ namespace google_test
                 AQLStringMatrix fixingTableLVB     = inputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 std::string spreadLegName       = inputFile["spreadLegName"];
                 
-                double actualSwapParSpread          = validation::tryAqObjSwapsParSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName.c_str() );
+                double actualSwapParSpread          = validation::tryAqSwapObjectParSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName.c_str() );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParSpread, TEST_DIR, outputsFilename, tolerance );
@@ -143,7 +143,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqSwapObjectCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = inputFile["swapName"];
@@ -151,7 +151,7 @@ namespace google_test
                 AQLStringMatrix fixingTableLVB     = inputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 std::string spreadLegName       = inputFile["spreadLegName"];
                 
-                double actualSwapSpread          = validation::tryAqObjSwapsSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName.c_str() );
+                double actualSwapSpread          = validation::tryAqSwapObjectSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName.c_str() );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapSpread, TEST_DIR, outputsFilename, tolerance );
@@ -190,7 +190,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqSwapObjectCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = inputFile["swapName"];
@@ -198,7 +198,7 @@ namespace google_test
                 AQLStringMatrix fixingTableLVB     = inputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 std::string spreadLegName       = inputFile["spreadLegName"];
                 
-                double actualSwapParSpread          = validation::tryAqObjSwapsParSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName.c_str() );
+                double actualSwapParSpread          = validation::tryAqSwapObjectParSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName.c_str() );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParSpread, TEST_DIR, outputsFilename, tolerance );
@@ -238,7 +238,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqSwapObjectCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = inputFile["swapName"];
@@ -246,7 +246,7 @@ namespace google_test
                 AQLStringMatrix fixingTableLVB     = inputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 std::string spreadLegName       = inputFile["spreadLegName"];
                 
-                double actualSwapSpread          = validation::tryAqObjSwapsSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName.c_str() );
+                double actualSwapSpread          = validation::tryAqSwapObjectSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName.c_str() );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapSpread, TEST_DIR, outputsFilename, tolerance );

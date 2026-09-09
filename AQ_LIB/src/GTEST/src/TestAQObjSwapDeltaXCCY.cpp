@@ -5,12 +5,12 @@
 #include "TryAqCurvesXccyBasis.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 
 // Risk calculation
-#include "tryAqObjSwapsDelta.h"
-#include "tryAqObjRatesFixingTable.h"
+#include "tryAqSwapObjectDelta.h"
+#include "tryAqRateFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // Curve Macros are Here !!!
@@ -35,49 +35,49 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]					= TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]					= TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char USDYC_OIS[]					= TEST_DIR "USDYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]					= TEST_DIR "USDYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
 
-    extern const char EURYC_OIS[]					= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]					= TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    extern const char EURYC_3M6M[]					= TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
-    extern const char EURYC_XCCY[]					= TEST_DIR "EURYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char EURYC_OIS[]					= TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]					= TEST_DIR "EURYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_3M6M[]					= TEST_DIR "EURYC_3M6M_tryAqCurveCalibrateBasis_inputs.csv";
+    extern const char EURYC_XCCY[]					= TEST_DIR "EURYC_XCCY_tryAqCurveCalibrateBasis_inputs.csv";
 
-	extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char JPYYC_JSCC_STD[]				= TEST_DIR "JPYYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    extern const char JPYYC_LCH_6M[]				= TEST_DIR "JPYYC_LCH6M_tryAqCurvesCalibrateBasis_inputs.csv";
-	extern const char JPYYC_LCH_3M[]				= TEST_DIR "JPYYC_LCH3M_tryAqCurvesCalibrateBasis_inputs.csv";
-    extern const char JPYYC_XCCY[]					= TEST_DIR "JPYYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
+	extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char JPYYC_JSCC_STD[]				= TEST_DIR "JPYYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    extern const char JPYYC_LCH_6M[]				= TEST_DIR "JPYYC_LCH6M_tryAqCurveCalibrateBasis_inputs.csv";
+	extern const char JPYYC_LCH_3M[]				= TEST_DIR "JPYYC_LCH3M_tryAqCurveCalibrateBasis_inputs.csv";
+    extern const char JPYYC_XCCY[]					= TEST_DIR "JPYYC_XCCY_tryAqCurveCalibrateBasis_inputs.csv";
 
     //
     // test call input and reference files
     //
-	extern const char xccySwapInputs1_Swap1[]		= TEST_DIR "XCCY1@4_tryAqObjSwapsCreate_inputs_1.csv";
-	extern const char xccySwapInputs1_Swap2[]		= TEST_DIR "XCCY2@1_tryAqObjSwapsCreate_inputs_1.csv";
+	extern const char xccySwapInputs1_Swap1[]		= TEST_DIR "XCCY1@4_tryAqSwapObjectCreate_inputs_1.csv";
+	extern const char xccySwapInputs1_Swap2[]		= TEST_DIR "XCCY2@1_tryAqSwapObjectCreate_inputs_1.csv";
 
-	extern const char xccySwapInputs2_Swap1[]		= TEST_DIR "XCCY1@4_tryAqObjSwapsCreate_inputs_2.csv";
-	extern const char xccySwapInputs2_Swap2[]		= TEST_DIR "XCCY2@1_tryAqObjSwapsCreate_inputs_2.csv";
+	extern const char xccySwapInputs2_Swap1[]		= TEST_DIR "XCCY1@4_tryAqSwapObjectCreate_inputs_2.csv";
+	extern const char xccySwapInputs2_Swap2[]		= TEST_DIR "XCCY2@1_tryAqSwapObjectCreate_inputs_2.csv";
 
-	extern const char raw_delta_ladder_outputs1_32[]	= "tryAqObjSwapsDeltaLadder_outputs_1.csv";
-	extern const char raw_delta_ladder_outputs1_64[]	= "tryAqObjSwapsDeltaLadder_outputs_1_64bit.csv";
+	extern const char raw_delta_ladder_outputs1_32[]	= "tryAqSwapObjectDeltaLadder_outputs_1.csv";
+	extern const char raw_delta_ladder_outputs1_64[]	= "tryAqSwapObjectDeltaLadder_outputs_1_64bit.csv";
 
-	extern const char raw_delta_ladder_outputs2_32[]	= "tryAqObjSwapsDeltaLadder_outputs_2.csv";
-	extern const char raw_delta_ladder_outputs2_64[]	= "tryAqObjSwapsDeltaLadder_outputs_2_64bit.csv";
+	extern const char raw_delta_ladder_outputs2_32[]	= "tryAqSwapObjectDeltaLadder_outputs_2.csv";
+	extern const char raw_delta_ladder_outputs2_64[]	= "tryAqSwapObjectDeltaLadder_outputs_2_64bit.csv";
 
-	extern const char raw_delta_ladder_outputs3_32[]	= "tryAqObjSwapsDeltaLadder_outputs_3.csv";
-	extern const char raw_delta_ladder_outputs3_64[]	= "tryAqObjSwapsDeltaLadder_outputs_3_64bit.csv";
+	extern const char raw_delta_ladder_outputs3_32[]	= "tryAqSwapObjectDeltaLadder_outputs_3.csv";
+	extern const char raw_delta_ladder_outputs3_64[]	= "tryAqSwapObjectDeltaLadder_outputs_3_64bit.csv";
 
-	extern const char delta_ladder_outputs1_32[]		= TEST_DIR "tryAqObjSwapsDeltaLadder_outputs_1.csv";
-	extern const char delta_ladder_outputs1_64[]		= TEST_DIR "tryAqObjSwapsDeltaLadder_outputs_1_64bit.csv";
+	extern const char delta_ladder_outputs1_32[]		= TEST_DIR "tryAqSwapObjectDeltaLadder_outputs_1.csv";
+	extern const char delta_ladder_outputs1_64[]		= TEST_DIR "tryAqSwapObjectDeltaLadder_outputs_1_64bit.csv";
 
-	extern const char delta_ladder_outputs2_32[]		= TEST_DIR "tryAqObjSwapsDeltaLadder_outputs_2.csv";
-	extern const char delta_ladder_outputs2_64[]		= TEST_DIR "tryAqObjSwapsDeltaLadder_outputs_2_64bit.csv";
+	extern const char delta_ladder_outputs2_32[]		= TEST_DIR "tryAqSwapObjectDeltaLadder_outputs_2.csv";
+	extern const char delta_ladder_outputs2_64[]		= TEST_DIR "tryAqSwapObjectDeltaLadder_outputs_2_64bit.csv";
 
-	extern const char delta_ladder_outputs3_32[]		= TEST_DIR "tryAqObjSwapsDeltaLadder_outputs_3.csv";
-	extern const char delta_ladder_outputs3_64[]		= TEST_DIR "tryAqObjSwapsDeltaLadder_outputs_3_64bit.csv";
+	extern const char delta_ladder_outputs3_32[]		= TEST_DIR "tryAqSwapObjectDeltaLadder_outputs_3.csv";
+	extern const char delta_ladder_outputs3_64[]		= TEST_DIR "tryAqSwapObjectDeltaLadder_outputs_3_64bit.csv";
 
-	extern const char deltaLadderInputs[]			= TEST_DIR "tryAqObjSwapsDeltaLadder_inputs.csv";  // ValuationCCY is USD 
-    extern const char deltaLadderInputs1[]			= TEST_DIR "tryAqObjSwapsDeltaLadder_inputs_1.csv";  // ValuationCCY is USD 
+	extern const char deltaLadderInputs[]			= TEST_DIR "tryAqSwapObjectDeltaLadder_inputs.csv";  // ValuationCCY is USD 
+    extern const char deltaLadderInputs1[]			= TEST_DIR "tryAqSwapObjectDeltaLadder_inputs_1.csv";  // ValuationCCY is USD 
 
 
 	std::string helperCreateSwapFromSwapGenerator(const char* swapGeneratorInputs, const char* swapInputs)
@@ -85,7 +85,7 @@ namespace
 		// Swap Generator
         const ReadDataFile::Load swapGeneratorInputFile( swapGeneratorInputs );
 		AQLStringMatrix swapGeneratorLVB = swapGeneratorInputFile[ "swapGeneratorLVB" ];
-		std::string swapGeneratorName = validation::tryAqObjSwapsGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
+		std::string swapGeneratorName = validation::tryAqSwapGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
 
 		// Swap
 		const ReadDataFile::Load swapInputFile( swapInputs );
@@ -94,7 +94,7 @@ namespace
 		AQLStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
-		return validation::tryAqObjSwapsCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		return validation::tryAqSwapObjectCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 
 	std::string createSwapFromDataFile( const char* swapInputs )
@@ -105,7 +105,7 @@ namespace
 		AQLStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
-		return validation::tryAqObjSwapsCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
+		return validation::tryAqSwapObjectCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
 	};
 
 }
@@ -150,7 +150,7 @@ namespace google_test
 		AQLStringVector pillarNames;
 		AQLStringVector headers;
 		DoubleMatrix deltas;
-		validation::tryAqObjSwapsDeltaLadder(headers,
+		validation::tryAqSwapObjectDeltaLadder(headers,
 												pillarNames,
 												deltas,
 												swapNames,
@@ -261,7 +261,7 @@ namespace google_test
 		AQLStringVector pillarNames;
 		AQLStringVector headers;
 		DoubleMatrix deltas;
-		validation::tryAqObjSwapsDeltaLadder(headers,
+		validation::tryAqSwapObjectDeltaLadder(headers,
 												pillarNames,
 												deltas,
 												swapNames,
@@ -372,7 +372,7 @@ namespace google_test
 		AQLStringVector pillarNames;
 		AQLStringVector headers;
 		DoubleMatrix deltas;
-		validation::tryAqObjSwapsDeltaLadder( headers,
+		validation::tryAqSwapObjectDeltaLadder( headers,
 												 pillarNames,
 												 deltas,
 												 swapNames,

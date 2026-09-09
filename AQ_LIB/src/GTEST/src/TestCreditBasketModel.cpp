@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryAqToolsSetup.h"
+#include "tryAqToolSetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
 #include "ResultsProcessor.h"
@@ -15,15 +15,15 @@
 #include "CurveOis.h"
 #include "AQLMathDateUtilities.h"
 
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectPricing.h"
 #include "JSONInfoBlock.h"          // JSON InfoBlock Helpers
 
-#include "tryAqObjCurvesMarketData.h"
-#include "tryAqObjCurvesCalibrate.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqCurveMarketData.h"
+#include "tryAqCurveObjectCalibrate.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 
-#include "tryAqDates.h"
+#include "tryAqDate.h"
 
 using etrading::ReadDataFile;
 
@@ -44,15 +44,15 @@ namespace
 	// -------------------------------------------------------------
 
 	// Curve market data files for use with CurveGenerators
-	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@6_tryAqObjCurvesMarketDataCreate_inputs.csv";
+	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@6_tryAqCurveMarketDataCreate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Curves built from generator and market data
-	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryAqObjCurvesCalibrate_inputs.csv";
+	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryAqCurveObjectCalibrate_inputs.csv";
 
 	// Build Credit Basket Model
-	const char CREDIT_BASKET_MODEL[]			= TEST_DIR "CREDITBASKETMODEL1@14_tryAqObjCreditBasketModelCreate_inputs.csv";
+	const char CREDIT_BASKET_MODEL[]			= TEST_DIR "CREDITBASKETMODEL1@14_tryAqCreditObjectBasketModelCreate_inputs.csv";
 
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
@@ -119,7 +119,7 @@ namespace
 	}
 
 
-	/* @brief			Builds AQObj MarketData Object by invoking the tryAqObjCurvesMarketDataCreate() API.
+	/* @brief			Builds AQObj MarketData Object by invoking the tryAqCurveMarketDataCreate() API.
 	*                   The code loops over all of the capitalized data keys in the specified filename and uses
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
@@ -156,7 +156,7 @@ namespace
 			}
 		}
 
-		validation::tryAqObjCurvesMarketDataCreate( objectName, marketDataKeys, infoBlocks );
+		validation::tryAqCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
 	}
 
 	/* @brief			Builds Generator curve by invoking the tryAqObjCurvesCalibration() API.
@@ -173,7 +173,7 @@ namespace
 		
 		std::string objectName = aqObjCurveGeneratorName;
 
-		validation::tryAqObjCurvesCalibrate(	objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqCurveObjectCalibrate(	objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -201,7 +201,7 @@ namespace
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 		infoBlocks.push_back( getTableInfoFromStringMatrix( creditModels ));
 
-		std::string objectName = validation::tryAqObjCreditBasketModelCreate( creditBasketModelName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryAqCreditObjectBasketModelCreate( creditBasketModelName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -252,7 +252,7 @@ namespace
         const etrading::JSONInfoBlockTuples modelData       = { modelInfoBlock, cdsInfoBlock };
 
         // Calibrate and Create the Credit Model
-        const std::string result = validation::tryAqObjCreditModelCreate( creditModelName, modelDataTypes, modelData );
+        const std::string result = validation::tryAqCreditModelCreate( creditModelName, modelDataTypes, modelData );
 		return result;
 	}
 
@@ -295,9 +295,9 @@ namespace google_test
 		{
 			AQLDate toDate(stoppingDates[i].c_str());
 
-			const double singleSurvivalProbability = validation::tryAqObjCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
+			const double singleSurvivalProbability = validation::tryAqCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
 
-			const double basketSurvivalProbability = validation::tryAqObjCreditBasketModelSurvivalProbability( creditBasketModelName, toDate, fromDate );
+			const double basketSurvivalProbability = validation::tryAqCreditObjectBasketModelSurvivalProbability( creditBasketModelName, toDate, fromDate );
 			
 			ASSERT_NEAR( singleSurvivalProbability, basketSurvivalProbability, tolerance );
 		}

@@ -1,7 +1,7 @@
 
 // TestUtilitiesSetup.cpp
 #include <string>
-#include "tryAqToolsSetup.h"
+#include "tryAqToolSetup.h"
 #include "OMPThreadManager.h"
 
 // Include: Google Test Library

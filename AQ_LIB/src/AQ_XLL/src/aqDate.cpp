@@ -8,7 +8,7 @@
 #include <cmath>
 
 #include <aqXllTools.h>
-#include <tryAqDates.h>
+#include <tryAqDate.h>
 
 using namespace aq_xll;
 
@@ -70,7 +70,7 @@ XLO_FUNC_START( aqDateFromTenor(
 	    toDateVector( startDates, true, "StartDates" );
 
 	const DateVector ends =
-	    validation::tryAqDatesFromTenor(
+	    validation::tryAqDateFromTenor(
 	        starts,
 	        toAQLString( tenor ),
 	        toAQLString( businessDayAdj ),
@@ -96,7 +96,7 @@ XLO_FUNC_START( aqDateFromYearFraction(
 {
     AQ_XLL_GUARD
 
-    const AQLDate end = validation::tryAqDatesFromYearFraction( toAQLDate( startDate ),
+    const AQLDate end = validation::tryAqDateFromYearFraction( toAQLDate( startDate ),
 	                                                            yearFraction.get<double>(),
 	                                                            toAQLString( dayCount ) );
 

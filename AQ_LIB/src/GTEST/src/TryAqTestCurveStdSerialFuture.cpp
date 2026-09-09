@@ -4,9 +4,9 @@
 
 #include "TryAqCurvesOis.h"
 #include "TryAqCurvesStd.h"
-#include "tryAqObjects.h"
-#include "tryAqCurvesForwardRate.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqObject.h"
+#include "tryAqCurveForwardRate.h"
+#include "tryAqSwapObjectPricing.h"
 
 #include <gTest/gTest.h>
 
@@ -33,35 +33,35 @@ namespace
     //
     // curve input files
     //
-    extern const char Contiguous_USDYC_OIS[]					= TEST_DIR "Contiguous_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char Contiguous_USDYC_STD[]					= TEST_DIR "Contiguous_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char Contiguous_USDYC_OIS[]					= TEST_DIR "Contiguous_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char Contiguous_USDYC_STD[]					= TEST_DIR "Contiguous_STD_tryAqCurveCalibrateSwap_inputs.csv";
 
-	extern const char SerialRate_USDYC_OIS[]					= TEST_DIR "SerialRate_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-	extern const char SerialRate_USDYC_STD[]					= TEST_DIR "SerialRate_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+	extern const char SerialRate_USDYC_OIS[]					= TEST_DIR "SerialRate_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+	extern const char SerialRate_USDYC_STD[]					= TEST_DIR "SerialRate_STD_tryAqCurveCalibrateSwap_inputs.csv";
 	
-	extern const char SerialDF_USDYC_OIS[]						= TEST_DIR "SerialDF_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-	extern const char SerialDF_USDYC_STD[]						= TEST_DIR "SerialDF_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+	extern const char SerialDF_USDYC_OIS[]						= TEST_DIR "SerialDF_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+	extern const char SerialDF_USDYC_STD[]						= TEST_DIR "SerialDF_STD_tryAqCurveCalibrateSwap_inputs.csv";
 	
 	//
     // test call input and reference files
     //
-    extern const char Contiguous_ForwardRatesInputs[]				= TEST_DIR "Contiguous_USD3M_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
-    extern const char Contiguous_ForwardRatesOutputs[]				= TEST_DIR "Contiguous_USD3M_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
+    extern const char Contiguous_ForwardRatesInputs[]				= TEST_DIR "Contiguous_USD3M_tryAqCurveForwardRatesFromForwardDates_inputs.csv";
+    extern const char Contiguous_ForwardRatesOutputs[]				= TEST_DIR "Contiguous_USD3M_tryAqCurveForwardRatesFromForwardDates_outputs.csv";
 
-	extern const char SerialRate_ForwardRatesInputs[]				= TEST_DIR "SerialRate_USD3M_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
-	extern const char SerialRate_ForwardRatesOutputs[]				= TEST_DIR "SerialRate_USD3M_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
+	extern const char SerialRate_ForwardRatesInputs[]				= TEST_DIR "SerialRate_USD3M_tryAqCurveForwardRatesFromForwardDates_inputs.csv";
+	extern const char SerialRate_ForwardRatesOutputs[]				= TEST_DIR "SerialRate_USD3M_tryAqCurveForwardRatesFromForwardDates_outputs.csv";
 
-	extern const char SerialDF_ForwardRatesInputs[]					= TEST_DIR "SerialDF_USD3M_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
-	extern const char SerialDF_ForwardRatesOutputs[]				= TEST_DIR "SerialDF_USD3M_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
+	extern const char SerialDF_ForwardRatesInputs[]					= TEST_DIR "SerialDF_USD3M_tryAqCurveForwardRatesFromForwardDates_inputs.csv";
+	extern const char SerialDF_ForwardRatesOutputs[]				= TEST_DIR "SerialDF_USD3M_tryAqCurveForwardRatesFromForwardDates_outputs.csv";
 
-	extern const char Contiguous_SwapParRateInputs[]				= TEST_DIR "Contiguous_tryAqObjSwapsParRate_inputs.csv";
-	extern const char Contiguous_SwapParRateOutputs[]				= TEST_DIR "Contiguous_tryAqObjSwapsParRate_outputs.csv";
+	extern const char Contiguous_SwapParRateInputs[]				= TEST_DIR "Contiguous_tryAqSwapObjectParRate_inputs.csv";
+	extern const char Contiguous_SwapParRateOutputs[]				= TEST_DIR "Contiguous_tryAqSwapObjectParRate_outputs.csv";
 
-	extern const char SerialRate_SwapParRateInputs[]				= TEST_DIR "SerialRate_tryAqObjSwapsParRate_inputs.csv";
-	extern const char SerialRate_SwapParRateOutputs[]				= TEST_DIR "SerialRate_tryAqObjSwapsParRate_outputs.csv";
+	extern const char SerialRate_SwapParRateInputs[]				= TEST_DIR "SerialRate_tryAqSwapObjectParRate_inputs.csv";
+	extern const char SerialRate_SwapParRateOutputs[]				= TEST_DIR "SerialRate_tryAqSwapObjectParRate_outputs.csv";
 
-	extern const char SerialDF_SwapParRateInputs[]					= TEST_DIR "SerialDF_tryAqObjSwapsParRate_inputs.csv";
-	extern const char SerialDF_SwapParRateOutputs[]					= TEST_DIR "SerialDF_tryAqObjSwapsParRate_outputs.csv";
+	extern const char SerialDF_SwapParRateInputs[]					= TEST_DIR "SerialDF_tryAqSwapObjectParRate_inputs.csv";
+	extern const char SerialDF_SwapParRateOutputs[]					= TEST_DIR "SerialDF_tryAqSwapObjectParRate_outputs.csv";
 
 	// Test Files
 	//const std::string SwapInput = etrading::getGoogleTestFolder() + "ETrading/Curves/TestCurveStdSerialFuture/EDJ0_COMDTY_SWAP.JSON";
@@ -85,7 +85,7 @@ namespace google_test
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation::tryAqCurvesForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryAqCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, Contiguous_ForwardRatesOutputs, tolerance);
     }
@@ -101,7 +101,7 @@ namespace google_test
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation::tryAqCurvesForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryAqCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, SerialRate_ForwardRatesOutputs, tolerance);
 	}
@@ -116,7 +116,7 @@ namespace google_test
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation::tryAqCurvesForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryAqCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, SerialDF_ForwardRatesOutputs, tolerance);
 	}
@@ -127,12 +127,12 @@ namespace google_test
 		setUpAqOISCurve(Contiguous_USDYC_OIS);
 		setUpAqSTDCurve(Contiguous_USDYC_STD);
 
-		const std::string swapObjectName = validation::tryAqObjLoad(SwapInput);
+		const std::string swapObjectName = validation::tryAqObjectLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(Contiguous_SwapParRateInputs);
 		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation::tryAqObjSwapsParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryAqSwapObjectParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, Contiguous_SwapParRateOutputs, tolerance);
 	}
@@ -143,12 +143,12 @@ namespace google_test
 		setUpAqOISCurve(SerialRate_USDYC_OIS);
 		setUpAqSTDCurve(SerialRate_USDYC_STD);
 
-		const std::string swapObjectName = validation::tryAqObjLoad(SwapInput);
+		const std::string swapObjectName = validation::tryAqObjectLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(SerialRate_SwapParRateInputs);
 		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation::tryAqObjSwapsParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryAqSwapObjectParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, SerialRate_SwapParRateOutputs, tolerance);
 	}
@@ -159,12 +159,12 @@ namespace google_test
 		setUpAqOISCurve(SerialDF_USDYC_OIS);
 		setUpAqSTDCurve(SerialDF_USDYC_STD);
 
-		const std::string swapObjectName = validation::tryAqObjLoad(SwapInput);
+		const std::string swapObjectName = validation::tryAqObjectLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(SerialDF_SwapParRateInputs);
 		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation::tryAqObjSwapsParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryAqSwapObjectParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, SerialDF_SwapParRateOutputs, tolerance);
 	}

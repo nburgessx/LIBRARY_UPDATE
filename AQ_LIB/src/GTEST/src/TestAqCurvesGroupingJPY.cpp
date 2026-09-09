@@ -7,7 +7,7 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
-#include "tryAqCurvesDisplay.h"
+#include "tryAqCurveDisplay.h"
 
 #include <gTest/gTest.h>
 
@@ -101,7 +101,7 @@ namespace google_test
 		inputDir = JPYYC_6M_STD_displayInputs;
 		const ReadDataFile::Load inputFile0( inputDir );
 		DoubleArray results
-			= validation::tryAqCurvesDisplay(
+			= validation::tryAqCurveDisplay(
 					inputFile0["curveCollection"],
 					inputFile0["curveIndex"] );
 
@@ -120,7 +120,7 @@ namespace google_test
 		inputDir = JPYYC_1M_Basis_displayInputs;
 		const ReadDataFile::Load inputFile1( inputDir );
 		results
-			= validation::tryAqCurvesDisplay(
+			= validation::tryAqCurveDisplay(
 					inputFile1["curveCollection"],
 					inputFile1["curveIndex"] );
 
@@ -139,7 +139,7 @@ namespace google_test
 		inputDir = JPYYC_3M_Basis_displayInputs;
 		const ReadDataFile::Load inputFile2( inputDir );
 		results
-			= validation::tryAqCurvesDisplay(
+			= validation::tryAqCurveDisplay(
 					inputFile2["curveCollection"],
 					inputFile2["curveIndex"] );
 
@@ -158,7 +158,7 @@ namespace google_test
 		inputDir = JPYYCLCH_6M_STD_displayInputs;
 		const ReadDataFile::Load inputFile3( inputDir );
 		results
-			= validation::tryAqCurvesDisplay(
+			= validation::tryAqCurveDisplay(
 					inputFile3["curveCollection"],
 					inputFile3["curveIndex"] );
 
@@ -177,7 +177,7 @@ namespace google_test
 		inputDir = JPYYCLCH_3M_Basis_displayInputs;
 		const ReadDataFile::Load inputFile4( inputDir );
 		results
-			= validation::tryAqCurvesDisplay(
+			= validation::tryAqCurveDisplay(
 					inputFile4["curveCollection"],
 					inputFile4["curveIndex"] );
 
@@ -196,7 +196,7 @@ namespace google_test
 		inputDir = JPYYCLCH_1M_Basis_displayInputs;
 		const ReadDataFile::Load inputFile5( inputDir );
 		results
-			= validation::tryAqCurvesDisplay(
+			= validation::tryAqCurveDisplay(
 					inputFile5["curveCollection"],
 					inputFile5["curveIndex"] );
 
@@ -215,7 +215,7 @@ namespace google_test
 		inputDir = JPYYCTIBOR_6M_Basis_displayInputs;
 		const ReadDataFile::Load inputFile6( inputDir );
 		results
-			= validation::tryAqCurvesDisplay(
+			= validation::tryAqCurveDisplay(
 					inputFile6["curveCollection"],
 					inputFile6["curveIndex"] );
 
@@ -234,7 +234,7 @@ namespace google_test
 		inputDir = JPYYCTIBOR_1M_Basis_displayInputs;
 		const ReadDataFile::Load inputFile7( inputDir );
 		results
-			= validation::tryAqCurvesDisplay(
+			= validation::tryAqCurveDisplay(
 					inputFile7["curveCollection"],
 					inputFile7["curveIndex"] );
 
@@ -253,7 +253,7 @@ namespace google_test
 		inputDir = JPYYCTIBOR_3M_Basis_displayInputs;
 		const ReadDataFile::Load inputFile8( inputDir );
 		results
-			= validation::tryAqCurvesDisplay(
+			= validation::tryAqCurveDisplay(
 					inputFile8["curveCollection"],
 					inputFile8["curveIndex"] );
 

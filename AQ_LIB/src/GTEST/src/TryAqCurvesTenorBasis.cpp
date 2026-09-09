@@ -1,5 +1,5 @@
 #include "TryAqCurvesTenorBasis.h"
-#include "tryAqCurvesCalibrateBasis.h"
+#include "tryAqCurveCalibrateBasis.h"
 
 namespace google_test
 {
@@ -10,7 +10,7 @@ namespace google_test
         {
             try
             {
-                validation::tryAqCurvesCalibrateBasis(
+                validation::tryAqCurveCalibrateBasis(
                     inputFile_["curveCollection"],
                     inputFile_["staticDataTable"],
                     inputFile_["curveIndex"],
@@ -48,7 +48,7 @@ namespace google_test
 			 
 			try
             {
-                validation::tryAqCurvesCalibrateBasis(
+                validation::tryAqCurveCalibrateBasis(
                     inputFileObj["curveCollection"],
                     inputFileObj["staticDataTable"],
                     inputFileObj["curveIndex"],

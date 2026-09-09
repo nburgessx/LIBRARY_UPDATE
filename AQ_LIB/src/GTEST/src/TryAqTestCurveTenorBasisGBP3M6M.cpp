@@ -7,9 +7,9 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
-#include "tryAqCurvesDisplay.h"
-#include "tryAqCurvesDiscountFactor.h"
-#include "tryAqCurvesForwardRate.h"
+#include "tryAqCurveDisplay.h"
+#include "tryAqCurveDiscountFactor.h"
+#include "tryAqCurveForwardRate.h"
 
 #include <gTest/gTest.h>
 
@@ -40,24 +40,24 @@ namespace
     //
     // curve input files
     //
-    extern const char GBPYC_OIS[]					= TEST_DIR "GBPYC_OIS_tryAqCurvesCalibrateOIS_inputs";
-    extern const char GBPYC_STD[]					= TEST_DIR "GBPYC_STD_tryAqCurvesCalibrateSwap_inputs";
-    extern const char GBPYC_3M6M[]					= TEST_DIR "GBPYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char GBPYC_OIS[]					= TEST_DIR "GBPYC_OIS_tryAqCurveCalibrateOIS_inputs";
+    extern const char GBPYC_STD[]					= TEST_DIR "GBPYC_STD_tryAqCurveCalibrateSwap_inputs";
+    extern const char GBPYC_3M6M[]					= TEST_DIR "GBPYC_3M6M_tryAqCurveCalibrateBasis_inputs";
 
     //
     // test call input and reference files
     //
-    extern const char curveDisplayInputs[]				= TEST_DIR "GBPYC_3M6M_tryAqCurvesDisplay_inputs.csv";
-    extern const char curveDisplayOutputs_32bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurvesDisplay_outputs_32bit.csv";
-	extern const char curveDisplayOutputs_64bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurvesDisplay_outputs_64bit.csv";
+    extern const char curveDisplayInputs[]				= TEST_DIR "GBPYC_3M6M_tryAqCurveDisplay_inputs.csv";
+    extern const char curveDisplayOutputs_32bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurveDisplay_outputs_32bit.csv";
+	extern const char curveDisplayOutputs_64bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurveDisplay_outputs_64bit.csv";
 
-    extern const char CheckDiscountFactorsInputs[]				= TEST_DIR "GBPYC_3M6M_tryAqCurvesDiscountFactorsFromYearFractions_inputs";
-    extern const char CheckDiscountFactorsOutputs_32bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurvesDiscountFactorsFromYearFractions_outputs_32bit";
-	extern const char CheckDiscountFactorsOutputs_64bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurvesDiscountFactorsFromYearFractions_outputs_64bit";
+    extern const char CheckDiscountFactorsInputs[]				= TEST_DIR "GBPYC_3M6M_tryAqCurveDiscountFactorsFromYearFractions_inputs";
+    extern const char CheckDiscountFactorsOutputs_32bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurveDiscountFactorsFromYearFractions_outputs_32bit";
+	extern const char CheckDiscountFactorsOutputs_64bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurveDiscountFactorsFromYearFractions_outputs_64bit";
 
-    extern const char CheckForwardRatesInputs[]				= TEST_DIR "GBPYC_3M6M_tryAqCurvesForwardRatesFromYearFraction_inputs";
-    extern const char CheckForwardRatesOutputs_32bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurvesForwardRatesFromYearFraction_outputs_32bit";
-	extern const char CheckForwardRatesOutputs_64bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurvesForwardRatesFromYearFraction_outputs_64bit";
+    extern const char CheckForwardRatesInputs[]				= TEST_DIR "GBPYC_3M6M_tryAqCurveForwardRatesFromYearFraction_inputs";
+    extern const char CheckForwardRatesOutputs_32bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurveForwardRatesFromYearFraction_outputs_32bit";
+	extern const char CheckForwardRatesOutputs_64bit[]		= TEST_DIR "GBPYC_3M6M_tryAqCurveForwardRatesFromYearFraction_outputs_64bit";
 }
 
 namespace google_test
@@ -95,7 +95,7 @@ namespace google_test
     {
         const ReadDataFile::Load inputFile( curveDisplayInputs );
         const DoubleArray results
-            = validation::tryAqCurvesDisplay(
+            = validation::tryAqCurveDisplay(
                   inputFile["curveCollection"],
                   inputFile["curveIndex"] );
         
@@ -113,7 +113,7 @@ namespace google_test
 
         const DoubleArray yearFractions = inputFile["yearFractions"];
         DoubleArray results
-            = validation::tryAqCurvesDiscountFactorsFromYearFractions(
+            = validation::tryAqCurveDiscountFactorsFromYearFractions(
                   yearFractions,
                   inputFile["dayCount"],
                   inputFile["curveCollection"],
@@ -137,7 +137,7 @@ namespace google_test
         const double yearFraction = inputFile["yearFraction"];
         const DateVector fromDateVector = inputFile["fromDates"];
 
-        const DoubleArray results = validation::tryAqCurvesForwardRatesFromYearFraction( fromDateVector,
+        const DoubleArray results = validation::tryAqCurveForwardRatesFromYearFraction( fromDateVector,
                                     yearFraction,
                                     inputFile["dayCount"],
                                     inputFile["curveCollection"],

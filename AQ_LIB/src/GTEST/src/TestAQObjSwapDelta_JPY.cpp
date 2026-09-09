@@ -9,12 +9,12 @@
 #include "TryAqCurvesFwdFxConst.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 
 // Risk calculation
-#include "tryAqObjSwapsDelta.h"
-#include "tryAqObjRatesFixingTable.h"
+#include "tryAqSwapObjectDelta.h"
+#include "tryAqRateFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // Curve Macros are Here !!!
@@ -41,15 +41,15 @@ namespace
 	//
     // curve input files
     //
-	const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    const char JPYYC_JSCC_STD[]				= TEST_DIR "JPYYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    const char JPYYC_LCH_6M[]				= TEST_DIR "JPYYC_LCH6M_tryAqCurvesCalibrateSwap_inputs.csv";
+	const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    const char JPYYC_JSCC_STD[]				= TEST_DIR "JPYYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    const char JPYYC_LCH_6M[]				= TEST_DIR "JPYYC_LCH6M_tryAqCurveCalibrateSwap_inputs.csv";
 	//
     // test call input and reference files
     //
 	int portfolioSize = 18;
 
-	const char swapInputFileSuffix[]		= "_JPY_6ML_LCH_tryAqObjSwapsCreateFromGenerator_inputs.csv";   
+	const char swapInputFileSuffix[]		= "_JPY_6ML_LCH_tryAqSwapObjectCreateFromGenerator_inputs.csv";   
 
 	// DV01 tests
 	const char swapDV01Inputs[]				= TEST_DIR "tryAqObjSwapsDV01_inputs";  // set up the DV01 calculation
@@ -93,7 +93,7 @@ namespace google_test
 		AQLStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
-		return validation::tryAqObjSwapsCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		return validation::tryAqSwapObjectCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 
 	void calcDV01AndCompareToReference()
@@ -114,8 +114,8 @@ namespace google_test
 
 		AQLStringVector positionIDs;
 		DoubleVector deltas;
-		// The DV01 is actually calculated by the tryAqObjSwapsDelta function
-		validation::tryAqObjSwapsDelta( positionIDs,
+		// The DV01 is actually calculated by the tryAqSwapObjectDelta function
+		validation::tryAqSwapObjectDelta( positionIDs,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,

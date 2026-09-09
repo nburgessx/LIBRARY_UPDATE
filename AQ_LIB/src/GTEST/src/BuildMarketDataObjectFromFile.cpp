@@ -1,5 +1,5 @@
 #include "BuildMarketDataObjectFromFile.h"
-#include "tryAqObjCurvesMarketData.h"
+#include "tryAqCurveMarketData.h"
 #include "ReadDataFile.h"
 #include "ContainerUtilities.h"
 #include "Variant.h"
@@ -76,7 +76,7 @@ namespace
 namespace google_test
 {
 
-	/* @brief			Builds AQObj MarketData Object by invoking the tryAqObjCurvesMarketDataCreate() API.
+	/* @brief			Builds AQObj MarketData Object by invoking the tryAqCurveMarketDataCreate() API.
 	*                   The code loops over all of the capitalized data keys in the specified filename and uses
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
@@ -114,7 +114,7 @@ namespace google_test
 			}
 		}
 
-		return validation::tryAqObjCurvesMarketDataCreate(objectName, marketDataKeys, infoBlocks);
+		return validation::tryAqCurveMarketDataCreate(objectName, marketDataKeys, infoBlocks);
 	}
 
 }

@@ -1,0 +1,22 @@
+Note: Google Test filter = TestAQObjSwapEURVariableNotionalSwaps.UNIT_CheckVariableNotionalSwapScheduleCreation
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TestAQObjSwapEURVariableNotionalSwaps
+[ RUN      ] TestAQObjSwapEURVariableNotionalSwaps.UNIT_CheckVariableNotionalSwapScheduleCreation
+error opening file C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\LIBRARY_UPDATE\AQ_LIB\resources\test\inputs\ETrading/AQObjects/TestAQObjSwapVariableNotionalSwaps/EUR_FIXEDSCHEDULE_tryAqSwapObjectScheduleCreateBespoke_inputs.csv for inputC:\Users\nburg\Documents\MY_DOCUMENTS\REPO\LIBRARY_UPDATE\AQ_LIB\src\GTEST\src\TestAQObjSwapEURVariableNotionalSwaps.cpp(113): error: Value of: true
+  Actual: true
+Expected: false
+
+[  FAILED  ] TestAQObjSwapEURVariableNotionalSwaps.UNIT_CheckVariableNotionalSwapScheduleCreation (299 ms)
+[----------] 1 test from TestAQObjSwapEURVariableNotionalSwaps (299 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (299 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] TestAQObjSwapEURVariableNotionalSwaps.UNIT_CheckVariableNotionalSwapScheduleCreation
+
+ 1 FAILED TEST
+Tests finished at: Wed Sep  9 01:28:58 2026
+
+didTestsFail: 1

@@ -1,7 +1,7 @@
 #include "ExceptionMacros.h"
 #include "TestHelperUtilities.h"
 #include "DateUtilities.h"
-#include "tryAqDates.h"
+#include "tryAqDate.h"
 #include "AQLPriceDataCalendar.h"
 
 #include <boost/filesystem.hpp>
@@ -120,7 +120,7 @@ namespace google_test
 		const std::string dummyBusinessDayAdjust;
 		const std::string dummyCalendar;
 		const std::string dummyRollConvention;
-		const AQLDate errorCutoffDate = validation::tryAqDatesFromTenor( lastCalendarUpdate, errorTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention );
+		const AQLDate errorCutoffDate = validation::tryAqDateFromTenor( lastCalendarUpdate, errorTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention );
 
 		if ( currentDate > errorCutoffDate )
 		{
@@ -130,7 +130,7 @@ namespace google_test
 						" old, Please regenerate it using the tool CDWCalendarUpdate.bat." );
 		}
 
-		const AQLDate warningCutoffDate = validation::tryAqDatesFromTenor(lastCalendarUpdate, warningTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention);
+		const AQLDate warningCutoffDate = validation::tryAqDateFromTenor(lastCalendarUpdate, warningTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention);
 
 		if ( currentDate > warningCutoffDate )
 		{

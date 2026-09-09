@@ -1,7 +1,7 @@
 #include "Dependency.h"
 #include "InitializeGoogleTest.h"
 #include "ParameterValidation.h"
-#include "tryAqToolsSetup.h"
+#include "tryAqToolSetup.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
 
@@ -39,15 +39,15 @@ namespace
 	extern const char DIR_SABR_INPUTS_1[]				= TEST_DIR "1_USD_SABR_inputs.csv";
 
 	extern const char DIR_USD_SABR_CALIBRATION_INPUTS_1[]	= TEST_DIR "1_USD_SABR_Calibration_inputs.csv";
-	extern const char DIR_USD_SABR_CONVENTION_INPUTS_1[]	= TEST_DIR "1_USD_tryAqVolsSABRSetupConvention_inputs.csv";
-	extern const char DIR_USD_SABR_ALPHA_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Alpha_inputs.csv";
-	extern const char DIR_USD_SABR_BETA_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Beta_inputs.csv";
-	extern const char DIR_USD_SABR_NU_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Nu_inputs.csv";
-	extern const char DIR_USD_SABR_RHO_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Rho_inputs.csv";
-	extern const char DIR_USD_SABR_FORWARDS_INPUTS_1[]		= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Forwards_inputs.csv";
-	extern const char DIR_USD_SABR_ANNUITY_INPUTS_1[]		= TEST_DIR "1_USD_tryAqVolsSABRSetupParameter_Annuity_inputs.csv";
+	extern const char DIR_USD_SABR_CONVENTION_INPUTS_1[]	= TEST_DIR "1_USD_tryAqVolatilitySABRSetupConvention_inputs.csv";
+	extern const char DIR_USD_SABR_ALPHA_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolatilitySABRSetupParameter_Alpha_inputs.csv";
+	extern const char DIR_USD_SABR_BETA_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolatilitySABRSetupParameter_Beta_inputs.csv";
+	extern const char DIR_USD_SABR_NU_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolatilitySABRSetupParameter_Nu_inputs.csv";
+	extern const char DIR_USD_SABR_RHO_INPUTS_1[]			= TEST_DIR "1_USD_tryAqVolatilitySABRSetupParameter_Rho_inputs.csv";
+	extern const char DIR_USD_SABR_FORWARDS_INPUTS_1[]		= TEST_DIR "1_USD_tryAqVolatilitySABRSetupParameter_Forwards_inputs.csv";
+	extern const char DIR_USD_SABR_ANNUITY_INPUTS_1[]		= TEST_DIR "1_USD_tryAqVolatilitySABRSetupParameter_Annuity_inputs.csv";
 
-	extern const vector<string> DIR_USD_SABR_VOL_INPUTS_1 = { TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_5delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_10delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_20delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_30delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_40delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_60delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_70delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_80delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_90delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_95delta_inputs.csv", TEST_DIR "1_USD_tryAqVolsSABRSetupSwaptionVol_ATM_inputs.csv" };
+	extern const vector<string> DIR_USD_SABR_VOL_INPUTS_1 = { TEST_DIR "1_USD_tryAqVolatilitySABRSetupSwaptionVol_5delta_inputs.csv", TEST_DIR "1_USD_tryAqVolatilitySABRSetupSwaptionVol_10delta_inputs.csv", TEST_DIR "1_USD_tryAqVolatilitySABRSetupSwaptionVol_20delta_inputs.csv", TEST_DIR "1_USD_tryAqVolatilitySABRSetupSwaptionVol_30delta_inputs.csv", TEST_DIR "1_USD_tryAqVolatilitySABRSetupSwaptionVol_40delta_inputs.csv", TEST_DIR "1_USD_tryAqVolatilitySABRSetupSwaptionVol_60delta_inputs.csv", TEST_DIR "1_USD_tryAqVolatilitySABRSetupSwaptionVol_70delta_inputs.csv", TEST_DIR "1_USD_tryAqVolatilitySABRSetupSwaptionVol_80delta_inputs.csv", TEST_DIR "1_USD_tryAqVolatilitySABRSetupSwaptionVol_90delta_inputs.csv", TEST_DIR "1_USD_tryAqVolatilitySABRSetupSwaptionVol_95delta_inputs.csv", TEST_DIR "1_USD_tryAqVolatilitySABRSetupSwaptionVol_ATM_inputs.csv" };
 	
 	// Output files
 	extern const char DIR_ALPHA_OUTPUT_32BIT[] = TEST_DIR "1_USD_SABR_Calibrated_ALPHA_ouputs_32bit.csv";
@@ -286,7 +286,7 @@ namespace google_test
 		CheckTestResultsAndRebaseOnRequest(calibratedRho, TEST_DIR, outputFileName_rho, tolerance);
 
 		// Flush the cache in preparation for a new set of curves
-		validation::tryAqToolsClearEntityPool();
+		validation::tryAqToolClearEntityPool();
 		
     }
 

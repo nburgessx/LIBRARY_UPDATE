@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\src\GTEST\src\Examples.cpp">
-      <Filter>src\SETUP</Filter>
+      <Filter>src\setup</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\Fixtures.cpp">
-      <Filter>src\SETUP</Filter>
+      <Filter>src\setup</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\CurveAccessors.cpp">
       <Filter>src\AQL Classic\Curve\CurveAccessors</Filter>
@@ -26,7 +26,7 @@
       <Filter>src\AQL Classic\Curve\CurveXccyBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\RunTests.cpp">
-      <Filter>src\SETUP</Filter>
+      <Filter>src\setup</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestDatesCentralBank.cpp">
       <Filter>src\AQL Classic\Dates</Filter>
@@ -47,7 +47,7 @@
       <Filter>src\etrading\DataFilesAndTypes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\InitializeGoogleTest.cpp">
-      <Filter>src\SETUP</Filter>
+      <Filter>src\setup</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestRiskSwapDeltaLadder.cpp">
       <Filter>src\AQL Classic\Risks</Filter>
@@ -196,7 +196,7 @@
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapGBPEURXccySwap.cpp">
       <Filter>src\etrading\Swaps\XccySwaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestAqDatesYearFraction.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqDateYearFraction.cpp">
       <Filter>src\etrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapEURUSDXccySwapFixedFixed.cpp">
@@ -256,7 +256,7 @@
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapFloatRate.cpp">
       <Filter>src\etrading\Swaps\FixingTable</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestAqDatesFuturesContract.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqDateFuturesContract.cpp">
       <Filter>src\etrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveForwardRates.cpp">
@@ -379,7 +379,7 @@
     <ClCompile Include="..\src\GTEST\src\TestCurveStreaming.cpp">
       <Filter>src\etrading\Curves\CurveStreaming</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestAqToolsLVB.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqToolLVB.cpp">
       <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondRepo.cpp">
@@ -452,7 +452,7 @@
       <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\GetGoogleTestFolder.cpp">
-      <Filter>src\SETUP</Filter>
+      <Filter>src\setup</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestSABRCalibration.cpp">
       <Filter>src\etrading\IRVol</Filter>
@@ -493,7 +493,7 @@
     <ClCompile Include="..\src\GTEST\src\TestCurveResults.cpp">
       <Filter>src\etrading\Curves\CurveResults</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestAqDatesECB.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqDateECB.cpp">
       <Filter>src\etrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestVariantDataType.cpp">
@@ -595,10 +595,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\GTEST\include\Dependency.h">
-      <Filter>include\SETUP</Filter>
+      <Filter>include\setup</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\QuickTest.h">
-      <Filter>include\SETUP</Filter>
+      <Filter>include\setup</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\CurveAccessors.h">
       <Filter>include\etrading\AQL Classic\Curve</Filter>
@@ -619,7 +619,7 @@
       <Filter>include\etrading\AQL Classic\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\InitializeGoogleTest.h">
-      <Filter>include\SETUP</Filter>
+      <Filter>include\setup</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\EnvironmentAttacker.h">
       <Filter>include\etrading\Infrastructure</Filter>
@@ -646,7 +646,7 @@
       <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\BindFileToClassConstructor.h">
-      <Filter>include\SETUP</Filter>
+      <Filter>include\setup</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\TestHelperUtilities.h">
       <Filter>include\etrading\Tools</Filter>
@@ -670,7 +670,7 @@
       <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\GetGoogleTestFolder.h">
-      <Filter>include\SETUP</Filter>
+      <Filter>include\setup</Filter>
     </ClInclude>
     <ClCompile Include="..\src\GTEST\src\TestBondFRNSpreads.cpp">
       <Filter>src\etrading\Bonds</Filter>
@@ -688,9 +688,6 @@
     </Filter>
     <Filter Include="buildscripts">
       <UniqueIdentifier>{771e6d28-4667-4554-b7ba-f3e4bcb9df4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\SETUP">
-      <UniqueIdentifier>{969850b1-30cb-4db6-b1c9-0a007ba68358}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\etrading">
       <UniqueIdentifier>{2b5029d1-9ae5-4ec3-b972-2ff78fd570b1}</UniqueIdentifier>
@@ -715,9 +712,6 @@
     </Filter>
     <Filter Include="include\etrading\Bonds">
       <UniqueIdentifier>{4dd96a71-f7b3-4c17-9212-ad17d313854f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\SETUP">
-      <UniqueIdentifier>{02824686-8f67-46d0-bd62-e65383f29f24}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\etrading\Tools">
       <UniqueIdentifier>{5efba66f-a23c-4c67-9117-b9c1aa675113}</UniqueIdentifier>
@@ -928,6 +922,12 @@
     </Filter>
     <Filter Include="src\etrading\Curves\CurveConsistency\CZKCurves">
       <UniqueIdentifier>{738c094a-202d-43c3-a3e9-b34a02d5e94d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\setup">
+      <UniqueIdentifier>{969850b1-30cb-4db6-b1c9-0a007ba68358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\setup">
+      <UniqueIdentifier>{02824686-8f67-46d0-bd62-e65383f29f24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

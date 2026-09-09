@@ -93,6 +93,30 @@ namespace aq_xll
     std::vector<std::string> toStringVector( const xloil::ExcelObj& obj,
                                              bool skipTrailingBlanks = true );
 
+    // As toStringVector, returned as AQLStrings - the Tool LVB wrappers take
+    // their key / value columns this way.
+    AQLStringVector toAQLStringVector( const xloil::ExcelObj& obj,
+                                      bool skipTrailingBlanks = true );
+
+    // A rectangular range -> a row-major matrix of doubles. Blank cells read as
+    // 0.0; a non-numeric cell is a hard failure. Backs aqMathPCA.
+    DoubleMatrix toDoubleMatrix( const xloil::ExcelObj& obj );
+
+    // A rectangular range -> a row-major matrix of std::string, every cell
+    // stringified. Fully-blank trailing rows are dropped. Backs
+    // aqToolValuationSettingsDisplay.
+    StandardStringMatrix toStandardStringMatrix( const xloil::ExcelObj& obj );
+
+    // A rectangular range -> a row-major VariantMatrix that keeps each cell's
+    // native type (number, boolean, text, blank). An error cell is carried
+    // through as its text ("#REF!", ...) rather than throwing. Back the
+    // aqToolClean / aqToolAppend data-shaping wrappers.
+    etrading::VariantMatrix toVariantMatrix( const xloil::ExcelObj& obj );
+
+    // As toVariantMatrix, flattened row by row into a single vector. Backs
+    // aqToolDataFilter.
+    etrading::VariantVector toVariantVector( const xloil::ExcelObj& obj );
+
     // Optional boolean: missing / empty / blank yields defaultValue. TRUE/FALSE,
     // a non-zero number, and the words "true"/"false" are all accepted.
     bool toBool( const xloil::ExcelObj& obj, bool defaultValue );
@@ -132,6 +156,10 @@ namespace aq_xll
     // number is returned as a real (formattable) number; everything else stays
     // text. An empty matrix returns #N/A.
     xloil::ExcelObj toExcelMatrix( const AQLStringMatrix& matrix );
+
+    // A VariantMatrix -> an Excel array, keeping each cell's native type
+    // (number, boolean, text, blank). An empty matrix returns #N/A.
+    xloil::ExcelObj toExcelMatrix( const etrading::VariantMatrix& matrix );
 
     // Reshape a range into numRows x numCols, row by row. Short cells are
     // blank-filled, surplus source cells are dropped. Backs aqToolResize.

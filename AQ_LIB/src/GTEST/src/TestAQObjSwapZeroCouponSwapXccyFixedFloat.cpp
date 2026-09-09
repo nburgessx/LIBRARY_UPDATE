@@ -5,8 +5,8 @@
 #include "TryAqCurvesXccyBasis.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -33,20 +33,20 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
-    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurvesCalibrateBasis_inputs.csv";
-    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryAqCurvesCalibrateBasis_inputs.csv";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryAqCurveCalibrateBasis_inputs.csv";
+    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryAqCurveCalibrateBasis_inputs.csv";
 
     //
     // test call input and reference files
     //
-    extern const char zeroCouponSwapInputs[]	= TEST_DIR "XCCYFIXEDFLOATZEROCOUPONSWAP@1_tryAqObjSwapsCreate_inputs";
-    extern const char parRateInputs[]	        = TEST_DIR "XCCYFIXEDFLOATZEROCOUPONSWAP@1_tryAqObjSwapsParRate_inputs";
-    extern const char parRateOutputs[]	    = TEST_DIR "XCCYFIXEDFLOATZEROCOUPONSWAP@1_tryAqObjSwapsParRate_outputs";
-    extern const char parRateOutputs64[]	    = TEST_DIR "XCCYFIXEDFLOATZEROCOUPONSWAP@1_tryAqObjSwapsParRate_outputs64_";
+    extern const char zeroCouponSwapInputs[]	= TEST_DIR "XCCYFIXEDFLOATZEROCOUPONSWAP@1_tryAqSwapObjectCreate_inputs";
+    extern const char parRateInputs[]	        = TEST_DIR "XCCYFIXEDFLOATZEROCOUPONSWAP@1_tryAqSwapObjectParRate_inputs";
+    extern const char parRateOutputs[]	    = TEST_DIR "XCCYFIXEDFLOATZEROCOUPONSWAP@1_tryAqSwapObjectParRate_outputs";
+    extern const char parRateOutputs64[]	    = TEST_DIR "XCCYFIXEDFLOATZEROCOUPONSWAP@1_tryAqSwapObjectParRate_outputs64_";
 }
 
 namespace google_test
@@ -87,14 +87,14 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqSwapObjectCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = parRateInputFile["swapName"];
                 AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
                 AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 
-                double actualSwapParRate          = validation::tryAqObjSwapsParRate( swapName, curveCollectionLVB, fixingTableLVB );
+                double actualSwapParRate          = validation::tryAqSwapObjectParRate( swapName, curveCollectionLVB, fixingTableLVB );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParRate, TEST_DIR, parRateOutputsFilename, tolerance );
@@ -127,14 +127,14 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqSwapObjectCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = parRateInputFile["swapName"];
                 AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
                 AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
 
-                double parRate = validation::tryAqObjSwapsParRate( swapName, curveCollectionLVB, fixingTableLVB );
+                double parRate = validation::tryAqSwapObjectParRate( swapName, curveCollectionLVB, fixingTableLVB );
 
 				//Update the swap's fixedRate by parRate
 				std::vector<LabelValueBlock> legsLVB = etrading::buildMultiLabelValueBlock(swapLVB);
@@ -145,9 +145,9 @@ namespace google_test
                 legsLVB[0] = LabelValueBlock( legsLVB[0], etrading::IRS_KEY::FIXED_RATE, parRateStr.str() );
 
 				std::string newSwapTradeName = swapTradeName + "_1";
-				validation::tryAqObjSwapsCreateFromLegLVBs(newSwapTradeName, legsLVB[0], legsLVB[1], swapPropertiesLVB, isXccySwap, validateKeys);
+				validation::tryAqSwapObjectCreateFromLegLVBs(newSwapTradeName, legsLVB[0], legsLVB[1], swapPropertiesLVB, isXccySwap, validateKeys);
 
-				double actualPV = validation::tryAqObjSwapsPV(newSwapTradeName, curveCollectionLVB, "", fixingTableLVB);
+				double actualPV = validation::tryAqSwapObjectPV(newSwapTradeName, curveCollectionLVB, "", fixingTableLVB);
                 
                 // 5. Check the Test Results
                 EXPECT_NEAR( 0, actualPV, tolerance );
@@ -180,14 +180,14 @@ namespace google_test
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
 				//1) Check Default Value
-                std::string swapName          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string swapName          = validation::tryAqSwapObjectCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
            		auto swap = etrading::getSwap(swapName);
 
                 AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
                 AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
 
 				// Call any pricing function so that the fwdInter flag will be retrieved from a specific curveCollection and staticTable
-                validation::tryAqObjSwapsParRate( swapName, curveCollectionLVB, fixingTableLVB );
+                validation::tryAqSwapObjectParRate( swapName, curveCollectionLVB, fixingTableLVB );
 
 				EXPECT_EQ(etrading::FALSE_BOOL, swap->getLeg(1)->getStaticData()->getFwdInter());
 
@@ -196,12 +196,12 @@ namespace google_test
 				auto firstLegLVB = legsLVB[0];
 				auto secondLegLVB = LabelValueBlock( legsLVB[1], etrading::IRS_KEY::IS_FWD_INTER, etrading::toString(etrading::TRUE_BOOL) );
 
-				std::string swapName2 = validation::tryAqObjSwapsCreateFromLegLVBs( swapTradeName, firstLegLVB, secondLegLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+				std::string swapName2 = validation::tryAqSwapObjectCreateFromLegLVBs( swapTradeName, firstLegLVB, secondLegLVB, swapPropertiesLVB, isXccySwap, validateKeys );
            		auto swap2 = etrading::getSwap(swapName2);
 
 				// Call any pricing function so that the fwdInter flag will be retrieved from a specific curveCollection and staticTable
 				// Since float leg's EURYC_3M6M is a basis curve, cannot set it to true, throw error when pricing
-				EXPECT_THROW(validation::tryAqObjSwapsParRate( swapName2, curveCollectionLVB, fixingTableLVB ), AQLCoreError );  // On Windows AQLCoreError inherits from std::exception; however on Linux it does not.
+				EXPECT_THROW(validation::tryAqSwapObjectParRate( swapName2, curveCollectionLVB, fixingTableLVB ), AQLCoreError );  // On Windows AQLCoreError inherits from std::exception; however on Linux it does not.
         }
         catch( const AQLCoreError& m )
         {

@@ -5,9 +5,9 @@
  */
 
 #include "RepriceCalibrationInstruments.h"
-#include "tryAqObjects.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqObject.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "DataUtilities.h"	// For AQ_TO_STRING macros
@@ -117,25 +117,25 @@ namespace google_test
                 case etrading::OIS_MARKETDATA:
                 {
                     // OIS PAR RATE - Percent
-                    actualResult                        = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
+                    actualResult                        = validation::tryAqSwapObjectParRate( swapObject, curveLVB );
                     break;
                 }
                 case etrading::LIBOR_OIS_BASISSPREAD_MARKETDATA:
                 {
                     // LIBOR-OIS BASIS - Basis Points
-                    actualResult                        = validation::tryAqObjSwapsSpread( swapObject, curveLVB, etrading::LabelValueBlock(), "Leg1:Float" ) / 10000; // Basis Points
+                    actualResult                        = validation::tryAqSwapObjectSpread( swapObject, curveLVB, etrading::LabelValueBlock(), "Leg1:Float" ) / 10000; // Basis Points
                     break;
                 }
                 case etrading::SWAP_MARKETDATA:
                 {
                     // SWAP PAR RATE - Percent
-                    actualResult                        = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
+                    actualResult                        = validation::tryAqSwapObjectParRate( swapObject, curveLVB );
                     break;
                 }
                 case etrading::BASIS_SWAP_MARKETDATA:
                 {
                     // TENOR BASIS PAR SPREAD - Basis Points
-                    actualResult                        = validation::tryAqObjSwapsSpread( swapObject, curveLVB ) / 10000; // Basis Points
+                    actualResult                        = validation::tryAqSwapObjectSpread( swapObject, curveLVB ) / 10000; // Basis Points
                     break;
                 }
                 // Unsupported calibrationInstrumentType Types

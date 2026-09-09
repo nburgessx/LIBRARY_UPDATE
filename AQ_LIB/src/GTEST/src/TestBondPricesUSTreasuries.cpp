@@ -6,7 +6,7 @@
 #include "BondFactory.h"
 #include "ObjectUtilities.h"
 #include "CreateFixedBond.h"
-#include "tryAqObjBonds.h"
+#include "tryAqBondObject.h"
 
 #include "ReadDataFile.h"
 #include "CreateDataFile.h"
@@ -48,44 +48,44 @@ namespace
     const double yieldTolerance = 1e-10;
 
     // Test Bond Input File(s)
-    extern const char createBondInputFile1[]         ="ETrading/Bonds/USTreasuries1/tryAqObjBondsCreate_inputs";
-    extern const char createBondInputFile2[]         ="ETrading/Bonds/USTreasuries2/tryAqObjBondsCreate_inputs";
-    extern const char createBondInputFile3[]         ="ETrading/Bonds/USTreasuries3/tryAqObjBondsCreate_inputs";
-    extern const char createBondInputFile4[]         ="ETrading/Bonds/USTreasuries4/tryAqObjBondsCreate_inputs";
-    extern const char createBondInputFile5[]         ="ETrading/Bonds/USTreasuries5/tryAqObjBondsCreate_inputs";
-    extern const char createBondInputFile6[]         ="ETrading/Bonds/USTreasuries6/tryAqObjBondsCreate_inputs";
-    extern const char createBondInputFile7[]         ="ETrading/Bonds/USTreasuries7/tryAqObjBondsCreate_inputs";
-    extern const char createBondInputFile8[]         ="ETrading/Bonds/USTreasuries8/tryAqObjBondsCreate_inputs";
-    extern const char createBondInputFile9[]         ="ETrading/Bonds/USTreasuries9/tryAqObjBondsCreate_inputs";
-    extern const char createBondInputFile10[]        ="ETrading/Bonds/USTreasuries10/tryAqObjBondsCreate_inputs";
-    extern const char createBondInputFile11[]        ="ETrading/Bonds/USTreasuries11/tryAqObjBondsCreate_inputs";
-    extern const char createBondInputFile12[]        ="ETrading/Bonds/USTreasuries12/tryAqObjBondsCreate_inputs";
+    extern const char createBondInputFile1[]         ="ETrading/Bonds/USTreasuries1/tryAqBondObjectCreate_inputs";
+    extern const char createBondInputFile2[]         ="ETrading/Bonds/USTreasuries2/tryAqBondObjectCreate_inputs";
+    extern const char createBondInputFile3[]         ="ETrading/Bonds/USTreasuries3/tryAqBondObjectCreate_inputs";
+    extern const char createBondInputFile4[]         ="ETrading/Bonds/USTreasuries4/tryAqBondObjectCreate_inputs";
+    extern const char createBondInputFile5[]         ="ETrading/Bonds/USTreasuries5/tryAqBondObjectCreate_inputs";
+    extern const char createBondInputFile6[]         ="ETrading/Bonds/USTreasuries6/tryAqBondObjectCreate_inputs";
+    extern const char createBondInputFile7[]         ="ETrading/Bonds/USTreasuries7/tryAqBondObjectCreate_inputs";
+    extern const char createBondInputFile8[]         ="ETrading/Bonds/USTreasuries8/tryAqBondObjectCreate_inputs";
+    extern const char createBondInputFile9[]         ="ETrading/Bonds/USTreasuries9/tryAqBondObjectCreate_inputs";
+    extern const char createBondInputFile10[]        ="ETrading/Bonds/USTreasuries10/tryAqBondObjectCreate_inputs";
+    extern const char createBondInputFile11[]        ="ETrading/Bonds/USTreasuries11/tryAqBondObjectCreate_inputs";
+    extern const char createBondInputFile12[]        ="ETrading/Bonds/USTreasuries12/tryAqBondObjectCreate_inputs";
 
-    extern const char priceBondInputFile1[]          ="ETrading/Bonds/USTreasuries1/tryAqObjBondsCleanPrice_inputs";
-    extern const char priceBondInputFile2[]          ="ETrading/Bonds/USTreasuries2/tryAqObjBondsCleanPrice_inputs";
-    extern const char priceBondInputFile3[]          ="ETrading/Bonds/USTreasuries3/tryAqObjBondsCleanPrice_inputs";
-    extern const char priceBondInputFile4[]          ="ETrading/Bonds/USTreasuries4/tryAqObjBondsCleanPrice_inputs";
-    extern const char priceBondInputFile5[]          ="ETrading/Bonds/USTreasuries5/tryAqObjBondsCleanPrice_inputs";
-    extern const char priceBondInputFile6[]          ="ETrading/Bonds/USTreasuries6/tryAqObjBondsCleanPrice_inputs";
-    extern const char priceBondInputFile7[]          ="ETrading/Bonds/USTreasuries7/tryAqObjBondsCleanPrice_inputs";
-    extern const char priceBondInputFile8[]          ="ETrading/Bonds/USTreasuries8/tryAqObjBondsCleanPrice_inputs";
-    extern const char priceBondInputFile9[]          ="ETrading/Bonds/USTreasuries9/tryAqObjBondsCleanPrice_inputs";
-    extern const char priceBondInputFile10[]         ="ETrading/Bonds/USTreasuries10/tryAqObjBondsCleanPrice_inputs";
-    extern const char priceBondInputFile11[]         ="ETrading/Bonds/USTreasuries11/tryAqObjBondsCleanPrice_inputs";
-    extern const char priceBondInputFile12[]         ="ETrading/Bonds/USTreasuries12/tryAqObjBondsCleanPrice_inputs";
+    extern const char priceBondInputFile1[]          ="ETrading/Bonds/USTreasuries1/tryAqBondObjectCleanPrice_inputs";
+    extern const char priceBondInputFile2[]          ="ETrading/Bonds/USTreasuries2/tryAqBondObjectCleanPrice_inputs";
+    extern const char priceBondInputFile3[]          ="ETrading/Bonds/USTreasuries3/tryAqBondObjectCleanPrice_inputs";
+    extern const char priceBondInputFile4[]          ="ETrading/Bonds/USTreasuries4/tryAqBondObjectCleanPrice_inputs";
+    extern const char priceBondInputFile5[]          ="ETrading/Bonds/USTreasuries5/tryAqBondObjectCleanPrice_inputs";
+    extern const char priceBondInputFile6[]          ="ETrading/Bonds/USTreasuries6/tryAqBondObjectCleanPrice_inputs";
+    extern const char priceBondInputFile7[]          ="ETrading/Bonds/USTreasuries7/tryAqBondObjectCleanPrice_inputs";
+    extern const char priceBondInputFile8[]          ="ETrading/Bonds/USTreasuries8/tryAqBondObjectCleanPrice_inputs";
+    extern const char priceBondInputFile9[]          ="ETrading/Bonds/USTreasuries9/tryAqBondObjectCleanPrice_inputs";
+    extern const char priceBondInputFile10[]         ="ETrading/Bonds/USTreasuries10/tryAqBondObjectCleanPrice_inputs";
+    extern const char priceBondInputFile11[]         ="ETrading/Bonds/USTreasuries11/tryAqBondObjectCleanPrice_inputs";
+    extern const char priceBondInputFile12[]         ="ETrading/Bonds/USTreasuries12/tryAqBondObjectCleanPrice_inputs";
 
-    extern const char priceBondOutputFile1[]         ="ETrading/Bonds/USTreasuries1/tryAqObjBondsCleanPrice_outputs";
-    extern const char priceBondOutputFile2[]         ="ETrading/Bonds/USTreasuries2/tryAqObjBondsCleanPrice_outputs";
-    extern const char priceBondOutputFile3[]         ="ETrading/Bonds/USTreasuries3/tryAqObjBondsCleanPrice_outputs";
-    extern const char priceBondOutputFile4[]         ="ETrading/Bonds/USTreasuries4/tryAqObjBondsCleanPrice_outputs";
-    extern const char priceBondOutputFile5[]         ="ETrading/Bonds/USTreasuries5/tryAqObjBondsCleanPrice_outputs";
-    extern const char priceBondOutputFile6[]         ="ETrading/Bonds/USTreasuries6/tryAqObjBondsCleanPrice_outputs";
-    extern const char priceBondOutputFile7[]         ="ETrading/Bonds/USTreasuries7/tryAqObjBondsCleanPrice_outputs";
-    extern const char priceBondOutputFile8[]         ="ETrading/Bonds/USTreasuries8/tryAqObjBondsCleanPrice_outputs";
-    extern const char priceBondOutputFile9[]         ="ETrading/Bonds/USTreasuries9/tryAqObjBondsCleanPrice_outputs";
-    extern const char priceBondOutputFile10[]        ="ETrading/Bonds/USTreasuries10/tryAqObjBondsCleanPrice_outputs";
-    extern const char priceBondOutputFile11[]        ="ETrading/Bonds/USTreasuries11/tryAqObjBondsCleanPrice_outputs";
-    extern const char priceBondOutputFile12[]        ="ETrading/Bonds/USTreasuries12/tryAqObjBondsCleanPrice_outputs";
+    extern const char priceBondOutputFile1[]         ="ETrading/Bonds/USTreasuries1/tryAqBondObjectCleanPrice_outputs";
+    extern const char priceBondOutputFile2[]         ="ETrading/Bonds/USTreasuries2/tryAqBondObjectCleanPrice_outputs";
+    extern const char priceBondOutputFile3[]         ="ETrading/Bonds/USTreasuries3/tryAqBondObjectCleanPrice_outputs";
+    extern const char priceBondOutputFile4[]         ="ETrading/Bonds/USTreasuries4/tryAqBondObjectCleanPrice_outputs";
+    extern const char priceBondOutputFile5[]         ="ETrading/Bonds/USTreasuries5/tryAqBondObjectCleanPrice_outputs";
+    extern const char priceBondOutputFile6[]         ="ETrading/Bonds/USTreasuries6/tryAqBondObjectCleanPrice_outputs";
+    extern const char priceBondOutputFile7[]         ="ETrading/Bonds/USTreasuries7/tryAqBondObjectCleanPrice_outputs";
+    extern const char priceBondOutputFile8[]         ="ETrading/Bonds/USTreasuries8/tryAqBondObjectCleanPrice_outputs";
+    extern const char priceBondOutputFile9[]         ="ETrading/Bonds/USTreasuries9/tryAqBondObjectCleanPrice_outputs";
+    extern const char priceBondOutputFile10[]        ="ETrading/Bonds/USTreasuries10/tryAqBondObjectCleanPrice_outputs";
+    extern const char priceBondOutputFile11[]        ="ETrading/Bonds/USTreasuries11/tryAqBondObjectCleanPrice_outputs";
+    extern const char priceBondOutputFile12[]        ="ETrading/Bonds/USTreasuries12/tryAqBondObjectCleanPrice_outputs";
 }
 
 namespace google_test
@@ -132,14 +132,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR1, priceBondOutputFile1, priceTolerance, i );
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -189,14 +189,14 @@ namespace google_test
                 std::vector< double > yields  = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR2, priceBondOutputFile2, priceTolerance, i+25 ); // File starts at 25
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -246,14 +246,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR3, priceBondOutputFile3, priceTolerance, i+50 ); // File Starts at 50
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -302,14 +302,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR4, priceBondOutputFile4, priceTolerance, i+75 ); // File Starts at 75
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -359,14 +359,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR5, priceBondOutputFile5, priceTolerance, i+100 ); // File Starts at 100
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -416,14 +416,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR6, priceBondOutputFile6, priceTolerance, i+125 ); // File Starts at 125
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -473,14 +473,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR7, priceBondOutputFile7, priceTolerance, i+150 ); // File Starts at 150
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -529,14 +529,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR8, priceBondOutputFile8, priceTolerance, i+175 ); // File Starts at 175
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -586,14 +586,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR9, priceBondOutputFile9, priceTolerance, i+200 ); // File Starts at 200
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -643,14 +643,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR10, priceBondOutputFile10, priceTolerance, i+225 ); // File Starts at 225
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -700,14 +700,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR11, priceBondOutputFile11, priceTolerance, i+250 ); // File Starts at 250
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -757,14 +757,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqBondObjectCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR12, priceBondOutputFile12, priceTolerance, i+275 ); // File Starts at 275
 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqBondObjectYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqBondObjectCompoundYield( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );

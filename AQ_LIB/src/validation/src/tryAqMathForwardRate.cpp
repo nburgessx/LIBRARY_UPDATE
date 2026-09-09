@@ -1,4 +1,4 @@
-#include "tryAqCurvesInterpolation.h"
+#include "tryAqCurveInterpolation.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveUtilities.h"
 #include "CreateDataFile.h"
@@ -48,7 +48,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	// validation interface for tryAqCurvesForwardRates method
+	// validation interface for tryAqCurveForwardRates method
 	std::vector<double> tryAqMathForwardRates( const std::vector<AQLDate> & fixingDates,
 											   const AQLDate & asOfDate,
 											   const etrading::InterpolationEnum interpolationEnum,
@@ -113,7 +113,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	/* @brief			validation interface for tryAqCurvesDiscountFactors method
+	/* @brief			validation interface for tryAqCurveDiscountFactors method
 	*  @param [in]		paymentDatesAsTerm
 	*  @param [in]		xValues
 	*  @param [in]		yValues
@@ -209,7 +209,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	// *** LEGACY METHOD *** validation interface for tryAqCurvesForwardRates method
+	// *** LEGACY METHOD *** validation interface for tryAqCurveForwardRates method
 	std::vector<double> tryAqMathForwardRates( const std::vector<AQLDate> & fixingDates,
 											   const AQLDate & asOfDate,
 											   const std::string & curveCollection,
@@ -325,7 +325,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-	// *** LEGACY METHOD *** validation interface for tryAqCurvesDiscountFactors method
+	// *** LEGACY METHOD *** validation interface for tryAqCurveDiscountFactors method
 	std::vector<double> tryAqMathDiscountFactors( const std::vector<AQLDate> & paymentDates,
 												  const AQLDate & asOfDate,
 												  const std::string & curveCollection,

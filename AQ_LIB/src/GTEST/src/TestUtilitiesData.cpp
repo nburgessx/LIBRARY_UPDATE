@@ -2,9 +2,9 @@
 #include <string>
 
 // Includes: This Library
-#include <tryAqToolsAppend.h>
-#include <tryAqToolsClean.h>
-#include <tryAqToolsDataFilter.h>
+#include <tryAqToolAppend.h>
+#include <tryAqToolClean.h>
+#include <tryAqToolDataFilter.h>
 
 // Include: Google Test Library
 #include <gTest/gTest.h>
@@ -113,7 +113,7 @@ TEST( TestUtilitiesData, UNIT_aqToolsAppendByRow )
 
 
     // Call the Append Function with Append by Row = TRUE
-    etrading::VariantMatrix actual = validation::tryAqToolsAppend( true, matrix1, matrix2 );
+    etrading::VariantMatrix actual = validation::tryAqToolAppend( true, matrix1, matrix2 );
 
 
     // Expected Results
@@ -166,7 +166,7 @@ TEST( TestUtilitiesData, UNIT_aqToolsAppendByColumn )
 
 
     // Call the Append Function with Append by Row = FALSE
-    etrading::VariantMatrix actual = validation::tryAqToolsAppend( false, matrix1, matrix2 );
+    etrading::VariantMatrix actual = validation::tryAqToolAppend( false, matrix1, matrix2 );
 
 
     // Expected Results
@@ -218,7 +218,7 @@ TEST( TestUtilitiesData, UNIT_aqToolsDataFilterByRow )
     input.push_back( AQLDate("20170929") );
 
     // Call the Data Filter function which removes duplicates
-    etrading::VariantMatrix actual = validation::tryAqToolsDataFilter( input, false ); // displayByRow = false
+    etrading::VariantMatrix actual = validation::tryAqToolDataFilter( input, false ); // displayByRow = false
 
     // Expected Output Matrix
     etrading::VariantVector rowVector;
@@ -264,7 +264,7 @@ TEST( TestUtilitiesData, UNIT_aqToolsDataFilterByColumn )
     input.push_back( AQLDate("20170929") );
 
     // Call the Data Filter function which removes duplicates
-    etrading::VariantMatrix actual = validation::tryAqToolsDataFilter( input, true ); // displayByRow = true
+    etrading::VariantMatrix actual = validation::tryAqToolDataFilter( input, true ); // displayByRow = true
 
     // Expected Output Matrix
     etrading::VariantMatrix expected;
@@ -348,7 +348,7 @@ TEST( TestUtilitiesData, UNIT_aqToolsCleanByRow )
 
 
     // Call the Clean Function with Clean by Row = TRUE
-    etrading::VariantMatrix actual = validation::tryAqToolsClean( inputMatrix, true );
+    etrading::VariantMatrix actual = validation::tryAqToolClean( inputMatrix, true );
 
 
     // Expected Results
@@ -412,7 +412,7 @@ TEST( TestUtilitiesData, UNIT_aqToolsCleanByColumn )
 
 
     // Call the Clean Function with Clean by Row = FALSE
-    etrading::VariantMatrix actual = validation::tryAqToolsClean( inputMatrix, false );
+    etrading::VariantMatrix actual = validation::tryAqToolClean( inputMatrix, false );
 
 
     // Expected Results

@@ -17,16 +17,16 @@
 #include "DataUtilities.h"		// AQ_TO_STRING macros
 
 // Curves and Swap Pricing
-#include "tryAqObjects.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqObject.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "RepriceCalibrationInstruments.h"
 
 // Curve Results
 #include "CurveResultsContainer.h"
-#include "tryAqCurvesResults.h"
+#include "tryAqCurveResults.h"
 #include "CurveUtilities.h"						// Contains Legcacy Curve Discount Factor and Forward Rate Methods
 #include "AQLCurveForwardRateHelpers.h"			// Also contains Legcacy Curve Discount Factor and Forward Rate Methods
 #include "ParameterValidation.h"				// Contains etrading::getDataInstance() method
@@ -58,8 +58,8 @@ namespace google_test
 			const std::string fileNameEUR3ML = TEST_FOLDER + "EUR_SWAP_3M_CURVE_" + interpolation + ".JSON";
 
 			// Load Curves
-		    const std::string curveObjectEUROIS_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUROIS, etrading::JSON );
-		    const std::string curveObjectEUR3ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR3ML, etrading::JSON );
+		    const std::string curveObjectEUROIS_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameEUROIS, etrading::JSON );
+		    const std::string curveObjectEUR3ML_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameEUR3ML, etrading::JSON );
 		}
 	}
 
@@ -90,7 +90,7 @@ namespace google_test
 		const etrading::StateVariableEnum stateVariable				= etrading::STATE_VARIABLE_DF;
 		
 		// 3. Extract the Curve Results: Matrix with 2 Columns - PaymentDatesAsTerms and DiscountFactors
-        const etrading::VariantMatrix curveResults = validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
+        const etrading::VariantMatrix curveResults = validation::tryAqCurveResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
 		
 		// 4. Extract Curve Payment Dates and Discount Factors from the Curve Results Table
 		ASSERT_GT( curveResults.size(), size_t(0) );		// we expect more than 1 row of data
@@ -106,7 +106,7 @@ namespace google_test
         }
 
 		// 5. Imply the Forward Rates from the Curve Results Table
-		const std::vector< double> expectedForwardRates = validation::tryAqCurvesResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
+		const std::vector< double> expectedForwardRates = validation::tryAqCurveResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
 
 		// 6. Get the Forward Rates from the Curve Interpolation Class, using isFwdInter = false (undesirable legacy feature)
 		const std::vector< double > actualForwardRates = validation::tryAqMathForwardRates( curveDates, asOfDate, curveCollection, curveIndex, false, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );
@@ -145,7 +145,7 @@ namespace google_test
 		const etrading::StateVariableEnum stateVariable				= etrading::STATE_VARIABLE_DF;
 		
 		// 3. Extract the Curve Results: Matrix with 2 Columns - PaymentDatesAsTerms and DiscountFactors
-        const etrading::VariantMatrix curveResults = validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
+        const etrading::VariantMatrix curveResults = validation::tryAqCurveResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
 		
 		// 4. Extract Curve Payment Dates and Discount Factors from the Curve Results Table
 		ASSERT_GT( curveResults.size(), size_t(0) );		// we expect more than 1 row of data
@@ -161,7 +161,7 @@ namespace google_test
         }
 
 		// 5. Imply the Forward Rates from the Curve Results Table
-		const std::vector< double> expectedForwardRates = validation::tryAqCurvesResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
+		const std::vector< double> expectedForwardRates = validation::tryAqCurveResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
 
 		// 6. Get the Forward Rates from the Curve Interpolation Class using isFwdInter = false
 		const std::vector< double > actualForwardRates = validation::tryAqMathForwardRates( curveDates, asOfDate, curveCollection, curveIndex, false, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );
@@ -200,7 +200,7 @@ namespace google_test
 		const etrading::StateVariableEnum stateVariable				= etrading::STATE_VARIABLE_DF;
 		
 		// 3. Extract the Curve Results: Matrix with 2 Columns - PaymentDatesAsTerms and DiscountFactors
-        const etrading::VariantMatrix curveResults = validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
+        const etrading::VariantMatrix curveResults = validation::tryAqCurveResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
 		
 		// 4. Extract Curve Payment Dates and Discount Factors from the Curve Results Table
 		ASSERT_GT( curveResults.size(), size_t(0) );		// we expect more than 1 row of data
@@ -216,7 +216,7 @@ namespace google_test
         }
 
 		// 5. Imply the Forward Rates from the Curve Results Table
-		const std::vector< double> expectedForwardRates = validation::tryAqCurvesResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
+		const std::vector< double> expectedForwardRates = validation::tryAqCurveResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
 
 		// 6. Get the Forward Rates from the Curve Interpolation Class - using isFwdInter = false
 		const std::vector< double > actualForwardRates = validation::tryAqMathForwardRates( curveDates, asOfDate, curveCollection, curveIndex, false, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );
@@ -255,7 +255,7 @@ namespace google_test
 	// 	const etrading::StateVariableEnum stateVariable				= etrading::STATE_VARIABLE_DF;
 	// 	
 	// 	// 3. Extract the Curve Results: Matrix with 2 Columns - PaymentDatesAsTerms and DiscountFactors
-    //     const etrading::VariantMatrix curveResults = validation::tryAqCurvesResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
+    //     const etrading::VariantMatrix curveResults = validation::tryAqCurveResultsDiscountFactorsDisplayAll( curveCollection, curveIndex );
 	// 	
 	// 	// 4. Extract Curve Payment Dates and Discount Factors from the Curve Results Table
 	// 	ASSERT_GT( curveResults.size(), size_t(0) );		// we expect more than 1 row of data
@@ -271,7 +271,7 @@ namespace google_test
     //     }
 	// 
 	// 	// 5. Imply the Forward Rates from the Curve Results Table
-	// 	const std::vector< double> expectedForwardRates = validation::tryAqCurvesResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
+	// 	const std::vector< double> expectedForwardRates = validation::tryAqCurveResultsForwardRatesDisplay( curveCollection, curveIndex, curveDates, useForwardInterpolation, fixingBusDayAdj, fixingCalendar );
 	// 
 	// 	// 6. Get the Forward Rates from the Curve Interpolation Class
 	// 	const std::vector< double > actualForwardRates = validation::tryAqMathForwardRates( curveDates, asOfDate, interpolation, stateVariable, curveDates, discountFactors, accrualDaycount, toString( curveTenor), fixingBusDayAdj, fixingCalendar, hybridInterpolationJoinDate, forwardAjustmentTable, compoundFreq );

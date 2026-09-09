@@ -12,9 +12,9 @@
 #include "GetGoogleTestFolder.h"
 #include "ResultsProcessor.h"
 #include "CoreEnumerations.h"
-#include "tryAqObjects.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqObject.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "DataUtilities.h" // AQ_TO_STRING macros
@@ -38,9 +38,9 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectAUDOIS_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameAUDOIS, etrading::JSON );
-        const std::string curveObjectAUD3ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameAUD3ML, etrading::JSON );
-        const std::string curveObjectAUD6ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameAUD6ML, etrading::JSON );
+        const std::string curveObjectAUDOIS_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameAUDOIS, etrading::JSON );
+        const std::string curveObjectAUD3ML_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameAUD3ML, etrading::JSON );
+        const std::string curveObjectAUD6ML_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameAUD6ML, etrading::JSON );
     };
 
     // Declare Test Fixture Class
@@ -49,9 +49,9 @@ namespace google_test
     public:
 
         // Load OIS Curve Multiple Times to test reloading of curves
-        std::string curveObjectAUDOIS1_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameAUDOIS, etrading::JSON );
-		std::string curveObjectAUDOIS2_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameAUDOIS, etrading::JSON );
-		std::string curveObjectAUDOIS3_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameAUDOIS, etrading::JSON );
+        std::string curveObjectAUDOIS1_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameAUDOIS, etrading::JSON );
+		std::string curveObjectAUDOIS2_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameAUDOIS, etrading::JSON );
+		std::string curveObjectAUDOIS3_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameAUDOIS, etrading::JSON );
     };
 
 	// Call Test Fixture Class
@@ -87,7 +87,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180809", oisSwapTerms[i] ); // Effective Date = 20180809
-            const double actualResult                    = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqSwapObjectParRate( swapObject, curveLVB );
             const double expectedResult                  = oisSwapParRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );
@@ -127,7 +127,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180809", oisSwapTerms[i] ); // Effective Date = 20180809
-            const double actualResult                    = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqSwapObjectParRate( swapObject, curveLVB );
             const double expectedResult                  = oisSwapParRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );
@@ -173,7 +173,7 @@ namespace google_test
             std::string swapGenerator = liborOisTerms[i] == "3Y" ? swapGeneratorQtr : swapGeneratorSemi;
             
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180809", liborOisTerms[i] ); // Effective Date = 20180809
-            const double actualResult                    = validation::tryAqObjSwapsSpread( swapObject, curveLVB, etrading::LabelValueBlock(), "Leg1:Float" ) / 10000; // Basis Points
+            const double actualResult                    = validation::tryAqSwapObjectSpread( swapObject, curveLVB, etrading::LabelValueBlock(), "Leg1:Float" ) / 10000; // Basis Points
             const double expectedResult                  = liborOisSpreads[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );

@@ -40,11 +40,12 @@ Status legend: ☐ not started · ◐ in progress · ☑ done
 | D11 | **Q3 — `AQ_API` confirmed.** |
 | D12 | **Q4 — holiday-centre join is `+` only** (Nicholas, this session). Reason: clean break (D9), fresh clients, no legacy user sheets to protect; the only `:`-form data that ships is the ~103 generator JSON, which we migrate ourselves; and `:` is heavily overloaded (`DATA_COLL_DEL`, curve-name lists in the same generator files). The `splitCalendarCentres()` helper is written so accepting `:` again is a **one-line toggle** if field feedback ever demands it — but it ships `+`-only. Migrate the 103 JSON calendar fields to `+`. |
 | D13 | **Q5 — Linux / CMake build is in scope**, lower priority (late phase). **End-state gate: not one file anywhere in the tree — source, Makefiles, `make.*`, CMake, `.sln`/`.vcxproj`, scripts, resources, examples, docs — may contain a legacy client name or an old prefix.** Many `resources\` and `examples\` items will be rewritten or removed for the final version. |
-| D14 | **Q6 — category taxonomy locked (20, singular).** See §2.2 / `CLAUDE.md` §5.1. |
+| D14 | **Q6 — category taxonomy locked (22, singular).** See §2.2 / `CLAUDE.md` §5.1. |
 | D15 | **LWO → `AQObj`** for the C++ object-framework **classes** (`AQObjCurve`, `AQObjUtilities`, …); screaming-snake macros take `AQOBJ_`; free predicate `isLWOObject → isAQObject`. Public **function** names carrying `LWO` become **`aq<Category>Object<Fn>`** (`aqSwapObjectPV`, `aqBondObjectDirtyPrice`); named sub-objects skip the `Object` word (`aqBondCurveYield`); lifecycle ops drop the category (`aqObjectLoad`, `aqObjectSave`). Supersedes the earlier `aqObj<Category>` / `aqObjects*` schemes — see Phase 3.2, step 8 and step 11. |
 | D17 | **`LA` → `AQL`** (not `AQ`). `LA` = "Legacy Analytics" — the whole `LA*` tree is legacy-to-deprecate; the `AQL` ("AQ Legacy") prefix keeps it visually distinct and greppable against new `AQ*` code. Applies to identifiers, files (`LAString.h → AQLString.h`), include-guard macros, error-string text. `MA`/`MB` → `AQ`, confirmed per project. `LAObject → AQLObject`, `LAMath → AQLMath`. |
 | D16 | **Navigation:** category names are a public-API concern and are **not** propagated into `etrading`/`math` file or class names (those stay domain-oriented). The bridge is the `validation` layer: every wrapper is the identical public name plus a `try` prefix, foldered by category (Phase 3.5), plus a live `docs\api_map.csv` (Phase 3.6). Judged acceptable — see §"Navigation" note below §2.5. |
-| D18 | **Category scheme (step 11):** categories are **singular** (`aqDate`, not `aqDates`); the handle marker is the word **`Object`** after the category (`aqBondObjectDirtyPrice`), a named sub-object skips it (`aqBondCurveYield`), generic lifecycle is `aqObject<Lifecycle>`. `Vols → Vol`. `AQ_XLL` category files are `aq<Category>.{cpp,h}` (`aqBond.cpp`, `aqDate.cpp`, `aqObject.cpp`, `aqTool.cpp`; `aqXllTools` is the XLL-layer utility, not a category). `validation`, `AQ_API`, `GTEST` **test names** and `resources\test` fixtures follow — task 2.6. |
+| D18 | **Category scheme (step 11):** categories are **singular** (`aqDate`, not `aqDates`); the handle marker is the word **`Object`** after the category (`aqBondObjectDirtyPrice`), a named sub-object skips it (`aqBondCurveYield`), generic lifecycle is `aqObject<Lifecycle>`. `Vols → Volatility`. `AQ_XLL` category files are `aq<Category>.{cpp,h}` (`aqBond.cpp`, `aqDate.cpp`, `aqObject.cpp`, `aqTool.cpp`; `aqXllTools` is the XLL-layer utility, not a category). `validation`, `AQ_API`, `GTEST` **test names** and `resources\test` fixtures follow — task 2.6. |
+| D19 | **The `validation` wrapper name is the GOLDEN SOURCE** for every public function name. Wrapper = `try` + `<GoldenName>`; the XLL function, every binding method (Python / C# / Java / R) and the `GTEST` case name are `<GoldenName>` verbatim. Rename the wrapper first; the other surfaces follow. Enforced by `docs\api_map.csv` + `api_pair_check.py`. |
 
 Open questions: none blocking. Phase 4 waits on the xlOil worked examples;
 Phase 6.0 (Credit untangle) needs Nicholas's domain call on `CreditResults`.
@@ -236,8 +237,10 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
   |---|---|---|
   | `Date` | calendars, schedules, IMM / central-bank dates, year fractions | `aqDateYearFraction` |
   | `Curve` | **rates yield-curve framework only** — build, calibration, interpolation, DF / zero / forward queries, cross-currency. *Not* bond or credit curves. | `aqCurveObjectForwardRate` |
-  | `Vol` | vol surfaces, surface SABR calibration, cap / swaption vol utilities | `aqVolSabrImplied` |
-  | `Rate` | FRAs, futures, cap / floor, stub rates, compounding | `aqRateCompound` |
+  | `Volatility` | vol surfaces, surface SABR calibration, cap / swaption vol utilities | `aqVolatilitySabrImplied` |
+  | `Rate` | FRAs, cap / floor, stub rates, compounding | `aqRateCompound` |
+  | `Future` | futures ticker / date-code helpers, futures conventions | `aqFutureTickerNext` |
+  | `Ois` | OIS PV / par rate (stateless) | `aqOisParRate` |
   | `Swap` | vanilla / OIS / basis / cross-currency — creation, legs, schedules, pricing, risk. Asset / CMS / total-return swaps have their own categories. | `aqSwapObjectParRate` |
   | `Bond` | bond creation, price / yield, repo / basis / CTD, **bond-curve fitting** (govie / spread curves) | `aqBondObjectYield`, `aqBondCurveYield` |
   | `Credit` | CDS, **hazard-rate / survival (credit) curves**, par spreads | `aqCreditParSpread` |
@@ -265,7 +268,7 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
   **Decisions folded in:** `Curve` = rates yield-curve framework only, bond-curve
   fitting → `Bond`, hazard/survival → `Credit`. **No `Options` umbrella** and
   **no `Object` category** — the handle API is the `Object` word after the
-  category. **`Vol`** (singular; supersedes the earlier `Vols`). **`Math` kept.**
+  category. **`Volatility`** (full word; supersedes the earlier `Vols` and the interim `Vol`). **`Math` kept.**
   **`Model` added.** **`Products` dropped.** `LoanCalculations`,
   `SupervisoryRules` and `msc*` are **removed** (client-specific — Phase 1.4a).
 - ☐ **2.3** Record the locked list in `CLAUDE.md` §5.1 (done). Map every row of
@@ -275,7 +278,7 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
 
   | Edition | Registers |
   |---|---|
-  | Swaps | Date, Curve, Vol, Rate, Swap, Math, Generator, Object, Tool |
+  | Swaps | Date, Curve, Volatility, Rate, Swap, Math, Generator, Object, Tool |
   | Bonds | Date, Curve, Rate, Bond, Math, Generator, Object, Tool |
   | Credit | Date, Curve, Credit, Bond, Math, Generator, Object, Tool |
   | Full | all 20, incl. options and Model |
@@ -284,13 +287,17 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
   **introspection only** — `aqGeneratorList` / `…Describe` / `…Validate`. The
   construction methods (`aqSwapFromGenerator`, `aqBondFromGenerator`, …) live in
   their **asset categories**, not in `Generator`.
-- ☐ **2.6 Apply the singular scheme across all four surfaces.** `validation`
-  wrappers, `AQ_API` (SWIG `.i` + the 8 generate/deploy scripts), `GTEST` **test
-  names**, `docs\api_map.csv` and every `resources\test` fixture file (named
-  `<function>_inputs.csv`). Its own branch/tag with the green-diff gate (§Phase
-  3 discipline). `AQ_XLL` was done at step 11 and is temporarily ahead of
-  `validation` on naming — its call sites still reference the old
-  `validation::tryAqObj…` names until this task lands.
+- ☑ **2.6 Apply the singular scheme across all four surfaces.** *(DONE —
+  built green with GTest passing, Nicholas 2026-09-09; uncommitted pending the
+  staged commit.)* `validation` wrappers, `AQ_API` (SWIG `.i`), `GTEST` **test
+  names**, `docs\api_map.csv` and every `resources\test` fixture file renamed to
+  the 22-category singular golden-source scheme (`Vol`→`Volatility`, `Future` +
+  `Ois` added). `AQ_XLL` call sites re-synced. Follow-on in the same delta:
+  the AQ_XLL `Tool` + `Object`-lifecycle port from `.APPLES\...\meUtilities.cpp`
+  (~55 `XLO_FUNC` functions across `aqObject.cpp` / `aqTool.cpp` + `aqXllTools`
+  marshalling helpers), and `Interpolation` / `PCA` moved `Tool` → `Math`
+  (`aqMathInterpolation` / `aqMathPCA`, `tryAqMath*`). Detail + resume plan in
+  `rebrand\STATUS.md`.
 
 **Exit:** agreed category list + edition→category map in `CLAUDE.md`; 0.7
 inventory fully categorised.
@@ -432,7 +439,7 @@ functions (details: `rebrand\callgraph_mir.md`).
 
 - ☐ **3c.1** For each of the 22 `tryMir*` functions, map to the `tryAq*`
   equivalent (post-Phase-3 names): `tryAqProductSwapPv`, `tryAqProductOisParRate`,
-  `tryAqCurveCalibrate*`, `tryAqDates*`, `tryAqObjectsCurve*` etc. Any with no
+  `tryAqCurveCalibrate*`, `tryAqDate*`, `tryAqObjectsCurve*` etc. Any with no
   equivalent → promote that one `mir` function to `aq` (rename + keep), don't
   drop the capability.
 - ☐ **3c.2** Migrate the 49 `GTEST` files to the `tryAq*` calls, **one
@@ -473,7 +480,7 @@ canonical marshalling / handle-I/O / array-return / error-convention pattern.
   only; no `me*` aliases, hidden or otherwise. Finalise the `RELEASE_NOTES`
   renamed/removed-function list started in 3.3 so users can find replacements.
 - ☐ **4.7** Port functions **category by category** in the CLAUDE.md §9.4 order
-  (Date → Tool → Curve → Swap → Bond → Credit → Rate → Vol → options →
+  (Date → Tool → Curve → Swap → Bond → Credit → Rate → Volatility → options →
   Math → Model → Generator → Object), driven by the 0.7 inventory and the
   locked Phase 2 categories. Per function: confirm it is a "keep" → port `_Impl`
   → `validation` wrapper → `GTEST` case → tick the inventory row. Build +

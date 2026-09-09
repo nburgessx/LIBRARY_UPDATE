@@ -16,10 +16,10 @@ import subprocess, re, os, sys, csv, collections
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.chdir(ROOT)
 
-# LOCKED (20), SINGULAR. Product sub-types are their own category -- there is no
+# LOCKED (22), SINGULAR. Future + Ois added at step 11b. Product sub-types are their own category -- there is no
 # Options umbrella. Longest-first matching matters: BondFutureOption before
 # BondOption, TotalReturnSwap/AssetSwap/ConstantMaturitySwap before Swap.
-CATEGORIES = ["Date", "Curve", "FX", "Inflation", "Vol", "Rate",
+CATEGORIES = ["Date", "Curve", "FX", "Inflation", "Volatility", "Rate", "Future", "Ois",
               "Swap", "AssetSwap", "ConstantMaturitySwap", "TotalReturnSwap",
               "CapFloor", "Swaption", "BondOption", "BondFutureOption",
               "Bond", "Credit", "Math", "Model", "Generator", "Tool"]

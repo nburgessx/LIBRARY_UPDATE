@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryAqToolsSetup.h"
+#include "tryAqToolSetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
 #include "ResultsProcessor.h"
@@ -16,11 +16,11 @@
 #include "CurveOis.h"
 
 // "Generator" API
-#include "tryAqObjCurvesMarketData.h"
-#include "tryAqObjCurvesDualBootstrap.h"
+#include "tryAqCurveMarketData.h"
+#include "tryAqCurveObjectDualBootstrap.h"
 
 // Forward Rates Table
-#include "tryAqCurvesForwardRate.h"
+#include "tryAqCurveForwardRate.h"
 
 using etrading::ReadDataFile;
 
@@ -61,7 +61,7 @@ namespace google_test
 		const ReadDataFile::Load inputFile(oisForwardRateInputFile);
 		const DateVector fromDateVector = inputFile["fromDates"];
 		const DateVector toDateVector = inputFile["toDates"];
-		const DoubleArray results = validation::tryAqCurvesForwardRatesFromForwardDates(fromDateVector,
+		const DoubleArray results = validation::tryAqCurveForwardRatesFromForwardDates(fromDateVector,
 			toDateVector,
 			inputFile["curveCollection"],
 			inputFile["curveIndex"],
@@ -99,7 +99,7 @@ namespace google_test
 			std::string oisCurveMarketObjectHandle = google_test::createAQObjMarketDataObjectFromFileName(oisCurveMarketDataFile);
 			std::string stdCurveMarketObjectHandle = google_test::createAQObjMarketDataObjectFromFileName(stdCurveMarketDataFile);
 
-			validation::tryAqObjCurvesDualBootstrap("", curveCollection, stdGenerator, oisGenerator, stdCurveMarketObjectHandle, oisCurveMarketObjectHandle);
+			validation::tryAqCurveObjectDualBootstrap("", curveCollection, stdGenerator, oisGenerator, stdCurveMarketObjectHandle, oisCurveMarketObjectHandle);
 
 			//----------------------------------------------------------------------------------------
 			// Test forward rates for the OIS curve and the STD curve
@@ -108,7 +108,7 @@ namespace google_test
 
 			//----------------------------------------------------------------------------------------
 			// Flush the cache in preparation for a new set of curves
-			validation::tryAqToolsClearEntityPool();
+			validation::tryAqToolClearEntityPool();
 		}
 	}
 

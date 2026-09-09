@@ -11,9 +11,9 @@
 #include "ReadDataFile.h"
 #include "GetGoogleTestFolder.h"
 #include "CoreEnumerations.h"
-#include "tryAqObjects.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqObject.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "RepriceCalibrationInstruments.h"
@@ -38,10 +38,10 @@ namespace google_test
     public:
 
         // Load Curves - Must Build Curves in the Correct Order
-        const std::string curveObjectJPYOIS_        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameJPYOIS, etrading::JSON );
-        const std::string curveObjectJPYStd6ML_     = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameJPY6ML, etrading::JSON );
-        const std::string curveObjectJPYBasis3ML_   = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameJPY3ML, etrading::JSON );
-        const std::string curveObjectJPYBasis1ML_   = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameJPY1ML, etrading::JSON );
+        const std::string curveObjectJPYOIS_        = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameJPYOIS, etrading::JSON );
+        const std::string curveObjectJPYStd6ML_     = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameJPY6ML, etrading::JSON );
+        const std::string curveObjectJPYBasis3ML_   = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameJPY3ML, etrading::JSON );
+        const std::string curveObjectJPYBasis1ML_   = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameJPY1ML, etrading::JSON );
     };
 
     // OIS OUTRIGHT SWAPS

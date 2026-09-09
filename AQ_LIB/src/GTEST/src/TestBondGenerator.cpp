@@ -3,7 +3,7 @@
 #include "InitializeGoogleTest.h"
 
 #include "ObjectUtilities.h"
-#include "tryAqObjBonds.h"
+#include "tryAqBondObject.h"
 
 #include "Dependency.h"
 #include "ReadDataFile.h"
@@ -17,16 +17,16 @@ using etrading::CreateDataFile;
 namespace
 {
     // Test Bond Input File(s)
-    extern const char bondInputsFile[]          = TEST_DIR "tryAqObjBondsCreateFromGenerator_inputs.csv";
-    extern const char cleanPriceInputs[]        = TEST_DIR "tryAqObjBondsCleanPrice_inputs.csv";
-    extern const char cleanPriceOutputs[]       = TEST_DIR "tryAqObjBondsCleanPrice_outputs.csv";
+    extern const char bondInputsFile[]          = TEST_DIR "tryAqBondObjectCreateFromGenerator_inputs.csv";
+    extern const char cleanPriceInputs[]        = TEST_DIR "tryAqBondObjectCleanPrice_inputs.csv";
+    extern const char cleanPriceOutputs[]       = TEST_DIR "tryAqBondObjectCleanPrice_outputs.csv";
 }
 
 namespace google_test
 {
 	DECLARE_TEST_FIXTURE(TestBondGenerator);
 
-    TEST_F( TestBondGenerator, SNAPSHOT_tryAqObjBondsCreateFromGenerator )
+    TEST_F( TestBondGenerator, SNAPSHOT_tryAqBondObjectCreateFromGenerator )
     {
         try
         {
@@ -41,7 +41,7 @@ namespace google_test
 		
 			// Check that we can create the bond instance from the specified BondGenerator, and the
 			// custom properties in the expressionLVB.
-			const std::string bondObjHandle = validation::tryAqObjBondsCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, validateKeys );
+			const std::string bondObjHandle = validation::tryAqBondObjectCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, validateKeys );
 
 			// Perform a sanity check: Calculate the clean price of the bond
 			etrading::ReadDataFile::Load cleanPriceInputFileObj = etrading::ReadDataFile::Load( cleanPriceInputs );
@@ -51,7 +51,7 @@ namespace google_test
 			const std::vector<double> yields          = cleanPriceInputFileObj[ "yields" ];
 			const std::string yieldCalculationType    = cleanPriceInputFileObj[ "yieldCalculationType" ];
 
-			std::vector<double> actualResults = validation::tryAqObjBondsCleanPrice( bondObjHandle, settlementDates, yields, yieldCalculationType );
+			std::vector<double> actualResults = validation::tryAqBondObjectCleanPrice( bondObjHandle, settlementDates, yields, yieldCalculationType );
 
             // Compare Results
             const double tolerance = 1.e-9;
@@ -75,7 +75,7 @@ namespace google_test
         }
     }
 
-    TEST_F( TestBondGenerator, UNIT_tryAqObjBondsCreateFromGenerator_US_Treasury_PriceAndRiskResults )
+    TEST_F( TestBondGenerator, UNIT_tryAqBondObjectCreateFromGenerator_US_Treasury_PriceAndRiskResults )
     {
         const std::string bondObjectName	  = "US_TREASURY_2.25_31-DEC-2023";
 		const std::string bondGeneratorName   = "US_TREASURY_TYPE1";
@@ -114,7 +114,7 @@ namespace google_test
         expressionLVB[8] = p9;
 		
 		// Create Bond from Generator
-		const std::string bondObjHandle = validation::tryAqObjBondsCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
+		const std::string bondObjHandle = validation::tryAqBondObjectCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
 
         // Settlement Date
         const AQLDate settlementDate = AQLDate("20180131"); // 31-Jan-2018
@@ -125,11 +125,11 @@ namespace google_test
         const std::vector< double > yields( 1, yield );
             
         // Price and Risk Results
-        std::vector<double> cleanPrices         = validation::tryAqObjBondsCleanPrice( bondObjHandle, settlementDates, yields );
-        std::vector<double> dirtyPrices         = validation::tryAqObjBondsDirtyPrice( bondObjHandle, settlementDates, yields );
-        std::vector<double> accruedInterests    = validation::tryAqObjBondsAccruedInterest( bondObjHandle, settlementDates );
-        std::vector<int> accruedInterestDays    = validation::tryAqObjBondsAccruedInterestDays( bondObjHandle, settlementDates );
-        std::vector<double> dv01s               = validation::tryAqObjBondsDV01( bondObjHandle, settlementDates, yields );
+        std::vector<double> cleanPrices         = validation::tryAqBondObjectCleanPrice( bondObjHandle, settlementDates, yields );
+        std::vector<double> dirtyPrices         = validation::tryAqBondObjectDirtyPrice( bondObjHandle, settlementDates, yields );
+        std::vector<double> accruedInterests    = validation::tryAqBondObjectAccruedInterest( bondObjHandle, settlementDates );
+        std::vector<int> accruedInterestDays    = validation::tryAqBondObjectAccruedInterestDays( bondObjHandle, settlementDates );
+        std::vector<double> dv01s               = validation::tryAqBondObjectDV01( bondObjHandle, settlementDates, yields );
 
         // Compare Results
         const double resultsTolerance = 1.0e-6;
@@ -152,7 +152,7 @@ namespace google_test
     }
 
 
-    TEST_F( TestBondGenerator, UNIT_tryAqObjBondsCreateFromGenerator_GermanBund_PriceAndRiskResults )
+    TEST_F( TestBondGenerator, UNIT_tryAqBondObjectCreateFromGenerator_GermanBund_PriceAndRiskResults )
     {
         const std::string bondObjectName	  = "BUNDESREPUBLIK_2.00_15AUG2023";
 		const std::string bondGeneratorName   = "GERMAN_BUND_TYPE60";
@@ -191,7 +191,7 @@ namespace google_test
         expressionLVB[8] = p9;
 		
 		// Create Bond from Generator
-		const std::string bondObjHandle = validation::tryAqObjBondsCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
+		const std::string bondObjHandle = validation::tryAqBondObjectCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
 
         // Settlement Date
         const AQLDate settlementDate = AQLDate("20180201"); // 1-Feb-2018
@@ -202,11 +202,11 @@ namespace google_test
         const std::vector< double > yields( 1, yield );
             
         // Price and Risk Results
-        std::vector<double> cleanPrices         = validation::tryAqObjBondsCleanPrice( bondObjHandle, settlementDates, yields );
-        std::vector<double> dirtyPrices         = validation::tryAqObjBondsDirtyPrice( bondObjHandle, settlementDates, yields );
-        std::vector<double> accruedInterests    = validation::tryAqObjBondsAccruedInterest( bondObjHandle, settlementDates );
-        std::vector<int> accruedInterestDays    = validation::tryAqObjBondsAccruedInterestDays( bondObjHandle, settlementDates );
-        std::vector<double> dv01s               = validation::tryAqObjBondsDV01( bondObjHandle, settlementDates, yields );
+        std::vector<double> cleanPrices         = validation::tryAqBondObjectCleanPrice( bondObjHandle, settlementDates, yields );
+        std::vector<double> dirtyPrices         = validation::tryAqBondObjectDirtyPrice( bondObjHandle, settlementDates, yields );
+        std::vector<double> accruedInterests    = validation::tryAqBondObjectAccruedInterest( bondObjHandle, settlementDates );
+        std::vector<int> accruedInterestDays    = validation::tryAqBondObjectAccruedInterestDays( bondObjHandle, settlementDates );
+        std::vector<double> dv01s               = validation::tryAqBondObjectDV01( bondObjHandle, settlementDates, yields );
 
         // Compare Results
         const double resultsTolerance = 1.0e-6;
@@ -228,7 +228,7 @@ namespace google_test
 
     }
 
-    TEST_F( TestBondGenerator, UNIT_tryAqObjBondsCreateFromGenerator_JapaneseJGB_PriceAndRiskResults )
+    TEST_F( TestBondGenerator, UNIT_tryAqBondObjectCreateFromGenerator_JapaneseJGB_PriceAndRiskResults )
     {
         const std::string bondObjectName	  = "JAPAN_JGB_2.20_20JUN2024";
 		const std::string bondGeneratorName   = "JAPAN_JGB_TYPE51";
@@ -267,7 +267,7 @@ namespace google_test
         expressionLVB[8] = p9;
 		
 		// Create Bond from Generator
-		const std::string bondObjHandle = validation::tryAqObjBondsCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
+		const std::string bondObjHandle = validation::tryAqBondObjectCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
 
         // Settlement Date
         const AQLDate settlementDate = AQLDate("20180201"); // 1-Feb-2018
@@ -278,11 +278,11 @@ namespace google_test
         const std::vector< double > yields( 1, yield );
             
         // Price and Risk Results
-        std::vector<double> cleanPrices         = validation::tryAqObjBondsCleanPrice( bondObjHandle, settlementDates, yields );
-        std::vector<double> dirtyPrices         = validation::tryAqObjBondsDirtyPrice( bondObjHandle, settlementDates, yields );
-        std::vector<double> accruedInterests    = validation::tryAqObjBondsAccruedInterest( bondObjHandle, settlementDates );
-        std::vector<int> accruedInterestDays    = validation::tryAqObjBondsAccruedInterestDays( bondObjHandle, settlementDates );
-        std::vector<double> dv01s               = validation::tryAqObjBondsDV01( bondObjHandle, settlementDates, yields );
+        std::vector<double> cleanPrices         = validation::tryAqBondObjectCleanPrice( bondObjHandle, settlementDates, yields );
+        std::vector<double> dirtyPrices         = validation::tryAqBondObjectDirtyPrice( bondObjHandle, settlementDates, yields );
+        std::vector<double> accruedInterests    = validation::tryAqBondObjectAccruedInterest( bondObjHandle, settlementDates );
+        std::vector<int> accruedInterestDays    = validation::tryAqBondObjectAccruedInterestDays( bondObjHandle, settlementDates );
+        std::vector<double> dv01s               = validation::tryAqBondObjectDV01( bondObjHandle, settlementDates, yields );
 
         // Compare Results
         const double resultsTolerance = 1.0e-6;
@@ -304,7 +304,7 @@ namespace google_test
 
     }
 
-    TEST_F( TestBondGenerator, UNIT_tryAqObjBondsCreateFromGenerator_FrenchOAT_PriceAndRiskResults )
+    TEST_F( TestBondGenerator, UNIT_tryAqBondObjectCreateFromGenerator_FrenchOAT_PriceAndRiskResults )
     {
         const std::string bondObjectName	  = "FRENCH_OAT_1.750_25MAY2023";
 		const std::string bondGeneratorName   = "FRENCH_OAT_TYPE89";
@@ -343,7 +343,7 @@ namespace google_test
         expressionLVB[8] = p9;
 		
 		// Create Bond from Generator
-		const std::string bondObjHandle = validation::tryAqObjBondsCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
+		const std::string bondObjHandle = validation::tryAqBondObjectCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
 
         // Settlement Date
         const AQLDate settlementDate = AQLDate("20180201"); // 1-Feb-2018
@@ -354,11 +354,11 @@ namespace google_test
         const std::vector< double > yields( 1, yield );
             
         // Price and Risk Results
-        std::vector<double> cleanPrices         = validation::tryAqObjBondsCleanPrice( bondObjHandle, settlementDates, yields );
-        std::vector<double> dirtyPrices         = validation::tryAqObjBondsDirtyPrice( bondObjHandle, settlementDates, yields );
-        std::vector<double> accruedInterests    = validation::tryAqObjBondsAccruedInterest( bondObjHandle, settlementDates );
-        std::vector<int> accruedInterestDays    = validation::tryAqObjBondsAccruedInterestDays( bondObjHandle, settlementDates );
-        std::vector<double> dv01s               = validation::tryAqObjBondsDV01( bondObjHandle, settlementDates, yields );
+        std::vector<double> cleanPrices         = validation::tryAqBondObjectCleanPrice( bondObjHandle, settlementDates, yields );
+        std::vector<double> dirtyPrices         = validation::tryAqBondObjectDirtyPrice( bondObjHandle, settlementDates, yields );
+        std::vector<double> accruedInterests    = validation::tryAqBondObjectAccruedInterest( bondObjHandle, settlementDates );
+        std::vector<int> accruedInterestDays    = validation::tryAqBondObjectAccruedInterestDays( bondObjHandle, settlementDates );
+        std::vector<double> dv01s               = validation::tryAqBondObjectDV01( bondObjHandle, settlementDates, yields );
 
         // Compare Results
         const double resultsTolerance = 1.0e-6;
@@ -380,7 +380,7 @@ namespace google_test
 
     }
 
-    TEST_F( TestBondGenerator, UNIT_tryAqObjBondsCreateFromGenerator_ItalianBTPS_PriceAndRiskResults )
+    TEST_F( TestBondGenerator, UNIT_tryAqBondObjectCreateFromGenerator_ItalianBTPS_PriceAndRiskResults )
     {
         const std::string bondObjectName	  = "ITALIAN_BTPS_8.5_22JUN2023";
 		const std::string bondGeneratorName   = "ITALIAN_BTPS_TYPE523";
@@ -422,7 +422,7 @@ namespace google_test
         expressionLVB[9] = p10;
 		
 		// Create Bond from Generator
-		const std::string bondObjHandle = validation::tryAqObjBondsCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
+		const std::string bondObjHandle = validation::tryAqBondObjectCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
 
         // Settlement Date
         const AQLDate settlementDate = AQLDate("20180201"); // 1-Feb-2018
@@ -433,11 +433,11 @@ namespace google_test
         const std::vector< double > yields( 1, yield );
             
         // Price and Risk Results
-        std::vector<double> cleanPrices         = validation::tryAqObjBondsCleanPrice( bondObjHandle, settlementDates, yields );
-        std::vector<double> dirtyPrices         = validation::tryAqObjBondsDirtyPrice( bondObjHandle, settlementDates, yields );
-        std::vector<double> accruedInterests    = validation::tryAqObjBondsAccruedInterest( bondObjHandle, settlementDates );
-        std::vector<int> accruedInterestDays    = validation::tryAqObjBondsAccruedInterestDays( bondObjHandle, settlementDates );
-        std::vector<double> dv01s               = validation::tryAqObjBondsDV01( bondObjHandle, settlementDates, yields );
+        std::vector<double> cleanPrices         = validation::tryAqBondObjectCleanPrice( bondObjHandle, settlementDates, yields );
+        std::vector<double> dirtyPrices         = validation::tryAqBondObjectDirtyPrice( bondObjHandle, settlementDates, yields );
+        std::vector<double> accruedInterests    = validation::tryAqBondObjectAccruedInterest( bondObjHandle, settlementDates );
+        std::vector<int> accruedInterestDays    = validation::tryAqBondObjectAccruedInterestDays( bondObjHandle, settlementDates );
+        std::vector<double> dv01s               = validation::tryAqBondObjectDV01( bondObjHandle, settlementDates, yields );
 
         // Compare Results
         const double resultsTolerance = 1.0e-6;

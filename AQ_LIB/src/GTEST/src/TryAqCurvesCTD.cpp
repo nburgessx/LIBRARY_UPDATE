@@ -1,6 +1,6 @@
 #include "TryAqCurvesOis.h"
 
-#include "tryAqCurvesCalibrateCTD.h"
+#include "tryAqCurveCalibrateCTD.h"
 
 namespace google_test
 {
@@ -16,7 +16,7 @@ namespace google_test
 
             try
             {
-                validation::tryAqCurvesCalibrateCTD( inputFileObj["curveCollection"],
+                validation::tryAqCurveCalibrateCTD( inputFileObj["curveCollection"],
                                                         inputFileObj["staticDataTable"],
                                                         inputFileObj["curveIndex"],
                                                         inputFileObj["curveConv"],

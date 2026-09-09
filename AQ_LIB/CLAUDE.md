@@ -211,18 +211,25 @@ header churn**. See `..\..\CLAUDE.md` §7 for the exact header text.
         └────────────────────────────────────────┘
 ```
 
-### 4.1 `validation` is the contract
+### 4.1 `validation` is the contract — and the GOLDEN SOURCE for names
 
-Every public call — bindings and XLL — routes through `validation`. Nothing
-bypasses it. It (1) validates inputs once so every language returns identical
-results, and (2) records inputs/outputs, from which `GTEST` cases are
-generated.
+Every public call — the Excel XLL and the Python / C# / Java / R bindings —
+routes through `validation`. Nothing bypasses it. It (1) validates inputs once
+so every language returns identical results, and (2) records inputs/outputs,
+from which `GTEST` cases are generated.
 
-Functions here carry a `try` prefix: `try` + the exact public name, e.g.
-`tryAqDateYearFraction` pairs with `aqDateYearFraction`,
-`tryAqBondObjectDirtyPrice` with `aqBondObjectDirtyPrice`. The `validation`,
-`AQ_XLL` and `AQ_API` names are identical bar the `try` prefix — keep them in
-sync. (Today they are `tryMe…` in namespace `validation_api` — both change in
+**The `validation` wrapper name is the single source of truth for every public
+function name.** A wrapper is `try` + `<GoldenName>`; the XLL function, every
+binding method (Python / C# / Java / R) and the `GTEST` case name are all
+`<GoldenName>` verbatim. So:
+
+- To name or rename a function, name the `validation` wrapper first; the other
+  surfaces follow.
+- `tryAqDateYearFraction` ⇔ `aqDateYearFraction` in the XLL, `aqDateYearFraction`
+  in Python/C#/Java/R, `…AqDateYearFraction…` in the test name.
+- `docs\api_map.csv` and `rebrand\tools\api_pair_check.py` enforce the pairing.
+
+(Today the wrappers are `tryMe…` in namespace `validation_api` — both change in
 the rebrand.)
 
 An `etrading` function is **not public** until it has a `validation` wrapper. Do
@@ -277,9 +284,9 @@ in every binding: type `aqDate` and the date functions surface together.
 
 **Categories are SINGULAR.** `aqDate`, not `aqDates`; `aqSwap`, not `aqSwaps`.
 
-**Canonical category list — LOCKED (20):**
+**Canonical category list — LOCKED (22):**
 
-`Date`, `Curve`, `FX`, `Inflation`, `Vol`, `Rate`, `Swap`, `AssetSwap`,
+`Date`, `Curve`, `FX`, `Inflation`, `Volatility`, `Rate`, `Future`, `Swap`, `Ois`, `AssetSwap`,
 `ConstantMaturitySwap`, `TotalReturnSwap`, `CapFloor`, `Swaption`, `BondOption`,
 `BondFutureOption`, `Bond`, `Credit`, `Math`, `Model`, `Generator`, `Tool`
 

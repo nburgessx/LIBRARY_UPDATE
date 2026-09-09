@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryAqToolsSetup.h"
+#include "tryAqToolSetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
 #include "ResultsProcessor.h"
@@ -16,13 +16,13 @@
 #include "CurveOis.h"
 
 // "me" API
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectPricing.h"
 
 
 // "Generator" API
-#include "tryAqObjCurvesMarketData.h"
-#include "tryAqObjCurvesCalibrate.h"
-#include "tryAqObjSwapsCreation.h"
+#include "tryAqCurveMarketData.h"
+#include "tryAqCurveObjectCalibrate.h"
+#include "tryAqSwapObjectCreation.h"
 
 
 using etrading::ReadDataFile;
@@ -46,30 +46,30 @@ namespace
 	// -------------------------------------------------------------
 
 	// Curve market data files for use with CurveGenerators
-	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@553_tryAqObjCurvesMarketDataCreate_inputs.csv";
+	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@553_tryAqCurveMarketDataCreate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Curves built from generator and market data
-	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryAqObjCurvesCalibrate_inputs.csv";
+	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryAqCurveObjectCalibrate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Build Credit Default Swap
 
-	const char GEN_CREDIT_DEFAULT_SWAP[]		= TEST_DIR "TEST_CDS@1_tryAqObjSwapsCreateFromGenerator_inputs.csv" ;
+	const char GEN_CREDIT_DEFAULT_SWAP[]		= TEST_DIR "TEST_CDS@1_tryAqSwapObjectCreateFromGenerator_inputs.csv" ;
 
 	// API methods
-	const char CDS_CALCULATE_PV[]				= TEST_DIR "tryAqObjCreditDefaultSwapPVFromHazardRate_inputs.csv";
+	const char CDS_CALCULATE_PV[]				= TEST_DIR "tryAqCreditObjectDefaultSwapPVFromHazardRate_inputs.csv";
 	const char CDS_CALCULATE_RISKY_ANNUITY[]	= TEST_DIR "tryAqObjCreditDefaultSwapAnnuityFromHazardRate_inputs.csv";
-	const char CDS_CALCULATE_PAR_SPREAD[]		= TEST_DIR "tryAqObjCreditDefaultSwapParSpreadFromHazardRate_inputs.csv";
-	const char CDS_CALCULATE_HAZARD_RATE[]		= TEST_DIR "tryAqObjCreditDefaultSwapHazardRateFromParSpread_inputs.csv";
+	const char CDS_CALCULATE_PAR_SPREAD[]		= TEST_DIR "tryAqCreditObjectDefaultSwapParSpreadFromHazardRate_inputs.csv";
+	const char CDS_CALCULATE_HAZARD_RATE[]		= TEST_DIR "tryAqCreditObjectDefaultSwapHazardRateFromParSpread_inputs.csv";
 
 	// Snapshot results
-	const char CDS_EXPECTED_PV[]				= TEST_DIR "tryAqObjCreditDefaultSwapPVFromHazardRate_outputs.csv";
+	const char CDS_EXPECTED_PV[]				= TEST_DIR "tryAqCreditObjectDefaultSwapPVFromHazardRate_outputs.csv";
 	const char CDS_EXPECTED_RISKY_ANNUITY[]		= TEST_DIR "tryAqObjCreditDefaultSwapAnnuityFromHazardRate_outputs.csv";
-	const char CDS_EXPECTED_PAR_SPREAD[]		= TEST_DIR "tryAqObjCreditDefaultSwapParSpreadFromHazardRate_outputs.csv";
-	const char CDS_EXPECTED_HAZARD_RATE[]		= TEST_DIR "tryAqObjCreditDefaultSwapHazardRateFromParSpread_outputs.csv";
+	const char CDS_EXPECTED_PAR_SPREAD[]		= TEST_DIR "tryAqCreditObjectDefaultSwapParSpreadFromHazardRate_outputs.csv";
+	const char CDS_EXPECTED_HAZARD_RATE[]		= TEST_DIR "tryAqCreditObjectDefaultSwapHazardRateFromParSpread_outputs.csv";
 
 	/* @brief			Builds Generator curve by invoking the tryAqObjCurvesCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
@@ -85,7 +85,7 @@ namespace
 		
 		std::string objectName = aqObjCurveGeneratorName;
 
-		validation::tryAqObjCurvesCalibrate(	objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqCurveObjectCalibrate(	objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -109,7 +109,7 @@ namespace
 		const bool isXccySwap					= creditDefaultSwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= creditDefaultSwapFileObj[ "validateKeys" ];
 		
-		validation::tryAqObjSwapsCreateFromGenerator( swapName, aqObjswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		validation::tryAqSwapObjectCreateFromGenerator( swapName, aqObjswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 }
 
@@ -135,7 +135,7 @@ namespace google_test
 		std::string legName					= PVFileObj[ "legName"];
 		bool includeAccruedInterest			= PVFileObj[ "includeAccruedInterest" ];
 
-		const double calculatedPV = validation::tryAqObjCreditDefaultSwapPVFromHazardRate( swapName, curveCollections, hazardRate, recoveryRate, legName.c_str(), includeAccruedInterest );
+		const double calculatedPV = validation::tryAqCreditObjectDefaultSwapPVFromHazardRate( swapName, curveCollections, hazardRate, recoveryRate, legName.c_str(), includeAccruedInterest );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedPV, TEST_DIR, CDS_EXPECTED_PV, pvTolerance );
@@ -158,7 +158,7 @@ namespace google_test
 		std::string legName					= riskyAnnuityFileObj[ "legName"];
 		bool includeAccruedInterest			= riskyAnnuityFileObj[ "includeAccruedInterest" ];
 
-		const double calculatedAnnuity = validation::tryAqObjCreditDefaultSwapRiskyAnnuityFromHazardRate( swapName, curveCollection, hazardRate, recoveryRate, legName.c_str(), includeAccruedInterest );
+		const double calculatedAnnuity = validation::tryAqCreditObjectDefaultSwapRiskyAnnuityFromHazardRate( swapName, curveCollection, hazardRate, recoveryRate, legName.c_str(), includeAccruedInterest );
 
 		// Check the Test Results or Rebase
 		const double annuityTolerance = 0.01;  // The expected annuity is a large number ( 13e6) ; we can afford to relax tolerance ( to allow 64 bit test to pass ).
@@ -182,7 +182,7 @@ namespace google_test
 		std::string protectionLegName		= parSpreadFileObj[ "protectionLegName"];
 		bool includeAccruedInterest			= parSpreadFileObj[ "includeAccruedInterest" ];
 
-		const double calculatedParSpread = validation::tryAqObjCreditDefaultSwapParSpreadFromHazardRate( swapName, curveCollections, hazardRate, recoveryRate, premiumLegName.c_str(), protectionLegName.c_str(), includeAccruedInterest );
+		const double calculatedParSpread = validation::tryAqCreditObjectDefaultSwapParSpreadFromHazardRate( swapName, curveCollections, hazardRate, recoveryRate, premiumLegName.c_str(), protectionLegName.c_str(), includeAccruedInterest );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedParSpread, TEST_DIR, CDS_EXPECTED_PAR_SPREAD, tolerance );
@@ -205,7 +205,7 @@ namespace google_test
 		std::string protectionLegName		= hazardRateFileObj[ "protectionLegName"];
 		bool includeAccruedInterest			= hazardRateFileObj[ "includeAccruedInterest" ];
 
-		const double calculatedHazardRate = validation::tryAqObjCreditDefaultSwapHazardRateFromParSpread( swapName, curveCollections, parSpread, recoveryRate, premiumLegName.c_str(), protectionLegName.c_str(), includeAccruedInterest );
+		const double calculatedHazardRate = validation::tryAqCreditObjectDefaultSwapHazardRateFromParSpread( swapName, curveCollections, parSpread, recoveryRate, premiumLegName.c_str(), protectionLegName.c_str(), includeAccruedInterest );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedHazardRate, TEST_DIR, CDS_EXPECTED_HAZARD_RATE, tolerance );

@@ -1,12 +1,342 @@
-# Rebrand status — pause point 2026-09-08
+# Rebrand status — 2026-09-09
 
-**HEAD: `e5c57046` ("aq_xll added function templates"). Uncommitted on top
-of it — `src/AQ_XLL/src/aqObj.cpp` and `aqTools.cpp` (the `AsArray` override
-+ `aqToolsCallerInfo` diagnostic below); plus the bond-port tranche (a)
-below: `src/AQ_XLL/src/aqBonds.cpp`, `src/AQ_XLL/src/aqXllTools.cpp`,
-`src/AQ_XLL/include/aqXllTools.h`. Not yet built or committed.** Last
-GoogleTest-green tag remains `61795829`; the AQ_XLL work since has been
-verified by Nicholas in Excel, not by a GTest run.
+**HEAD: `3809f148` ("AQ_XLL function category update").** The full `meLWO.cpp`
+bond port, the AQ_XLL comment/include cleanup, the `aqObjSave` `.arg()` fix and
+**step 11** (singular categories, `aq<Category>Object` handle marker, file
+renames `aqBonds/aqDates/aqObj/aqTools.cpp` → `aqBond/aqDate/aqObject/aqTool.cpp`)
+are all **committed and building green with GTest passing** (Nicholas). Working
+tree clean.
+
+**task 2.6 — the `validation`/`GTEST`/`AQ_API` rename to the step-11 +
+`Volatility` + 22-category scheme — is BUILT GREEN with GTest passing (Nicholas,
+2026-09-09).** Uncommitted, working tree carries the full batch (see the detail
+block below and the "Fixture-rename recovery + final cleanup" section). Ready to
+commit.
+
+**Third explicit task — expose the `Tool` + `Object`-lifecycle category in
+`AQ_XLL` — DONE and BUILT GREEN with tests passing (Nicholas, 2026-09-09).**
+All four batches (Object lifecycle → `aqObject.cpp`; Tool setup/version/parallel
++ record/replay, the LVB family, and data-reshaping → `aqTool.cpp`) plus the new
+`aqXllTools` marshalling helpers are in. `aqToolInterpolation` / `aqToolPCA` were
+then re-homed to `Math` (`aqMathInterpolation` / `aqMathPCA` in `aqMath.cpp`),
+wrappers renamed `tryAqMath*`, `AQ_API` + SWIG + `GTEST` + `docs/api_map.csv`
+updated to match — also built green. Port source for the marshalling was
+`.APPLES\APPLE\src\MLIBQ_ADDIN\src\meUtilities.cpp` (37 `IMPLEMENT_XLLFN4`
+exports). See the "AQ_XLL Tool/Object port" section below.
+
+**== PAUSE POINT (2026-09-09) ==** Everything below is BUILT GREEN with GTest
+passing (Nicholas), but **uncommitted** — the whole tree from `3809f148` onward
+is one working-tree delta.
+
+### Next steps on resume (priority order)
+
+1. **Commit the accumulated work.** One delta since `3809f148` now covers:
+   task 2.6 (validation/GTEST/AQ_API rename to the 22-category singular scheme),
+   the fixture-rename recovery, the AQ_XLL Tool/Object port (4 batches), and the
+   Interpolation/PCA → Math move. All green. Suggest **staged commits** in this
+   order so history stays bisectable:
+   (a) validation/AQ_API/GTEST/fixtures rename + `docs/api_map.csv`;
+   (b) AQ_XLL `aqObject.cpp` + `aqTool.cpp` + `aqXllTools` Tool/Object port;
+   (c) Interpolation/PCA → Math.
+   Before staging: `git checkout HEAD -- 'src/AQ_API/source/swig_*_wrap.*'`
+   (never commit the generated SWIG wrappers), and re-check
+   `git status --porcelain -- 'src/AQ_API/source/swig_*_wrap.*'` is empty.
+2. **Confirm the 4 pre-existing test failures** (`TestDatesCentralBank`,
+   `TestAQObjCurve`, `TestExampleObject`,
+   `TestStructuredExceptionHandler.UNIT_IntegerDivideByZero`) also fail on a
+   clean `3809f148` checkout — i.e. not caused by any of this work. If Nicholas's
+   green run already showed them passing, this is moot.
+3. **New-category AQ_XLL files** `aqFuture.cpp` / `aqOis.cpp` — `Future` and
+   `Ois` are validation-only categories (`tryAqFutureTicker*`, `tryAqOis*`); no
+   XLL surface yet. Small: one/few functions each, same pattern as the Tool port.
+4. **`meUtilityLWODecorateNames`** (Tool) + **`meUtilityMLIBSetUp` /
+   `meUtilityMLIBTearDown`** — deferred from the Tool port because no
+   golden-source wrapper exists. Decide: write conforming
+   `tryAqTool{ObjectDecorateNames,Setup,TearDown}` wrappers, or drop these
+   functions from the surface.
+5. **`aqGeneratorList`** — the generator-name introspection function
+   (CLAUDE.md §5.1) that does not exist in either library. New `etrading`
+   directory scan of `resources/config/{BOND,CURVE,SWAP}_GENERATOR/` +
+   `tryAqGeneratorList` wrapper + XLL/API. Nicholas said Batch-1 `aqObjectList`
+   is "ok for now"; this is the fuller answer when wanted.
+6. **Resume the main XLL port backlog** (the bigger Phase 4 work) — Curves →
+   Swaps → products → Models, driven by
+   `rebrand/xll_function_inventory.csv`. See "⇒ RESUME HERE — AQ_XLL port".
+7. Lower priority, still open: the validation **recording rollout** (plan 4.9,
+   see "⇒ RESUME HERE — recording rollout"); `AQ_API` SEH guard (plan 4.12);
+   the 5 + 1 wrapper-name-drift advisories; the `tryAqObjSwapsDV01*` /
+   credit-fixture golden-source cleanup (Phase 6 resources audit).
+
+- Docs: `Vol` → `Volatility`; **Future** + **Ois** added as categories (now 22);
+  D19 = the `validation` wrapper is the GOLDEN SOURCE for names. `api_pair_check.py`
+  CATEGORIES updated.
+- Rename map: `rebrand/phase2_validation_rename_MAP.csv` — 467 wrappers, 416
+  renames, 0 collisions. Decisions baked in: `tryAqFuturesTicker*` →
+  `tryAqFutureTicker*` (new `Future` cat), `tryAqOIS*` → `tryAqOis*` (new `Ois`
+  cat), `tryAqObj{QuickLoad,QuickSave,Type,TypeAsString,CreateRange}` →
+  `tryAqObject*`, `tryAqObjBondsCompoundYields` → `tryAqBondObjectCompoundYield`
+  (wrapper singularised), `tryAqBondsYield` → `tryAqBondCurveYield`.
+- **DONE this session (uncommitted, NOT BUILT):**
+  - **Date batch** — `tryAqDates*` → `tryAqDate*` (29 fns) across validation +
+    `AQ_API` (`aqDates*` → `aqDate*` method names + files) + `GTEST` (suites +
+    `TestAqDates*.cpp` → `TestAqDate*.cpp`) + `AQ_XLL` call sites + SWIG `.i` +
+    all 3 vcxproj/.filters. **No fixtures exist for Date.**
+  - **Object lifecycle batch** — `tryAqObj{Load,Save,Exists,ClearCache,
+    CreateRange,Delete,DeleteAll,List,LoadFromString,LoadAndReturnTupleResults,
+    QuickLoad,QuickSave,Type,TypeAsString}` → `tryAqObject*` (14 fns). Container
+    files `tryAqObjects.{h,cpp}` → `tryAqObject.{h,cpp}`, AQ_API `aqObjects.*` →
+    `aqObject.*`, ~40 GTEST includers, SWIG `.i`, vcxproj. `tryAqObjToolsGrid*`
+    deliberately left (that is the Tool batch). **No fixtures.**
+  - Reverted twice: `swig_Python_wrap.cxx` (generated — regenerated in Phase 5)
+    and `rebrand/phase3_Bsimple_MAP.csv` (historical) were caught by an
+    unscoped sweep. Sweeps are now scoped to `src/` + `projects/`, excluding
+    `swig_*_wrap.*`.
+- **FULL MAP APPLIED (uncommitted, NOT BUILT).** All 416 renames from
+  `phase2_validation_rename_MAP.csv` applied in one pass (the user said "go"):
+  - `validation` — 467 wrappers renamed; ~240 `.h/.cpp` files `git mv`'d
+    (exact-stem + container headers like `tryAqObjBonds.h → tryAqBondObject.h`,
+    `tryAqCurvesDiscountFactor.h → tryAqCurveDiscountFactor.h`, …); all `#include`
+    updated.
+  - `AQ_API` — `aq*` binding method names + source files + SWIG `.i` `%include`.
+  - `GTEST` — `tryAq*` calls + `_inputs.csv` path-string literals + `TestAq*.cpp`
+    file names where the stem was a function name.
+  - `AQ_XLL` — `validation::tryAq…` call sites.
+  - `resources/test` — **~3,560 fixture files** `git mv`'d
+    (`<oldfn>_{inputs,outputs}*.csv → <newfn>_…`). Content untouched.
+  - 3 × `.vcxproj`/`.filters`. `docs/api_map.csv` regenerated.
+  - `swig_*_wrap.*` reverted twice (generated — Phase 5).
+- **Verification (what I could check without a build):**
+  - `api_pair_check.py` **HARD GATE = 0** (every public fn routes through validation).
+  - Old function names in code: **0**. Old validation header files: **0**.
+  - 5 wrapper-name-drift advisories — all pre-existing (the deferred set), not new.
+  - **24 fixtures keep old names** — `tryAqObjSwapsDV01*`, `tryAqObjSwaps_{IRS,XCCY}_DV01*`,
+    `tryAqObjCreditDefaultSwap{AnnuityFromHazardRate,PVIntegration,PVMonteCarlo,PVMonteCarloSobol}*`.
+    Their GTEST path-strings are ALSO still old (hardcoded literals that aren't a
+    function name), so file+string are self-consistent → tests still read them.
+    These are drift/orphan fixtures for the Phase 6 resources audit.
+  - A handful of GTEST `.csv` string literals reference fixtures that exist under
+    **neither** old nor new name (`tryAqSwapObjectPV_inputs.csv`,
+    `tryAqSwapObjectDeltaLadder_spot_4Y_inputs.csv`, the VariableNotional set) —
+    **pre-existing** (0 files under the old name too), not caused by this rename.
+- **GATE — build `validation` + `AQ_API` + `GTEST` and run GTest.** Output must
+  be numerically identical to the pre-rename baseline. Any fixture-name failure
+  will name the exact file; report it and I fix that one. This is the
+  build-between-batches checkpoint (done once here, since the map went in as one
+  batch).
+- Still to do after green: the two new-category AQ_XLL files `aqFuture.cpp` /
+  `aqOIS.cpp` (Future/Ois currently validation-only); the `meUtility*` → `Tool`
+  port from `.APPLES`.
+
+### AQ_XLL Tool / Object port (2026-09-09, in progress, uncommitted, NOT BUILT)
+
+Third explicit task — expose the `Tool` + `Object`-lifecycle surface in the Excel
+add-in. The `validation` wrappers (`tryAqTool*`, `tryAqObject*`) already exist
+(ported in earlier phases); the missing piece is the `AQ_XLL`
+`XLO_FUNC_START/END` code. Marshalling reference: `.APPLES\APPLE\src\
+MLIBQ_ADDIN\src\meUtilities.cpp` (37 `IMPLEMENT_XLLFN4` exports).
+
+Port maps to existing wrappers as:
+
+| .APPLES `meUtilities.cpp` | validation wrapper (exists) | new AQ_XLL fn | file |
+|---|---|---|---|
+| `meLWOType` | `tryAqObjectType` | `aqObjectType` | aqObject.cpp |
+| `meLWOList` | `tryAqObjectList` | `aqObjectList` | aqObject.cpp |
+| `meLWODelete` | `tryAqObjectDelete` | `aqObjectDelete` | aqObject.cpp |
+| `meLWODeleteAll` | `tryAqObjectDeleteAll` | `aqObjectDeleteAll` | aqObject.cpp |
+| `meLWOExists` | `tryAqObjectExists` | `aqObjectExists` | ✅ already |
+| `meLWOLoad` | `tryAqObjectLoad` | `aqObjectLoad` | ✅ already |
+| `meLWOSave` | `tryAqObjectSave` | `aqObjectSave` | ✅ already |
+| `meLWOLoadFromString` | `tryAqObjectLoadFromString` | `aqObjectLoadFromString` | aqObject.cpp |
+| `meLWOQuickLoad` | `tryAqObjectQuickLoad` | `aqObjectQuickLoad` | aqObject.cpp |
+| `meLWOQuickSave` | `tryAqObjectQuickSave` | `aqObjectQuickSave` | aqObject.cpp |
+| `meUtilityClearLWOCache` | `tryAqObjectClearCache` | `aqObjectClearCache` | aqObject.cpp |
+| `meUtilityResize` | (n/a) | `aqToolResize` | ✅ already |
+| `meUtilityVersion` | `tryAqToolVersion` | `aqToolVersion` | aqTool.cpp |
+| `meUtilityRecord` | `tryAqToolRecord` | `aqToolRecord` | aqTool.cpp |
+| `meUtilityReplay` | `tryAqToolReplay` | `aqToolReplay` | aqTool.cpp |
+| `meUtilityClearEntityPool` | `tryAqToolClearEntityPool` | `aqToolClearEntityPool` | aqTool.cpp |
+| `meUtilityLoadStaticData` | `tryAqToolLoadStaticData` | `aqToolLoadStaticData` | aqTool.cpp |
+| `meUtilityLoadCalendarFile` | `tryAqToolLoadCalendarFile` | `aqToolLoadCalendarFile` | aqTool.cpp |
+| `meUtilityLoadConfigurationFiles` | `tryAqToolLoadConfigurationFiles` | `aqToolLoadConfigurationFiles` | aqTool.cpp |
+| `meUtilityParallelModeEnable` | `tryAqToolParallelModeEnable` | `aqToolParallelModeEnable` | aqTool.cpp |
+| `meUtilityParallelModeStatus` | `tryAqToolParallelModeStatus` | `aqToolParallelModeStatus` | aqTool.cpp |
+| `meUtilityMLIBSetUp` | `tryAqToolSetup` | `aqToolSetup` | aqTool.cpp |
+| `meUtilityInterpolation` | `tryAqToolInterpolation` | `aqToolInterpolation` | aqTool.cpp |
+| `meUtilityPCA` | `tryAqToolPCA` | `aqToolPCA` | aqTool.cpp |
+| `meUtilityLVBFromKeysValues` | `tryAqToolLVBFromKeysValues` | `aqToolLVBFromKeysValues` | aqTool.cpp |
+| `meUtilityLVB` | `tryAqToolLVB` | `aqToolLVB` | aqTool.cpp |
+| `meUtilityLVBGroup` | `tryAqToolLVBGroup` | `aqToolLVBGroup` | aqTool.cpp |
+| `meUtilityLVBFromMultipleKeysValues` | `tryAqToolLVBFromMultipleKeysValues` | `aqToolLVBFromMultipleKeysValues` | aqTool.cpp |
+| `meUtilityLVBFromKeysAndMultipleValues` | `tryAqToolLVBFromKeysAndMultipleValues` | `aqToolLVBFromKeysAndMultipleValues` | aqTool.cpp |
+| `meUtilityClean` | `tryAqToolClean` | `aqToolClean` | aqTool.cpp |
+| `meUtilityAppend` | `tryAqToolAppend` | `aqToolAppend` | aqTool.cpp |
+| `meUtilityDataFilter` | `tryAqToolDataFilter` | `aqToolDataFilter` | aqTool.cpp |
+| `meUtilityTermsToDates` | `tryAqToolTermsToDates` | `aqToolTermsToDates` | aqTool.cpp |
+| `meUtilityDatesToTerms` | `tryAqToolDatesToTerms` | `aqToolDatesToTerms` | aqTool.cpp |
+| `meUtilityValuationSettingsDisplay` | `tryAqToolValuationSettingsDisplay` | `aqToolValuationSettingsDisplay` | aqTool.cpp |
+
+No validation wrapper in AQ_LIB (defer — needs a wrapper first, or drop):
+`meUtilityLWODecorateNames`, `meUtilityThreadsEnableLocks`, `meUtilityMLIBTearDown`.
+`meUtilityMLIBSetUp/TearDown` — `MLIB` is a legacy prefix; the setup half maps to
+`tryAqToolSetup`, the teardown half has no wrapper. Also unmapped in AQ_XLL so far:
+the `tryAqToolObjectGrid*` / `tryAqToolObjectMultiGrid*` / `tryAqToolSwapScheduleTemplate`
+wrappers (these come from `.APPLES` files other than `meUtilities.cpp`).
+
+Batches (build between each, on Nicholas's side):
+
+1. **Object lifecycle → `aqObject.cpp`** — `aqObjectType`, `aqObjectList`,
+   `aqObjectDelete`, `aqObjectDeleteAll`, `aqObjectLoadFromString`,
+   `aqObjectQuickLoad`, `aqObjectQuickSave`, `aqObjectClearCache` (8 fns).
+   **DONE (uncommitted, NOT BUILT).** Added `#include <boost/format.hpp>` +
+   `<tryAqToolSetup.h>`. Every fn has `.arg()` count == parameter count.
+   **BUILT GREEN in Excel (Nicholas, 2026-09-09).**
+2. **Tool setup/version/parallel + record/replay → `aqTool.cpp`** —
+   `aqToolVersion`, `aqToolClearEntityPool`, `aqToolLoadStaticData`,
+   `aqToolLoadCalendarFile`, `aqToolLoadConfigurationFiles`,
+   `aqToolParallelModeEnable`, `aqToolParallelModeStatus`, `aqToolRecord`,
+   `aqToolReplay` (9 fns). All string / bool / int in, string out.
+   **DONE — BUILT GREEN with tests passing (Nicholas, 2026-09-09).** Added
+   `#include <cstdio>` `<ctime>` + `<tryAqToolSetup.h>` `<tryAqToolRecord.h>`
+   `<tryAqToolReplay.h>`; file-local `toIntOr()` for the optional
+   `StartIndex`/`MaxIndex` args.
+   - `meUtilityMLIBSetUp` / `meUtilityMLIBTearDown` **dropped** — no
+     golden-source wrapper: the only setup helpers in `tryAqToolSetup.h` are
+     `trySetupAQL(irProps, calendar, cbCalendar)` / `tryTearDownAQL()`, which
+     do not conform to the `tryAq<Category>` scheme. Needs a conforming
+     `tryAqToolSetup` / `tryAqToolTearDown` wrapper defined first.
+3. **Tool LVB family + data reshaping + maths → `aqTool.cpp`** (13 fns).
+   **DONE — BUILT GREEN with tests passing (Nicholas, 2026-09-09).**
+   - LVB: `aqToolLVBFromKeysValues`, `aqToolLVB`, `aqToolLVBGroup` (10 optional
+     block args), `aqToolLVBFromMultipleKeysValues` (5 keys/values/prefix
+     triples = 15 args), `aqToolLVBFromKeysAndMultipleValues` (6 args).
+   - Reshaping: `aqToolClean` (5), `aqToolAppend` (11), `aqToolDataFilter` (2),
+     `aqToolValuationSettingsDisplay` (1).
+   - Maths: `aqToolInterpolation` (5), `aqToolPCA` (4), `aqToolTermsToDates` (2),
+     `aqToolDatesToTerms` (2).
+   - **New `aqXllTools` helpers** (added to `.h` + `.cpp`): `toAQLStringVector`,
+     `toDoubleMatrix`, `toStandardStringMatrix`, `toVariantMatrix` (row-major,
+     type-preserving, error cell → its text, blank → EMPTY Variant),
+     `toVariantVector`, and a `toExcelMatrix( const etrading::VariantMatrix& )`
+     overload (native Excel types out). File-local `toDoubleOr` / `addLvbBlock`
+     / `addStringColumn` in `aqTool.cpp`.
+   - **ValuationSettings orientation:** input read as-is (rows of key/value
+     pairs) — matches the current `TestValuationSettings` GTEST contract
+     (`{{ "CURVECOLLECTION", curveUSD3M }}`). The old XLL+ add-in force-
+     transposed here but its own comment flagged that as a bug ("needs
+     fixing!!!"); not carried.
+   - `.arg()` count == parameter count verified for all 26 functions in
+     `aqTool.cpp`.
+4. `meUtilityLWODecorateNames` still deferred — no golden-source wrapper.
+
+### Interpolation + PCA moved Tool → Math (2026-09-09) — BUILT GREEN, tests passing (Nicholas)
+
+Nicholas: interpolation and PCA are `Math` building blocks, not `Tool`. Renamed
+the golden-source wrappers and every surface that follows them:
+
+- `validation`: `tryAqToolInterpolation` → **`tryAqMathInterpolation`**,
+  `tryAqToolPCA` → **`tryAqMathPCA`**; files `tryAqTool{Interpolation,PCA}.{h,cpp}`
+  → `tryAqMath{Interpolation,PCA}.{h,cpp}`; `projects/validation.vcxproj{,.filters}`.
+- `AQ_API`: `aqToolInterpolation` / `aqToolPCA` → `aqMathInterpolation` /
+  `aqMathPCA`; source files renamed; 4 SWIG `.i` (`#include` + `%include`);
+  `projects/AQ_API.vcxproj{,.filters}`.
+- `GTEST`: `TestUtilitiesInterpolation.cpp` call sites (12) + include. (Bespoke
+  unit test — suite/case names left as-is; not a recording-generated test, and
+  there are **no fixtures** for either function, so nothing else to move.)
+- `AQ_XLL`: the two `XLO_FUNC` blocks moved out of `aqTool.cpp` into
+  `aqMath.cpp` as `aqMathInterpolation` / `aqMathPCA`; `toDoubleOr` helper moved
+  with them; `aqMath.cpp` gained a file-local `toIntOr` and `using namespace
+  aq_xll;`.
+- `docs/api_map.csv` regenerated — 118 rows, `aqMath{Interpolation,PCA}` now
+  under `Math`. HARD GATE = 0. No `swig_*_wrap` touched.
+
+### Open question raised — a generator-name listing function
+
+Nicholas asked whether the old `.APPLES` add-in has a function to list the
+generator names from the config folders (so users don't memorise them).
+**Answer: no.** `.APPLES\...\MLIBQ_ADDIN` only has, per asset class,
+`*GeneratorCreate` / `*GeneratorDisplay` / `*GeneratorModify` and
+`*CreateFromGenerator` — `*GeneratorDisplay` dumps one *named* generator; nothing
+enumerates the `resources/config/{BOND,CURVE,SWAP}_GENERATOR/*.JSON` names.
+CLAUDE.md §5.1 already earmarks this as intended-but-unbuilt: the `Generator`
+category = introspection only (`aqGeneratorList` / `Describe` / `Validate`).
+Building it = a new `etrading` directory-scan + a `tryAqGeneratorList` wrapper +
+XLL/API surface. Not started; flagged for Nicholas's go-ahead.
+
+### Fixture-rename recovery + final cleanup (2026-09-09, uncommitted, NOT BUILT)
+
+After Nicholas's build+GTest run flagged ~20 failures, root cause was a
+fixture/​code-string boundary mismatch: the fixture sweep matched only names
+**starting** with a function name (`b.startswith(old)`) while the code-string
+rewrite used a **bounded-token** regex that also hit infixes like
+`"..._tryAqObjSwaps..._inputs.csv"` — so prefixed fixture FILES kept old names
+while their string LITERALS moved to new → "error opening file".
+
+- **Reverted all `resources/test/` fixture moves to HEAD** (needed all three:
+  `git checkout HEAD -- resources/test/`, `git reset HEAD -- resources/test/`,
+  `git clean -fdq resources/test/inputs/` — `git add -A` had staged the renames
+  as Add/Delete pairs).
+- **Fixture rename take-3** — boundary `(?<![A-Za-z0-9])<old>(?![A-Za-z0-9])`
+  (allows a leading `_`), driven by `pairs + apair` (both `tryAq*` and `aq*`
+  names), skipping any result still containing a stale fragment:
+  **7,551 renamed, 0 skipped, 0 `tryAqObj…` left**.
+- **Relaxed code pass** — 69 GTEST/validation files: rewrote `_`-prefixed
+  regex/scan/recording string fragments the first `(?<![A-Za-z0-9_])` pass had
+  missed (e.g. `"_tryAqBondObjectPriceFromDiscountMargin_inputs.csv"` suffix
+  constants).
+- Verified `BOND1_tryAqBondObjectPrice_inputs.csv` and
+  `EUR_FIXEDSCHEDULE_tryAqSwapObjectScheduleCreateBespoke_inputs.csv` now exist,
+  matching the rewritten code strings.
+
+**Residual function fixed (was the only real code-level miss):**
+`tryAqObjCurvesDiscountFactorsForwardStartingFromTenor` (function *definition* at
+`src/validation/src/tryAqCurveDiscountFactor.cpp:624`, missing from the map —
+the map had the stateless `…Tenor` and the object-form plural `…Tenors` but not
+the object-form singular) → **`tryAqCurveObjectDiscountFactorsForwardStartingFromTenor`**,
+plus its `CreateDataFile`/`generatorFunction` labels. 0 fixtures / 0 GTEST readers
+depended on the old name.
+
+**Dead recording-label cleanup** (WRITE-side `CreateDataFile` / `decorateCurvename`
+labels only — 0 committed fixtures, 0 GTEST readers, provenance not on the
+test-read path; changed to golden names for internal consistency):
+`tryAqObjCurvesCalibrate{Basis,OIS,Swap,FXForwards}` →
+`tryAqCurveObjectCreate{Basis,OIS,Swap,FXForwards}` in the four
+`tryAqCurveObjectCreate*.cpp`; `…DiscountFactorsForwardStartingFromTenor` labels
+in `tryAqCurveObjectDiscountFactor.cpp` → `…Tenors` (match enclosing fn);
+`tryAqObjSwapsDeltaLadderHorizontal` label in `tryAqSwapObjectDelta.cpp:395` →
+`tryAqSwapObjectDeltaLadderHorizontal` (real fixtures already use the new name).
+
+**Left as-is on purpose — `tryAqObjSwapsDV01*`** (18 fixtures on disk +
+`TestAQObjSwapDelta{,XCCY_CSA,_JPY}.cpp` hardcoded path literals). File name and
+GTEST read-string are mutually self-consistent, so the tests pass. Renaming would
+mean an 18-fixture + 4-file lockstep move for zero functional gain — this is a
+golden-source cleanup item for the Phase 6 resources audit, tracked, not a break.
+Same disposition for the `tryAqObjCreditDefaultSwap{PVIntegration,PVMonteCarlo,
+PVMonteCarloSobol}_outputs.csv` credit fixtures (stems that aren't function
+names; self-consistent with unchanged test strings).
+
+**Final no-build verification (2026-09-09):**
+- `api_pair_check.py` **HARD GATE = 0**; 5 wrapper-name-drift advisories, all
+  pre-existing (deferred set).
+- Tree-wide code-level residual `tryAqObj{Curves,Bonds,Dates,Vols,OIS,Credits,
+  Rates}*` (excluding `@brief`/comment text): **NONE**.
+- ~9 `@brief` doc-comment mentions of `tryAqObjCurvesCalibration()` in GTEST
+  headers — advisory comment cleanup only, no code effect.
+- No `swig_*_wrap.*` staged. `docs/api_map.csv` regenerated (118 public / 467
+  wrappers).
+
+**4 failures assessed as pre-existing (NOT caused by the rename) — Nicholas to
+confirm they also fail on clean HEAD:**
+- `TestDatesCentralBank.UNIT_AreThereEnoughDates` — `totalDaysToLast: -1704`;
+  stale ECB meeting-date data in `AQLMathCentralBank::meetingSchedule("ECB")`,
+  no `tryAq*` involved.
+- `TestAQObjCurve` + `TestExampleObject` — write to `.../resource/test/...`
+  (singular); pre-existing FolderConfig path bug.
+- `TestStructuredExceptionHandler.UNIT_IntegerDivideByZero` — SEH "throws
+  nothing"; build/optimizer issue, no `tryAq*`.
+
+**GATE — Nicholas: rebuild `validation` + `AQ_API` + `GTEST`, run GTest.**
+Expect the ~15 fixture-mismatch failures gone; the 4 above expected to remain
+(please confirm on clean HEAD). Then commit this batch.
 
 ## ⇒ RESUME HERE — meLWOBond port (2026-09-08)
 
@@ -255,7 +585,7 @@ legacy-named paths there fell from 1,310 to 126.
 
 | commit | what |
 |---|---|
-| _(uncommitted)_ | **Step 11 — category naming scheme + AQ_XLL rebrand.** Categories now SINGULAR; handle marker moved from `aqObj<Category>` prefix to `aq<Category>Object<Fn>`; named sub-objects skip `Object` (`aqBondCurveYield`); lifecycle `aqObject<Lifecycle>`; `Vols`→`Vol`. Docs: `CLAUDE.md` (both), `MIGRATION_PLAN.md` §2.2/§2.5/§2.6/D14/D15/D16/D18/Phase 3.2/3.5/4.7/4.11, `rebrand/STATUS.md`, `rebrand/tools/api_pair_check.py` (CATEGORIES + `category()`). **AQ_XLL code:** `git mv` `aqBonds/aqDates/aqObj/aqTools.cpp` → `aqBond/aqDate/aqObject/aqTool.cpp`; 53 functions renamed (42 bond + 4 date + 3 object + 4 tool); comments + `AQ_XLL.vcxproj`/`.filters` updated. Param/`.arg()` audit `aqBond.cpp` 42/42. `aqMath.cpp` / `aqMain.cpp` / `aqXllTools.{h,cpp}` unchanged names (Math already singular; XllTools is a utility, not a category). **`validation::tryAqObj…` call sites in AQ_XLL still use the OLD wrapper names** — temporary desync until MIGRATION_PLAN 2.6 renames `validation` / `AQ_API` / `GTEST` test names / fixtures. **NOT BUILT.** |
+| _(uncommitted)_ | **Step 11 — category naming scheme + AQ_XLL rebrand.** Categories now SINGULAR; handle marker moved from `aqObj<Category>` prefix to `aq<Category>Object<Fn>`; named sub-objects skip `Object` (`aqBondCurveYield`); lifecycle `aqObject<Lifecycle>`; `Vols`→`Volatility`. Docs: `CLAUDE.md` (both), `MIGRATION_PLAN.md` §2.2/§2.5/§2.6/D14/D15/D16/D18/Phase 3.2/3.5/4.7/4.11, `rebrand/STATUS.md`, `rebrand/tools/api_pair_check.py` (CATEGORIES + `category()`). **AQ_XLL code:** `git mv` `aqBonds/aqDates/aqObj/aqTools.cpp` → `aqBond/aqDate/aqObject/aqTool.cpp`; 53 functions renamed (42 bond + 4 date + 3 object + 4 tool); comments + `AQ_XLL.vcxproj`/`.filters` updated. Param/`.arg()` audit `aqBond.cpp` 42/42. `aqMath.cpp` / `aqMain.cpp` / `aqXllTools.{h,cpp}` unchanged names (Math already singular; XllTools is a utility, not a category). **`validation::tryAqObj…` call sites in AQ_XLL still use the OLD wrapper names** — temporary desync until MIGRATION_PLAN 2.6 renames `validation` / `AQ_API` / `GTEST` test names / fixtures. **NOT BUILT.** |
 | _(uncommitted)_ | **AQ_XLL fails to load in Excel — ROOT CAUSE FOUND + FIXED.** `xlAutoOpen` threw `xloil::Exception<std::runtime_error>` ("unhandled C++ exception in Excel.EXE"). Cause: `src/AQ_XLL/src/aqObj.cpp` `aqObjSave` had **3 parameters but 4 `.arg()` descriptions** (the `ShowArrayOutputs` arg text was added in commit `a8b50b47` "AqObjSave update" without the matching 4th parameter). xlOil's `.arg(i>=nParams)` throws "Too many args for function" at registration. Introduced by `a8b50b47`, which post-dates the last Excel-verified commit `e5c57046`, so it was never caught. Fix: added the 4th param `showArrayOutputs` and implemented the documented TRUE → 3-row `{result, filePath, name}` column / else → name behaviour (uses existing `toBool` + `toExcelColumn`). **Not related to LTCG or to the tranche-(a) bond port** (all 11 new funcs audited: param/arg counts match). The earlier `AQ_XLL.vcxproj` LTCG edit was reverted — project settings unchanged from HEAD. `targets/64/{Release,Debug,ReleaseProfiler}/AQ_XLL` were deleted (build output only). **Next: rebuild AQ_XLL, verify it loads, then verify tranche (a).** |
 | _(uncommitted)_ | **meLWOBond port tranche (a)** — 11 `meLWOBond*` functions ported from `.APPLES\...\meLWO.cpp` into `src/AQ_XLL/src/aqBonds.cpp` as `aqObjBonds*` (DisplaySchedule, DisplayCashflows, DirtyPrice, AccruedInterestDays, CleanPrice, AccruedInterest, Yield, CompoundYield, Price, DV01, DV01Numerical). New helpers `toDoubleVector` / `toExcelDoubleColumn` / `toExcelIntColumn` in `aqXllTools.{h,cpp}`. CLAUDE.md §9 gains an "always update STATUS.md" rule. **Not built yet.** |
 | _(uncommitted)_ | `aqObjSave` gains optional `AsArray` arg (force column / force message / auto); new `aqToolsCallerInfo()` diagnostic. Mitigation for the CSE-detection problem. **Not built yet.** |
@@ -413,7 +743,7 @@ branch + green-diff gate).
   (774 renames, 7,300 fixtures) + internal `AQO`→`AQObj`. Superseded by step 11.
 - **step 9** `db980842` — Options umbrella removed, sub-types promoted. Still holds.
 - **step 11** (this session) — plural → singular, `aqObj<Cat>` → `aq<Cat>Object`,
-  `Vols`→`Vol`. AQ_XLL done; rest pending.
+  `Vols`→`Volatility`. AQ_XLL done; rest pending.
 
 ### Two exclusions that must survive any future AQO/AQObj pass
 `AQObjects` (fixture path segment), `IsAQObject`, `isAQObject` — these already

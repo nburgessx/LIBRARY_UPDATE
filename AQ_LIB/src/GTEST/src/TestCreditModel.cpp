@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryAqToolsSetup.h"
+#include "tryAqToolSetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
 #include "ResultsProcessor.h"
@@ -16,15 +16,15 @@
 #include "CurveOis.h"
 #include "AQLDateScheduleHelpers.h"
 
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectPricing.h"
 #include "JSONInfoBlock.h"          // JSON InfoBlock Helpers
 
-#include "tryAqObjCurvesMarketData.h"
-#include "tryAqObjCurvesCalibrate.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqCurveMarketData.h"
+#include "tryAqCurveObjectCalibrate.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 
-#include "tryAqDates.h"
+#include "tryAqDate.h"
 
 
 using etrading::ReadDataFile;
@@ -47,49 +47,49 @@ namespace
 	// -------------------------------------------------------------
 
 	// Curve market data files for use with CurveGenerators
-	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@6_tryAqObjCurvesMarketDataCreate_inputs.csv";
+	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USD_OIS_CURVE_MARKETDATA@6_tryAqCurveMarketDataCreate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Curves built from generator and market data
-	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryAqObjCurvesCalibrate_inputs.csv";
+	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryAqCurveObjectCalibrate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Build Credit Model
-	const char GEN_USD_CREDIT_MODEL[]			        = TEST_DIR "CREDITMODEL1@2_tryAqObjCreditModelCreate_inputs.csv";
-	const char VIEW_CREDIT_MODEL_CALIBRATION[]	        = TEST_DIR "tryAqObjCreditModelCalibrationParameters_inputs.csv";
+	const char GEN_USD_CREDIT_MODEL[]			        = TEST_DIR "CREDITMODEL1@2_tryAqCreditModelCreate_inputs.csv";
+	const char VIEW_CREDIT_MODEL_CALIBRATION[]	        = TEST_DIR "tryAqCreditModelCalibrationParameters_inputs.csv";
 
 	// Build Credit Default Swap
-	const char GEN_CREDIT_DEFAULT_SWAP_5Y[]		        = TEST_DIR "USD_CDS_IMM_tryAqObjSwapsCreateFromGenerator_5Y_inputs.csv" ;
+	const char GEN_CREDIT_DEFAULT_SWAP_5Y[]		        = TEST_DIR "USD_CDS_IMM_tryAqSwapObjectCreateFromGenerator_5Y_inputs.csv" ;
 
 	// API methods
-	const char CDS_CALCULATE_PV[]				        = TEST_DIR "tryAqObjCreditDefaultSwapPV_inputs.csv";
-	const char CDS_CALCULATE_PV_BY_INTEGRATION[]        = TEST_DIR "tryAqObjCreditDefaultSwapPVByIntegration_inputs.csv";
-	const char CDS_CALCULATE_PV_BY_MONTE_CARLO_MT[]     = TEST_DIR "tryAqObjCreditDefaultSwapPVByMonteCarlo_inputs_MT.csv";
-    const char CDS_CALCULATE_PV_BY_MONTE_CARLO_SOBOL[]  = TEST_DIR "tryAqObjCreditDefaultSwapPVByMonteCarlo_inputs_SOBOL.csv";
-	const char CDS_CALCULATE_RISKY_ANNUITY[]	        = TEST_DIR "tryAqObjCreditDefaultSwapRiskyAnnuity_inputs.csv";
-	const char CDS_CALCULATE_CS01[]				        = TEST_DIR "tryAqObjCreditDefaultSwapCS01_inputs.csv";
-	const char CDS_CALCULATE_HAZARD_RATE[]		        = TEST_DIR "tryAqObjCreditModelHazardRate_inputs.csv";
-	const char CDS_CALCULATE_SURVIVAL_PROB[]	        = TEST_DIR "tryAqObjCreditModelSurvivalProbability_inputs.csv";
-	const char CDS_CALCULATE_DEFAULT_PROB[]		        = TEST_DIR "tryAqObjCreditModelDefaultProbability_inputs.csv";
+	const char CDS_CALCULATE_PV[]				        = TEST_DIR "tryAqCreditObjectDefaultSwapPV_inputs.csv";
+	const char CDS_CALCULATE_PV_BY_INTEGRATION[]        = TEST_DIR "tryAqCreditObjectDefaultSwapPVByIntegration_inputs.csv";
+	const char CDS_CALCULATE_PV_BY_MONTE_CARLO_MT[]     = TEST_DIR "tryAqCreditObjectDefaultSwapPVByMonteCarlo_inputs_MT.csv";
+    const char CDS_CALCULATE_PV_BY_MONTE_CARLO_SOBOL[]  = TEST_DIR "tryAqCreditObjectDefaultSwapPVByMonteCarlo_inputs_SOBOL.csv";
+	const char CDS_CALCULATE_RISKY_ANNUITY[]	        = TEST_DIR "tryAqCreditObjectDefaultSwapRiskyAnnuity_inputs.csv";
+	const char CDS_CALCULATE_CS01[]				        = TEST_DIR "tryAqCreditObjectDefaultSwapCS01_inputs.csv";
+	const char CDS_CALCULATE_HAZARD_RATE[]		        = TEST_DIR "tryAqCreditModelHazardRate_inputs.csv";
+	const char CDS_CALCULATE_SURVIVAL_PROB[]	        = TEST_DIR "tryAqCreditModelSurvivalProbability_inputs.csv";
+	const char CDS_CALCULATE_DEFAULT_PROB[]		        = TEST_DIR "tryAqCreditModelDefaultProbability_inputs.csv";
 
-	const char CDS_REPRICE_PREFIX[]				        = TEST_DIR "USD_CDS_IMM_tryAqObjSwapsCreateFromGenerator_Reprice_inputs_";
+	const char CDS_REPRICE_PREFIX[]				        = TEST_DIR "USD_CDS_IMM_tryAqSwapObjectCreateFromGenerator_Reprice_inputs_";
 
-	//const char CDS_CALCULATE_HAZARD_RATE[]		    = TEST_DIR "tryAqObjCreditDefaultSwapHazardRateFromParSpread_inputs.csv";
+	//const char CDS_CALCULATE_HAZARD_RATE[]		    = TEST_DIR "tryAqCreditObjectDefaultSwapHazardRateFromParSpread_inputs.csv";
 
 	// Snapshot results
-	const char CREDITMODEL_EXPECTED_CALIBRATION[]       = TEST_DIR "tryAqObjCreditModelCalibrationParameters_outputs.csv";
+	const char CREDITMODEL_EXPECTED_CALIBRATION[]       = TEST_DIR "tryAqCreditModelCalibrationParameters_outputs.csv";
 
-	const char CDS_EXPECTED_PV[]				                = TEST_DIR "tryAqObjCreditDefaultSwapPV_outputs.csv";
+	const char CDS_EXPECTED_PV[]				                = TEST_DIR "tryAqCreditObjectDefaultSwapPV_outputs.csv";
 	const char CDS_EXPECTED_PV_BY_INTEGRATION[]	                = TEST_DIR "tryAqObjCreditDefaultSwapPVIntegration_outputs.csv";
 	const char CDS_EXPECTED_PV_BY_MONTECARLO_MERSENNE_TWISTER[]	= TEST_DIR "tryAqObjCreditDefaultSwapPVMonteCarlo_outputs.csv";
 	const char CDS_EXPECTED_PV_BY_MONTECARLO_SOBOL[]			= TEST_DIR "tryAqObjCreditDefaultSwapPVMonteCarloSobol_outputs.csv";
-	const char CDS_EXPECTED_RISKY_ANNUITY[]		                = TEST_DIR "tryAqObjCreditDefaultSwapRiskyAnnuity_outputs.csv";
-	const char CDS_EXPECTED_CS01[]				                = TEST_DIR "tryAqObjCreditDefaultSwapCS01_outputs.csv";
+	const char CDS_EXPECTED_RISKY_ANNUITY[]		                = TEST_DIR "tryAqCreditObjectDefaultSwapRiskyAnnuity_outputs.csv";
+	const char CDS_EXPECTED_CS01[]				                = TEST_DIR "tryAqCreditObjectDefaultSwapCS01_outputs.csv";
 
 
-	// const char CDS_EXPECTED_HAZARD_RATE[]		= TEST_DIR "tryAqObjCreditDefaultSwapHazardRateFromParSpread_outputs.csv";
+	// const char CDS_EXPECTED_HAZARD_RATE[]		= TEST_DIR "tryAqCreditObjectDefaultSwapHazardRateFromParSpread_outputs.csv";
 
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
@@ -155,7 +155,7 @@ namespace
         return std::make_tuple( columnNames, columnEnumTypes, dataValues );
 	}
 
-	/* @brief			Builds AQObj MarketData Object by invoking the tryAqObjCurvesMarketDataCreate() API.
+	/* @brief			Builds AQObj MarketData Object by invoking the tryAqCurveMarketDataCreate() API.
 	*                   The code loops over all of the capitalized data keys in the specified filename and uses
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
@@ -192,7 +192,7 @@ namespace
 			}
 		}
 
-		validation::tryAqObjCurvesMarketDataCreate( objectName, marketDataKeys, infoBlocks );
+		validation::tryAqCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
 	}
 
 	/* @brief			Builds Generator curve by invoking the tryAqObjCurvesCalibration() API.
@@ -209,7 +209,7 @@ namespace
 		
 		std::string objectName = aqObjCurveGeneratorName;
 
-		validation::tryAqObjCurvesCalibrate(	objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqCurveObjectCalibrate(	objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -237,7 +237,7 @@ namespace
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 		infoBlocks.push_back( getTableInfoFromStringMatrix( cdsMarketData ));
 
-		std::string objectName = validation::tryAqObjCreditModelCreate( creditModelName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryAqCreditModelCreate( creditModelName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -245,7 +245,7 @@ namespace
 	{
 		etrading::ReadDataFile::Load viewCreditModelCalibrationFileObj = etrading::ReadDataFile::Load( viewCreditModelCalibrationFileName );
 		std::string creditModelName = viewCreditModelCalibrationFileObj[ "creditModelName" ];
-		AnyTypeMatrix results = validation::tryAqObjCreditModelCalibrationParameters( creditModelName );
+		AnyTypeMatrix results = validation::tryAqCreditModelCalibrationParameters( creditModelName );
 
 		const size_t nRows = results.size();
 		ASSERT_EQ( nRows, 8 ) << "#Error: Expected 8 rows of calibration results";  // One row per calibration point
@@ -307,7 +307,7 @@ namespace
 		const bool isXccySwap					= creditDefaultSwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= creditDefaultSwapFileObj[ "validateKeys" ];
 		
-		std::string cdsName = validation::tryAqObjSwapsCreateFromGenerator( swapName, aqObjswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		std::string cdsName = validation::tryAqSwapObjectCreateFromGenerator( swapName, aqObjswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 		return cdsName;
 	}
 
@@ -315,7 +315,7 @@ namespace
 	{
 		etrading::ReadDataFile::Load viewCreditModelCalibrationFileObj = etrading::ReadDataFile::Load( viewCreditModelCalibrationFileName );
 		std::string creditModelName = viewCreditModelCalibrationFileObj[ "creditModelName" ];
-		AnyTypeMatrix results = validation::tryAqObjCreditModelCalibrationParameters( creditModelName );
+		AnyTypeMatrix results = validation::tryAqCreditModelCalibrationParameters( creditModelName );
 
 		const size_t nRows = results.size();
 		ASSERT_EQ( nRows, 8 ) << "#Error: Expected 8 rows of calibration results";  // One row per calibration point
@@ -348,11 +348,11 @@ namespace
 			// 2. Check consistency between calibration hazard rate and API hazard rate
 			AQLDate fromDate;
 			AQLDate toDate = etrading::AQLDateScheduleHelpers::getAQLDate( maturityDateAsInt );
-			double apiHazardRate = validation::tryAqObjCreditModelHazardRate( creditModelName, toDate );
+			double apiHazardRate = validation::tryAqCreditModelHazardRate( creditModelName, toDate );
 			ASSERT_NEAR( hazardRate, apiHazardRate, tolerance ) << "#Error: Mismatch in hazard rate";
 
 			// 3. Check consistency between calibration survival probability and API survival probability
-			double apiSurvivalProbability = validation::tryAqObjCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
+			double apiSurvivalProbability = validation::tryAqCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
 			ASSERT_NEAR( survivalProbability, apiSurvivalProbability, tolerance ) << "#Error: Mismatch in survival probability";
 			
 			if ( row > 0 )
@@ -361,7 +361,7 @@ namespace
 				double marginalDefaultProbability = defaultProbability - prevDefaultProbability;
 
 				fromDate = etrading::AQLDateScheduleHelpers::getAQLDate( prevMaturityDateAsInt );
-				double apiMarginalDefaultProbability = validation::tryAqObjCreditModelDefaultProbability( creditModelName, toDate, fromDate );
+				double apiMarginalDefaultProbability = validation::tryAqCreditModelDefaultProbability( creditModelName, toDate, fromDate );
 				ASSERT_NEAR( marginalDefaultProbability, apiMarginalDefaultProbability, tolerance ) << "#Error: Mismatch in marginal default probability";
 			}
 
@@ -375,7 +375,7 @@ namespace
 	{
 		etrading::ReadDataFile::Load viewCreditModelCalibrationFileObj = etrading::ReadDataFile::Load( viewCreditModelCalibrationFileName );
 		std::string creditModelName = viewCreditModelCalibrationFileObj[ "creditModelName" ];
-		AnyTypeMatrix results = validation::tryAqObjCreditModelCalibrationParameters( creditModelName );
+		AnyTypeMatrix results = validation::tryAqCreditModelCalibrationParameters( creditModelName );
 
 		const size_t nRows = results.size();
 		ASSERT_EQ( nRows, 8 ) << "#Error: Expected 8 rows of calibration results";  // One row per calibration point
@@ -395,12 +395,12 @@ namespace
 		double defaultProbability = boost::get<double>( anyDefaultProbability );
 
 		// Check consistency between calibration survival probability and API survival probability at the final calibration point
-		const AQLDate asOfDate = validation::tryAqObjCreditModelAsOfDate( creditModelName );
+		const AQLDate asOfDate = validation::tryAqCreditModelAsOfDate( creditModelName );
 		AQLDate toDate = etrading::AQLDateScheduleHelpers::getAQLDate( maturityDateAsInt );
-		const double apiSurvivalProbability = validation::tryAqObjCreditModelSurvivalProbability( creditModelName, toDate, asOfDate );
+		const double apiSurvivalProbability = validation::tryAqCreditModelSurvivalProbability( creditModelName, toDate, asOfDate );
 		ASSERT_NEAR( survivalProbability, apiSurvivalProbability, tolerance ) << "#Error: Mismatch in survival probability";
 
-		const double apiMarginalDefaultProbability = validation::tryAqObjCreditModelDefaultProbability( creditModelName, toDate, asOfDate );
+		const double apiMarginalDefaultProbability = validation::tryAqCreditModelDefaultProbability( creditModelName, toDate, asOfDate );
 		ASSERT_NEAR( defaultProbability, apiMarginalDefaultProbability, tolerance ) << "#Error: Mismatch in marginal default probability";
 
 		// Calculate survival probabilities for extrapolation dates and perform sanity checks
@@ -414,12 +414,12 @@ namespace
 			const AQLString businessDayAdj;
 			const AQLString calendar;
 			const AQLString rolLConvention;
-			toDate = validation::tryAqDatesFromTenor( toDate, tenor, businessDayAdj, calendar, rolLConvention );
+			toDate = validation::tryAqDateFromTenor( toDate, tenor, businessDayAdj, calendar, rolLConvention );
 
-			const double survivalProbability = validation::tryAqObjCreditModelSurvivalProbability( creditModelName, toDate, asOfDate );
+			const double survivalProbability = validation::tryAqCreditModelSurvivalProbability( creditModelName, toDate, asOfDate );
 			ASSERT_TRUE( survivalProbability < prevSurvivalProbability ) << "#ERROR: survivalProbability should be monotonically decreasing when extrapolating";
 
-			const double defaultProbability = validation::tryAqObjCreditModelDefaultProbability( creditModelName, toDate, asOfDate );
+			const double defaultProbability = validation::tryAqCreditModelDefaultProbability( creditModelName, toDate, asOfDate );
 			double marginalDefaultProbability = defaultProbability - prevDefaultProbability;
 			ASSERT_TRUE( marginalDefaultProbability > 0 ) << "#ERROR: marginalDefaultProbability should be positive in each time period, when extrapolating";
 
@@ -434,7 +434,7 @@ namespace
 		const std::string swapName			= PVFileObj[ "swapName" ];
 		std::string creditModelName			= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
-		const double calculatedPV = validation::tryAqObjCreditDefaultSwapPV( swapName, creditModelName, legName.c_str() );
+		const double calculatedPV = validation::tryAqCreditObjectDefaultSwapPV( swapName, creditModelName, legName.c_str() );
 		
 		const double pvTolerance = 0.01;
         google_test::CheckTestResultsAndRebaseOnRequest( calculatedPV, TEST_DIR, CDS_EXPECTED_PV, pvTolerance );
@@ -447,13 +447,13 @@ namespace
 		const std::string swapName			= PVFileObj[ "swapName" ];
 		std::string creditModelName			= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
-		const double analyticPV = validation::tryAqObjCreditDefaultSwapPV( swapName, creditModelName, legName.c_str() );
+		const double analyticPV = validation::tryAqCreditObjectDefaultSwapPV( swapName, creditModelName, legName.c_str() );
 		
 		// Calculate the PV by integration over survival probability / stopping time
 		const size_t nIntegrationPoints		= PVFileObj[ "numberOfIntegrationPoints"];
 		const bool evaluateInParallel		= PVFileObj[ "evaluateInParallel"];
 		const bool payDefaultCashflowsOnNextCouponDate = PVFileObj[ "payDefaultCashflowsOnNextCouponDate"];
-		const double pvByIntegration = validation::tryAqObjCreditDefaultSwapPVByIntegration( swapName, creditModelName, legName.c_str(), nIntegrationPoints, evaluateInParallel, payDefaultCashflowsOnNextCouponDate );
+		const double pvByIntegration = validation::tryAqCreditObjectDefaultSwapPVByIntegration( swapName, creditModelName, legName.c_str(), nIntegrationPoints, evaluateInParallel, payDefaultCashflowsOnNextCouponDate );
 
 		const double pvTolerance = 0.01;
 		google_test::CheckTestResultsAndRebaseOnRequest( pvByIntegration, TEST_DIR, CDS_EXPECTED_PV_BY_INTEGRATION, pvTolerance );
@@ -471,7 +471,7 @@ namespace
         const std::string swapName			= PVFileObj[ "swapName" ];
 		std::string creditModelName			= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
-		const double analyticPV = validation::tryAqObjCreditDefaultSwapPV( swapName, creditModelName, legName.c_str() );
+		const double analyticPV = validation::tryAqCreditObjectDefaultSwapPV( swapName, creditModelName, legName.c_str() );
 		
 		// Calculate the PV by monte-carlo simulation over survival probability / stopping time
 		// The default test setup uses Mersenne-Twister derived paths
@@ -479,7 +479,7 @@ namespace
 		AQLStringMatrix mcParameters		= PVFileObj[ "mcParametersLVB"];
 		const bool payDefaultCashflowsOnNextCouponDate= PVFileObj[ "payDefaultCashflowsOnNextCouponDate" ];
 		
-		const double pvByMersenneTwisterMC = validation::tryAqObjCreditDefaultSwapPVByMonteCarlo( swapName, creditModelName, legName.c_str(), mcParameters, payDefaultCashflowsOnNextCouponDate, standardError );
+		const double pvByMersenneTwisterMC = validation::tryAqCreditObjectDefaultSwapPVByMonteCarlo( swapName, creditModelName, legName.c_str(), mcParameters, payDefaultCashflowsOnNextCouponDate, standardError );
 		
 		// Check PV against recorded Mersenne Twister baseline
 		const double pvTolerance = 0.01;
@@ -492,7 +492,7 @@ namespace
 		// Now re-run the test using Sobol sequence
         etrading::ReadDataFile::Load PVFileObjSOBOL = etrading::ReadDataFile::Load( CDS_CALCULATE_PV_BY_MONTE_CARLO_SOBOL );
         AQLStringMatrix mcParametersSobol		= PVFileObjSOBOL[ "mcParametersLVB"];
-		const double pvBySobolMC = validation::tryAqObjCreditDefaultSwapPVByMonteCarlo( swapName, creditModelName, legName.c_str(), mcParametersSobol, payDefaultCashflowsOnNextCouponDate, standardError );
+		const double pvBySobolMC = validation::tryAqCreditObjectDefaultSwapPVByMonteCarlo( swapName, creditModelName, legName.c_str(), mcParametersSobol, payDefaultCashflowsOnNextCouponDate, standardError );
 
 		// Check PV against recorded Sobol baseline
 		google_test::CheckTestResultsAndRebaseOnRequest( pvBySobolMC, TEST_DIR, CDS_EXPECTED_PV_BY_MONTECARLO_SOBOL, pvTolerance );
@@ -508,7 +508,7 @@ namespace
 		const std::string swapName			= PVFileObj[ "swapName" ];
 		std::string creditModelName			= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
-		const double calculatedRiskyAnnuity = validation::tryAqObjCreditDefaultSwapRiskyAnnuity( swapName, creditModelName, legName.c_str() );
+		const double calculatedRiskyAnnuity = validation::tryAqCreditObjectDefaultSwapRiskyAnnuity( swapName, creditModelName, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		// Since the CDS has a CDS spread matching the 5Y point in the calibration market data, the PV had better be close to zero
@@ -522,7 +522,7 @@ namespace
 		const std::string swapName			= PVFileObj[ "swapName" ];
 		std::string creditModelName			= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
-		const double calculatedCS01 = validation::tryAqObjCreditDefaultSwapCS01( swapName, creditModelName, legName.c_str() );
+		const double calculatedCS01 = validation::tryAqCreditObjectDefaultSwapCS01( swapName, creditModelName, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		// Since the CDS has a CDS spread matching the 5Y point in the calibration market data, the PV had better be close to zero
@@ -618,7 +618,7 @@ namespace google_test
 
 			AQLString premiumLegName;
 			AQLString protectionLegName;
-			const double calculatedCDSSpread = validation::tryAqObjCreditDefaultSwapParSpread( cdsName, creditModelName, premiumLegName, protectionLegName );
+			const double calculatedCDSSpread = validation::tryAqCreditObjectDefaultSwapParSpread( cdsName, creditModelName, premiumLegName, protectionLegName );
 
             char * pFirstNonNumber;
 			const double expectedCDSSpread = strtod( cdsMarketData[row][1].getCString(), &pFirstNonNumber );
@@ -701,7 +701,7 @@ namespace google_test
         const etrading::JSONInfoBlockTuples modelData       = { modelInfoBlock, cdsInfoBlock };
 
         // Calibrate and Create the Credit Model
-        const std::string result = validation::tryAqObjCreditModelCreate( creditModelName, modelDataTypes, modelData );
+        const std::string result = validation::tryAqCreditModelCreate( creditModelName, modelDataTypes, modelData );
 		return result;
 	}
 
@@ -749,8 +749,8 @@ namespace google_test
 		{
 			AQLDate toDate(stoppingDates[i].c_str());
 
-			const double survivalProbability = validation::tryAqObjCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
-			const AQLDate impliedSurvivalDate = validation::tryAqObjCreditModelImpliedSurvivalDate( creditModelName, survivalProbability );
+			const double survivalProbability = validation::tryAqCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
+			const AQLDate impliedSurvivalDate = validation::tryAqCreditModelImpliedSurvivalDate( creditModelName, survivalProbability );
 
 			EXPECT_EQ( toDate, impliedSurvivalDate );
 			if ( toDate != impliedSurvivalDate )

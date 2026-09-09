@@ -36,8 +36,8 @@ namespace
     //
     // curve input files
     //
-    extern const char EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
-    extern const char EURYC_STD[]			= TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs";
+    extern const char EURYC_OIS[]			= TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs";
+    extern const char EURYC_STD[]			= TEST_DIR "EURYC_STD_tryAqCurveCalibrateSwap_inputs";
 
     //
     // test call input and reference files

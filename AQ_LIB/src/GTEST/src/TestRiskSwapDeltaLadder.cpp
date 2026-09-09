@@ -5,7 +5,7 @@
 #include "CurveStd.h"
 #include "CurveTenorBasis.h"
 #include "CurveXccyBasis.h"
-#include "tryAqSwapsDelta.h"
+#include "tryAqSwapDelta.h"
 #include "BindFileToClassConstructor.h"
 
 #include <gTest/gTest.h>
@@ -34,11 +34,11 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char inputs[]		    = TEST_DIR "tryAqSwapsDelta_inputs.csv";
-    extern const char raw_outputs_32[]	= "tryAqSwapsDelta_outputs.csv";
-    extern const char raw_outputs_64[]	= "tryAqSwapsDelta_outputs_64bit.csv";
-    extern const char outputs_32[]		= TEST_DIR "tryAqSwapsDelta_outputs.csv";
-    extern const char outputs_64[]		= TEST_DIR "tryAqSwapsDelta_outputs_64bit.csv";
+    extern const char inputs[]		    = TEST_DIR "tryAqSwapDelta_inputs.csv";
+    extern const char raw_outputs_32[]	= "tryAqSwapDelta_outputs.csv";
+    extern const char raw_outputs_64[]	= "tryAqSwapDelta_outputs_64bit.csv";
+    extern const char outputs_32[]		= TEST_DIR "tryAqSwapDelta_outputs.csv";
+    extern const char outputs_64[]		= TEST_DIR "tryAqSwapDelta_outputs_64bit.csv";
 
 
     const int TRADE_COUNT = 4;
@@ -88,7 +88,7 @@ namespace google_test
         // Dummy Xccy FX Spot Rates
         DoubleVector dummyXccyFXSpotRates( TRADE_COUNT, 1.0 );
 
-        validation::tryAqSwapsDelta( pillarNames,
+        validation::tryAqSwapDelta( pillarNames,
                                                headers,
                                                deltas,
                                                getDataInstance(),

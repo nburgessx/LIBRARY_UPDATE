@@ -4,11 +4,11 @@
 #include "CurveOis.h"
 #include "CurveStd.h"
 #include "CurveTenorBasis.h"
-#include "tryAqCurvesDiscountFactor.h"
+#include "tryAqCurveDiscountFactor.h"
 #include "TryAqCurvesOis.h"
 #include "TryAqCurvesStd.h"
 #include "TryAqCurvesTenorBasis.h"
-#include "tryAqCurvesDiscountFactor.h"
+#include "tryAqCurveDiscountFactor.h"
 
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;
@@ -60,7 +60,7 @@ namespace google_test
 
         const DoubleArray yearFractions = inputFile["yearFractions"];
 
-        DoubleArray results = validation::tryAqCurvesDiscountFactorsFromYearFractions( yearFractions,
+        DoubleArray results = validation::tryAqCurveDiscountFactorsFromYearFractions( yearFractions,
                               inputFile["dayCount"],
                               inputFile["curveCollection"],
                               inputFile["curveIndex"] );
@@ -82,7 +82,7 @@ namespace google_test
 
         const DoubleArray yearFractions = inputFile["yearFractions"];
 
-        DoubleArray results = validation::tryAqCurvesDiscountFactorsFromYearFractions( yearFractions,
+        DoubleArray results = validation::tryAqCurveDiscountFactorsFromYearFractions( yearFractions,
                               inputFile["dayCount"],
                               inputFile["curveCollection"],
                               inputFile["curveIndex"] );

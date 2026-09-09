@@ -5,9 +5,9 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
-#include "tryAqCurvesDisplay.h"
-#include "tryAqCurvesDiscountFactor.h"
-#include "tryAqCurvesForwardRate.h"
+#include "tryAqCurveDisplay.h"
+#include "tryAqCurveDiscountFactor.h"
+#include "tryAqCurveForwardRate.h"
 
 #include <gTest/gTest.h>
 
@@ -39,20 +39,20 @@ namespace
     //
     // curve input files
     //
-    extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char JPYYC_STD[]					= TEST_DIR "JPYYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char JPYYC_OIS[]					= TEST_DIR "JPYYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char JPYYC_STD[]					= TEST_DIR "JPYYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
 
     //
     // test call input and reference files
     //
-    extern const char curveDisplayInputs[]				= TEST_DIR "JPYYC_STD_tryAqCurvesDisplay_inputs.csv";
-    extern const char curveDisplayOutputs[]				= TEST_DIR "JPYYC_STD_tryAqCurvesDisplay_outputs.csv";
+    extern const char curveDisplayInputs[]				= TEST_DIR "JPYYC_STD_tryAqCurveDisplay_inputs.csv";
+    extern const char curveDisplayOutputs[]				= TEST_DIR "JPYYC_STD_tryAqCurveDisplay_outputs.csv";
 
-    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "JPYYC_STD_tryAqCurvesDiscountFactorsFromYearFractions_inputs.csv";
-    extern const char CheckDiscountFactorsOutputs[]	= TEST_DIR "JPYYC_STD_tryAqCurvesDiscountFactorsFromYearFractions_outputs.csv";
+    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "JPYYC_STD_tryAqCurveDiscountFactorsFromYearFractions_inputs.csv";
+    extern const char CheckDiscountFactorsOutputs[]	= TEST_DIR "JPYYC_STD_tryAqCurveDiscountFactorsFromYearFractions_outputs.csv";
 
-    extern const char CheckForwardRatesInputs[]			= TEST_DIR "JPYYC_STD_tryAqCurvesForwardRatesFromYearFraction_inputs.csv";
-    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "JPYYC_STD_tryAqCurvesForwardRatesFromYearFraction_outputs.csv";
+    extern const char CheckForwardRatesInputs[]			= TEST_DIR "JPYYC_STD_tryAqCurveForwardRatesFromYearFraction_inputs.csv";
+    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "JPYYC_STD_tryAqCurveForwardRatesFromYearFraction_outputs.csv";
 }
 
 namespace google_test
@@ -90,7 +90,7 @@ namespace google_test
         const ReadDataFile::Load inputFile( curveDisplayInputs );
 
         const DoubleArray results
-            = validation::tryAqCurvesDisplay(
+            = validation::tryAqCurveDisplay(
                   inputFile["curveCollection"],
                   inputFile["curveIndex"] );
 
@@ -103,7 +103,7 @@ namespace google_test
 
         const DoubleArray yearFractions = inputFile["yearFractions"];
 
-        DoubleArray results = validation::tryAqCurvesDiscountFactorsFromYearFractions( yearFractions,
+        DoubleArray results = validation::tryAqCurveDiscountFactorsFromYearFractions( yearFractions,
                               inputFile["dayCount"],
                               inputFile["curveCollection"],
                               inputFile["curveIndex"] );
@@ -122,7 +122,7 @@ namespace google_test
 
         const DateVector fromDateVector = inputFile["fromDates"];
 
-        const DoubleArray results = validation::tryAqCurvesForwardRatesFromYearFraction( fromDateVector,
+        const DoubleArray results = validation::tryAqCurveForwardRatesFromYearFraction( fromDateVector,
                                     yearFraction,
                                     inputFile["dayCount"],
                                     inputFile["curveCollection"],

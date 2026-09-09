@@ -14,12 +14,12 @@
 #include "CreateDataFile.h"
 #include "TestHelperUtilities.h"
 
-#include "tryAqObjSwapsSchedule.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
-#include "tryAqObjects.h"
-#include "tryAqObjSwapsLeg.h"
-#include "tryAqObjSwapsDelta.h"
+#include "tryAqSwapObjectSchedule.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
+#include "tryAqObject.h"
+#include "tryAqSwapObjectLeg.h"
+#include "tryAqSwapObjectDelta.h"
 
 
 using etrading::ReadDataFile;
@@ -43,53 +43,53 @@ namespace
 	const std::string fileName_EUR_1ML = TEST_DIR + "EUR_BASIS_1M_CURVE.JSON";
 	const std::string fileName_EUR_3ML = TEST_DIR + "EUR_SWAP_3M_CURVE.JSON";
 
-	const std::string bespokeScheduleCreationInput_Fixed = TEST_DIR + "FIXED_SCHEDULE_tryAqObjSwapsScheduleCreateBespoke_inputs";
-	const std::string bespokeScheduleCreationInput_Float_1M = TEST_DIR + "FLOAT_1M_SCHEDULE_tryAqObjSwapsScheduleCreateBespoke_inputs";
-	const std::string bespokeScheduleCreationInput_Float_3M = TEST_DIR + "FLOAT_3M_SCHEDULE_tryAqObjSwapsScheduleCreateBespoke_inputs";
+	const std::string bespokeScheduleCreationInput_Fixed = TEST_DIR + "FIXED_SCHEDULE_tryAqSwapObjectScheduleCreateBespoke_inputs";
+	const std::string bespokeScheduleCreationInput_Float_1M = TEST_DIR + "FLOAT_1M_SCHEDULE_tryAqSwapObjectScheduleCreateBespoke_inputs";
+	const std::string bespokeScheduleCreationInput_Float_3M = TEST_DIR + "FLOAT_3M_SCHEDULE_tryAqSwapObjectScheduleCreateBespoke_inputs";
 
-	const std::string legCreationInput_Fixed = TEST_DIR + "FIXED_LEG_tryAqObjSwapsLegCreateFromSchedule_inputs";
-	const std::string legCreationInput_Float_1M = TEST_DIR + "FLOAT_1M_LEG_tryAqObjSwapsLegCreateFromSchedule_inputs";
-	const std::string legCreationInput_Float_3M = TEST_DIR + "FLOAT_3M_LEG_tryAqObjSwapsLegCreateFromSchedule_inputs";
+	const std::string legCreationInput_Fixed = TEST_DIR + "FIXED_LEG_tryAqSwapObjectLegCreateFromSchedule_inputs";
+	const std::string legCreationInput_Float_1M = TEST_DIR + "FLOAT_1M_LEG_tryAqSwapObjectLegCreateFromSchedule_inputs";
+	const std::string legCreationInput_Float_3M = TEST_DIR + "FLOAT_3M_LEG_tryAqSwapObjectLegCreateFromSchedule_inputs";
 
-	const std::string swapCreationInput = TEST_DIR + "VNS_SWAP_tryAqObjSwapsCreateFromLegs_inputs";
+	const std::string swapCreationInput = TEST_DIR + "VNS_SWAP_tryAqSwapObjectCreateFromLegs_inputs";
 
 	const std::string pvInput = TEST_DIR + "validationUtilitySwapPV_inputs";
 	const std::string pvOutput = TEST_DIR + "validationUtilitySwapPV_outputs";
 
-	const std::string parRateInput = TEST_DIR + "tryAqObjSwapsParRate_inputs";
-	const std::string parRateOutput = TEST_DIR + "tryAqObjSwapsParRate_outputs";
+	const std::string parRateInput = TEST_DIR + "tryAqSwapObjectParRate_inputs";
+	const std::string parRateOutput = TEST_DIR + "tryAqSwapObjectParRate_outputs";
 
-	const std::string pv01Input = TEST_DIR + "tryAqObjSwapsPV01_inputs";
-	const std::string pv01Output = TEST_DIR + "tryAqObjSwapsPV01_outputs";
+	const std::string pv01Input = TEST_DIR + "tryAqSwapObjectPV01_inputs";
+	const std::string pv01Output = TEST_DIR + "tryAqSwapObjectPV01_outputs";
 
-	const std::string dv01Input = TEST_DIR + "tryAqObjSwapsDelta_inputs";
-	const std::string dv01Output = TEST_DIR + "tryAqObjSwapsDelta_outputs";
+	const std::string dv01Input = TEST_DIR + "tryAqSwapObjectDelta_inputs";
+	const std::string dv01Output = TEST_DIR + "tryAqSwapObjectDelta_outputs";
 
 	//With Fee Leg:
 
 	const std::string TEST_WITH_FEE_DIR = TEST_DIR + "WithFeeLeg/";
 
-	const std::string feeCreationInput = TEST_WITH_FEE_DIR + "FEE1_tryAqObjCreditFeeLegCreate_inputs";
+	const std::string feeCreationInput = TEST_WITH_FEE_DIR + "FEE1_tryAqCreditObjectFeeLegCreate_inputs";
 
 	const std::string pvInput_withFee = TEST_WITH_FEE_DIR + "validationUtilitySwapPV_inputs";
 	const std::string pvOutput_withFee = TEST_WITH_FEE_DIR + "validationUtilitySwapPV_outputs";
 
-	const std::string parRateInput_withFee = TEST_WITH_FEE_DIR + "tryAqObjSwapsParRate_inputs";
-	const std::string parRateOutput_withFee = TEST_WITH_FEE_DIR + "tryAqObjSwapsParRate_outputs";
+	const std::string parRateInput_withFee = TEST_WITH_FEE_DIR + "tryAqSwapObjectParRate_inputs";
+	const std::string parRateOutput_withFee = TEST_WITH_FEE_DIR + "tryAqSwapObjectParRate_outputs";
 
-	const std::string pv01Input_withFee = TEST_WITH_FEE_DIR + "tryAqObjSwapsPV01_inputs";
-	const std::string pv01Output_withFee = TEST_WITH_FEE_DIR + "tryAqObjSwapsPV01_outputs";
+	const std::string pv01Input_withFee = TEST_WITH_FEE_DIR + "tryAqSwapObjectPV01_inputs";
+	const std::string pv01Output_withFee = TEST_WITH_FEE_DIR + "tryAqSwapObjectPV01_outputs";
 
-	const std::string dv01Input_withFee = TEST_WITH_FEE_DIR + "tryAqObjSwapsDelta_inputs";
-	const std::string dv01Output_withFee = TEST_WITH_FEE_DIR + "tryAqObjSwapsDelta_outputs";
+	const std::string dv01Input_withFee = TEST_WITH_FEE_DIR + "tryAqSwapObjectDelta_inputs";
+	const std::string dv01Output_withFee = TEST_WITH_FEE_DIR + "tryAqSwapObjectDelta_outputs";
 
 
 	void loadCurves()
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
-		auto load1ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_1ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
+		auto load1ML = validation::tryAqObjectLoad(etrading::getGoogleTestFolder() + fileName_EUR_1ML, etrading::JSON);
 	}
 
 	std::string createBespokeSchedule(const std::string& fileName)
@@ -100,7 +100,7 @@ namespace
 		AQLStringMatrix bespokeScheduleProperties = inputFile["bespokeScheduleProperties"];
 		AQLStringMatrix bespokeScheduleLVB = inputFile["bespokeScheduleLVB"];
 
-		validation::tryAqObjSwapsScheduleCreateBespoke(scheduleName, bespokeScheduleProperties, bespokeScheduleLVB);
+		validation::tryAqSwapObjectScheduleCreateBespoke(scheduleName, bespokeScheduleProperties, bespokeScheduleLVB);
 
 		return scheduleName;
 	}
@@ -113,7 +113,7 @@ namespace
 		std::string scheduleName = inputFile["scheduleName"];
 		AQLStringMatrix legLVB = inputFile["legLVB"];
 
-		validation::tryAqObjSwapsLegCreateFromSchedule(legObjectName, scheduleName, legLVB);
+		validation::tryAqSwapObjectLegCreateFromSchedule(legObjectName, scheduleName, legLVB);
 
 		return legObjectName;
 	}
@@ -127,7 +127,7 @@ namespace
 		AQLStringMatrix swapPropertiesLVB = inputFile["swapPropertiesLVB"];
 		bool isXccySwap = inputFile["isXccySwap"];
 
-		validation::tryAqObjSwapsCreateFromLegs(swapName, legObjectNames, swapPropertiesLVB, isXccySwap);
+		validation::tryAqSwapObjectCreateFromLegs(swapName, legObjectNames, swapPropertiesLVB, isXccySwap);
 
 		return swapName;
 	}
@@ -158,7 +158,7 @@ namespace
 		AQLStringMatrix feeProperties = inputFile["feeProperties"];
 		AQLStringMatrix feeScheduleLVB = inputFile["feeScheduleLVB"];
 
-		validation::tryAqObjCreditFeeLegCreate(legObjectName, feeProperties, feeScheduleLVB);
+		validation::tryAqCreditObjectFeeLegCreate(legObjectName, feeProperties, feeScheduleLVB);
 
 		return legObjectName;
 	}
@@ -168,7 +168,7 @@ namespace
 		std::string swapName = loadSwap();
 		std::string feeName = createFeeLeg(feeCreationInput);
 
-		validation::tryAqObjSwapsAddFee(swapName, feeName);
+		validation::tryAqSwapObjectAddFee(swapName, feeName);
 		return swapName;
 	}
 
@@ -191,7 +191,7 @@ namespace google_test
 		std::string swapName = inputFile["swapName"];
 		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		double actualValue = validation::tryAqObjSwapsPV(swapName, valuationSettingsLVB);
+		double actualValue = validation::tryAqSwapObjectPV(swapName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(actualValue, TEST_DIR.c_str(), pvOutput.c_str(), pvTolerance);
 	}
@@ -205,7 +205,7 @@ namespace google_test
 		std::string swapName = inputFile["swapName"];
 		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		double actualValue = validation::tryAqObjSwapsParRate(swapName, valuationSettingsLVB);
+		double actualValue = validation::tryAqSwapObjectParRate(swapName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(actualValue, TEST_DIR.c_str(), parRateOutput.c_str(), tolerance);
 	}
@@ -219,7 +219,7 @@ namespace google_test
 		std::string swapName = inputFile["swapName"];
 		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		double actualValue = validation::tryAqObjSwapsPV01(swapName, valuationSettingsLVB);
+		double actualValue = validation::tryAqSwapObjectPV01(swapName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(actualValue, TEST_DIR.c_str(), pv01Output.c_str(), tolerance);
 
@@ -245,7 +245,7 @@ namespace google_test
 
 		DoubleVector deltas;
 		AQLStringVector tempStrVector;
-		validation::tryAqObjSwapsDelta(tempStrVector, deltas, swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, groupRiskBy, aggregateRisks, reportInLegCCY, xccyFXSpotRates);
+		validation::tryAqSwapObjectDelta(tempStrVector, deltas, swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, groupRiskBy, aggregateRisks, reportInLegCCY, xccyFXSpotRates);
 
 		const ReadDataFile::Load outputFile(dv01Output.c_str());
 		double expectDelta = outputFile["TotalDelta"];
@@ -264,7 +264,7 @@ namespace google_test
 		std::string swapName = inputFile["swapName"];
 		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		double actualValue = validation::tryAqObjSwapsPV(swapName, valuationSettingsLVB);
+		double actualValue = validation::tryAqSwapObjectPV(swapName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(actualValue, TEST_WITH_FEE_DIR.c_str(), pvOutput_withFee.c_str(), pvTolerance);
 	}
@@ -278,7 +278,7 @@ namespace google_test
 		std::string swapName = inputFile["swapName"];
 		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		double actualValue = validation::tryAqObjSwapsParRate(swapName, valuationSettingsLVB);
+		double actualValue = validation::tryAqSwapObjectParRate(swapName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(actualValue, TEST_WITH_FEE_DIR.c_str(), parRateOutput_withFee.c_str(), tolerance);
 	}
@@ -292,7 +292,7 @@ namespace google_test
 		std::string swapName = inputFile["swapName"];
 		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		double actualValue = validation::tryAqObjSwapsPV01(swapName, valuationSettingsLVB);
+		double actualValue = validation::tryAqSwapObjectPV01(swapName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(actualValue, TEST_WITH_FEE_DIR.c_str(), pv01Output_withFee.c_str(), tolerance);
 
@@ -318,7 +318,7 @@ namespace google_test
 
 		DoubleVector deltas;
 		AQLStringVector tempStrVector;
-		validation::tryAqObjSwapsDelta(tempStrVector, deltas, swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, groupRiskBy, aggregateRisks, reportInLegCCY, xccyFXSpotRates);
+		validation::tryAqSwapObjectDelta(tempStrVector, deltas, swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, groupRiskBy, aggregateRisks, reportInLegCCY, xccyFXSpotRates);
 
 		const ReadDataFile::Load outputFile(dv01Output_withFee.c_str());
 		double expectDelta = outputFile["TotalDelta"];

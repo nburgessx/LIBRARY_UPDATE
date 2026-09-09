@@ -21,7 +21,7 @@
 #include "AQLLinearRatesVolatilityManager.h"
 #include "LibSetUpETrading.h"
 #include "EnvironmentUtilities.h"
-#include "tryAqToolsSetup.h"
+#include "tryAqToolSetup.h"
 #include "AQLCoreLockControl.h"
 #include "OMPThreadManager.h"
 

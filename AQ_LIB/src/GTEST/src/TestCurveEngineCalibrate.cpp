@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryAqToolsSetup.h"
+#include "tryAqToolSetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
 #include "ResultsProcessor.h"
@@ -14,9 +14,9 @@
 
 
 // "Generator" API
-#include "tryAqObjCurvesMarketData.h"
-#include "tryAqObjCurvesEngineCalibrate.h"
-#include "tryAqObjCurvesGenerator.h"
+#include "tryAqCurveMarketData.h"
+#include "tryAqCurveObjectEngineCalibrate.h"
+#include "tryAqCurveGenerator.h"
 
 // Forward Rates Table
 
@@ -108,7 +108,7 @@ namespace
 		return std::make_tuple(columnNames, columnEnumTypes, dataValues);
 	}
 
-	/* @brief			Builds AQObj MarketData Object by invoking the tryAqObjCurvesMarketDataCreate() API.
+	/* @brief			Builds AQObj MarketData Object by invoking the tryAqCurveMarketDataCreate() API.
 	*                   The code loops over all of the capitalized data keys in the specified filename and uses
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
@@ -146,7 +146,7 @@ namespace
 			}
 		}
 
-		return validation::tryAqObjCurvesMarketDataCreate(objectName, marketDataKeys, infoBlocks);
+		return validation::tryAqCurveMarketDataCreate(objectName, marketDataKeys, infoBlocks);
 	}
 
 	
@@ -203,7 +203,7 @@ namespace google_test
     //             StandardString value    = "TRUE";
 	// 			etrading::LabelValueBlock overridingInputs( key, value );
     //             
-	// 			std::string fwd6MCurveGenerator = validation::tryAqObjCurvesGeneratorModify("FWD_USD_BASIS_3X6", "USD_BASIS_3X6", overridingInputs);
+	// 			std::string fwd6MCurveGenerator = validation::tryAqCurveGeneratorModify("FWD_USD_BASIS_3X6", "USD_BASIS_3X6", overridingInputs);
 	// 			curveGenerators.push_back(fwd6MCurveGenerator);
 	// 		}
 	// 		else
@@ -212,7 +212,7 @@ namespace google_test
 	// 		}
 	// 		marketDataHandles.push_back(buildMarketDataObjectHandle(testIndex, ccy, "6M"));
     // 
-	// 		validation::tryAqObjCurvesEngineCalibrate("",				// engine name
+	// 		validation::tryAqCurveObjectEngineCalibrate("",				// engine name
 	// 			                                         curveCollection,	// curve collection name
 	// 			                                         AQLStringMatrix(),	// Engine params
 	// 			                                         curveGenerators,
@@ -225,7 +225,7 @@ namespace google_test
 	// 		testEngineCurveForwardRates("6M", ccy, testIndex);
     // 
 	// 		// Flush the cache in preparation for a new set of curves
-	// 		validation::tryAqToolsClearEntityPool();
+	// 		validation::tryAqToolClearEntityPool();
 	// 		curveGenerators.clear();
 	// 		marketDataHandles.clear();
 	// 	}
@@ -262,7 +262,7 @@ namespace google_test
 	//		curveGenerators.push_back("EUR_BASIS_3X12");
 	//		marketDataHandles.push_back(buildMarketDataObjectHandle(testIndex, ccy, "12M"));
 
-	//		validation::tryAqObjCurvesEngineCalibrate("",				// engine name
+	//		validation::tryAqCurveObjectEngineCalibrate("",				// engine name
 	//			curveCollection,	// curve collection name
 	//			AQLStringMatrix(),		// Engine params
 	//			curveGenerators,
@@ -276,7 +276,7 @@ namespace google_test
 	//		testEngineCurveForwardRates("12M", ccy, testIndex);
 
 	//		// Flush the cache in preparation for a new set of curves
-	//		validation::tryAqToolsClearEntityPool();
+	//		validation::tryAqToolClearEntityPool();
 	//		curveGenerators.clear();
 	//		marketDataHandles.clear();
 	//	}

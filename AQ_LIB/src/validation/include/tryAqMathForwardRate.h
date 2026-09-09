@@ -20,7 +20,7 @@ namespace validation
 							     const StandardStringMatrix & forwardAdjustmentTable = StandardStringMatrix(),
 								 const etrading::CompoundingFrequencyEnum & compoundFreqEnum = etrading::SIMPLE_COMPOUNDING );
 
-	// validation interface for tryAqCurvesForwardRates method
+	// validation interface for tryAqCurveForwardRates method
 	std::vector<double> tryAqMathForwardRates( const std::vector<AQLDate> & fixingDates,
 											   const AQLDate & asOfDate,
 											   const etrading::InterpolationEnum interpolationEnum,
@@ -52,7 +52,7 @@ namespace validation
 									const StandardStringMatrix & forwardAdjustmentTable = StandardStringMatrix(),
 									const etrading::CompoundingFrequencyEnum & compoundFreqEnum = etrading::SIMPLE_COMPOUNDING );
 
-	// validation interface for tryAqCurvesDiscountFactors method
+	// validation interface for tryAqCurveDiscountFactors method
 	std::vector<double> tryAqMathDiscountFactors( const std::vector<AQLDate> & paymentDates,
 											      const AQLDate & asOfDate,
 											      const etrading::InterpolationEnum interpolationEnum,
@@ -86,7 +86,7 @@ namespace validation
 								 const StandardStringMatrix & forwardAdjustmentTable = StandardStringMatrix(),
 								 const etrading::CompoundingFrequencyEnum & compoundFreqEnum = etrading::SIMPLE_COMPOUNDING );
 
-	// *** LEGACY METHOD *** validation interface for tryAqCurvesForwardRates method
+	// *** LEGACY METHOD *** validation interface for tryAqCurveForwardRates method
 	std::vector<double> tryAqMathForwardRates( const std::vector<AQLDate> & fixingDates,
 											   const AQLDate & asOfDate,
 											   const std::string & curveCollection,
@@ -122,7 +122,7 @@ namespace validation
 								    const StandardStringMatrix & forwardAdjustmentTable = StandardStringMatrix(),
 									const etrading::CompoundingFrequencyEnum & compoundFreqEnum = etrading::SIMPLE_COMPOUNDING );
 
-	// *** LEGACY METHOD *** validation interface for tryAqCurvesDiscountFactors method
+	// *** LEGACY METHOD *** validation interface for tryAqCurveDiscountFactors method
 	std::vector<double> tryAqMathDiscountFactors( const std::vector<AQLDate> & paymentDates,
 											      const AQLDate & asOfDate,
 												  const std::string & curveCollection,

@@ -8,7 +8,7 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
-#include "tryAqCurvesDisplay.h"
+#include "tryAqCurveDisplay.h"
 
 #include <gTest/gTest.h>
 
@@ -105,7 +105,7 @@ namespace google_test
 			AQLString inputDir = TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + curveDisplayInputs_Daily + AQLString(".csv");
 			const ReadDataFile::Load inputFile1( inputDir );
 			const DoubleArray results1
-				= validation::tryAqCurvesDisplay(
+				= validation::tryAqCurveDisplay(
 					  inputFile1["curveCollection"],
 					  inputFile1["curveIndex"] );
 
@@ -124,7 +124,7 @@ namespace google_test
 			inputDir = TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + curveDisplayInputs_Quarterly + AQLString(".csv");
 			const ReadDataFile::Load inputFile2( inputDir );
 			const DoubleArray results2
-				= validation::tryAqCurvesDisplay(
+				= validation::tryAqCurveDisplay(
 					  inputFile2["curveCollection"],
 					  inputFile2["curveIndex"] );
 

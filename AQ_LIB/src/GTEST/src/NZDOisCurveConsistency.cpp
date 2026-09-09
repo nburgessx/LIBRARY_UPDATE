@@ -12,9 +12,9 @@
 #include "GetGoogleTestFolder.h"
 #include "ResultsProcessor.h"
 #include "CoreEnumerations.h"
-#include "tryAqObjects.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqObject.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "RepriceCalibrationInstruments.h"
@@ -38,8 +38,8 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectNZDOIS_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameNZDOIS, etrading::JSON );    
-		const std::string curveObjectNZD3ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameNZD3ML, etrading::JSON );
+        const std::string curveObjectNZDOIS_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameNZDOIS, etrading::JSON );    
+		const std::string curveObjectNZD3ML_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameNZD3ML, etrading::JSON );
     };
 
     // Call Test Fixture Class
@@ -88,7 +88,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20200420", oisSwapTerms[i] ); // Effective Date = 20200420
-            const double actualResult                    = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqSwapObjectParRate( swapObject, curveLVB );
             const double expectedResult                  = oisSwapParRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );

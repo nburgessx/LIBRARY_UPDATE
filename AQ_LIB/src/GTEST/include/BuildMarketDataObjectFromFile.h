@@ -3,6 +3,6 @@
 
 namespace google_test
 {
-	// Builds AQObj MarketData Object by invoking the tryAqObjCurvesMarketDataCreate() API.
+	// Builds AQObj MarketData Object by invoking the tryAqCurveMarketDataCreate() API.
 	std::string createAQObjMarketDataObjectFromFileName(const AQLString& marketDataFileName);
 }

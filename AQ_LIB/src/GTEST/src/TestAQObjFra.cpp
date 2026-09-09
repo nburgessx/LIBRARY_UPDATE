@@ -4,7 +4,7 @@
 #include "TryAqCurvesTenorBasis.h"
 
 // Leg Creation and Pricing
-#include "tryAqObjSwapsLeg.h"
+#include "tryAqSwapObjectLeg.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -31,25 +31,25 @@ namespace
     //
     // curve input files
     //
-    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryAqCurveCalibrateOIS_inputs";
     extern const char USDYC_1M[]			    = "";
-    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurvesCalibrateSwap_inputs";
-    extern const char USDYC_6M[]			    = TEST_DIR "USDYC_3M6M_tryAqCurvesCalibrateBasis_inputs";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryAqCurveCalibrateSwap_inputs";
+    extern const char USDYC_6M[]			    = TEST_DIR "USDYC_3M6M_tryAqCurveCalibrateBasis_inputs";
     extern const char USDYC_12M[]			    = "";
 
     //
     // test call input and reference files
     //
-    extern const char fraInput1[]	= TEST_DIR "FRA_USD@1_tryAqObjSwapsLegCreate_inputs";
-	extern const char pvInputs1[] = TEST_DIR "FRA_USD@1_tryAqObjSwapsLegPV_inputs";
-	extern const char pvOutputs1[] = TEST_DIR "FRA_USD@1_tryAqObjSwapsLegPV_outputs";
-	extern const char pvOutputs1_64[] = TEST_DIR "FRA_USD@1_tryAqObjSwapsLegPV_outputs64_";
+    extern const char fraInput1[]	= TEST_DIR "FRA_USD@1_tryAqSwapObjectLegCreate_inputs";
+	extern const char pvInputs1[] = TEST_DIR "FRA_USD@1_tryAqSwapObjectLegPV_inputs";
+	extern const char pvOutputs1[] = TEST_DIR "FRA_USD@1_tryAqSwapObjectLegPV_outputs";
+	extern const char pvOutputs1_64[] = TEST_DIR "FRA_USD@1_tryAqSwapObjectLegPV_outputs64_";
 
 
-	extern const char fraInput2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjSwapsLegCreate_inputs";
-	extern const char pvInputs2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjSwapsLegPV_inputs";
-	extern const char pvOutputs2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjSwapsLegPV_outputs";
-	extern const char pvOutputs2_64[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjSwapsLegPV_outputs64_";
+	extern const char fraInput2[] = TEST_DIR "FRA_USD_STUB@2_tryAqSwapObjectLegCreate_inputs";
+	extern const char pvInputs2[] = TEST_DIR "FRA_USD_STUB@2_tryAqSwapObjectLegPV_inputs";
+	extern const char pvOutputs2[] = TEST_DIR "FRA_USD_STUB@2_tryAqSwapObjectLegPV_outputs";
+	extern const char pvOutputs2_64[] = TEST_DIR "FRA_USD_STUB@2_tryAqSwapObjectLegPV_outputs64_";
 
 }
 
@@ -90,12 +90,12 @@ namespace google_test
 			AQLStringMatrix legLVB = tradeInputFile["legLVB"];
 			bool validateKeys = tradeInputFile["validateKeys"];
 
-			std::string createSwap = validation::tryAqObjSwapsLegCreate(legObjectName, legLVB, validateKeys);
+			std::string createSwap = validation::tryAqSwapObjectLegCreate(legObjectName, legLVB, validateKeys);
 
 			// 4. Get the ParRate Inputs & Calculate the parRate
 			etrading::LabelValueBlock curveCollection = etrading::fromStringToLVB(pvInputFile["curveCollection"]);
 
-			double actualPV = validation::tryAqObjSwapsLegPV(legObjectName, curveCollection, "");
+			double actualPV = validation::tryAqSwapObjectLegPV(legObjectName, curveCollection, "");
 
 			// 5. Check the Test Results or Rebase
 			CheckTestResultsAndRebaseOnRequest(actualPV, TEST_DIR, pvOutputsFilename, tolerance);
@@ -135,12 +135,12 @@ namespace google_test
 			AQLStringMatrix legLVB = tradeInputFile["legLVB"];
 			bool validateKeys = tradeInputFile["validateKeys"];
 
-			std::string createSwap = validation::tryAqObjSwapsLegCreate(legObjectName, legLVB, validateKeys);
+			std::string createSwap = validation::tryAqSwapObjectLegCreate(legObjectName, legLVB, validateKeys);
 
 			// 4. Get the ParRate Inputs & Calculate the parRate
 			etrading::LabelValueBlock curveCollection = etrading::fromStringToLVB(pvInputFile["curveCollection"]);
 
-			double actualPV = validation::tryAqObjSwapsLegPV(legObjectName, curveCollection, "");
+			double actualPV = validation::tryAqSwapObjectLegPV(legObjectName, curveCollection, "");
 
 			// 5. Check the Test Results or Rebase
 			CheckTestResultsAndRebaseOnRequest(actualPV, TEST_DIR, pvOutputsFilename, tolerance);

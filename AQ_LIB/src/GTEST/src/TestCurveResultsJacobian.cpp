@@ -6,8 +6,8 @@
 #include "GetGoogleTestFolder.h"
 #include "RecordMacros.h"						// Logfile Macros
 #include "ResultsProcessor.h"					// Test Rebase Methods
-#include "tryAqObjects.h"							// AQObj Curve Loading et al.
-#include "tryAqCurvesResults.h"					// Curve Results Jacobian 
+#include "tryAqObject.h"							// AQObj Curve Loading et al.
+#include "tryAqCurveResults.h"					// Curve Results Jacobian 
 
 
 // Test Folders
@@ -17,17 +17,17 @@ const std::string TEST_FOLDER_NO_BUMP				= "ETrading/Curves/TestCurveResultsJaco
 const std::string TEST_FOLDER_BUMPED				= "ETrading/Curves/TestCurveResultsJacobian/Bumped/";
 
 // Test Files: Function Inputs / Outputs
-const std::string discountFactorDelta_USDOIS_inputs		= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USDOIS_inputs.csv";
-const std::string discountFactorDelta_USD6ML_inputs		= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD6ML_inputs.csv";
-const std::string discountFactorDelta_USD3ML_inputs		= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD3ML_inputs.csv";
+const std::string discountFactorDelta_USDOIS_inputs		= TEST_FOLDER + "tryAqCurveResultsJacobianDiscountFactorDelta_USDOIS_inputs.csv";
+const std::string discountFactorDelta_USD6ML_inputs		= TEST_FOLDER + "tryAqCurveResultsJacobianDiscountFactorDelta_USD6ML_inputs.csv";
+const std::string discountFactorDelta_USD3ML_inputs		= TEST_FOLDER + "tryAqCurveResultsJacobianDiscountFactorDelta_USD3ML_inputs.csv";
 
-const std::string discountFactorDelta_USDOIS_outputs_X86	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USDOIS_outputs_X86.csv";
-const std::string discountFactorDelta_USD3ML_outputs_X86	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD3ML_outputs_X86.csv";
-const std::string discountFactorDelta_USD6ML_outputs_X86	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD6ML_outputs_X86.csv";
+const std::string discountFactorDelta_USDOIS_outputs_X86	= TEST_FOLDER + "tryAqCurveResultsJacobianDiscountFactorDelta_USDOIS_outputs_X86.csv";
+const std::string discountFactorDelta_USD3ML_outputs_X86	= TEST_FOLDER + "tryAqCurveResultsJacobianDiscountFactorDelta_USD3ML_outputs_X86.csv";
+const std::string discountFactorDelta_USD6ML_outputs_X86	= TEST_FOLDER + "tryAqCurveResultsJacobianDiscountFactorDelta_USD6ML_outputs_X86.csv";
 
-const std::string discountFactorDelta_USDOIS_outputs_X64	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USDOIS_outputs_X64.csv";
-const std::string discountFactorDelta_USD3ML_outputs_X64	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD3ML_outputs_X64.csv";
-const std::string discountFactorDelta_USD6ML_outputs_X64	= TEST_FOLDER + "tryAqCurvesResultsJacobianDiscountFactorDelta_USD6ML_outputs_X64.csv";
+const std::string discountFactorDelta_USDOIS_outputs_X64	= TEST_FOLDER + "tryAqCurveResultsJacobianDiscountFactorDelta_USDOIS_outputs_X64.csv";
+const std::string discountFactorDelta_USD3ML_outputs_X64	= TEST_FOLDER + "tryAqCurveResultsJacobianDiscountFactorDelta_USD3ML_outputs_X64.csv";
+const std::string discountFactorDelta_USD6ML_outputs_X64	= TEST_FOLDER + "tryAqCurveResultsJacobianDiscountFactorDelta_USD6ML_outputs_X64.csv";
 
 // Test Files: USD CURVES NO BUMP
 const std::string fileNameUSDOIS_CurveGenerator			= TEST_FOLDER_CURVE_GENERATORS + "USD_OIS_WITH_RISK.JSON";
@@ -59,11 +59,11 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator		= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string loadUSDOISCurve		        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator		= validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string loadUSDOISCurve		        = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
 
 		// Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USDOIS" );
+		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurveResultsJacobianDiscountFactorDelta( "USDYC", "USDOIS" );
 
 		// Validation: Check if results are empty and if present FlatShift Discount Factor Deltas should have two columns
 		ASSERT_GT( discountFactorDeltas.size(), (unsigned int)(0) );
@@ -81,13 +81,13 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator		= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string loadUSD3MLCurveGenerator		= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
-        const std::string loadUSDOISCurve		        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
-        const std::string loadUSD3MLCurve		        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator		= validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string loadUSD3MLCurveGenerator		= validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
+        const std::string loadUSDOISCurve		        = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+        const std::string loadUSD3MLCurve		        = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
         
 		// Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USD3ML" );
+		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurveResultsJacobianDiscountFactorDelta( "USDYC", "USD3ML" );
 
 		// Validation: Check if results are empty and if present FlatShift Discount Factor Deltas should have two columns
 		ASSERT_GT( discountFactorDeltas.size(), (unsigned int)(0) );
@@ -106,15 +106,15 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator		= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string loadUSD3MLCurveGenerator		= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
-		const std::string loadUSD6MLCurveGenerator		= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_CurveGenerator, etrading::JSON );
-		const std::string loadUSDOISCurve		        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
-        const std::string loadUSD3MLCurve		        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
-        const std::string loadUSD6MLCurve		        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_NoBump, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator		= validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string loadUSD3MLCurveGenerator		= validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
+		const std::string loadUSD6MLCurveGenerator		= validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_CurveGenerator, etrading::JSON );
+		const std::string loadUSDOISCurve		        = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+        const std::string loadUSD3MLCurve		        = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
+        const std::string loadUSD6MLCurve		        = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_NoBump, etrading::JSON );
 
 		// Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USD6ML" );
+		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurveResultsJacobianDiscountFactorDelta( "USDYC", "USD6ML" );
 
 		// Validation: Check if results are empty and if present FlatShift Discount Factor Deltas should have two columns
 		ASSERT_GT( discountFactorDeltas.size(), (unsigned int)(0) );
@@ -132,8 +132,8 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string originalCurveUSDOIS = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string originalCurveUSDOIS = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
 		
 		const double oneBasisPointShiftSize = 0.0001;
 
@@ -142,10 +142,10 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 1.	Original Discount Factors
-		etrading::VariantMatrix originalDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USDOIS");
+		etrading::VariantMatrix originalDiscountFactors	= validation::tryAqCurveResultsDiscountFactorsDisplayAll("USDYC","USDOIS");
 
 		// 2.	Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDelta	= validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USDOIS" );
+		etrading::VariantMatrix discountFactorDelta	= validation::tryAqCurveResultsJacobianDiscountFactorDelta( "USDYC", "USDOIS" );
 		
 		// 3.	Discount Factor Delta01 i.e. the Delta scaled by 1 basis point
 		etrading::VariantMatrix discountFactorDelta01 = discountFactorDelta;
@@ -174,10 +174,10 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 5. Load Shifted Curve with Market Data Bumped by 1 Bps
-		const std::string shiftedCurveUSDOIS = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_Bumped, etrading::JSON );
+		const std::string shiftedCurveUSDOIS = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_Bumped, etrading::JSON );
 
 		// 6. Shifted Discount Factors
-		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USDOIS");
+		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurveResultsDiscountFactorsDisplayAll("USDYC","USDOIS");
 
 		// Dimension Validation
 		ASSERT_EQ( actualShiftedDiscountFactors.size(), expectedShiftedDiscountFactors.size() );
@@ -197,11 +197,11 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string loadUSD3MLCurveGenerator = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string loadUSD3MLCurveGenerator = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
 
-		const std::string originalCurveUSDOIS = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
-		const std::string originalCurveUSD3ML = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
+		const std::string originalCurveUSDOIS = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+		const std::string originalCurveUSD3ML = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
 		
 		const double oneBasisPointShiftSize = 0.0001;
 
@@ -210,10 +210,10 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 1.	Original Discount Factors
-		etrading::VariantMatrix originalDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USD3ML");
+		etrading::VariantMatrix originalDiscountFactors	= validation::tryAqCurveResultsDiscountFactorsDisplayAll("USDYC","USD3ML");
 
 		// 2.	Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDelta	= validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USD3ML" );
+		etrading::VariantMatrix discountFactorDelta	= validation::tryAqCurveResultsJacobianDiscountFactorDelta( "USDYC", "USD3ML" );
 		
 		// 3.	Discount Factor Delta01 i.e. the Delta scaled by 1 basis point
 		etrading::VariantMatrix discountFactorDelta01 = discountFactorDelta;
@@ -242,10 +242,10 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 5. Load Shifted Curve with Market Data Bumped by 1 Bps
-		const std::string shiftedCurveUSD3ML = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_Bumped, etrading::JSON );
+		const std::string shiftedCurveUSD3ML = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_Bumped, etrading::JSON );
 
 		// 6. Shifted Discount Factors
-		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USD3ML");
+		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurveResultsDiscountFactorsDisplayAll("USDYC","USD3ML");
 
 		// Dimension Validation
 		ASSERT_EQ( actualShiftedDiscountFactors.size(), expectedShiftedDiscountFactors.size() );
@@ -265,13 +265,13 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string loadUSD3MLCurveGenerator = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
-		const std::string loadUSD6MLCurveGenerator = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_CurveGenerator, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string loadUSD3MLCurveGenerator = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
+		const std::string loadUSD6MLCurveGenerator = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_CurveGenerator, etrading::JSON );
 
-		const std::string originalCurveUSDOIS = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
-		const std::string originalCurveUSD3ML = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
-		const std::string originalCurveUSD6ML = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_NoBump, etrading::JSON );
+		const std::string originalCurveUSDOIS = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+		const std::string originalCurveUSD3ML = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
+		const std::string originalCurveUSD6ML = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_NoBump, etrading::JSON );
 		
 		const double oneBasisPointShiftSize = 0.0001;
 
@@ -280,10 +280,10 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 1.	Original Discount Factors
-		etrading::VariantMatrix originalDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USD6ML");
+		etrading::VariantMatrix originalDiscountFactors	= validation::tryAqCurveResultsDiscountFactorsDisplayAll("USDYC","USD6ML");
 
 		// 2.	Jacobian Discount Factor Delta
-		etrading::VariantMatrix discountFactorDelta	= validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USD6ML" );
+		etrading::VariantMatrix discountFactorDelta	= validation::tryAqCurveResultsJacobianDiscountFactorDelta( "USDYC", "USD6ML" );
 		
 		// 3.	Discount Factor Delta01 i.e. the Delta scaled by 1 basis point
 		etrading::VariantMatrix discountFactorDelta01 = discountFactorDelta;
@@ -312,10 +312,10 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 5. Load Shifted Curve with Market Data Bumped by 1 Bps
-		const std::string shiftedCurveUSD6ML = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_Bumped, etrading::JSON );
+		const std::string shiftedCurveUSD6ML = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_Bumped, etrading::JSON );
 
 		// 6. Shifted Discount Factors
-		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USD6ML");
+		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurveResultsDiscountFactorsDisplayAll("USDYC","USD6ML");
 
 		// Dimension Validation
 		ASSERT_EQ( actualShiftedDiscountFactors.size(), expectedShiftedDiscountFactors.size() );

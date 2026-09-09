@@ -7,7 +7,7 @@
 #include "Dependency.h"
 #include "InitializeETrading.h"
 #include "GetGoogleTestFolder.h"
-#include "tryAqObjects.h"
+#include "tryAqObject.h"
 
 // Test Folder
 const std::string TEST_FOLDER = "ETrading/Curves/TestCurveResults/";
@@ -27,11 +27,11 @@ namespace google_test
 	void loadUSDCurves()
 	{
 		// Load USD Curves
-		const std::string curveObjectUSDOIS_  = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-		const std::string curveObjectUSD3ML_  = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-		const std::string curveObjectUSD6ML_  = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
-		const std::string curveObjectUSD1ML_  = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD1ML, etrading::JSON );
-		const std::string curveObjectUSD12ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD12ML, etrading::JSON );
+		const std::string curveObjectUSDOIS_  = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+		const std::string curveObjectUSD3ML_  = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+		const std::string curveObjectUSD6ML_  = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+		const std::string curveObjectUSD1ML_  = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD1ML, etrading::JSON );
+		const std::string curveObjectUSD12ML_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameUSD12ML, etrading::JSON );
 	}
 
 

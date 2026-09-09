@@ -5,8 +5,8 @@
 #include "ResultsProcessor.h"
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
-#include "tryAqBondsCurves.h"
-#include "tryAqObjBonds.h"
+#include "tryAqBondCurves.h"
+#include "tryAqBondObject.h"
 
 #include "FolderConfig.h"
 
@@ -21,45 +21,45 @@ using etrading::CreateDataFile;
 namespace
 {
     // Test Bond Input File(s)
-    const std::string nelsonSiegelCalibrate				= TEST_DIR "tryAqBondsCurveNelsonSiegelCalibrate_inputs.csv";
-	const std::string svenssonCalibrate					= TEST_DIR "tryAqBondsCurveSvenssonCalibrate_inputs.csv";
-	const std::string polynomialCalibrate				= TEST_DIR "tryAqBondsCurvePolynomialCalibrate_inputs.csv";
+    const std::string nelsonSiegelCalibrate				= TEST_DIR "tryAqBondCurveNelsonSiegelCalibrate_inputs.csv";
+	const std::string svenssonCalibrate					= TEST_DIR "tryAqBondCurveSvenssonCalibrate_inputs.csv";
+	const std::string polynomialCalibrate				= TEST_DIR "tryAqBondCurvePolynomialCalibrate_inputs.csv";
 	
-	const std::string nelsonSiegelBondYield				= TEST_DIR "tryAqBondsCurveNelsonSiegelYield_inputs.csv";
-    const std::string svenssonBondYield					= TEST_DIR "tryAqBondsCurveSvenssonYield_inputs.csv";
-    const std::string polynomialBondYield				= TEST_DIR "tryAqBondsCurvePolynomialYield_inputs.csv";
+	const std::string nelsonSiegelBondYield				= TEST_DIR "tryAqBondCurveNelsonSiegelYield_inputs.csv";
+    const std::string svenssonBondYield					= TEST_DIR "tryAqBondCurveSvenssonYield_inputs.csv";
+    const std::string polynomialBondYield				= TEST_DIR "tryAqBondCurvePolynomialYield_inputs.csv";
 
-	const std::string nelsonSiegelCalibrate_outputs_32	= TEST_DIR "tryAqBondsCurveNelsonSiegelCalibrate_outputs_32bit.csv";
-	const std::string svenssonCalibrate_outputs_32		= TEST_DIR "tryAqBondsCurveSvenssonCalibrate_outputs_32bit.csv";
-	const std::string polynomialCalibrate_outputs_32	= TEST_DIR "tryAqBondsCurvePolynomialCalibrate_outputs_32bit.csv";
+	const std::string nelsonSiegelCalibrate_outputs_32	= TEST_DIR "tryAqBondCurveNelsonSiegelCalibrate_outputs_32bit.csv";
+	const std::string svenssonCalibrate_outputs_32		= TEST_DIR "tryAqBondCurveSvenssonCalibrate_outputs_32bit.csv";
+	const std::string polynomialCalibrate_outputs_32	= TEST_DIR "tryAqBondCurvePolynomialCalibrate_outputs_32bit.csv";
 
-	const std::string nelsonSiegelCalibrate_outputs_64	= TEST_DIR "tryAqBondsCurveNelsonSiegelCalibrate_outputs_64bit.csv";
-	const std::string svenssonCalibrate_outputs_64		= TEST_DIR "tryAqBondsCurveSvenssonCalibrate_outputs_64bit.csv";
-	const std::string polynomialCalibrate_outputs_64	= TEST_DIR "tryAqBondsCurvePolynomialCalibrate_outputs_64bit.csv";
+	const std::string nelsonSiegelCalibrate_outputs_64	= TEST_DIR "tryAqBondCurveNelsonSiegelCalibrate_outputs_64bit.csv";
+	const std::string svenssonCalibrate_outputs_64		= TEST_DIR "tryAqBondCurveSvenssonCalibrate_outputs_64bit.csv";
+	const std::string polynomialCalibrate_outputs_64	= TEST_DIR "tryAqBondCurvePolynomialCalibrate_outputs_64bit.csv";
 
-	const std::string nelsonSiegelBondYield_outputs		= TEST_DIR "tryAqBondsCurveNelsonSiegelYield_outputs.csv";
-    const std::string svenssonBondYield_outputs			= TEST_DIR "tryAqBondsCurveSvenssonYield_outputs.csv";
-	const std::string polynomialBondYield_outputs		= TEST_DIR "tryAqBondsCurvePolynomialYield_outputs.csv";
+	const std::string nelsonSiegelBondYield_outputs		= TEST_DIR "tryAqBondCurveNelsonSiegelYield_outputs.csv";
+    const std::string svenssonBondYield_outputs			= TEST_DIR "tryAqBondCurveSvenssonYield_outputs.csv";
+	const std::string polynomialBondYield_outputs		= TEST_DIR "tryAqBondCurvePolynomialYield_outputs.csv";
 
 	// Bootstrapped bond curve
-	const std::string createBondCurve					= TEST_DIR "USTREASURIES1@127_tryAqBondsCurveCreate_inputs.csv";
-	const std::string bondCurveDisplay_inputs			= TEST_DIR "tryAqBondsCurveDisplay_inputs.csv";
-	const std::string bondCurveDisplay_outputs			= TEST_DIR "tryAqBondsCurveDisplay_outputs.csv";
+	const std::string createBondCurve					= TEST_DIR "USTREASURIES1@127_tryAqBondCurveCreate_inputs.csv";
+	const std::string bondCurveDisplay_inputs			= TEST_DIR "tryAqBondCurveDisplay_inputs.csv";
+	const std::string bondCurveDisplay_outputs			= TEST_DIR "tryAqBondCurveDisplay_outputs.csv";
 
 	// Corporate bond curve as a spread to government treasury benchmark bond curve
-	const std::string corporateSpreadBondCurve			= TEST_DIR "USD_CORP_CURVE@128_tryAqBondsCurveCreate_inputs.csv";
+	const std::string corporateSpreadBondCurve			= TEST_DIR "USD_CORP_CURVE@128_tryAqBondCurveCreate_inputs.csv";
 
 	 /*
 	 * This test builds 15 US Treasuries from input file, and uses these bonds to calibrate a bond curve.
 	 * Rather than list out all bond filenames individually, we load then using the following regular expression pattern:
 	 * The file pattern is:
-	 * pathname / ( bondObjectName ) _tryAqObjBondsCreateFromGenerator_inputs.csv
+	 * pathname / ( bondObjectName ) _tryAqBondObjectCreateFromGenerator_inputs.csv
 	*/
-    const std::string treasuryCreateInputFilePattern    = ".+_tryAqObjBondsCreateFromGenerator_inputs.csv";
+    const std::string treasuryCreateInputFilePattern    = ".+_tryAqBondObjectCreateFromGenerator_inputs.csv";
 
-	const std::string treasuryPriceFromYieldPattern     = ".+_tryAqObjBondsPrice_inputs.csv";
+	const std::string treasuryPriceFromYieldPattern     = ".+_tryAqBondObjectPrice_inputs.csv";
 
-	const std::string treasuryPriceFromBondCurveSuffix  =  "_tryAqObjBondsPriceFromBondCurve_inputs.csv";
+	const std::string treasuryPriceFromBondCurveSuffix  =  "_tryAqBondObjectPriceFromBondCurve_inputs.csv";
 
 
 	/*
@@ -183,7 +183,7 @@ namespace
         AQLStringMatrix bondExpressionLVB = createBondInputFile["expressionLVB"];
         bool validateKeys              = createBondInputFile["validateKeys"];
         
-		std::string objectName = validation::tryAqObjBondsCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
+		std::string objectName = validation::tryAqBondObjectCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
 		return objectName;
     };
 
@@ -206,7 +206,7 @@ namespace
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 		infoBlocks.push_back( getTableInfoFromStringMatrix( bondMarketData ));
 
-		std::string objectName = validation::tryAqBondsCurveCreate( bondCurveName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryAqBondCurveCreate( bondCurveName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -226,7 +226,7 @@ namespace
 		std::vector<validation::TableInfo> infoBlocks;
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 
-		std::string objectName = validation::tryAqBondsCurveCreate( bondspreadCurveName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryAqBondCurveCreate( bondspreadCurveName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -309,7 +309,7 @@ namespace google_test
 
 	//----------------------------------------------------------------------------------------
 
-    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurveNelsonSiegelCalibrate )
+    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondCurveNelsonSiegelCalibrate )
     {
 
         // Load the Nelson-Siegel Calibration inputs
@@ -335,7 +335,7 @@ namespace google_test
 		const std::vector<double> bondMaturities = nsCalibrationInputFile["bondMaturities"];
 		const std::vector<double> bondYields     = nsCalibrationInputFile["bondYields"];
 
-		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation::tryAqBondsCurveNelsonSiegelCalibrate( bondMaturities, bondYields,
+		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation::tryAqBondCurveNelsonSiegelCalibrate( bondMaturities, bondYields,
 																														 initialGuess,
 																														 maxIterations, maxStationaryStateIterations,
 																														 lowerBounds, upperBounds );
@@ -359,7 +359,7 @@ namespace google_test
 
 
 
-    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurveSvenssonCalibrate )
+    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondCurveSvenssonCalibrate )
     {
         // Load the Nelson-Siegel Calibration inputs
         const ReadDataFile::Load svenssonCalibrationInputFile( svenssonCalibrate.c_str() );
@@ -386,7 +386,7 @@ namespace google_test
 		const std::vector<double> bondMaturities = svenssonCalibrationInputFile["bondMaturities"];
 		const std::vector<double> bondYields     = svenssonCalibrationInputFile["bondYields"];
 
-		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation::tryAqBondsCurveSvenssonCalibrate( bondMaturities, bondYields,
+		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation::tryAqBondCurveSvenssonCalibrate( bondMaturities, bondYields,
 																													 initialGuess,
 																													 maxIterations, maxStationaryStateIterations,
 																													 lowerBounds, upperBounds );
@@ -414,7 +414,7 @@ namespace google_test
         CheckTestResultsAndRebaseOnRequest( actualCalibration, TEST_DIR, outputFileName, tolerance );
     }
 
-	TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurvePolynomialCalibrate )
+	TEST_F( TestBondCurves, SNAPSHOT_tryAqBondCurvePolynomialCalibrate )
     {
 
         // Load the Polynomial Calibration inputs
@@ -433,7 +433,7 @@ namespace google_test
 		const std::vector<double> bondMaturities = polynomialCalibrationInputFile["bondMaturities"];
 		const std::vector<double> bondYields     = polynomialCalibrationInputFile["bondYields"];
 
-		etrading::PolynomialCalibrationResults calibrationResult = validation::tryAqBondsCurvePolynomialCalibrate( polynomialOrder,
+		etrading::PolynomialCalibrationResults calibrationResult = validation::tryAqBondCurvePolynomialCalibrate( polynomialOrder,
 																														bondMaturities,
 																														bondYields,
 																														maxIterations,
@@ -454,7 +454,7 @@ namespace google_test
     }
 
 
-    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurveNelsonSiegelYield )
+    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondCurveNelsonSiegelYield )
     {
         // Load the Nelson-Siegel Bond Yield inputs
         const ReadDataFile::Load nsBondYieldInputFile( nelsonSiegelBondYield.c_str() );
@@ -468,7 +468,7 @@ namespace google_test
 		// Bond maturities to calculate
 		const std::vector<double> bondMaturities = nsBondYieldInputFile["maturities"];
 
-		const std::vector<double> calculatedYields = validation::tryAqBondsCurveNelsonSiegelYield( beta0, beta1, beta2, lambda, bondMaturities );
+		const std::vector<double> calculatedYields = validation::tryAqBondCurveNelsonSiegelYield( beta0, beta1, beta2, lambda, bondMaturities );
 
         // Compare Results
         const double tolerance = 0.000000001;
@@ -477,7 +477,7 @@ namespace google_test
 
     }
 
-    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurveSvenssonYield )
+    TEST_F( TestBondCurves, SNAPSHOT_tryAqBondCurveSvenssonYield )
     {
         // Load the Nelson-Siegel Bond Yield inputs
         const ReadDataFile::Load svenssonBondYieldInputFile( svenssonBondYield.c_str() );
@@ -493,7 +493,7 @@ namespace google_test
 		// Bond maturities to calculate
 		const std::vector<double> bondMaturities = svenssonBondYieldInputFile["maturities"];
 
-		const std::vector<double> calculatedYields = validation::tryAqBondsCurveSvenssonYield( beta0, beta1, beta2, beta3, lambda1, lambda2, bondMaturities );
+		const std::vector<double> calculatedYields = validation::tryAqBondCurveSvenssonYield( beta0, beta1, beta2, beta3, lambda1, lambda2, bondMaturities );
 
         // Compare Results
         const double tolerance = 0.000000001;
@@ -502,7 +502,7 @@ namespace google_test
 
     }
 
-	TEST_F( TestBondCurves, SNAPSHOT_tryAqBondsCurvePolynomialYield )
+	TEST_F( TestBondCurves, SNAPSHOT_tryAqBondCurvePolynomialYield )
     {
         // Load the Nelson-Siegel Bond Yield inputs
         const ReadDataFile::Load polynomialBondYieldInputFile( polynomialBondYield.c_str() );
@@ -513,7 +513,7 @@ namespace google_test
 		// Bond maturities to calculate
 		const std::vector<double> bondMaturities = polynomialBondYieldInputFile["maturities"];
 
-		const std::vector<double> calculatedYields = validation::tryAqBondsCurvePolynomialYield( coefficients, bondMaturities );
+		const std::vector<double> calculatedYields = validation::tryAqBondCurvePolynomialYield( coefficients, bondMaturities );
 
         // Compare Results
         const double tolerance = 0.000000001;
@@ -531,7 +531,7 @@ namespace google_test
         const ReadDataFile::Load bondCurveDisplayInputFile( bondCurveDisplay_inputs.c_str() );
 		const std::string bondCurveObjectName  = bondCurveDisplayInputFile["bondCurveName"];
 
-		const AnyTypeMatrix calibratedYields = validation::tryAqBondsCurveDisplay( bondCurveObjectName );
+		const AnyTypeMatrix calibratedYields = validation::tryAqBondCurveDisplay( bondCurveObjectName );
 
 		const double tolerance = 1.0e-9;
 		checkBondCurveCalibration( calibratedYields, bondCurveDisplay_outputs, tolerance );
@@ -558,7 +558,7 @@ namespace google_test
 			const std::string bondObjectName          = priceFromYieldFile[ "bondObjectName" ];
 			const std::vector<AQLDate> settlementDates = priceFromYieldFile[ "settlementDates" ];
 			const std::vector<double> yields          = priceFromYieldFile[ "yields" ];
-			const DoubleVector priceFromYields = validation::tryAqObjBondsPrice( bondObjectName, settlementDates, yields );
+			const DoubleVector priceFromYields = validation::tryAqBondObjectPrice( bondObjectName, settlementDates, yields );
 			const double priceFromYield = priceFromYields[0];
 
 			// Load the corresponding file to price the bond from bond curve
@@ -570,7 +570,7 @@ namespace google_test
 			// Calculate bond price from bond curve
 			const AQLDate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
 			const std::string bondCurveName = priceFromBondCurveFile[ "bondCurveName" ];
-			const double priceFromBondCurve = validation::tryAqObjBondsPriceFromBondCurve( bondObjectName, settlementDate, bondCurveName );
+			const double priceFromBondCurve = validation::tryAqBondObjectPriceFromBondCurve( bondObjectName, settlementDate, bondCurveName );
 
 			// Compare the two prices for consistency
 			EXPECT_NEAR( priceFromYield, priceFromBondCurve, tolerance ) << "Difference in priceFromYield vs priceFromBondCurve: " << bondObjectName;
@@ -613,7 +613,7 @@ namespace google_test
 			const std::string bondCurveName = priceFromBondCurveFile[ "bondCurveName" ];
 
 			// Calculate the YIELD from bond curve
-			const double yieldFromBondCurve = validation::tryAqObjBondsYieldFromBondCurve( bondObjectName, settlementDate, bondCurveName );
+			const double yieldFromBondCurve = validation::tryAqBondObjectYieldFromBondCurve( bondObjectName, settlementDate, bondCurveName );
 
 			// Compare the two prices for consistency
 			EXPECT_NEAR( bondYTM, yieldFromBondCurve, tolerance ) << "Difference in bond yield-to-maturity vs yieldFromBondCurve: " << bondObjectName;
@@ -646,7 +646,7 @@ namespace google_test
 			const std::string bondObjectName          = priceFromYieldFile[ "bondObjectName" ];
 			const std::vector<AQLDate> settlementDates = priceFromYieldFile[ "settlementDates" ];
 			const std::vector<double> yields          = priceFromYieldFile[ "yields" ];
-			const DoubleVector priceFromYields = validation::tryAqObjBondsPrice( bondObjectName, settlementDates, yields );
+			const DoubleVector priceFromYields = validation::tryAqBondObjectPrice( bondObjectName, settlementDates, yields );
 			const double priceFromYield = priceFromYields[0];
 
 			// Load the corresponding file to price the bond from bond curve
@@ -657,7 +657,7 @@ namespace google_test
 
 			// Calculate bond price from bond SPREAD curve
 			const AQLDate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
-			const double priceFromBondCurve = validation::tryAqObjBondsPriceFromBondCurve( bondObjectName, settlementDate, bondSpreadCurveName );
+			const double priceFromBondCurve = validation::tryAqBondObjectPriceFromBondCurve( bondObjectName, settlementDate, bondSpreadCurveName );
 
 			// Compare the two prices for consistency:
 			// The price calculated from the spread bond curve should be strictly less than the price from yield-to-maturity

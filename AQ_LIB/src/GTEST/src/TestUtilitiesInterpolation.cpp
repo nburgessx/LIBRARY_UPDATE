@@ -1,6 +1,6 @@
 // TestUtilitiesInterpolation.cpp
 
-#include "tryAqToolsInterpolation.h"
+#include "tryAqMathInterpolation.h"
 #include <algorithm>					// std::for_each
 
 
@@ -24,7 +24,7 @@ TEST(TestUtilitiesInterpolation, UNIT_LinearInterpolation )
 	ASSERT_EQ( interpValues.size(), expectedResults.size() );
 	for ( size_t i = 0; i < expectedResults.size(); ++i )
 	{
-		const double actualResult = validation::tryAqToolsInterpolation(xValues, yValues, interpValues[i], interpolation );
+		const double actualResult = validation::tryAqMathInterpolation(xValues, yValues, interpValues[i], interpolation );
 		EXPECT_NEAR( expectedResults[i], actualResult, tolerance );
 	}
 }
@@ -45,7 +45,7 @@ TEST(TestUtilitiesInterpolation, UNIT_LinearInterpolation2)
 	ASSERT_EQ(interpValues.size(), expectedResults.size());
 	for (size_t i = 0; i < expectedResults.size(); ++i)
 	{
-		const double actualResult = validation::tryAqToolsInterpolation(xValues, yValues, interpValues[i], interpolation);
+		const double actualResult = validation::tryAqMathInterpolation(xValues, yValues, interpValues[i], interpolation);
 		EXPECT_NEAR(expectedResults[i], actualResult, tolerance);
 	}
 }
@@ -66,7 +66,7 @@ TEST(TestUtilitiesInterpolation, UNIT_LinearWithFlatExtrapolation)
 	ASSERT_EQ(interpValues.size(), expectedResults.size());
 	for (size_t i = 0; i < expectedResults.size(); ++i)
 	{
-		const double actualResult = validation::tryAqToolsInterpolation(xValues, yValues, interpValues[i], interpolation);
+		const double actualResult = validation::tryAqMathInterpolation(xValues, yValues, interpValues[i], interpolation);
 		EXPECT_NEAR(expectedResults[i], actualResult, tolerance);
 	}
 }
@@ -87,7 +87,7 @@ TEST(TestUtilitiesInterpolation, UNIT_SplineInterpolation)
 	ASSERT_EQ(interpValues.size(), expectedResults.size());
 	for (size_t i = 0; i < expectedResults.size(); ++i)
 	{
-		const double actualResult = validation::tryAqToolsInterpolation(xValues, yValues, interpValues[i], interpolation);
+		const double actualResult = validation::tryAqMathInterpolation(xValues, yValues, interpValues[i], interpolation);
 		EXPECT_NEAR(expectedResults[i], actualResult, tolerance);
 	}
 }
@@ -108,7 +108,7 @@ TEST(TestUtilitiesInterpolation, UNIT_SplineInterpolation2)
 	ASSERT_EQ(interpValues.size(), expectedResults.size());
 	for (size_t i = 0; i < expectedResults.size(); ++i)
 	{
-		const double actualResult = validation::tryAqToolsInterpolation(xValues, yValues, interpValues[i], interpolation);
+		const double actualResult = validation::tryAqMathInterpolation(xValues, yValues, interpValues[i], interpolation);
 		EXPECT_NEAR(expectedResults[i], actualResult, tolerance);
 	}
 }
@@ -129,7 +129,7 @@ TEST(TestUtilitiesInterpolation, UNIT_LeftContinuousInterpolation)
 	ASSERT_EQ(interpValues.size(), expectedResults.size());
 	for (size_t i = 0; i < expectedResults.size(); ++i)
 	{
-		const double actualResult = validation::tryAqToolsInterpolation(xValues, yValues, interpValues[i], interpolation);
+		const double actualResult = validation::tryAqMathInterpolation(xValues, yValues, interpValues[i], interpolation);
 		EXPECT_NEAR(expectedResults[i], actualResult, tolerance);
 	}
 }
@@ -150,7 +150,7 @@ TEST(TestUtilitiesInterpolation, UNIT_LeftContinuousInterpolation2)
 	ASSERT_EQ(interpValues.size(), expectedResults.size());
 	for (size_t i = 0; i < expectedResults.size(); ++i)
 	{
-		const double actualResult = validation::tryAqToolsInterpolation(xValues, yValues, interpValues[i], interpolation);
+		const double actualResult = validation::tryAqMathInterpolation(xValues, yValues, interpValues[i], interpolation);
 		EXPECT_NEAR(expectedResults[i], actualResult, tolerance);
 	}
 }
@@ -171,7 +171,7 @@ TEST(TestUtilitiesInterpolation, UNIT_RightContinuousInterpolation)
 	ASSERT_EQ(interpValues.size(), expectedResults.size());
 	for (size_t i = 0; i < expectedResults.size(); ++i)
 	{
-		const double actualResult = validation::tryAqToolsInterpolation(xValues, yValues, interpValues[i], interpolation);
+		const double actualResult = validation::tryAqMathInterpolation(xValues, yValues, interpValues[i], interpolation);
 		EXPECT_NEAR(expectedResults[i], actualResult, tolerance);
 	}
 }
@@ -192,7 +192,7 @@ TEST(TestUtilitiesInterpolation, UNIT_RightContinuousInterpolation2)
 	ASSERT_EQ(interpValues.size(), expectedResults.size());
 	for (size_t i = 0; i < expectedResults.size(); ++i)
 	{
-		const double actualResult = validation::tryAqToolsInterpolation(xValues, yValues, interpValues[i], interpolation);
+		const double actualResult = validation::tryAqMathInterpolation(xValues, yValues, interpValues[i], interpolation);
 		EXPECT_NEAR(expectedResults[i], actualResult, tolerance);
 	}
 }
@@ -216,7 +216,7 @@ TEST(TestUtilitiesInterpolation, UNIT_MonotoneCubic)
 	ASSERT_EQ(interpValues.size(), expectedResults.size());
 	for (size_t i = 0; i < expectedResults.size(); ++i)
 	{
-		const double actualResult = validation::tryAqToolsInterpolation(xValues, yValues, interpValues[i], interpolation);
+		const double actualResult = validation::tryAqMathInterpolation(xValues, yValues, interpValues[i], interpolation);
 		EXPECT_NEAR(expectedResults[i], actualResult, tolerance);
 	}
 }
@@ -241,7 +241,7 @@ TEST(TestUtilitiesInterpolation, UNIT_MonotoneParabolic)
 	ASSERT_EQ(interpValues.size(), expectedResults.size());
 	for (size_t i = 0; i < expectedResults.size(); ++i)
 	{
-		const double actualResult = validation::tryAqToolsInterpolation(xValues, yValues, interpValues[i], interpolation);
+		const double actualResult = validation::tryAqMathInterpolation(xValues, yValues, interpValues[i], interpolation);
 		EXPECT_NEAR(expectedResults[i], actualResult, tolerance);
 	}
 }

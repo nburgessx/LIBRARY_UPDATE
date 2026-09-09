@@ -5,9 +5,9 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
-#include "tryAqCurvesDisplay.h"
-#include "tryAqCurvesDiscountFactor.h"
-#include "tryAqCurvesForwardRate.h"
+#include "tryAqCurveDisplay.h"
+#include "tryAqCurveDiscountFactor.h"
+#include "tryAqCurveForwardRate.h"
 
 #include <gTest/gTest.h>
 
@@ -39,24 +39,24 @@ namespace
     //
     // curve input files
     //
-    extern const char EURYC_OIS[]					= TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs.csv";
-    extern const char EURYC_STD[]					= TEST_DIR "EURYC_STD_tryAqCurvesCalibrateSwap_inputs.csv";
+    extern const char EURYC_OIS[]					= TEST_DIR "EURYC_OIS_tryAqCurveCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]					= TEST_DIR "EURYC_STD_tryAqCurveCalibrateSwap_inputs.csv";
 	extern const char EURYC_OIS_2[]					= TEST_DIR "OIS_2.csv";
 	extern const char EURYC_STD_2[]					= TEST_DIR "STD_2.csv";
 
     //
     // test call input and reference files
     //
-    extern const char curveDisplayInputs[]				= TEST_DIR "EURYC_STD_tryAqCurvesDisplay_inputs.csv";
-    extern const char curveDisplayOutputs[]				= TEST_DIR "EURYC_STD_tryAqCurvesDisplay_outputs.csv";
-	extern const char curveDisplayOutputs_2[]			= TEST_DIR "aqCurvesDisplay_outputs_2.csv";
+    extern const char curveDisplayInputs[]				= TEST_DIR "EURYC_STD_tryAqCurveDisplay_inputs.csv";
+    extern const char curveDisplayOutputs[]				= TEST_DIR "EURYC_STD_tryAqCurveDisplay_outputs.csv";
+	extern const char curveDisplayOutputs_2[]			= TEST_DIR "aqCurveDisplay_outputs_2.csv";
 
-    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "EURYC_STD_tryAqCurvesDiscountFactorsFromYearFractions_inputs.csv";
-    extern const char CheckDiscountFactorsOutputs[]		= TEST_DIR "EURYC_STD_tryAqCurvesDiscountFactorsFromYearFractions_outputs.csv";
-	extern const char CheckDiscountFactorsOutputs_2[]	= TEST_DIR "aqCurvesDiscountFactorsFromYearFractions_outputs_2.csv";
+    extern const char CheckDiscountFactorsInputs[]		= TEST_DIR "EURYC_STD_tryAqCurveDiscountFactorsFromYearFractions_inputs.csv";
+    extern const char CheckDiscountFactorsOutputs[]		= TEST_DIR "EURYC_STD_tryAqCurveDiscountFactorsFromYearFractions_outputs.csv";
+	extern const char CheckDiscountFactorsOutputs_2[]	= TEST_DIR "aqCurveDiscountFactorsFromYearFractions_outputs_2.csv";
 
-    extern const char CheckForwardRatesInputs[]			= TEST_DIR "EURYC_STD_tryAqCurvesForwardRatesFromYearFraction_inputs.csv";
-    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "EURYC_STD_tryAqCurvesForwardRatesFromYearFraction_outputs.csv";
+    extern const char CheckForwardRatesInputs[]			= TEST_DIR "EURYC_STD_tryAqCurveForwardRatesFromYearFraction_inputs.csv";
+    extern const char CheckForwardRatesOutputs[]		= TEST_DIR "EURYC_STD_tryAqCurveForwardRatesFromYearFraction_outputs.csv";
 	extern const char CheckForwardRatesOutputs_2[]		= TEST_DIR "tryAqForwardRatesFromYearFraction_outputs_2.csv";
 }
 
@@ -94,7 +94,7 @@ namespace google_test
 
         const ReadDataFile::Load inputFile( curveDisplayInputs );
         const DoubleArray results
-            = validation::tryAqCurvesDisplay(
+            = validation::tryAqCurveDisplay(
                   inputFile["curveCollection"],
                   inputFile["curveIndex"] );
 
@@ -106,7 +106,7 @@ namespace google_test
         const ReadDataFile::Load inputFile( CheckDiscountFactorsInputs );
 
         const DoubleArray yearFractions = inputFile["yearFractions"];
-        DoubleArray results = validation::tryAqCurvesDiscountFactorsFromYearFractions( yearFractions,
+        DoubleArray results = validation::tryAqCurveDiscountFactorsFromYearFractions( yearFractions,
                               inputFile["dayCount"],
                               inputFile["curveCollection"],
                               inputFile["curveIndex"] );
@@ -124,7 +124,7 @@ namespace google_test
         const double yearFraction = inputFile["yearFraction"];
         const DateVector fromDateVector = inputFile["fromDates"];
 
-        const DoubleArray results = validation::tryAqCurvesForwardRatesFromYearFraction( fromDateVector,
+        const DoubleArray results = validation::tryAqCurveForwardRatesFromYearFraction( fromDateVector,
                                     yearFraction,
                                     inputFile["dayCount"],
                                     inputFile["curveCollection"],
@@ -155,7 +155,7 @@ namespace google_test
 
         const ReadDataFile::Load inputFile( curveDisplayInputs );
         const DoubleArray results
-            = validation::tryAqCurvesDisplay(
+            = validation::tryAqCurveDisplay(
                   inputFile["curveCollection"],
                   inputFile["curveIndex"] );
 		        
@@ -167,7 +167,7 @@ namespace google_test
         const ReadDataFile::Load inputFile( CheckDiscountFactorsInputs );
 
         const DoubleArray yearFractions = inputFile["yearFractions"];
-        DoubleArray results = validation::tryAqCurvesDiscountFactorsFromYearFractions( yearFractions,
+        DoubleArray results = validation::tryAqCurveDiscountFactorsFromYearFractions( yearFractions,
                                                                                           inputFile["dayCount"],
                                                                                           inputFile["curveCollection"],
                                                                                           inputFile["curveIndex"] );
@@ -185,7 +185,7 @@ namespace google_test
         const double yearFraction = inputFile["yearFraction"];
         const DateVector fromDateVector = inputFile["fromDates"];
 
-        const DoubleArray results = validation::tryAqCurvesForwardRatesFromYearFraction( fromDateVector,
+        const DoubleArray results = validation::tryAqCurveForwardRatesFromYearFraction( fromDateVector,
                                                                                             yearFraction,
                                                                                             inputFile["dayCount"],
                                                                                             inputFile["curveCollection"],

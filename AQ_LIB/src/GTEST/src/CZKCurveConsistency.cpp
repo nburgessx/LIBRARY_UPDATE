@@ -12,9 +12,9 @@
 #include "GetGoogleTestFolder.h"
 #include "ResultsProcessor.h"
 #include "CoreEnumerations.h"
-#include "tryAqObjects.h"
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqObject.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "RepriceCalibrationInstruments.h"
@@ -41,11 +41,11 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectCZKOIS_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameCZKOIS, etrading::JSON );
-        const std::string curveObjectCZK6M_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameCZK6M, etrading::JSON );
-        const std::string curveObjectCZK3M_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameCZK3M, etrading::JSON );
-		const std::string curveObjectCZK1M_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameCZK1M, etrading::JSON );
-		const std::string curveObjectCZK12M_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameCZK12M, etrading::JSON );
+        const std::string curveObjectCZKOIS_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameCZKOIS, etrading::JSON );
+        const std::string curveObjectCZK6M_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameCZK6M, etrading::JSON );
+        const std::string curveObjectCZK3M_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameCZK3M, etrading::JSON );
+		const std::string curveObjectCZK1M_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameCZK1M, etrading::JSON );
+		const std::string curveObjectCZK12M_ = validation::tryAqObjectLoad( etrading::getGoogleTestFolder() + fileNameCZK12M, etrading::JSON );
     };
 
     // Call Test Fixture Class

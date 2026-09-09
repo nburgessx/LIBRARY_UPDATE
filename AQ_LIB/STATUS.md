@@ -1,6 +1,22 @@
 # AlgoQuantLib — project status
 
-**As at 2026-09-07.** Overview of where the rebrand stands and what is left.
+**As at 2026-09-09 (pause point).** Overview of where the rebrand stands and what
+is left. Committed HEAD is `3809f148` (step 11 — singular categories +
+`aq<Category>Object` marker + AQ_XLL file renames). Since then, one **uncommitted
+working-tree delta** — all of it now **built green with GoogleTest passing**
+(Nicholas):
+
+- **task 2.6** — validation / AQ_API / GTEST / fixture rename to the 22-category
+  singular golden-source scheme (`Vol`→`Volatility`, `Future` + `Ois` added);
+- **AQ_XLL Tool + Object-lifecycle port** — ~55 new `XLO_FUNC` worksheet
+  functions in `aqObject.cpp` / `aqTool.cpp`, plus Variant/matrix marshalling
+  helpers in `aqXllTools`, ported from `.APPLES\...\meUtilities.cpp`;
+- **Interpolation + PCA** re-homed from `Tool` to `Math`
+  (`aqMathInterpolation` / `aqMathPCA`, `tryAqMath*`).
+
+Next action on resume is to **commit** this delta (staged, see
+`rebrand/STATUS.md` → "Next steps on resume"). `rebrand/STATUS.md` has the full
+per-batch detail, verification and the resume plan.
 
 - The **phase-by-phase plan** is `MIGRATION_PLAN.md`.
 - The **detailed running record** of the rebrand (per-commit, per-step) is
@@ -22,7 +38,7 @@ XLL port; its harness and first tranche now work in Excel.
 | 2 | Category taxonomy (20 categories, locked) | **done** |
 | 3 | Identifier rebrand + calendar delimiter | **done** |
 | 3c | Retire `mir*` | **done** (deleted wholesale) |
-| 4 | xlOil XLL port | **~15%** — harness + Dates/Tools/Bonds/Obj tranche live in Excel; see §3.1 |
+| 4 | xlOil XLL port | **~25%** — harness + Date / Tool / Bond / Object-lifecycle / Math surface built green; Curve / Swap / products / Model still to do; see §3.1 |
 | 4a | Editions & manifest gating | not started |
 | 4b | Config folder & generators audit | not started |
 | 5 | Bindings (C#/Java/R) & test coverage | not started |
@@ -37,23 +53,22 @@ XLL port; its harness and first tranche now work in Excel.
 
 ## 2. State of the working tree right now
 
-**HEAD is `e5c57046` ("aq_xll added function templates"). Two files
-uncommitted — read this before building.**
+**Committed HEAD is `3809f148`. One large uncommitted delta on top of it, all
+built green with GoogleTest passing (Nicholas, 2026-09-09).** The delta is the
+three workstreams listed in the header. It has not been split into commits yet —
+the first resume step is to stage it (see `rebrand/STATUS.md` → "Next steps on
+resume").
 
-| File | Whose | State |
-|---|---|---|
-| `src/AQ_XLL/src/aqObj.cpp` | Claude | `aqObjSave` gains optional `AsArray` arg (force column / message / auto). **Not built.** |
-| `src/AQ_XLL/src/aqTools.cpp` | Claude | New `aqToolsCallerInfo()` diagnostic for the CSE-detection problem. **Not built.** |
-| `projects/AQ_XLL.vcxproj.user` | — | Local debug settings, not tracked content. |
+Do **not** `git add -A` blindly: `src/AQ_API/source/swig_*_wrap.*` are
+SWIG-generated and keep showing as phantom modifications; run
+`git checkout HEAD -- 'src/AQ_API/source/swig_*_wrap.*'` before staging and never
+commit them.
 
-The `ExcelObj`-argument question (old §6) is **resolved**: on the static
-`XLO_FUNC_START` path every arg must be `const ExcelObj&` and be unpacked in
-the body (`.get<double>()`, `.isMissing()`, `toAQLString(...)`). All AQ_XLL
-functions ported since follow this.
-
-Last **fully confirmed-green** state (build + GoogleTest, verified by Nicholas)
-was `61795829`. The AQ_XLL work since (`68ca1ceb`, `e5c57046`) is verified by
-Nicholas **in Excel**, not by a GoogleTest run.
+The `ExcelObj`-argument rule for the static `XLO_FUNC_START` path: every arg is
+`const ExcelObj&`, unpacked in the body (`.get<double>()`, `.isMissing()`,
+`toAQLString(...)`), and **`.arg()` count must equal the parameter count** or the
+add-in throws at `xlAutoOpen` and Excel reports a "corrupt" XLL. Every ported
+function is audited for this.
 
 ---
 

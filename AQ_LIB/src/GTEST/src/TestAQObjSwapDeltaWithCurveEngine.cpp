@@ -1,19 +1,19 @@
 // Curves
-#include "tryAqObjCurvesEngineCalibrate.h"
+#include "tryAqCurveObjectEngineCalibrate.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectPricing.h"
 
 // Risk calculation
-#include "tryAqObjSwapsDelta.h"
-#include "tryAqObjRatesFixingTable.h"
+#include "tryAqSwapObjectDelta.h"
+#include "tryAqRateFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // Curve Macros are Here !!!
 #include "ReadDataFile.h"
 #include "CreateDataFile.h"
 #include "ResultsProcessor.h"
-#include "tryAqToolsSetup.h"
+#include "tryAqToolSetup.h"
 #include <gTest/gTest.h>
 #include "BuildMarketDataObjectFromFile.h"
 #include "BuildSwapTradeFromGenerator.h"
@@ -69,7 +69,7 @@ namespace
 		marketDataObjects.push_back(marketObj_6M);
 
 		AQLStringMatrix engineSettings;	// dummy optional
-		validation::tryAqObjCurvesEngineCalibrate("", curveCollection, engineSettings, curveGeneratorNames, marketDataObjects);
+		validation::tryAqCurveObjectEngineCalibrate("", curveCollection, engineSettings, curveGeneratorNames, marketDataObjects);
 	}
 }
 
@@ -99,7 +99,7 @@ namespace google_test
 			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 			buildEngineCurves(ccy, prefix, "EURYC", curveGeneratorNames);
 
-			// Load inputs to aqObjSwapsDeltaLadder
+			// Load inputs to aqSwapObjectDeltaLadder
 			AQLString deltaLadderInputDir = TEST_DIR;
 			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
@@ -123,7 +123,7 @@ namespace google_test
             // Dummy Xccy FX Spot Rates
             DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 
-			validation::tryAqObjSwapsDeltaLadder(headers,
+			validation::tryAqSwapObjectDeltaLadder(headers,
 													pillarNames,
 													deltas,
 													swapNames,
@@ -145,7 +145,7 @@ namespace google_test
 
 			//------------------------------------------------
 			// 4. Flush the curve curves
-			validation::tryAqToolsClearEntityPool();
+			validation::tryAqToolClearEntityPool();
 		}		
 	}
 	
@@ -171,7 +171,7 @@ namespace google_test
 	// 		AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 	// 		buildEngineCurves(ccy, prefix, "USDYC", curveGeneratorNames);
 	// 
-	// 		// Load inputs to aqObjSwapsDeltaLadder
+	// 		// Load inputs to aqSwapObjectDeltaLadder
 	// 		AQLString deltaLadderInputDir = TEST_DIR;
 	// 		deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 	// 		const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
@@ -195,7 +195,7 @@ namespace google_test
     //         // Dummy Xccy FX Spot Rates
     //         DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 	// 
-	// 		validation::tryAqObjSwapsDeltaLadder(headers,
+	// 		validation::tryAqSwapObjectDeltaLadder(headers,
 	// 												pillarNames,
 	// 												deltas,
 	// 												swapNames,
@@ -217,7 +217,7 @@ namespace google_test
 	// 
 	// 		//------------------------------------------------
 	// 		// 4. Flush the object pool cache
-	// 		validation::tryAqToolsClearEntityPool();
+	// 		validation::tryAqToolClearEntityPool();
 	// 	}
 	// }
 

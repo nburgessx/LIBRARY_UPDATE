@@ -1,21 +1,21 @@
 // Curves
-#include "tryAqObjCurvesMarketData.h"
-#include "tryAqObjCurvesDualBootstrap.h"
+#include "tryAqCurveMarketData.h"
+#include "tryAqCurveObjectDualBootstrap.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjSwapsCreation.h"
-#include "tryAqObjSwapsPricing.h"
+#include "tryAqSwapObjectCreation.h"
+#include "tryAqSwapObjectPricing.h"
 
 // Risk calculation
-#include "tryAqObjSwapsDelta.h"
-#include "tryAqObjRatesFixingTable.h"
+#include "tryAqSwapObjectDelta.h"
+#include "tryAqRateFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // Curve Macros are Here !!!
 #include "ReadDataFile.h"
 #include "CreateDataFile.h"
 #include "ResultsProcessor.h"
-#include "tryAqToolsSetup.h"
+#include "tryAqToolSetup.h"
 #include <gTest/gTest.h>
 
 #include "BuildMarketDataObjectFromFile.h"
@@ -60,7 +60,7 @@ namespace
 		std::string oisCurveMarketObjectHandle = google_test::createAQObjMarketDataObjectFromFileName(oisCurveMarketDataFile);
 		std::string stdCurveMarketObjectHandle = google_test::createAQObjMarketDataObjectFromFileName(stdCurveMarketDataFile);
 
-		validation::tryAqObjCurvesDualBootstrap("", curveCollection, stdGenerator, oisGenerator, stdCurveMarketObjectHandle, oisCurveMarketObjectHandle);
+		validation::tryAqCurveObjectDualBootstrap("", curveCollection, stdGenerator, oisGenerator, stdCurveMarketObjectHandle, oisCurveMarketObjectHandle);
 	}
 
 }
@@ -87,7 +87,7 @@ namespace google_test
 			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 			buildDualBootstrapCurves(ccy, prefix, "EUR_SWAP_3M", "EUR_OIS", "EURYC");
 
-			// Load inputs to aqObjSwapsDeltaLadder
+			// Load inputs to aqSwapObjectDeltaLadder
 			AQLString deltaLadderInputDir = TEST_DIR;
 			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
@@ -111,7 +111,7 @@ namespace google_test
             // Dummy Xccy FX Spot Rates
             DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 
-			validation::tryAqObjSwapsDeltaLadder(headers,
+			validation::tryAqSwapObjectDeltaLadder(headers,
 													pillarNames,
 													deltas,
 													swapNames,
@@ -133,7 +133,7 @@ namespace google_test
 
 			//------------------------------------------------
 			// 4. Flush the curve curves
-			validation::tryAqToolsClearEntityPool();
+			validation::tryAqToolClearEntityPool();
 		}		
 	}
 
@@ -154,7 +154,7 @@ namespace google_test
 			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 			buildDualBootstrapCurves(ccy, prefix, "USD_SWAP_3M", "USD_OIS", "USDYC");
 
-			// Load inputs to aqObjSwapsDeltaLadder
+			// Load inputs to aqSwapObjectDeltaLadder
 			AQLString deltaLadderInputDir = TEST_DIR;
 			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
@@ -178,7 +178,7 @@ namespace google_test
             // Dummy Xccy FX Spot Rates
             DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 			
-            validation::tryAqObjSwapsDeltaLadder(headers,
+            validation::tryAqSwapObjectDeltaLadder(headers,
 													pillarNames,
 													deltas,
 													swapNames,
@@ -200,7 +200,7 @@ namespace google_test
 
 			//------------------------------------------------
 			// 4. Flush the object pool cache
-			validation::tryAqToolsClearEntityPool();
+			validation::tryAqToolClearEntityPool();
 		}
 
 

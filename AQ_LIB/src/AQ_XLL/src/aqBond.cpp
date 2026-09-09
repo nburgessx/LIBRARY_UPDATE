@@ -18,7 +18,7 @@
 #include <vector>
 
 #include <aqXllTools.h>
-#include <tryAqObjBonds.h>      // validation bond wrappers
+#include <tryAqBondObject.h>      // validation bond wrappers
 
 using namespace aq_xll;
 
@@ -51,7 +51,7 @@ XLO_FUNC_START( aqBondObjectCreate(
     const etrading::LabelValueBlock scheduleBlock = toLabelValueBlock( scheduleLVB );
 
     const std::string storedName =
-        validation::tryAqObjBondsCreate( objectName,
+        validation::tryAqBondObjectCreate( objectName,
                                          bondBlock,
                                          scheduleBlock,
                                          toBool( validateKeys, true ) );
@@ -79,7 +79,7 @@ XLO_FUNC_START( aqBondObjectDisplay(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const AnyTypeMatrix result =
-        validation::tryAqObjBondsDisplay( objectName );
+        validation::tryAqBondObjectDisplay( objectName );
 
     return returnValue( toExcelMatrix( result ) );
 }
@@ -98,7 +98,7 @@ XLO_FUNC_START( aqBondObjectDisplaySchedule(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const AnyTypeMatrix result =
-        validation::tryAqObjBondsDisplaySchedule( objectName,
+        validation::tryAqBondObjectDisplaySchedule( objectName,
                                                   toBool( showColumnHeaders, true ) );
 
     return returnValue( toExcelMatrix( result ) );
@@ -122,7 +122,7 @@ XLO_FUNC_START( aqBondObjectDisplayCashflows(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const AnyTypeMatrix result =
-        validation::tryAqObjBondsDisplayCashflows( objectName,
+        validation::tryAqBondObjectDisplayCashflows( objectName,
                                                    toAQLDate( settlementDate ),
                                                    yield.get<double>(),
                                                    toNarrowString( yieldCalcType ),
@@ -151,7 +151,7 @@ XLO_FUNC_START( aqBondObjectDirtyPrice(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const std::vector<double> results =
-        validation::tryAqObjBondsDirtyPrice( objectName,
+        validation::tryAqBondObjectDirtyPrice( objectName,
                                              toDateVector( settlementDates, true, "SettlementDates" ),
                                              toDoubleVector( yields, true, "Yields" ),
                                              toNarrowString( yieldCalcType ) );
@@ -176,7 +176,7 @@ XLO_FUNC_START( aqBondObjectAccruedInterestDays(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const std::vector<int> results =
-        validation::tryAqObjBondsAccruedInterestDays( objectName,
+        validation::tryAqBondObjectAccruedInterestDays( objectName,
                                                       toDateVector( settlementDates, true, "SettlementDates" ) );
 
     return returnValue( toExcelIntColumn( results ) );
@@ -199,7 +199,7 @@ XLO_FUNC_START( aqBondObjectCleanPrice(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const std::vector<double> results =
-        validation::tryAqObjBondsCleanPrice( objectName,
+        validation::tryAqBondObjectCleanPrice( objectName,
                                              toDateVector( settlementDates, true, "SettlementDates" ),
                                              toDoubleVector( yields, true, "Yields" ),
                                              toNarrowString( yieldCalcType ) );
@@ -224,7 +224,7 @@ XLO_FUNC_START( aqBondObjectAccruedInterest(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const double result =
-        validation::tryAqObjBondsAccruedInterest( objectName,
+        validation::tryAqBondObjectAccruedInterest( objectName,
                                                   toLabelValueBlock( valuationSettings ) );
 
     return returnValue( result );
@@ -247,7 +247,7 @@ XLO_FUNC_START( aqBondObjectYield(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const double result =
-        validation::tryAqObjBondsYield( objectName,
+        validation::tryAqBondObjectYield( objectName,
                                         toLabelValueBlock( valuationSettings ),
                                         price.get<double>(),
                                         toNarrowString( yieldCalcType ) );
@@ -274,7 +274,7 @@ XLO_FUNC_START( aqBondObjectCompoundYield(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const std::vector<double> results =
-        validation::tryAqObjBondsCompoundYields( objectName,
+        validation::tryAqBondObjectCompoundYield( objectName,
                                                  toDateVector( settlementDates, true, "SettlementDates" ),
                                                  toDoubleVector( prices, true, "Prices" ),
                                                  toNarrowString( yieldCalcType ) );
@@ -301,7 +301,7 @@ XLO_FUNC_START( aqBondObjectPrice(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const std::vector<double> results =
-        validation::tryAqObjBondsPrice( objectName,
+        validation::tryAqBondObjectPrice( objectName,
                                         toDateVector( settlementDates, true, "SettlementDates" ),
                                         toDoubleVector( yields, true, "Yields" ),
                                         toNarrowString( yieldCalcType ) );
@@ -328,7 +328,7 @@ XLO_FUNC_START( aqBondObjectDV01(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const std::vector<double> results =
-        validation::tryAqObjBondsDV01( objectName,
+        validation::tryAqBondObjectDV01( objectName,
                                        toDateVector( settlementDates, true, "SettlementDates" ),
                                        toDoubleVector( yields, true, "Yields" ),
                                        toNarrowString( yieldCalcType ) );
@@ -361,7 +361,7 @@ XLO_FUNC_START( aqBondObjectDV01Numerical(
     const AQLString bumpModeValue = bumpMode.isMissing() ? AQLString( "Up" ) : toAQLString( bumpMode );
 
     const std::vector<double> results =
-        validation::tryAqObjBondsDV01Numerical( objectName,
+        validation::tryAqBondObjectDV01Numerical( objectName,
                                                 toDateVector( settlementDates, true, "SettlementDates" ),
                                                 toDoubleVector( yields, true, "Yields" ),
                                                 bumpSizeValue,
@@ -392,7 +392,7 @@ XLO_FUNC_START( aqBondObjectModifiedDuration(
     const std::string objectName = getNameWithoutCounter( bondName );
 
     const std::vector<double> results =
-        validation::tryAqObjBondsModifiedDuration( objectName,
+        validation::tryAqBondObjectModifiedDuration( objectName,
                                                    toDateVector( settlementDates, true, "SettlementDates" ),
                                                    toDoubleVector( yields, true, "Yields" ),
                                                    toNarrowString( yieldCalcType ) );
@@ -417,7 +417,7 @@ XLO_FUNC_START( aqBondObjectOisSpread(
     AQ_INITIALIZE
 
     const std::vector<double> results =
-        validation::tryAqObjBondsOisSpread( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectOisSpread( getNameWithoutCounter( bondName ),
                                             getNameWithoutCounter( marketDataName ),
                                             toDateVector( settlementDates, true, "SettlementDates" ),
                                             toDoubleVector( bondYields, true, "BondYields" ) );
@@ -440,7 +440,7 @@ XLO_FUNC_START( aqBondObjectLastCouponDate(
     AQ_INITIALIZE
 
     const std::vector<double> results =
-        validation::tryAqObjBondsLastCouponDate( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectLastCouponDate( getNameWithoutCounter( bondName ),
                                                  toDateVector( settlementDates, true, "SettlementDates" ) );
 
     return returnValue( toExcelDoubleColumn( results ) );
@@ -460,7 +460,7 @@ XLO_FUNC_START( aqBondObjectPriceFromDirtyToClean(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsPriceFromDirtyToClean( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectPriceFromDirtyToClean( getNameWithoutCounter( bondName ),
                                                         toLabelValueBlock( valuationSettings ),
                                                         dirtyPrice.get<double>() );
 
@@ -482,7 +482,7 @@ XLO_FUNC_START( aqBondObjectPriceFromCleanToDirty(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsPriceFromCleanToDirty( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectPriceFromCleanToDirty( getNameWithoutCounter( bondName ),
                                                         toLabelValueBlock( valuationSettings ),
                                                         cleanPrice.get<double>() );
 
@@ -506,7 +506,7 @@ XLO_FUNC_START( aqBondObjectZSpreadFromRates(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsZSpreadFromRates( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectZSpreadFromRates( getNameWithoutCounter( bondName ),
                                                    toAQLDate( settlementDate ),
                                                    bondPrice.get<double>(),
                                                    toDoubleVector( zeroRates, true, "ZeroRates" ),
@@ -535,7 +535,7 @@ XLO_FUNC_START( aqBondObjectZSpread(
     AQ_INITIALIZE
 
     const std::vector<double> results =
-        validation::tryAqObjBondsZSpreads( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectZSpreads( getNameWithoutCounter( bondName ),
                                            toDateVector( settlementDates, true, "SettlementDates" ),
                                            toDoubleVector( bondPrices, true, "BondPrices" ),
                                            toStringVector( curveCollections ),
@@ -566,7 +566,7 @@ XLO_FUNC_START( aqBondObjectForwardPrice(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsForwardPrice( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectForwardPrice( getNameWithoutCounter( bondName ),
                                                toAQLDate( settleDate ),
                                                toAQLDate( forwardSettleDate ),
                                                price.get<double>(),
@@ -597,7 +597,7 @@ XLO_FUNC_START( aqBondObjectRepoRate(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsRepoRate( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectRepoRate( getNameWithoutCounter( bondName ),
                                            toAQLDate( settlementDate ),
                                            toAQLDate( forwardSettleDate ),
                                            price.get<double>(),
@@ -629,7 +629,7 @@ XLO_FUNC_START( aqBondObjectRepoRateFromFuture(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsRepoRateFromFuture( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectRepoRateFromFuture( getNameWithoutCounter( bondName ),
                                                      toAQLDate( settlementDate ),
                                                      toAQLDate( deliveryDate ),
                                                      bondPrice.get<double>(),
@@ -663,7 +663,7 @@ XLO_FUNC_START( aqBondObjectFuturePrice(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsFuturePrice( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectFuturePrice( getNameWithoutCounter( bondName ),
                                               toAQLDate( settleDate ),
                                               toAQLDate( deliveryDate ),
                                               bondPrice.get<double>(),
@@ -693,7 +693,7 @@ XLO_FUNC_START( aqBondObjectConversionFactor(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsConversionFactor( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectConversionFactor( getNameWithoutCounter( bondName ),
                                                    toAQLDate( firstFutureSettleDate ),
                                                    notionalBondCouponRate.get<double>() );
 
@@ -717,7 +717,7 @@ XLO_FUNC_START( aqBondObjectGrossBasis(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsGrossBasis( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectGrossBasis( getNameWithoutCounter( bondName ),
                                              toAQLDate( settleDate ),
                                              bondPrice.get<double>(),
                                              futurePrice.get<double>(),
@@ -748,7 +748,7 @@ XLO_FUNC_START( aqBondObjectNetBasis(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsNetBasis( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectNetBasis( getNameWithoutCounter( bondName ),
                                            toAQLDate( settleDate ),
                                            toAQLDate( deliveryDate ),
                                            bondPrice.get<double>(),
@@ -784,7 +784,7 @@ XLO_FUNC_START( aqBondObjectCheapestToDeliver(
     AQ_INITIALIZE
 
     const std::string result =
-        validation::tryAqObjBondsCheapestToDeliver( futurePrice.get<double>(),
+        validation::tryAqBondObjectCheapestToDeliver( futurePrice.get<double>(),
                                                     toAQLDate( settleDate ),
                                                     toAQLDate( deliveryDate ),
                                                     toNarrowString( repoDayCount ),
@@ -819,7 +819,7 @@ XLO_FUNC_START( aqBondObjectCheapestToDeliverByNetBasis(
     AQ_INITIALIZE
 
     const std::string result =
-        validation::tryAqObjBondsCheapestToDeliverByNetBasis( futurePrice.get<double>(),
+        validation::tryAqBondObjectCheapestToDeliverByNetBasis( futurePrice.get<double>(),
                                                               toAQLDate( settleDate ),
                                                               toAQLDate( deliveryDate ),
                                                               toNarrowString( repoDayCount ),
@@ -854,7 +854,7 @@ XLO_FUNC_START( aqBondObjectFRNPriceFromDiscountMargin(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsFRNPriceFromDiscountMargin( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectFRNPriceFromDiscountMargin( getNameWithoutCounter( bondName ),
                                                              toAQLDate( settlementDate ),
                                                              discountMargin.get<double>(),
                                                              assumedRate.get<double>(),
@@ -885,7 +885,7 @@ XLO_FUNC_START( aqBondObjectFRNPriceFromYield(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsFRNPriceFromYield( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectFRNPriceFromYield( getNameWithoutCounter( bondName ),
                                                     toAQLDate( settlementDate ),
                                                     yield.get<double>(),
                                                     assumedRate.get<double>(),
@@ -916,7 +916,7 @@ XLO_FUNC_START( aqBondObjectFRNYieldFromPrice(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsFRNYieldFromPrice( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectFRNYieldFromPrice( getNameWithoutCounter( bondName ),
                                                     toAQLDate( settlementDate ),
                                                     price.get<double>(),
                                                     assumedRate.get<double>(),
@@ -947,7 +947,7 @@ XLO_FUNC_START( aqBondObjectFRNDiscountMarginFromPrice(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsFRNDiscountMarginFromPrice( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectFRNDiscountMarginFromPrice( getNameWithoutCounter( bondName ),
                                                              toAQLDate( settlementDate ),
                                                              price.get<double>(),
                                                              assumedRate.get<double>(),
@@ -975,7 +975,7 @@ XLO_FUNC_START( aqBondObjectPriceFromCreditModel(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsPriceFromCreditModel( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectPriceFromCreditModel( getNameWithoutCounter( bondName ),
                                                        toAQLDate( settlementDate ),
                                                        getNameWithoutCounter( creditModelName ) );
 
@@ -999,7 +999,7 @@ XLO_FUNC_START( aqBondObjectBPVPerTick(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqObjBondsBPVPerTick( getNameWithoutCounter( bondName ),
+        validation::tryAqBondObjectBPVPerTick( getNameWithoutCounter( bondName ),
                                              toLabelValueBlock( valuationSettings ),
                                              price.get<double>(),
                                              toNarrowString( yieldCalcType ),
@@ -1023,7 +1023,7 @@ XLO_FUNC_START( aqBondAverageYield(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqToolsBondAverageYield( toDoubleVector( underlyingBondYields, true, "UnderlyingBondYields" ) );
+        validation::tryAqToolBondAverageYield( toDoubleVector( underlyingBondYields, true, "UnderlyingBondYields" ) );
 
     return returnValue( result );
 }
@@ -1039,7 +1039,7 @@ XLO_FUNC_START( aqBondYieldFromFuturePrice(
     AQ_INITIALIZE
 
     const double result =
-        validation::tryAqToolsBondYieldFromFuturePrice( futurePrice.get<double>() );
+        validation::tryAqToolBondYieldFromFuturePrice( futurePrice.get<double>() );
 
     return returnValue( result );
 }
@@ -1071,7 +1071,7 @@ XLO_FUNC_START( aqBondObjectCreateFromLVB(
     }
 
     const std::string storedName =
-        validation::tryAqObjBondsCreateFromLVB( objectName,
+        validation::tryAqBondObjectCreateFromLVB( objectName,
                                                 toLabelValueBlock( bondLVB, toBool( verticalLVBKeys, true ) ),
                                                 toBool( validateKeys, true ) );
 
@@ -1109,7 +1109,7 @@ XLO_FUNC_START( aqBondObjectCreateFromGenerator(
     }
 
     const std::string storedName =
-        validation::tryAqObjBondsCreateFromGenerator( objectName,
+        validation::tryAqBondObjectCreateFromGenerator( objectName,
                                                       getNameWithoutCounter( bondGeneratorName ),
                                                       toLabelValueBlock( bondExpressionLVB ),
                                                       toBool( validateKeys, true ) );
@@ -1153,7 +1153,7 @@ XLO_FUNC_START( aqBondObjectCreateAUDNotionalBond(
     }
 
     const std::string storedName =
-        validation::tryAqObjBondsCreateAUDNotionalBond( objectName,
+        validation::tryAqBondObjectCreateAUDNotionalBond( objectName,
                                                         toAQLDate( settleDate ),
                                                         toNarrowString( maturityDate ),
                                                         toNarrowString( couponRate ),
@@ -1205,7 +1205,7 @@ XLO_FUNC_START( aqBondGeneratorCreate(
     }
 
     const std::string storedName =
-        validation::tryAqObjBondsGeneratorCreate( objectName, propertyNames, infoBlocks );
+        validation::tryAqBondGeneratorCreate( objectName, propertyNames, infoBlocks );
 
     return returnValue( appendInstanceCounter( storedName ) );
 }
@@ -1226,7 +1226,7 @@ XLO_FUNC_START( aqBondGeneratorDisplay(
     AQ_INITIALIZE
 
     const etrading::VariantMatrix result =
-        validation::tryAqObjBondsGeneratorDisplay( getNameWithoutCounter( bondGeneratorName ),
+        validation::tryAqBondGeneratorDisplay( getNameWithoutCounter( bondGeneratorName ),
                                                    etrading::trim_to_upper( toNarrowString( propertyKey ) ) );
 
     return returnValue( toExcelMatrix( etrading::toAQLStringMatrixFromVariantMatrix( result, false ) ) );

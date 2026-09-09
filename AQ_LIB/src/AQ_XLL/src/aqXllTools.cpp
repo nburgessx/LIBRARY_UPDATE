@@ -268,6 +268,156 @@ namespace aq_xll
         return values;
     }
 
+    AQLStringVector toAQLStringVector( const xloil::ExcelObj& obj, bool skipTrailingBlanks )
+    {
+        const std::vector<std::string> narrow = toStringVector( obj, skipTrailingBlanks );
+
+        AQLStringVector values;
+        values.reserve( narrow.size() );
+        for ( const std::string& value : narrow )
+        {
+            values.push_back( AQLString( value.c_str() ) );
+        }
+        return values;
+    }
+
+    namespace
+    {
+        // One Excel cell -> a Variant, keeping its native type. An error cell is
+        // carried through as its text rather than throwing; a blank cell is an
+        // EMPTY Variant.
+        etrading::Variant excelCellToVariant( const xloil::ExcelObj& cell )
+        {
+            if ( cell.isType( xloil::ExcelType::Bool ) )
+            {
+                return etrading::Variant( cell.get<bool>() );
+            }
+            if ( cell.isType( xloil::ExcelType::Num ) || cell.isType( xloil::ExcelType::Int ) )
+            {
+                return etrading::Variant( cell.get<double>() );
+            }
+            if ( !cell.isNonEmpty() )
+            {
+                return etrading::Variant();
+            }
+            return etrading::Variant( toNarrowString( cell ).c_str() );
+        }
+
+        // One Variant -> an Excel cell, keeping its native type.
+        xloil::ExcelObj variantToExcel( const etrading::Variant& value )
+        {
+            switch ( value.getType() )
+            {
+                case etrading::INTEGER_VALUE:
+                case etrading::DOUBLE_VALUE:
+                    return xloil::ExcelObj( value.getValue<double>() );
+                case etrading::BOOL_VALUE:
+                    return xloil::ExcelObj( value.getValue<bool>() );
+                case etrading::EMPTY_VALUE:
+                    return xloil::ExcelObj();
+                default:
+                {
+                    const std::string text = value.getValueAsString();
+                    return xloil::ExcelObj( std::wstring( text.begin(), text.end() ) );
+                }
+            }
+        }
+    }
+
+    DoubleMatrix toDoubleMatrix( const xloil::ExcelObj& obj )
+    {
+        DoubleMatrix matrix;
+
+        if ( !obj.isType( xloil::ExcelType::Multi ) )
+        {
+            matrix.push_back( DoubleVector( 1, obj.isNonEmpty() ? obj.get<double>() : 0.0 ) );
+            return matrix;
+        }
+
+        xloil::ExcelArray array( obj, false );
+        matrix.reserve( array.nRows() );
+        for ( size_t r = 0; r < array.nRows(); ++r )
+        {
+            DoubleVector row;
+            row.reserve( array.nCols() );
+            for ( size_t c = 0; c < array.nCols(); ++c )
+            {
+                const xloil::ExcelObj& cell = array( r, c );
+                row.push_back( cell.isNonEmpty() ? cell.get<double>() : 0.0 );
+            }
+            matrix.push_back( std::move( row ) );
+        }
+        return matrix;
+    }
+
+    StandardStringMatrix toStandardStringMatrix( const xloil::ExcelObj& obj )
+    {
+        const AQLStringMatrix aqlMatrix = toAQLStringMatrix( obj );
+
+        StandardStringMatrix matrix;
+        matrix.reserve( aqlMatrix.size() );
+        for ( const AQLStringVector& aqlRow : aqlMatrix )
+        {
+            StandardStringVector row;
+            row.reserve( aqlRow.size() );
+            for ( const AQLString& cell : aqlRow )
+            {
+                row.emplace_back( cell.getCString() );
+            }
+            matrix.push_back( std::move( row ) );
+        }
+        return matrix;
+    }
+
+    etrading::VariantMatrix toVariantMatrix( const xloil::ExcelObj& obj )
+    {
+        etrading::VariantMatrix matrix;
+
+        if ( !obj.isType( xloil::ExcelType::Multi ) )
+        {
+            etrading::VariantVector row;
+            row.push_back( excelCellToVariant( obj ) );
+            matrix.push_back( row );
+            return matrix;
+        }
+
+        xloil::ExcelArray array( obj, false );
+        matrix.reserve( array.nRows() );
+        for ( size_t r = 0; r < array.nRows(); ++r )
+        {
+            etrading::VariantVector row;
+            row.reserve( array.nCols() );
+            for ( size_t c = 0; c < array.nCols(); ++c )
+            {
+                row.push_back( excelCellToVariant( array( r, c ) ) );
+            }
+            matrix.push_back( std::move( row ) );
+        }
+        return matrix;
+    }
+
+    etrading::VariantVector toVariantVector( const xloil::ExcelObj& obj )
+    {
+        etrading::VariantVector values;
+
+        if ( !obj.isType( xloil::ExcelType::Multi ) )
+        {
+            values.push_back( excelCellToVariant( obj ) );
+            return values;
+        }
+
+        xloil::ExcelArray array( obj, false );
+        values.reserve( array.nRows() * array.nCols() );
+        for ( size_t r = 0; r < array.nRows(); ++r )
+        {
+            for ( size_t c = 0; c < array.nCols(); ++c )
+            {
+                values.push_back( excelCellToVariant( array( r, c ) ) );
+            }
+        }
+        return values;
+    }
+
     // -------------------------------------------------------------------------
     //  Marshalling: AQ -> Excel
     // -------------------------------------------------------------------------
@@ -675,6 +825,44 @@ namespace aq_xll
             {
                 builder( r, c ) = ( c < matrix[r].size() )
                     ? numericAwareStringToExcel( std::string( matrix[r][c].getCString() ) )
+                    : xloil::ExcelObj( xloil::CellError::NA );
+            }
+        }
+
+        return builder.toExcelObj();
+    }
+
+    xloil::ExcelObj toExcelMatrix( const etrading::VariantMatrix& matrix )
+    {
+        if ( matrix.empty() || matrix[0].empty() )
+        {
+            return xloil::ExcelObj( xloil::CellError::NA );
+        }
+
+        const uint32_t nRows = static_cast<uint32_t>( matrix.size() );
+        uint32_t nCols = 0;
+        size_t totalStringLength = 0;
+        for ( const etrading::VariantVector& row : matrix )
+        {
+            nCols = std::max( nCols, static_cast<uint32_t>( row.size() ) );
+            for ( const etrading::Variant& cell : row )
+            {
+                const etrading::ContainedTypeEnum type = cell.getType();
+                if ( type != etrading::DOUBLE_VALUE && type != etrading::INTEGER_VALUE &&
+                     type != etrading::BOOL_VALUE && type != etrading::EMPTY_VALUE )
+                {
+                    totalStringLength += cell.getValueAsString().size();
+                }
+            }
+        }
+
+        xloil::ExcelArrayBuilder builder( nRows, nCols, totalStringLength, true /* pad to 2D */ );
+        for ( uint32_t r = 0; r < nRows; ++r )
+        {
+            for ( uint32_t c = 0; c < nCols; ++c )
+            {
+                builder( r, c ) = ( c < matrix[r].size() )
+                    ? variantToExcel( matrix[r][c] )
                     : xloil::ExcelObj( xloil::CellError::NA );
             }
         }
