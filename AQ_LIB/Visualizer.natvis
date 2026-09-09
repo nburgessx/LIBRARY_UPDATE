@@ -2,20 +2,20 @@
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
 
   <Type Name="AQLString">
-    <DisplayString>[AQLString]{stringData_->string_,sb}</DisplayString>
+    <DisplayString>[aqlString]{stringData_->string_,sb}</DisplayString>
     <Expand>
-      <Item Name="[AQLString]">stringData_->string_,sb</Item>
+      <Item Name="[aqlString]">stringData_->string_,sb</Item>
     </Expand>
   </Type>
   
   <Type Name="AQLDate">
-    <DisplayString>[AQLDate]{mDay}-{mMonth}-{mYear}</DisplayString>
+    <DisplayString>[aqlDate] {mDay}-{mMonth}-{mYear}</DisplayString>
     <Expand>
       <Item Name="[Day]">mDay</Item>
       <Item Name="[Month]">mMonth</Item>
       <Item Name="[Year]">mYear</Item>
-      <Item Name="[Excel]" Optional="true">mJulius-693594</Item>
       <Item Name="[Julius]" Optional="true">mJulius</Item>
+	  <Item Name="[Excel]" Optional="true">(mJulius - 693594) &gt; 0 ? (mJulius - 693594) : 0</Item>
     </Expand>
   </Type>
 

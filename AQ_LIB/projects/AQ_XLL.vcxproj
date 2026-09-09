@@ -165,7 +165,7 @@
       <FixedBaseAddress>
       </FixedBaseAddress>
       <ForceSymbolReferences>DllMain;%(ForceSymbolReferences)</ForceSymbolReferences>
-      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
       <ImageHasSafeExceptionHandlers>
       </ImageHasSafeExceptionHandlers>
       <LinkTimeCodeGeneration>
@@ -222,7 +222,7 @@
       <FixedBaseAddress>
       </FixedBaseAddress>
       <ForceSymbolReferences>DllMain;%(ForceSymbolReferences)</ForceSymbolReferences>
-      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
       <ImageHasSafeExceptionHandlers>
       </ImageHasSafeExceptionHandlers>
       <LinkTimeCodeGeneration>
@@ -265,7 +265,7 @@
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <ForceSymbolReferences>DllMain;%(ForceSymbolReferences)</ForceSymbolReferences>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PreBuildEvent>
@@ -313,7 +313,7 @@
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <ForceSymbolReferences>DllMain;%(ForceSymbolReferences)</ForceSymbolReferences>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PreBuildEvent>
@@ -324,6 +324,26 @@
       <Message>
       </Message>
     </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Link>
+      <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">
+    <Link>
+      <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Link>
+      <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">
+    <Link>
+      <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Reference Include="System">
