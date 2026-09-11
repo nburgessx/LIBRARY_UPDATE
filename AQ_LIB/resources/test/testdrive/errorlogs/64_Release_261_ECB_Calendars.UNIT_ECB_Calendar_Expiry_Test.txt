@@ -5,16 +5,16 @@ Note: Google Test filter = ECB_Calendars.UNIT_ECB_Calendar_Expiry_Test
 [ RUN      ] ECB_Calendars.UNIT_ECB_Calendar_Expiry_Test
 unknown file: error: C++ exception with description "#Error: ECB Calendar has Expired!!! - Less than 3 ECB Meeting Dates Available" thrown in the test body.
 
-[  FAILED  ] ECB_Calendars.UNIT_ECB_Calendar_Expiry_Test (12 ms)
-[----------] 1 test from ECB_Calendars (12 ms total)
+[  FAILED  ] ECB_Calendars.UNIT_ECB_Calendar_Expiry_Test (1 ms)
+[----------] 1 test from ECB_Calendars (1 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (13 ms total)
+[==========] 1 test from 1 test suite ran. (1 ms total)
 [  PASSED  ] 0 tests.
 [  FAILED  ] 1 test, listed below:
 [  FAILED  ] ECB_Calendars.UNIT_ECB_Calendar_Expiry_Test
 
  1 FAILED TEST
-Tests finished at: Fri Sep 11 03:58:26 2026
+Tests finished at: Fri Sep 11 17:12:10 2026
 
 didTestsFail: 1

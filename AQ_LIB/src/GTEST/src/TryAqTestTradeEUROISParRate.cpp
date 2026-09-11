@@ -2,8 +2,8 @@
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
 #include "TryAqCurvesOis.h"
-#include "tryAqOisParRate.h"
-#include "tryAqOisPV.h"
+#include "tryAqSwapOisParRate.h"
+#include "tryAqSwapOisPV.h"
 
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;
@@ -37,11 +37,11 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char getParRateInputs[]     = TEST_DIR "EURYC_tryAqOisParRate_inputs";
-    extern const char getParRateOutputs[]	 = TEST_DIR "EURYC_tryAqOisParRate_outputs";
+    extern const char getParRateInputs[]     = TEST_DIR "EURYC_tryAqSwapOisParRate_inputs";
+    extern const char getParRateOutputs[]	 = TEST_DIR "EURYC_tryAqSwapOisParRate_outputs";
 
-    extern const char getPVInputs[]			 = TEST_DIR "EURYC_tryAqOisPV_inputs";
-    extern const char getPVOutputs[]		 = TEST_DIR "EURYC_tryAqOisPV_outputs";
+    extern const char getPVInputs[]			 = TEST_DIR "EURYC_tryAqSwapOisPV_inputs";
+    extern const char getPVOutputs[]		 = TEST_DIR "EURYC_tryAqSwapOisPV_outputs";
 }
 
 
@@ -71,7 +71,7 @@ namespace google_test
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getParRateInputs, i ) );
 
                 AQLStringMatrix oisLVB = inputFile["oisLVB"];
-                double parRate = validation::tryAqOisParRate( oisLVB, true );
+                double parRate = validation::tryAqSwapOisParRate( oisLVB, true );
 
                 if ( etrading::CreateDataFile::rebaseResultsEnabled() )
                 {
@@ -121,7 +121,7 @@ namespace google_test
 
                 AQLStringMatrix oisLVB = inputFile["oisLVB"];
 
-                double pv = validation::tryAqOisPV( oisLVB, true );
+                double pv = validation::tryAqSwapOisPV( oisLVB, true );
 
                 CheckTestResultsAndRebaseOnRequest( pv, TEST_DIR, getPVOutputs, pvTolerance, i );
             }

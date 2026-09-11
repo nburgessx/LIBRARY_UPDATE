@@ -5,16 +5,16 @@ Note: Google Test filter = TestExampleObject.UNIT_ExampleObjects
 [ RUN      ] TestExampleObject.UNIT_ExampleObjects
 unknown file: error: C++ exception with description "Cannot write the JSON string to the file C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\LIBRARY_UPDATE\AQ_LIB/resource/test/inputs/ETrading/AQObjects/ExampleObjects/StandAlone_2.json" thrown in the test body.
 
-[  FAILED  ] TestExampleObject.UNIT_ExampleObjects (1 ms)
-[----------] 1 test from TestExampleObject (1 ms total)
+[  FAILED  ] TestExampleObject.UNIT_ExampleObjects (22 ms)
+[----------] 1 test from TestExampleObject (22 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (1 ms total)
+[==========] 1 test from 1 test suite ran. (22 ms total)
 [  PASSED  ] 0 tests.
 [  FAILED  ] 1 test, listed below:
 [  FAILED  ] TestExampleObject.UNIT_ExampleObjects
 
  1 FAILED TEST
-Tests finished at: Fri Sep 11 01:48:37 2026
+Tests finished at: Fri Sep 11 17:12:23 2026
 
 didTestsFail: 1

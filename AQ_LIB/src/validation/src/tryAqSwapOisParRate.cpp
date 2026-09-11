@@ -1,4 +1,4 @@
-#include "tryAqOisParRate.h"
+#include "tryAqSwapOisParRate.h"
 
 #include "RecordMacros.h"
 #include "CurveInstrumentPricing.h"
@@ -20,7 +20,7 @@ namespace validation
     /* @brief			return a set of expected keys for ois swap par rate label value block
     *  @return			expected keys
     */
-    std::vector<std::string> tryAqOisParRateLVBKeys()
+    std::vector<std::string> tryAqSwapOisParRateLVBKeys()
     {
         const std::string arr[] =
         {
@@ -38,16 +38,16 @@ namespace validation
         return expectedKeys;
     }
 
-    /* @brief			validation interface for the aqOisParRate method
+    /* @brief			validation interface for the aqSwapOisParRate method
     *  @param [in]		oisLVB		A label value block defining the ois swap
     *  @param [in]		validateKeys		True to validate the all keys provided are valid. Default to TRUE
     *  @return			OIS Par Swap Rate
     */
-    double tryAqOisParRate( const LabelValueBlock& oisLVB, bool validateKeys )
+    double tryAqSwapOisParRate( const LabelValueBlock& oisLVB, bool validateKeys )
     {
         VALID_EXCEPTION_START
 
-        etrading::validateKeysForLVB( tryAqOisParRateLVBKeys(), oisLVB.getKeys(), validateKeys );
+        etrading::validateKeysForLVB( tryAqSwapOisParRateLVBKeys(), oisLVB.getKeys(), validateKeys );
 
         const std::string inputLVB = "OISLVB";
         AQLString curveCollection = oisLVB.getCompulsoryValueAsAQLString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );

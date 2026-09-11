@@ -1120,74 +1120,45 @@ SWIGINTERN void std_vector_Sl_std_vector_Sl_std_vector_Sl_std_string_Sg__Sg__Sg_
 
 #include "SwigTypes.h"
 #include "exposed_functions.h"	
-#include "mirSetUpOISCurve.h"	
-#include "mirSetUpSwapCurve.h"	
-#include "mirSetUpBasisSwapCurve.h"	
-#include "mirGetDateFromTerm.h"	
-#include "mirGetDate.h"	
-#include "mirGetIMMDate.h"	
-#include "mirGetParRate.h"	
-#include "mirOISParRate.h"	
-#include "mirOISSwapPV.h"	
-#include "mirSwapPV.h"	
-#include "mirGetDF.h"	
-#include "mirGetPCAResults.h"	
-#include "mirSetupPCA.h"	
-#include "mirInterpolation.h"	
-#include "mirGetForwardRate.h"	
-#include "mirSetUpFwdFXConstantCurve.h"	
-#include "mirSwapStubRate.h"	
-#include "mirGetZeroRate.h"
-#include "mirOutputCurve.h"	
-#include "mirSwapPV01.h"	
-#include "mirCompound.h"	
-#include "mirGetAnnuity.h"	
-#include "mirGetBusinessDays.h"	
-#include "mirGetECBStartDate.h"	
-#include "mirGetNextCBDate.h"	
-#include "mirGetNextECBDate.h"	
-#include "mirGetTerm.h"	
-#include "mirSwapSchedule.h"	
-#include "mirClearEntityPool.h"
-#include "meCurveCalibrateBasis.h"
-#include "meCurveCalibrateFXForwards.h"
-#include "meCurveCalibrateOIS.h"
-#include "meCurveCalibrateSwap.h"
-#include "meCurveCompoundRate.h"
-#include "meCurveDiscountFactor.h"
-#include "meCurveDisplay.h"
-#include "meCurveForwardRate.h"
-#include "meCurveZeroRate.h"
-#include "meDate.h"
-#include "meDateCentralBank.h"
-#include "meDateIMM.h"
-#include "meProductAssetSwapSpread.h"
-#include "meProductOISParRate.h"
-#include "meProductOISPV.h"
-#include "meProductSwapDV01.h"
-#include "meProductSwapParRate.h"
-#include "meProductSwapPV.h"
-#include "meProductSwapPV01.h"
-#include "meProductSwapSchedule.h"
-#include "meProductSwapStubRate.h"
-#include "meUtilityInterpolation.h"
-#include "meUtilityPCA.h"
-#include "meUtilityRecord.h"
-#include "meUtilitySetup.h"
-#include "meCurveInterpolationJoinDate.h"
-#include "meCurveDualBootstrap.h"
-#include "meLWO.h"
-#include "meLWOBondCreate.h"
-#include "meLWOBondPrice.h"
-#include "meUtilityLVB.h"
-#include "meLWOSwapCreate.h"
-#include "meLWOSwapPrice.h"
+#include "aqCurveCalibrateBasis.h"
+#include "aqCurveCalibrateFXForwards.h"
+#include "aqCurveCalibrateOIS.h"
+#include "aqCurveCalibrateSwap.h"
+#include "aqCurveCompoundRate.h"
+#include "aqCurveDiscountFactor.h"
+#include "aqCurveDisplay.h"
+#include "aqCurveForwardRate.h"
+#include "aqCurveZeroRate.h"
+#include "aqDate.h"
+#include "aqDateCentralBank.h"
+#include "aqDateIMM.h"
+#include "aqAssetSwapSpread.h"
+#include "aqSwapOisParRate.h"
+#include "aqSwapOisPV.h"
+#include "aqSwapDV01.h"
+#include "aqSwapParRate.h"
+#include "aqSwapPV.h"
+#include "aqSwapPV01.h"
+#include "aqSwapSchedule.h"
+#include "aqSwapStubRate.h"
+#include "aqMathInterpolation.h"
+#include "aqMathPCA.h"
+#include "aqToolRecord.h"
+#include "aqToolSetup.h"
+#include "aqCurveInterpolationJoinDate.h"
+#include "aqCurveDualBootstrap.h"
+#include "aqObject.h"
+#include "aqBondObjectCreate.h"
+#include "aqBondObjectPrice.h"
+#include "aqToolLVB.h"
+#include "aqSwapObjectCreate.h"
+#include "aqSwapObjectPrice.h"
 #include "BondTypes.h"
-#include "meBondCurve.h"
-#include "meLWOCredit.h"
-#include "meCurveResults.h"
-#include "meLWOCurve.h"
-#include "meLWOGrids.h"
+#include "aqBondCurve.h"
+#include "aqCreditObject.h"
+#include "aqCurveResults.h"
+#include "aqCurveObject.h"
+#include "aqToolGrids.h"
 
 
 #ifdef __cplusplus
@@ -5710,7 +5681,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_VecVecVecString(void * jarg1) {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_setUpMLIB__SWIG_0(char * jarg1, char * jarg2) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_setUpAQL__SWIG_0(char * jarg1, char * jarg2) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -5731,7 +5702,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_setUpMLIB__SWIG_0(char * jarg1, char * jarg
   {
     try
     {
-      result = setUpMLIB((std::string const &)*arg1,(std::string const &)*arg2);
+      result = setUpAQL((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -5745,7 +5716,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_setUpMLIB__SWIG_0(char * jarg1, char * jarg
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_setupMLIB__SWIG_0(char * jarg1, char * jarg2) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_setupAQL__SWIG_0(char * jarg1, char * jarg2) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -5766,7 +5737,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_setupMLIB__SWIG_0(char * jarg1, char * jarg
   {
     try
     {
-      result = setupMLIB((std::string const &)*arg1,(std::string const &)*arg2);
+      result = setupAQL((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -5780,7 +5751,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_setupMLIB__SWIG_0(char * jarg1, char * jarg
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_initMLIB__SWIG_0(char * jarg1, char * jarg2) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_initAQL__SWIG_0(char * jarg1, char * jarg2) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -5801,7 +5772,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_initMLIB__SWIG_0(char * jarg1, char * jarg2
   {
     try
     {
-      result = initMLIB((std::string const &)*arg1,(std::string const &)*arg2);
+      result = initAQL((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -5815,14 +5786,14 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_initMLIB__SWIG_0(char * jarg1, char * jarg2
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_setUpMLIB__SWIG_1() {
+SWIGEXPORT char * SWIGSTDCALL CSharp_setUpAQL__SWIG_1() {
   char * jresult ;
   std::string result;
   
   {
     try
     {
-      result = setUpMLIB();
+      result = setUpAQL();
     }
     catch (const std::exception& e)
     {
@@ -5836,14 +5807,14 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_setUpMLIB__SWIG_1() {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_setupMLIB__SWIG_1() {
+SWIGEXPORT char * SWIGSTDCALL CSharp_setupAQL__SWIG_1() {
   char * jresult ;
   std::string result;
   
   {
     try
     {
-      result = setupMLIB();
+      result = setupAQL();
     }
     catch (const std::exception& e)
     {
@@ -5857,14 +5828,14 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_setupMLIB__SWIG_1() {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_initMLIB__SWIG_1() {
+SWIGEXPORT char * SWIGSTDCALL CSharp_initAQL__SWIG_1() {
   char * jresult ;
   std::string result;
   
   {
     try
     {
-      result = initMLIB();
+      result = initAQL();
     }
     catch (const std::exception& e)
     {
@@ -5878,14 +5849,14 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_initMLIB__SWIG_1() {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_tearDownMLIB() {
+SWIGEXPORT char * SWIGSTDCALL CSharp_tearDownAQL() {
   char * jresult ;
   std::string result;
   
   {
     try
     {
-      result = tearDownMLIB();
+      result = tearDownAQL();
     }
     catch (const std::exception& e)
     {
@@ -6787,4236 +6758,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_doSomeFormula(double jarg1) {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirSetUpOISCurve(char * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, char * jarg6, void * jarg7, void * jarg8, void * jarg9, void * jarg10, void * jarg11) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::vector< std::vector< std::string > > *arg3 = 0 ;
-  std::vector< std::vector< std::string > > *arg4 = 0 ;
-  std::vector< std::vector< std::string > > *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::vector< std::vector< std::string > > *arg7 = 0 ;
-  std::vector< std::vector< std::string > > *arg8 = 0 ;
-  std::vector< std::vector< std::string > > *arg9 = 0 ;
-  std::vector< std::vector< std::string > > *arg10 = 0 ;
-  std::vector< std::vector< std::string > > *arg11 = 0 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  arg3 = (std::vector< std::vector< std::string > > *)jarg3;
-  if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg4 = (std::vector< std::vector< std::string > > *)jarg4;
-  if (!arg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg5 = (std::vector< std::vector< std::string > > *)jarg5;
-  if (!arg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  arg7 = (std::vector< std::vector< std::string > > *)jarg7;
-  if (!arg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg8 = (std::vector< std::vector< std::string > > *)jarg8;
-  if (!arg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg9 = (std::vector< std::vector< std::string > > *)jarg9;
-  if (!arg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg10 = (std::vector< std::vector< std::string > > *)jarg10;
-  if (!arg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg11 = (std::vector< std::vector< std::string > > *)jarg11;
-  if (!arg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  {
-    try
-    {
-      result = mirSetUpOISCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::string const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9,(std::vector< std::vector< std::string > > const &)*arg10,(std::vector< std::vector< std::string > > const &)*arg11);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirSetUpSwapCurve(char * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9, void * jarg10, void * jarg11, void * jarg12, void * jarg13, void * jarg14, void * jarg15, char * jarg16, char * jarg17) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::vector< std::vector< std::string > > *arg3 = 0 ;
-  std::vector< std::vector< std::string > > *arg4 = 0 ;
-  std::vector< std::vector< std::string > > *arg5 = 0 ;
-  std::vector< std::vector< std::string > > *arg6 = 0 ;
-  std::vector< std::vector< std::string > > *arg7 = 0 ;
-  std::vector< std::vector< std::string > > *arg8 = 0 ;
-  std::vector< std::vector< std::string > > *arg9 = 0 ;
-  std::vector< std::vector< std::string > > *arg10 = 0 ;
-  std::vector< std::vector< std::string > > *arg11 = 0 ;
-  std::vector< std::vector< std::string > > *arg12 = 0 ;
-  std::vector< std::vector< std::string > > *arg13 = 0 ;
-  std::vector< std::vector< std::string > > *arg14 = 0 ;
-  std::vector< std::vector< std::string > > *arg15 = 0 ;
-  std::string *arg16 = 0 ;
-  std::string *arg17 = 0 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  arg3 = (std::vector< std::vector< std::string > > *)jarg3;
-  if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg4 = (std::vector< std::vector< std::string > > *)jarg4;
-  if (!arg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg5 = (std::vector< std::vector< std::string > > *)jarg5;
-  if (!arg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg6 = (std::vector< std::vector< std::string > > *)jarg6;
-  if (!arg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg7 = (std::vector< std::vector< std::string > > *)jarg7;
-  if (!arg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg8 = (std::vector< std::vector< std::string > > *)jarg8;
-  if (!arg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg9 = (std::vector< std::vector< std::string > > *)jarg9;
-  if (!arg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg10 = (std::vector< std::vector< std::string > > *)jarg10;
-  if (!arg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg11 = (std::vector< std::vector< std::string > > *)jarg11;
-  if (!arg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg12 = (std::vector< std::vector< std::string > > *)jarg12;
-  if (!arg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg13 = (std::vector< std::vector< std::string > > *)jarg13;
-  if (!arg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg14 = (std::vector< std::vector< std::string > > *)jarg14;
-  if (!arg14) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg15 = (std::vector< std::vector< std::string > > *)jarg15;
-  if (!arg15) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg16) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg16_str(jarg16);
-  arg16 = &arg16_str; 
-  if (!jarg17) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg17_str(jarg17);
-  arg17 = &arg17_str; 
-  {
-    try
-    {
-      result = mirSetUpSwapCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::vector< std::vector< std::string > > const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9,(std::vector< std::vector< std::string > > const &)*arg10,(std::vector< std::vector< std::string > > const &)*arg11,(std::vector< std::vector< std::string > > const &)*arg12,(std::vector< std::vector< std::string > > const &)*arg13,(std::vector< std::vector< std::string > > const &)*arg14,(std::vector< std::vector< std::string > > const &)*arg15,(std::string const &)*arg16,(std::string const &)*arg17);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirSetUpBasisSwapCurve__SWIG_0(char * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, char * jarg6, void * jarg7, void * jarg8, void * jarg9) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::vector< std::vector< std::string > > *arg3 = 0 ;
-  std::vector< std::vector< std::string > > *arg4 = 0 ;
-  std::vector< std::vector< std::string > > *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::vector< std::vector< std::string > > *arg7 = 0 ;
-  std::vector< std::vector< std::string > > *arg8 = 0 ;
-  std::vector< std::vector< std::string > > *arg9 = 0 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  arg3 = (std::vector< std::vector< std::string > > *)jarg3;
-  if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg4 = (std::vector< std::vector< std::string > > *)jarg4;
-  if (!arg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg5 = (std::vector< std::vector< std::string > > *)jarg5;
-  if (!arg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  arg7 = (std::vector< std::vector< std::string > > *)jarg7;
-  if (!arg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg8 = (std::vector< std::vector< std::string > > *)jarg8;
-  if (!arg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg9 = (std::vector< std::vector< std::string > > *)jarg9;
-  if (!arg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  {
-    try
-    {
-      result = mirSetUpBasisSwapCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::string const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirSetUpBasisSwapCurve__SWIG_1(char * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, char * jarg6, void * jarg7, void * jarg8, void * jarg9, void * jarg10, void * jarg11) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::vector< std::vector< std::string > > *arg3 = 0 ;
-  std::vector< std::vector< std::string > > *arg4 = 0 ;
-  std::vector< std::vector< std::string > > *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::vector< std::vector< std::string > > *arg7 = 0 ;
-  std::vector< std::vector< std::string > > *arg8 = 0 ;
-  std::vector< std::vector< std::string > > *arg9 = 0 ;
-  std::vector< std::vector< std::string > > *arg10 = 0 ;
-  std::vector< std::vector< std::string > > *arg11 = 0 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  arg3 = (std::vector< std::vector< std::string > > *)jarg3;
-  if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg4 = (std::vector< std::vector< std::string > > *)jarg4;
-  if (!arg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg5 = (std::vector< std::vector< std::string > > *)jarg5;
-  if (!arg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  arg7 = (std::vector< std::vector< std::string > > *)jarg7;
-  if (!arg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg8 = (std::vector< std::vector< std::string > > *)jarg8;
-  if (!arg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg9 = (std::vector< std::vector< std::string > > *)jarg9;
-  if (!arg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg10 = (std::vector< std::vector< std::string > > *)jarg10;
-  if (!arg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg11 = (std::vector< std::vector< std::string > > *)jarg11;
-  if (!arg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  {
-    try
-    {
-      result = mirSetUpBasisSwapCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::string const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9,(std::vector< std::vector< std::string > > const &)*arg10,(std::vector< std::vector< std::string > > const &)*arg11);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirGetDateFromTerm(char * jarg1, double jarg2, char * jarg3, unsigned int jarg4) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  double arg2 ;
-  std::string *arg3 = 0 ;
-  bool arg4 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  arg2 = (double)jarg2; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  arg4 = jarg4 ? true : false; 
-  {
-    try
-    {
-      result = mirGetDateFromTerm((std::string const &)*arg1,arg2,(std::string const &)*arg3,arg4);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirGetDate__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  {
-    try
-    {
-      result = mirGetDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirGetDate__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
-  void * jresult ;
-  std::vector< std::string > *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::vector< std::string > result;
-  
-  arg1 = (std::vector< std::string > *)jarg1;
-  if (!arg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  {
-    try
-    {
-      result = mirGetDate((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< std::string >((const std::vector< std::string > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirGetIMMDate1(int jarg1, int jarg2, char * jarg3, char * jarg4) {
-  char * jresult ;
-  int arg1 ;
-  int arg2 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string result;
-  
-  arg1 = (int)jarg1; 
-  arg2 = (int)jarg2; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  {
-    try
-    {
-      result = mirGetIMMDate1(arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirGetIMMDate2(int jarg1, int jarg2, char * jarg3, char * jarg4) {
-  char * jresult ;
-  int arg1 ;
-  int arg2 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string result;
-  
-  arg1 = (int)jarg1; 
-  arg2 = (int)jarg2; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  {
-    try
-    {
-      result = mirGetIMMDate2(arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirGetIMMDate3(char * jarg1, int jarg2, char * jarg3, char * jarg4) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  int arg2 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  arg2 = (int)jarg2; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  {
-    try
-    {
-      result = mirGetIMMDate3((std::string const &)*arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetParRate4(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15, char * jarg16, char * jarg17, char * jarg18, char * jarg19, char * jarg20, double jarg21, double jarg22, char * jarg23, char * jarg24, char * jarg25, char * jarg26, char * jarg27, unsigned int jarg28, unsigned int jarg29, double jarg30, unsigned int jarg31) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  std::string *arg13 = 0 ;
-  std::string *arg14 = 0 ;
-  std::string *arg15 = 0 ;
-  std::string *arg16 = 0 ;
-  std::string *arg17 = 0 ;
-  std::string *arg18 = 0 ;
-  std::string *arg19 = 0 ;
-  std::string *arg20 = 0 ;
-  double arg21 ;
-  double arg22 ;
-  std::string *arg23 = 0 ;
-  std::string *arg24 = 0 ;
-  std::string *arg25 = 0 ;
-  std::string *arg26 = 0 ;
-  std::string *arg27 = 0 ;
-  bool arg28 ;
-  bool arg29 ;
-  double arg30 ;
-  bool arg31 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  if (!jarg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg13_str(jarg13);
-  arg13 = &arg13_str; 
-  if (!jarg14) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg14_str(jarg14);
-  arg14 = &arg14_str; 
-  if (!jarg15) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg15_str(jarg15);
-  arg15 = &arg15_str; 
-  if (!jarg16) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg16_str(jarg16);
-  arg16 = &arg16_str; 
-  if (!jarg17) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg17_str(jarg17);
-  arg17 = &arg17_str; 
-  if (!jarg18) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg18_str(jarg18);
-  arg18 = &arg18_str; 
-  if (!jarg19) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg19_str(jarg19);
-  arg19 = &arg19_str; 
-  if (!jarg20) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg20_str(jarg20);
-  arg20 = &arg20_str; 
-  arg21 = (double)jarg21; 
-  arg22 = (double)jarg22; 
-  if (!jarg23) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg23_str(jarg23);
-  arg23 = &arg23_str; 
-  if (!jarg24) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg24_str(jarg24);
-  arg24 = &arg24_str; 
-  if (!jarg25) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg25_str(jarg25);
-  arg25 = &arg25_str; 
-  if (!jarg26) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg26_str(jarg26);
-  arg26 = &arg26_str; 
-  if (!jarg27) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg27_str(jarg27);
-  arg27 = &arg27_str; 
-  arg28 = jarg28 ? true : false; 
-  arg29 = jarg29 ? true : false; 
-  arg30 = (double)jarg30; 
-  arg31 = jarg31 ? true : false; 
-  {
-    try
-    {
-      result = (double)mirGetParRate4((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15,(std::string const &)*arg16,(std::string const &)*arg17,(std::string const &)*arg18,(std::string const &)*arg19,(std::string const &)*arg20,arg21,arg22,(std::string const &)*arg23,(std::string const &)*arg24,(std::string const &)*arg25,(std::string const &)*arg26,(std::string const &)*arg27,arg28,arg29,arg30,arg31);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetParRate5(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15, char * jarg16, char * jarg17, char * jarg18, char * jarg19, char * jarg20, double jarg21, double jarg22, char * jarg23, char * jarg24, char * jarg25, char * jarg26, char * jarg27, unsigned int jarg28, unsigned int jarg29, double jarg30, unsigned int jarg31, char * jarg32) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  std::string *arg13 = 0 ;
-  std::string *arg14 = 0 ;
-  std::string *arg15 = 0 ;
-  std::string *arg16 = 0 ;
-  std::string *arg17 = 0 ;
-  std::string *arg18 = 0 ;
-  std::string *arg19 = 0 ;
-  std::string *arg20 = 0 ;
-  double arg21 ;
-  double arg22 ;
-  std::string *arg23 = 0 ;
-  std::string *arg24 = 0 ;
-  std::string *arg25 = 0 ;
-  std::string *arg26 = 0 ;
-  std::string *arg27 = 0 ;
-  bool arg28 ;
-  bool arg29 ;
-  double arg30 ;
-  bool arg31 ;
-  std::string *arg32 = 0 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  if (!jarg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg13_str(jarg13);
-  arg13 = &arg13_str; 
-  if (!jarg14) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg14_str(jarg14);
-  arg14 = &arg14_str; 
-  if (!jarg15) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg15_str(jarg15);
-  arg15 = &arg15_str; 
-  if (!jarg16) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg16_str(jarg16);
-  arg16 = &arg16_str; 
-  if (!jarg17) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg17_str(jarg17);
-  arg17 = &arg17_str; 
-  if (!jarg18) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg18_str(jarg18);
-  arg18 = &arg18_str; 
-  if (!jarg19) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg19_str(jarg19);
-  arg19 = &arg19_str; 
-  if (!jarg20) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg20_str(jarg20);
-  arg20 = &arg20_str; 
-  arg21 = (double)jarg21; 
-  arg22 = (double)jarg22; 
-  if (!jarg23) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg23_str(jarg23);
-  arg23 = &arg23_str; 
-  if (!jarg24) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg24_str(jarg24);
-  arg24 = &arg24_str; 
-  if (!jarg25) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg25_str(jarg25);
-  arg25 = &arg25_str; 
-  if (!jarg26) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg26_str(jarg26);
-  arg26 = &arg26_str; 
-  if (!jarg27) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg27_str(jarg27);
-  arg27 = &arg27_str; 
-  arg28 = jarg28 ? true : false; 
-  arg29 = jarg29 ? true : false; 
-  arg30 = (double)jarg30; 
-  arg31 = jarg31 ? true : false; 
-  if (!jarg32) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg32_str(jarg32);
-  arg32 = &arg32_str; 
-  {
-    try
-    {
-      result = (double)mirGetParRate5((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15,(std::string const &)*arg16,(std::string const &)*arg17,(std::string const &)*arg18,(std::string const &)*arg19,(std::string const &)*arg20,arg21,arg22,(std::string const &)*arg23,(std::string const &)*arg24,(std::string const &)*arg25,(std::string const &)*arg26,(std::string const &)*arg27,arg28,arg29,arg30,arg31,(std::string const &)*arg32);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetParRate3(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, unsigned int jarg14, unsigned int jarg15) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  std::string *arg13 = 0 ;
-  bool arg14 ;
-  bool arg15 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  if (!jarg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg13_str(jarg13);
-  arg13 = &arg13_str; 
-  arg14 = jarg14 ? true : false; 
-  arg15 = jarg15 ? true : false; 
-  {
-    try
-    {
-      result = (double)mirGetParRate3((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,arg14,arg15);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirOISParRate(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15, char * jarg16, char * jarg17, char * jarg18, char * jarg19, char * jarg20, double jarg21, double jarg22, char * jarg23, char * jarg24, char * jarg25, char * jarg26, char * jarg27, unsigned int jarg28, double jarg29, char * jarg30) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  std::string *arg13 = 0 ;
-  std::string *arg14 = 0 ;
-  std::string *arg15 = 0 ;
-  std::string *arg16 = 0 ;
-  std::string *arg17 = 0 ;
-  std::string *arg18 = 0 ;
-  std::string *arg19 = 0 ;
-  std::string *arg20 = 0 ;
-  double arg21 ;
-  double arg22 ;
-  std::string *arg23 = 0 ;
-  std::string *arg24 = 0 ;
-  std::string *arg25 = 0 ;
-  std::string *arg26 = 0 ;
-  std::string *arg27 = 0 ;
-  bool arg28 ;
-  double arg29 ;
-  std::string *arg30 = 0 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  if (!jarg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg13_str(jarg13);
-  arg13 = &arg13_str; 
-  if (!jarg14) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg14_str(jarg14);
-  arg14 = &arg14_str; 
-  if (!jarg15) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg15_str(jarg15);
-  arg15 = &arg15_str; 
-  if (!jarg16) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg16_str(jarg16);
-  arg16 = &arg16_str; 
-  if (!jarg17) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg17_str(jarg17);
-  arg17 = &arg17_str; 
-  if (!jarg18) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg18_str(jarg18);
-  arg18 = &arg18_str; 
-  if (!jarg19) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg19_str(jarg19);
-  arg19 = &arg19_str; 
-  if (!jarg20) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg20_str(jarg20);
-  arg20 = &arg20_str; 
-  arg21 = (double)jarg21; 
-  arg22 = (double)jarg22; 
-  if (!jarg23) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg23_str(jarg23);
-  arg23 = &arg23_str; 
-  if (!jarg24) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg24_str(jarg24);
-  arg24 = &arg24_str; 
-  if (!jarg25) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg25_str(jarg25);
-  arg25 = &arg25_str; 
-  if (!jarg26) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg26_str(jarg26);
-  arg26 = &arg26_str; 
-  if (!jarg27) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg27_str(jarg27);
-  arg27 = &arg27_str; 
-  arg28 = jarg28 ? true : false; 
-  arg29 = (double)jarg29; 
-  if (!jarg30) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg30_str(jarg30);
-  arg30 = &arg30_str; 
-  {
-    try
-    {
-      result = (double)mirOISParRate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15,(std::string const &)*arg16,(std::string const &)*arg17,(std::string const &)*arg18,(std::string const &)*arg19,(std::string const &)*arg20,arg21,arg22,(std::string const &)*arg23,(std::string const &)*arg24,(std::string const &)*arg25,(std::string const &)*arg26,(std::string const &)*arg27,arg28,arg29,(std::string const &)*arg30);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirOISSwapPV(double jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, double jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15, double jarg16, char * jarg17, char * jarg18, char * jarg19, char * jarg20, char * jarg21, char * jarg22, char * jarg23, char * jarg24, double jarg25, double jarg26, char * jarg27, char * jarg28, char * jarg29, char * jarg30, char * jarg31, unsigned int jarg32, char * jarg33) {
-  double jresult ;
-  double arg1 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  double arg6 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  std::string *arg13 = 0 ;
-  std::string *arg14 = 0 ;
-  std::string *arg15 = 0 ;
-  double arg16 ;
-  std::string *arg17 = 0 ;
-  std::string *arg18 = 0 ;
-  std::string *arg19 = 0 ;
-  std::string *arg20 = 0 ;
-  std::string *arg21 = 0 ;
-  std::string *arg22 = 0 ;
-  std::string *arg23 = 0 ;
-  std::string *arg24 = 0 ;
-  double arg25 ;
-  double arg26 ;
-  std::string *arg27 = 0 ;
-  std::string *arg28 = 0 ;
-  std::string *arg29 = 0 ;
-  std::string *arg30 = 0 ;
-  std::string *arg31 = 0 ;
-  bool arg32 ;
-  std::string *arg33 = 0 ;
-  double result;
-  
-  arg1 = (double)jarg1; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  arg6 = (double)jarg6; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  if (!jarg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg13_str(jarg13);
-  arg13 = &arg13_str; 
-  if (!jarg14) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg14_str(jarg14);
-  arg14 = &arg14_str; 
-  if (!jarg15) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg15_str(jarg15);
-  arg15 = &arg15_str; 
-  arg16 = (double)jarg16; 
-  if (!jarg17) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg17_str(jarg17);
-  arg17 = &arg17_str; 
-  if (!jarg18) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg18_str(jarg18);
-  arg18 = &arg18_str; 
-  if (!jarg19) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg19_str(jarg19);
-  arg19 = &arg19_str; 
-  if (!jarg20) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg20_str(jarg20);
-  arg20 = &arg20_str; 
-  if (!jarg21) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg21_str(jarg21);
-  arg21 = &arg21_str; 
-  if (!jarg22) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg22_str(jarg22);
-  arg22 = &arg22_str; 
-  if (!jarg23) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg23_str(jarg23);
-  arg23 = &arg23_str; 
-  if (!jarg24) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg24_str(jarg24);
-  arg24 = &arg24_str; 
-  arg25 = (double)jarg25; 
-  arg26 = (double)jarg26; 
-  if (!jarg27) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg27_str(jarg27);
-  arg27 = &arg27_str; 
-  if (!jarg28) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg28_str(jarg28);
-  arg28 = &arg28_str; 
-  if (!jarg29) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg29_str(jarg29);
-  arg29 = &arg29_str; 
-  if (!jarg30) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg30_str(jarg30);
-  arg30 = &arg30_str; 
-  if (!jarg31) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg31_str(jarg31);
-  arg31 = &arg31_str; 
-  arg32 = jarg32 ? true : false; 
-  if (!jarg33) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg33_str(jarg33);
-  arg33 = &arg33_str; 
-  {
-    try
-    {
-      result = (double)mirOISSwapPV(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15,arg16,(std::string const &)*arg17,(std::string const &)*arg18,(std::string const &)*arg19,(std::string const &)*arg20,(std::string const &)*arg21,(std::string const &)*arg22,(std::string const &)*arg23,(std::string const &)*arg24,arg25,arg26,(std::string const &)*arg27,(std::string const &)*arg28,(std::string const &)*arg29,(std::string const &)*arg30,(std::string const &)*arg31,arg32,(std::string const &)*arg33);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirSwapPV(double jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, double jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15, double jarg16, char * jarg17, char * jarg18, char * jarg19, char * jarg20, char * jarg21, char * jarg22, char * jarg23, char * jarg24, double jarg25, double jarg26, char * jarg27, char * jarg28, char * jarg29, char * jarg30, char * jarg31, unsigned int jarg32, unsigned int jarg33) {
-  double jresult ;
-  double arg1 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  double arg6 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  std::string *arg13 = 0 ;
-  std::string *arg14 = 0 ;
-  std::string *arg15 = 0 ;
-  double arg16 ;
-  std::string *arg17 = 0 ;
-  std::string *arg18 = 0 ;
-  std::string *arg19 = 0 ;
-  std::string *arg20 = 0 ;
-  std::string *arg21 = 0 ;
-  std::string *arg22 = 0 ;
-  std::string *arg23 = 0 ;
-  std::string *arg24 = 0 ;
-  double arg25 ;
-  double arg26 ;
-  std::string *arg27 = 0 ;
-  std::string *arg28 = 0 ;
-  std::string *arg29 = 0 ;
-  std::string *arg30 = 0 ;
-  std::string *arg31 = 0 ;
-  bool arg32 ;
-  bool arg33 ;
-  double result;
-  
-  arg1 = (double)jarg1; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  arg6 = (double)jarg6; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  if (!jarg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg13_str(jarg13);
-  arg13 = &arg13_str; 
-  if (!jarg14) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg14_str(jarg14);
-  arg14 = &arg14_str; 
-  if (!jarg15) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg15_str(jarg15);
-  arg15 = &arg15_str; 
-  arg16 = (double)jarg16; 
-  if (!jarg17) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg17_str(jarg17);
-  arg17 = &arg17_str; 
-  if (!jarg18) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg18_str(jarg18);
-  arg18 = &arg18_str; 
-  if (!jarg19) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg19_str(jarg19);
-  arg19 = &arg19_str; 
-  if (!jarg20) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg20_str(jarg20);
-  arg20 = &arg20_str; 
-  if (!jarg21) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg21_str(jarg21);
-  arg21 = &arg21_str; 
-  if (!jarg22) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg22_str(jarg22);
-  arg22 = &arg22_str; 
-  if (!jarg23) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg23_str(jarg23);
-  arg23 = &arg23_str; 
-  if (!jarg24) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg24_str(jarg24);
-  arg24 = &arg24_str; 
-  arg25 = (double)jarg25; 
-  arg26 = (double)jarg26; 
-  if (!jarg27) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg27_str(jarg27);
-  arg27 = &arg27_str; 
-  if (!jarg28) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg28_str(jarg28);
-  arg28 = &arg28_str; 
-  if (!jarg29) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg29_str(jarg29);
-  arg29 = &arg29_str; 
-  if (!jarg30) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg30_str(jarg30);
-  arg30 = &arg30_str; 
-  if (!jarg31) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg31_str(jarg31);
-  arg31 = &arg31_str; 
-  arg32 = jarg32 ? true : false; 
-  arg33 = jarg33 ? true : false; 
-  {
-    try
-    {
-      result = (double)mirSwapPV(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15,arg16,(std::string const &)*arg17,(std::string const &)*arg18,(std::string const &)*arg19,(std::string const &)*arg20,(std::string const &)*arg21,(std::string const &)*arg22,(std::string const &)*arg23,(std::string const &)*arg24,arg25,arg26,(std::string const &)*arg27,(std::string const &)*arg28,(std::string const &)*arg29,(std::string const &)*arg30,(std::string const &)*arg31,arg32,arg33);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetDF1__SWIG_0(double jarg1, char * jarg2, char * jarg3, char * jarg4, unsigned int jarg5, char * jarg6) {
-  double jresult ;
-  double arg1 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  bool arg5 ;
-  std::string *arg6 = 0 ;
-  double result;
-  
-  arg1 = (double)jarg1; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  arg5 = jarg5 ? true : false; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  {
-    try
-    {
-      result = (double)mirGetDF1(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,(std::string const &)*arg6);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirGetDF1__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, unsigned int jarg5, char * jarg6) {
-  void * jresult ;
-  std::vector< double > *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  bool arg5 ;
-  std::string *arg6 = 0 ;
-  std::vector< double > result;
-  
-  arg1 = (std::vector< double > *)jarg1;
-  if (!arg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< double > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  arg5 = jarg5 ? true : false; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  {
-    try
-    {
-      result = mirGetDF1((std::vector< double > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,(std::string const &)*arg6);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< double >((const std::vector< double > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetDF2__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, unsigned int jarg7, char * jarg8) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  bool arg7 ;
-  std::string *arg8 = 0 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  arg7 = jarg7 ? true : false; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  {
-    try
-    {
-      result = (double)mirGetDF2((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,arg7,(std::string const &)*arg8);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirGetDF2__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, unsigned int jarg7, char * jarg8) {
-  void * jresult ;
-  std::vector< std::string > *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  bool arg7 ;
-  std::string *arg8 = 0 ;
-  std::vector< double > result;
-  
-  arg1 = (std::vector< std::string > *)jarg1;
-  if (!arg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  arg7 = jarg7 ? true : false; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  {
-    try
-    {
-      result = mirGetDF2((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,arg7,(std::string const &)*arg8);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< double >((const std::vector< double > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetDF3__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, unsigned int jarg8, char * jarg9) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  bool arg8 ;
-  std::string *arg9 = 0 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  arg8 = jarg8 ? true : false; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  {
-    try
-    {
-      result = (double)mirGetDF3((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,arg8,(std::string const &)*arg9);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirGetDF3__SWIG_1(char * jarg1, void * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, unsigned int jarg8, char * jarg9) {
-  void * jresult ;
-  std::string *arg1 = 0 ;
-  std::vector< std::string > *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  bool arg8 ;
-  std::string *arg9 = 0 ;
-  std::vector< double > result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  arg2 = (std::vector< std::string > *)jarg2;
-  if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  arg8 = jarg8 ? true : false; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  {
-    try
-    {
-      result = mirGetDF3((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,arg8,(std::string const &)*arg9);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< double >((const std::vector< double > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetDF4__SWIG_0(char * jarg1, double jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, unsigned int jarg8, char * jarg9) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  double arg2 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  bool arg8 ;
-  std::string *arg9 = 0 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  arg2 = (double)jarg2; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  arg8 = jarg8 ? true : false; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  {
-    try
-    {
-      result = (double)mirGetDF4((std::string const &)*arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,arg8,(std::string const &)*arg9);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirGetDF4__SWIG_1(void * jarg1, void * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, unsigned int jarg8, char * jarg9) {
-  void * jresult ;
-  std::vector< std::string > *arg1 = 0 ;
-  std::vector< double > *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  bool arg8 ;
-  std::string *arg9 = 0 ;
-  std::vector< double > result;
-  
-  arg1 = (std::vector< std::string > *)jarg1;
-  if (!arg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  arg2 = (std::vector< double > *)jarg2;
-  if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< double > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  arg8 = jarg8 ? true : false; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  {
-    try
-    {
-      result = mirGetDF4((std::vector< std::string > const &)*arg1,(std::vector< double > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,arg8,(std::string const &)*arg9);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< double >((const std::vector< double > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetDF5__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, unsigned int jarg8, char * jarg9) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  bool arg8 ;
-  std::string *arg9 = 0 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  arg8 = jarg8 ? true : false; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  {
-    try
-    {
-      result = (double)mirGetDF5((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,arg8,(std::string const &)*arg9);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirGetDF5__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, unsigned int jarg8, char * jarg9) {
-  void * jresult ;
-  std::vector< std::string > *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  bool arg8 ;
-  std::string *arg9 = 0 ;
-  std::vector< double > result;
-  
-  arg1 = (std::vector< std::string > *)jarg1;
-  if (!arg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  arg8 = jarg8 ? true : false; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  {
-    try
-    {
-      result = mirGetDF5((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,arg8,(std::string const &)*arg9);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< double >((const std::vector< double > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirGetPCAResults(char * jarg1, int jarg2) {
-  void * jresult ;
-  std::string *arg1 = 0 ;
-  int arg2 ;
-  std::vector< std::vector< std::string > > result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  arg2 = (int)jarg2; 
-  {
-    try
-    {
-      result = mirGetPCAResults((std::string const &)*arg1,arg2);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirSetupPCA(char * jarg1, void * jarg2, unsigned int jarg3, int jarg4) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  std::vector< std::vector< double > > *arg2 = 0 ;
-  bool arg3 ;
-  int arg4 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  arg2 = (std::vector< std::vector< double > > *)jarg2;
-  if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< double > > const & type is null", 0);
-    return 0;
-  } 
-  arg3 = jarg3 ? true : false; 
-  arg4 = (int)jarg4; 
-  {
-    try
-    {
-      result = mirSetupPCA((std::string const &)*arg1,(std::vector< std::vector< double > > const &)*arg2,arg3,arg4);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirInterpolation(void * jarg1, void * jarg2, double jarg3, char * jarg4) {
-  double jresult ;
-  std::vector< double > *arg1 = 0 ;
-  std::vector< double > *arg2 = 0 ;
-  double arg3 ;
-  std::string *arg4 = 0 ;
-  double result;
-  
-  arg1 = (std::vector< double > *)jarg1;
-  if (!arg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< double > const & type is null", 0);
-    return 0;
-  } 
-  arg2 = (std::vector< double > *)jarg2;
-  if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< double > const & type is null", 0);
-    return 0;
-  } 
-  arg3 = (double)jarg3; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  {
-    try
-    {
-      result = (double)mirInterpolation((std::vector< double > const &)*arg1,(std::vector< double > const &)*arg2,arg3,(std::string const &)*arg4);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirGetForwardRate2(void * jarg1, void * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, char * jarg8, char * jarg9, unsigned int jarg10, unsigned int jarg11) {
-  void * jresult ;
-  std::vector< std::string > *arg1 = 0 ;
-  std::vector< std::string > *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  bool arg10 ;
-  bool arg11 ;
-  std::vector< double > result;
-  
-  arg1 = (std::vector< std::string > *)jarg1;
-  if (!arg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  arg2 = (std::vector< std::string > *)jarg2;
-  if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  arg10 = jarg10 ? true : false; 
-  arg11 = jarg11 ? true : false; 
-  {
-    try
-    {
-      result = mirGetForwardRate2((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,arg10,arg11);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< double >((const std::vector< double > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirSetUpFwdFXConstantCurve(char * jarg1, char * jarg2, void * jarg3, void * jarg4, char * jarg5) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::vector< std::vector< std::string > > *arg3 = 0 ;
-  std::vector< std::vector< std::string > > *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  arg3 = (std::vector< std::vector< std::string > > *)jarg3;
-  if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  arg4 = (std::vector< std::vector< std::string > > *)jarg4;
-  if (!arg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::vector< std::string > > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  {
-    try
-    {
-      result = mirSetUpFwdFXConstantCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::string const &)*arg5);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirSwapStubRate(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, char * jarg8, unsigned int jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, void * jarg15, void * jarg16, void * jarg17, char * jarg18, char * jarg19, unsigned int jarg20, unsigned int jarg21) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  bool arg9 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  std::string *arg13 = 0 ;
-  std::string *arg14 = 0 ;
-  std::vector< std::string > *arg15 = 0 ;
-  std::vector< std::string > *arg16 = 0 ;
-  std::vector< double > *arg17 = 0 ;
-  std::string *arg18 = 0 ;
-  std::string *arg19 = 0 ;
-  bool arg20 ;
-  bool arg21 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  arg9 = jarg9 ? true : false; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  if (!jarg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg13_str(jarg13);
-  arg13 = &arg13_str; 
-  if (!jarg14) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg14_str(jarg14);
-  arg14 = &arg14_str; 
-  arg15 = (std::vector< std::string > *)jarg15;
-  if (!arg15) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  arg16 = (std::vector< std::string > *)jarg16;
-  if (!arg16) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  arg17 = (std::vector< double > *)jarg17;
-  if (!arg17) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< double > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg18) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg18_str(jarg18);
-  arg18 = &arg18_str; 
-  if (!jarg19) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg19_str(jarg19);
-  arg19 = &arg19_str; 
-  arg20 = jarg20 ? true : false; 
-  arg21 = jarg21 ? true : false; 
-  {
-    try
-    {
-      result = (double)mirSwapStubRate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::vector< std::string > const &)*arg15,(std::vector< std::string > const &)*arg16,(std::vector< double > const &)*arg17,(std::string const &)*arg18,(std::string const &)*arg19,arg20,arg21);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetZeroRate1__SWIG_0(double jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, unsigned int jarg7) {
-  double jresult ;
-  double arg1 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  bool arg7 ;
-  double result;
-  
-  arg1 = (double)jarg1; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  arg7 = jarg7 ? true : false; 
-  {
-    try
-    {
-      result = (double)mirGetZeroRate1(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,arg7);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirGetZeroRate1__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, unsigned int jarg7) {
-  void * jresult ;
-  std::vector< double > *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  bool arg7 ;
-  std::vector< double > result;
-  
-  arg1 = (std::vector< double > *)jarg1;
-  if (!arg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< double > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  arg7 = jarg7 ? true : false; 
-  {
-    try
-    {
-      result = mirGetZeroRate1((std::vector< double > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,arg7);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< double >((const std::vector< double > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetZeroRate2__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, char * jarg8, unsigned int jarg9) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  bool arg9 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  arg9 = jarg9 ? true : false; 
-  {
-    try
-    {
-      result = (double)mirGetZeroRate2((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,arg9);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirGetZeroRate2__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, char * jarg8, unsigned int jarg9) {
-  void * jresult ;
-  std::vector< std::string > *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  bool arg9 ;
-  std::vector< double > result;
-  
-  arg1 = (std::vector< std::string > *)jarg1;
-  if (!arg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  arg9 = jarg9 ? true : false; 
-  {
-    try
-    {
-      result = mirGetZeroRate2((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,arg9);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< double >((const std::vector< double > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirOutputCurve(char * jarg1, char * jarg2) {
-  void * jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::vector< std::vector< double > > result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  {
-    try
-    {
-      result = mirOutputCurve((std::string const &)*arg1,(std::string const &)*arg2);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< std::vector< double > >((const std::vector< std::vector< double > > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirSwapPV01(double jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, double jarg15, char * jarg16, char * jarg17, char * jarg18, char * jarg19, char * jarg20, char * jarg21, char * jarg22, char * jarg23, double jarg24, double jarg25, char * jarg26, char * jarg27, char * jarg28, char * jarg29, char * jarg30, unsigned int jarg31, unsigned int jarg32) {
-  double jresult ;
-  double arg1 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  std::string *arg13 = 0 ;
-  std::string *arg14 = 0 ;
-  double arg15 ;
-  std::string *arg16 = 0 ;
-  std::string *arg17 = 0 ;
-  std::string *arg18 = 0 ;
-  std::string *arg19 = 0 ;
-  std::string *arg20 = 0 ;
-  std::string *arg21 = 0 ;
-  std::string *arg22 = 0 ;
-  std::string *arg23 = 0 ;
-  double arg24 ;
-  double arg25 ;
-  std::string *arg26 = 0 ;
-  std::string *arg27 = 0 ;
-  std::string *arg28 = 0 ;
-  std::string *arg29 = 0 ;
-  std::string *arg30 = 0 ;
-  bool arg31 ;
-  bool arg32 ;
-  double result;
-  
-  arg1 = (double)jarg1; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  if (!jarg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg13_str(jarg13);
-  arg13 = &arg13_str; 
-  if (!jarg14) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg14_str(jarg14);
-  arg14 = &arg14_str; 
-  arg15 = (double)jarg15; 
-  if (!jarg16) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg16_str(jarg16);
-  arg16 = &arg16_str; 
-  if (!jarg17) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg17_str(jarg17);
-  arg17 = &arg17_str; 
-  if (!jarg18) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg18_str(jarg18);
-  arg18 = &arg18_str; 
-  if (!jarg19) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg19_str(jarg19);
-  arg19 = &arg19_str; 
-  if (!jarg20) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg20_str(jarg20);
-  arg20 = &arg20_str; 
-  if (!jarg21) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg21_str(jarg21);
-  arg21 = &arg21_str; 
-  if (!jarg22) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg22_str(jarg22);
-  arg22 = &arg22_str; 
-  if (!jarg23) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg23_str(jarg23);
-  arg23 = &arg23_str; 
-  arg24 = (double)jarg24; 
-  arg25 = (double)jarg25; 
-  if (!jarg26) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg26_str(jarg26);
-  arg26 = &arg26_str; 
-  if (!jarg27) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg27_str(jarg27);
-  arg27 = &arg27_str; 
-  if (!jarg28) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg28_str(jarg28);
-  arg28 = &arg28_str; 
-  if (!jarg29) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg29_str(jarg29);
-  arg29 = &arg29_str; 
-  if (!jarg30) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg30_str(jarg30);
-  arg30 = &arg30_str; 
-  arg31 = jarg31 ? true : false; 
-  arg32 = jarg32 ? true : false; 
-  {
-    try
-    {
-      result = (double)mirSwapPV01(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,arg15,(std::string const &)*arg16,(std::string const &)*arg17,(std::string const &)*arg18,(std::string const &)*arg19,(std::string const &)*arg20,(std::string const &)*arg21,(std::string const &)*arg22,(std::string const &)*arg23,arg24,arg25,(std::string const &)*arg26,(std::string const &)*arg27,(std::string const &)*arg28,(std::string const &)*arg29,(std::string const &)*arg30,arg31,arg32);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirCompound3__SWIG_0(void * jarg1, void * jarg2, char * jarg3, char * jarg4, char * jarg5, double jarg6, unsigned int jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15) {
-  void * jresult ;
-  std::vector< std::string > *arg1 = 0 ;
-  std::vector< std::string > *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  double arg6 ;
-  bool arg7 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  std::string *arg13 = 0 ;
-  std::string *arg14 = 0 ;
-  std::string *arg15 = 0 ;
-  std::vector< double > result;
-  
-  arg1 = (std::vector< std::string > *)jarg1;
-  if (!arg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  arg2 = (std::vector< std::string > *)jarg2;
-  if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  arg6 = (double)jarg6; 
-  arg7 = jarg7 ? true : false; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  if (!jarg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg13_str(jarg13);
-  arg13 = &arg13_str; 
-  if (!jarg14) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg14_str(jarg14);
-  arg14 = &arg14_str; 
-  if (!jarg15) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg15_str(jarg15);
-  arg15 = &arg15_str; 
-  {
-    try
-    {
-      result = mirCompound3((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< double >((const std::vector< double > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirCompound3__SWIG_1(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, double jarg6, unsigned int jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  double arg6 ;
-  bool arg7 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  std::string *arg13 = 0 ;
-  std::string *arg14 = 0 ;
-  std::string *arg15 = 0 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  arg6 = (double)jarg6; 
-  arg7 = jarg7 ? true : false; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  if (!jarg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg13_str(jarg13);
-  arg13 = &arg13_str; 
-  if (!jarg14) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg14_str(jarg14);
-  arg14 = &arg14_str; 
-  if (!jarg15) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg15_str(jarg15);
-  arg15 = &arg15_str; 
-  {
-    try
-    {
-      result = (double)mirCompound3((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetAnnuity1(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  {
-    try
-    {
-      result = (double)mirGetAnnuity1((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetAnnuity2(char * jarg1, void * jarg2, char * jarg3, char * jarg4, char * jarg5) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::vector< std::string > *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  arg2 = (std::vector< std::string > *)jarg2;
-  if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "std::vector< std::string > const & type is null", 0);
-    return 0;
-  } 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  {
-    try
-    {
-      result = (double)mirGetAnnuity2((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_mirGetBusinessDays(char * jarg1, char * jarg2, char * jarg3) {
-  int jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  int result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  {
-    try
-    {
-      result = (int)mirGetBusinessDays((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirGetECBStartDate(char * jarg1) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  {
-    try
-    {
-      result = mirGetECBStartDate((std::string const &)*arg1);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirGetNextCBDate(char * jarg1, char * jarg2, unsigned int jarg3) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  bool arg3 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  arg3 = jarg3 ? true : false; 
-  {
-    try
-    {
-      result = mirGetNextCBDate((std::string const &)*arg1,(std::string const &)*arg2,arg3);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirGetNextECBDate(char * jarg1, unsigned int jarg2) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  bool arg2 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  arg2 = jarg2 ? true : false; 
-  {
-    try
-    {
-      result = mirGetNextECBDate((std::string const &)*arg1,arg2);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT double SWIGSTDCALL CSharp_mirGetTerm(char * jarg1, char * jarg2, char * jarg3, unsigned int jarg4) {
-  double jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  bool arg4 ;
-  double result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  arg4 = jarg4 ? true : false; 
-  {
-    try
-    {
-      result = (double)mirGetTerm((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_mirSwapSchedule(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15, char * jarg16, char * jarg17, unsigned int jarg18) {
-  void * jresult ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string *arg4 = 0 ;
-  std::string *arg5 = 0 ;
-  std::string *arg6 = 0 ;
-  std::string *arg7 = 0 ;
-  std::string *arg8 = 0 ;
-  std::string *arg9 = 0 ;
-  std::string *arg10 = 0 ;
-  std::string *arg11 = 0 ;
-  std::string *arg12 = 0 ;
-  std::string *arg13 = 0 ;
-  std::string *arg14 = 0 ;
-  std::string *arg15 = 0 ;
-  std::string *arg16 = 0 ;
-  std::string *arg17 = 0 ;
-  bool arg18 ;
-  std::vector< std::vector< std::string > > result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg2_str(jarg2);
-  arg2 = &arg2_str; 
-  if (!jarg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg3_str(jarg3);
-  arg3 = &arg3_str; 
-  if (!jarg4) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg4_str(jarg4);
-  arg4 = &arg4_str; 
-  if (!jarg5) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg5_str(jarg5);
-  arg5 = &arg5_str; 
-  if (!jarg6) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg6_str(jarg6);
-  arg6 = &arg6_str; 
-  if (!jarg7) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg7_str(jarg7);
-  arg7 = &arg7_str; 
-  if (!jarg8) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg8_str(jarg8);
-  arg8 = &arg8_str; 
-  if (!jarg9) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg9_str(jarg9);
-  arg9 = &arg9_str; 
-  if (!jarg10) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg10_str(jarg10);
-  arg10 = &arg10_str; 
-  if (!jarg11) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg11_str(jarg11);
-  arg11 = &arg11_str; 
-  if (!jarg12) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg12_str(jarg12);
-  arg12 = &arg12_str; 
-  if (!jarg13) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg13_str(jarg13);
-  arg13 = &arg13_str; 
-  if (!jarg14) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg14_str(jarg14);
-  arg14 = &arg14_str; 
-  if (!jarg15) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg15_str(jarg15);
-  arg15 = &arg15_str; 
-  if (!jarg16) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg16_str(jarg16);
-  arg16 = &arg16_str; 
-  if (!jarg17) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg17_str(jarg17);
-  arg17 = &arg17_str; 
-  arg18 = jarg18 ? true : false; 
-  {
-    try
-    {
-      result = mirSwapSchedule((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15,(std::string const &)*arg16,(std::string const &)*arg17,arg18);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_mirClearEntityPool() {
-  char * jresult ;
-  std::string result;
-  
-  {
-    try
-    {
-      result = mirClearEntityPool();
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateBasis__SWIG_0(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqCurveCalibrateBasis__SWIG_0(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -11080,7 +6822,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateBasis__SWIG_0(char * jarg1,
   {
     try
     {
-      result = meCurveCalibrateBasis((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::vector< std::vector< std::string > > const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9);
+      result = aqCurveCalibrateBasis((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::vector< std::vector< std::string > > const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9);
     }
     catch (const std::exception& e)
     {
@@ -11094,7 +6836,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateBasis__SWIG_0(char * jarg1,
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateBasis__SWIG_1(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9, void * jarg10, void * jarg11) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqCurveCalibrateBasis__SWIG_1(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9, void * jarg10, void * jarg11) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -11170,7 +6912,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateBasis__SWIG_1(char * jarg1,
   {
     try
     {
-      result = meCurveCalibrateBasis((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::vector< std::vector< std::string > > const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9,(std::vector< std::vector< std::string > > const &)*arg10,(std::vector< std::vector< std::string > > const &)*arg11);
+      result = aqCurveCalibrateBasis((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::vector< std::vector< std::string > > const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9,(std::vector< std::vector< std::string > > const &)*arg10,(std::vector< std::vector< std::string > > const &)*arg11);
     }
     catch (const std::exception& e)
     {
@@ -11184,7 +6926,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateBasis__SWIG_1(char * jarg1,
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateFXForwards(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqCurveCalibrateFXForwards(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -11224,7 +6966,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateFXForwards(char * jarg1, ch
   {
     try
     {
-      result = meCurveCalibrateFXForwards((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5);
+      result = aqCurveCalibrateFXForwards((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -11238,7 +6980,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateFXForwards(char * jarg1, ch
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateOIS(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9, void * jarg10, void * jarg11) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqCurveCalibrateOIS(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9, void * jarg10, void * jarg11) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -11314,7 +7056,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateOIS(char * jarg1, char * ja
   {
     try
     {
-      result = meCurveCalibrateOIS((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::vector< std::vector< std::string > > const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9,(std::vector< std::vector< std::string > > const &)*arg10,(std::vector< std::vector< std::string > > const &)*arg11);
+      result = aqCurveCalibrateOIS((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::vector< std::vector< std::string > > const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9,(std::vector< std::vector< std::string > > const &)*arg10,(std::vector< std::vector< std::string > > const &)*arg11);
     }
     catch (const std::exception& e)
     {
@@ -11328,7 +7070,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateOIS(char * jarg1, char * ja
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateSwap(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9, void * jarg10, void * jarg11, void * jarg12, void * jarg13, void * jarg14, void * jarg15, void * jarg16) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqCurveCalibrateSwap(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9, void * jarg10, void * jarg11, void * jarg12, void * jarg13, void * jarg14, void * jarg15, void * jarg16) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -11434,7 +7176,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateSwap(char * jarg1, char * j
   {
     try
     {
-      result = meCurveCalibrateSwap((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::vector< std::vector< std::string > > const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9,(std::vector< std::vector< std::string > > const &)*arg10,(std::vector< std::vector< std::string > > const &)*arg11,(std::vector< std::vector< std::string > > const &)*arg12,(std::vector< std::vector< std::string > > const &)*arg13,(std::vector< std::vector< std::string > > const &)*arg14,(std::vector< std::vector< std::string > > const &)*arg15,(std::vector< std::vector< std::string > > const &)*arg16);
+      result = aqCurveCalibrateSwap((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::vector< std::vector< std::string > > const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9,(std::vector< std::vector< std::string > > const &)*arg10,(std::vector< std::vector< std::string > > const &)*arg11,(std::vector< std::vector< std::string > > const &)*arg12,(std::vector< std::vector< std::string > > const &)*arg13,(std::vector< std::vector< std::string > > const &)*arg14,(std::vector< std::vector< std::string > > const &)*arg15,(std::vector< std::vector< std::string > > const &)*arg16);
     }
     catch (const std::exception& e)
     {
@@ -11448,7 +7190,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveCalibrateSwap(char * jarg1, char * j
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveCompoundRate__SWIG_0(void * jarg1, void * jarg2, char * jarg3, char * jarg4, char * jarg5, double jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveCompoundRate__SWIG_0(void * jarg1, void * jarg2, char * jarg3, char * jarg4, char * jarg5, double jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -11553,7 +7295,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveCompoundRate__SWIG_0(void * jarg1, v
   {
     try
     {
-      result = meCurveCompoundRate((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15);
+      result = aqCurveCompoundRate((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15);
     }
     catch (const std::exception& e)
     {
@@ -11567,7 +7309,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveCompoundRate__SWIG_0(void * jarg1, v
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meCurveCompoundRate__SWIG_1(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, double jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCurveCompoundRate__SWIG_1(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, double jarg6, char * jarg7, char * jarg8, char * jarg9, char * jarg10, char * jarg11, char * jarg12, char * jarg13, char * jarg14, char * jarg15) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -11674,7 +7416,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveCompoundRate__SWIG_1(char * jarg1, c
   {
     try
     {
-      result = (double)meCurveCompoundRate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15);
+      result = (double)aqCurveCompoundRate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,(std::string const &)*arg12,(std::string const &)*arg13,(std::string const &)*arg14,(std::string const &)*arg15);
     }
     catch (const std::exception& e)
     {
@@ -11688,7 +7430,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveCompoundRate__SWIG_1(char * jarg1, c
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactors(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveDiscountFactors(void * jarg1, char * jarg2, char * jarg3) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -11715,7 +7457,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactors(void * jarg1, char *
   {
     try
     {
-      result = meCurveDiscountFactors((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = aqCurveDiscountFactors((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -11729,7 +7471,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactors(void * jarg1, char *
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsFromYearFractions__SWIG_0(double jarg1, char * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCurveDiscountFactorsFromYearFractions__SWIG_0(double jarg1, char * jarg2, char * jarg3, char * jarg4) {
   double jresult ;
   double arg1 ;
   std::string *arg2 = 0 ;
@@ -11759,7 +7501,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsFromYearFractions__SW
   {
     try
     {
-      result = (double)meCurveDiscountFactorsFromYearFractions(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = (double)aqCurveDiscountFactorsFromYearFractions(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -11773,7 +7515,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsFromYearFractions__SW
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsFromYearFractions__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveDiscountFactorsFromYearFractions__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4) {
   void * jresult ;
   std::vector< double > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -11807,7 +7549,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsFromYearFractions__SW
   {
     try
     {
-      result = meCurveDiscountFactorsFromYearFractions((std::vector< double > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = aqCurveDiscountFactorsFromYearFractions((std::vector< double > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -11821,7 +7563,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsFromYearFractions__SW
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsFromTenors__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCurveDiscountFactorsFromTenors__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -11863,7 +7605,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsFromTenors__SWIG_0(ch
   {
     try
     {
-      result = (double)meCurveDiscountFactorsFromTenors((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+      result = (double)aqCurveDiscountFactorsFromTenors((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -11877,7 +7619,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsFromTenors__SWIG_0(ch
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsFromTenors__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveDiscountFactorsFromTenors__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -11918,7 +7660,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsFromTenors__SWIG_1(vo
   {
     try
     {
-      result = meCurveDiscountFactorsFromTenors((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+      result = aqCurveDiscountFactorsFromTenors((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -11932,7 +7674,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsFromTenors__SWIG_1(vo
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStarting__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCurveDiscountFactorsForwardStarting__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -11967,7 +7709,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStarting__SWIG
   {
     try
     {
-      result = (double)meCurveDiscountFactorsForwardStarting((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = (double)aqCurveDiscountFactorsForwardStarting((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -11981,7 +7723,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStarting__SWIG
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStarting__SWIG_1(void * jarg1, void * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveDiscountFactorsForwardStarting__SWIG_1(void * jarg1, void * jarg2, char * jarg3, char * jarg4) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -12014,7 +7756,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStarting__SWIG
   {
     try
     {
-      result = meCurveDiscountFactorsForwardStarting((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = aqCurveDiscountFactorsForwardStarting((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -12028,7 +7770,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStarting__SWIG
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromYearFractions__SWIG_0(char * jarg1, double jarg2, char * jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCurveDiscountFactorsForwardStartingFromYearFractions__SWIG_0(char * jarg1, double jarg2, char * jarg3, char * jarg4, char * jarg5) {
   double jresult ;
   std::string *arg1 = 0 ;
   double arg2 ;
@@ -12065,7 +7807,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromYe
   {
     try
     {
-      result = (double)meCurveDiscountFactorsForwardStartingFromYearFractions((std::string const &)*arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+      result = (double)aqCurveDiscountFactorsForwardStartingFromYearFractions((std::string const &)*arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -12079,7 +7821,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromYe
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromYearFractions__SWIG_1(void * jarg1, void * jarg2, char * jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveDiscountFactorsForwardStartingFromYearFractions__SWIG_1(void * jarg1, void * jarg2, char * jarg3, char * jarg4, char * jarg5) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::vector< double > *arg2 = 0 ;
@@ -12119,7 +7861,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromYe
   {
     try
     {
-      result = meCurveDiscountFactorsForwardStartingFromYearFractions((std::vector< std::string > const &)*arg1,(std::vector< double > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+      result = aqCurveDiscountFactorsForwardStartingFromYearFractions((std::vector< std::string > const &)*arg1,(std::vector< double > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -12133,7 +7875,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromYe
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromTenor__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCurveDiscountFactorsForwardStartingFromTenor__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12182,7 +7924,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromTe
   {
     try
     {
-      result = (double)meCurveDiscountFactorsForwardStartingFromTenor((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+      result = (double)aqCurveDiscountFactorsForwardStartingFromTenor((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
     }
     catch (const std::exception& e)
     {
@@ -12196,7 +7938,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromTe
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromTenor__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveDiscountFactorsForwardStartingFromTenor__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12244,7 +7986,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromTe
   {
     try
     {
-      result = meCurveDiscountFactorsForwardStartingFromTenor((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+      result = aqCurveDiscountFactorsForwardStartingFromTenor((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
     }
     catch (const std::exception& e)
     {
@@ -12258,7 +8000,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDiscountFactorsForwardStartingFromTe
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDisplay(char * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveDisplay(char * jarg1, char * jarg2) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12279,7 +8021,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDisplay(char * jarg1, char * jarg2) 
   {
     try
     {
-      result = meCurveDisplay((std::string const &)*arg1,(std::string const &)*arg2);
+      result = aqCurveDisplay((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -12293,7 +8035,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveDisplay(char * jarg1, char * jarg2) 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRatesFromYearFraction(void * jarg1, double jarg2, char * jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveForwardRatesFromYearFraction(void * jarg1, double jarg2, char * jarg3, char * jarg4, char * jarg5) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   double arg2 ;
@@ -12329,7 +8071,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRatesFromYearFraction(void * 
   {
     try
     {
-      result = meCurveForwardRatesFromYearFraction((std::vector< std::string > const &)*arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+      result = aqCurveForwardRatesFromYearFraction((std::vector< std::string > const &)*arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -12343,7 +8085,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRatesFromYearFraction(void * 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRates(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveForwardRates(void * jarg1, char * jarg2, char * jarg3) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12370,7 +8112,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRates(void * jarg1, char * ja
   {
     try
     {
-      result = meCurveForwardRates((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = aqCurveForwardRates((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -12384,7 +8126,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRates(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRatesFromForwardDates__SWIG_0(void * jarg1, void * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveForwardRatesFromForwardDates__SWIG_0(void * jarg1, void * jarg2, char * jarg3, char * jarg4) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -12417,7 +8159,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRatesFromForwardDates__SWIG_0
   {
     try
     {
-      result = meCurveForwardRatesFromForwardDates((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = aqCurveForwardRatesFromForwardDates((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -12431,7 +8173,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRatesFromForwardDates__SWIG_0
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRatesFromForwardDates__SWIG_1(void * jarg1, void * jarg2, char * jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveForwardRatesFromForwardDates__SWIG_1(void * jarg1, void * jarg2, char * jarg3, char * jarg4, char * jarg5) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -12471,7 +8213,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRatesFromForwardDates__SWIG_1
   {
     try
     {
-      result = meCurveForwardRatesFromForwardDates((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+      result = aqCurveForwardRatesFromForwardDates((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -12485,7 +8227,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveForwardRatesFromForwardDates__SWIG_1
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meCurveZeroRatesFromYearFractions__SWIG_0(double jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCurveZeroRatesFromYearFractions__SWIG_0(double jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
   double jresult ;
   double arg1 ;
   std::string *arg2 = 0 ;
@@ -12522,7 +8264,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveZeroRatesFromYearFractions__SWIG_0(d
   {
     try
     {
-      result = (double)meCurveZeroRatesFromYearFractions(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+      result = (double)aqCurveZeroRatesFromYearFractions(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -12536,7 +8278,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveZeroRatesFromYearFractions__SWIG_0(d
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveZeroRatesFromYearFractions__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveZeroRatesFromYearFractions__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
   void * jresult ;
   std::vector< double > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12577,7 +8319,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveZeroRatesFromYearFractions__SWIG_1(v
   {
     try
     {
-      result = meCurveZeroRatesFromYearFractions((std::vector< double > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+      result = aqCurveZeroRatesFromYearFractions((std::vector< double > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -12591,7 +8333,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveZeroRatesFromYearFractions__SWIG_1(v
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meCurveZeroRatesFromTenors__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCurveZeroRatesFromTenors__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12647,7 +8389,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveZeroRatesFromTenors__SWIG_0(char * j
   {
     try
     {
-      result = (double)meCurveZeroRatesFromTenors((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7);
+      result = (double)aqCurveZeroRatesFromTenors((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7);
     }
     catch (const std::exception& e)
     {
@@ -12661,7 +8403,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meCurveZeroRatesFromTenors__SWIG_0(char * j
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveZeroRatesFromTenors__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveZeroRatesFromTenors__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12716,7 +8458,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveZeroRatesFromTenors__SWIG_1(void * j
   {
     try
     {
-      result = meCurveZeroRatesFromTenors((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7);
+      result = aqCurveZeroRatesFromTenors((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7);
     }
     catch (const std::exception& e)
     {
@@ -12730,7 +8472,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveZeroRatesFromTenors__SWIG_1(void * j
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateFromTenor__SWIG_0(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12772,7 +8514,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_0(char * jarg1, char 
   {
     try
     {
-      result = meDateFromTenor((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+      result = aqDateFromTenor((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -12786,7 +8528,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_0(char * jarg1, char 
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_1(char * jarg1, char * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateFromTenor__SWIG_1(char * jarg1, char * jarg2, char * jarg3, char * jarg4) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12821,7 +8563,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_1(char * jarg1, char 
   {
     try
     {
-      result = meDateFromTenor((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = aqDateFromTenor((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -12835,7 +8577,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_1(char * jarg1, char 
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_2(char * jarg1, char * jarg2) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateFromTenor__SWIG_2(char * jarg1, char * jarg2) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12856,7 +8598,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_2(char * jarg1, char 
   {
     try
     {
-      result = meDateFromTenor((std::string const &)*arg1,(std::string const &)*arg2);
+      result = aqDateFromTenor((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -12870,7 +8612,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_2(char * jarg1, char 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_3(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqDateFromTenor__SWIG_3(void * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12911,7 +8653,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_3(void * jarg1, char 
   {
     try
     {
-      result = meDateFromTenor((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+      result = aqDateFromTenor((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -12925,7 +8667,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meDateFromTenor__SWIG_3(void * jarg1, char 
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromYearFraction(char * jarg1, double jarg2, char * jarg3) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateFromYearFraction(char * jarg1, double jarg2, char * jarg3) {
   char * jresult ;
   std::string *arg1 = 0 ;
   double arg2 ;
@@ -12948,7 +8690,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromYearFraction(char * jarg1, double
   {
     try
     {
-      result = meDateFromYearFraction((std::string const &)*arg1,arg2,(std::string const &)*arg3);
+      result = aqDateFromYearFraction((std::string const &)*arg1,arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -12962,7 +8704,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateFromYearFraction(char * jarg1, double
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_meDateBusinessDays(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_aqDateBusinessDays(char * jarg1, char * jarg2, char * jarg3) {
   int jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12990,7 +8732,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_meDateBusinessDays(char * jarg1, char * jarg2,
   {
     try
     {
-      result = (int)meDateBusinessDays((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (int)aqDateBusinessDays((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -13004,7 +8746,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_meDateBusinessDays(char * jarg1, char * jarg2,
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meDateYearFraction__SWIG_0(char * jarg1, char * jarg2, char * jarg3, unsigned int jarg4) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqDateYearFraction__SWIG_0(char * jarg1, char * jarg2, char * jarg3, unsigned int jarg4) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -13034,7 +8776,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meDateYearFraction__SWIG_0(char * jarg1, ch
   {
     try
     {
-      result = (double)meDateYearFraction((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4);
+      result = (double)aqDateYearFraction((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4);
     }
     catch (const std::exception& e)
     {
@@ -13048,7 +8790,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meDateYearFraction__SWIG_0(char * jarg1, ch
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meDateYearFraction__SWIG_1(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqDateYearFraction__SWIG_1(char * jarg1, char * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -13076,7 +8818,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meDateYearFraction__SWIG_1(char * jarg1, ch
   {
     try
     {
-      result = (double)meDateYearFraction((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqDateYearFraction((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -13090,7 +8832,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meDateYearFraction__SWIG_1(char * jarg1, ch
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSwapUSDSpotDate(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqObjSwapsUSDSpotDate(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -13139,7 +8881,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSwapUSDSpotDate(char * jarg1, char * j
   {
     try
     {
-      result = meLWOSwapUSDSpotDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+      result = aqObjSwapsUSDSpotDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
     }
     catch (const std::exception& e)
     {
@@ -13153,7 +8895,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSwapUSDSpotDate(char * jarg1, char * j
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateShiftedSpotDate(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateShiftedSpotDate(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, char * jarg7) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -13209,7 +8951,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateShiftedSpotDate(char * jarg1, char * 
   {
     try
     {
-      result = meDateShiftedSpotDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7);
+      result = aqDateShiftedSpotDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7);
     }
     catch (const std::exception& e)
     {
@@ -13223,7 +8965,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateShiftedSpotDate(char * jarg1, char * 
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateCentralBank(char * jarg1, char * jarg2, unsigned int jarg3) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateCentralBank(char * jarg1, char * jarg2, unsigned int jarg3) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -13246,7 +8988,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateCentralBank(char * jarg1, char * jarg
   {
     try
     {
-      result = meDateCentralBank((std::string const &)*arg1,(std::string const &)*arg2,arg3);
+      result = aqDateCentralBank((std::string const &)*arg1,(std::string const &)*arg2,arg3);
     }
     catch (const std::exception& e)
     {
@@ -13260,7 +9002,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateCentralBank(char * jarg1, char * jarg
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateECB(char * jarg1, unsigned int jarg2) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateECB(char * jarg1, unsigned int jarg2) {
   char * jresult ;
   std::string *arg1 = 0 ;
   bool arg2 ;
@@ -13276,7 +9018,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateECB(char * jarg1, unsigned int jarg2)
   {
     try
     {
-      result = meDateECB((std::string const &)*arg1,arg2);
+      result = aqDateECB((std::string const &)*arg1,arg2);
     }
     catch (const std::exception& e)
     {
@@ -13290,7 +9032,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateECB(char * jarg1, unsigned int jarg2)
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateECBSwapStart(char * jarg1) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateECBSwapStart(char * jarg1) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string result;
@@ -13304,7 +9046,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateECBSwapStart(char * jarg1) {
   {
     try
     {
-      result = meDateECBSwapStart((std::string const &)*arg1);
+      result = aqDateECBSwapStart((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -13318,7 +9060,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateECBSwapStart(char * jarg1) {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateECBSwapEnd(char * jarg1) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateECBSwapEnd(char * jarg1) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string result;
@@ -13332,7 +9074,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateECBSwapEnd(char * jarg1) {
   {
     try
     {
-      result = meDateECBSwapEnd((std::string const &)*arg1);
+      result = aqDateECBSwapEnd((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -13346,7 +9088,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateECBSwapEnd(char * jarg1) {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateIMMFromMonth(int jarg1, int jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateIMMFromMonth(int jarg1, int jarg2, char * jarg3, char * jarg4) {
   char * jresult ;
   int arg1 ;
   int arg2 ;
@@ -13371,7 +9113,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateIMMFromMonth(int jarg1, int jarg2, ch
   {
     try
     {
-      result = meDateIMMFromMonth(arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = aqDateIMMFromMonth(arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -13385,7 +9127,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateIMMFromMonth(int jarg1, int jarg2, ch
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateNthIMM(int jarg1, int jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateNthIMM(int jarg1, int jarg2, char * jarg3, char * jarg4) {
   char * jresult ;
   int arg1 ;
   int arg2 ;
@@ -13410,7 +9152,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateNthIMM(int jarg1, int jarg2, char * j
   {
     try
     {
-      result = meDateNthIMM(arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = aqDateNthIMM(arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -13424,7 +9166,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateNthIMM(int jarg1, int jarg2, char * j
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meDateNthIMMFromStartDate(char * jarg1, int jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqDateNthIMMFromStartDate(char * jarg1, int jarg2, char * jarg3, char * jarg4) {
   char * jresult ;
   std::string *arg1 = 0 ;
   int arg2 ;
@@ -13454,7 +9196,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateNthIMMFromStartDate(char * jarg1, int
   {
     try
     {
-      result = meDateNthIMMFromStartDate((std::string const &)*arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = aqDateNthIMMFromStartDate((std::string const &)*arg1,arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -13468,7 +9210,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meDateNthIMMFromStartDate(char * jarg1, int
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductAssetSwapSpread__SWIG_0(double jarg1, void * jarg2, unsigned int jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqAssetSwapSpread__SWIG_0(double jarg1, void * jarg2, unsigned int jarg3) {
   double jresult ;
   double arg1 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -13485,7 +9227,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductAssetSwapSpread__SWIG_0(double jar
   {
     try
     {
-      result = (double)meProductAssetSwapSpread(arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3);
+      result = (double)aqAssetSwapSpread(arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3);
     }
     catch (const std::exception& e)
     {
@@ -13499,7 +9241,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductAssetSwapSpread__SWIG_0(double jar
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductAssetSwapSpread__SWIG_1(double jarg1, void * jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqAssetSwapSpread__SWIG_1(double jarg1, void * jarg2) {
   double jresult ;
   double arg1 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -13514,7 +9256,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductAssetSwapSpread__SWIG_1(double jar
   {
     try
     {
-      result = (double)meProductAssetSwapSpread(arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+      result = (double)aqAssetSwapSpread(arg1,(std::vector< std::vector< std::string > > const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -13528,14 +9270,14 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductAssetSwapSpread__SWIG_1(double jar
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductAssetSwapSpreadLVBKeys() {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqAssetSwapSpreadLVBKeys() {
   void * jresult ;
   std::vector< std::string > result;
   
   {
     try
     {
-      result = meProductAssetSwapSpreadLVBKeys();
+      result = aqAssetSwapSpreadLVBKeys();
     }
     catch (const std::exception& e)
     {
@@ -13549,7 +9291,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductAssetSwapSpreadLVBKeys() {
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISParRate__SWIG_0(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapOisParRate__SWIG_0(void * jarg1, unsigned int jarg2) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   bool arg2 ;
@@ -13564,7 +9306,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISParRate__SWIG_0(void * jarg1, u
   {
     try
     {
-      result = (double)meProductOISParRate((std::vector< std::vector< std::string > > const &)*arg1,arg2);
+      result = (double)aqSwapOisParRate((std::vector< std::vector< std::string > > const &)*arg1,arg2);
     }
     catch (const std::exception& e)
     {
@@ -13578,7 +9320,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISParRate__SWIG_0(void * jarg1, u
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISParRate__SWIG_1(void * jarg1) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapOisParRate__SWIG_1(void * jarg1) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   double result;
@@ -13591,7 +9333,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISParRate__SWIG_1(void * jarg1) {
   {
     try
     {
-      result = (double)meProductOISParRate((std::vector< std::vector< std::string > > const &)*arg1);
+      result = (double)aqSwapOisParRate((std::vector< std::vector< std::string > > const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -13605,14 +9347,14 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISParRate__SWIG_1(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductOISParRateLVBKeys() {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapOisParRateLVBKeys() {
   void * jresult ;
   std::vector< std::string > result;
   
   {
     try
     {
-      result = meProductOISParRateLVBKeys();
+      result = aqSwapOisParRateLVBKeys();
     }
     catch (const std::exception& e)
     {
@@ -13626,7 +9368,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductOISParRateLVBKeys() {
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISPV__SWIG_0(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapOisPV__SWIG_0(void * jarg1, unsigned int jarg2) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   bool arg2 ;
@@ -13641,7 +9383,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISPV__SWIG_0(void * jarg1, unsign
   {
     try
     {
-      result = (double)meProductOISPV((std::vector< std::vector< std::string > > const &)*arg1,arg2);
+      result = (double)aqSwapOisPV((std::vector< std::vector< std::string > > const &)*arg1,arg2);
     }
     catch (const std::exception& e)
     {
@@ -13655,7 +9397,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISPV__SWIG_0(void * jarg1, unsign
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISPV__SWIG_1(void * jarg1) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapOisPV__SWIG_1(void * jarg1) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   double result;
@@ -13668,7 +9410,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISPV__SWIG_1(void * jarg1) {
   {
     try
     {
-      result = (double)meProductOISPV((std::vector< std::vector< std::string > > const &)*arg1);
+      result = (double)aqSwapOisPV((std::vector< std::vector< std::string > > const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -13682,14 +9424,14 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductOISPV__SWIG_1(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductOISPVLVBKeys() {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapOisPVLVBKeys() {
   void * jresult ;
   std::vector< std::string > result;
   
   {
     try
     {
-      result = meProductOISPVLVBKeys();
+      result = aqSwapOisPVLVBKeys();
     }
     catch (const std::exception& e)
     {
@@ -13703,7 +9445,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductOISPVLVBKeys() {
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapDV01__SWIG_0(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapDV01__SWIG_0(void * jarg1, unsigned int jarg2) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   bool arg2 ;
@@ -13718,7 +9460,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapDV01__SWIG_0(void * jarg1, uns
   {
     try
     {
-      result = (double)meProductSwapDV01((std::vector< std::vector< std::string > > const &)*arg1,arg2);
+      result = (double)aqSwapDV01((std::vector< std::vector< std::string > > const &)*arg1,arg2);
     }
     catch (const std::exception& e)
     {
@@ -13732,7 +9474,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapDV01__SWIG_0(void * jarg1, uns
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapDV01__SWIG_1(void * jarg1) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapDV01__SWIG_1(void * jarg1) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   double result;
@@ -13745,7 +9487,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapDV01__SWIG_1(void * jarg1) {
   {
     try
     {
-      result = (double)meProductSwapDV01((std::vector< std::vector< std::string > > const &)*arg1);
+      result = (double)aqSwapDV01((std::vector< std::vector< std::string > > const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -13759,14 +9501,14 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapDV01__SWIG_1(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapDV01LVBKeys() {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapDV01LVBKeys() {
   void * jresult ;
   std::vector< std::string > result;
   
   {
     try
     {
-      result = meProductSwapDV01LVBKeys();
+      result = aqSwapDV01LVBKeys();
     }
     catch (const std::exception& e)
     {
@@ -13780,7 +9522,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapDV01LVBKeys() {
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapParRate__SWIG_0(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapParRate__SWIG_0(void * jarg1, unsigned int jarg2) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   bool arg2 ;
@@ -13795,7 +9537,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapParRate__SWIG_0(void * jarg1, 
   {
     try
     {
-      result = (double)meProductSwapParRate((std::vector< std::vector< std::string > > const &)*arg1,arg2);
+      result = (double)aqSwapParRate((std::vector< std::vector< std::string > > const &)*arg1,arg2);
     }
     catch (const std::exception& e)
     {
@@ -13809,7 +9551,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapParRate__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapParRate__SWIG_1(void * jarg1) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapParRate__SWIG_1(void * jarg1) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   double result;
@@ -13822,7 +9564,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapParRate__SWIG_1(void * jarg1) 
   {
     try
     {
-      result = (double)meProductSwapParRate((std::vector< std::vector< std::string > > const &)*arg1);
+      result = (double)aqSwapParRate((std::vector< std::vector< std::string > > const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -13836,14 +9578,14 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapParRate__SWIG_1(void * jarg1) 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapParRateLVBKeys() {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapParRateLVBKeys() {
   void * jresult ;
   std::vector< std::string > result;
   
   {
     try
     {
-      result = meProductSwapParRateLVBKeys();
+      result = aqSwapParRateLVBKeys();
     }
     catch (const std::exception& e)
     {
@@ -13857,7 +9599,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapParRateLVBKeys() {
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV__SWIG_0(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapPV__SWIG_0(void * jarg1, unsigned int jarg2) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   bool arg2 ;
@@ -13872,7 +9614,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV__SWIG_0(void * jarg1, unsig
   {
     try
     {
-      result = (double)meProductSwapPV((std::vector< std::vector< std::string > > const &)*arg1,arg2);
+      result = (double)aqSwapPV((std::vector< std::vector< std::string > > const &)*arg1,arg2);
     }
     catch (const std::exception& e)
     {
@@ -13886,7 +9628,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV__SWIG_0(void * jarg1, unsig
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV__SWIG_1(void * jarg1) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapPV__SWIG_1(void * jarg1) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   double result;
@@ -13899,7 +9641,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV__SWIG_1(void * jarg1) {
   {
     try
     {
-      result = (double)meProductSwapPV((std::vector< std::vector< std::string > > const &)*arg1);
+      result = (double)aqSwapPV((std::vector< std::vector< std::string > > const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -13913,14 +9655,14 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV__SWIG_1(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_tryMeProductSwapPVLVBKeys() {
+SWIGEXPORT void * SWIGSTDCALL CSharp_tryAqSwapPVLVBKeys() {
   void * jresult ;
   std::vector< std::string > result;
   
   {
     try
     {
-      result = tryMeProductSwapPVLVBKeys();
+      result = tryAqSwapPVLVBKeys();
     }
     catch (const std::exception& e)
     {
@@ -13934,7 +9676,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_tryMeProductSwapPVLVBKeys() {
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV01__SWIG_0(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapPV01__SWIG_0(void * jarg1, unsigned int jarg2) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   bool arg2 ;
@@ -13949,7 +9691,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV01__SWIG_0(void * jarg1, uns
   {
     try
     {
-      result = (double)meProductSwapPV01((std::vector< std::vector< std::string > > const &)*arg1,arg2);
+      result = (double)aqSwapPV01((std::vector< std::vector< std::string > > const &)*arg1,arg2);
     }
     catch (const std::exception& e)
     {
@@ -13963,7 +9705,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV01__SWIG_0(void * jarg1, uns
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV01__SWIG_1(void * jarg1) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapPV01__SWIG_1(void * jarg1) {
   double jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   double result;
@@ -13976,7 +9718,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV01__SWIG_1(void * jarg1) {
   {
     try
     {
-      result = (double)meProductSwapPV01((std::vector< std::vector< std::string > > const &)*arg1);
+      result = (double)aqSwapPV01((std::vector< std::vector< std::string > > const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -13990,14 +9732,14 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapPV01__SWIG_1(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapPV01LVBKeys() {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapPV01LVBKeys() {
   void * jresult ;
   std::vector< std::string > result;
   
   {
     try
     {
-      result = meProductSwapPV01LVBKeys();
+      result = aqSwapPV01LVBKeys();
     }
     catch (const std::exception& e)
     {
@@ -14011,7 +9753,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapPV01LVBKeys() {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapSchedule__SWIG_0(unsigned int jarg1, void * jarg2, unsigned int jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapSchedule__SWIG_0(unsigned int jarg1, void * jarg2, unsigned int jarg3) {
   void * jresult ;
   bool arg1 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -14028,7 +9770,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapSchedule__SWIG_0(unsigned int 
   {
     try
     {
-      result = meProductSwapSchedule(arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3);
+      result = aqSwapSchedule(arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3);
     }
     catch (const std::exception& e)
     {
@@ -14042,7 +9784,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapSchedule__SWIG_0(unsigned int 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapSchedule__SWIG_1(unsigned int jarg1, void * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapSchedule__SWIG_1(unsigned int jarg1, void * jarg2) {
   void * jresult ;
   bool arg1 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -14057,7 +9799,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapSchedule__SWIG_1(unsigned int 
   {
     try
     {
-      result = meProductSwapSchedule(arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+      result = aqSwapSchedule(arg1,(std::vector< std::vector< std::string > > const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -14071,7 +9813,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapSchedule__SWIG_1(unsigned int 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapScheduleFixed(unsigned int jarg1, void * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapScheduleFixed(unsigned int jarg1, void * jarg2) {
   void * jresult ;
   bool arg1 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -14086,7 +9828,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapScheduleFixed(unsigned int jar
   {
     try
     {
-      result = meProductSwapScheduleFixed(arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+      result = aqSwapScheduleFixed(arg1,(std::vector< std::vector< std::string > > const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -14100,7 +9842,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapScheduleFixed(unsigned int jar
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapScheduleFloat(unsigned int jarg1, void * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapScheduleFloat(unsigned int jarg1, void * jarg2) {
   void * jresult ;
   bool arg1 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -14115,7 +9857,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapScheduleFloat(unsigned int jar
   {
     try
     {
-      result = meProductSwapScheduleFloat(arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+      result = aqSwapScheduleFloat(arg1,(std::vector< std::vector< std::string > > const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -14129,14 +9871,14 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapScheduleFloat(unsigned int jar
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapScheduleLVBKeys() {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapScheduleLVBKeys() {
   void * jresult ;
   std::vector< std::string > result;
   
   {
     try
     {
-      result = meProductSwapScheduleLVBKeys();
+      result = aqSwapScheduleLVBKeys();
     }
     catch (const std::exception& e)
     {
@@ -14150,7 +9892,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapScheduleLVBKeys() {
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapStubRate(void * jarg1, void * jarg2, void * jarg3, void * jarg4, unsigned int jarg5) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapStubRate(void * jarg1, void * jarg2, void * jarg3, void * jarg4, unsigned int jarg5) {
   double jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -14183,7 +9925,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapStubRate(void * jarg1, void * 
   {
     try
     {
-      result = (double)meProductSwapStubRate((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< double > const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,arg5);
+      result = (double)aqSwapStubRate((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< double > const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,arg5);
     }
     catch (const std::exception& e)
     {
@@ -14197,14 +9939,14 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meProductSwapStubRate(void * jarg1, void * 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapStubRateLVBKeys() {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapStubRateLVBKeys() {
   void * jresult ;
   std::vector< std::string > result;
   
   {
     try
     {
-      result = meProductSwapStubRateLVBKeys();
+      result = aqSwapStubRateLVBKeys();
     }
     catch (const std::exception& e)
     {
@@ -14218,7 +9960,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meProductSwapStubRateLVBKeys() {
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meUtilityInterpolation(void * jarg1, void * jarg2, double jarg3, char * jarg4) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqMathInterpolation(void * jarg1, void * jarg2, double jarg3, char * jarg4) {
   double jresult ;
   std::vector< double > *arg1 = 0 ;
   std::vector< double > *arg2 = 0 ;
@@ -14246,7 +9988,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meUtilityInterpolation(void * jarg1, void *
   {
     try
     {
-      result = (double)meUtilityInterpolation((std::vector< double > const &)*arg1,(std::vector< double > const &)*arg2,arg3,(std::string const &)*arg4);
+      result = (double)aqMathInterpolation((std::vector< double > const &)*arg1,(std::vector< double > const &)*arg2,arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -14260,7 +10002,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meUtilityInterpolation(void * jarg1, void *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityPCA(char * jarg1, void * jarg2, unsigned int jarg3, int jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqMathPCA(char * jarg1, void * jarg2, unsigned int jarg3, int jarg4) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< double > > *arg2 = 0 ;
@@ -14284,7 +10026,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityPCA(char * jarg1, void * jarg2, un
   {
     try
     {
-      result = meUtilityPCA((std::string const &)*arg1,(std::vector< std::vector< double > > const &)*arg2,arg3,arg4);
+      result = aqMathPCA((std::string const &)*arg1,(std::vector< std::vector< double > > const &)*arg2,arg3,arg4);
     }
     catch (const std::exception& e)
     {
@@ -14298,7 +10040,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityPCA(char * jarg1, void * jarg2, un
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityRecord(unsigned int jarg1, char * jarg2, unsigned int jarg3, int jarg4, int jarg5) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqToolRecord(unsigned int jarg1, char * jarg2, unsigned int jarg3, int jarg4, int jarg5) {
   char * jresult ;
   bool arg1 ;
   std::string *arg2 = 0 ;
@@ -14320,7 +10062,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityRecord(unsigned int jarg1, char * 
   {
     try
     {
-      result = meUtilityRecord(arg1,(std::string const &)*arg2,arg3,arg4,arg5);
+      result = aqToolRecord(arg1,(std::string const &)*arg2,arg3,arg4,arg5);
     }
     catch (const std::exception& e)
     {
@@ -14334,14 +10076,14 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityRecord(unsigned int jarg1, char * 
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityClearEntityPool() {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqToolClearEntityPool() {
   char * jresult ;
   std::string result;
   
   {
     try
     {
-      result = meUtilityClearEntityPool();
+      result = aqToolClearEntityPool();
     }
     catch (const std::exception& e)
     {
@@ -14355,14 +10097,14 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityClearEntityPool() {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityClearLWOCache() {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqObjectClearCache() {
   char * jresult ;
   std::string result;
   
   {
     try
     {
-      result = meUtilityClearLWOCache();
+      result = aqObjectClearCache();
     }
     catch (const std::exception& e)
     {
@@ -14376,35 +10118,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityClearLWOCache() {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityLoadCalendarFile(char * jarg1) {
-  char * jresult ;
-  std::string *arg1 = 0 ;
-  std::string result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  {
-    try
-    {
-      result = meUtilityLoadCalendarFile((std::string const &)*arg1);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityLoadStaticData(char * jarg1) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqToolLoadCalendarFile(char * jarg1) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string result;
@@ -14418,7 +10132,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityLoadStaticData(char * jarg1) {
   {
     try
     {
-      result = meUtilityLoadStaticData((std::string const &)*arg1);
+      result = aqToolLoadCalendarFile((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -14432,14 +10146,42 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityLoadStaticData(char * jarg1) {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityVersion() {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqToolLoadStaticData(char * jarg1) {
+  char * jresult ;
+  std::string *arg1 = 0 ;
+  std::string result;
+  
+  if (!jarg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return 0;
+  }
+  std::string arg1_str(jarg1);
+  arg1 = &arg1_str; 
+  {
+    try
+    {
+      result = aqToolLoadStaticData((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      {
+        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+  }
+  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqToolVersion() {
   char * jresult ;
   std::string result;
   
   {
     try
     {
-      result = meUtilityVersion();
+      result = aqToolVersion();
     }
     catch (const std::exception& e)
     {
@@ -14453,7 +10195,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityVersion() {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityParallelModeEnable(unsigned int jarg1) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqToolParallelModeEnable(unsigned int jarg1) {
   char * jresult ;
   bool arg1 ;
   std::string result;
@@ -14462,7 +10204,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityParallelModeEnable(unsigned int ja
   {
     try
     {
-      result = meUtilityParallelModeEnable(arg1);
+      result = aqToolParallelModeEnable(arg1);
     }
     catch (const std::exception& e)
     {
@@ -14476,14 +10218,14 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityParallelModeEnable(unsigned int ja
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityParallelModeStatus() {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqToolParallelModeStatus() {
   char * jresult ;
   std::string result;
   
   {
     try
     {
-      result = meUtilityParallelModeStatus();
+      result = aqToolParallelModeStatus();
     }
     catch (const std::exception& e)
     {
@@ -14497,7 +10239,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meUtilityParallelModeStatus() {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveInterpolationJoinDate(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqCurveInterpolationJoinDate(char * jarg1, char * jarg2, char * jarg3) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -14525,7 +10267,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveInterpolationJoinDate(char * jarg1, 
   {
     try
     {
-      result = meCurveInterpolationJoinDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = aqCurveInterpolationJoinDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -14539,7 +10281,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveInterpolationJoinDate(char * jarg1, 
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveDualBootstrap(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, void * jarg7, void * jarg8, void * jarg9, void * jarg10, void * jarg11, void * jarg12, void * jarg13, void * jarg14, void * jarg15, void * jarg16, void * jarg17, void * jarg18, void * jarg19, void * jarg20, void * jarg21, void * jarg22, void * jarg23, void * jarg24, void * jarg25, void * jarg26, void * jarg27) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqCurveDualBootstrap(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5, char * jarg6, void * jarg7, void * jarg8, void * jarg9, void * jarg10, void * jarg11, void * jarg12, void * jarg13, void * jarg14, void * jarg15, void * jarg16, void * jarg17, void * jarg18, void * jarg19, void * jarg20, void * jarg21, void * jarg22, void * jarg23, void * jarg24, void * jarg25, void * jarg26, void * jarg27) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -14714,7 +10456,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveDualBootstrap(char * jarg1, char * j
   {
     try
     {
-      result = meCurveDualBootstrap((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9,(std::vector< std::vector< std::string > > const &)*arg10,(std::vector< std::vector< std::string > > const &)*arg11,(std::vector< std::vector< std::string > > const &)*arg12,(std::vector< std::vector< std::string > > const &)*arg13,(std::vector< std::vector< std::string > > const &)*arg14,(std::vector< std::vector< std::string > > const &)*arg15,(std::vector< std::vector< std::string > > const &)*arg16,(std::vector< std::vector< std::string > > const &)*arg17,(std::vector< std::vector< std::string > > const &)*arg18,(std::vector< std::vector< std::string > > const &)*arg19,(std::vector< std::vector< std::string > > const &)*arg20,(std::vector< std::vector< std::string > > const &)*arg21,(std::vector< std::vector< std::string > > const &)*arg22,(std::vector< std::vector< std::string > > const &)*arg23,(std::vector< std::vector< std::string > > const &)*arg24,(std::vector< std::vector< std::string > > const &)*arg25,(std::vector< std::vector< std::string > > const &)*arg26,(std::vector< std::vector< std::string > > const &)*arg27);
+      result = aqCurveDualBootstrap((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::vector< std::vector< std::string > > const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9,(std::vector< std::vector< std::string > > const &)*arg10,(std::vector< std::vector< std::string > > const &)*arg11,(std::vector< std::vector< std::string > > const &)*arg12,(std::vector< std::vector< std::string > > const &)*arg13,(std::vector< std::vector< std::string > > const &)*arg14,(std::vector< std::vector< std::string > > const &)*arg15,(std::vector< std::vector< std::string > > const &)*arg16,(std::vector< std::vector< std::string > > const &)*arg17,(std::vector< std::vector< std::string > > const &)*arg18,(std::vector< std::vector< std::string > > const &)*arg19,(std::vector< std::vector< std::string > > const &)*arg20,(std::vector< std::vector< std::string > > const &)*arg21,(std::vector< std::vector< std::string > > const &)*arg22,(std::vector< std::vector< std::string > > const &)*arg23,(std::vector< std::vector< std::string > > const &)*arg24,(std::vector< std::vector< std::string > > const &)*arg25,(std::vector< std::vector< std::string > > const &)*arg26,(std::vector< std::vector< std::string > > const &)*arg27);
     }
     catch (const std::exception& e)
     {
@@ -14728,7 +10470,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meCurveDualBootstrap(char * jarg1, char * j
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSave(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqObjectSave(char * jarg1, char * jarg2, char * jarg3) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -14756,7 +10498,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSave(char * jarg1, char * jarg2, char 
   {
     try
     {
-      result = meLWOSave((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = aqObjectSave((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -14770,7 +10512,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSave(char * jarg1, char * jarg2, char 
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOLoad(char * jarg1) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqObjectLoad(char * jarg1) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string result;
@@ -14784,7 +10526,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOLoad(char * jarg1) {
   {
     try
     {
-      result = meLWOLoad((std::string const &)*arg1);
+      result = aqObjectLoad((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -14798,7 +10540,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOLoad(char * jarg1) {
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOBondCreate(char * jarg1, void * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqBondObjectCreate(char * jarg1, void * jarg2, void * jarg3, unsigned int jarg4) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -14826,7 +10568,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOBondCreate(char * jarg1, void * jarg2,
   {
     try
     {
-      result = meLWOBondCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,arg4);
+      result = aqBondObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,arg4);
     }
     catch (const std::exception& e)
     {
@@ -14840,7 +10582,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOBondCreate(char * jarg1, void * jarg2,
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOBondCreateFromGenerator(char * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqBondObjectCreateFromGenerator(char * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -14869,7 +10611,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOBondCreateFromGenerator(char * jarg1, 
   {
     try
     {
-      result = meLWOBondCreateFromGenerator((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,arg4);
+      result = aqBondObjectCreateFromGenerator((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,arg4);
     }
     catch (const std::exception& e)
     {
@@ -14883,7 +10625,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOBondCreateFromGenerator(char * jarg1, 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondPrice(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondObjectPrice(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -14916,7 +10658,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondPrice(char * jarg1, void * jarg2, 
   {
     try
     {
-      result = meLWOBondPrice((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< double > const &)*arg3,(std::string const &)*arg4);
+      result = aqBondObjectPrice((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< double > const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -14930,7 +10672,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondPrice(char * jarg1, void * jarg2, 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondCleanPrice(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondObjectCleanPrice(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -14963,7 +10705,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondCleanPrice(char * jarg1, void * ja
   {
     try
     {
-      result = meLWOBondCleanPrice((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< double > const &)*arg3,(std::string const &)*arg4);
+      result = aqBondObjectCleanPrice((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< double > const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -14977,7 +10719,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondCleanPrice(char * jarg1, void * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDirtyPrice(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondObjectDirtyPrice(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -15010,7 +10752,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDirtyPrice(char * jarg1, void * ja
   {
     try
     {
-      result = meLWOBondDirtyPrice((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< double > const &)*arg3,(std::string const &)*arg4);
+      result = aqBondObjectDirtyPrice((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< double > const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -15024,7 +10766,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDirtyPrice(char * jarg1, void * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondYield(char * jarg1, void * jarg2, void * jarg3, char * jarg4, unsigned int jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondObjectYield(char * jarg1, void * jarg2, void * jarg3, char * jarg4, unsigned int jarg5) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -15061,7 +10803,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondYield(char * jarg1, void * jarg2, 
   {
     try
     {
-      result = meLWOBondYield((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< double > const &)*arg3,(std::string const &)*arg4,(bool const &)*arg5);
+      result = aqBondObjectYield((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< double > const &)*arg3,(std::string const &)*arg4,(bool const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -15075,7 +10817,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondYield(char * jarg1, void * jarg2, 
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOBondForwardPrice(char * jarg1, char * jarg2, char * jarg3, double jarg4, double jarg5, char * jarg6) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqBondObjectForwardPrice(char * jarg1, char * jarg2, char * jarg3, double jarg4, double jarg5, char * jarg6) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -15118,7 +10860,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOBondForwardPrice(char * jarg1, char * 
   {
     try
     {
-      result = (double)meLWOBondForwardPrice((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(double const &)*arg4,(double const &)*arg5,(std::string const &)*arg6);
+      result = (double)aqBondObjectForwardPrice((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(double const &)*arg4,(double const &)*arg5,(std::string const &)*arg6);
     }
     catch (const std::exception& e)
     {
@@ -15132,7 +10874,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOBondForwardPrice(char * jarg1, char * 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBCreate__SWIG_0(void * jarg1, void * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqToolLVBCreate__SWIG_0(void * jarg1, void * jarg2) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -15151,7 +10893,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBCreate__SWIG_0(void * jarg1, vo
   {
     try
     {
-      result = meUtilityLVBCreate((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2);
+      result = aqToolLVBCreate((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -15165,7 +10907,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBCreate__SWIG_0(void * jarg1, vo
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBCreate__SWIG_1(void * jarg1, void * jarg2, void * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqToolLVBCreate__SWIG_1(void * jarg1, void * jarg2, void * jarg3) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -15190,7 +10932,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBCreate__SWIG_1(void * jarg1, vo
   {
     try
     {
-      result = meUtilityLVBCreate((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::string > const &)*arg3);
+      result = aqToolLVBCreate((std::vector< std::string > const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::string > const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -15204,7 +10946,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBCreate__SWIG_1(void * jarg1, vo
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBAppendAndCreate__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqToolsLVBAppendAndCreate__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   void * jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -15231,7 +10973,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBAppendAndCreate__SWIG_0(void * 
   {
     try
     {
-      result = meUtilityLVBAppendAndCreate((std::vector< std::vector< std::string > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = aqToolsLVBAppendAndCreate((std::vector< std::vector< std::string > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -15245,7 +10987,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBAppendAndCreate__SWIG_0(void * 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBAppendAndCreate__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqToolsLVBAppendAndCreate__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4) {
   void * jresult ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -15279,7 +11021,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBAppendAndCreate__SWIG_1(void * 
   {
     try
     {
-      result = meUtilityLVBAppendAndCreate((std::vector< std::vector< std::string > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = aqToolsLVBAppendAndCreate((std::vector< std::vector< std::string > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -15293,7 +11035,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meUtilityLVBAppendAndCreate__SWIG_1(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_meUtilityLVBAdd__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_aqToolLVBAdd__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   std::string *arg2 = 0 ;
   std::string *arg3 = 0 ;
@@ -15318,7 +11060,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_meUtilityLVBAdd__SWIG_0(void * jarg1, char * 
   {
     try
     {
-      meUtilityLVBAdd(*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      aqToolLVBAdd(*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -15330,7 +11072,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_meUtilityLVBAdd__SWIG_0(void * jarg1, char * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_meUtilityLVBAdd__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_aqToolLVBAdd__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4) {
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   std::string *arg2 = 0 ;
   std::string *arg3 = 0 ;
@@ -15362,7 +11104,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_meUtilityLVBAdd__SWIG_1(void * jarg1, char * 
   {
     try
     {
-      meUtilityLVBAdd(*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      aqToolLVBAdd(*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -15374,7 +11116,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_meUtilityLVBAdd__SWIG_1(void * jarg1, char * 
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSwapCreate(char * jarg1, void * jarg2, void * jarg3, unsigned int jarg4, unsigned int jarg5) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqSwapObjectCreate(char * jarg1, void * jarg2, void * jarg3, unsigned int jarg4, unsigned int jarg5) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -15404,7 +11146,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSwapCreate(char * jarg1, void * jarg2,
   {
     try
     {
-      result = meLWOSwapCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,arg4,arg5);
+      result = aqSwapObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,arg4,arg5);
     }
     catch (const std::exception& e)
     {
@@ -15418,7 +11160,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSwapCreate(char * jarg1, void * jarg2,
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSwapCreateFromGenerator(char * jarg1, char * jarg2, void * jarg3, void * jarg4, unsigned int jarg5, unsigned int jarg6) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqSwapObjectCreateFromGenerator(char * jarg1, char * jarg2, void * jarg3, void * jarg4, unsigned int jarg5, unsigned int jarg6) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -15455,7 +11197,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSwapCreateFromGenerator(char * jarg1, 
   {
     try
     {
-      result = meLWOSwapCreateFromGenerator((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,arg5,arg6);
+      result = aqSwapObjectCreateFromGenerator((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,arg5,arg6);
     }
     catch (const std::exception& e)
     {
@@ -15469,7 +11211,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOSwapCreateFromGenerator(char * jarg1, 
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapPV(char * jarg1, void * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapObjectPV(char * jarg1, void * jarg2, char * jarg3, void * jarg4) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -15502,7 +11244,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapPV(char * jarg1, void * jarg2, cha
   {
     try
     {
-      result = (double)meLWOSwapPV((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4);
+      result = (double)aqSwapObjectPV((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -15516,7 +11258,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapPV(char * jarg1, void * jarg2, cha
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapPV01(char * jarg1, void * jarg2, void * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapObjectPV01(char * jarg1, void * jarg2, void * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -15542,7 +11284,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapPV01(char * jarg1, void * jarg2, v
   {
     try
     {
-      result = (double)meLWOSwapPV01((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
+      result = (double)aqSwapObjectPV01((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -15556,7 +11298,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapPV01(char * jarg1, void * jarg2, v
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapParRate__SWIG_0(char * jarg1, void * jarg2, void * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapObjectParRate__SWIG_0(char * jarg1, void * jarg2, void * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -15582,7 +11324,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapParRate__SWIG_0(char * jarg1, void
   {
     try
     {
-      result = (double)meLWOSwapParRate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
+      result = (double)aqSwapObjectParRate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -15596,7 +11338,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapParRate__SWIG_0(char * jarg1, void
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapParRate__SWIG_1(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapObjectParRate__SWIG_1(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -15629,7 +11371,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapParRate__SWIG_1(char * jarg1, void
   {
     try
     {
-      result = (double)meLWOSwapParRate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4);
+      result = (double)aqSwapObjectParRate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -15643,7 +11385,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapParRate__SWIG_1(char * jarg1, void
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapAnnuity(char * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapObjectAnnuity(char * jarg1, void * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -15670,7 +11412,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapAnnuity(char * jarg1, void * jarg2
   {
     try
     {
-      result = (double)meLWOSwapAnnuity((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqSwapObjectAnnuity((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -15684,7 +11426,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapAnnuity(char * jarg1, void * jarg2
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapParSpread(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapObjectParSpread(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -15717,7 +11459,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapParSpread(char * jarg1, void * jar
   {
     try
     {
-      result = (double)meLWOSwapParSpread((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4);
+      result = (double)aqSwapObjectParSpread((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -15731,7 +11473,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapParSpread(char * jarg1, void * jar
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapSpread(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqSwapObjectSpread(char * jarg1, void * jarg2, void * jarg3, char * jarg4) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -15764,7 +11506,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapSpread(char * jarg1, void * jarg2,
   {
     try
     {
-      result = (double)meLWOSwapSpread((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4);
+      result = (double)aqSwapObjectSpread((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -15778,7 +11520,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOSwapSpread(char * jarg1, void * jarg2,
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOSwapDisplayCashflows(char * jarg1, void * jarg2, char * jarg3, void * jarg4, unsigned int jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqSwapObjectDisplayCashflows(char * jarg1, void * jarg2, char * jarg3, void * jarg4, unsigned int jarg5) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > *arg2 = 0 ;
@@ -15813,7 +11555,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOSwapDisplayCashflows(char * jarg1, voi
   {
     try
     {
-      result = meLWOSwapDisplayCashflows((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,arg5);
+      result = aqSwapObjectDisplayCashflows((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4,arg5);
     }
     catch (const std::exception& e)
     {
@@ -16262,7 +12004,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_PolynomialCalibrationResults(void * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveNelsonSiegelCalibrate(void * jarg1, void * jarg2, void * jarg3, unsigned int jarg4, unsigned int jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondCurveNelsonSiegelCalibrate(void * jarg1, void * jarg2, void * jarg3, unsigned int jarg4, unsigned int jarg5, void * jarg6, void * jarg7) {
   void * jresult ;
   std::vector< double > *arg1 = 0 ;
   std::vector< double > *arg2 = 0 ;
@@ -16307,7 +12049,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveNelsonSiegelCalibrate(void * jar
   {
     try
     {
-      result = meBondCurveNelsonSiegelCalibrate((std::vector< double > const &)*arg1,(std::vector< double > const &)*arg2,(swig::NelsonSiegelSvenssonParameters const &)*arg3,(unsigned int const &)*arg4,(unsigned int const &)*arg5,(std::vector< double > const &)*arg6,(std::vector< double > const &)*arg7);
+      result = aqBondCurveNelsonSiegelCalibrate((std::vector< double > const &)*arg1,(std::vector< double > const &)*arg2,(swig::NelsonSiegelSvenssonParameters const &)*arg3,(unsigned int const &)*arg4,(unsigned int const &)*arg5,(std::vector< double > const &)*arg6,(std::vector< double > const &)*arg7);
     }
     catch (const std::exception& e)
     {
@@ -16321,7 +12063,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveNelsonSiegelCalibrate(void * jar
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveSvenssonCalibrate(void * jarg1, void * jarg2, void * jarg3, unsigned int jarg4, unsigned int jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondCurveSvenssonCalibrate(void * jarg1, void * jarg2, void * jarg3, unsigned int jarg4, unsigned int jarg5, void * jarg6, void * jarg7) {
   void * jresult ;
   std::vector< double > *arg1 = 0 ;
   std::vector< double > *arg2 = 0 ;
@@ -16366,7 +12108,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveSvenssonCalibrate(void * jarg1, 
   {
     try
     {
-      result = meBondCurveSvenssonCalibrate((std::vector< double > const &)*arg1,(std::vector< double > const &)*arg2,(swig::NelsonSiegelSvenssonParameters const &)*arg3,(unsigned int const &)*arg4,(unsigned int const &)*arg5,(std::vector< double > const &)*arg6,(std::vector< double > const &)*arg7);
+      result = aqBondCurveSvenssonCalibrate((std::vector< double > const &)*arg1,(std::vector< double > const &)*arg2,(swig::NelsonSiegelSvenssonParameters const &)*arg3,(unsigned int const &)*arg4,(unsigned int const &)*arg5,(std::vector< double > const &)*arg6,(std::vector< double > const &)*arg7);
     }
     catch (const std::exception& e)
     {
@@ -16380,7 +12122,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveSvenssonCalibrate(void * jarg1, 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurvePolynomialCalibrate(unsigned int jarg1, void * jarg2, void * jarg3, unsigned int jarg4, unsigned int jarg5, double jarg6, double jarg7) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondCurvePolynomialCalibrate(unsigned int jarg1, void * jarg2, void * jarg3, unsigned int jarg4, unsigned int jarg5, double jarg6, double jarg7) {
   void * jresult ;
   unsigned int arg1 ;
   std::vector< double > *arg2 = 0 ;
@@ -16411,7 +12153,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurvePolynomialCalibrate(unsigned int
   {
     try
     {
-      result = meBondCurvePolynomialCalibrate(arg1,(std::vector< double > const &)*arg2,(std::vector< double > const &)*arg3,(unsigned int const &)*arg4,arg5,arg6,arg7);
+      result = aqBondCurvePolynomialCalibrate(arg1,(std::vector< double > const &)*arg2,(std::vector< double > const &)*arg3,(unsigned int const &)*arg4,arg5,arg6,arg7);
     }
     catch (const std::exception& e)
     {
@@ -16425,7 +12167,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurvePolynomialCalibrate(unsigned int
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveNelsonSiegelYield(double jarg1, double jarg2, double jarg3, double jarg4, void * jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondCurveNelsonSiegelYield(double jarg1, double jarg2, double jarg3, double jarg4, void * jarg5) {
   void * jresult ;
   double *arg1 = 0 ;
   double *arg2 = 0 ;
@@ -16454,7 +12196,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveNelsonSiegelYield(double jarg1, 
   {
     try
     {
-      result = meBondCurveNelsonSiegelYield((double const &)*arg1,(double const &)*arg2,(double const &)*arg3,(double const &)*arg4,(std::vector< double > const &)*arg5);
+      result = aqBondCurveNelsonSiegelYield((double const &)*arg1,(double const &)*arg2,(double const &)*arg3,(double const &)*arg4,(std::vector< double > const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -16468,7 +12210,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveNelsonSiegelYield(double jarg1, 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveSvenssonYield(double jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, void * jarg7) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondCurveSvenssonYield(double jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, void * jarg7) {
   void * jresult ;
   double *arg1 = 0 ;
   double *arg2 = 0 ;
@@ -16505,7 +12247,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveSvenssonYield(double jarg1, doub
   {
     try
     {
-      result = meBondCurveSvenssonYield((double const &)*arg1,(double const &)*arg2,(double const &)*arg3,(double const &)*arg4,(double const &)*arg5,(double const &)*arg6,(std::vector< double > const &)*arg7);
+      result = aqBondCurveSvenssonYield((double const &)*arg1,(double const &)*arg2,(double const &)*arg3,(double const &)*arg4,(double const &)*arg5,(double const &)*arg6,(std::vector< double > const &)*arg7);
     }
     catch (const std::exception& e)
     {
@@ -16519,7 +12261,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurveSvenssonYield(double jarg1, doub
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurvePolynomialYield(void * jarg1, void * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondCurvePolynomialYield(void * jarg1, void * jarg2) {
   void * jresult ;
   std::vector< double > *arg1 = 0 ;
   std::vector< double > *arg2 = 0 ;
@@ -16538,7 +12280,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurvePolynomialYield(void * jarg1, vo
   {
     try
     {
-      result = meBondCurvePolynomialYield((std::vector< double > const &)*arg1,(std::vector< double > const &)*arg2);
+      result = aqBondCurvePolynomialYield((std::vector< double > const &)*arg1,(std::vector< double > const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -16552,7 +12294,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meBondCurvePolynomialYield(void * jarg1, vo
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplayCashflows__SWIG_0(char * jarg1, char * jarg2, double jarg3, char * jarg4, unsigned int jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondObjectDisplayCashflows__SWIG_0(char * jarg1, char * jarg2, double jarg3, char * jarg4, unsigned int jarg5) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -16588,7 +12330,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplayCashflows__SWIG_0(char * ja
   {
     try
     {
-      result = meLWOBondDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(double const &)*arg3,(std::string const &)*arg4,(bool const &)*arg5);
+      result = aqBondObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(double const &)*arg3,(std::string const &)*arg4,(bool const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -16602,7 +12344,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplayCashflows__SWIG_0(char * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplayCashflows__SWIG_1(char * jarg1, char * jarg2, double jarg3, char * jarg4, unsigned int jarg5, void * jarg6) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondObjectDisplayCashflows__SWIG_1(char * jarg1, char * jarg2, double jarg3, char * jarg4, unsigned int jarg5, void * jarg6) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -16644,7 +12386,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplayCashflows__SWIG_1(char * ja
   {
     try
     {
-      result = meLWOBondDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(double const &)*arg3,(std::string const &)*arg4,(bool const &)*arg5,(std::vector< std::string > const &)*arg6);
+      result = aqBondObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(double const &)*arg3,(std::string const &)*arg4,(bool const &)*arg5,(std::vector< std::string > const &)*arg6);
     }
     catch (const std::exception& e)
     {
@@ -16658,7 +12400,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplayCashflows__SWIG_1(char * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplaySchedule__SWIG_0(char * jarg1, unsigned int jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondObjectDisplaySchedule__SWIG_0(char * jarg1, unsigned int jarg2) {
   void * jresult ;
   std::string *arg1 = 0 ;
   bool *arg2 = 0 ;
@@ -16676,7 +12418,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplaySchedule__SWIG_0(char * jar
   {
     try
     {
-      result = meLWOBondDisplaySchedule((std::string const &)*arg1,(bool const &)*arg2);
+      result = aqBondObjectDisplaySchedule((std::string const &)*arg1,(bool const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -16690,7 +12432,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplaySchedule__SWIG_0(char * jar
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplaySchedule__SWIG_1(char * jarg1, unsigned int jarg2, void * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqBondObjectDisplaySchedule__SWIG_1(char * jarg1, unsigned int jarg2, void * jarg3) {
   void * jresult ;
   std::string *arg1 = 0 ;
   bool *arg2 = 0 ;
@@ -16714,7 +12456,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplaySchedule__SWIG_1(char * jar
   {
     try
     {
-      result = meLWOBondDisplaySchedule((std::string const &)*arg1,(bool const &)*arg2,(std::vector< std::string > const &)*arg3);
+      result = aqBondObjectDisplaySchedule((std::string const &)*arg1,(bool const &)*arg2,(std::vector< std::string > const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -16728,7 +12470,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOBondDisplaySchedule__SWIG_1(char * jar
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCreditModelCreate(char * jarg1, char * jarg2, void * jarg3, char * jarg4, void * jarg5) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqCreditModelCreate(char * jarg1, char * jarg2, void * jarg3, char * jarg4, void * jarg5) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -16768,7 +12510,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCreditModelCreate(char * jarg1, char *
   {
     try
     {
-      result = meLWOCreditModelCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5);
+      result = aqCreditModelCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -16782,7 +12524,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCreditModelCreate(char * jarg1, char *
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelSurvivalProbability(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditModelSurvivalProbability(char * jarg1, char * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -16810,7 +12552,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelSurvivalProbability(char * 
   {
     try
     {
-      result = (double)meLWOCreditModelSurvivalProbability((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCreditModelSurvivalProbability((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -16824,7 +12566,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelSurvivalProbability(char * 
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelDefaultProbability(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditModelDefaultProbability(char * jarg1, char * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -16852,7 +12594,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelDefaultProbability(char * j
   {
     try
     {
-      result = (double)meLWOCreditModelDefaultProbability((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCreditModelDefaultProbability((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -16866,7 +12608,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelDefaultProbability(char * j
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelHazardRate(char * jarg1, char * jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditModelHazardRate(char * jarg1, char * jarg2) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -16887,7 +12629,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelHazardRate(char * jarg1, ch
   {
     try
     {
-      result = (double)meLWOCreditModelHazardRate((std::string const &)*arg1,(std::string const &)*arg2);
+      result = (double)aqCreditModelHazardRate((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -16901,7 +12643,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelHazardRate(char * jarg1, ch
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelRiskyDiscountFactor(char * jarg1, char * jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqObjCreditModelRiskyDiscountFactor(char * jarg1, char * jarg2) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -16922,7 +12664,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelRiskyDiscountFactor(char * 
   {
     try
     {
-      result = (double)meLWOCreditModelRiskyDiscountFactor((std::string const &)*arg1,(std::string const &)*arg2);
+      result = (double)aqObjCreditModelRiskyDiscountFactor((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -16936,7 +12678,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditModelRiskyDiscountFactor(char * 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCreditModelRiskyDiscountFactors(char * jarg1, void * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCreditModelRiskyDiscountFactors(char * jarg1, void * jarg2) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -16956,7 +12698,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCreditModelRiskyDiscountFactors(char *
   {
     try
     {
-      result = meLWOCreditModelRiskyDiscountFactors((std::string const &)*arg1,(std::vector< std::string > const &)*arg2);
+      result = aqCreditModelRiskyDiscountFactors((std::string const &)*arg1,(std::vector< std::string > const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -16970,7 +12712,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCreditModelRiskyDiscountFactors(char *
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapPV(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapPV(char * jarg1, char * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -16998,7 +12740,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapPV(char * jarg1, char
   {
     try
     {
-      result = (double)meLWOCreditDefaultSwapPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCreditObjectDefaultSwapPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -17012,7 +12754,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapPV(char * jarg1, char
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapRiskyAnnuity(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapRiskyAnnuity(char * jarg1, char * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17040,7 +12782,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapRiskyAnnuity(char * j
   {
     try
     {
-      result = (double)meLWOCreditDefaultSwapRiskyAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCreditObjectDefaultSwapRiskyAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -17054,7 +12796,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapRiskyAnnuity(char * j
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapCS01(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapCS01(char * jarg1, char * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17082,7 +12824,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapCS01(char * jarg1, ch
   {
     try
     {
-      result = (double)meLWOCreditDefaultSwapCS01((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCreditObjectDefaultSwapCS01((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -17096,7 +12838,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapCS01(char * jarg1, ch
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapParSpread(char * jarg1, char * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapParSpread(char * jarg1, char * jarg2, char * jarg3, char * jarg4) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17131,7 +12873,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapParSpread(char * jarg
   {
     try
     {
-      result = (double)meLWOCreditDefaultSwapParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = (double)aqCreditObjectDefaultSwapParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -17145,7 +12887,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOCreditDefaultSwapParSpread(char * jarg
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapPV__SWIG_0(char * jarg1, char * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqTRSObjectPV__SWIG_0(char * jarg1, char * jarg2, char * jarg3, void * jarg4) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17179,7 +12921,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapPV__SWIG_0(char * jarg1
   {
     try
     {
-      result = (double)meLWOTotalReturnSwapPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4);
+      result = (double)aqTRSObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::vector< std::string > > const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -17193,7 +12935,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapPV__SWIG_0(char * jarg1
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapPV__SWIG_1(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqTRSObjectPV__SWIG_1(char * jarg1, char * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17221,7 +12963,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapPV__SWIG_1(char * jarg1
   {
     try
     {
-      result = (double)meLWOTotalReturnSwapPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqTRSObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -17235,7 +12977,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapPV__SWIG_1(char * jarg1
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParRate__SWIG_0(char * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqTRSObjectParRate__SWIG_0(char * jarg1, char * jarg2, void * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17262,7 +13004,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParRate__SWIG_0(char * 
   {
     try
     {
-      result = (double)meLWOTotalReturnSwapParRate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
+      result = (double)aqTRSObjectParRate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -17276,7 +13018,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParRate__SWIG_0(char * 
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParRate__SWIG_1(char * jarg1, char * jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqTRSObjectParRate__SWIG_1(char * jarg1, char * jarg2) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17297,7 +13039,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParRate__SWIG_1(char * 
   {
     try
     {
-      result = (double)meLWOTotalReturnSwapParRate((std::string const &)*arg1,(std::string const &)*arg2);
+      result = (double)aqTRSObjectParRate((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -17311,7 +13053,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParRate__SWIG_1(char * 
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParSpread__SWIG_0(char * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqTRSObjectParSpread__SWIG_0(char * jarg1, char * jarg2, void * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17338,7 +13080,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParSpread__SWIG_0(char 
   {
     try
     {
-      result = (double)meLWOTotalReturnSwapParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
+      result = (double)aqTRSObjectParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -17352,7 +13094,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParSpread__SWIG_0(char 
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParSpread__SWIG_1(char * jarg1, char * jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqTRSObjectParSpread__SWIG_1(char * jarg1, char * jarg2) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17373,7 +13115,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParSpread__SWIG_1(char 
   {
     try
     {
-      result = (double)meLWOTotalReturnSwapParSpread((std::string const &)*arg1,(std::string const &)*arg2);
+      result = (double)aqTRSObjectParSpread((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -17387,7 +13129,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapParSpread__SWIG_1(char 
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapAnnuity(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqTRSObjectAnnuity(char * jarg1, char * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17415,7 +13157,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapAnnuity(char * jarg1, c
   {
     try
     {
-      result = (double)meLWOTotalReturnSwapAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqTRSObjectAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -17429,7 +13171,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOTotalReturnSwapAnnuity(char * jarg1, c
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveResultsDisplayDiscountFactors(char * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurvesResultsDisplayDiscountFactors(char * jarg1, char * jarg2) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17450,7 +13192,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveResultsDisplayDiscountFactors(char *
   {
     try
     {
-      result = meCurveResultsDisplayDiscountFactors((std::string const &)*arg1,(std::string const &)*arg2);
+      result = aqCurvesResultsDisplayDiscountFactors((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -17464,7 +13206,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meCurveResultsDisplayDiscountFactors(char *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCurveDisplay(char * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveObjectDisplay(char * jarg1) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > result;
@@ -17478,7 +13220,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCurveDisplay(char * jarg1) {
   {
     try
     {
-      result = meLWOCurveDisplay((std::string const &)*arg1);
+      result = aqCurveObjectDisplay((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -17492,41 +13234,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCurveDisplay(char * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCurveMarketDataDisplay(char * jarg1, char * jarg2) {
-  void * jresult ;
-  std::string *arg1 = 0 ;
-  std::string arg2 ;
-  std::vector< std::vector< std::string > > result;
-  
-  if (!jarg1) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  std::string arg1_str(jarg1);
-  arg1 = &arg1_str; 
-  if (!jarg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
-    return 0;
-  }
-  (&arg2)->assign(jarg2); 
-  {
-    try
-    {
-      result = meLWOCurveMarketDataDisplay((std::string const &)*arg1,arg2);
-    }
-    catch (const std::exception& e)
-    {
-      {
-        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCurveMarketDataDisplayFromCurve(char * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveMarketDataDisplay(char * jarg1, char * jarg2) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::string arg2 ;
@@ -17546,7 +13254,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCurveMarketDataDisplayFromCurve(char *
   {
     try
     {
-      result = meLWOCurveMarketDataDisplayFromCurve((std::string const &)*arg1,arg2);
+      result = aqCurveMarketDataDisplay((std::string const &)*arg1,arg2);
     }
     catch (const std::exception& e)
     {
@@ -17560,7 +13268,41 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCurveMarketDataDisplayFromCurve(char *
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCurveCalibrate(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveMarketDataDisplayFromCurve(char * jarg1, char * jarg2) {
+  void * jresult ;
+  std::string *arg1 = 0 ;
+  std::string arg2 ;
+  std::vector< std::vector< std::string > > result;
+  
+  if (!jarg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return 0;
+  }
+  std::string arg1_str(jarg1);
+  arg1 = &arg1_str; 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return 0;
+  }
+  (&arg2)->assign(jarg2); 
+  {
+    try
+    {
+      result = aqCurveMarketDataDisplayFromCurve((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      {
+        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+  }
+  jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqCurveObjectCalibrate(char * jarg1, char * jarg2, char * jarg3, char * jarg4, char * jarg5) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17602,7 +13344,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCurveCalibrate(char * jarg1, char * ja
   {
     try
     {
-      result = meLWOCurveCalibrate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+      result = aqCurveObjectCalibrate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -17616,7 +13358,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCurveCalibrate(char * jarg1, char * ja
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCurveMarketDataCreate(char * jarg1, char * jarg2, void * jarg3, char * jarg4, void * jarg5, char * jarg6, void * jarg7, char * jarg8, void * jarg9) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqCurveMarketDataCreate(char * jarg1, char * jarg2, void * jarg3, char * jarg4, void * jarg5, char * jarg6, void * jarg7, char * jarg8, void * jarg9) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17682,7 +13424,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCurveMarketDataCreate(char * jarg1, ch
   {
     try
     {
-      result = meLWOCurveMarketDataCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::string const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::string const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9);
+      result = aqCurveMarketDataCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5,(std::string const &)*arg6,(std::vector< std::vector< std::string > > const &)*arg7,(std::string const &)*arg8,(std::vector< std::vector< std::string > > const &)*arg9);
     }
     catch (const std::exception& e)
     {
@@ -17696,7 +13438,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCurveMarketDataCreate(char * jarg1, ch
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCurveMarketDataCreateUsingMultipleBlocks(char * jarg1, void * jarg2, void * jarg3) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqObjCurvesMarketDataCreateUsingMultipleBlocks(char * jarg1, void * jarg2, void * jarg3) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -17722,7 +13464,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCurveMarketDataCreateUsingMultipleBloc
   {
     try
     {
-      result = meLWOCurveMarketDataCreateUsingMultipleBlocks((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::vector< std::vector< std::string > > > const &)*arg3);
+      result = aqObjCurvesMarketDataCreateUsingMultipleBlocks((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::vector< std::vector< std::string > > > const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -17736,7 +13478,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOCurveMarketDataCreateUsingMultipleBloc
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOFixingTableCreate(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqInterestRateFixingTableCreate(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17776,7 +13518,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOFixingTableCreate(char * jarg1, char *
   {
     try
     {
-      result = meLWOFixingTableCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::string > const &)*arg4,(std::vector< double > const &)*arg5);
+      result = aqInterestRateFixingTableCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::string > const &)*arg4,(std::vector< double > const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -17790,7 +13532,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_meLWOFixingTableCreate(char * jarg1, char *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOFixingTableDisplay(char * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqInterestRateFixingTableDisplay(char * jarg1) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > result;
@@ -17804,7 +13546,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOFixingTableDisplay(char * jarg1) {
   {
     try
     {
-      result = meLWOFixingTableDisplay((std::string const &)*arg1);
+      result = aqInterestRateFixingTableDisplay((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -17818,7 +13560,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOFixingTableDisplay(char * jarg1) {
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_meLWOFixingTableValue(char * jarg1, char * jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqInterestRateFixingTableValue(char * jarg1, char * jarg2) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17839,7 +13581,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOFixingTableValue(char * jarg1, char * 
   {
     try
     {
-      result = (double)meLWOFixingTableValue((std::string const &)*arg1,(std::string const &)*arg2);
+      result = (double)aqInterestRateFixingTableValue((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -17853,7 +13595,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_meLWOFixingTableValue(char * jarg1, char * 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOFixingTableValues(char * jarg1, void * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqInterestRateFixingTableValues(char * jarg1, void * jarg2) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -17873,7 +13615,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOFixingTableValues(char * jarg1, void *
   {
     try
     {
-      result = meLWOFixingTableValues((std::string const &)*arg1,(std::vector< std::string > const &)*arg2);
+      result = aqInterestRateFixingTableValues((std::string const &)*arg1,(std::vector< std::string > const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -17887,7 +13629,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOFixingTableValues(char * jarg1, void *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCurveDiscountFactorsWithSpread(void * jarg1, char * jarg2, char * jarg3, double jarg4, char * jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveObjectDiscountFactorsWithSpread(void * jarg1, char * jarg2, char * jarg3, double jarg4, char * jarg5) {
   void * jresult ;
   std::vector< std::string > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -17925,7 +13667,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCurveDiscountFactorsWithSpread(void * 
   {
     try
     {
-      result = meLWOCurveDiscountFactorsWithSpread((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(double const &)*arg4,(std::string const &)*arg5);
+      result = aqCurveObjectDiscountFactorsWithSpread((std::vector< std::string > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(double const &)*arg4,(std::string const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -17939,7 +13681,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOCurveDiscountFactorsWithSpread(void * 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOGridDisplay__SWIG_0(char * jarg1, unsigned int jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqToolObjectGridDisplay__SWIG_0(char * jarg1, unsigned int jarg2) {
   void * jresult ;
   std::string *arg1 = 0 ;
   bool *arg2 = 0 ;
@@ -17957,7 +13699,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOGridDisplay__SWIG_0(char * jarg1, unsi
   {
     try
     {
-      result = meLWOGridDisplay((std::string const &)*arg1,(bool const &)*arg2);
+      result = aqToolObjectGridDisplay((std::string const &)*arg1,(bool const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -17971,7 +13713,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOGridDisplay__SWIG_0(char * jarg1, unsi
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOGridDisplay__SWIG_1(char * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqToolObjectGridDisplay__SWIG_1(char * jarg1) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > result;
@@ -17985,7 +13727,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_meLWOGridDisplay__SWIG_1(char * jarg1) {
   {
     try
     {
-      result = meLWOGridDisplay((std::string const &)*arg1);
+      result = aqToolObjectGridDisplay((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {

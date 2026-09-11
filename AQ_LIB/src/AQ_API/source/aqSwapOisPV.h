@@ -8,11 +8,11 @@
 *  @param [in]		validateKeys		True to validate the all keys provided are valid. Default to TRUE
 *  @return			OIS PV
 */
-double aqOisPV(const std::vector<std::vector <std::string> >& oisSwapLVB, 
+double aqSwapOisPV(const std::vector<std::vector <std::string> >& oisSwapLVB, 
 						bool validateKeys=true);
 
 
 /* @brief			return a set of expected keys for swap pv label value block
 *  @return			expected keys
 */
-std::vector<std::string> aqOisPVLVBKeys();
+std::vector<std::string> aqSwapOisPVLVBKeys();

@@ -69,20 +69,35 @@ AQ_LIB\
 └── targets\                      build output (git-ignored, regenerated)
 ```
 
-### 2.1 Current state (2026-09)
+### 2.1 Current state (2026-09-11)
 
-The **toolchain** migration is done. The **code rebrand has not started**:
+**This section was stale for a long time — it used to say "the code rebrand
+has not started," which stopped being true many sessions ago. Corrected
+here; treat `STATUS.md` and `rebrand\STATUS.md` as the live source, not this
+paragraph, if the two ever drift again.**
 
-- Namespaces still `validation_api`, `etrading`.
-- ~25,900 `LA*` / `MA*` / `MB*` identifiers untouched.
-- ~340 `me*` / `mir*` / `tryMe*` source files untouched.
-- `AQ_XLL` is a 5-file, ~140-line xlOil proof of concept. The ~82k-line,
-  653-function XLL+ add-in in `.APPLES\APPLE\src\MLIBQ_ADDIN` is **not ported**.
-
-Done: VS2022/v143/C++17, static runtime, `/MP`; projects `validation_api→validation`,
-`MLIB_CLIENT_API→AQ_BINDINGS`, `MLIBQ_ADDIN→AQ_XLL`; `ZEROMQ` dropped; external
-deps upgraded and routed through `$(AQ_EXTERNAL_LIB_PATH)`; xlOil static build
-wired (`AlgoQuantLib.xll` registers, hello-world functions return values).
+- **Toolchain migration: done.** VS2022/v143/C++17, static runtime, `/MP`;
+  projects `validation_api→validation`, `MLIB_CLIENT_API/AQ_BINDINGS→AQ_API`,
+  `MLIBQ_ADDIN→AQ_XLL`; `ZEROMQ` dropped; external deps upgraded and routed
+  through `$(AQ_EXTERNAL_LIB_PATH)`.
+- **Phase 3 (identifier rebrand): done.** `validation_api`→`validation`,
+  `me*`/`mir*`/`LA*`/`MA*`/`MB*` renamed per §6, `mir*` deleted wholesale,
+  `LWO`→`AQObj`.
+- **Phase 4 (xlOil XLL port): essentially complete.** `AQ_XLL` is no longer a
+  proof of concept — **466 worksheet functions, covering 458 of 467
+  `validation` wrappers (98%)**, build green in every configuration,
+  GoogleTest passing. The 9 unmatched wrappers are deliberate exclusions
+  (a false-positive name collision, one in-place mutator that doesn't fit a
+  worksheet-function shape, and 7 legacy SABR functions decided superseded),
+  not gaps. The only category-level work left is `Model`/`Generator`, which
+  have **zero `validation` wrappers today** — new design-and-build work, not
+  a port. Full detail and the re-runnable gap-audit script: `STATUS.md` §2
+  and `rebrand\STATUS.md`.
+- **Not yet started:** Phase 4a's `AQ_API` runtime edition manifest and the
+  `AQ_XLL` per-edition build *configurations* (the underlying `src\Core`/
+  `src\Optional` file split is done, §4.4); Phase 5 (bindings verification,
+  SWIG regen); Phase 6 (legacy extraction, licence headers, resources audit);
+  Phase 7 (Linux/CMake, clang-format, clean repo).
 
 ### 2.2 Visualizer.natvis
 
@@ -272,6 +287,42 @@ harden later without touching registration; at `xlAutoOpen` / import, register
 only the entitled categories; `aqToolEdition()` reports the active edition.
 Editions cut **across** categories, so the gate is category-level.
 
+**`AQ_XLL` also has a compile-time edition mechanism, on top of the runtime
+one above (decided, Nicholas 2026-09-11):** `projects\AQ_XLL.vcxproj.filters`
+organises every `src\AQ_XLL\src\*.cpp` file under two Solution Explorer
+filters:
+
+- **`src\Core`** — files that must build into **every** edition
+  (`aqXllTools.cpp`, `aqMain.cpp`, `aqDate.cpp`, `aqObject.cpp`, `aqMath.cpp`,
+  `aqTool.cpp`). These are infrastructure / always-needed categories, not
+  gated by any edition.
+- **`src\Optional`** — one file per product category (`aqBond.cpp`,
+  `aqSwaption.cpp`, `aqCMS.cpp`, `aqTRS.cpp`, `aqCapFloor.cpp`, `aqFX.cpp`,
+  `aqFuture.cpp`, `aqInflation.cpp`, `aqInterestRate.cpp`, `aqVolatility.cpp`,
+  `aqAssetSwap.cpp`, and every new category file going forward). **Every new
+  `AQ_XLL` category file is added to `src\Optional`, never `src\Core`** — the
+  always-needed set is already complete.
+
+The filters are a visual map, prepared ahead of the actual mechanism: when
+per-edition build configurations are added (e.g. `ReleaseBonds`,
+`ReleaseSwaps`, `ReleaseCurves`, alongside the existing
+`Debug`/`DebugEditAndContinue`/`ReleaseProfiler`/`Release`), each new
+configuration compiles every `src\Core` file plus only the `src\Optional`
+file(s) its edition needs — excluded files are marked "Excluded From Build"
+for that configuration in the `.vcxproj`, same mechanism as any normal
+per-configuration file exclusion, just organised so the `Core`/`Optional`
+filter grouping makes at a glance which files a new edition config must
+include. **The existing `Release` configuration is the `Full` edition and
+excludes nothing** — every `src\Optional` file builds into it. This is
+specific to `AQ_XLL` (a native binary per edition is cheap to produce for one
+add-in); it does not change the Phase 4a runtime-manifest plan for `AQ_API`
+bindings (Python/C#/Java/R) — those still gate a single binary at
+`xlAutoOpen`/import time, since building N native-per-language artefacts
+there is the combinatorial blow-up CLAUDE.md §5.2 rules out. The two
+mechanisms can coexist: `AQ_XLL` edition SKUs are separate small `.xll`
+binaries built from a filtered file set; `AQ_API` edition SKUs are one binary
+per language with runtime-gated registration.
+
 ---
 
 ## 5. Naming conventions
@@ -310,12 +361,13 @@ in every binding: type `aqDate` and the date functions surface together.
   needed) — see the form table below. Code-wise, `aqSwapOis*` lives in
   `aqSwap.cpp` alongside `aqSwap*`, **not** a separate `aqOis.cpp`; the
   validation wrappers live in `src\validation\Swap\` alongside the vanilla-swap
-  wrappers. Migrating Ois means *renaming* the pre-existing `tryAqOis*`
-  wrappers (`tryAqOisPV`, `tryAqOisParRate` + their `*LVBKeys` companions) to
-  `tryAqSwapOis*` — they predate the current category scheme — plus the
-  matching `AQ_API` (`aqOisPV`/`aqOisParRate`) and `GTEST`
-  (`TryAqTestTradeEUROISParRate.cpp`) renames, before the `AQ_XLL` functions are
-  written. See `rebrand\STATUS.md` for the live task detail.
+  wrappers. **Done (2026-09-11):** the pre-existing `tryAqOisPV`/
+  `tryAqOisParRate` wrappers (+ `*LVBKeys` companions) — which predated the
+  current category scheme — were renamed to `tryAqSwapOisPV`/
+  `tryAqSwapOisParRate`, files included, along with the matching `AQ_API`
+  (`aqSwapOisPV`/`aqSwapOisParRate`) and `GTEST`
+  (`TryAqTestTradeEUROISParRate.cpp`) renames. See `rebrand\STATUS.md` for
+  the detail.
 
 Use these 21, identically in `validation` / `AQ_XLL` / `AQ_API` / `GTEST`.
 Detail: `MIGRATION_PLAN.md` §2.2.
@@ -376,8 +428,11 @@ this; don't do it merely because two category names share a prefix.
 - **Discoverability** = category prefix (`aqCurve…`, `aqSwap…`).
 - **Gating** = shipped edition (Swaps / Bonds / Credit / Full). Editions cut
   *across* categories and are enforced by a **runtime edition manifest with gated
-  registration** (§4.4), not separate builds. Protection is light by design — the
-  library is not useful without the shipped examples and templates.
+  registration** (§4.4), not separate builds, for `AQ_API`. `AQ_XLL` instead
+  gates at compile time via the `src\Core`/`src\Optional` filter split and
+  per-edition build configurations (§4.4) — a native `.xll` per edition is
+  cheap, unlike per-language bindings. Protection is light by design either
+  way — the library is not useful without the shipped examples and templates.
 
 ### 5.3 C++ style (do not "improve" this)
 
@@ -493,6 +548,23 @@ genuinely-ours bits: `AQDate`/`AQString`/`Variant` conversions, the handle I/O
 
 Date → Tool → Curve → Swap → products → Model. Each ported function needs a
 `validation` wrapper (§4.1) **and** a GoogleTest case before it counts as done.
+
+### 6.3 File organisation for editions — `src\Core` / `src\Optional`
+
+Every `AQ_XLL` category `.cpp` under `projects\AQ_XLL.vcxproj.filters` sits in
+one of two filters — see §4.4 for the full edition-gating design:
+
+- **`src\Core`** — always-built infrastructure (`aqXllTools.cpp`,
+  `aqMain.cpp`, `aqDate.cpp`, `aqObject.cpp`, `aqMath.cpp`, `aqTool.cpp`).
+- **`src\Optional`** — one file per product category. **New category files go
+  here, not `Core`.**
+
+This is a visual map today; it becomes load-bearing once per-edition build
+configurations (`ReleaseBonds`, `ReleaseSwaps`, `ReleaseCurves`, …) are added
+alongside the existing `Debug`/`DebugEditAndContinue`/`ReleaseProfiler`/
+`Release` — each new configuration builds `Core` plus only the `Optional`
+file(s) its edition needs, everything else marked excluded from that
+configuration. `Release` (full) excludes nothing.
 
 ---
 

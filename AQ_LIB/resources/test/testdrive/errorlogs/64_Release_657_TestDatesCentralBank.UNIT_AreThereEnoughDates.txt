@@ -5,16 +5,16 @@ Note: Google Test filter = TestDatesCentralBank.UNIT_AreThereEnoughDates
 [ RUN      ] TestDatesCentralBank.UNIT_AreThereEnoughDates
 C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\LIBRARY_UPDATE\AQ_LIB\src\GTEST\src\TestDatesCentralBank.cpp(62): error: Expected: (totalDaysToLast) >= (150), actual: -1706 vs 150
 
-[  FAILED  ] TestDatesCentralBank.UNIT_AreThereEnoughDates (1 ms)
-[----------] 1 test from TestDatesCentralBank (1 ms total)
+[  FAILED  ] TestDatesCentralBank.UNIT_AreThereEnoughDates (21 ms)
+[----------] 1 test from TestDatesCentralBank (21 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (1 ms total)
+[==========] 1 test from 1 test suite ran. (21 ms total)
 [  PASSED  ] 0 tests.
 [  FAILED  ] 1 test, listed below:
 [  FAILED  ] TestDatesCentralBank.UNIT_AreThereEnoughDates
 
  1 FAILED TEST
-Tests finished at: Fri Sep 11 01:48:36 2026
+Tests finished at: Fri Sep 11 17:12:22 2026
 
 didTestsFail: 1

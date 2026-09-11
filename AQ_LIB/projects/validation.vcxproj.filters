@@ -34,6 +34,9 @@
     <ClCompile Include="..\src\validation\src\tryAqCurveFrequency.cpp">
       <Filter>src\etrading\Curve</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\validation\src\tryAqCurveGetInterpolationJoinDate.cpp">
+      <Filter>src\etrading\Curve</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqCurveZeroRate.cpp">
       <Filter>src\etrading\Curve</Filter>
     </ClCompile>
@@ -52,10 +55,10 @@
     <ClCompile Include="..\src\validation\src\tryAqBondSchedule.cpp">
       <Filter>src\etrading\Products</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryAqOisParRate.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqSwapOisParRate.cpp">
       <Filter>src\etrading\Products</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryAqOisPV.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqSwapOisPV.cpp">
       <Filter>src\etrading\Products</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqSwapDelta.cpp">
@@ -143,6 +146,9 @@
       <Filter>src\etrading\Date</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqToolDate.cpp">
+      <Filter>src\etrading\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\validation\src\tryAqToolEchoDouble.cpp">
       <Filter>src\etrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqMathIntegrate.cpp">
@@ -333,6 +339,9 @@
     <ClInclude Include="..\src\validation\include\tryAqCurveFrequency.h">
       <Filter>include\etrading\Curve</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\validation\include\tryAqCurveGetInterpolationJoinDate.h">
+      <Filter>include\etrading\Curve</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqCurveZeroRate.h">
       <Filter>include\etrading\Curve</Filter>
     </ClInclude>
@@ -351,10 +360,10 @@
     <ClInclude Include="..\src\validation\include\tryAqBondSchedule.h">
       <Filter>include\etrading\Products</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryAqOisParRate.h">
+    <ClInclude Include="..\src\validation\include\tryAqSwapOisParRate.h">
       <Filter>include\etrading\Products</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryAqOisPV.h">
+    <ClInclude Include="..\src\validation\include\tryAqSwapOisPV.h">
       <Filter>include\etrading\Products</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqSwapDelta.h">
@@ -442,6 +451,9 @@
       <Filter>include\etrading\Date</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqToolDate.h">
+      <Filter>include\etrading\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\validation\include\tryAqToolEchoDouble.h">
       <Filter>include\etrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqMathIntegrate.h">

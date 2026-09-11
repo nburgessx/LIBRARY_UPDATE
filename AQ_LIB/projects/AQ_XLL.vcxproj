@@ -381,6 +381,8 @@
     <ClCompile Include="..\src\AQ_XLL\src\aqBond.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqCapFloor.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqCMS.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqCredit.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqCurve.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqDate.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqFuture.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqFX.cpp" />
@@ -389,6 +391,7 @@
     <ClCompile Include="..\src\AQ_XLL\src\aqMath.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqObject.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqInterestRate.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqSwap.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqSwaption.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqTool.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqTRS.cpp" />

@@ -179,10 +179,10 @@
     <ClInclude Include="..\src\AQ_API\source\aqAssetSwapSpread.h">
       <Filter>include\etrading\Product</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqOisParRate.h">
+    <ClInclude Include="..\src\AQ_API\source\aqSwapOisParRate.h">
       <Filter>include\etrading\Product</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqOisPV.h">
+    <ClInclude Include="..\src\AQ_API\source\aqSwapOisPV.h">
       <Filter>include\etrading\Product</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwapDV01.h">
@@ -313,10 +313,10 @@
     <ClCompile Include="..\src\AQ_API\source\aqAssetSwapSpread.cpp">
       <Filter>src\etrading\Product</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqOisParRate.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqSwapOisParRate.cpp">
       <Filter>src\etrading\Product</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqOisPV.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqSwapOisPV.cpp">
       <Filter>src\etrading\Product</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwapDV01.cpp">

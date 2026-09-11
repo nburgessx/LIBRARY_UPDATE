@@ -65,6 +65,7 @@
     <ClInclude Include="..\src\validation\include\tryAqCurveDisplay.h" />
     <ClInclude Include="..\src\validation\include\tryAqCurveForwardRate.h" />
     <ClInclude Include="..\src\validation\include\tryAqCurveFrequency.h" />
+    <ClInclude Include="..\src\validation\include\tryAqCurveGetInterpolationJoinDate.h" />
     <ClInclude Include="..\src\validation\include\tryAqAssetSwapObject.h" />
     <ClInclude Include="..\src\validation\include\tryAqBondObject.h" />
     <ClInclude Include="..\src\validation\include\tryAqCurveObjectCalibrate.h" />
@@ -98,8 +99,8 @@
     <ClInclude Include="..\src\validation\include\tryAqMathNormalDistribution.h" />
     <ClInclude Include="..\src\validation\include\tryAqAssetSwapSpread.h" />
     <ClInclude Include="..\src\validation\include\tryAqBondSchedule.h" />
-    <ClInclude Include="..\src\validation\include\tryAqOisParRate.h" />
-    <ClInclude Include="..\src\validation\include\tryAqOisPV.h" />
+    <ClInclude Include="..\src\validation\include\tryAqSwapOisParRate.h" />
+    <ClInclude Include="..\src\validation\include\tryAqSwapOisPV.h" />
     <ClInclude Include="..\src\validation\include\tryAqSwapDV01.h" />
     <ClInclude Include="..\src\validation\include\tryAqSwapLeg.h" />
     <ClInclude Include="..\src\validation\include\tryAqSwapParRate.h" />
@@ -110,6 +111,7 @@
     <ClInclude Include="..\src\validation\include\tryAqSwapDelta.h" />
     <ClInclude Include="..\src\validation\include\tryAqToolClean.h" />
     <ClInclude Include="..\src\validation\include\tryAqToolDate.h" />
+    <ClInclude Include="..\src\validation\include\tryAqToolEchoDouble.h" />
     <ClInclude Include="..\src\validation\include\tryAqToolSetup.h" />
     <ClInclude Include="..\src\validation\include\tryAqToolLVB.h" />
     <ClInclude Include="..\src\validation\include\tryAqMathInterpolation.h" />
@@ -135,6 +137,7 @@
     <ClCompile Include="..\src\validation\src\tryAqCurveDisplay.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveForwardRate.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveFrequency.cpp" />
+    <ClCompile Include="..\src\validation\src\tryAqCurveGetInterpolationJoinDate.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveInterpolation.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveHullWhite.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveVasicek.cpp" />
@@ -198,8 +201,8 @@
     <ClCompile Include="..\src\validation\src\tryAqMathNormalDistribution.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqAssetSwapSpread.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqBondSchedule.cpp" />
-    <ClCompile Include="..\src\validation\src\tryAqOisParRate.cpp" />
-    <ClCompile Include="..\src\validation\src\tryAqOisPV.cpp" />
+    <ClCompile Include="..\src\validation\src\tryAqSwapOisParRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryAqSwapOisPV.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqSwapDV01.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqSwapLeg.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqSwapParRate.cpp" />
@@ -211,6 +214,7 @@
     <ClCompile Include="..\src\validation\src\tryAqToolAppend.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqToolClean.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqToolDate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryAqToolEchoDouble.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqToolSetup.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqToolLVB.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqMathInterpolation.cpp" />

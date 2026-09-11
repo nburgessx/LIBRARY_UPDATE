@@ -76,10 +76,6 @@ aqObjSwapsUSDSpotDate,(lifecycle),stateless,tryAqCurveUSDSpotDate,src/AQ_API/sou
 aqObjectClearCache,(lifecycle),object,tryAqObjectClearCache,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqObjectLoad,(lifecycle),object,tryAqObjectLoad,src/AQ_API/source/aqObject.h,src/validation/include/tryAqObject.h
 aqObjectSave,(lifecycle),object,tryAqObjectSave,src/AQ_API/source/aqObject.h,src/validation/include/tryAqObject.h
-aqOisPV,(lifecycle),stateless,tryAqOisPV,src/AQ_API/source/aqOisPV.h,src/validation/include/tryAqOisPV.h
-aqOisPVLVBKeys,(lifecycle),stateless,tryAqOisPVLVBKeys,src/AQ_API/source/aqOisPV.h,src/validation/include/tryAqOisPV.h
-aqOisParRate,(lifecycle),stateless,tryAqOisParRate,src/AQ_API/source/aqOisParRate.h,src/validation/include/tryAqOisParRate.h
-aqOisParRateLVBKeys,(lifecycle),stateless,tryAqOisParRateLVBKeys,src/AQ_API/source/aqOisParRate.h,src/validation/include/tryAqOisParRate.h
 aqSwapDV01,Swap,stateless,tryAqSwapDV01,src/AQ_API/source/aqSwapDV01.h,src/validation/include/tryAqSwapDV01.h
 aqSwapDV01LVBKeys,Swap,stateless,tryAqSwapDV01LVBKeys,src/AQ_API/source/aqSwapDV01.h,src/validation/include/tryAqSwapDV01.h
 aqSwapObjectAnnuity,Swap,object,tryAqSwapObjectAnnuity,src/AQ_API/source/aqSwapObjectPrice.h,src/validation/include/tryAqSwapObjectPricing.h
@@ -91,6 +87,10 @@ aqSwapObjectPV01,Swap,object,tryAqSwapObjectPV01,src/AQ_API/source/aqSwapObjectP
 aqSwapObjectParRate,Swap,object,tryAqSwapObjectParRate,src/AQ_API/source/aqSwapObjectPrice.h,src/validation/include/tryAqSwapObjectPricing.h
 aqSwapObjectParSpread,Swap,object,tryAqSwapObjectParSpread,src/AQ_API/source/aqSwapObjectPrice.h,src/validation/include/tryAqSwapObjectPricing.h
 aqSwapObjectSpread,Swap,object,tryAqSwapObjectSpread,src/AQ_API/source/aqSwapObjectPrice.h,src/validation/include/tryAqSwapObjectPricing.h
+aqSwapOisPV,Swap,stateless,tryAqSwapOisPV,src/AQ_API/source/aqSwapOisPV.h,src/validation/include/tryAqSwapOisPV.h
+aqSwapOisPVLVBKeys,Swap,stateless,tryAqSwapOisPVLVBKeys,src/AQ_API/source/aqSwapOisPV.h,src/validation/include/tryAqSwapOisPV.h
+aqSwapOisParRate,Swap,stateless,tryAqSwapOisParRate,src/AQ_API/source/aqSwapOisParRate.h,src/validation/include/tryAqSwapOisParRate.h
+aqSwapOisParRateLVBKeys,Swap,stateless,tryAqSwapOisParRateLVBKeys,src/AQ_API/source/aqSwapOisParRate.h,src/validation/include/tryAqSwapOisParRate.h
 aqSwapPV,Swap,stateless,tryAqSwapPV,src/AQ_API/source/aqSwapPV.h,src/validation/include/tryAqSwapPV.h
 aqSwapPV01,Swap,stateless,tryAqSwapPV01,src/AQ_API/source/aqSwapPV01.h,src/validation/include/tryAqSwapPV01.h
 aqSwapPV01LVBKeys,Swap,stateless,tryAqSwapPV01LVBKeys,src/AQ_API/source/aqSwapPV01.h,src/validation/include/tryAqSwapPV01.h

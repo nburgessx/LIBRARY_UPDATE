@@ -15,6 +15,7 @@
 #include <tryAqMathEuropeanIRSwaption.h>  // validation::tryAqMathEuropeanIRSwaption*
 #include <tryAqMathIntegrate.h>       // validation::tryAqMathIntegrate*
 #include <tryAqMathPolynomial.h>      // validation::tryAqMathPolynomial* / tryAqMathPoynomial*
+#include <tryAqMathForwardRate.h>     // validation::tryAqMathForwardRate(s) / tryAqMathDiscountFactor(s)
 
 using namespace aq_xll;
 
@@ -55,6 +56,50 @@ namespace
     unsigned int toUInt( const xloil::ExcelObj& obj )
     {
         return static_cast< unsigned int >( obj.get<double>() );
+    }
+
+    // Optional column of strings: missing / empty / blank yields an empty vector.
+    std::vector<std::string> toStringVectorOr( const xloil::ExcelObj& obj )
+    {
+        if ( obj.isMissing() || !obj.isNonEmpty() )
+        {
+            return std::vector<std::string>();
+        }
+        return toStringVector( obj, true );
+    }
+
+    // Optional column of doubles: missing / empty / blank yields an empty vector.
+    std::vector<double> toDoubleVectorOr( const xloil::ExcelObj& obj, const char* nameOfVariable )
+    {
+        if ( obj.isMissing() || !obj.isNonEmpty() )
+        {
+            return std::vector<double>();
+        }
+        return toDoubleVector( obj, true, nameOfVariable );
+    }
+
+    // A column of call/put strings -> a vector<CallOrPutEnum>.
+    std::vector<etrading::CallOrPutEnum> toCallOrPutEnumVector( const xloil::ExcelObj& obj )
+    {
+        const std::vector<std::string> strings = toStringVector( obj, true );
+        std::vector<etrading::CallOrPutEnum> result;
+        result.reserve( strings.size() );
+        for ( const std::string& s : strings )
+        {
+            result.push_back( etrading::toCallOrPutEnum( s ) );
+        }
+        return result;
+    }
+
+    // Optional matrix worksheet argument: missing / empty / blank yields a
+    // genuinely empty StandardStringMatrix.
+    StandardStringMatrix toStandardStringMatrixOr( const xloil::ExcelObj& obj )
+    {
+        if ( obj.isMissing() || !obj.isNonEmpty() )
+        {
+            return StandardStringMatrix();
+        }
+        return toStandardStringMatrix( obj );
     }
 }
 
@@ -1130,3 +1175,402 @@ XLO_FUNC_END( aqMathIntegrate )
     .arg( L"UpperBoundDates",   L"Column of upper bound dates, aligned with LowerBoundDates" )
     .arg( L"NSteps",            L"Number of integration steps" )
     .arg( L"Optimize",          L"Optional. Default FALSE" );
+
+
+/* -------------------------------------------------------------------------
+ *  Vector overloads (optimize=true uses OMP threading) - deferred earlier
+ *  this session alongside the Curve/Bond vector forms, now ported.
+ * ---------------------------------------------------------------------- */
+
+XLO_FUNC_START( aqMathBlackScholesPrices(
+    const ExcelObj& callOrPut,
+    const ExcelObj& spot,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& rate,
+    const ExcelObj& carry,
+    const ExcelObj& shift,
+    const ExcelObj& optimize ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathBlackScholesPrices(
+        toCallOrPutEnumVector( callOrPut ),
+        toDoubleVector( spot, true, "Spot" ), toDoubleVector( strike, true, "Strike" ),
+        toDoubleVector( vol, true, "Vol" ), toDoubleVector( time, true, "Time" ),
+        toDoubleVector( rate, true, "Rate" ), toDoubleVector( carry, true, "Carry" ),
+        toDoubleVectorOr( shift, "Shift" ), toBool( optimize, false ) ) ) );
+}
+XLO_FUNC_END( aqMathBlackScholesPrices )
+    .help( L"Black-Scholes prices for a column of options." )
+    .arg( L"CallOrPut", L"Column of CALL/PUT" )
+    .arg( L"Spot",      L"Column of spot prices" )
+    .arg( L"Strike",    L"Column of strikes" )
+    .arg( L"Vol",       L"Column of volatilities" )
+    .arg( L"Time",      L"Column of times to expiry, in years" )
+    .arg( L"Rate",      L"Column of risk-free rates" )
+    .arg( L"Carry",     L"Column of cost-of-carry rates" )
+    .arg( L"Shift",     L"Optional. Column of shifts" )
+    .arg( L"Optimize",  L"Optional. Default FALSE. Use OMP threading" );
+
+
+XLO_FUNC_START( aqMathBlackScholesImpliedVols(
+    const ExcelObj& price,
+    const ExcelObj& callOrPut,
+    const ExcelObj& spot,
+    const ExcelObj& strike,
+    const ExcelObj& time,
+    const ExcelObj& rate,
+    const ExcelObj& carry,
+    const ExcelObj& shift,
+    const ExcelObj& optimize ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathBlackScholesImpliedVols(
+        toDoubleVector( price, true, "Price" ), toCallOrPutEnumVector( callOrPut ),
+        toDoubleVector( spot, true, "Spot" ), toDoubleVector( strike, true, "Strike" ),
+        toDoubleVector( time, true, "Time" ), toDoubleVector( rate, true, "Rate" ),
+        toDoubleVector( carry, true, "Carry" ),
+        toDoubleVectorOr( shift, "Shift" ), toBool( optimize, false ) ) ) );
+}
+XLO_FUNC_END( aqMathBlackScholesImpliedVols )
+    .help( L"Black-Scholes implied volatilities for a column of options." )
+    .arg( L"Price",     L"Column of option prices" )
+    .arg( L"CallOrPut", L"Column of CALL/PUT" )
+    .arg( L"Spot",      L"Column of spot prices" )
+    .arg( L"Strike",    L"Column of strikes" )
+    .arg( L"Time",      L"Column of times to expiry, in years" )
+    .arg( L"Rate",      L"Column of risk-free rates" )
+    .arg( L"Carry",     L"Column of cost-of-carry rates" )
+    .arg( L"Shift",     L"Optional. Column of shifts" )
+    .arg( L"Optimize",  L"Optional. Default FALSE. Use OMP threading" );
+
+
+XLO_FUNC_START( aqMathCapletFloorletPrices(
+    const ExcelObj& capletOrFloorlet,
+    const ExcelObj& annuityFactor,
+    const ExcelObj& liborRate,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType,
+    const ExcelObj& optimize ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathCapletFloorletPrices(
+        toStringVector( capletOrFloorlet, true ),
+        toDoubleVector( annuityFactor, true, "AnnuityFactor" ), toDoubleVector( liborRate, true, "LiborRate" ),
+        toDoubleVector( strike, true, "Strike" ), toDoubleVector( vol, true, "Vol" ), toDoubleVector( time, true, "Time" ),
+        toDoubleVectorOr( shift, "Shift" ), toStringVectorOr( volatilityType ), toBool( optimize, false ) ) ) );
+}
+XLO_FUNC_END( aqMathCapletFloorletPrices )
+    .help( L"Caplet/floorlet prices for a column of options." )
+    .arg( L"CapletOrFloorlet", L"Column of CAPLET/FLOORLET" )
+    .arg( L"AnnuityFactor",    L"Column of annuity factors" )
+    .arg( L"LiborRate",        L"Column of forward Libor rates" )
+    .arg( L"Strike",           L"Column of strikes" )
+    .arg( L"Vol",              L"Column of volatilities" )
+    .arg( L"Time",             L"Column of times to expiry, in years" )
+    .arg( L"Shift",            L"Optional. Column of shifts" )
+    .arg( L"VolatilityType",   L"Optional. Column of LOGNORMAL/NORMAL, default LOGNORMAL" )
+    .arg( L"Optimize",         L"Optional. Default FALSE. Use OMP threading" );
+
+
+XLO_FUNC_START( aqMathCapletFloorletImpliedVols(
+    const ExcelObj& price,
+    const ExcelObj& capletOrFloorlet,
+    const ExcelObj& annuityFactor,
+    const ExcelObj& liborRate,
+    const ExcelObj& strike,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType,
+    const ExcelObj& optimize ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathCapletFloorletImpliedVols(
+        toDoubleVector( price, true, "Price" ), toStringVector( capletOrFloorlet, true ),
+        toDoubleVector( annuityFactor, true, "AnnuityFactor" ), toDoubleVector( liborRate, true, "LiborRate" ),
+        toDoubleVector( strike, true, "Strike" ), toDoubleVector( time, true, "Time" ),
+        toDoubleVectorOr( shift, "Shift" ), toStringVectorOr( volatilityType ), toBool( optimize, false ) ) ) );
+}
+XLO_FUNC_END( aqMathCapletFloorletImpliedVols )
+    .help( L"Caplet/floorlet implied volatilities for a column of options." )
+    .arg( L"Price",            L"Column of option prices" )
+    .arg( L"CapletOrFloorlet", L"Column of CAPLET/FLOORLET" )
+    .arg( L"AnnuityFactor",    L"Column of annuity factors" )
+    .arg( L"LiborRate",        L"Column of forward Libor rates" )
+    .arg( L"Strike",           L"Column of strikes" )
+    .arg( L"Time",             L"Column of times to expiry, in years" )
+    .arg( L"Shift",            L"Optional. Column of shifts" )
+    .arg( L"VolatilityType",   L"Optional. Column of LOGNORMAL/NORMAL, default LOGNORMAL" )
+    .arg( L"Optimize",         L"Optional. Default FALSE. Use OMP threading" );
+
+
+XLO_FUNC_START( aqMathEuropeanIRSwaptionPrices(
+    const ExcelObj& payerReceiver,
+    const ExcelObj& annuity,
+    const ExcelObj& swapRate,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType,
+    const ExcelObj& optimize ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathEuropeanIRSwaptionPrices(
+        toStringVector( payerReceiver, true ),
+        toDoubleVector( annuity, true, "Annuity" ), toDoubleVector( swapRate, true, "SwapRate" ),
+        toDoubleVector( strike, true, "Strike" ), toDoubleVector( vol, true, "Vol" ), toDoubleVector( time, true, "Time" ),
+        toDoubleVectorOr( shift, "Shift" ), toStringVectorOr( volatilityType ), toBool( optimize, false ) ) ) );
+}
+XLO_FUNC_END( aqMathEuropeanIRSwaptionPrices )
+    .help( L"European IR swaption prices for a column of options." )
+    .arg( L"PayerReceiver",  L"Column of PAYER/RECEIVER" )
+    .arg( L"Annuity",        L"Column of annuities" )
+    .arg( L"SwapRate",       L"Column of forward swap rates" )
+    .arg( L"Strike",         L"Column of strikes" )
+    .arg( L"Vol",            L"Column of volatilities" )
+    .arg( L"Time",           L"Column of times to expiry, in years" )
+    .arg( L"Shift",          L"Optional. Column of shifts" )
+    .arg( L"VolatilityType", L"Optional. Column of LOGNORMAL/NORMAL, default LOGNORMAL" )
+    .arg( L"Optimize",       L"Optional. Default FALSE. Use OMP threading" );
+
+
+XLO_FUNC_START( aqMathEuropeanIRSwaptionImpliedVols(
+    const ExcelObj& price,
+    const ExcelObj& payerReceiver,
+    const ExcelObj& annuity,
+    const ExcelObj& swapRate,
+    const ExcelObj& strike,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType,
+    const ExcelObj& optimize ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathEuropeanIRSwaptionImpliedVols(
+        toDoubleVector( price, true, "Price" ), toStringVector( payerReceiver, true ),
+        toDoubleVector( annuity, true, "Annuity" ), toDoubleVector( swapRate, true, "SwapRate" ),
+        toDoubleVector( strike, true, "Strike" ), toDoubleVector( time, true, "Time" ),
+        toDoubleVectorOr( shift, "Shift" ), toStringVectorOr( volatilityType ), toBool( optimize, false ) ) ) );
+}
+XLO_FUNC_END( aqMathEuropeanIRSwaptionImpliedVols )
+    .help( L"European IR swaption implied volatilities for a column of options." )
+    .arg( L"Price",          L"Column of option prices" )
+    .arg( L"PayerReceiver",  L"Column of PAYER/RECEIVER" )
+    .arg( L"Annuity",        L"Column of annuities" )
+    .arg( L"SwapRate",       L"Column of forward swap rates" )
+    .arg( L"Strike",         L"Column of strikes" )
+    .arg( L"Time",           L"Column of times to expiry, in years" )
+    .arg( L"Shift",          L"Optional. Column of shifts" )
+    .arg( L"VolatilityType", L"Optional. Column of LOGNORMAL/NORMAL, default LOGNORMAL" )
+    .arg( L"Optimize",       L"Optional. Default FALSE. Use OMP threading" );
+
+
+/* -------------------------------------------------------------------------
+ *  Low-level forward-rate / discount-factor primitives, direct from a raw
+ *  (dates, values) curve fit. Each of these validation wrappers also has a
+ *  "*** LEGACY METHOD ***" overload (curveCollection/curveIndex based,
+ *  explicitly marked legacy in the header) - only the non-legacy overload
+ *  is ported here, per that labelling.
+ * ---------------------------------------------------------------------- */
+
+XLO_FUNC_START( aqMathForwardRate(
+    const ExcelObj& fixingDate,
+    const ExcelObj& asOfDate,
+    const ExcelObj& interpolation,
+    const ExcelObj& stateVariable,
+    const ExcelObj& xValues,
+    const ExcelObj& yValues,
+    const ExcelObj& accrualDaycount,
+    const ExcelObj& curveFrequencyTenor,
+    const ExcelObj& fixingBusinessDayAdjustment,
+    const ExcelObj& fixingCalendar,
+    const ExcelObj& joinDate,
+    const ExcelObj& polynomialOrder,
+    const ExcelObj& forwardAdjustmentTable,
+    const ExcelObj& compoundFreq ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathForwardRate(
+        toAQLDate( fixingDate ), toAQLDate( asOfDate ),
+        etrading::toInterpolationEnum( toNarrowString( interpolation ) ),
+        etrading::toStateVariableEnum( toNarrowString( stateVariable ) ),
+        toDateVector( xValues, true, "XValues" ), toDoubleVector( yValues, true, "YValues" ),
+        etrading::toDayCountEnum( toNarrowString( accrualDaycount ) ), toNarrowString( curveFrequencyTenor ),
+        etrading::toBusinessDayAdjustmentEnum( toStrOr( fixingBusinessDayAdjustment, "NONE" ) ), toNarrowString( fixingCalendar ),
+        joinDate.isMissing() || !joinDate.isNonEmpty() ? AQLDate() : toAQLDate( joinDate ),
+        static_cast<size_t>( toIntOr( polynomialOrder, 0 ) ),
+        toStandardStringMatrixOr( forwardAdjustmentTable ),
+        etrading::toCompoundingFrequencyEnum( toStrOr( compoundFreq, "SIMPLE" ) ) ) );
+}
+XLO_FUNC_END( aqMathForwardRate )
+    .help( L"Forward rate at a fixing date, from a raw (dates, values) curve fit." )
+    .arg( L"FixingDate",                   L"The fixing date" )
+    .arg( L"AsOfDate",                     L"The curve as-of date" )
+    .arg( L"Interpolation",                L"Interpolation method, e.g. LINEAR, MONOTONE_CONVEX" )
+    .arg( L"StateVariable",                L"The interpolated state variable, e.g. FORWARD_RATE, DISCOUNT_FACTOR" )
+    .arg( L"XValues",                      L"Column of curve pillar dates" )
+    .arg( L"YValues",                      L"Column of curve pillar values, aligned with XValues" )
+    .arg( L"AccrualDaycount",              L"Day count convention" )
+    .arg( L"CurveFrequencyTenor",          L"The curve's own tenor, e.g. 3M" )
+    .arg( L"FixingBusinessDayAdjustment",  L"Optional. Default NONE" )
+    .arg( L"FixingCalendar",               L"Holiday centre(s) for the fixing" )
+    .arg( L"JoinDate",                     L"Optional. Piecewise-scheme join date" )
+    .arg( L"PolynomialOrder",              L"Optional. Default 0" )
+    .arg( L"ForwardAdjustmentTable",       L"Optional. A forward-adjustment override table" )
+    .arg( L"CompoundFreq",                 L"Optional. Default SIMPLE" );
+
+
+XLO_FUNC_START( aqMathForwardRates(
+    const ExcelObj& fixingDates,
+    const ExcelObj& asOfDate,
+    const ExcelObj& interpolation,
+    const ExcelObj& stateVariable,
+    const ExcelObj& xValues,
+    const ExcelObj& yValues,
+    const ExcelObj& accrualDaycount,
+    const ExcelObj& curveFrequencyTenor,
+    const ExcelObj& fixingBusinessDayAdjustment,
+    const ExcelObj& fixingCalendar,
+    const ExcelObj& joinDate,
+    const ExcelObj& polynomialOrder,
+    const ExcelObj& forwardAdjustmentTable,
+    const ExcelObj& compoundFreq ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathForwardRates(
+        toDateVector( fixingDates, true, "FixingDates" ), toAQLDate( asOfDate ),
+        etrading::toInterpolationEnum( toNarrowString( interpolation ) ),
+        etrading::toStateVariableEnum( toNarrowString( stateVariable ) ),
+        toDateVector( xValues, true, "XValues" ), toDoubleVector( yValues, true, "YValues" ),
+        etrading::toDayCountEnum( toNarrowString( accrualDaycount ) ), toNarrowString( curveFrequencyTenor ),
+        etrading::toBusinessDayAdjustmentEnum( toStrOr( fixingBusinessDayAdjustment, "NONE" ) ), toNarrowString( fixingCalendar ),
+        joinDate.isMissing() || !joinDate.isNonEmpty() ? AQLDate() : toAQLDate( joinDate ),
+        static_cast<size_t>( toIntOr( polynomialOrder, 0 ) ),
+        toStandardStringMatrixOr( forwardAdjustmentTable ),
+        etrading::toCompoundingFrequencyEnum( toStrOr( compoundFreq, "SIMPLE" ) ) ) ) );
+}
+XLO_FUNC_END( aqMathForwardRates )
+    .help( L"Forward rates at a column of fixing dates, from a raw (dates, values) curve fit." )
+    .arg( L"FixingDates",                  L"Column of fixing dates" )
+    .arg( L"AsOfDate",                     L"The curve as-of date" )
+    .arg( L"Interpolation",                L"Interpolation method, e.g. LINEAR, MONOTONE_CONVEX" )
+    .arg( L"StateVariable",                L"The interpolated state variable, e.g. FORWARD_RATE, DISCOUNT_FACTOR" )
+    .arg( L"XValues",                      L"Column of curve pillar dates" )
+    .arg( L"YValues",                      L"Column of curve pillar values, aligned with XValues" )
+    .arg( L"AccrualDaycount",              L"Day count convention" )
+    .arg( L"CurveFrequencyTenor",          L"The curve's own tenor, e.g. 3M" )
+    .arg( L"FixingBusinessDayAdjustment",  L"Optional. Default NONE" )
+    .arg( L"FixingCalendar",               L"Holiday centre(s) for the fixing" )
+    .arg( L"JoinDate",                     L"Optional. Piecewise-scheme join date" )
+    .arg( L"PolynomialOrder",              L"Optional. Default 0" )
+    .arg( L"ForwardAdjustmentTable",       L"Optional. A forward-adjustment override table" )
+    .arg( L"CompoundFreq",                 L"Optional. Default SIMPLE" );
+
+
+XLO_FUNC_START( aqMathDiscountFactor(
+    const ExcelObj& paymentDate,
+    const ExcelObj& asOfDate,
+    const ExcelObj& interpolation,
+    const ExcelObj& stateVariable,
+    const ExcelObj& xValues,
+    const ExcelObj& yValues,
+    const ExcelObj& accrualDaycount,
+    const ExcelObj& curveFrequencyTenor,
+    const ExcelObj& fixingBusinessDayAdjustment,
+    const ExcelObj& fixingCalendar,
+    const ExcelObj& joinDate,
+    const ExcelObj& polynomialOrder,
+    const ExcelObj& forwardAdjustmentTable,
+    const ExcelObj& compoundFreq ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathDiscountFactor(
+        toAQLDate( paymentDate ), toAQLDate( asOfDate ),
+        etrading::toInterpolationEnum( toNarrowString( interpolation ) ),
+        etrading::toStateVariableEnum( toNarrowString( stateVariable ) ),
+        toDateVector( xValues, true, "XValues" ), toDoubleVector( yValues, true, "YValues" ),
+        etrading::toDayCountEnum( toNarrowString( accrualDaycount ) ), toNarrowString( curveFrequencyTenor ),
+        etrading::toBusinessDayAdjustmentEnum( toStrOr( fixingBusinessDayAdjustment, "NONE" ) ), toNarrowString( fixingCalendar ),
+        joinDate.isMissing() || !joinDate.isNonEmpty() ? AQLDate() : toAQLDate( joinDate ),
+        static_cast<size_t>( toIntOr( polynomialOrder, 0 ) ),
+        toStandardStringMatrixOr( forwardAdjustmentTable ),
+        etrading::toCompoundingFrequencyEnum( toStrOr( compoundFreq, "SIMPLE" ) ) ) );
+}
+XLO_FUNC_END( aqMathDiscountFactor )
+    .help( L"Discount factor at a payment date, from a raw (dates, values) curve fit." )
+    .arg( L"PaymentDate",                  L"The payment date" )
+    .arg( L"AsOfDate",                     L"The curve as-of date" )
+    .arg( L"Interpolation",                L"Interpolation method, e.g. LINEAR, MONOTONE_CONVEX" )
+    .arg( L"StateVariable",                L"The interpolated state variable, e.g. FORWARD_RATE, DISCOUNT_FACTOR" )
+    .arg( L"XValues",                      L"Column of curve pillar dates" )
+    .arg( L"YValues",                      L"Column of curve pillar values, aligned with XValues" )
+    .arg( L"AccrualDaycount",              L"Day count convention" )
+    .arg( L"CurveFrequencyTenor",          L"The curve's own tenor, e.g. 3M" )
+    .arg( L"FixingBusinessDayAdjustment",  L"Optional. Default NONE" )
+    .arg( L"FixingCalendar",               L"Holiday centre(s) for the fixing" )
+    .arg( L"JoinDate",                     L"Optional. Piecewise-scheme join date" )
+    .arg( L"PolynomialOrder",              L"Optional. Default 0" )
+    .arg( L"ForwardAdjustmentTable",       L"Optional. A forward-adjustment override table" )
+    .arg( L"CompoundFreq",                 L"Optional. Default SIMPLE" );
+
+
+XLO_FUNC_START( aqMathDiscountFactors(
+    const ExcelObj& paymentDates,
+    const ExcelObj& asOfDate,
+    const ExcelObj& interpolation,
+    const ExcelObj& stateVariable,
+    const ExcelObj& xValues,
+    const ExcelObj& yValues,
+    const ExcelObj& accrualDaycount,
+    const ExcelObj& curveFrequencyTenor,
+    const ExcelObj& fixingBusinessDayAdjustment,
+    const ExcelObj& fixingCalendar,
+    const ExcelObj& joinDate,
+    const ExcelObj& polynomialOrder,
+    const ExcelObj& forwardAdjustmentTable,
+    const ExcelObj& compoundFreq ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathDiscountFactors(
+        toDateVector( paymentDates, true, "PaymentDates" ), toAQLDate( asOfDate ),
+        etrading::toInterpolationEnum( toNarrowString( interpolation ) ),
+        etrading::toStateVariableEnum( toNarrowString( stateVariable ) ),
+        toDateVector( xValues, true, "XValues" ), toDoubleVector( yValues, true, "YValues" ),
+        etrading::toDayCountEnum( toNarrowString( accrualDaycount ) ), toNarrowString( curveFrequencyTenor ),
+        etrading::toBusinessDayAdjustmentEnum( toStrOr( fixingBusinessDayAdjustment, "NONE" ) ), toNarrowString( fixingCalendar ),
+        joinDate.isMissing() || !joinDate.isNonEmpty() ? AQLDate() : toAQLDate( joinDate ),
+        static_cast<size_t>( toIntOr( polynomialOrder, 0 ) ),
+        toStandardStringMatrixOr( forwardAdjustmentTable ),
+        etrading::toCompoundingFrequencyEnum( toStrOr( compoundFreq, "SIMPLE" ) ) ) ) );
+}
+XLO_FUNC_END( aqMathDiscountFactors )
+    .help( L"Discount factors at a column of payment dates, from a raw (dates, values) curve fit." )
+    .arg( L"PaymentDates",                 L"Column of payment dates" )
+    .arg( L"AsOfDate",                     L"The curve as-of date" )
+    .arg( L"Interpolation",                L"Interpolation method, e.g. LINEAR, MONOTONE_CONVEX" )
+    .arg( L"StateVariable",                L"The interpolated state variable, e.g. FORWARD_RATE, DISCOUNT_FACTOR" )
+    .arg( L"XValues",                      L"Column of curve pillar dates" )
+    .arg( L"YValues",                      L"Column of curve pillar values, aligned with XValues" )
+    .arg( L"AccrualDaycount",              L"Day count convention" )
+    .arg( L"CurveFrequencyTenor",          L"The curve's own tenor, e.g. 3M" )
+    .arg( L"FixingBusinessDayAdjustment",  L"Optional. Default NONE" )
+    .arg( L"FixingCalendar",               L"Holiday centre(s) for the fixing" )
+    .arg( L"JoinDate",                     L"Optional. Piecewise-scheme join date" )
+    .arg( L"PolynomialOrder",              L"Optional. Default 0" )
+    .arg( L"ForwardAdjustmentTable",       L"Optional. A forward-adjustment override table" )
+    .arg( L"CompoundFreq",                 L"Optional. Default SIMPLE" );

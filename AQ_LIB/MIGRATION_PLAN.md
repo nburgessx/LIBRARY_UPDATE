@@ -302,7 +302,7 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
   marshalling helpers), and `Interpolation` / `PCA` moved `Tool` → `Math`
   (`aqMathInterpolation` / `aqMathPCA`, `tryAqMath*`). Detail + resume plan in
   `rebrand\STATUS.md`.
-- ☐ **2.7 `Ois` folded into `Swap` as a product variant** (Nicholas,
+- ☑ **2.7 `Ois` folded into `Swap` as a product variant** (Nicholas,
   2026-09-11) — supersedes the `Ois` category added in 2.6; category count
   22 → **21**. `Ois` is a vanilla swap with an overnight-compounded floating
   leg, not a structurally distinct product, so it does not earn a top-level
@@ -310,14 +310,14 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
   `aqSwapOis<Function>` (stateless; object form would be
   `aqSwapOisObject<Function>` if ever needed), living in `aqSwap.cpp` /
   `src\validation\Swap\`, not a separate `aqOis.cpp` / category folder.
-  **Not yet applied to code** — docs updated (`CLAUDE.md` both, this file,
-  `rebrand\tools\api_pair_check.py` `CATEGORIES`) so the rename lands correctly
-  whenever `Swap` is next migrated. The pre-existing `tryAqOisPV` /
+  **Rename done (2026-09-11):** the pre-existing `tryAqOisPV` /
   `tryAqOisParRate` (+ `*LVBKeys`) wrappers, their `AQ_API` bindings
-  (`aqOisPV`/`aqOisParRate`, already shipped to Python/C#/Java/R via SWIG) and
-  `GTEST` (`TryAqTestTradeEUROISParRate.cpp`) predate this decision and need
-  renaming to `tryAqSwapOis*` / `aqSwapOis*` as part of that migration — apply
-  §5.1a's validation → GTEST → API → XLL order. Detail: `rebrand\STATUS.md`.
+  (`aqOisPV`/`aqOisParRate`, shipped to Python/C#/Java/R via SWIG) and
+  `GTEST` (`TryAqTestTradeEUROISParRate.cpp`) predated this decision and have
+  been renamed to `tryAqSwapOisPV`/`tryAqSwapOisParRate` /
+  `aqSwapOisPV`/`aqSwapOisParRate`, per §5.1a's validation → GTEST → API →
+  XLL order (the `AQ_XLL` functions themselves land with the rest of `Swap`).
+  Detail: `rebrand\STATUS.md`.
 
 **Exit:** agreed category list + edition→category map in `CLAUDE.md`; 0.7
 inventory fully categorised.
@@ -477,7 +477,17 @@ baseline-identical.
 
 ---
 
-## Phase 4 — xlOil XLL port  ☐
+## Phase 4 — xlOil XLL port  ☑ (essentially complete, 2026-09-11)
+
+**Status (2026-09-11): 466 `AQ_XLL` functions ported, covering 458 of 467
+`validation` wrappers (98%).** The 9 unmatched wrappers are deliberate
+exclusions (1 false-positive name collision, 1 in-place mutator that doesn't
+fit a worksheet-function shape, 7 legacy SABR functions Nicholas decided to
+leave out as superseded) — not gaps. Detail and the re-runnable audit script:
+`rebrand\STATUS.md` and `STATUS.md` §2. The only category-level work left is
+`Model`/`Generator`, which have **zero validation wrappers today** — that is
+4.7's category-by-category port order reaching two categories with nothing
+yet to port, not a port failure; see 4.7 below.
 
 Wait for Nicholas's xlOil worked examples before starting — they define the
 canonical marshalling / handle-I/O / array-return / error-convention pattern.
@@ -499,12 +509,20 @@ canonical marshalling / handle-I/O / array-return / error-convention pattern.
 - ☐ **4.6** **Clean break confirmed at registration** (D9): register `aq*` names
   only; no `me*` aliases, hidden or otherwise. Finalise the `RELEASE_NOTES`
   renamed/removed-function list started in 3.3 so users can find replacements.
-- ☐ **4.7** Port functions **category by category** in the CLAUDE.md §9.4 order
+- ☑ **4.7** Port functions **category by category** in the CLAUDE.md §9.4 order
   (Date → Tool → Curve → Swap → Bond → Credit → InterestRate → Volatility → options →
   Math → Model → Generator → Object), driven by the 0.7 inventory and the
   locked Phase 2 categories. Per function: confirm it is a "keep" → port `_Impl`
   → `validation` wrapper → `GTEST` case → tick the inventory row. Build +
-  run suite per category.
+  run suite per category. **Done (2026-09-11) for every category with an
+  existing `validation` surface** — `Date, Curve, FX, Inflation, Volatility,
+  InterestRate, Future, Swap, AssetSwap, CMS, TRS, CapFloor, Swaption,
+  BondOption, BondFutureOption, Bond, Credit, Math, Tool, Object(-lifecycle)`
+  all ported, build green, tests pass. `Model`/`Generator` remain: both have
+  **0 `validation` wrappers today**, so there is nothing yet to port — see
+  Phase 4.1 (`Model`/`Generator`) note added to §4 above; needs
+  `tryAqGeneratorList`/`Describe`/`Validate` (etc.) designed and written from
+  scratch before any `AQ_XLL` surface is possible.
 - ☐ **4.8 Generator + config wiring** — see **Phase 4b**.
 - ☑ **4.11 `AQ_XLL` file naming** (Nicholas): every category file is
   `aq<Category>.{cpp,h}` — `aqBond.cpp`, `aqDate.cpp`, `aqMath.cpp`,
@@ -597,12 +615,14 @@ generators load from the shipped `config` folder.
 ## Phase 4a — Editions & manifest gating  ☐
 
 Nicholas wants `AlgoQuantLib` to ship as **Swaps / Bonds / Credit / Full**
-editions, one artefact per language, gated at runtime. Design (for discussion —
-not locked):
+editions. Two mechanisms now, one per surface (the `AQ_XLL` half decided
+2026-09-11, superseding the original "no per-edition builds" stance for that
+project specifically — see below):
 
-- **Single binary per language, built once.** No per-edition builds (the build ×
-  config × language matrix is already large; CLAUDE.md §5.2 rules this out).
-  Physical code is all present — protection is intentionally light.
+**`AQ_API` (Python/C#/Java/R) — single binary per language, gated at
+runtime.** No per-edition builds here (the build × config × language matrix
+is already large; CLAUDE.md §5.2 rules this out). Physical code is all
+present — protection is intentionally light.
 - **Edition manifest** — `config\editions.json`: named editions → the categories
   (and optionally specific functions) each registers. This is the 2.4 table,
   shipped as data so editions can be re-cut without a rebuild.
@@ -610,17 +630,37 @@ not locked):
   `config\licence.json` (or a short key string) naming the edition. Keep the
   read behind one function so enforcement can harden later (signed key, expiry,
   machine binding) **without touching registration code**.
-- **Registration** — at `xlAutoOpen` (XLL) and module import (bindings): load
-  manifest → resolve entitled edition → register only those categories.
-  Unentitled functions are **not registered** (clean `#NAME?` / `AttributeError`).
-  Add `aqToolEdition()` returning the active edition and category list.
-- ☐ **4a.1** Agree manifest + entitlement file shape and the enforcement seam.
-- ☐ **4a.2** Implement the gate in the shared registration layer (used by both
-  `AQ_XLL` and `AQ_API`).
+- **Registration** — at module import: load manifest → resolve entitled
+  edition → register only those categories. Unentitled functions are **not
+  registered** (clean `AttributeError`). Add `aqToolEdition()` returning the
+  active edition and category list.
+
+**`AQ_XLL` (decided, Nicholas 2026-09-11) — per-edition build configurations,
+gated at compile time.** A native `.xll` per edition is cheap for one add-in,
+so this project does the opposite of the `AQ_API` design above:
+`projects\AQ_XLL.vcxproj.filters` already splits every `src\AQ_XLL\src\*.cpp`
+file into **`src\Core`** (always-built: `aqXllTools.cpp`, `aqMain.cpp`,
+`aqDate.cpp`, `aqObject.cpp`, `aqMath.cpp`, `aqTool.cpp`) and
+**`src\Optional`** (one file per product category — every new category file
+goes here). New build configurations (`ReleaseBonds`, `ReleaseSwaps`,
+`ReleaseCurves`, …), alongside the existing
+`Debug`/`DebugEditAndContinue`/`ReleaseProfiler`/`Release`, will each compile
+`Core` plus only the `Optional` file(s) that edition needs (marked excluded
+from build for every other configuration); `Release` (Full) excludes nothing.
+`aqToolEdition()` still applies here too, reporting which build this `.xll`
+is. Detail: `CLAUDE.md` (both) §4.4/§4.5, `AQ_LIB\CLAUDE.md` §6.3.
+
+- ☐ **4a.1** Agree `AQ_API` manifest + entitlement file shape and the
+  enforcement seam.
+- ☐ **4a.2** Implement the `AQ_API` runtime gate in its registration layer.
 - ☐ **4a.3** `config\editions.json` from the 2.4 table; a `Full` `licence.json`
   for dev.
-- ☐ **4a.4** `GTEST` / smoke: each edition registers exactly its categories
-  and nothing else; `aqToolEdition()` agrees.
+- ☐ **4a.4** `GTEST` / smoke: each `AQ_API` edition registers exactly its
+  categories and nothing else; `aqToolEdition()` agrees.
+- ☐ **4a.5** Add the `AQ_XLL` per-edition build configurations
+  (`ReleaseBonds`/`ReleaseSwaps`/`ReleaseCurves`/…), each excluding the
+  `src\Optional` files its edition doesn't need; confirm each configuration
+  builds green and its `.xll` registers only the intended categories.
 
 ---
 
@@ -773,9 +813,14 @@ current.
          └── Phase 2 output feeds 3, 4, 4a, 4b and 5
 ```
 
-All decisions are made bar the Phase 2 sign-off. Phases 0–3 can start now.
-Phase 4 (and 4a/4b) waits only on the xlOil worked examples. Phase 7.1 (Linux)
-can slot in any time after Phase 3 but is lowest priority.
+**Status (2026-09-11): Phases 0-3 done. Phase 4 essentially complete** (466
+`AQ_XLL` functions, 458/467 `validation` wrappers covered — see Phase 4's
+status note above); `Model`/`Generator` need new `validation` wrappers before
+they can be ported (0 exist today). **Phase 4a started** (`AQ_XLL`'s
+`src\Core`/`src\Optional` file split is done; the per-edition build
+configurations and the `AQ_API` runtime manifest are not). Phases 4b, 5, 6, 7
+not started. Phase 7.1 (Linux) can slot in any time after Phase 3 but is
+lowest priority.
 
 ---
 

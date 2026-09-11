@@ -8,15 +8,16 @@ using etrading::LabelValueBlock;
 namespace validation
 {
 
-    /* @brief			return a set of expected keys for swap pv label value block
+    /* @brief			return a set of expected keys for ois swap par rate label value block
     *  @return			expected keys
     */
-    std::vector<std::string> tryAqOisPVLVBKeys();
+    std::vector<std::string> tryAqSwapOisParRateLVBKeys();
 
-    /* @brief			validation interface for the aqOisPV method
+    /* @brief			validation interface for the aqSwapOisParRate method
     *  @param [in]		swapLVB		A label value block defining the swap
     *  @param [in]		validateKeys	True to validate the all keys provided are valid. Default to True
-    *  @return			OIS PV
+    *  @return			OIS Par Swap Rate
     */
-    double tryAqOisPV( const LabelValueBlock& oisLVB, bool validateKeys = true );
+    double tryAqSwapOisParRate( const LabelValueBlock& oisLVB, bool validateKeys = true );
+
 }

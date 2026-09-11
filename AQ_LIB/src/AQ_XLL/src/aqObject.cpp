@@ -329,3 +329,45 @@ XLO_FUNC_START( aqObjectClearCache() )
 }
 XLO_FUNC_END( aqObjectClearCache )
     .help( L"Clear the entire AQObj object cache. Returns a summary of what was removed." );
+
+
+// The single object type this name resolves to (the first match, where
+// aqObjectType returns every possible match as a column).
+XLO_FUNC_START( aqObjectTypeAsString(
+    const ExcelObj& objectName ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqObjectTypeAsString( getNameWithoutCounter( objectName ) ) );
+}
+XLO_FUNC_END( aqObjectTypeAsString )
+    .help( L"The object type this name resolves to (the first match)." )
+    .arg( L"ObjectName", L"Object name or a handle returned by an aq*ObjectCreate function" );
+
+
+// Load a single AQObj object and report both its handle and its cached type.
+XLO_FUNC_START( aqObjectLoadAndReturnTupleResults(
+    const ExcelObj& fileNameJson ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    const std::string filePath = toNarrowString( fileNameJson );
+    if ( filePath.empty() )
+    {
+        throw std::runtime_error( "Unable to load object: no file path provided" );
+    }
+
+    const std::tuple<std::string, etrading::CachedObjectEnum> loaded =
+        validation::tryAqObjectLoadAndReturnTupleResults( filePath );
+
+    std::vector<std::string> result;
+    result.push_back( appendInstanceCounter( std::get<0>( loaded ) ) );
+    result.push_back( etrading::toString( std::get<1>( loaded ) ) );
+
+    return returnValue( toExcelColumn( result ) );
+}
+XLO_FUNC_END( aqObjectLoadAndReturnTupleResults )
+    .help( L"Load a single AQObj object from a JSON file; returns a 2-row column [handle, cached object type]." )
+    .arg( L"FileNameJSON", L"Full path to the .json file written by aqObjectSave" );

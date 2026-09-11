@@ -646,8 +646,8 @@
     <ClInclude Include="..\src\AQ_API\source\aqSwapObjectCreate.h" />
     <ClInclude Include="..\src\AQ_API\source\aqSwapObjectPrice.h" />
     <ClInclude Include="..\src\AQ_API\source\aqAssetSwapSpread.h" />
-    <ClInclude Include="..\src\AQ_API\source\aqOisParRate.h" />
-    <ClInclude Include="..\src\AQ_API\source\aqOisPV.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqSwapOisParRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqSwapOisPV.h" />
     <ClInclude Include="..\src\AQ_API\source\aqSwapDV01.h" />
     <ClInclude Include="..\src\AQ_API\source\aqSwapParRate.h" />
     <ClInclude Include="..\src\AQ_API\source\aqSwapPV.h" />
@@ -689,8 +689,8 @@
     <ClCompile Include="..\src\AQ_API\source\aqSwapObjectCreate.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqSwapObjectPrice.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqAssetSwapSpread.cpp" />
-    <ClCompile Include="..\src\AQ_API\source\aqOisParRate.cpp" />
-    <ClCompile Include="..\src\AQ_API\source\aqOisPV.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqSwapOisParRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqSwapOisPV.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqSwapDV01.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqSwapParRate.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqSwapPV.cpp" />

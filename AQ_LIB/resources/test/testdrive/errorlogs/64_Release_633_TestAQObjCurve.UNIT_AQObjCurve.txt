@@ -5,16 +5,16 @@ Note: Google Test filter = TestAQObjCurve.UNIT_AQObjCurve
 [ RUN      ] TestAQObjCurve.UNIT_AQObjCurve
 unknown file: error: C++ exception with description "Cannot write the JSON string to the file C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\LIBRARY_UPDATE\AQ_LIB/resource/test/inputs/ETrading/AQObjects/AQObjCurve/AnotherCurveOutput.json" thrown in the test body.
 
-[  FAILED  ] TestAQObjCurve.UNIT_AQObjCurve (411 ms)
-[----------] 1 test from TestAQObjCurve (412 ms total)
+[  FAILED  ] TestAQObjCurve.UNIT_AQObjCurve (379 ms)
+[----------] 1 test from TestAQObjCurve (379 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (412 ms total)
+[==========] 1 test from 1 test suite ran. (379 ms total)
 [  PASSED  ] 0 tests.
 [  FAILED  ] 1 test, listed below:
 [  FAILED  ] TestAQObjCurve.UNIT_AQObjCurve
 
  1 FAILED TEST
-Tests finished at: Fri Sep 11 01:48:36 2026
+Tests finished at: Fri Sep 11 17:12:20 2026
 
 didTestsFail: 1

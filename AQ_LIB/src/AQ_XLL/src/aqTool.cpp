@@ -23,6 +23,9 @@
 #include <tryAqToolDate.h>         // validation::tryAqToolTermsToDates / tryAqToolDatesToTerms
 #include <tryAqToolGrid.h>         // validation::tryAqToolObjectGrid*
 #include <tryAqToolMultiGrid.h>   // validation::tryAqToolObjectMultiGrid*
+#include <tryAqToolEchoDouble.h>  // validation::tryAqToolEchoDouble
+#include <tryAqBondObject.h>      // validation::tryAqToolBondAverageYield / tryAqToolBondYieldFromFuturePrice (filed under Bond, golden-named Tool)
+#include <tryAqSwapObjectSchedule.h>  // validation::tryAqToolSwapScheduleTemplate (filed under Swap, golden-named Tool)
 
 using namespace aq_xll;
 
@@ -972,3 +975,71 @@ XLO_FUNC_START( aqToolSEH() )
 XLO_FUNC_END( aqToolSEH )
     .help( L"Diagnostic: deliberately triggers a structured exception (out-of-bounds access) "
            L"to test whether AQ_XLL_GUARD catches it or the add-in crashes." );
+
+
+// Echo a double straight back through the validation layer. Diagnostic for
+// confirming a numeric argument round-trips validation unchanged.
+XLO_FUNC_START( aqToolEchoDouble(
+    const ExcelObj& value ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqToolEchoDouble( value.get<double>() ) );
+}
+XLO_FUNC_END( aqToolEchoDouble )
+    .help( L"Echo a double straight back through the validation layer." )
+    .arg( L"Value", L"Any number" );
+
+
+// The average of several underlying bond yields (filed under Bond, golden-named Tool).
+XLO_FUNC_START( aqToolBondAverageYield(
+    const ExcelObj& underlyingBondYields ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqToolBondAverageYield(
+        toDoubleVector( underlyingBondYields, true, "UnderlyingBondYields" ) ) );
+}
+XLO_FUNC_END( aqToolBondAverageYield )
+    .help( L"The average of several underlying bond yields." )
+    .arg( L"UnderlyingBondYields", L"Column of bond yields to average" );
+
+
+// A bond yield implied by a bond-future price (filed under Bond, golden-named Tool).
+XLO_FUNC_START( aqToolBondYieldFromFuturePrice(
+    const ExcelObj& futurePrice ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqToolBondYieldFromFuturePrice( futurePrice.get<double>() ) );
+}
+XLO_FUNC_END( aqToolBondYieldFromFuturePrice )
+    .help( L"A bond yield implied by a bond-future price." )
+    .arg( L"FuturePrice", L"The bond-future price" );
+
+
+// A template of a swap's floating/fixing leg schedules (filed under Swap, golden-named Tool).
+XLO_FUNC_START( aqToolSwapScheduleTemplate(
+    const ExcelObj& showColumnHeaders,
+    const ExcelObj& swapScheduleLVB,
+    const ExcelObj& validateKeys,
+    const ExcelObj& columnList ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    const std::vector<std::string> columns =
+        ( columnList.isMissing() || !columnList.isNonEmpty() ) ? std::vector<std::string>() : toStringVector( columnList, true );
+
+    return returnValue( toExcelMatrix( validation::tryAqToolSwapScheduleTemplate(
+        toBool( showColumnHeaders, true ), toLabelValueBlock( swapScheduleLVB ), toBool( validateKeys, true ), columns ) ) );
+}
+XLO_FUNC_END( aqToolSwapScheduleTemplate )
+    .help( L"A template of a swap's floating/fixing leg schedules, from a label/value block of schedule properties." )
+    .arg( L"ShowColumnHeaders", L"Include a header row" )
+    .arg( L"SwapScheduleLVB",   L"The schedule configuration as a label/value block" )
+    .arg( L"ValidateKeys",      L"Optional. Default TRUE. Check the LVB keys" )
+    .arg( L"ColumnList",        L"Optional. Column names to include; default all columns" );
