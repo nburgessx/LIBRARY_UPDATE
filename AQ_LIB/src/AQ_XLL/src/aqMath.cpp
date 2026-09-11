@@ -1,12 +1,20 @@
 #include <aqMain.h>
 #include <aqXllTools.h>
 
+#include <string>
+#include <vector>
+
 // include
 #include <CoreEnumerations.h>
 #include <tryAqMathNormalDistribution.h>
 #include <tryAqMathBlackScholes.h>
 #include <tryAqMathInterpolation.h>   // validation::tryAqMathInterpolation
 #include <tryAqMathPCA.h>             // validation::tryAqMathPCA
+#include <tryAqMathCapletFloorlet.h>  // validation::tryAqMathCapletFloorlet*
+#include <tryAqMathConvexity.h>       // validation::tryAqMathVolatility* / tryAqMathLibor*
+#include <tryAqMathEuropeanIRSwaption.h>  // validation::tryAqMathEuropeanIRSwaption*
+#include <tryAqMathIntegrate.h>       // validation::tryAqMathIntegrate*
+#include <tryAqMathPolynomial.h>      // validation::tryAqMathPolynomial* / tryAqMathPoynomial*
 
 using namespace aq_xll;
 
@@ -31,6 +39,22 @@ namespace
             return defaultValue;
         }
         return obj.get<double>();
+    }
+
+    // Optional string worksheet argument.
+    std::string toStrOr( const xloil::ExcelObj& obj, const char* defaultValue )
+    {
+        if ( obj.isMissing() || !obj.isNonEmpty() )
+        {
+            return std::string( defaultValue );
+        }
+        return toNarrowString( obj );
+    }
+
+    // Required unsigned integer worksheet argument.
+    unsigned int toUInt( const xloil::ExcelObj& obj )
+    {
+        return static_cast< unsigned int >( obj.get<double>() );
     }
 }
 
@@ -138,3 +162,971 @@ XLO_FUNC_END( aqMathPCA )
     .arg( L"Data",                 L"The data matrix (observations x variables)" )
     .arg( L"UseCorrelationMatrix", L"Optional. Default FALSE. TRUE uses the correlation matrix, FALSE the covariance matrix" )
     .arg( L"NFactors",             L"Number of factors (principal components) to return" );
+
+
+/* =========================================================================
+ *  Black-Scholes - implied vol and Greeks
+ * ====================================================================== */
+
+// Implied volatility from a Black-Scholes price.
+XLO_FUNC_START( aqMathBlackScholesImpliedVol(
+    const ExcelObj& price,
+    const ExcelObj& callOrPut,
+    const ExcelObj& spot,
+    const ExcelObj& strike,
+    const ExcelObj& time,
+    const ExcelObj& rate,
+    const ExcelObj& carry,
+    const ExcelObj& shift ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathBlackScholesImpliedVol(
+        price.get<double>(),
+        etrading::toCallOrPutEnum( toNarrowString( callOrPut ) ),
+        spot.get<double>(), strike.get<double>(), time.get<double>(),
+        rate.get<double>(), carry.get<double>(), toDoubleOr( shift, 0.0 ) ) );
+}
+XLO_FUNC_END( aqMathBlackScholesImpliedVol )
+    .help( L"Implied volatility from a Black-Scholes price." )
+    .arg( L"Price",     L"The option price" )
+    .arg( L"CallOrPut", L"Call or Put" )
+    .arg( L"Spot",      L"Spot" )
+    .arg( L"Strike",    L"Strike" )
+    .arg( L"Time",      L"Time to expiry in years" )
+    .arg( L"Rate",      L"Interest rate" )
+    .arg( L"Carry",     L"Cost of carry" )
+    .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+
+
+// Black-Scholes forward delta.
+XLO_FUNC_START( aqMathBlackScholesDeltaForward(
+    const ExcelObj& callOrPut,
+    const ExcelObj& spot,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& rate,
+    const ExcelObj& carry,
+    const ExcelObj& shift ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathBlackScholesDeltaForward(
+        etrading::toCallOrPutEnum( toNarrowString( callOrPut ) ),
+        spot.get<double>(), strike.get<double>(), vol.get<double>(), time.get<double>(),
+        rate.get<double>(), carry.get<double>(), toDoubleOr( shift, 0.0 ) ) );
+}
+XLO_FUNC_END( aqMathBlackScholesDeltaForward )
+    .help( L"Black-Scholes forward delta." )
+    .arg( L"CallOrPut", L"Call or Put" )
+    .arg( L"Spot",      L"Spot" )
+    .arg( L"Strike",    L"Strike" )
+    .arg( L"Vol",       L"Volatility" )
+    .arg( L"Time",      L"Time to expiry in years" )
+    .arg( L"Rate",      L"Interest rate" )
+    .arg( L"Carry",     L"Cost of carry" )
+    .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+
+
+// Black-Scholes spot delta.
+XLO_FUNC_START( aqMathBlackScholesDeltaSpot(
+    const ExcelObj& callOrPut,
+    const ExcelObj& spot,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& rate,
+    const ExcelObj& carry,
+    const ExcelObj& shift ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathBlackScholesDeltaSpot(
+        etrading::toCallOrPutEnum( toNarrowString( callOrPut ) ),
+        spot.get<double>(), strike.get<double>(), vol.get<double>(), time.get<double>(),
+        rate.get<double>(), carry.get<double>(), toDoubleOr( shift, 0.0 ) ) );
+}
+XLO_FUNC_END( aqMathBlackScholesDeltaSpot )
+    .help( L"Black-Scholes spot delta." )
+    .arg( L"CallOrPut", L"Call or Put" )
+    .arg( L"Spot",      L"Spot" )
+    .arg( L"Strike",    L"Strike" )
+    .arg( L"Vol",       L"Volatility" )
+    .arg( L"Time",      L"Time to expiry in years" )
+    .arg( L"Rate",      L"Interest rate" )
+    .arg( L"Carry",     L"Cost of carry" )
+    .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+
+
+// Black-Scholes gamma.
+XLO_FUNC_START( aqMathBlackScholesGamma(
+    const ExcelObj& callOrPut,
+    const ExcelObj& spot,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& rate,
+    const ExcelObj& carry,
+    const ExcelObj& shift ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathBlackScholesGamma(
+        etrading::toCallOrPutEnum( toNarrowString( callOrPut ) ),
+        spot.get<double>(), strike.get<double>(), vol.get<double>(), time.get<double>(),
+        rate.get<double>(), carry.get<double>(), toDoubleOr( shift, 0.0 ) ) );
+}
+XLO_FUNC_END( aqMathBlackScholesGamma )
+    .help( L"Black-Scholes gamma." )
+    .arg( L"CallOrPut", L"Call or Put" )
+    .arg( L"Spot",      L"Spot" )
+    .arg( L"Strike",    L"Strike" )
+    .arg( L"Vol",       L"Volatility" )
+    .arg( L"Time",      L"Time to expiry in years" )
+    .arg( L"Rate",      L"Interest rate" )
+    .arg( L"Carry",     L"Cost of carry" )
+    .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+
+
+// Black-Scholes vega.
+XLO_FUNC_START( aqMathBlackScholesVega(
+    const ExcelObj& callOrPut,
+    const ExcelObj& spot,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& rate,
+    const ExcelObj& carry,
+    const ExcelObj& shift ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathBlackScholesVega(
+        etrading::toCallOrPutEnum( toNarrowString( callOrPut ) ),
+        spot.get<double>(), strike.get<double>(), vol.get<double>(), time.get<double>(),
+        rate.get<double>(), carry.get<double>(), toDoubleOr( shift, 0.0 ) ) );
+}
+XLO_FUNC_END( aqMathBlackScholesVega )
+    .help( L"Black-Scholes vega." )
+    .arg( L"CallOrPut", L"Call or Put" )
+    .arg( L"Spot",      L"Spot" )
+    .arg( L"Strike",    L"Strike" )
+    .arg( L"Vol",       L"Volatility" )
+    .arg( L"Time",      L"Time to expiry in years" )
+    .arg( L"Rate",      L"Interest rate" )
+    .arg( L"Carry",     L"Cost of carry" )
+    .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+
+
+// Black-Scholes theta.
+XLO_FUNC_START( aqMathBlackScholesTheta(
+    const ExcelObj& callOrPut,
+    const ExcelObj& spot,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& rate,
+    const ExcelObj& carry,
+    const ExcelObj& shift ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathBlackScholesTheta(
+        etrading::toCallOrPutEnum( toNarrowString( callOrPut ) ),
+        spot.get<double>(), strike.get<double>(), vol.get<double>(), time.get<double>(),
+        rate.get<double>(), carry.get<double>(), toDoubleOr( shift, 0.0 ) ) );
+}
+XLO_FUNC_END( aqMathBlackScholesTheta )
+    .help( L"Black-Scholes theta." )
+    .arg( L"CallOrPut", L"Call or Put" )
+    .arg( L"Spot",      L"Spot" )
+    .arg( L"Strike",    L"Strike" )
+    .arg( L"Vol",       L"Volatility" )
+    .arg( L"Time",      L"Time to expiry in years" )
+    .arg( L"Rate",      L"Interest rate" )
+    .arg( L"Carry",     L"Cost of carry" )
+    .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+
+
+// Black-Scholes rho.
+XLO_FUNC_START( aqMathBlackScholesRho(
+    const ExcelObj& callOrPut,
+    const ExcelObj& spot,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& rate,
+    const ExcelObj& carry,
+    const ExcelObj& shift ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathBlackScholesRho(
+        etrading::toCallOrPutEnum( toNarrowString( callOrPut ) ),
+        spot.get<double>(), strike.get<double>(), vol.get<double>(), time.get<double>(),
+        rate.get<double>(), carry.get<double>(), toDoubleOr( shift, 0.0 ) ) );
+}
+XLO_FUNC_END( aqMathBlackScholesRho )
+    .help( L"Black-Scholes rho." )
+    .arg( L"CallOrPut", L"Call or Put" )
+    .arg( L"Spot",      L"Spot" )
+    .arg( L"Strike",    L"Strike" )
+    .arg( L"Vol",       L"Volatility" )
+    .arg( L"Time",      L"Time to expiry in years" )
+    .arg( L"Rate",      L"Interest rate" )
+    .arg( L"Carry",     L"Cost of carry" )
+    .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+
+
+/* =========================================================================
+ *  Caplet / floorlet
+ * ====================================================================== */
+
+// Black caplet / floorlet price.
+XLO_FUNC_START( aqMathCapletFloorletPrice(
+    const ExcelObj& capletOrFloorlet,
+    const ExcelObj& annuityFactor,
+    const ExcelObj& liborRate,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathCapletFloorletPrice(
+        toNarrowString( capletOrFloorlet ),
+        annuityFactor.get<double>(), liborRate.get<double>(), strike.get<double>(),
+        vol.get<double>(), time.get<double>(), toDoubleOr( shift, 0.0 ),
+        toStrOr( volatilityType, "LOGNORMAL" ) ) );
+}
+XLO_FUNC_END( aqMathCapletFloorletPrice )
+    .help( L"Black caplet / floorlet price." )
+    .arg( L"CapletOrFloorlet", L"CAPLET or FLOORLET" )
+    .arg( L"AnnuityFactor",    L"Discounted year-fraction of the period" )
+    .arg( L"LiborRate",        L"Forward Libor rate for the period" )
+    .arg( L"Strike",           L"Strike rate" )
+    .arg( L"Vol",              L"Volatility" )
+    .arg( L"Time",             L"Time to expiry in years" )
+    .arg( L"Shift",            L"Optional. Lognormal shift. Default 0" )
+    .arg( L"VolatilityType",   L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+
+
+// Implied volatility from a caplet / floorlet price.
+XLO_FUNC_START( aqMathCapletFloorletImpliedVol(
+    const ExcelObj& price,
+    const ExcelObj& capletOrFloorlet,
+    const ExcelObj& annuityFactor,
+    const ExcelObj& liborRate,
+    const ExcelObj& strike,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathCapletFloorletImpliedVol(
+        price.get<double>(),
+        toNarrowString( capletOrFloorlet ),
+        annuityFactor.get<double>(), liborRate.get<double>(), strike.get<double>(),
+        time.get<double>(), toDoubleOr( shift, 0.0 ),
+        toStrOr( volatilityType, "LOGNORMAL" ) ) );
+}
+XLO_FUNC_END( aqMathCapletFloorletImpliedVol )
+    .help( L"Implied volatility from a caplet / floorlet price." )
+    .arg( L"Price",            L"The caplet / floorlet price" )
+    .arg( L"CapletOrFloorlet", L"CAPLET or FLOORLET" )
+    .arg( L"AnnuityFactor",    L"Discounted year-fraction of the period" )
+    .arg( L"LiborRate",        L"Forward Libor rate for the period" )
+    .arg( L"Strike",           L"Strike rate" )
+    .arg( L"Time",             L"Time to expiry in years" )
+    .arg( L"Shift",            L"Optional. Lognormal shift. Default 0" )
+    .arg( L"VolatilityType",   L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+
+
+/* =========================================================================
+ *  Volatility conversion + Libor-in-arrears convexity
+ * ====================================================================== */
+
+XLO_FUNC_START( aqMathVolatilityToNormalFromLognormal(
+    const ExcelObj& lognormalVol,
+    const ExcelObj& underlyingRate ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathVolatilityToNormalFromLognormal(
+        lognormalVol.get<double>(), underlyingRate.get<double>() ) );
+}
+XLO_FUNC_END( aqMathVolatilityToNormalFromLognormal )
+    .help( L"Convert a lognormal volatility to a normal (basis-point) volatility." )
+    .arg( L"LognormalVol",   L"The lognormal volatility" )
+    .arg( L"UnderlyingRate", L"The underlying forward rate" );
+
+
+XLO_FUNC_START( aqMathVolatilityToLognormalFromNormal(
+    const ExcelObj& normalVol,
+    const ExcelObj& underlyingRate ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathVolatilityToLognormalFromNormal(
+        normalVol.get<double>(), underlyingRate.get<double>() ) );
+}
+XLO_FUNC_END( aqMathVolatilityToLognormalFromNormal )
+    .help( L"Convert a normal (basis-point) volatility to a lognormal volatility." )
+    .arg( L"NormalVol",      L"The normal volatility" )
+    .arg( L"UnderlyingRate", L"The underlying forward rate" );
+
+
+XLO_FUNC_START( aqMathVolatilityToShiftedLognormalFromLognormal(
+    const ExcelObj& lognormalVol,
+    const ExcelObj& underlyingRate,
+    const ExcelObj& shiftSize ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathVolatilityToShiftedLognormalFromLognormal(
+        lognormalVol.get<double>(), underlyingRate.get<double>(), shiftSize.get<double>() ) );
+}
+XLO_FUNC_END( aqMathVolatilityToShiftedLognormalFromLognormal )
+    .help( L"Convert a lognormal volatility to a shifted-lognormal volatility." )
+    .arg( L"LognormalVol",   L"The lognormal volatility" )
+    .arg( L"UnderlyingRate", L"The underlying forward rate" )
+    .arg( L"ShiftSize",      L"The lognormal shift" );
+
+
+XLO_FUNC_START( aqMathVolatilityToLognormalFromShiftedLognormal(
+    const ExcelObj& shiftedLognormalVol,
+    const ExcelObj& underlyingRate,
+    const ExcelObj& shiftSize ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathVolatilityToLognormalFromShiftedLognormal(
+        shiftedLognormalVol.get<double>(), underlyingRate.get<double>(), shiftSize.get<double>() ) );
+}
+XLO_FUNC_END( aqMathVolatilityToLognormalFromShiftedLognormal )
+    .help( L"Convert a shifted-lognormal volatility to a lognormal volatility." )
+    .arg( L"ShiftedLognormalVol", L"The shifted-lognormal volatility" )
+    .arg( L"UnderlyingRate",      L"The underlying forward rate" )
+    .arg( L"ShiftSize",           L"The lognormal shift" );
+
+
+XLO_FUNC_START( aqMathVolatilityToShiftedLognormalFromNormal(
+    const ExcelObj& normalVol,
+    const ExcelObj& underlyingRate,
+    const ExcelObj& shiftSize ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathVolatilityToShiftedLognormalFromNormal(
+        normalVol.get<double>(), underlyingRate.get<double>(), shiftSize.get<double>() ) );
+}
+XLO_FUNC_END( aqMathVolatilityToShiftedLognormalFromNormal )
+    .help( L"Convert a normal volatility to a shifted-lognormal volatility." )
+    .arg( L"NormalVol",      L"The normal volatility" )
+    .arg( L"UnderlyingRate", L"The underlying forward rate" )
+    .arg( L"ShiftSize",      L"The lognormal shift" );
+
+
+XLO_FUNC_START( aqMathVolatilityToNormalFromShiftedLognormal(
+    const ExcelObj& shiftedLognormalVol,
+    const ExcelObj& underlyingRate,
+    const ExcelObj& shiftSize ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathVolatilityToNormalFromShiftedLognormal(
+        shiftedLognormalVol.get<double>(), underlyingRate.get<double>(), shiftSize.get<double>() ) );
+}
+XLO_FUNC_END( aqMathVolatilityToNormalFromShiftedLognormal )
+    .help( L"Convert a shifted-lognormal volatility to a normal volatility." )
+    .arg( L"ShiftedLognormalVol", L"The shifted-lognormal volatility" )
+    .arg( L"UnderlyingRate",      L"The underlying forward rate" )
+    .arg( L"ShiftSize",           L"The lognormal shift" );
+
+
+XLO_FUNC_START( aqMathLiborConvexityAdjustmentInArrears(
+    const ExcelObj& liborRate,
+    const ExcelObj& couponYearFraction,
+    const ExcelObj& timeToMaturity,
+    const ExcelObj& volatility,
+    const ExcelObj& volatilityType,
+    const ExcelObj& volatilityShift,
+    const ExcelObj& useHullApproximation ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathLiborConvexityAdjustmentInArrears(
+        liborRate.get<double>(), couponYearFraction.get<double>(), timeToMaturity.get<double>(),
+        volatility.get<double>(),
+        etrading::toVolatilityTypeEnum( toNarrowString( volatilityType ) ),
+        toDoubleOr( volatilityShift, 0.0 ), toBool( useHullApproximation, false ) ) );
+}
+XLO_FUNC_END( aqMathLiborConvexityAdjustmentInArrears )
+    .help( L"Libor-in-arrears convexity adjustment." )
+    .arg( L"LiborRate",           L"The forward Libor rate" )
+    .arg( L"CouponYearFraction",  L"Year fraction of the coupon period" )
+    .arg( L"TimeToMaturity",      L"Time to the fixing, in years" )
+    .arg( L"Volatility",          L"Volatility of the Libor rate" )
+    .arg( L"VolatilityType",      L"LOGNORMAL, NORMAL or SHIFTED_LOGNORMAL" )
+    .arg( L"VolatilityShift",     L"Optional. Shift for a shifted-lognormal vol. Default 0" )
+    .arg( L"UseHullApproximation", L"Optional. Default FALSE. Use Hull's approximation" );
+
+
+XLO_FUNC_START( aqMathLiborRateInArrears(
+    const ExcelObj& liborRate,
+    const ExcelObj& couponYearFraction,
+    const ExcelObj& timeToMaturity,
+    const ExcelObj& volatility,
+    const ExcelObj& volatilityType,
+    const ExcelObj& volatilityShift,
+    const ExcelObj& useHullApproximation ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathLiborRateInArrears(
+        liborRate.get<double>(), couponYearFraction.get<double>(), timeToMaturity.get<double>(),
+        volatility.get<double>(),
+        etrading::toVolatilityTypeEnum( toNarrowString( volatilityType ) ),
+        toDoubleOr( volatilityShift, 0.0 ), toBool( useHullApproximation, false ) ) );
+}
+XLO_FUNC_END( aqMathLiborRateInArrears )
+    .help( L"Convexity-adjusted Libor-in-arrears rate." )
+    .arg( L"LiborRate",           L"The forward Libor rate" )
+    .arg( L"CouponYearFraction",  L"Year fraction of the coupon period" )
+    .arg( L"TimeToMaturity",      L"Time to the fixing, in years" )
+    .arg( L"Volatility",          L"Volatility of the Libor rate" )
+    .arg( L"VolatilityType",      L"LOGNORMAL, NORMAL or SHIFTED_LOGNORMAL" )
+    .arg( L"VolatilityShift",     L"Optional. Shift for a shifted-lognormal vol. Default 0" )
+    .arg( L"UseHullApproximation", L"Optional. Default FALSE. Use Hull's approximation" );
+
+
+XLO_FUNC_START( aqMathLiborConvexityAdjustmentForArbitraryFixingDate(
+    const ExcelObj& liborRate,
+    const ExcelObj& couponYearFraction,
+    const ExcelObj& timeToMaturity,
+    const ExcelObj& fixingDateYearFraction,
+    const ExcelObj& startDiscountFactor,
+    const ExcelObj& endDiscountFactor,
+    const ExcelObj& volatility,
+    const ExcelObj& volatilityType,
+    const ExcelObj& volatilityShift,
+    const ExcelObj& useHullApproximation ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathLiborConvexityAdjustmentForArbitraryFixingDate(
+        liborRate.get<double>(), couponYearFraction.get<double>(), timeToMaturity.get<double>(),
+        fixingDateYearFraction.get<double>(), startDiscountFactor.get<double>(), endDiscountFactor.get<double>(),
+        volatility.get<double>(),
+        etrading::toVolatilityTypeEnum( toNarrowString( volatilityType ) ),
+        toDoubleOr( volatilityShift, 0.0 ), toBool( useHullApproximation, false ) ) );
+}
+XLO_FUNC_END( aqMathLiborConvexityAdjustmentForArbitraryFixingDate )
+    .help( L"Libor convexity adjustment for a fixing date that is not the period start." )
+    .arg( L"LiborRate",              L"The forward Libor rate" )
+    .arg( L"CouponYearFraction",     L"Year fraction of the coupon period" )
+    .arg( L"TimeToMaturity",         L"Time to the period end, in years" )
+    .arg( L"FixingDateYearFraction", L"Time to the fixing date, in years" )
+    .arg( L"StartDiscountFactor",    L"Discount factor to the period start" )
+    .arg( L"EndDiscountFactor",      L"Discount factor to the period end" )
+    .arg( L"Volatility",             L"Volatility of the Libor rate" )
+    .arg( L"VolatilityType",         L"LOGNORMAL, NORMAL or SHIFTED_LOGNORMAL" )
+    .arg( L"VolatilityShift",        L"Optional. Shift for a shifted-lognormal vol. Default 0" )
+    .arg( L"UseHullApproximation",   L"Optional. Default FALSE. Use Hull's approximation" );
+
+
+XLO_FUNC_START( aqMathLiborRateForArbitraryFixingDate(
+    const ExcelObj& liborRate,
+    const ExcelObj& couponYearFraction,
+    const ExcelObj& timeToMaturity,
+    const ExcelObj& fixingDateYearFraction,
+    const ExcelObj& startDiscountFactor,
+    const ExcelObj& endDiscountFactor,
+    const ExcelObj& volatility,
+    const ExcelObj& volatilityType,
+    const ExcelObj& volatilityShift,
+    const ExcelObj& useHullApproximation ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathLiborRateForArbitraryFixingDate(
+        liborRate.get<double>(), couponYearFraction.get<double>(), timeToMaturity.get<double>(),
+        fixingDateYearFraction.get<double>(), startDiscountFactor.get<double>(), endDiscountFactor.get<double>(),
+        volatility.get<double>(),
+        etrading::toVolatilityTypeEnum( toNarrowString( volatilityType ) ),
+        toDoubleOr( volatilityShift, 0.0 ), toBool( useHullApproximation, false ) ) );
+}
+XLO_FUNC_END( aqMathLiborRateForArbitraryFixingDate )
+    .help( L"Convexity-adjusted Libor rate for a fixing date that is not the period start." )
+    .arg( L"LiborRate",              L"The forward Libor rate" )
+    .arg( L"CouponYearFraction",     L"Year fraction of the coupon period" )
+    .arg( L"TimeToMaturity",         L"Time to the period end, in years" )
+    .arg( L"FixingDateYearFraction", L"Time to the fixing date, in years" )
+    .arg( L"StartDiscountFactor",    L"Discount factor to the period start" )
+    .arg( L"EndDiscountFactor",      L"Discount factor to the period end" )
+    .arg( L"Volatility",             L"Volatility of the Libor rate" )
+    .arg( L"VolatilityType",         L"LOGNORMAL, NORMAL or SHIFTED_LOGNORMAL" )
+    .arg( L"VolatilityShift",        L"Optional. Shift for a shifted-lognormal vol. Default 0" )
+    .arg( L"UseHullApproximation",   L"Optional. Default FALSE. Use Hull's approximation" );
+
+
+/* =========================================================================
+ *  European IR swaption - price, implied vol, Greeks, cash annuity
+ * ====================================================================== */
+
+XLO_FUNC_START( aqMathEuropeanIRSwaptionPrice(
+    const ExcelObj& payerReceiver,
+    const ExcelObj& annuity,
+    const ExcelObj& swapRate,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathEuropeanIRSwaptionPrice(
+        toNarrowString( payerReceiver ),
+        annuity.get<double>(), swapRate.get<double>(), strike.get<double>(),
+        vol.get<double>(), time.get<double>(), toDoubleOr( shift, 0.0 ),
+        toStrOr( volatilityType, "LOGNORMAL" ) ) );
+}
+XLO_FUNC_END( aqMathEuropeanIRSwaptionPrice )
+    .help( L"European interest-rate swaption price (Black / Bachelier)." )
+    .arg( L"PayerReceiver",  L"PAYER or RECEIVER" )
+    .arg( L"Annuity",        L"The swap annuity (PV01 x 10000)" )
+    .arg( L"SwapRate",       L"The forward swap rate" )
+    .arg( L"Strike",         L"The strike rate" )
+    .arg( L"Vol",            L"Volatility" )
+    .arg( L"Time",           L"Time to expiry in years" )
+    .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
+    .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+
+
+XLO_FUNC_START( aqMathEuropeanIRSwaptionImpliedVol(
+    const ExcelObj& price,
+    const ExcelObj& payerReceiver,
+    const ExcelObj& annuity,
+    const ExcelObj& swapRate,
+    const ExcelObj& strike,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathEuropeanIRSwaptionImpliedVol(
+        price.get<double>(),
+        toNarrowString( payerReceiver ),
+        annuity.get<double>(), swapRate.get<double>(), strike.get<double>(),
+        time.get<double>(), toDoubleOr( shift, 0.0 ),
+        toStrOr( volatilityType, "LOGNORMAL" ) ) );
+}
+XLO_FUNC_END( aqMathEuropeanIRSwaptionImpliedVol )
+    .help( L"Implied volatility from a European interest-rate swaption price." )
+    .arg( L"Price",          L"The swaption price" )
+    .arg( L"PayerReceiver",  L"PAYER or RECEIVER" )
+    .arg( L"Annuity",        L"The swap annuity" )
+    .arg( L"SwapRate",       L"The forward swap rate" )
+    .arg( L"Strike",         L"The strike rate" )
+    .arg( L"Time",           L"Time to expiry in years" )
+    .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
+    .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+
+
+XLO_FUNC_START( aqMathEuropeanIRSwaptionDelta(
+    const ExcelObj& payerReceiver,
+    const ExcelObj& annuity,
+    const ExcelObj& swapRate,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathEuropeanIRSwaptionDelta(
+        toNarrowString( payerReceiver ),
+        annuity.get<double>(), swapRate.get<double>(), strike.get<double>(),
+        vol.get<double>(), time.get<double>(), toDoubleOr( shift, 0.0 ),
+        toStrOr( volatilityType, "LOGNORMAL" ) ) );
+}
+XLO_FUNC_END( aqMathEuropeanIRSwaptionDelta )
+    .help( L"European interest-rate swaption delta." )
+    .arg( L"PayerReceiver",  L"PAYER or RECEIVER" )
+    .arg( L"Annuity",        L"The swap annuity" )
+    .arg( L"SwapRate",       L"The forward swap rate" )
+    .arg( L"Strike",         L"The strike rate" )
+    .arg( L"Vol",            L"Volatility" )
+    .arg( L"Time",           L"Time to expiry in years" )
+    .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
+    .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+
+
+XLO_FUNC_START( aqMathEuropeanIRSwaptionGamma(
+    const ExcelObj& payerReceiver,
+    const ExcelObj& annuity,
+    const ExcelObj& swapRate,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathEuropeanIRSwaptionGamma(
+        toNarrowString( payerReceiver ),
+        annuity.get<double>(), swapRate.get<double>(), strike.get<double>(),
+        vol.get<double>(), time.get<double>(), toDoubleOr( shift, 0.0 ),
+        toStrOr( volatilityType, "LOGNORMAL" ) ) );
+}
+XLO_FUNC_END( aqMathEuropeanIRSwaptionGamma )
+    .help( L"European interest-rate swaption gamma." )
+    .arg( L"PayerReceiver",  L"PAYER or RECEIVER" )
+    .arg( L"Annuity",        L"The swap annuity" )
+    .arg( L"SwapRate",       L"The forward swap rate" )
+    .arg( L"Strike",         L"The strike rate" )
+    .arg( L"Vol",            L"Volatility" )
+    .arg( L"Time",           L"Time to expiry in years" )
+    .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
+    .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+
+
+XLO_FUNC_START( aqMathEuropeanIRSwaptionVega(
+    const ExcelObj& payerReceiver,
+    const ExcelObj& annuity,
+    const ExcelObj& swapRate,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathEuropeanIRSwaptionVega(
+        toNarrowString( payerReceiver ),
+        annuity.get<double>(), swapRate.get<double>(), strike.get<double>(),
+        vol.get<double>(), time.get<double>(), toDoubleOr( shift, 0.0 ),
+        toStrOr( volatilityType, "LOGNORMAL" ) ) );
+}
+XLO_FUNC_END( aqMathEuropeanIRSwaptionVega )
+    .help( L"European interest-rate swaption vega." )
+    .arg( L"PayerReceiver",  L"PAYER or RECEIVER" )
+    .arg( L"Annuity",        L"The swap annuity" )
+    .arg( L"SwapRate",       L"The forward swap rate" )
+    .arg( L"Strike",         L"The strike rate" )
+    .arg( L"Vol",            L"Volatility" )
+    .arg( L"Time",           L"Time to expiry in years" )
+    .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
+    .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+
+
+XLO_FUNC_START( aqMathEuropeanIRSwaptionTheta(
+    const ExcelObj& payerReceiver,
+    const ExcelObj& annuity,
+    const ExcelObj& swapRate,
+    const ExcelObj& strike,
+    const ExcelObj& vol,
+    const ExcelObj& time,
+    const ExcelObj& shift,
+    const ExcelObj& volatilityType ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathEuropeanIRSwaptionTheta(
+        toNarrowString( payerReceiver ),
+        annuity.get<double>(), swapRate.get<double>(), strike.get<double>(),
+        vol.get<double>(), time.get<double>(), toDoubleOr( shift, 0.0 ),
+        toStrOr( volatilityType, "LOGNORMAL" ) ) );
+}
+XLO_FUNC_END( aqMathEuropeanIRSwaptionTheta )
+    .help( L"European interest-rate swaption theta." )
+    .arg( L"PayerReceiver",  L"PAYER or RECEIVER" )
+    .arg( L"Annuity",        L"The swap annuity" )
+    .arg( L"SwapRate",       L"The forward swap rate" )
+    .arg( L"Strike",         L"The strike rate" )
+    .arg( L"Vol",            L"Volatility" )
+    .arg( L"Time",           L"Time to expiry in years" )
+    .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
+    .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+
+
+XLO_FUNC_START( aqMathEuropeanIRSwaptionCashAnnuity(
+    const ExcelObj& notional,
+    const ExcelObj& swapRate,
+    const ExcelObj& nCouponsPerYear,
+    const ExcelObj& tenorInYears,
+    const ExcelObj& stubType ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathEuropeanIRSwaptionCashAnnuity(
+        notional.get<double>(), swapRate.get<double>(),
+        toUInt( nCouponsPerYear ), tenorInYears.get<double>(),
+        toStrOr( stubType, "SHORT_START" ) ) );
+}
+XLO_FUNC_END( aqMathEuropeanIRSwaptionCashAnnuity )
+    .help( L"Cash-settled annuity for a European interest-rate swaption." )
+    .arg( L"Notional",        L"The swap notional" )
+    .arg( L"SwapRate",        L"The forward swap rate" )
+    .arg( L"NCouponsPerYear", L"Fixed-leg coupons per year" )
+    .arg( L"TenorInYears",    L"Swap tenor in years" )
+    .arg( L"StubType",        L"Optional. SHORT_START, LONG_START, SHORT_END, LONG_END. Default SHORT_START" );
+
+
+/* =========================================================================
+ *  Normal distribution
+ * ====================================================================== */
+
+XLO_FUNC_START( aqMathNormalDistributionStandard( const ExcelObj& z ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathNormalDistributionStandard( z.get<double>() ) );
+}
+XLO_FUNC_END( aqMathNormalDistributionStandard )
+    .help( L"Standard normal cumulative distribution function N(z)." )
+    .arg( L"Z", L"The argument" );
+
+
+XLO_FUNC_START( aqMathNormalDistributionStandardPDF( const ExcelObj& z ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathNormalDistributionStandardPDF( z.get<double>() ) );
+}
+XLO_FUNC_END( aqMathNormalDistributionStandardPDF )
+    .help( L"Standard normal probability density function n(z)." )
+    .arg( L"Z", L"The argument" );
+
+
+XLO_FUNC_START( aqMathNormalDistributionStandardInverse( const ExcelObj& phi ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathNormalDistributionStandardInverse( phi.get<double>() ) );
+}
+XLO_FUNC_END( aqMathNormalDistributionStandardInverse )
+    .help( L"Inverse standard normal CDF (probit)." )
+    .arg( L"Phi", L"A probability in (0, 1)" );
+
+
+XLO_FUNC_START( aqMathNormalDistribution(
+    const ExcelObj& x,
+    const ExcelObj& mean,
+    const ExcelObj& variance ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathNormalDistribution(
+        x.get<double>(), mean.get<double>(), variance.get<double>() ) );
+}
+XLO_FUNC_END( aqMathNormalDistribution )
+    .help( L"Normal cumulative distribution function with a given mean and variance." )
+    .arg( L"X",        L"The argument" )
+    .arg( L"Mean",     L"Distribution mean" )
+    .arg( L"Variance", L"Distribution variance" );
+
+
+XLO_FUNC_START( aqMathNormalDistributionPDF(
+    const ExcelObj& x,
+    const ExcelObj& mean,
+    const ExcelObj& variance ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathNormalDistributionPDF(
+        x.get<double>(), mean.get<double>(), variance.get<double>() ) );
+}
+XLO_FUNC_END( aqMathNormalDistributionPDF )
+    .help( L"Normal probability density function with a given mean and variance." )
+    .arg( L"X",        L"The argument" )
+    .arg( L"Mean",     L"Distribution mean" )
+    .arg( L"Variance", L"Distribution variance" );
+
+
+XLO_FUNC_START( aqMathNormalDistributionInverse(
+    const ExcelObj& phi,
+    const ExcelObj& mean,
+    const ExcelObj& variance ) )
+{
+    AQ_XLL_GUARD
+    return returnValue( validation::tryAqMathNormalDistributionInverse(
+        phi.get<double>(), mean.get<double>(), variance.get<double>() ) );
+}
+XLO_FUNC_END( aqMathNormalDistributionInverse )
+    .help( L"Inverse normal CDF with a given mean and variance." )
+    .arg( L"Phi",      L"A probability in (0, 1)" )
+    .arg( L"Mean",     L"Distribution mean" )
+    .arg( L"Variance", L"Distribution variance" );
+
+
+/* =========================================================================
+ *  Polynomial interpolation / integration
+ * ====================================================================== */
+
+XLO_FUNC_START( aqMathPolynomialInterpolation(
+    const ExcelObj& xValues,
+    const ExcelObj& yValues,
+    const ExcelObj& degree,
+    const ExcelObj& x ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathPolynomialInterpolation(
+        toDoubleVector( xValues, true, "XValues" ),
+        toDoubleVector( yValues, true, "YValues" ),
+        toUInt( degree ), x.get<double>() ) );
+}
+XLO_FUNC_END( aqMathPolynomialInterpolation )
+    .help( L"Fit a polynomial of the given degree to (x, y) and evaluate it at X." )
+    .arg( L"XValues", L"Column of x values" )
+    .arg( L"YValues", L"Column of y values, aligned with XValues" )
+    .arg( L"Degree",  L"Polynomial degree" )
+    .arg( L"X",       L"The point to evaluate at" );
+
+
+XLO_FUNC_START( aqMathPolynomialInterpolations(
+    const ExcelObj& xValues,
+    const ExcelObj& yValues,
+    const ExcelObj& degree,
+    const ExcelObj& x ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathPolynomialInterpolations(
+        toDoubleVector( xValues, true, "XValues" ),
+        toDoubleVector( yValues, true, "YValues" ),
+        toUInt( degree ),
+        toDoubleVector( x, true, "X" ) ) ) );
+}
+XLO_FUNC_END( aqMathPolynomialInterpolations )
+    .help( L"Fit a polynomial of the given degree to (x, y) and evaluate it at a column of points." )
+    .arg( L"XValues", L"Column of x values" )
+    .arg( L"YValues", L"Column of y values, aligned with XValues" )
+    .arg( L"Degree",  L"Polynomial degree" )
+    .arg( L"X",       L"Column of points to evaluate at" );
+
+
+XLO_FUNC_START( aqMathPoynomialIntegration(
+    const ExcelObj& xValues,
+    const ExcelObj& yValues,
+    const ExcelObj& degree,
+    const ExcelObj& lowerBound,
+    const ExcelObj& upperBound ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( validation::tryAqMathPoynomialIntegration(
+        toDoubleVector( xValues, true, "XValues" ),
+        toDoubleVector( yValues, true, "YValues" ),
+        toUInt( degree ), lowerBound.get<double>(), upperBound.get<double>() ) );
+}
+XLO_FUNC_END( aqMathPoynomialIntegration )
+    .help( L"Fit a polynomial to (x, y) and integrate it between two bounds." )
+    .arg( L"XValues",    L"Column of x values" )
+    .arg( L"YValues",    L"Column of y values, aligned with XValues" )
+    .arg( L"Degree",     L"Polynomial degree" )
+    .arg( L"LowerBound", L"Lower integration bound" )
+    .arg( L"UpperBound", L"Upper integration bound" );
+
+
+XLO_FUNC_START( aqMathPoynomialIntegrations(
+    const ExcelObj& xValues,
+    const ExcelObj& yValues,
+    const ExcelObj& degree,
+    const ExcelObj& lowerBounds,
+    const ExcelObj& upperBounds ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathPoynomialIntegrations(
+        toDoubleVector( xValues, true, "XValues" ),
+        toDoubleVector( yValues, true, "YValues" ),
+        toUInt( degree ),
+        toDoubleVector( lowerBounds, true, "LowerBounds" ),
+        toDoubleVector( upperBounds, true, "UpperBounds" ) ) ) );
+}
+XLO_FUNC_END( aqMathPoynomialIntegrations )
+    .help( L"Fit a polynomial to (x, y) and integrate it over each (lower, upper) bound pair." )
+    .arg( L"XValues",     L"Column of x values" )
+    .arg( L"YValues",     L"Column of y values, aligned with XValues" )
+    .arg( L"Degree",      L"Polynomial degree" )
+    .arg( L"LowerBounds", L"Column of lower bounds" )
+    .arg( L"UpperBounds", L"Column of upper bounds, aligned with LowerBounds" );
+
+
+/* =========================================================================
+ *  Curve integration
+ * ====================================================================== */
+
+XLO_FUNC_START( aqMathIntegrateUsingTerms(
+    const ExcelObj& terms,
+    const ExcelObj& values,
+    const ExcelObj& interpolationType,
+    const ExcelObj& joinDateAsDouble,
+    const ExcelObj& lowerBounds,
+    const ExcelObj& upperBounds,
+    const ExcelObj& nSteps,
+    const ExcelObj& optimize ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathIntegrateUsingTerms(
+        toDoubleVector( terms, true, "Terms" ),
+        toDoubleVector( values, true, "Values" ),
+        toNarrowString( interpolationType ),
+        joinDateAsDouble.get<double>(),
+        toDoubleVector( lowerBounds, true, "LowerBounds" ),
+        toDoubleVector( upperBounds, true, "UpperBounds" ),
+        toUInt( nSteps ),
+        toBool( optimize, false ) ) ) );
+}
+XLO_FUNC_END( aqMathIntegrateUsingTerms )
+    .help( L"Integrate an interpolated (term, value) curve over each (lower, upper) term-bound pair." )
+    .arg( L"Terms",             L"Column of terms in years" )
+    .arg( L"Values",            L"Column of values, aligned with Terms" )
+    .arg( L"InterpolationType", L"Interpolation method, e.g. LINEAR, MONOTONE_CONVEX" )
+    .arg( L"JoinDateAsDouble",  L"Join term for a piecewise scheme (0 for none)" )
+    .arg( L"LowerBounds",       L"Column of lower term bounds" )
+    .arg( L"UpperBounds",       L"Column of upper term bounds, aligned with LowerBounds" )
+    .arg( L"NSteps",            L"Number of integration steps" )
+    .arg( L"Optimize",          L"Optional. Default FALSE" );
+
+
+XLO_FUNC_START( aqMathIntegrate(
+    const ExcelObj& asOfDate,
+    const ExcelObj& dates,
+    const ExcelObj& values,
+    const ExcelObj& interpolationType,
+    const ExcelObj& joinDate,
+    const ExcelObj& lowerBoundDates,
+    const ExcelObj& upperBoundDates,
+    const ExcelObj& nSteps,
+    const ExcelObj& optimize ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    const AQLDate joinDateArg =
+        ( joinDate.isMissing() || !joinDate.isNonEmpty() ) ? AQLDate() : toAQLDate( joinDate );
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqMathIntegrate(
+        toAQLDate( asOfDate ),
+        toDateVector( dates, true, "Dates" ),
+        toDoubleVector( values, true, "Values" ),
+        toNarrowString( interpolationType ),
+        joinDateArg,
+        toDateVector( lowerBoundDates, true, "LowerBoundDates" ),
+        toDateVector( upperBoundDates, true, "UpperBoundDates" ),
+        toUInt( nSteps ),
+        toBool( optimize, false ) ) ) );
+}
+XLO_FUNC_END( aqMathIntegrate )
+    .help( L"Integrate an interpolated (date, value) curve over each (lower, upper) date-bound pair." )
+    .arg( L"AsOfDate",          L"The anchor date for time measurement" )
+    .arg( L"Dates",             L"Column of curve dates" )
+    .arg( L"Values",            L"Column of values, aligned with Dates" )
+    .arg( L"InterpolationType", L"Interpolation method, e.g. LINEAR, MONOTONE_CONVEX" )
+    .arg( L"JoinDate",          L"Join date for a piecewise scheme (blank for none)" )
+    .arg( L"LowerBoundDates",   L"Column of lower bound dates" )
+    .arg( L"UpperBoundDates",   L"Column of upper bound dates, aligned with LowerBoundDates" )
+    .arg( L"NSteps",            L"Number of integration steps" )
+    .arg( L"Optimize",          L"Optional. Default FALSE" );

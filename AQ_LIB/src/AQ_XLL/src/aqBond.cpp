@@ -19,8 +19,56 @@
 
 #include <aqXllTools.h>
 #include <tryAqBondObject.h>      // validation bond wrappers
+#include <tryAqBondCurves.h>      // validation::tryAqBondCurve* + PriceFromBondCurve / YieldFromBondCurve
+#include <tryAqBondSchedule.h>    // validation::tryAqBondSchedule / tryAqBondScheduleLVBKeys
+#include <AQObjUtilities.h>       // etrading::getBond
+#include <BondCurves.h>           // etrading::NelsonSiegelSvenssonParameters
+#include <NelsonSiegelFitting.h>  // etrading::NelsonSiegelSvenssonCalibrationResults
+#include <PolynomialFitting.h>    // etrading::PolynomialCalibrationResults
 
 using namespace aq_xll;
+
+namespace
+{
+    // Read a fixed-length column of doubles into a Nelson-Siegel / Svensson
+    // parameter block. NS uses beta0..lambda1; Svensson also uses beta3, lambda2.
+    etrading::NelsonSiegelSvenssonParameters nssParamsFromRange( const xloil::ExcelObj& range )
+    {
+        const std::vector<double> v = toDoubleVector( range, true, "InitialGuess" );
+        etrading::NelsonSiegelSvenssonParameters p = {};
+        p.beta0_   = v.size() > 0 ? v[0] : 0.0;
+        p.beta1_   = v.size() > 1 ? v[1] : 0.0;
+        p.beta2_   = v.size() > 2 ? v[2] : 0.0;
+        p.lambda1_ = v.size() > 3 ? v[3] : 0.0;
+        p.beta3_   = v.size() > 4 ? v[4] : 0.0;
+        p.lambda2_ = v.size() > 5 ? v[5] : 0.0;
+        return p;
+    }
+
+    // A calibrated Nelson-Siegel / Svensson result as a (label, value) block.
+    xloil::ExcelObj nssResultBlock( const etrading::NelsonSiegelSvenssonCalibrationResults& r, bool isSvensson )
+    {
+        AQLStringMatrix m;
+        auto row = []( const char* k, double val ) {
+            AQLStringVector r;
+            r.push_back( AQLString( k ) );
+            r.push_back( AQLString( val, 10 ) );
+            return r;
+        };
+        m.push_back( row( "beta0",   r.parameters_.beta0_ ) );
+        m.push_back( row( "beta1",   r.parameters_.beta1_ ) );
+        m.push_back( row( "beta2",   r.parameters_.beta2_ ) );
+        m.push_back( row( "lambda1", r.parameters_.lambda1_ ) );
+        if ( isSvensson )
+        {
+            m.push_back( row( "beta3",   r.parameters_.beta3_ ) );
+            m.push_back( row( "lambda2", r.parameters_.lambda2_ ) );
+        }
+        m.push_back( row( "leastSquaresError", r.leastSquaresError_ ) );
+        m.push_back( row( "iterations",        r.iterations_ ) );
+        return toExcelMatrix( m );
+    }
+}
 
 
 XLO_FUNC_START( aqBondObjectCreate(
@@ -1235,3 +1283,460 @@ XLO_FUNC_END( aqBondGeneratorDisplay )
     .help( L"Return a bond generator's configuration as a key/value block. Omit PropertyKey to return every block." )
     .arg( L"BondGeneratorName", L"A bond generator handle" )
     .arg( L"PropertyKey",       L"Optional. The configuration block to return; blank returns all blocks" );
+
+
+/* -------------------------------------------------------------------------
+ *  Bond curve (fitted yield curve for a bond universe)
+ * ---------------------------------------------------------------------- */
+
+// Create and store a fitted bond curve from one or two named data blocks.
+XLO_FUNC_START( aqBondCurveCreate(
+    const ExcelObj& bondCurveName,
+    const ExcelObj& key1,
+    const ExcelObj& value1,
+    const ExcelObj& key2,
+    const ExcelObj& value2 ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    const std::string objectName =
+        decorateWithExcelLocation( toNarrowString( bondCurveName ) );
+
+    std::vector<std::string>           dataBlockNames;
+    std::vector<validation::TableInfo> infoBlocks;
+
+    dataBlockNames.push_back( etrading::trim_to_upper( toNarrowString( key1 ) ) );
+    infoBlocks.push_back( toTableInfo( value1 ) );
+
+    if ( !value2.isMissing() && value2.isNonEmpty() )
+    {
+        dataBlockNames.push_back( etrading::trim_to_upper( toNarrowString( key2 ) ) );
+        infoBlocks.push_back( toTableInfo( value2 ) );
+    }
+
+    const std::string storedName =
+        validation::tryAqBondCurveCreate( objectName, dataBlockNames, infoBlocks );
+
+    return returnValue( appendInstanceCounter( storedName ) );
+}
+XLO_FUNC_END( aqBondCurveCreate )
+    .help( L"Create and store a fitted bond curve from one or two named data blocks; returns its handle." )
+    .arg( L"BondCurveName", L"Name for the bond curve object" )
+    .arg( L"Key1",          L"Name of the first data block" )
+    .arg( L"Value1",        L"First data block, as a range" )
+    .arg( L"Key2",          L"Optional. Name of the second data block" )
+    .arg( L"Value2",        L"Optional. Second data block, as a range" );
+
+
+// Display a stored bond curve as a matrix.
+XLO_FUNC_START( aqBondCurveDisplay(
+    const ExcelObj& bondCurveName ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( toExcelMatrix(
+        validation::tryAqBondCurveDisplay( getNameWithoutCounter( bondCurveName ) ) ) );
+}
+XLO_FUNC_END( aqBondCurveDisplay )
+    .help( L"Display a stored bond curve as a matrix." )
+    .arg( L"BondCurveName", L"A bond curve handle" );
+
+
+// Interpolated yield off a stored bond curve at a reference date.
+XLO_FUNC_START( aqBondCurveYield(
+    const ExcelObj& bondCurveName,
+    const ExcelObj& referenceDate ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqBondCurveYield(
+        getNameWithoutCounter( bondCurveName ), toAQLDate( referenceDate ) ) );
+}
+XLO_FUNC_END( aqBondCurveYield )
+    .help( L"Interpolated yield off a stored bond curve at a reference date." )
+    .arg( L"BondCurveName", L"A bond curve handle" )
+    .arg( L"ReferenceDate", L"The date to read the yield at" );
+
+
+// Calibrate Nelson-Siegel parameters to a set of (maturity, yield) points.
+XLO_FUNC_START( aqBondCurveNelsonSiegelCalibrate(
+    const ExcelObj& bondMaturities,
+    const ExcelObj& bondYields,
+    const ExcelObj& initialGuess,
+    const ExcelObj& maxIterations,
+    const ExcelObj& maxStationaryStateIterations,
+    const ExcelObj& lowerBounds,
+    const ExcelObj& upperBounds ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    const etrading::NelsonSiegelSvenssonCalibrationResults r =
+        validation::tryAqBondCurveNelsonSiegelCalibrate(
+            toDoubleVector( bondMaturities, true, "BondMaturities" ),
+            toDoubleVector( bondYields, true, "BondYields" ),
+            nssParamsFromRange( initialGuess ),
+            static_cast<unsigned int>( maxIterations.get<double>() ),
+            static_cast<unsigned int>( maxStationaryStateIterations.get<double>() ),
+            toDoubleVector( lowerBounds, true, "LowerBounds" ),
+            toDoubleVector( upperBounds, true, "UpperBounds" ) );
+
+    return returnValue( nssResultBlock( r, false ) );
+}
+XLO_FUNC_END( aqBondCurveNelsonSiegelCalibrate )
+    .help( L"Calibrate Nelson-Siegel parameters to (maturity, yield) points. Returns a key/value block." )
+    .arg( L"BondMaturities",               L"Column of bond maturities in years" )
+    .arg( L"BondYields",                   L"Column of bond yields, aligned with BondMaturities" )
+    .arg( L"InitialGuess",                 L"4 starting values: beta0, beta1, beta2, lambda1" )
+    .arg( L"MaxIterations",                L"Maximum optimiser iterations" )
+    .arg( L"MaxStationaryStateIterations", L"Maximum iterations with no improvement before stopping" )
+    .arg( L"LowerBounds",                  L"4 lower bounds, aligned with InitialGuess" )
+    .arg( L"UpperBounds",                  L"4 upper bounds, aligned with InitialGuess" );
+
+
+// Nelson-Siegel yields for a set of maturities from fitted parameters.
+XLO_FUNC_START( aqBondCurveNelsonSiegelYield(
+    const ExcelObj& beta0,
+    const ExcelObj& beta1,
+    const ExcelObj& beta2,
+    const ExcelObj& lambda,
+    const ExcelObj& bondMaturities ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqBondCurveNelsonSiegelYield(
+        beta0.get<double>(), beta1.get<double>(), beta2.get<double>(), lambda.get<double>(),
+        toDoubleVector( bondMaturities, true, "BondMaturities" ) ) ) );
+}
+XLO_FUNC_END( aqBondCurveNelsonSiegelYield )
+    .help( L"Nelson-Siegel yields for a column of maturities from fitted parameters." )
+    .arg( L"Beta0",          L"Long-term yield level" )
+    .arg( L"Beta1",          L"Slope" )
+    .arg( L"Beta2",          L"Curvature" )
+    .arg( L"Lambda",         L"Time-decay" )
+    .arg( L"BondMaturities", L"Column of maturities in years" );
+
+
+// Calibrate polynomial coefficients to a set of (maturity, yield) points.
+XLO_FUNC_START( aqBondCurvePolynomialCalibrate(
+    const ExcelObj& polynomialOrder,
+    const ExcelObj& bondMaturities,
+    const ExcelObj& bondYields,
+    const ExcelObj& maxIterations,
+    const ExcelObj& maxStationaryStateIterations,
+    const ExcelObj& lowerBound,
+    const ExcelObj& upperBound ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    const etrading::PolynomialCalibrationResults r =
+        validation::tryAqBondCurvePolynomialCalibrate(
+            static_cast<unsigned int>( polynomialOrder.get<double>() ),
+            toDoubleVector( bondMaturities, true, "BondMaturities" ),
+            toDoubleVector( bondYields, true, "BondYields" ),
+            static_cast<unsigned int>( maxIterations.get<double>() ),
+            static_cast<unsigned int>( maxStationaryStateIterations.get<double>() ),
+            lowerBound.get<double>(),
+            upperBound.get<double>() );
+
+    AQLStringMatrix m;
+    for ( std::size_t i = 0; i < r.coefficients_.size(); ++i )
+    {
+        AQLStringVector row;
+        row.push_back( AQLString( ( std::string( "c" ) + std::to_string( i ) ).c_str() ) );
+        row.push_back( AQLString( r.coefficients_[ i ], 10 ) );
+        m.push_back( row );
+    }
+    {
+        AQLStringVector errRow;
+        errRow.push_back( AQLString( "leastSquaresError" ) );
+        errRow.push_back( AQLString( r.leastSquaresError_, 10 ) );
+        m.push_back( errRow );
+    }
+    {
+        AQLStringVector itRow;
+        itRow.push_back( AQLString( "iterations" ) );
+        itRow.push_back( AQLString( r.iterations_, 0 ) );
+        m.push_back( itRow );
+    }
+
+    return returnValue( toExcelMatrix( m ) );
+}
+XLO_FUNC_END( aqBondCurvePolynomialCalibrate )
+    .help( L"Calibrate polynomial coefficients to (maturity, yield) points. Returns a key/value block." )
+    .arg( L"PolynomialOrder",              L"Order of the fitting polynomial" )
+    .arg( L"BondMaturities",               L"Column of bond maturities in years" )
+    .arg( L"BondYields",                   L"Column of bond yields, aligned with BondMaturities" )
+    .arg( L"MaxIterations",                L"Maximum optimiser iterations" )
+    .arg( L"MaxStationaryStateIterations", L"Maximum iterations with no improvement before stopping" )
+    .arg( L"LowerBound",                   L"Lower bound applied to every coefficient" )
+    .arg( L"UpperBound",                   L"Upper bound applied to every coefficient" );
+
+
+// Polynomial yields for a set of maturities from fitted coefficients.
+XLO_FUNC_START( aqBondCurvePolynomialYield(
+    const ExcelObj& coefficients,
+    const ExcelObj& bondMaturities ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqBondCurvePolynomialYield(
+        toDoubleVector( coefficients, true, "Coefficients" ),
+        toDoubleVector( bondMaturities, true, "BondMaturities" ) ) ) );
+}
+XLO_FUNC_END( aqBondCurvePolynomialYield )
+    .help( L"Polynomial yields for a column of maturities from fitted coefficients." )
+    .arg( L"Coefficients",   L"Column of polynomial coefficients, lowest order first" )
+    .arg( L"BondMaturities", L"Column of maturities in years" );
+
+
+// Calibrate Svensson parameters to a set of (maturity, yield) points.
+XLO_FUNC_START( aqBondCurveSvenssonCalibrate(
+    const ExcelObj& bondMaturities,
+    const ExcelObj& bondYields,
+    const ExcelObj& initialGuess,
+    const ExcelObj& maxIterations,
+    const ExcelObj& maxStationaryStateIterations,
+    const ExcelObj& lowerBounds,
+    const ExcelObj& upperBounds ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    const etrading::NelsonSiegelSvenssonCalibrationResults r =
+        validation::tryAqBondCurveSvenssonCalibrate(
+            toDoubleVector( bondMaturities, true, "BondMaturities" ),
+            toDoubleVector( bondYields, true, "BondYields" ),
+            nssParamsFromRange( initialGuess ),
+            static_cast<unsigned int>( maxIterations.get<double>() ),
+            static_cast<unsigned int>( maxStationaryStateIterations.get<double>() ),
+            toDoubleVector( lowerBounds, true, "LowerBounds" ),
+            toDoubleVector( upperBounds, true, "UpperBounds" ) );
+
+    return returnValue( nssResultBlock( r, true ) );
+}
+XLO_FUNC_END( aqBondCurveSvenssonCalibrate )
+    .help( L"Calibrate Svensson parameters to (maturity, yield) points. Returns a key/value block." )
+    .arg( L"BondMaturities",               L"Column of bond maturities in years" )
+    .arg( L"BondYields",                   L"Column of bond yields, aligned with BondMaturities" )
+    .arg( L"InitialGuess",                 L"6 starting values: beta0, beta1, beta2, lambda1, beta3, lambda2" )
+    .arg( L"MaxIterations",                L"Maximum optimiser iterations" )
+    .arg( L"MaxStationaryStateIterations", L"Maximum iterations with no improvement before stopping" )
+    .arg( L"LowerBounds",                  L"6 lower bounds, aligned with InitialGuess" )
+    .arg( L"UpperBounds",                  L"6 upper bounds, aligned with InitialGuess" );
+
+
+// Svensson yields for a set of maturities from fitted parameters.
+XLO_FUNC_START( aqBondCurveSvenssonYield(
+    const ExcelObj& beta0,
+    const ExcelObj& beta1,
+    const ExcelObj& beta2,
+    const ExcelObj& beta3,
+    const ExcelObj& lambda1,
+    const ExcelObj& lambda2,
+    const ExcelObj& bondMaturities ) )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqBondCurveSvenssonYield(
+        beta0.get<double>(), beta1.get<double>(), beta2.get<double>(), beta3.get<double>(),
+        lambda1.get<double>(), lambda2.get<double>(),
+        toDoubleVector( bondMaturities, true, "BondMaturities" ) ) ) );
+}
+XLO_FUNC_END( aqBondCurveSvenssonYield )
+    .help( L"Svensson yields for a column of maturities from fitted parameters." )
+    .arg( L"Beta0",          L"Long-term yield level" )
+    .arg( L"Beta1",          L"Slope" )
+    .arg( L"Beta2",          L"Curvature" )
+    .arg( L"Beta3",          L"Secondary curvature" )
+    .arg( L"Lambda1",        L"Time-decay" )
+    .arg( L"Lambda2",        L"Secondary time-decay" )
+    .arg( L"BondMaturities", L"Column of maturities in years" );
+
+
+/* -------------------------------------------------------------------------
+ *  Bond object - additional pricing / yield functions
+ * ---------------------------------------------------------------------- */
+
+// Price a cached bond off a fitted bond curve at a settlement date.
+XLO_FUNC_START( aqBondObjectPriceFromBondCurve(
+    const ExcelObj& bondObjectName,
+    const ExcelObj& settlementDate,
+    const ExcelObj& bondCurveName ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqBondObjectPriceFromBondCurve(
+        getNameWithoutCounter( bondObjectName ),
+        toAQLDate( settlementDate ),
+        getNameWithoutCounter( bondCurveName ) ) );
+}
+XLO_FUNC_END( aqBondObjectPriceFromBondCurve )
+    .help( L"Price a cached bond off a fitted bond curve at a settlement date." )
+    .arg( L"BondObjectName", L"A bond handle" )
+    .arg( L"SettlementDate", L"The settlement date" )
+    .arg( L"BondCurveName",  L"A bond curve handle" );
+
+
+// Yield of a cached bond implied by a fitted bond curve at a settlement date.
+XLO_FUNC_START( aqBondObjectYieldFromBondCurve(
+    const ExcelObj& bondObjectName,
+    const ExcelObj& settlementDate,
+    const ExcelObj& bondCurveName ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqBondObjectYieldFromBondCurve(
+        getNameWithoutCounter( bondObjectName ),
+        toAQLDate( settlementDate ),
+        getNameWithoutCounter( bondCurveName ) ) );
+}
+XLO_FUNC_END( aqBondObjectYieldFromBondCurve )
+    .help( L"Yield of a cached bond implied by a fitted bond curve at a settlement date." )
+    .arg( L"BondObjectName", L"A bond handle" )
+    .arg( L"SettlementDate", L"The settlement date" )
+    .arg( L"BondCurveName",  L"A bond curve handle" );
+
+
+// Forward reinvested coupon for a cached bond over a repo period.
+XLO_FUNC_START( aqBondObjectForwardReinvestedCoupon(
+    const ExcelObj& bondObjectName,
+    const ExcelObj& settleDate,
+    const ExcelObj& forwardSettleDate,
+    const ExcelObj& price,
+    const ExcelObj& repoRate,
+    const ExcelObj& repoDayCount ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqBondObjectForwardReinvestedCoupon(
+        getNameWithoutCounter( bondObjectName ),
+        toAQLDate( settleDate ),
+        toAQLDate( forwardSettleDate ),
+        price.get<double>(),
+        repoRate.get<double>(),
+        toNarrowString( repoDayCount ) ) );
+}
+XLO_FUNC_END( aqBondObjectForwardReinvestedCoupon )
+    .help( L"Forward reinvested coupon for a cached bond over a repo period." )
+    .arg( L"BondObjectName",    L"A bond handle" )
+    .arg( L"SettleDate",        L"The spot settlement date" )
+    .arg( L"ForwardSettleDate", L"The forward settlement date" )
+    .arg( L"Price",             L"The spot price" )
+    .arg( L"RepoRate",          L"The repo rate over the period" )
+    .arg( L"RepoDayCount",      L"Day count for the repo accrual, e.g. ACT/360" );
+
+
+// Quote (yield -> price) for a cached bond at one or more settlement dates.
+XLO_FUNC_START( aqBondObjectQuote(
+    const ExcelObj& bondObjectName,
+    const ExcelObj& settlementDates,
+    const ExcelObj& yields,
+    const ExcelObj& yieldCalculationType ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqBondObjectQuote(
+        getNameWithoutCounter( bondObjectName ),
+        toDateVector( settlementDates, true, "SettlementDates" ),
+        toDoubleVector( yields, true, "Yields" ),
+        toNarrowString( yieldCalculationType ) ) ) );
+}
+XLO_FUNC_END( aqBondObjectQuote )
+    .help( L"Quote (yield to price) for a cached bond at one or more settlement dates." )
+    .arg( L"BondObjectName",       L"A bond handle" )
+    .arg( L"SettlementDates",      L"Column of settlement dates" )
+    .arg( L"Yields",               L"Column of yields, aligned with SettlementDates" )
+    .arg( L"YieldCalculationType", L"Optional. Yield convention, e.g. STREET, TRUE" );
+
+
+// Yield (price -> yield) for a cached bond at a settlement date.
+XLO_FUNC_START( aqBondObjectYieldFromObject(
+    const ExcelObj& bondObjectName,
+    const ExcelObj& settlementDate,
+    const ExcelObj& price,
+    const ExcelObj& yieldCalculationType ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqBondObjectYieldFromObject(
+        etrading::getBond( getNameWithoutCounter( bondObjectName ) ),
+        toAQLDate( settlementDate ),
+        price.get<double>(),
+        toNarrowString( yieldCalculationType ) ) );
+}
+XLO_FUNC_END( aqBondObjectYieldFromObject )
+    .help( L"Yield (price to yield) for a cached bond at a settlement date." )
+    .arg( L"BondObjectName",       L"A bond handle" )
+    .arg( L"SettlementDate",       L"The settlement date" )
+    .arg( L"Price",                L"The price to solve the yield from" )
+    .arg( L"YieldCalculationType", L"Optional. Yield convention, e.g. STREET, TRUE" );
+
+
+// Optimised yield solve (price -> yield) for a cached bond at multiple dates.
+XLO_FUNC_START( aqBondObjectYieldOptimized(
+    const ExcelObj& bondObjectName,
+    const ExcelObj& settlementDates,
+    const ExcelObj& prices,
+    const ExcelObj& yieldCalculationType ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( toExcelDoubleColumn( validation::tryAqBondObjectYieldOptimized(
+        etrading::getBond( getNameWithoutCounter( bondObjectName ) ),
+        toDateVector( settlementDates, true, "SettlementDates" ),
+        toDoubleVector( prices, true, "Prices" ),
+        toNarrowString( yieldCalculationType ) ) ) );
+}
+XLO_FUNC_END( aqBondObjectYieldOptimized )
+    .help( L"Optimised yield solve (price to yield) for a cached bond at multiple settlement dates." )
+    .arg( L"BondObjectName",       L"A bond handle" )
+    .arg( L"SettlementDates",      L"Column of settlement dates" )
+    .arg( L"Prices",               L"Column of prices, aligned with SettlementDates" )
+    .arg( L"YieldCalculationType", L"Optional. Yield convention, e.g. STREET, TRUE" );
+
+
+/* -------------------------------------------------------------------------
+ *  Bond schedule (stateless)
+ * ---------------------------------------------------------------------- */
+
+// The expected keys for a bond schedule label/value block.
+XLO_FUNC_START( aqBondScheduleLVBKeys() )
+{
+    AQ_XLL_GUARD
+
+    return returnValue( toExcelColumn( validation::tryAqBondScheduleLVBKeys() ) );
+}
+XLO_FUNC_END( aqBondScheduleLVBKeys )
+    .help( L"The expected keys for a bond schedule label/value block, as a column." );
+
+
+// Build a bond schedule from a label/value block.
+XLO_FUNC_START( aqBondSchedule(
+    const ExcelObj& bondScheduleLVB,
+    const ExcelObj& validateKeys,
+    const ExcelObj& showColumnHeaders ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( toExcelMatrix( validation::tryAqBondSchedule(
+        toLabelValueBlock( bondScheduleLVB ),
+        toBool( validateKeys, true ),
+        toBool( showColumnHeaders, true ) ) ) );
+}
+XLO_FUNC_END( aqBondSchedule )
+    .help( L"Build a bond schedule from a label/value block. Returns the schedule as a matrix." )
+    .arg( L"BondScheduleLVB",   L"The bond schedule label/value block" )
+    .arg( L"ValidateKeys",      L"Optional. Default TRUE. Check the keys against aqBondScheduleLVBKeys" )
+    .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );

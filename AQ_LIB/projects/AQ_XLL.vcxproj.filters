@@ -34,6 +34,9 @@
     <ClCompile Include="..\src\AQ_XLL\src\aqObject.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\AQ_XLL\src\aqRate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqTool.cpp">
       <Filter>src</Filter>
     </ClCompile>

@@ -1,22 +1,27 @@
 # AlgoQuantLib — project status
 
-**As at 2026-09-09 (pause point).** Overview of where the rebrand stands and what
-is left. Committed HEAD is `3809f148` (step 11 — singular categories +
-`aq<Category>Object` marker + AQ_XLL file renames). Since then, one **uncommitted
-working-tree delta** — all of it now **built green with GoogleTest passing**
-(Nicholas):
+**As at 2026-09-10 (pause point).** Overview of where the rebrand stands and what
+is left. Committed **HEAD is `18328864`**. Since the old `3809f148` baseline,
+`22212bc5` committed **task 2.6** (the `validation` / `AQ_API` / `GTEST` /
+fixture rename to the 22-category singular golden-source scheme — `Vol`→
+`Volatility`, `Future` + `Ois` added), the **AQ_XLL Tool + Object-lifecycle
+port** from `.APPLES\...\meUtilities.cpp`, and **Interpolation + PCA re-homed
+`Tool`→`Math`** (`tryAqMath*`); `18328864` added a natvis refresh (and,
+inadvertently, a generated `swig_Python_wrap.cxx` — flag to fix). All built green
+with GoogleTest passing.
 
-- **task 2.6** — validation / AQ_API / GTEST / fixture rename to the 22-category
-  singular golden-source scheme (`Vol`→`Volatility`, `Future` + `Ois` added);
-- **AQ_XLL Tool + Object-lifecycle port** — ~55 new `XLO_FUNC` worksheet
-  functions in `aqObject.cpp` / `aqTool.cpp`, plus Variant/matrix marshalling
-  helpers in `aqXllTools`, ported from `.APPLES\...\meUtilities.cpp`;
-- **Interpolation + PCA** re-homed from `Tool` to `Math`
-  (`aqMathInterpolation` / `aqMathPCA`, `tryAqMath*`).
+**Uncommitted working-tree delta (small):**
+- `src/AQ_XLL/src/{aqBond,aqDate,aqMath,aqTool}.cpp` — the remaining Bond / Tool
+  / Date / Math worksheet functions. **Built green, GTest passing (Nicholas).**
+- `src/AQ_XLL/src/aqRate.cpp` (new) + vcxproj/filters — the `Rate` category
+  (fixing table, FRA object, future↔FRA). **NOT yet built.**
+- `rebrand/phase2_validation_rename_MAP.csv` (untracked, the task-2.6 map) + doc
+  updates.
 
-Next action on resume is to **commit** this delta (staged, see
-`rebrand/STATUS.md` → "Next steps on resume"). `rebrand/STATUS.md` has the full
-per-batch detail, verification and the resume plan.
+Two open items before resuming: (1) rebuild `AQ_XLL` with `aqRate.cpp`;
+(2) decide whether the **`Rate` category is renamed** to `IR` / `InterestRate`
+(`aqRate*` reads oddly) — a golden-source category rename if it goes ahead. Then
+commit the small delta. Detail + resume plan: `rebrand/STATUS.md` top section.
 
 - The **phase-by-phase plan** is `MIGRATION_PLAN.md`.
 - The **detailed running record** of the rebrand (per-commit, per-step) is
@@ -38,7 +43,7 @@ XLL port; its harness and first tranche now work in Excel.
 | 2 | Category taxonomy (20 categories, locked) | **done** |
 | 3 | Identifier rebrand + calendar delimiter | **done** |
 | 3c | Retire `mir*` | **done** (deleted wholesale) |
-| 4 | xlOil XLL port | **~25%** — harness + Date / Tool / Bond / Object-lifecycle / Math surface built green; Curve / Swap / products / Model still to do; see §3.1 |
+| 4 | xlOil XLL port | **~35%** — Date / Tool / Bond / Object-lifecycle / Math complete; Rate (`aqRate.cpp`) written, not yet built; Curve / Swap / FX / Inflation / Volatility / product-option / Model / Generator still to do; see §3.1 |
 | 4a | Editions & manifest gating | not started |
 | 4b | Config folder & generators audit | not started |
 | 5 | Bindings (C#/Java/R) & test coverage | not started |
@@ -53,16 +58,16 @@ XLL port; its harness and first tranche now work in Excel.
 
 ## 2. State of the working tree right now
 
-**Committed HEAD is `3809f148`. One large uncommitted delta on top of it, all
-built green with GoogleTest passing (Nicholas, 2026-09-09).** The delta is the
-three workstreams listed in the header. It has not been split into commits yet —
-the first resume step is to stage it (see `rebrand/STATUS.md` → "Next steps on
-resume").
+**Committed HEAD is `18328864`.** `22212bc5` (task 2.6 + AQ_XLL Tool/Object port
++ Interpolation/PCA→Math) and `18328864` (natvis) are committed and green. The
+**uncommitted delta is now small** — the Bond/Tool/Date/Math XLL fill-in (green)
+plus the new `aqRate.cpp` (not yet built) plus doc/map files. See the PAUSE
+POINT block at the top of `rebrand/STATUS.md` for the exact file list.
 
 Do **not** `git add -A` blindly: `src/AQ_API/source/swig_*_wrap.*` are
-SWIG-generated and keep showing as phantom modifications; run
-`git checkout HEAD -- 'src/AQ_API/source/swig_*_wrap.*'` before staging and never
-commit them.
+SWIG-generated and keep showing as phantom modifications; never commit them —
+and note `swig_Python_wrap.cxx` already slipped into `18328864` (candidate for
+`git rm --cached`).
 
 The `ExcelObj`-argument rule for the static `XLO_FUNC_START` path: every arg is
 `const ExcelObj&`, unpacked in the body (`.get<double>()`, `.isMissing()`,

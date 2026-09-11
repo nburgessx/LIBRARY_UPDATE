@@ -21,8 +21,38 @@
 #include <tryAqToolDataFilter.h>   // validation::tryAqToolDataFilter
 #include <tryAqToolValuationSettings.h>  // validation::tryAqToolValuationSettingsDisplay
 #include <tryAqToolDate.h>         // validation::tryAqToolTermsToDates / tryAqToolDatesToTerms
+#include <tryAqToolGrid.h>         // validation::tryAqToolObjectGrid*
+#include <tryAqToolMultiGrid.h>   // validation::tryAqToolObjectMultiGrid*
 
 using namespace aq_xll;
+
+namespace
+{
+    // A (data, column-names) pair as an Excel array: the names become a header
+    // row above the data. Backs the grid Display functions.
+    xloil::ExcelObj flexibleDataToExcel( const std::pair<const validation::FlexibleData, std::vector<std::string>>& result )
+    {
+        const validation::FlexibleData& data = result.first;
+        const std::vector<std::string>& names = result.second;
+
+        etrading::VariantMatrix matrix;
+        if ( !names.empty() )
+        {
+            etrading::VariantVector header;
+            header.reserve( names.size() );
+            for ( const std::string& name : names )
+            {
+                header.push_back( etrading::Variant( name.c_str() ) );
+            }
+            matrix.push_back( header );
+        }
+        for ( const auto& row : data )
+        {
+            matrix.push_back( row );
+        }
+        return toExcelMatrix( matrix );
+    }
+}
 
 namespace
 {
@@ -679,3 +709,246 @@ XLO_FUNC_END( aqToolDatesToTerms )
     .help( L"Convert a list of dates into year-fraction terms measured from AsOfDate." )
     .arg( L"AsOfDate",     L"The anchor date" )
     .arg( L"PaymentDates", L"Column of dates" );
+
+
+/* -------------------------------------------------------------------------
+ *  Label-value-block: matrix form
+ * ---------------------------------------------------------------------- */
+
+// Build a label/value block from a keys column and one or two values columns.
+XLO_FUNC_START( aqToolLVBCreate(
+    const ExcelObj& keys,
+    const ExcelObj& values1,
+    const ExcelObj& values2 ) )
+{
+    AQ_XLL_GUARD
+
+    const std::vector<std::string> keyVec = toStringVector( keys, true );
+    const std::vector<std::string> val1   = toStringVector( values1, true );
+
+    StandardStringMatrix result;
+    if ( !values2.isMissing() && values2.isNonEmpty() )
+    {
+        result = validation::tryAqToolLVBCreate( keyVec, val1, toStringVector( values2, true ) );
+    }
+    else
+    {
+        result = validation::tryAqToolLVBCreate( keyVec, val1 );
+    }
+
+    AQLStringMatrix asAql;
+    asAql.reserve( result.size() );
+    for ( const StandardStringVector& row : result )
+    {
+        AQLStringVector aqlRow;
+        aqlRow.reserve( row.size() );
+        for ( const std::string& cell : row )
+        {
+            aqlRow.push_back( AQLString( cell.c_str() ) );
+        }
+        asAql.push_back( std::move( aqlRow ) );
+    }
+    return returnValue( toExcelMatrix( asAql ) );
+}
+XLO_FUNC_END( aqToolLVBCreate )
+    .help( L"Build a label/value block from a keys column and one or two values columns." )
+    .arg( L"Keys",    L"Column of keys" )
+    .arg( L"Values1", L"Column of values, aligned with Keys" )
+    .arg( L"Values2", L"Optional. A second column of values" );
+
+
+/* -------------------------------------------------------------------------
+ *  Object grid - a cached rectangular data block
+ * ---------------------------------------------------------------------- */
+
+// Create and store an object grid from a range.
+XLO_FUNC_START( aqToolObjectGridCreate(
+    const ExcelObj& objectName,
+    const ExcelObj& data,
+    const ExcelObj& allowJaggedData ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    const std::string name = decorateWithExcelLocation( toNarrowString( objectName ) );
+
+    const std::string storedName =
+        validation::tryAqToolObjectGridCreate( name, toTableInfo( data ), toBool( allowJaggedData, false ) );
+
+    return returnValue( appendInstanceCounter( storedName ) );
+}
+XLO_FUNC_END( aqToolObjectGridCreate )
+    .help( L"Create and store an object grid (a cached rectangular data block); returns its handle." )
+    .arg( L"ObjectName",      L"Name for the grid object" )
+    .arg( L"Data",            L"The range to store" )
+    .arg( L"AllowJaggedData", L"Optional. Default FALSE. Allow columns of differing length" );
+
+
+// Save an object grid to a file.
+XLO_FUNC_START( aqToolObjectGridSave(
+    const ExcelObj& objectName,
+    const ExcelObj& fileNameToWriteTo ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqToolObjectGridSave(
+        getNameWithoutCounter( objectName ), toNarrowString( fileNameToWriteTo ) ) );
+}
+XLO_FUNC_END( aqToolObjectGridSave )
+    .help( L"Save an object grid to a file. Returns a status string." )
+    .arg( L"ObjectName",        L"A grid handle" )
+    .arg( L"FileNameToWriteTo", L"Full path to write the grid to" );
+
+
+// Load an object grid from a file.
+XLO_FUNC_START( aqToolObjectGridLoad(
+    const ExcelObj& fileName ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqToolObjectGridLoad( toNarrowString( fileName ) ).second );
+}
+XLO_FUNC_END( aqToolObjectGridLoad )
+    .help( L"Load an object grid from a file. Returns a status string." )
+    .arg( L"FileName", L"Full path to the grid file" );
+
+
+// Display an object grid as a matrix, column names as the header row.
+XLO_FUNC_START( aqToolObjectGridDisplay(
+    const ExcelObj& objectName ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( flexibleDataToExcel(
+        validation::tryAqToolObjectGridDisplay( getNameWithoutCounter( objectName ) ) ) );
+}
+XLO_FUNC_END( aqToolObjectGridDisplay )
+    .help( L"Display an object grid as a matrix with the column names as a header row." )
+    .arg( L"ObjectName", L"A grid handle" );
+
+
+// The names of every cached object grid.
+XLO_FUNC_START( aqToolObjectGridObjectNames() )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( toExcelColumn( validation::tryAqToolObjectGridObjectNames() ) );
+}
+XLO_FUNC_END( aqToolObjectGridObjectNames )
+    .help( L"The names of every cached object grid, as a column." );
+
+
+// Remove one object grid from the cache.
+XLO_FUNC_START( aqToolObjectGridClearOne(
+    const ExcelObj& objectName ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqToolObjectGridClearOne( getNameWithoutCounter( objectName ) ) );
+}
+XLO_FUNC_END( aqToolObjectGridClearOne )
+    .help( L"Remove one object grid from the cache. Returns TRUE on success." )
+    .arg( L"ObjectName", L"A grid handle" );
+
+
+// Remove every object grid from the cache.
+XLO_FUNC_START( aqToolObjectGridClearAll() )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqToolObjectGridClearAll() );
+}
+XLO_FUNC_END( aqToolObjectGridClearAll )
+    .help( L"Remove every object grid from the cache. Returns TRUE on success." );
+
+
+/* -------------------------------------------------------------------------
+ *  Object multi-grid - a cached set of named grids
+ * ---------------------------------------------------------------------- */
+
+// Create and store a multi-grid from up to three named grids.
+XLO_FUNC_START( aqToolObjectMultiGridCreate(
+    const ExcelObj& objectName,
+    const ExcelObj& gridName1,
+    const ExcelObj& grid1,
+    const ExcelObj& gridName2,
+    const ExcelObj& grid2,
+    const ExcelObj& gridName3,
+    const ExcelObj& grid3,
+    const ExcelObj& allowJaggedData ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    const std::string name = decorateWithExcelLocation( toNarrowString( objectName ) );
+
+    std::vector<std::string>           gridNames;
+    std::vector<validation::TableInfo> infoBlocks;
+
+    gridNames.push_back( etrading::trim_to_upper( toNarrowString( gridName1 ) ) );
+    infoBlocks.push_back( toTableInfo( grid1 ) );
+
+    if ( !grid2.isMissing() && grid2.isNonEmpty() )
+    {
+        gridNames.push_back( etrading::trim_to_upper( toNarrowString( gridName2 ) ) );
+        infoBlocks.push_back( toTableInfo( grid2 ) );
+    }
+    if ( !grid3.isMissing() && grid3.isNonEmpty() )
+    {
+        gridNames.push_back( etrading::trim_to_upper( toNarrowString( gridName3 ) ) );
+        infoBlocks.push_back( toTableInfo( grid3 ) );
+    }
+
+    const std::string storedName = validation::tryAqToolObjectMultiGridCreate(
+        name, gridNames, infoBlocks, toBool( allowJaggedData, false ) );
+
+    return returnValue( appendInstanceCounter( storedName ) );
+}
+XLO_FUNC_END( aqToolObjectMultiGridCreate )
+    .help( L"Create and store a multi-grid from up to three named grids; returns its handle." )
+    .arg( L"ObjectName",      L"Name for the multi-grid object" )
+    .arg( L"GridName1",       L"Name of the first grid" )
+    .arg( L"Grid1",           L"First grid, as a range" )
+    .arg( L"GridName2",       L"Optional. Name of the second grid" )
+    .arg( L"Grid2",           L"Optional. Second grid, as a range" )
+    .arg( L"GridName3",       L"Optional. Name of the third grid" )
+    .arg( L"Grid3",           L"Optional. Third grid, as a range" )
+    .arg( L"AllowJaggedData", L"Optional. Default FALSE. Allow columns of differing length" );
+
+
+// Display one named grid of a multi-grid as a matrix.
+XLO_FUNC_START( aqToolObjectMultiGridDisplay(
+    const ExcelObj& objectName,
+    const ExcelObj& gridName ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( flexibleDataToExcel( validation::tryAqToolObjectMultiGridDisplay(
+        getNameWithoutCounter( objectName ), toNarrowString( gridName ) ) ) );
+}
+XLO_FUNC_END( aqToolObjectMultiGridDisplay )
+    .help( L"Display one named grid of a multi-grid as a matrix with a header row." )
+    .arg( L"ObjectName", L"A multi-grid handle" )
+    .arg( L"GridName",   L"The grid within the multi-grid to display" );
+
+
+// The sub-grid names held by a multi-grid.
+XLO_FUNC_START( aqToolObjectMultiGridSubNames(
+    const ExcelObj& objectName ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( toExcelColumn(
+        validation::tryAqToolObjectMultiGridSubNames( getNameWithoutCounter( objectName ) ) ) );
+}
+XLO_FUNC_END( aqToolObjectMultiGridSubNames )
+    .help( L"The sub-grid names held by a multi-grid, as a column." )
+    .arg( L"ObjectName", L"A multi-grid handle" );

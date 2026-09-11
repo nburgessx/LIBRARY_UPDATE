@@ -382,6 +382,7 @@
     <ClCompile Include="..\src\AQ_XLL\src\aqMain.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqMath.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqObject.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqRate.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqTool.cpp" />
   </ItemGroup>
   <ItemGroup>
