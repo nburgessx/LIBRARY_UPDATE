@@ -3,7 +3,7 @@
 #include "tryAqCurveObjectDisplay.h"
 #include "tryAqCurveMarketData.h"
 #include "tryAqCurveObjectCalibrate.h"
-#include "tryAqRateFixingTable.h"
+#include "tryAqInterestRateFixingTable.h"
 
 #include "ContainerUtilities.h"
 #include "JSONInfoBlock.h"
@@ -255,7 +255,7 @@ std::string aqObjCurvesMarketDataCreateUsingMultipleBlocks( const std::string& o
 *  @param [in]		fixingValues	    Vector of Fixing Values in Double Format
 *  @return			returns the name of the fixing table on the cache
 */
-std::string aqRateFixingTableCreate( const std::string& tableName,
+std::string aqInterestRateFixingTableCreate( const std::string& tableName,
                                     const std::string& currency,                                   
                                     const std::string& curveTenor,
                                     const std::vector< std::string >& fixingDates,
@@ -268,7 +268,7 @@ std::string aqRateFixingTableCreate( const std::string& tableName,
     swig::buildGregorianDateVector( gregorianFixingDates, fixingDates );
 
     // Call Method
-	const std::string result = validation::tryAqRateFixingTableCreate( tableName,
+	const std::string result = validation::tryAqInterestRateFixingTableCreate( tableName,
                                                                           currency,
                                                                           curveTenor,
                                                                           gregorianFixingDates, 
@@ -283,12 +283,12 @@ std::string aqRateFixingTableCreate( const std::string& tableName,
 *  @param [in]		tableName		    Fixing Table name
 *  @return			returns a VariantMatrix representing the fixing currency, curveTenor, fixingDates and fixingValues
 */
-SWIG_STRINGMATRIX aqRateFixingTableDisplay( const std::string& tableName )
+SWIG_STRINGMATRIX aqInterestRateFixingTableDisplay( const std::string& tableName )
 {
     AQ_API_START
     
     // Call Method
-	etrading::VariantMatrix results = validation::tryAqRateFixingTableDisplay( tableName );
+	etrading::VariantMatrix results = validation::tryAqInterestRateFixingTableDisplay( tableName );
 
     // Marshall Output to Standard String Matrix
 	SWIG_STRINGMATRIX resultsStringMatrix = swig::fromVariantMatrixToMatrixOfString( results );
@@ -302,7 +302,7 @@ SWIG_STRINGMATRIX aqRateFixingTableDisplay( const std::string& tableName )
 *  @param [in]		fixingDate	        Fixing Date
 *  @return			swapName
 */
-double aqRateFixingTableValue( const std::string& tableName, const std::string & fixingDate )
+double aqInterestRateFixingTableValue( const std::string& tableName, const std::string & fixingDate )
 {
     AQ_API_START
     
@@ -310,7 +310,7 @@ double aqRateFixingTableValue( const std::string& tableName, const std::string &
     boost::gregorian::date gregorianFixingDate( etrading::validateAndConvertStringToGregorianDate( fixingDate ) );
     
     // Call Method
-    const double result = validation::tryAqRateFixingTableValue( tableName, gregorianFixingDate );
+    const double result = validation::tryAqInterestRateFixingTableValue( tableName, gregorianFixingDate );
 	
     // Output
     return result;
@@ -323,7 +323,7 @@ double aqRateFixingTableValue( const std::string& tableName, const std::string &
 *  @param [in]		fixingDates     	Fixing Dates
 *  @return			swapName
 */
-std::vector<double> aqRateFixingTableValues( const std::string& tableName, const std::vector< std::string >& fixingDates )
+std::vector<double> aqInterestRateFixingTableValues( const std::string& tableName, const std::vector< std::string >& fixingDates )
 {
     AQ_API_START
 
@@ -332,7 +332,7 @@ std::vector<double> aqRateFixingTableValues( const std::string& tableName, const
     swig::buildGregorianDateVector( gregorianFixingDates, fixingDates );
     
     // Call Method
-    const std::vector<double> results = validation::tryAqRateFixingTableValues( tableName, gregorianFixingDates );
+    const std::vector<double> results = validation::tryAqInterestRateFixingTableValues( tableName, gregorianFixingDates );
 	
     // Output
     return results;

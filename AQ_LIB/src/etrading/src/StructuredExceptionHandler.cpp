@@ -1,6 +1,13 @@
 #include "StructuredExceptionHandler.h"
 #include "AQLCoreError.h"
 #include <stdlib.h>
+#include <sstream>
+#include <cstdint>
+
+#if defined(_WIN32) || defined(_WIN64)
+#include <DbgHelp.h>
+#pragma comment(lib, "Dbghelp.lib")
+#endif
 
 // The ThreadGuard instance count used by the validation layer to guarantee single threaded access.
 boost::atomic<int> etrading::ThreadGuard::instanceCount_( 0 );
@@ -14,37 +21,79 @@ namespace etrading
     {
         // Message map for structured exceptions copied from the MS help file
         // For more information please go to: https://msdn.microsoft.com/en-us/library/windows/desktop/ms679356(v=vs.85).aspx
+        // Category is a short name for the exception (used in "#Structured Exception: <category> - ...");
+        // plain english is the concise, non-jargon explanation of what triggered it.
 
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_ACCESS_VIOLATION,         "#Structured Exception - attempts to read from or write to a virtual address for which it does not have access." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_ARRAY_BOUNDS_EXCEEDED,    "#Structured Exception - attempts to access an array element that is out of bounds, and the underlying hardware supports bounds checking." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_DATATYPE_MISALIGNMENT,    "#Structured Exception - attempts to read or write data that is misaligned on hardware that does not provide alignment. For example, 16-bit values must be aligned on 2-byte boundaries, 32-bit values on 4-byte boundaries, and so on." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_FLT_DENORMAL_OPERAND,     "#Structured Exception - One of the operands in a floating point operation is denormal. A denormal value is one that is too small to represent as a standard floating point value." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_FLT_DIVIDE_BY_ZERO,       "#Structured Exception - attempts to divide a floating point value by a floating point divisor of 0 (zero)." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_FLT_INEXACT_RESULT,       "#Structured Exception - The result of a floating point operation cannot be represented exactly as a decimal fraction." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_FLT_INVALID_OPERATION,    "#Structured Exception - A floating point exception that is not included in this list." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_FLT_OVERFLOW,             "#Structured Exception - The exponent of a floating point operation is greater than the magnitude allowed by the corresponding type." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_FLT_STACK_CHECK,          "#Structured Exception - The stack has overflowed or underflowed, because of a floating point operation." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_FLT_UNDERFLOW,            "#Structured Exception - The exponent of a floating point operation is less than the magnitude allowed by the corresponding type." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_GUARD_PAGE,               "#Structured Exception - accessed memory allocated with the PAGE_GUARD modifier." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_ILLEGAL_INSTRUCTION,      "#Structured Exception - tries to execute an invalid instruction." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_IN_PAGE_ERROR,            "#Structured Exception - tries to access a page that is not present, and the system is unable to load the page. For example, this exception might occur if a network connection is lost while running a program over a network." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_INT_DIVIDE_BY_ZERO,       "#Structured Exception - attempts to divide an integer value by an integer divisor of 0 (zero)." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_INT_OVERFLOW,             "#Structured Exception - The result of an integer operation causes a carry out of the most significant bit of the result." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_INVALID_DISPOSITION,      "#Structured Exception - An exception handler returns an invalid disposition to the exception dispatcher. Programmers using a high-level language such as C should never encounter this exception." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_INVALID_HANDLE,           "#Structured Exception - used a handle to a kernel object that was invalid (probably because it had been closed)." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_NONCONTINUABLE_EXCEPTION, "#Structured Exception - attempts to continue execution after a non-continuable exception occurs." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_PRIV_INSTRUCTION,         "#Structured Exception - attempts to execute an instruction with an operation that is not allowed in the current computer mode." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_SINGLE_STEP,              "#Structured Exception - A trace trap or other single instruction mechanism signals that one instruction is executed." ) );
-        m_ExceptionCodeMap.insert( std::pair<unsigned int, const char*>( EXCEPTION_STACK_OVERFLOW,           "#Structured Exception - the current thread uses up its stack." ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_ACCESS_VIOLATION,         { "Access Violation",          "attempted to read from or write to a memory address it does not have access to." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_ARRAY_BOUNDS_EXCEEDED,    { "Array Bounds Exceeded",     "tried to access an array element that is out of bounds." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_DATATYPE_MISALIGNMENT,    { "Data Misalignment",         "tried to read or write data that is not aligned to the boundary the hardware requires." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_FLT_DENORMAL_OPERAND,     { "Denormal Float",            "one operand in a floating point calculation is too small to represent as a normal float." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_FLT_DIVIDE_BY_ZERO,       { "Float Divide By Zero",      "attempted to divide a floating point value by zero." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_FLT_INEXACT_RESULT,       { "Float Inexact Result",      "a floating point result cannot be represented exactly as a decimal fraction." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_FLT_INVALID_OPERATION,    { "Float Invalid Operation",   "an unspecified floating point error occurred." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_FLT_OVERFLOW,             { "Float Overflow",            "a floating point result is too large to represent in its type." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_FLT_STACK_CHECK,          { "Float Stack Check",         "the stack overflowed or underflowed during a floating point operation." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_FLT_UNDERFLOW,            { "Float Underflow",           "a floating point result is too small to represent in its type." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_GUARD_PAGE,               { "Guard Page Violation",      "accessed memory that was reserved with a guard-page protection." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_ILLEGAL_INSTRUCTION,      { "Illegal Instruction",       "tried to execute an invalid CPU instruction." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_IN_PAGE_ERROR,            { "Page Fault",                "tried to access a memory page that could not be loaded, e.g. a lost network connection to a memory-mapped file." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_INT_DIVIDE_BY_ZERO,       { "Integer Divide By Zero",    "attempted to divide an integer value by zero." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_INT_OVERFLOW,             { "Integer Overflow",          "an integer calculation overflowed its type." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_INVALID_DISPOSITION,      { "Invalid Disposition",       "an internal exception handler returned an invalid disposition (should not occur in C++)." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_INVALID_HANDLE,           { "Invalid Handle",            "used a handle to a system object that was invalid, e.g. already closed." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_NONCONTINUABLE_EXCEPTION, { "Non-Continuable Exception", "attempted to continue execution after a non-continuable exception." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_PRIV_INSTRUCTION,         { "Privileged Instruction",    "tried to execute an instruction not permitted in the current processor mode." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_SINGLE_STEP,              { "Single Step",               "a single-instruction trace trap fired." } ) );
+        m_ExceptionCodeMap.insert( std::pair<unsigned int, StructuredExceptionInfo>( EXCEPTION_STACK_OVERFLOW,           { "Stack Overflow",            "the current thread's stack was exhausted." } ) );
     }
 
     /* @brief		Singleton class that maintains a list of structured exception codes
     *  @return		The map between structured exception codes and error messages
     */
-    std::map<unsigned int, const char*>& StructuredExceptionCodeMap::getExceptionCodes()
+    std::map<unsigned int, StructuredExceptionInfo>& StructuredExceptionCodeMap::getExceptionCodes()
     {
         static StructuredExceptionCodeMap m;
         return m.m_ExceptionCodeMap;
+    }
+
+    namespace
+    {
+        // Best-effort resolution of the faulting instruction address to a "file(line)"
+        // string via DbgHelp, using the PDB shipped alongside this module (debug builds
+        // only - a release build with no PDB simply yields an empty string and the
+        // message falls back to the raw address). Never throws: this runs inside a
+        // structured-exception translator, so any DbgHelp failure is swallowed.
+        std::string resolveCrashLocation( void* faultingAddress )
+        {
+            if ( faultingAddress == nullptr )
+            {
+                return std::string();
+            }
+
+            const HANDLE process = GetCurrentProcess();
+
+            // SymInitialize is cheap to call repeatedly (it no-ops if already initialised
+            // for this process); this keeps the crash handler self-contained.
+            static const bool symbolsInitialised = ( SymInitialize( process, nullptr, TRUE ) != FALSE );
+            if ( !symbolsInitialised )
+            {
+                return std::string();
+            }
+
+            DWORD             displacement = 0;
+            IMAGEHLP_LINE64   line;
+            ZeroMemory( &line, sizeof( line ) );
+            line.SizeOfStruct = sizeof( IMAGEHLP_LINE64 );
+
+            if ( !SymGetLineFromAddr64( process, reinterpret_cast<DWORD64>( faultingAddress ), &displacement, &line ) )
+            {
+                return std::string();
+            }
+
+            std::ostringstream location;
+            location << line.FileName << "(" << line.LineNumber << ")";
+            return location.str();
+        }
     }
 
     //-----------------------------------------------------------------------------------------------------------------------
@@ -126,20 +175,44 @@ namespace etrading
     */
     void StructuredExceptionHandler::SEHandler( const unsigned code, EXCEPTION_POINTERS* pExcept )
     {
-        std::map<unsigned int, const char*> excepCodes = StructuredExceptionCodeMap::getExceptionCodes();
+        const std::map<unsigned int, StructuredExceptionInfo>& excepCodes = StructuredExceptionCodeMap::getExceptionCodes();
 
-        std::string msg;
-        if ( excepCodes.find( code ) != excepCodes.end() )
+        // Build the concise, plain-English "#Structured Exception: <Category> - <what happened>" message.
+        std::ostringstream msg;
+        msg << "#Structured Exception: ";
+
+        const auto it = excepCodes.find( code );
+        if ( it != excepCodes.end() )
         {
-            msg = excepCodes[code];
+            msg << it->second.category_ << " - " << it->second.plainEnglish_;
         }
         else
         {
-            msg = "#Structured Exception - unknown structured exception is encountered. Please exit the current session and reload the DLL.";
+            msg << "Unknown (code 0x" << std::hex << code << std::dec << ") - an unrecognised structured exception occurred.";
         }
 
-        // Translate structured exception to standard C++ exception
-        throw AQLCoreError( msg.c_str(), __FILE__, __LINE__ );
+        // Append where it happened, so a crash can be found without a debugger session.
+        // The faulting instruction's address resolves to "file(line)" when a PDB is
+        // available (debug builds); otherwise fall back to the raw address.
+        void* const faultingAddress = ( pExcept != nullptr && pExcept->ExceptionRecord != nullptr )
+            ? pExcept->ExceptionRecord->ExceptionAddress
+            : nullptr;
+
+        const std::string crashLocation = resolveCrashLocation( faultingAddress );
+        if ( !crashLocation.empty() )
+        {
+            msg << " at " << crashLocation;
+        }
+        else if ( faultingAddress != nullptr )
+        {
+            msg << " at address 0x" << std::hex << reinterpret_cast<uintptr_t>( faultingAddress ) << std::dec;
+        }
+        msg << ".";
+
+        // Translate structured exception to standard C++ exception. __FILE__/__LINE__ here
+        // are this handler's own location, not the crash site - the crash site (when
+        // resolvable) is already folded into the message text above.
+        throw AQLCoreError( msg.str().c_str(), __FILE__, __LINE__ );
     }
 
 

@@ -17,6 +17,8 @@
 #include <utility>
 #include <vector>
 
+#include <boost/date_time/gregorian/gregorian_types.hpp>
+
 #include <AQLDate.h>
 #include <AQLString.h>
 #include <AQLCoreTemplateType.h>   // DateVector, AQLStringMatrix, AnyTypeMatrix
@@ -82,6 +84,14 @@ namespace aq_xll
     DateVector toDateVector( const xloil::ExcelObj& obj,
                              bool skipTrailingBlanks = true,
                              const std::string& nameOfVariable = "date" );
+
+    // A handful of validation wrappers (Rate's fixing table, most of Curve's
+    // discount-factor / forward-rate family) take boost::gregorian::date
+    // rather than AQLDate - these bridge via etrading::toGregorianDateFromAQLDate.
+    boost::gregorian::date toGregorian( const AQLDate& date );
+    std::vector<boost::gregorian::date> toGregorianVector( const xloil::ExcelObj& obj,
+                                                            bool skipTrailingBlanks = true,
+                                                            const std::string& nameOfVariable = "date" );
 
     // As toDateVector; a text cell that reads cleanly as a number is accepted.
     std::vector<double> toDoubleVector( const xloil::ExcelObj& obj,

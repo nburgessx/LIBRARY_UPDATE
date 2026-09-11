@@ -1,6 +1,6 @@
-// tryAqRateFixingTable.cpp
+// tryAqInterestRateFixingTable.cpp
 
-#include "tryAqRateFixingTable.h"
+#include "tryAqInterestRateFixingTable.h"
 #include "FixingTableSet.h"
 #include "ObjectUtilities.h"
 #include "Environment.h"
@@ -23,7 +23,7 @@ namespace validation
 	*  @param [in]		fixingValues	    The fixing values to store
 	*  @return			returns the name of the fixing table on the cache
 	*/
-    std::string tryAqRateFixingTableCreate( const std::string& tableName,
+    std::string tryAqInterestRateFixingTableCreate( const std::string& tableName,
                                            const std::string& currencyString,                                   
                                            const std::string& curveTenorString,
                                            const std::vector< boost::gregorian::date >& fixingDates,
@@ -34,8 +34,8 @@ namespace validation
         // Recording of inputs for playback
 		if (etrading::CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryAqRateFixingTableCreate_inputs", tableName.c_str()));
-			file.write("generatorFunction", "tryAqRateFixingTableCreate");
+			CreateDataFile file(decorateFilename("tryAqInterestRateFixingTableCreate_inputs", tableName.c_str()));
+			file.write("generatorFunction", "tryAqInterestRateFixingTableCreate");
 			file.write("tableName", tableName);
 			file.write("currency", currencyString);
 			file.write("curveTenor", curveTenorString);
@@ -82,7 +82,7 @@ namespace validation
 	*  @param [in]		fixingValues	    The fixing values to store
 	*  @return			returns the name of the fixing table on the cache
 	*/
-	std::string tryAqRateFixingTableCreate( const std::string& tableName,
+	std::string tryAqInterestRateFixingTableCreate( const std::string& tableName,
 										   const etrading::LabelValueBlock& parameterLVB,
 										   const std::vector< boost::gregorian::date >& fixingDates,
 										   const std::vector< double >& fixingValues )
@@ -111,7 +111,7 @@ namespace validation
 	}
 
 
-    etrading::VariantMatrix tryAqRateFixingTableDisplay( const std::string& tableName )
+    etrading::VariantMatrix tryAqInterestRateFixingTableDisplay( const std::string& tableName )
     {
          VALID_EXCEPTION_START
 
@@ -129,7 +129,7 @@ namespace validation
 
 			if ( CreateDataFile::recordEnabled() )
             {
-		        CreateDataFile file( decorateFilename("tryAqRateFixingTableDisplay_outputs", tableName.c_str() ) );
+		        CreateDataFile file( decorateFilename("tryAqInterestRateFixingTableDisplay_outputs", tableName.c_str() ) );
 				
                 // Note Need to know Schema to get display values
                 file.write( "currency", fixingTableMatrix[1][0] );
@@ -155,7 +155,7 @@ namespace validation
     }
 
 
-    double tryAqRateFixingTableValue( const std::string& tableName, const boost::gregorian::date fixingDate )
+    double tryAqInterestRateFixingTableValue( const std::string& tableName, const boost::gregorian::date fixingDate )
     {
         VALID_EXCEPTION_START
 
@@ -191,7 +191,7 @@ namespace validation
 	*  @param [in]		fixingDates     	Fixing Dates
 	*  @return			A vector of fixing values
 	*/
-    std::vector< double > tryAqRateFixingTableValues( const std::string& tableName, const std::vector< boost::gregorian::date >& fixingDates )
+    std::vector< double > tryAqInterestRateFixingTableValues( const std::string& tableName, const std::vector< boost::gregorian::date >& fixingDates )
     {
         VALID_EXCEPTION_START
         
@@ -222,7 +222,7 @@ namespace validation
 	*  @param [in]		fixingDates     	Fixing Dates
 	*  @return			A vector of fixing values
 	*/
-    std::vector< double > tryAqRateFixingTableValues( const std::string& tableName, const std::string& currency, const std::string& curveTenor, const std::vector< boost::gregorian::date >& fixingDates )
+    std::vector< double > tryAqInterestRateFixingTableValues( const std::string& tableName, const std::string& currency, const std::string& curveTenor, const std::vector< boost::gregorian::date >& fixingDates )
     {
         VALID_EXCEPTION_START
 
@@ -232,8 +232,8 @@ namespace validation
         // Recording of inputs for playback
 		if (etrading::CreateDataFile::recordEnabled()) 
 		{
-			CreateDataFile file(decorateFilename("tryAqRateFixingTableValues_inputs", tableName.c_str() ) );
-			file.write("generatorFunction", "tryAqRateFixingTableValues");
+			CreateDataFile file(decorateFilename("tryAqInterestRateFixingTableValues_inputs", tableName.c_str() ) );
+			file.write("generatorFunction", "tryAqInterestRateFixingTableValues");
 			file.write("tableName", tableName);
             file.write("currency", fixingTableCurrency);
             file.write("curveTenor", fixingTableCurveTenor);
@@ -270,7 +270,7 @@ namespace validation
 	*  @param [in]		fixingDates     	Fixing Dates
 	*  @return			A vector of fixing values
 	*/
-	std::vector< double > tryAqRateFixingTableValues(const std::string& tableName, const etrading::LabelValueBlock& parameterLVB, const std::vector< boost::gregorian::date >& fixingDates)
+	std::vector< double > tryAqInterestRateFixingTableValues(const std::string& tableName, const etrading::LabelValueBlock& parameterLVB, const std::vector< boost::gregorian::date >& fixingDates)
 	{
 		VALID_EXCEPTION_START;
 

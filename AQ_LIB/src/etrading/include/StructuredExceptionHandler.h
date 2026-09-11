@@ -92,6 +92,16 @@ namespace etrading
 #if defined(_WIN32) || defined(_WIN64)
 namespace etrading
 {
+    /* @brief	A structured exception code's short category (e.g. "Access Violation")
+    *			plus a plain-English, concise explanation of what triggered it. Kept
+    *			separate so callers can format "#Structured Exception: <category> - <plain english>"
+    *			without re-parsing the old single blended string.
+    */
+    struct StructuredExceptionInfo
+    {
+        const char* category_;
+        const char* plainEnglish_;
+    };
 
     /* @brief	Singleton class that maintains a list of structured exception codes and
     *			the corresponding error messages
@@ -103,14 +113,14 @@ namespace etrading
         /* @brief		Singleton class that maintains a list of structured exception codes
         *  @return		The map between structured exception codes and error messages
         */
-        static std::map<unsigned int, const char*>& getExceptionCodes();
+        static std::map<unsigned int, StructuredExceptionInfo>& getExceptionCodes();
 
     private:
         StructuredExceptionCodeMap();
         StructuredExceptionCodeMap& operator=( const StructuredExceptionCodeMap& ) {}
         StructuredExceptionCodeMap( const StructuredExceptionCodeMap& ) {}
 
-        std::map<unsigned int, const char*> m_ExceptionCodeMap;
+        std::map<unsigned int, StructuredExceptionInfo> m_ExceptionCodeMap;
     };
 
 

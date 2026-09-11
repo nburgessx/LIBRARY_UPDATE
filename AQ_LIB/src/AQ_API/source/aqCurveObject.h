@@ -80,7 +80,7 @@ std::string aqObjCurvesMarketDataCreateUsingMultipleBlocks( const std::string& o
 *  @param [in]		fixingValues	    Vector of Fixing Values in Double Format
 *  @return			returns the name of the fixing table on the cache
 */
-std::string aqRateFixingTableCreate( const std::string& tableName,
+std::string aqInterestRateFixingTableCreate( const std::string& tableName,
                                     const std::string& currency,                                   
                                     const std::string& curveTenor,
                                     const std::vector< std::string >& fixingDates,
@@ -90,21 +90,21 @@ std::string aqRateFixingTableCreate( const std::string& tableName,
 *  @param [in]		tableName		    Fixing Table name
 *  @return			returns a VariantMatrix representing the fixing currency, curveTenor, fixingDates and fixingValues
 */
-SWIG_STRINGMATRIX aqRateFixingTableDisplay( const std::string& tableName );
+SWIG_STRINGMATRIX aqInterestRateFixingTableDisplay( const std::string& tableName );
 
 /* @brief			function to get the fixing value for a particular date
 *  @param [in]		tableName		    Fixing Table name
 *  @param [in]		fixingDate	        Fixing Date
 *  @return			fixing value
 */
-double aqRateFixingTableValue( const std::string& tableName, const std::string & fixingDate );
+double aqInterestRateFixingTableValue( const std::string& tableName, const std::string & fixingDate );
 
 /* @brief			function to get fixing values for a vector of dates
 *  @param [in]		tableName		    Fixing Table name
 *  @param [in]		fixingDates     	Fixing Dates
 *  @return			fixing values
 */
-std::vector<double> aqRateFixingTableValues( const std::string& tableName, const std::vector< std::string >& fixingDates );
+std::vector<double> aqInterestRateFixingTableValues( const std::string& tableName, const std::vector< std::string >& fixingDates );
 
 /* @brief			Validation method which calculates a set of discount factors for the specified dates.
 *					If a spread is provided, calculates the discount factors using the zero discount-margin

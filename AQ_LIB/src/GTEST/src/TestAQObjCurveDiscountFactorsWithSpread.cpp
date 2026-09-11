@@ -23,7 +23,7 @@
 #include "tryAqCurveObjectCalibrate.h"
 
 #include "tryAqCurveObjectDiscountFactor.h"
-#include "tryAqRateFixingTable.h"
+#include "tryAqInterestRateFixingTable.h"
 
 
 using etrading::ReadDataFile;
@@ -57,7 +57,7 @@ namespace
 	const char DISCOUNT_FACTORS_1BP_INPUT[]		= TEST_DIR "tryAqCurveObjectDiscountFactorsWithSpread_1bp_inputs.csv";
 	const char DISCOUNT_FACTORS_1BP_OUTPUT[]	= TEST_DIR "tryAqCurveObjectDiscountFactorsWithSpread_1bp_outputs.csv";
 
-	const char EUR_STD_FIXING_TABLE[]			= TEST_DIR "EUR3M_FIXINGS@74_tryAqRateFixingTableCreate_inputs.csv";
+	const char EUR_STD_FIXING_TABLE[]			= TEST_DIR "EUR3M_FIXINGS@74_tryAqInterestRateFixingTableCreate_inputs.csv";
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 	
@@ -214,7 +214,7 @@ namespace
 		auto fixingDates   = fixingInputFileObj["fixingDates"];
 		auto fixingValues  = fixingInputFileObj["fixingValues"];
 		
-		const std::string fixingTableName = validation::tryAqRateFixingTableCreate(tableName, currency, curveTenor, fixingDates, fixingValues);
+		const std::string fixingTableName = validation::tryAqInterestRateFixingTableCreate(tableName, currency, curveTenor, fixingDates, fixingValues);
 	}
 
 }

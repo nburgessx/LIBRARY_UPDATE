@@ -4,7 +4,7 @@
 namespace validation
 {
 
-	/* @brief			Calculate the FRA rate from Future price, validation API for aqRateFuturePriceToFraRate
+	/* @brief			Calculate the FRA rate from Future price, validation API for aqInterestRateFuturePriceToFraRate
 	* @param [in]		futurePrice			The given future price
 	* @param [in]		curveAsOfDate       The yield curve as of or valuation date
 	* @param [in]		futuresStartDate    The futures start date
@@ -13,13 +13,13 @@ namespace validation
 	* @param [in]		volatility          The Hull-White 1F Volatility Parameter
 	* @param [out]		Returns Fra rate
 	*/
-	double tryAqRateFuturePriceToFraRate(const double& futurePrice, const AQLDate& curveAsOfDate, const AQLDate& futuresStartDate, const AQLDate& futuresEndDate, const double& meanReversion, const double& volatility);
+	double tryAqInterestRateFuturePriceToFraRate(const double& futurePrice, const AQLDate& curveAsOfDate, const AQLDate& futuresStartDate, const AQLDate& futuresEndDate, const double& meanReversion, const double& volatility);
 
-	/* @brief			Calculate the FRA rate from Future price, validation API for aqRateFuturePriceToFraRateFromConvAdj
+	/* @brief			Calculate the FRA rate from Future price, validation API for aqInterestRateFuturePriceToFraRateFromConvAdj
 	* @param [in]		futurePrice			The given future price
 	* @param [in]		convexityAdjustment The given convexity adjustment between Future rate and Fra rate
 	* @param [out]		Returns Fra rate
 	*/
-	double tryAqRateFuturePriceToFraRateFromConvAdj(const double& futurePrice, const double& convexityAdjustment);
+	double tryAqInterestRateFuturePriceToFraRateFromConvAdj(const double& futurePrice, const double& convexityAdjustment);
 
 }

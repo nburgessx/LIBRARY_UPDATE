@@ -447,7 +447,7 @@ namespace validation
 	* @param[in]	fixingTableNames	Fixing table object names
 	* @returns	The calculated PV value
 	*/
-	double tryAqConstantMaturitySwapObjectPVUsingConvexityAdjustment( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double convexityAdjustment, const AQLString& legName, const LabelValueBlock& fixingTableNames=LabelValueBlock() );
+	double tryAqCMSObjectPVUsingConvexityAdjustment( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double convexityAdjustment, const AQLString& legName, const LabelValueBlock& fixingTableNames=LabelValueBlock() );
 
 	/* @brief validation interface for the aqObjConstantMaturitySwapParRateFromConvexity() method.
 	*   Calculates the ParRate of a Constant Maturity Swap.
@@ -458,9 +458,9 @@ namespace validation
 	* @param[in]	fixingTableNames	Fixing table object names
 	* @returns	The calculated ParRate value
 	*/
-	double tryAqConstantMaturitySwapObjectParRateUsingConvexityAdjustment( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double convexityAdjustment, const LabelValueBlock& fixingTableNames=LabelValueBlock() );
+	double tryAqCMSObjectParRateUsingConvexityAdjustment( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double convexityAdjustment, const LabelValueBlock& fixingTableNames=LabelValueBlock() );
 
-	/* @brief validation interface for the aqTotalReturnSwapObjectPV method.
+	/* @brief validation interface for the aqTRSObjectPV method.
 	*   Calculates the PV of the specified Total Return Swap.
 	*
 	* @param[in]	swapName			The name of the total return swap object
@@ -469,7 +469,7 @@ namespace validation
 	* @param[in]	fixingTableNames	Fixing table object names
 	* @returns	The calculated PV value
 	*/
-	double tryAqTotalReturnSwapObjectPV( const std::string& swapName, const std::string& creditModelName,  const std::string& legName="", const LabelValueBlock& fixingTableNames=LabelValueBlock() );
+	double tryAqTRSObjectPV( const std::string& swapName, const std::string& creditModelName,  const std::string& legName="", const LabelValueBlock& fixingTableNames=LabelValueBlock() );
 
 	/* @brief Calculates the par rate of the specified Total Return Swap's premium leg.
 	*
@@ -478,7 +478,7 @@ namespace validation
 	* @param[in]	fixingTableNames		Fixing table object names
 	* @returns	The par rate of the TRS premium leg
 	*/
-	double tryAqTotalReturnSwapObjectParRate( const std::string& swapName, const std::string& creditModelName, const LabelValueBlock& fixingTableNames=LabelValueBlock() );
+	double tryAqTRSObjectParRate( const std::string& swapName, const std::string& creditModelName, const LabelValueBlock& fixingTableNames=LabelValueBlock() );
 
 	/* @brief Calculates the par spread of the specified Total Return Swap's float leg.
 	*
@@ -487,9 +487,9 @@ namespace validation
 	* @param[in]	fixingTableNames		Fixing table object names
 	* @returns	The par spread of the TRS float leg
 	*/
-	double tryAqTotalReturnSwapObjectParSpread( const std::string& swapName, const std::string& creditModelName, const LabelValueBlock& fixingTableNames=LabelValueBlock() );
+	double tryAqTRSObjectParSpread( const std::string& swapName, const std::string& creditModelName, const LabelValueBlock& fixingTableNames=LabelValueBlock() );
 
-	/* @brief validation interface for the aqTotalReturnSwapObjectPV method.
+	/* @brief validation interface for the aqTRSObjectPV method.
 	*   Calculates the annity of the specified Total Return Swap leg
 	*
 	* @param[in]	swapName			The name of the total return swap object
@@ -497,7 +497,7 @@ namespace validation
 	* @param[in]	legName			    Mandatory, calculate the annuity of this leg.
 	* @returns	The calculated annuity value
 	*/
-	double tryAqTotalReturnSwapObjectAnnuity( const std::string& swapName, const std::string& creditModelName,  const std::string& legName );
+	double tryAqTRSObjectAnnuity( const std::string& swapName, const std::string& creditModelName,  const std::string& legName );
 
 
 }

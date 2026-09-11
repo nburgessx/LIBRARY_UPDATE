@@ -133,6 +133,26 @@ namespace aq_xll
         return dates;
     }
 
+    boost::gregorian::date toGregorian( const AQLDate& date )
+    {
+        return etrading::toGregorianDateFromAQLDate( date );
+    }
+
+    std::vector<boost::gregorian::date> toGregorianVector( const xloil::ExcelObj& obj,
+                                                            bool skipTrailingBlanks,
+                                                            const std::string& nameOfVariable )
+    {
+        const DateVector aqlDates = toDateVector( obj, skipTrailingBlanks, nameOfVariable );
+
+        std::vector<boost::gregorian::date> dates;
+        dates.reserve( aqlDates.size() );
+        for ( const AQLDate& date : aqlDates )
+        {
+            dates.push_back( toGregorian( date ) );
+        }
+        return dates;
+    }
+
     std::vector<double> toDoubleVector( const xloil::ExcelObj& obj,
                                        bool skipTrailingBlanks,
                                        const std::string& nameOfVariable )

@@ -10,7 +10,7 @@
 
 // Risk calculation
 #include "tryAqSwapObjectDelta.h"
-#include "tryAqRateFixingTable.h"
+#include "tryAqInterestRateFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // Curve Macros are Here !!!
@@ -50,7 +50,7 @@ namespace
 	extern const char tenorBasisSwapInputs[]		= TEST_DIR "EUR3X6_2@112_tryAqSwapObjectCreateFromLegLVBs_inputs.csv";
 	extern const char xccySwapInputs[]				= TEST_DIR "XCCY4@52_tryAqSwapObjectCreate_inputs.csv";
 
-	extern const char fixingTableInputs[]			= TEST_DIR "FIXING@1_tryAqRateFixingTableCreate_inputs.csv";
+	extern const char fixingTableInputs[]			= TEST_DIR "FIXING@1_tryAqInterestRateFixingTableCreate_inputs.csv";
 
 	extern const char raw_delta_outputs_ois_32[]	= "tryAqSwapObjectDelta_outputs_ois.csv";
 	extern const char raw_delta_outputs_ois_64[]	= "tryAqSwapObjectDelta_outputs_ois_64bit.csv";
@@ -238,7 +238,7 @@ namespace google_test
 		std::vector< boost::gregorian::date > fixingDates = fixingTableFile[ "fixingDates" ];
 		DoubleVector fixingValues = fixingTableFile[ "fixingValues" ];
 		
-		std::string fixingTableLeg1 = validation::tryAqRateFixingTableCreate( tableName, currency, tenor, fixingDates, fixingValues );
+		std::string fixingTableLeg1 = validation::tryAqInterestRateFixingTableCreate( tableName, currency, tenor, fixingDates, fixingValues );
 		
 		const ReadDataFile::Load flatShiftDelta( flatShiftDeltaInputs_irs );
 		AQLStringVector swapNames					= flatShiftDelta[ "swapNames" ];

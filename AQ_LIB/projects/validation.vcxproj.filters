@@ -130,7 +130,7 @@
     <ClCompile Include="..\src\validation\src\tryAqMathEuropeanIRSwaption.cpp">
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryAqRateFutureFra.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqInterestRateFutureFra.cpp">
       <Filter>src\etrading\Products</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqMathCapletFloorlet.cpp">
@@ -199,10 +199,10 @@
     <ClCompile Include="..\src\validation\src\tryAqCurveObjectUtilities.cpp">
       <Filter>src\etrading\Objects\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryAqRateFixingTable.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqInterestRateFixingTable.cpp">
       <Filter>src\etrading\Objects\FixingTable</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryAqRateObjectFra.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqInterestRateObjectFra.cpp">
       <Filter>src\etrading\Objects\FRA</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqFXObject.cpp">
@@ -429,7 +429,7 @@
     <ClInclude Include="..\src\validation\include\tryAqMathEuropeanIRSwaption.h">
       <Filter>include\etrading\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryAqRateFutureFra.h">
+    <ClInclude Include="..\src\validation\include\tryAqInterestRateFutureFra.h">
       <Filter>include\etrading\Products</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqMathCapletFloorlet.h">
@@ -519,10 +519,10 @@
     <ClInclude Include="..\src\validation\include\tryAqToolMultiGrid.h">
       <Filter>include\etrading\Objects\Grid</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryAqRateFixingTable.h">
+    <ClInclude Include="..\src\validation\include\tryAqInterestRateFixingTable.h">
       <Filter>include\etrading\Objects\FixingTable</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryAqRateObjectFra.h">
+    <ClInclude Include="..\src\validation\include\tryAqInterestRateObjectFra.h">
       <Filter>include\etrading\Objects\FRA</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqFXObject.h">

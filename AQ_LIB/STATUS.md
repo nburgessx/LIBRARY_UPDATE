@@ -1,27 +1,38 @@
 # AlgoQuantLib — project status
 
-**As at 2026-09-10 (pause point).** Overview of where the rebrand stands and what
+**As at 2026-09-11 (pause point).** Overview of where the rebrand stands and what
 is left. Committed **HEAD is `18328864`**. Since the old `3809f148` baseline,
 `22212bc5` committed **task 2.6** (the `validation` / `AQ_API` / `GTEST` /
-fixture rename to the 22-category singular golden-source scheme — `Vol`→
-`Volatility`, `Future` + `Ois` added), the **AQ_XLL Tool + Object-lifecycle
-port** from `.APPLES\...\meUtilities.cpp`, and **Interpolation + PCA re-homed
-`Tool`→`Math`** (`tryAqMath*`); `18328864` added a natvis refresh (and,
-inadvertently, a generated `swig_Python_wrap.cxx` — flag to fix). All built green
-with GoogleTest passing.
+fixture rename to the singular golden-source scheme — `Vol`→`Volatility`,
+`Future` + `Ois` added as categories at the time), the **AQ_XLL Tool +
+Object-lifecycle port** from `.APPLES\...\meUtilities.cpp`, and
+**Interpolation + PCA re-homed `Tool`→`Math`** (`tryAqMath*`); `18328864` added
+a natvis refresh (and, inadvertently, a generated `swig_Python_wrap.cxx` — flag
+to fix). All built green with GoogleTest passing.
 
-**Uncommitted working-tree delta (small):**
+**Uncommitted working-tree delta:**
 - `src/AQ_XLL/src/{aqBond,aqDate,aqMath,aqTool}.cpp` — the remaining Bond / Tool
   / Date / Math worksheet functions. **Built green, GTest passing (Nicholas).**
-- `src/AQ_XLL/src/aqRate.cpp` (new) + vcxproj/filters — the `Rate` category
-  (fixing table, FRA object, future↔FRA). **NOT yet built.**
+- `Rate` category → **renamed to `InterestRate`** (Nicholas decided
+  2026-09-11): `src/AQ_XLL/src/aqInterestRate.cpp` (was `aqRate.cpp`) +
+  3 renamed `validation` files + `AQ_API`/`GTEST`/docs updated. **Touches
+  `validation` — needs a full rebuild** (`validation`→`AQ_API`→`AQ_XLL`→`GTEST`),
+  not yet done.
+- **`Ois` category folded into `Swap`** as a product variant (Nicholas,
+  2026-09-11) — category count 22→21. **Docs-only so far** (`CLAUDE.md` both,
+  `MIGRATION_PLAN.md`, `api_pair_check.py`) — no code renamed yet. When `Swap`
+  is migrated, the pre-existing `tryAqOisPV`/`tryAqOisParRate` (+ their already-
+  shipped `AQ_API`/SWIG bindings and `GTEST` file) rename to `tryAqSwapOis*` /
+  `aqSwapOis*` and land in `aqSwap.cpp`, not a separate `aqOis.cpp`.
+- A new standing rule (`AQ_LIB\CLAUDE.md` §5.1a): every category migration goes
+  `validation` (golden source) → `GTEST` → `AQ_API` → `AQ_XLL`, in that order,
+  cleaning up any drift between the four surfaces as it goes.
 - `rebrand/phase2_validation_rename_MAP.csv` (untracked, the task-2.6 map) + doc
   updates.
 
-Two open items before resuming: (1) rebuild `AQ_XLL` with `aqRate.cpp`;
-(2) decide whether the **`Rate` category is renamed** to `IR` / `InterestRate`
-(`aqRate*` reads oddly) — a golden-source category rename if it goes ahead. Then
-commit the small delta. Detail + resume plan: `rebrand/STATUS.md` top section.
+Next action on resume: rebuild `validation`→`AQ_API`→`AQ_XLL`→`GTEST` (the
+`InterestRate` rename requires it), then commit the delta. Detail + resume
+plan: `rebrand/STATUS.md` top section.
 
 - The **phase-by-phase plan** is `MIGRATION_PLAN.md`.
 - The **detailed running record** of the rebrand (per-commit, per-step) is
@@ -43,7 +54,7 @@ XLL port; its harness and first tranche now work in Excel.
 | 2 | Category taxonomy (20 categories, locked) | **done** |
 | 3 | Identifier rebrand + calendar delimiter | **done** |
 | 3c | Retire `mir*` | **done** (deleted wholesale) |
-| 4 | xlOil XLL port | **~35%** — Date / Tool / Bond / Object-lifecycle / Math complete; Rate (`aqRate.cpp`) written, not yet built; Curve / Swap / FX / Inflation / Volatility / product-option / Model / Generator still to do; see §3.1 |
+| 4 | xlOil XLL port | **~35%** — Date / Tool / Bond / Object-lifecycle / Math complete; InterestRate (`aqInterestRate.cpp`) written, not yet built; Curve / Swap (incl. the Ois product variant) / FX / Inflation / Volatility / product-option / Model / Generator still to do; see §3.1 |
 | 4a | Editions & manifest gating | not started |
 | 4b | Config folder & generators audit | not started |
 | 5 | Bindings (C#/Java/R) & test coverage | not started |

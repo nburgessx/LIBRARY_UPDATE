@@ -377,13 +377,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqAssetSwap.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqBond.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqCapFloor.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqCMS.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqDate.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqFuture.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqFX.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqInflation.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqMain.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqMath.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqObject.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqRate.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqInterestRate.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqSwaption.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqTool.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqTRS.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqVolatility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\AQ_XLL\include\aqXllTools.h" />

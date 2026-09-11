@@ -70,31 +70,31 @@ namespace
 
 
 	// API methods
-	const char TRS_CALCULATE_ALL_PV[]			= TEST_DIR "tryAqTotalReturnSwapObjectPV_ALL_inputs.csv";
-	const char TRS_CALCULATE_PREMIUM_PV[]		= TEST_DIR "tryAqTotalReturnSwapObjectPV_Premium_inputs.csv";
-	const char TRS_CALCULATE_FLOAT_PV[]			= TEST_DIR "tryAqTotalReturnSwapObjectPV_Float_inputs.csv";
+	const char TRS_CALCULATE_ALL_PV[]			= TEST_DIR "tryAqTRSObjectPV_ALL_inputs.csv";
+	const char TRS_CALCULATE_PREMIUM_PV[]		= TEST_DIR "tryAqTRSObjectPV_Premium_inputs.csv";
+	const char TRS_CALCULATE_FLOAT_PV[]			= TEST_DIR "tryAqTRSObjectPV_Float_inputs.csv";
 
-	const char TRS_CALCULATE_PAR_RATE[]			= TEST_DIR "tryAqTotalReturnSwapObjectParRate_inputs.csv";
-	const char TRS_CALCULATE_PAR_SPREAD[]		= TEST_DIR "tryAqTotalReturnSwapObjectParSpread_inputs.csv";
+	const char TRS_CALCULATE_PAR_RATE[]			= TEST_DIR "tryAqTRSObjectParRate_inputs.csv";
+	const char TRS_CALCULATE_PAR_SPREAD[]		= TEST_DIR "tryAqTRSObjectParSpread_inputs.csv";
 
 	const char TRS_DISPLAY_CASHFLOWS[]			= TEST_DIR "tryAqSwapObjectDisplayCashflows_inputs.csv";
 
-	const char TRS_CALCULATE_PREMIUM_ANNUITY[]	= TEST_DIR "tryAqTotalReturnSwapObjectAnnuity_Premium_inputs.csv";
+	const char TRS_CALCULATE_PREMIUM_ANNUITY[]	= TEST_DIR "tryAqTRSObjectAnnuity_Premium_inputs.csv";
 
 	// Snapshot results
-	const char TRS_EXPECTED_ALL_PV[]			= TEST_DIR "tryAqTotalReturnSwapObjectPV_ALL_outputs.csv";
-	const char TRS_EXPECTED_PREMIUM_PV[]		= TEST_DIR "tryAqTotalReturnSwapObjectPV_Premium_outputs.csv";
-	const char TRS_EXPECTED_FLOAT_PV[]			= TEST_DIR "tryAqTotalReturnSwapObjectPV_Float_outputs.csv";
+	const char TRS_EXPECTED_ALL_PV[]			= TEST_DIR "tryAqTRSObjectPV_ALL_outputs.csv";
+	const char TRS_EXPECTED_PREMIUM_PV[]		= TEST_DIR "tryAqTRSObjectPV_Premium_outputs.csv";
+	const char TRS_EXPECTED_FLOAT_PV[]			= TEST_DIR "tryAqTRSObjectPV_Float_outputs.csv";
 
-	const char TRS_EXPECTED_PAY_ON_SURVIVAL_ALL_PV[]	= TEST_DIR "tryAqTotalReturnSwapObjectPV_PayOnSurvival_ALL_outputs.csv";
-	const char TRS_EXPECTED_PAY_ON_SURVIVAL_FLOAT_PV[]	= TEST_DIR "tryAqTotalReturnSwapObjectPV_PayOnSurvival_Float_outputs.csv";
+	const char TRS_EXPECTED_PAY_ON_SURVIVAL_ALL_PV[]	= TEST_DIR "tryAqTRSObjectPV_PayOnSurvival_ALL_outputs.csv";
+	const char TRS_EXPECTED_PAY_ON_SURVIVAL_FLOAT_PV[]	= TEST_DIR "tryAqTRSObjectPV_PayOnSurvival_Float_outputs.csv";
 
-	const char TRS_EXPECTED_PAR_RATE[]			= TEST_DIR "tryAqTotalReturnSwapObjectParRate_outputs.csv";
-	const char TRS_EXPECTED_PAR_SPREAD[]		= TEST_DIR "tryAqTotalReturnSwapObjectParSpread_outputs.csv";
+	const char TRS_EXPECTED_PAR_RATE[]			= TEST_DIR "tryAqTRSObjectParRate_outputs.csv";
+	const char TRS_EXPECTED_PAR_SPREAD[]		= TEST_DIR "tryAqTRSObjectParSpread_outputs.csv";
 
-	const char TRS_EXPECTED_PREMIUM_ANNUITY[]	= TEST_DIR "tryAqTotalReturnSwapObjectAnnuity_Premium_outputs.csv";
-	const char TRS_EXPECTED_FLOAT_PAYALWAYS_ANNUITY[] = TEST_DIR "tryAqTotalReturnSwapObjectAnnuity_Float_PayAlways_outputs.csv";
-	const char TRS_EXPECTED_FLOAT_PAYONSURVIVAL_ANNUITY[] = TEST_DIR "tryAqTotalReturnSwapObjectAnnuity_Float_PayOnSurvival_outputs.csv";
+	const char TRS_EXPECTED_PREMIUM_ANNUITY[]	= TEST_DIR "tryAqTRSObjectAnnuity_Premium_outputs.csv";
+	const char TRS_EXPECTED_FLOAT_PAYALWAYS_ANNUITY[] = TEST_DIR "tryAqTRSObjectAnnuity_Float_PayAlways_outputs.csv";
+	const char TRS_EXPECTED_FLOAT_PAYONSURVIVAL_ANNUITY[] = TEST_DIR "tryAqTRSObjectAnnuity_Float_PayOnSurvival_outputs.csv";
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 
@@ -317,7 +317,7 @@ namespace
 		}
 
 		// ---- Calculate the total PV of swap leg ----
-		const double calculatedLegPV = validation::tryAqTotalReturnSwapObjectPV( swapName, creditModelName, legName.c_str() );
+		const double calculatedLegPV = validation::tryAqTRSObjectPV( swapName, creditModelName, legName.c_str() );
 		ASSERT_NEAR( calculatedLegPV, totalPV, tolerance );
 	}
 
@@ -351,7 +351,7 @@ namespace google_test
 		const std::string creditModelName	= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
 
-		const double calculatedPV = validation::tryAqTotalReturnSwapObjectPV( swapName, creditModelName, legName.c_str() );
+		const double calculatedPV = validation::tryAqTRSObjectPV( swapName, creditModelName, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		const double pvTolerance = 10.0;  // Notional of 1MM. We can afford a slightly wider tolerance which allows 64bit test to pass.
@@ -362,7 +362,7 @@ namespace google_test
 		etrading::ReadDataFile::Load PVPremiumFileObj = etrading::ReadDataFile::Load( TRS_CALCULATE_PREMIUM_PV );
 		std::string premiumLegName			= PVPremiumFileObj[ "legName"];
 
-		const double calculatedPremiumPV = validation::tryAqTotalReturnSwapObjectPV( swapName, creditModelName, premiumLegName.c_str() );
+		const double calculatedPremiumPV = validation::tryAqTRSObjectPV( swapName, creditModelName, premiumLegName.c_str() );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedPremiumPV, TEST_DIR, TRS_EXPECTED_PREMIUM_PV, pvTolerance );
@@ -373,7 +373,7 @@ namespace google_test
 		etrading::ReadDataFile::Load PVFloatFileObj = etrading::ReadDataFile::Load( TRS_CALCULATE_FLOAT_PV );
 		std::string floatLegName			= PVFloatFileObj[ "legName"];
 
-		const double calculatedFloatPV = validation::tryAqTotalReturnSwapObjectPV( swapName, creditModelName, floatLegName.c_str() );
+		const double calculatedFloatPV = validation::tryAqTRSObjectPV( swapName, creditModelName, floatLegName.c_str() );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedFloatPV, TEST_DIR, TRS_EXPECTED_FLOAT_PV, pvTolerance );
@@ -402,7 +402,7 @@ namespace google_test
 		const std::string swapName			= parRateFileObj[ "swapName" ];
 		const std::string creditModelName		= parRateFileObj[ "creditModelName" ];
 
-		const double calculatedParRate = validation::tryAqTotalReturnSwapObjectParRate( swapName, creditModelName );
+		const double calculatedParRate = validation::tryAqTRSObjectParRate( swapName, creditModelName );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedParRate, TEST_DIR, TRS_EXPECTED_PAR_RATE, tolerance );
@@ -429,7 +429,7 @@ namespace google_test
 		const std::string swapName			= parRateFileObj[ "swapName" ];
 		const std::string creditModelName	= parRateFileObj[ "creditModelName" ];
 
-		const double calculatedParSpread = validation::tryAqTotalReturnSwapObjectParSpread( swapName, creditModelName );
+		const double calculatedParSpread = validation::tryAqTRSObjectParSpread( swapName, creditModelName );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedParSpread, TEST_DIR, TRS_EXPECTED_PAR_SPREAD, tolerance );
@@ -456,7 +456,7 @@ namespace google_test
 		const std::string creditModelName	= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
 
-		const double calculated_PayOnSurvival_ALL_PV = validation::tryAqTotalReturnSwapObjectPV( swapName_payOnSurvival, creditModelName, legName.c_str() );
+		const double calculated_PayOnSurvival_ALL_PV = validation::tryAqTRSObjectPV( swapName_payOnSurvival, creditModelName, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		const double pvTolerance = 10.0;  // Notional of 1MM. We can afford a slightly wider tolerance which allows 64bit test to pass.
@@ -467,7 +467,7 @@ namespace google_test
 		etrading::ReadDataFile::Load PVPremiumFileObj = etrading::ReadDataFile::Load( TRS_CALCULATE_PREMIUM_PV );
 		std::string premiumLegName			= PVPremiumFileObj[ "legName"];
 
-		const double calculatedPremiumPV = validation::tryAqTotalReturnSwapObjectPV( swapName_payOnSurvival, creditModelName, premiumLegName.c_str() );
+		const double calculatedPremiumPV = validation::tryAqTRSObjectPV( swapName_payOnSurvival, creditModelName, premiumLegName.c_str() );
 
 		// The PAYMENTTRIGGER is set on the FLOAT leg. The premium LEG should therefore have the same PV as before.
         CheckTestResultsAndRebaseOnRequest( calculatedPremiumPV, TEST_DIR, TRS_EXPECTED_PREMIUM_PV, pvTolerance );
@@ -478,7 +478,7 @@ namespace google_test
 		etrading::ReadDataFile::Load PVFloatFileObj = etrading::ReadDataFile::Load( TRS_CALCULATE_FLOAT_PV );
 		std::string floatLegName			= PVFloatFileObj[ "legName"];
 
-		const double calculatedFloat_PayOnSurvival_PV = validation::tryAqTotalReturnSwapObjectPV( swapName_payOnSurvival, creditModelName, floatLegName.c_str() );
+		const double calculatedFloat_PayOnSurvival_PV = validation::tryAqTRSObjectPV( swapName_payOnSurvival, creditModelName, floatLegName.c_str() );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedFloat_PayOnSurvival_PV, TEST_DIR, TRS_EXPECTED_PAY_ON_SURVIVAL_FLOAT_PV, pvTolerance );
@@ -487,7 +487,7 @@ namespace google_test
 		createAQObjSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
 		const std::string swapName = createAQObjTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
 
-		const double calculatedFloatPV = validation::tryAqTotalReturnSwapObjectPV( swapName, creditModelName, floatLegName.c_str() );
+		const double calculatedFloatPV = validation::tryAqTRSObjectPV( swapName, creditModelName, floatLegName.c_str() );
 
 		// ASSERT_LE( calculatedFloat_PayOnSurvival_PV, calculatedFloatPV );
 		ASSERT_LE( fabs( calculatedFloat_PayOnSurvival_PV ), fabs( calculatedFloatPV ) );
@@ -538,7 +538,7 @@ namespace google_test
 		// 1. Calculate Premium Leg annuity
 		etrading::ReadDataFile::Load annuityFileObj = etrading::ReadDataFile::Load( TRS_CALCULATE_PREMIUM_ANNUITY );
 		std::string legName			= annuityFileObj[ "legName"];
-		const double calculatedPremiumAnnuity = validation::tryAqTotalReturnSwapObjectAnnuity( swapName, creditModelName, legName );
+		const double calculatedPremiumAnnuity = validation::tryAqTRSObjectAnnuity( swapName, creditModelName, legName );
 
 		// Check the Test Results or Rebase
 		const double annuityTolerance = 1.0e-2;
@@ -546,7 +546,7 @@ namespace google_test
 
 		// 2. Calculate Float Leg annuity
 		legName = "Leg2:FLOAT";
-		const double calculatedFloatAnnuity_payAlways = validation::tryAqTotalReturnSwapObjectAnnuity( swapName, creditModelName, legName );
+		const double calculatedFloatAnnuity_payAlways = validation::tryAqTRSObjectAnnuity( swapName, creditModelName, legName );
         CheckTestResultsAndRebaseOnRequest( calculatedFloatAnnuity_payAlways, TEST_DIR, TRS_EXPECTED_FLOAT_PAYALWAYS_ANNUITY, annuityTolerance );
 
 		
@@ -557,7 +557,7 @@ namespace google_test
 		const std::string swapName_payOnSurvival = createAQObjTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP_PAY_ON_SURVIVAL );
 
 		// 3. Calculate Float Leg annuity: PayOnSurvival
-		const double calculatedFloatAnnuity_payOnSurvival = validation::tryAqTotalReturnSwapObjectAnnuity( swapName_payOnSurvival, creditModelName, legName );
+		const double calculatedFloatAnnuity_payOnSurvival = validation::tryAqTRSObjectAnnuity( swapName_payOnSurvival, creditModelName, legName );
         CheckTestResultsAndRebaseOnRequest( calculatedFloatAnnuity_payOnSurvival, TEST_DIR, TRS_EXPECTED_FLOAT_PAYONSURVIVAL_ANNUITY, annuityTolerance );
 
 		// Final sanity check: The annuity for "PayOnSurvival" must be strictly less than the annuity for "PayAlways"

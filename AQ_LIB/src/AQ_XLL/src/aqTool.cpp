@@ -952,3 +952,23 @@ XLO_FUNC_START( aqToolObjectMultiGridSubNames(
 XLO_FUNC_END( aqToolObjectMultiGridSubNames )
     .help( L"The sub-grid names held by a multi-grid, as a column." )
     .arg( L"ObjectName", L"A multi-grid handle" );
+
+
+/* -------------------------------------------------------------------------
+ *  Diagnostics
+ * ---------------------------------------------------------------------- */
+
+// Deliberately triggers a structured exception (out-of-bounds access on an
+// empty vector, undefined behaviour - typically an access violation) to
+// exercise AQ_XLL_GUARD / etrading::StructuredExceptionHandler. No tryAq*
+// wrapper - this is an AQ_XLL-only diagnostic, like aqToolEcho / aqToolBuildTime.
+XLO_FUNC_START( aqToolSEH() )
+{
+    AQ_XLL_GUARD
+
+    std::vector<int> empty;
+    return returnValue( static_cast<double>( empty.front() ) );  // UB: no bounds check, nothing to return
+}
+XLO_FUNC_END( aqToolSEH )
+    .help( L"Diagnostic: deliberately triggers a structured exception (out-of-bounds access) "
+           L"to test whether AQ_XLL_GUARD catches it or the add-in crashes." );

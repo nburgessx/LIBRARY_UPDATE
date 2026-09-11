@@ -5,6 +5,18 @@
  * aqBondObject*  - operate on a cached bond object (name in).
  * aqBondCurve* / aqBondGenerator* - operate on a cached named sub-object.
  *
+ * Also holds the BondOption and BondFutureOption categories
+ * (aqBondOptionObject* / aqBondFutureOptionObject*) - kept in this file rather
+ * than their own aqBondOption.cpp / aqBondFutureOption.cpp because they share
+ * the aqBond* prefix and, more to the point, operate on the exact same cached
+ * object: aqBondOptionObjectCreate is the only creator for both - there is no
+ * separate aqBondFutureOptionObjectCreate. tryAqBondFutureOptionObjectPV/
+ * Greeks call etrading::getOption() and dynamic_pointer_cast to the same
+ * etrading::BondOption the create call registered, then price it against a
+ * bond-future price instead of a bond spot price. The two categories
+ * themselves are unchanged (BondOption / BondFutureOption stay separate
+ * entries in the locked category list) - only their code location moved.
+ *
  * Handle-creating functions run: decorateWithExcelLocation -> allowAQObjUpdates
  * (create-vs-modify) -> the validation-layer create call -> appendInstanceCounter
  * (so Excel re-fires dependents on recalculation). Marshalling to and from Excel
@@ -21,6 +33,7 @@
 #include <tryAqBondObject.h>      // validation bond wrappers
 #include <tryAqBondCurves.h>      // validation::tryAqBondCurve* + PriceFromBondCurve / YieldFromBondCurve
 #include <tryAqBondSchedule.h>    // validation::tryAqBondSchedule / tryAqBondScheduleLVBKeys
+#include <tryAqBondOptionObject.h>// validation::tryAqBondOptionObject* / tryAqBondFutureOptionObject*
 #include <AQObjUtilities.h>       // etrading::getBond
 #include <BondCurves.h>           // etrading::NelsonSiegelSvenssonParameters
 #include <NelsonSiegelFitting.h>  // etrading::NelsonSiegelSvenssonCalibrationResults
@@ -1739,4 +1752,214 @@ XLO_FUNC_END( aqBondSchedule )
     .help( L"Build a bond schedule from a label/value block. Returns the schedule as a matrix." )
     .arg( L"BondScheduleLVB",   L"The bond schedule label/value block" )
     .arg( L"ValidateKeys",      L"Optional. Default TRUE. Check the keys against aqBondScheduleLVBKeys" )
+    .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );
+
+
+/* -------------------------------------------------------------------------
+ *  BondOption (its own category - see the file header note above)
+ * ---------------------------------------------------------------------- */
+
+// Create and store a bond option from a label/value block.
+XLO_FUNC_START( aqBondOptionObjectCreate(
+    const ExcelObj& objectName,
+    const ExcelObj& optionLVB,
+    const ExcelObj& validateKeys ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    const std::string name = decorateWithExcelLocation( toNarrowString( objectName ) );
+
+    const std::string storedName = validation::tryAqBondOptionObjectCreate(
+        name, toLabelValueBlock( optionLVB ), toBool( validateKeys, true ) );
+
+    return returnValue( appendInstanceCounter( storedName ) );
+}
+XLO_FUNC_END( aqBondOptionObjectCreate )
+    .help( L"Create and store a bond option from a label/value block; returns its handle." )
+    .arg( L"ObjectName",   L"Name for the bond-option object" )
+    .arg( L"OptionLVB",    L"The bond-option definition as a label/value block" )
+    .arg( L"ValidateKeys", L"Optional. Default TRUE. Check the LVB keys" );
+
+
+// Display a cached bond option as a matrix.
+XLO_FUNC_START( aqBondOptionObjectDisplay(
+    const ExcelObj& objectName ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( toExcelMatrix(
+        validation::tryAqBondOptionObjectDisplay( getNameWithoutCounter( objectName ) ) ) );
+}
+XLO_FUNC_END( aqBondOptionObjectDisplay )
+    .help( L"Display a cached bond option as a matrix." )
+    .arg( L"ObjectName", L"A bond-option handle" );
+
+
+// Present value of a cached bond option.
+XLO_FUNC_START( aqBondOptionObjectPV(
+    const ExcelObj& objectName,
+    const ExcelObj& valuationSettings,
+    const ExcelObj& bondPrice,
+    const ExcelObj& repoRate,
+    const ExcelObj& repoDaycount,
+    const ExcelObj& discountRate,
+    const ExcelObj& discountDayCount ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqBondOptionObjectPV(
+        getNameWithoutCounter( objectName ),
+        toAQLStringMatrix( valuationSettings ),
+        bondPrice.get<double>(),
+        repoRate.get<double>(),
+        toNarrowString( repoDaycount ),
+        discountRate.get<double>(),
+        toNarrowString( discountDayCount ) ) );
+}
+XLO_FUNC_END( aqBondOptionObjectPV )
+    .help( L"Present value of a cached bond option." )
+    .arg( L"ObjectName",        L"A bond-option handle" )
+    .arg( L"ValuationSettings", L"Valuation settings as a key/value matrix" )
+    .arg( L"BondPrice",         L"Underlying bond price" )
+    .arg( L"RepoRate",          L"Repo rate for the underlying" )
+    .arg( L"RepoDaycount",      L"Day count for the repo accrual, e.g. ACT/360" )
+    .arg( L"DiscountRate",      L"Discount rate for the option" )
+    .arg( L"DiscountDayCount",  L"Day count for the discount accrual" );
+
+
+// Greeks of a cached bond option.
+XLO_FUNC_START( aqBondOptionObjectGreeks(
+    const ExcelObj& greekType,
+    const ExcelObj& objectName,
+    const ExcelObj& valuationSettings,
+    const ExcelObj& bondSpotPrice,
+    const ExcelObj& repoRate,
+    const ExcelObj& repoDaycount,
+    const ExcelObj& discountRate,
+    const ExcelObj& discountDayCount,
+    const ExcelObj& deltaBump,
+    const ExcelObj& gammaBump,
+    const ExcelObj& vegaBump,
+    const ExcelObj& thetaBump,
+    const ExcelObj& rhoBump,
+    const ExcelObj& showColumnHeaders ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( toExcelMatrix( validation::tryAqBondOptionObjectGreeks(
+        toNarrowString( greekType ),
+        getNameWithoutCounter( objectName ),
+        toAQLStringMatrix( valuationSettings ),
+        bondSpotPrice.get<double>(),
+        repoRate.get<double>(),
+        toNarrowString( repoDaycount ),
+        discountRate.get<double>(),
+        toNarrowString( discountDayCount ),
+        deltaBump.get<double>(),
+        gammaBump.get<double>(),
+        vegaBump.get<double>(),
+        thetaBump.get<double>(),
+        rhoBump.get<double>(),
+        toBool( showColumnHeaders, true ) ) ) );
+}
+XLO_FUNC_END( aqBondOptionObjectGreeks )
+    .help( L"Greeks of a cached bond option, by bump-and-revalue." )
+    .arg( L"GreekType",         L"Which greek(s) to compute, e.g. ALL, DELTA, GAMMA" )
+    .arg( L"ObjectName",        L"A bond-option handle" )
+    .arg( L"ValuationSettings", L"Valuation settings as a key/value matrix" )
+    .arg( L"BondSpotPrice",     L"Underlying bond spot price" )
+    .arg( L"RepoRate",          L"Repo rate for the underlying" )
+    .arg( L"RepoDaycount",      L"Day count for the repo accrual, e.g. ACT/360" )
+    .arg( L"DiscountRate",      L"Discount rate for the option" )
+    .arg( L"DiscountDayCount",  L"Day count for the discount accrual" )
+    .arg( L"DeltaBump",         L"Bump size for delta" )
+    .arg( L"GammaBump",         L"Bump size for gamma" )
+    .arg( L"VegaBump",          L"Bump size for vega" )
+    .arg( L"ThetaBump",         L"Bump size for theta (days)" )
+    .arg( L"RhoBump",           L"Bump size for rho" )
+    .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );
+
+
+/* -------------------------------------------------------------------------
+ *  BondFutureOption (its own category - see the file header note above).
+ *  No separate create function: aqBondOptionObjectCreate creates the object
+ *  these price against a bond-future price instead of a bond spot price.
+ * ---------------------------------------------------------------------- */
+
+// Present value of a cached bond-future option.
+XLO_FUNC_START( aqBondFutureOptionObjectPV(
+    const ExcelObj& objectName,
+    const ExcelObj& valuationSettings,
+    const ExcelObj& bondFuturePrice,
+    const ExcelObj& discountRate,
+    const ExcelObj& discountDayCount ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( validation::tryAqBondFutureOptionObjectPV(
+        getNameWithoutCounter( objectName ),
+        toAQLStringMatrix( valuationSettings ),
+        bondFuturePrice.get<double>(),
+        discountRate.get<double>(),
+        toNarrowString( discountDayCount ) ) );
+}
+XLO_FUNC_END( aqBondFutureOptionObjectPV )
+    .help( L"Present value of a cached bond-future option (the object created by aqBondOptionObjectCreate)." )
+    .arg( L"ObjectName",        L"A bond-option handle" )
+    .arg( L"ValuationSettings", L"Valuation settings as a key/value matrix" )
+    .arg( L"BondFuturePrice",   L"The bond-future price" )
+    .arg( L"DiscountRate",      L"Discount rate for the option" )
+    .arg( L"DiscountDayCount",  L"Day count for the discount accrual" );
+
+
+// Greeks of a cached bond-future option.
+XLO_FUNC_START( aqBondFutureOptionObjectGreeks(
+    const ExcelObj& greekType,
+    const ExcelObj& objectName,
+    const ExcelObj& valuationSettings,
+    const ExcelObj& bondFuturePrice,
+    const ExcelObj& discountRate,
+    const ExcelObj& discountDayCount,
+    const ExcelObj& deltaBump,
+    const ExcelObj& gammaBump,
+    const ExcelObj& vegaBump,
+    const ExcelObj& thetaBump,
+    const ExcelObj& rhoBump,
+    const ExcelObj& showColumnHeaders ) )
+{
+    AQ_XLL_GUARD
+    AQ_INITIALIZE
+
+    return returnValue( toExcelMatrix( validation::tryAqBondFutureOptionObjectGreeks(
+        toNarrowString( greekType ),
+        getNameWithoutCounter( objectName ),
+        toAQLStringMatrix( valuationSettings ),
+        bondFuturePrice.get<double>(),
+        discountRate.get<double>(),
+        toNarrowString( discountDayCount ),
+        deltaBump.get<double>(),
+        gammaBump.get<double>(),
+        vegaBump.get<double>(),
+        thetaBump.get<double>(),
+        rhoBump.get<double>(),
+        toBool( showColumnHeaders, true ) ) ) );
+}
+XLO_FUNC_END( aqBondFutureOptionObjectGreeks )
+    .help( L"Greeks of a cached bond-future option, by bump-and-revalue." )
+    .arg( L"GreekType",         L"Which greek(s) to compute, e.g. ALL, DELTA, GAMMA" )
+    .arg( L"ObjectName",        L"A bond-option handle" )
+    .arg( L"ValuationSettings", L"Valuation settings as a key/value matrix" )
+    .arg( L"BondFuturePrice",   L"The bond-future price" )
+    .arg( L"DiscountRate",      L"Discount rate for the option" )
+    .arg( L"DiscountDayCount",  L"Day count for the discount accrual" )
+    .arg( L"DeltaBump",         L"Bump size for delta" )
+    .arg( L"GammaBump",         L"Bump size for gamma" )
+    .arg( L"VegaBump",          L"Bump size for vega" )
+    .arg( L"ThetaBump",         L"Bump size for theta (days)" )
+    .arg( L"RhoBump",           L"Bump size for rho" )
     .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );

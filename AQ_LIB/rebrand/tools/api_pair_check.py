@@ -16,11 +16,14 @@ import subprocess, re, os, sys, csv, collections
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.chdir(ROOT)
 
-# LOCKED (22), SINGULAR. Future + Ois added at step 11b. Product sub-types are their own category -- there is no
-# Options umbrella. Longest-first matching matters: BondFutureOption before
-# BondOption, TotalReturnSwap/AssetSwap/ConstantMaturitySwap before Swap.
-CATEGORIES = ["Date", "Curve", "FX", "Inflation", "Volatility", "Rate", "Future", "Ois",
-              "Swap", "AssetSwap", "ConstantMaturitySwap", "TotalReturnSwap",
+# LOCKED (21), SINGULAR. Future added at step 11b. Product sub-types are their own category -- there is no
+# Options umbrella. `Ois` is NOT a category (folded into Swap 2026-09-11 as a
+# product variant -- aqSwapOis*, not its own top-level category; see CLAUDE.md
+# Sec 5.1 / MIGRATION_PLAN.md Sec 2.7). Longest-first matching matters:
+# BondFutureOption before BondOption, TRS/AssetSwap/
+# CMS before Swap.
+CATEGORIES = ["Date", "Curve", "FX", "Inflation", "Volatility", "InterestRate", "Future",
+              "Swap", "AssetSwap", "CMS", "TRS",
               "CapFloor", "Swaption", "BondOption", "BondFutureOption",
               "Bond", "Credit", "Math", "Model", "Generator", "Tool"]
 

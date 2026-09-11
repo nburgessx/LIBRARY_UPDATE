@@ -3,7 +3,7 @@
 
 // Risk calculation
 #include "tryAqSwapObjectDelta.h"
-#include "tryAqRateFixingTable.h"
+#include "tryAqInterestRateFixingTable.h"
 
 // par rate calculation
 #include "tryAqSwapObjectPricing.h"

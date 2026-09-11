@@ -284,10 +284,10 @@ in every binding: type `aqDate` and the date functions surface together.
 
 **Categories are SINGULAR.** `aqDate`, not `aqDates`; `aqSwap`, not `aqSwaps`.
 
-**Canonical category list — LOCKED (22):**
+**Canonical category list — LOCKED (21):**
 
-`Date`, `Curve`, `FX`, `Inflation`, `Volatility`, `Rate`, `Future`, `Swap`, `Ois`, `AssetSwap`,
-`ConstantMaturitySwap`, `TotalReturnSwap`, `CapFloor`, `Swaption`, `BondOption`,
+`Date`, `Curve`, `FX`, `Inflation`, `Volatility`, `InterestRate`, `Future`, `Swap`, `AssetSwap`,
+`CMS`, `TRS`, `CapFloor`, `Swaption`, `BondOption`,
 `BondFutureOption`, `Bond`, `Credit`, `Math`, `Model`, `Generator`, `Tool`
 
 `Curve` is the rates yield-curve framework only — *not* bond or credit curves;
@@ -297,12 +297,27 @@ in every binding: type `aqDate` and the date functions surface together.
 
 - **No `Option` category.** An option product is its own category —
   `CapFloor`, `Swaption`, `BondOption`, `BondFutureOption`. Same principle for
-  swaps: `AssetSwap`, `ConstantMaturitySwap` and `TotalReturnSwap` are their own
+  swaps: `AssetSwap`, `CMS` and `TRS` are their own
   categories, not members of `Swap`; `Swap` is the vanilla swap plus its legs
   and schedules. `Inflation` is likewise its own category, not part of `Curve`.
   A user reaches for the product, not the umbrella.
+- **`Ois` is NOT its own category (decided, Nicholas 2026-09-11) — it lives
+  inside `Swap`.** Unlike `AssetSwap`/`CapFloor`/`Swaption` etc., an OIS is not
+  a structurally distinct product — it is a vanilla swap whose floating leg
+  compounds an overnight index instead of a term rate. So it is a **product
+  qualifier inside `Swap`**, not a category: `aqSwapOisPV`, `aqSwapOisParRate`
+  (stateless; the object form would be `aqSwapOisObject<Function>` if/when
+  needed) — see the form table below. Code-wise, `aqSwapOis*` lives in
+  `aqSwap.cpp` alongside `aqSwap*`, **not** a separate `aqOis.cpp`; the
+  validation wrappers live in `src\validation\Swap\` alongside the vanilla-swap
+  wrappers. Migrating Ois means *renaming* the pre-existing `tryAqOis*`
+  wrappers (`tryAqOisPV`, `tryAqOisParRate` + their `*LVBKeys` companions) to
+  `tryAqSwapOis*` — they predate the current category scheme — plus the
+  matching `AQ_API` (`aqOisPV`/`aqOisParRate`) and `GTEST`
+  (`TryAqTestTradeEUROISParRate.cpp`) renames, before the `AQ_XLL` functions are
+  written. See `rebrand\STATUS.md` for the live task detail.
 
-Use these 20, identically in `validation` / `AQ_XLL` / `AQ_API` / `GTEST`.
+Use these 21, identically in `validation` / `AQ_XLL` / `AQ_API` / `GTEST`.
 Detail: `MIGRATION_PLAN.md` §2.2.
 
 **Stateless vs object (stateful).** Most product functions take a cached object
@@ -313,12 +328,48 @@ category list and are told apart by the word `Object`:
 |---|---|---|
 | `aq<Category><Function>` | stateless — data in, value out | `aqBondScheduleKeys` |
 | `aq<Category>Object<Function>` | operates on a cached instance of the category's product | `aqBondObjectDirtyPrice`, `aqSwapObjectParRate` |
-| `aq<Category><SubObject><Function>` | operates on a cached *named* sub-object (Curve, Generator, MarketData, Model, FixingTable); the sub-object already denotes an object, so `Object` is not repeated | `aqBondCurveYield`, `aqBondGeneratorCreate`, `aqRateFixingTableValues` |
+| `aq<Category><SubObject><Function>` | operates on a cached *named* sub-object (Curve, Generator, MarketData, Model, FixingTable); the sub-object already denotes an object, so `Object` is not repeated | `aqBondCurveYield`, `aqBondGeneratorCreate`, `aqInterestRateFixingTableValues` |
+| `aq<Category><Variant><Function>` | a same-category **product variant** that doesn't earn its own top-level category — stateless (`<Variant>` before `Object`, no `Object` word) or, if ever needed, stateful (`<Variant>Object<Function>`) | `aqSwapOisPV`, `aqSwapOisParRate` (stateless OIS-swap forms; not `aqSwapObjectOis*`) |
 | `aqObject<Lifecycle>` | generic handle lifecycle, no category | `aqObjectLoad`, `aqObjectSave`, `aqObjectExists`, `aqObjectClearCache` |
 
 `FX` is its own category (not folded into `Curve`): FX forwards and FX swaps are
 derived from discount / xccy curves, but `FX` is what a user reaches for, and
 discoverability wins over taxonomy here.
+
+### 5.1a Category-migration sequence — always in this order
+
+Whenever a category (or a variant like `Ois`) is migrated or newly exposed, do
+the four surfaces **in this order** — never start with `AQ_XLL`:
+
+1. **`validation`** — confirm or rename the wrapper to the golden-source name
+   (`tryAq<Category>[<Variant>][Object]<Function>`). Legacy wrappers that
+   predate the current category scheme (like `tryAqOis*`) get renamed here
+   first; this is the one and only place a public name is decided.
+2. **`GTEST`** — update call sites, and file/suite names where they encode the
+   old wrapper name, to match.
+3. **`AQ_API`** — update the SWIG-bound method name (and source file name) in
+   every language binding to match.
+4. **`AQ_XLL`** — write or rename the worksheet function to the identical name
+   (minus `try`); `.arg()` count must equal the parameter count.
+
+Then run `rebrand\tools\api_pair_check.py` (HARD GATE must be 0) and rebuild
+`validation → AQ_API → AQ_XLL → GTEST`. Any drift found between the four
+surfaces during a migration gets cleaned up as part of that migration, not
+deferred — `validation` is always the tie-breaker.
+
+**File-per-category is the default, not a hard rule.** `AQ_XLL` category files
+are normally `aq<Category>.cpp` — but `BondOption` and `BondFutureOption`
+(decided, Nicholas 2026-09-11) are code-organized together in `aqBond.cpp`
+rather than their own files: `aqBondOptionObjectCreate` is the *only* creator
+for both (`tryAqBondFutureOptionObjectPV`/`Greeks` `dynamic_pointer_cast` the
+very same cached `etrading::BondOption` to price it against a bond-future price
+instead of a bond spot price — there is no `aqBondFutureOptionObjectCreate`).
+The category names themselves are unchanged — `BondOption` and
+`BondFutureOption` stay separate entries in the locked list, and their
+functions keep the `aqBondOptionObject*` / `aqBondFutureOptionObject*` names;
+only the file they live in moved. Consolidate a category's file into a sibling
+category's file when they operate on the same underlying cached object like
+this; don't do it merely because two category names share a prefix.
 
 ### 5.2 Two orthogonal groupings — do not conflate
 

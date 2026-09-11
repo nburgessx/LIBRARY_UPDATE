@@ -10,7 +10,7 @@
 
 // Risk calculation
 #include "tryAqSwapObjectDelta.h"
-#include "tryAqRateFixingTable.h"
+#include "tryAqInterestRateFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"
@@ -58,7 +58,7 @@ namespace
 	extern const char irs_3Yfwdstart_4Y_SwapInputs[]	= TEST_DIR "USD_3ML_3Yfwdst_4Y_tryAqSwapObjectCreateFromGenerator_inputs.csv";
 	extern const char irs_3Y9Mfwdstart_3M_SwapInputs[]	= TEST_DIR "USD_3ML_3Y9MFwdSt_3M_tryAqSwapObjectCreateFromGenerator_inputs.csv";
 
-	//extern const char fixingTableInputs[]				= TEST_DIR "FIXING@1_tryAqRateFixingTableCreate_inputs.csv";
+	//extern const char fixingTableInputs[]				= TEST_DIR "FIXING@1_tryAqInterestRateFixingTableCreate_inputs.csv";
 
 
 	// Delta Ladder Inputs

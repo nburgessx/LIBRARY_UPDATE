@@ -1,4 +1,320 @@
-# Rebrand status — 2026-09-10
+# Rebrand status — 2026-09-11
+
+## ⏸ PAUSED HERE — resume point (2026-09-11, session ran out of credit)
+
+**Next action for the next session:** finish wiring `aqCurve.cpp` into the
+build, then continue the Curve migration. In order:
+
+1. **`aqCurve.cpp` is written (batch 1, 34 functions) but NOT YET added to
+   `projects/AQ_XLL.vcxproj` / `.vcxproj.filters`.** Confirmed by grep — no
+   `aqCurve.cpp` entry exists in the vcxproj yet. Add it the same way every
+   other new category file was added this session (`<ClCompile
+   Include="..\src\AQ_XLL\src\aqCurve.cpp" />` in both files, filter
+   `Source Files`), then re-verify both files are well-formed XML
+   (`python -c "import xml.etree.ElementTree as ET; ET.parse(path)"`) and that
+   the `<ClCompile Include=` count matches the `</ClCompile>` count (the
+   orphaned-tag bug from earlier this session).
+2. **Batch-1 verification already done, before adding to the project:**
+   whole-tree param-vs-`.arg()` audit run against every `src/AQ_XLL/src/*.cpp`
+   — **290 functions total, 0 real mismatches** (`aqToolEcho` flagged by the
+   quick regex is a false positive — it takes `const ExcelObj*`, not `&`, and
+   is genuinely 1 param / 1 `.arg()`, pre-existing and fine). `aqCurve.cpp`
+   itself: **34/34 clean**. No duplicate `XLO_FUNC` names anywhere in the tree.
+   Signatures for all 34 were cross-checked line-by-line against the actual
+   validation headers (`tryAqCurveObjectUtilities.h`, `...Display.h`,
+   `...Calibrate.h`, `...CalibrateHedge.h`, `...DiscountFactor.h`,
+   `...ForwardRate.h`, `tryAqCurveZeroRate.h`, `tryAqCurveGenerator.h`,
+   `tryAqCurveMarketData.h`) — all match exactly. Caught and fixed two issues
+   while cross-checking: (a) `toIntOr` is a **file-local** helper (lives in an
+   anonymous namespace in `aqMath.cpp`, not shared via `aqXllTools.h`) — added
+   a local copy to `aqCurve.cpp`'s anonymous namespace, same as the existing
+   local `toStrOr`; (b) `etrading::trim_to_upper` (used in
+   `aqCurveGeneratorCreate`/`aqCurveMarketDataCreate`) needs
+   `#include <CoreEnumerations.h>`, which was missing — added. **Still not
+   run through an actual compiler** — these are static/textual checks only;
+   the real build is the next hard gate.
+3. **`aqCurve.cpp` batch 1 covers:** object lifecycle
+   (List/Delete/DeleteAll/Save/Load, 5), Display (1), Calibrate +
+   CalibrateHedge (2 — the hedge one returns `etrading::HedgeCurveInfo`,
+   marshalled as a 4-row key/value block), the DiscountFactor family (8,
+   including the `void` out-param `DiscountFactorsTable` built as a
+   date-column + one-column-per-curve-index matrix, and
+   `DiscountFactorsWithSpread` which correctly uses `toDateVector`/
+   `DateVector` not `toGregorianVector`), ForwardRate family (3), ZeroRate
+   family (2), Generator (4, using the confirmed-safe
+   `std::vector<validation::TableInfo>` pattern), MarketData (9). **34
+   functions total.**
+4. **After the vcxproj wiring:** run `rebrand/tools/api_pair_check.py` (HARD
+   GATE must stay 0), rebuild all four projects
+   (`validation → AQ_API → AQ_XLL → GTEST`), then continue with the rest of
+   Curve — see the enumerated ~97-function list captured earlier this session
+   (not reproduced here in full; re-derive from `src/validation/include/
+   tryAqCurve*.h` if needed, there are 32 headers). **Not yet started:** the
+   curve Results/Jacobian risk family (`tryAqCurveResults.h`,
+   `tryAqCurveObjectJacobianDisplay.h`), `tryAqCurveObjectDualBootstrap.h`,
+   `tryAqCurveHullWhite.h`/`tryAqCurveVasicek.h`, `tryAqCurveCalibrateCTD.h`,
+   the misc utilities (`tryAqCurveCompoundRate.h`,
+   `tryAqCurveEuroDollarConvexityAdjustment.h`, `tryAqCurveFrequency.h`,
+   `tryAqCurveGetInterpolationJoinDate.h`, `tryAqCurveInterpolation.h`),
+   `tryAqBondCurves.h` (check whether this belongs to `Bond` not `Curve` —
+   name suggests bond-curve, likely already covered by `aqBond.cpp`, verify
+   before touching), and `tryAqCurveObjectData.h`/`tryAqCurveObjectEngineCalibrate.h`
+   (not yet read).
+5. **Still an OPEN DECISION, not yet asked of Nicholas:** the four heavy
+   one-shot creation functions `tryAqCurveObjectCreateBasis/FXForwards/OIS/Swap`
+   (`tryAqCurveObjectCreateBasis.h`, `...CreateFXForwards.h`, `...CreateOIS.h`,
+   `...CreateSwap.h` — 10-17 raw `AQLStringMatrix` params each). These look
+   like a legacy one-shot path that may be superseded by the
+   `CurveGenerator`+`CurveMarketData`+`tryAqCurveObjectCalibrate` two-step
+   architecture already ported in batch 1 (which `CLAUDE.md` §4.4 explicitly
+   endorses as the intended design). **Ask Nicholas before porting these** —
+   don't guess.
+
+**Also still open from earlier in this session (unrelated to Curve):**
+- The legacy SABR calibration family decision
+  (`tryAqVolatilitySABR{Calibrate,GetPrem,GetVol,...}` vs the already-ported
+  object-based `tryAqVolatilityObjectSabr*`) — not yet asked.
+- `Swap` category (~67 wrappers, including the `Ois`→`aqSwapOis*` rename work
+  documented in `CLAUDE.md` §5.1) and `Credit` category (~34 wrappers) — not
+  started, come after Curve.
+- `src/validation/src/tryAqToolEchoDouble.cpp` needs adding to
+  `projects/validation.vcxproj` (pre-existing gap, unrelated to this session).
+- Confirm with Nicholas whether the improved `aqToolSEH()` message (see next
+  section) actually resolves a `file(line)` in Excel once rebuilt — the
+  DbgHelp path is untested end-to-end.
+- Top-level `STATUS.md` (the short pointer file, not this one) has not been
+  refreshed since the `InterestRate` rename — still says ~35%/Phase 4 without
+  mentioning CMS/TRS/aqToolSEH/Curve-start. Worth a refresh next session.
+
+Nothing in this session has been committed (still uncommitted, matching every
+other entry in this file) and nothing has been built — every check above is
+static (grep/regex/XML-parse), not a compiler run. **First thing next
+session: do a real build** before trusting any of this further.
+
+---
+
+### `aqToolSEH()` feedback: structured-exception messages made plain-English + crash-located (2026-09-11, uncommitted, NOT BUILT)
+
+Nicholas tried `aqToolSEH()` in Excel: **it works** — `AQ_XLL_GUARD` /
+`etrading::StructuredExceptionHandler` catches the access violation cleanly,
+no crash. Follow-up ask: make the returned error message concise plain English
+(`#Structured Exception: <Category> - <plain english>`, not the old verbose
+MSDN-quoted paragraph), and report the crash site (`__FILE__`/`__LINE__`) to
+speed up debugging.
+
+Changed `src/etrading/include/StructuredExceptionHandler.h` +
+`src/etrading/src/StructuredExceptionHandler.cpp` (the shared SEH translator
+behind every `AQ_XLL_GUARD`/`VALID_EXCEPTION_START`, not just `aqToolSEH` —
+this improves every structured-exception message library-wide):
+
+- `StructuredExceptionCodeMap`'s map value changed from a single blended
+  `const char*` to a new `StructuredExceptionInfo{ category_, plainEnglish_ }`
+  struct. All 20 Win32 exception codes re-worded: short category
+  ("Access Violation", "Integer Divide By Zero", ...) + one concise
+  plain-English sentence each (old text was a verbatim MSDN paragraph).
+- `SEHandler` now formats `"#Structured Exception: <Category> - <plain
+  english> at <file>(<line>)."` — e.g. `#Structured Exception: Access
+  Violation - attempted to read from or write to a memory address it does not
+  have access to. at aqTool.cpp(412).`
+- **Crash-site location, not handler location:** added a file-local
+  `resolveCrashLocation()` using DbgHelp (`SymInitialize` +
+  `SymGetLineFromAddr64`) against `pExcept->ExceptionRecord->ExceptionAddress`
+  — the actual faulting instruction — to resolve `file(line)` when a PDB is
+  available (debug builds). Falls back to the raw hex address when no PDB /
+  symbol is found (e.g. Release), and to nothing if resolution fails outright
+  — never throws from inside the SE translator itself. `__FILE__`/`__LINE__`
+  passed to the final `AQLCoreError` are still this handler's own location
+  (unavoidable — that's what the macro expands to at the `throw` site); the
+  crash site is carried in the message text instead, which is what actually
+  answers "where did it crash".
+- New includes: `<DbgHelp.h>` + `#pragma comment(lib, "Dbghelp.lib")` (Windows
+  only, inside the existing `_WIN32`/`_WIN64` guard) — no `.vcxproj` change
+  needed, the pragma embeds the linker directive in the `.obj` and every
+  consumer (`AQ_XLL`, `AQ_API`, `GTEST`) picks it up at final link.
+
+**Verification (no build yet):** grepped the tree for other callers of
+`StructuredExceptionCodeMap`/`getExceptionCodes` — none found outside this
+pair of files, so the map-value-type change is self-contained. Needs a real
+build + a re-run of `aqToolSEH()` in Excel to confirm the DbgHelp path
+resolves a file/line in the Debug config (PDB for `etrading`/`AQ_XLL` must be
+present at runtime, same folder as the `.xll`/`.pdb`) — **not yet verified
+end-to-end**, flagged for the next Excel round-trip with Nicholas.
+
+---
+
+### `TotalReturnSwap` category renamed to `TRS` (2026-09-11, uncommitted, NOT BUILT)
+
+Same pattern as the `ConstantMaturitySwap` → `CMS` rename, one layer further:
+**`TotalReturnSwap` already had a real `AQ_API` surface** (unlike CMS) — 4
+functions in `aqCreditObject.cpp/.h` (filed under the Credit API source, not a
+dedicated TRS file — same pre-existing filing quirk as the Ois/FixingTable
+functions living in `aqCurveObject.h`), already generated into all 4 SWIG
+`_wrap` files.
+
+- `validation`: `tryAqSwapObjectPricing.{h,cpp}` — substring rename
+  `TotalReturnSwapObject → TRSObject` (6 hits each file). Confirmed
+  `etrading::TotalReturnSwap` (the internal pricer class) and
+  `#include "TotalReturnSwap.h"` untouched — same anchor discipline as CMS.
+- `AQ_API`: `aqCreditObject.h` (9 hits) / `.cpp` (16 hits) renamed
+  (`aqTotalReturnSwapObject* → aqTRSObject*`, both the function defs and their
+  `validation::tryAq...` call sites). The 4 generated `swig_*_wrap.*` files
+  still say the old name — expected, untouched, will regenerate on next SWIG
+  build.
+- `GTEST`: `TestTotalReturnSwap.cpp` — 29 call-site substitutions. (Its own
+  `TRS_*` constant names were already TRS-branded; only the wrapper-name calls
+  needed changing.)
+- `AQ_XLL`: `aqTotalReturnSwap.cpp` → `aqTRS.cpp`, 4 functions renamed,
+  `AQ_XLL.vcxproj`/`.filters` updated (clean single-line edit this time — no
+  repeat of the CMS batch's orphaned-tag mistake).
+- 16 fixture files renamed (`tryAqTRSObject{PV,ParRate,ParSpread,Annuity}*_{inputs,outputs}.csv`,
+  including variant suffixes like `_ALL`, `_Float`, `_Premium`, `_PayOnSurvival`).
+- Docs: `CLAUDE.md` (both), `MIGRATION_PLAN.md`, `rebrand/tools/api_pair_check.py`
+  `CATEGORIES` updated `TotalReturnSwap` → `TRS`; **`docs/api_map.csv`
+  regenerated** this time (unlike CMS) since the AQ_API rows actually changed —
+  `aqTRSObjectPV/ParRate/ParSpread/Annuity` now show category `TRS`.
+
+**Verification:** HARD GATE = 0; `aqTRS.cpp` 4/4 param-vs-`.arg()`; zero
+residual `TotalReturnSwapObject` outside the generated SWIG files; both
+project files re-confirmed well-formed XML; fixture rename count matches (16
+renamed, 0 old names left).
+
+### Nicholas's follow-up on batch 1: CMS rename, BondOption/BondFutureOption merge, aqToolSEH diagnostic (2026-09-11, uncommitted, NOT BUILT)
+
+Three requests after reviewing batch 1:
+
+**1. `ConstantMaturitySwap` category renamed to `CMS`.** Golden-source rename,
+validation first: `tryAqConstantMaturitySwapObject{PVUsingConvexityAdjustment,
+ParRateUsingConvexityAdjustment}` → `tryAqCMSObject*` in the shared
+`tryAqSwapObjectPricing.{h,cpp}` (no file rename there - CMS never had its own
+validation file). **Anchoring note:** the first attempt used `\bConstantMaturitySwapObject\b`
+and silently matched nothing - camelCase has no regex word boundary between
+`tryAq` and `Constant...` (all letters, no separator), so `\b` never fires
+there. Redone as a plain substring replace of the (distinctive, unambiguous)
+compound `ConstantMaturitySwapObject`, verified against zero collisions first.
+**Critically, `etrading::ConstantMaturitySwap` (the internal pricer class),
+`ConstantMaturitySwap.h`/`.cpp`, and the `projects/etrading.vcxproj`/`GTEST.vcxproj`
+entries referencing them were confirmed untouched** - the rename target is the
+compound `...SwapObject...` (with `Object` immediately after), which never
+matches the bare internal class name (per CLAUDE.md §5.1a: category names
+don't propagate into `etrading` class/file names).
+- `AQ_XLL`: `aqConstantMaturitySwap.cpp` → `aqCMS.cpp`, 2 functions renamed,
+  `AQ_XLL.vcxproj`/`.filters` updated.
+- `GTEST`: `TestConstantMaturitySwap.cpp` call sites updated (test class name,
+  helper function name and `TEST_DIR` folder segment deliberately left as-is -
+  internal test naming, not governed by the golden-source rule). 4 fixture
+  files renamed (`tryAqCMSObject{PV,ParRate}UsingConvexityAdjustment_{inputs,outputs}.csv`).
+- Docs: `CLAUDE.md` (both), `MIGRATION_PLAN.md`, `rebrand/tools/api_pair_check.py`
+  `CATEGORIES` updated `ConstantMaturitySwap` → `CMS`.
+
+**2. `aqBondOption.cpp` / `aqBondFutureOption.cpp` deleted; their 6 functions
+moved into `aqBond.cpp` verbatim (signatures unchanged).** `AQ_XLL.vcxproj` +
+`.filters` updated - **caught and fixed a self-inflicted XML corruption here**:
+a scripted removal of the two `<ClCompile>` entries mishandled the 3-line
+`.filters` block (`<ClCompile>` / `<Filter>` / `</ClCompile>`) and left two
+orphaned `</ClCompile>` tags with no matching open tag. Caught by counting
+`<ClCompile Include=` vs `</ClCompile>` (17 vs 19) before moving on, rather than
+trusting the "no residual filename string" grep alone; fixed and reverified
+both `.vcxproj` and `.filters` as well-formed XML via `xml.etree.ElementTree`.
+Documented the resulting **file-per-category exception** in `CLAUDE.md` §5.1a
+and `MIGRATION_PLAN.md` D18: consolidate a category's file into a sibling's
+only when they share the same underlying cached object (see point 3), not
+merely a name prefix.
+
+**3. Nicholas asked where `aqBondFutureOptionObjectCreate` is - there isn't
+one, and that's correct, not a gap.** Traced `tryAqBondOptionObjectCreate` →
+`etrading::createOption()` → `OptionFactory.cpp`: the factory's
+`OptionTradeTypeEnum` switch has exactly three cases - `CAP_FLOOR_TRADE`,
+`EUROPEAN_SWAPTION_TRADE`, `BOND_OPTION_TRADE` (the `default` branch's own
+error text confirms it: "must be 'CAPFLOOR', 'EUROPEAN_SWAPTION' or
+'BONDOPTION'"). `tryAqBondFutureOptionObjectPV` confirms the design:
+```
+const auto& option = etrading::getOption(objectName);
+const auto& bondOption = std::dynamic_pointer_cast<etrading::BondOption>(option);
+...
+auto result = pricer.forwardOptionPrice(bondFuturePrice);
+```
+`aqBondOptionObjectCreate` creates one `etrading::BondOption` object;
+`aqBondOptionObjectPV` prices it against a bond spot price,
+`aqBondFutureOptionObjectPV`/`Greeks` price the **same cached object** against
+a bond-future price instead. One create function genuinely serves both
+categories by design - nothing to build. Documented in the `aqBond.cpp` file
+header and `CLAUDE.md` §5.1a so the next person doesn't go looking for it either.
+
+**4. New diagnostic `aqToolSEH()` added to `aqTool.cpp`** (Nicholas): no args,
+builds an empty `std::vector<int>` and calls `.front()` on it (undefined
+behaviour - out-of-bounds, no bounds check, typically an access violation) to
+let Nicholas observe firsthand whether `AQ_XLL_GUARD` /
+`etrading::StructuredExceptionHandler` turns the resulting structured
+exception into a clean Excel error, or whether it crashes the add-in. No
+`tryAq*` wrapper - same class of AQ_XLL-only diagnostic as `aqToolEcho` /
+`aqToolBuildTime` (deliberately not routed through validation; nothing to
+validate). 0-arg, so trivially param/`.arg()`-clean.
+
+**Verification (no build):** whole-tree param-vs-`.arg()` audit **256/256
+across every `AQ_XLL/src/*.cpp`, 0 mismatches**; no duplicate `XLO_FUNC` names;
+`vcxproj`/`.filters` file lists identical and both well-formed XML;
+`api_pair_check` HARD GATE = 0.
+
+---
+
+### "Migrate all remaining categories" — batch 1 of N: 11 small/medium categories DONE (2026-09-11, uncommitted, NOT BUILT)
+
+Nicholas asked to migrate everything still missing from `AQ_XLL`. Working in
+size order (small/clean first), not yet touching the three big ones
+(`Swap`+`Ois`, `Credit`, `Curve`) which need more care. **11 new category
+files, 66 new `XLO_FUNC` functions**, all added to `AQ_XLL.vcxproj` +
+`.filters`:
+
+| File | Category | Fns |
+|---|---|---:|
+| `aqFuture.cpp` | Future | 4 |
+| `aqBondOption.cpp` | BondOption | 4 |
+| `aqBondFutureOption.cpp` | BondFutureOption | 2 |
+| `aqConstantMaturitySwap.cpp` | ConstantMaturitySwap | 2 |
+| `aqTotalReturnSwap.cpp` | TotalReturnSwap | 4 |
+| `aqAssetSwap.cpp` | AssetSwap | 7 |
+| `aqSwaption.cpp` | Swaption | 8 |
+| `aqCapFloor.cpp` | CapFloor | 10 |
+| `aqInflation.cpp` | Inflation | 7 |
+| `aqFX.cpp` | FX | 11 |
+| `aqVolatility.cpp` | Volatility | 7 |
+
+**Verification:** whole-tree param-vs-`.arg()` audit — **255/255 functions
+across every `AQ_XLL/src/*.cpp`, 0 mismatches**; no duplicate `XLO_FUNC` names;
+every `validation::tryAq*` symbol called resolves in `src/validation/include`;
+`vcxproj`/`.filters` file lists identical; `api_pair_check` HARD GATE = 0.
+
+**Bug caught and fixed before it reached a build:** `aqInflationCurveCreate`
+and the two `aqVolatilityObjectSabr{MarketDataCreate,ModelCalibrate}` functions
+were first written using `std::vector<validation::TableInfo>` for the
+multi-block-create pattern (copying the `aqBondCurveCreate` /
+`aqBondGeneratorCreate` idiom) — but unlike `tryAqBondObject.h` /
+`tryAqToolGrid.h`, neither `tryAqInflationObjectPricing.h` nor
+`tryAqVolatilityObject.h` declares a `validation::TableInfo` typedef; both take
+`etrading::JSONInfoBlockTuples` directly. `std::vector<validation::TableInfo>`
+would have failed to compile ("no member named 'TableInfo' in namespace
+'validation'"). Fixed by using `etrading::JSONInfoBlockTuples` directly (the
+underlying tuple type is identical, so `toTableInfo(...)` still binds) —
+caught by re-reading each header rather than assuming the pattern held.
+
+**Decision needed — the legacy SABR calibration family, deferred:**
+`tryAqVolatilitySABR{Calibrate,GetPrem,GetVol,OutputParameter,SetupConvention,
+SetupParameter,SetupSwaptionVol}` (`tryAqVolatilitySABRCalibrate.h` and
+siblings) is a **procedural, ID-string-driven** calibration workflow
+(`alphaID`, `betaID`, `nuID`, `rhoID`, `convID`, `capConvID`, `curveMat`, …)
+that looks superseded by the cleaner object-based `tryAqVolatilityObjectSabr*`
+API already ported above. **Not ported — needs Nicholas's call:** port it
+as-is (needs real domain understanding of what those ID strings reference to
+marshal correctly — high risk of a plausible-but-wrong port), or drop it as
+legacy since the object-based Sabr* API appears to be the intended replacement.
+
+**Not attempted yet:** `Swap` (67 wrappers, incl. folding `Ois` in as
+`aqSwapOis*` — see the section below), `Credit` (34), `Curve` (~100 — the
+biggest, needs new enum-string marshalling helpers for `InterpolationEnum` /
+`StateVariableEnum` / `DayCountEnum` / etc. and unblocks the deferred Math
+`ForwardRate`/`DiscountFactor` functions too), `Model` (**empty — 0 validation
+wrappers exist**, nothing to migrate), `Generator` (**0 wrappers — needs
+`tryAqGeneratorList` written first**, unchanged from the earlier note).
 
 **== PAUSE POINT (2026-09-10) ==**
 
@@ -17,12 +333,17 @@ old `3809f148` baseline, Nicholas has committed:
   that the standing rule says never to commit (§"Known noise"). Flag to Nicholas:
   `git rm --cached` it and re-ignore, or accept it and note the exception.
 
-**Uncommitted working-tree delta right now (small):**
+**Uncommitted working-tree delta right now:**
 
 | Path | State |
 |---|---|
 | `src/AQ_XLL/src/aqBond.cpp` `aqDate.cpp` `aqMath.cpp` `aqTool.cpp` | **BUILT GREEN, GTest passing** (Nicholas) — the "remaining Bond / Tool / Date / Math functions" fill-in |
-| `src/AQ_XLL/src/aqRate.cpp` (new) + `AQ_XLL.vcxproj` / `.filters` | **NOT BUILT** — new `Rate` category file, added since the last green build |
+| `src/AQ_XLL/src/aqInterestRate.cpp` (renamed from `aqRate.cpp`) + `AQ_XLL.vcxproj` / `.filters` | **NOT BUILT** — new category file, added since the last green build |
+| `src/validation/{include,src}/tryAqInterestRate{FixingTable,FutureFra,ObjectFra}.{h,cpp}` (renamed from `tryAqRate*`) + `validation.vcxproj` / `.filters` | **NOT BUILT** — see the category rename below |
+| `src/AQ_API/source/aqCurveObject.{h,cpp}` | `aqRateFixingTable* → aqInterestRateFixingTable*` (the Python/SWIG binding for this — it lives in the Curve API file, a pre-existing filing quirk, not touched) |
+| `src/GTEST/src/Test{AQObjCurveDiscountFactorsWithSpread,AQObjHedgeCurveDelta,AQObjSwapDelta,AQObjSwapDeltaDualBootstrap,AQObjSwapDeltaWithCurveEngine,AQObjSwapDeltaXCCY,AQObjSwapDeltaXCCY_CSA,AQObjSwapDeltaXCCY_ZAR,AQObjSwapDelta_ARR,AQObjSwapDelta_JPY,AQObjSwapFloatRate}.cpp` | call-site rename, same reason |
+| 3 fixtures (`FIXING@1`, `EUR6M_FIXINGS@191`, `EUR3M_FIXINGS@74` `_tryAqRateFixingTableCreate_inputs.csv`) | renamed to `tryAqInterestRateFixingTableCreate_inputs.csv` |
+| `CLAUDE.md` (both), `MIGRATION_PLAN.md`, `rebrand/tools/api_pair_check.py`, `docs/api_map.csv` (regenerated) | category list `Rate → InterestRate` |
 | `STATUS.md`, `rebrand/STATUS.md` | doc updates (this pause) |
 | `rebrand/phase2_validation_rename_MAP.csv` | untracked — the task-2.6 rename map; sibling of the committed `phase3_*_MAP.csv` files, `git add` it with the next commit |
 
@@ -32,20 +353,91 @@ compiles — that is why `aqToolEchoDouble` was dropped from `aqTool.cpp` (link
 error). Add the `.cpp` to `validation.vcxproj` + `.filters` on the next
 `validation` rebuild, then re-add the XLL wrapper.
 
-**Open naming question (Nicholas, 2026-09-10): rename the `Rate` category?**
-`aqRate*` reads oddly. Candidates: `aqIR*` or `aqInterestRate*`. Not yet decided,
-nothing changed. If it goes ahead it is a golden-source category rename with the
-usual blast radius — `tryAqRate* → tryAq{IR,InterestRate}*` in `validation`
-(3 headers: `tryAqRateFixingTable`, `tryAqRateFutureFra`, `tryAqRateObjectFra`),
-the `CATEGORIES` list in `rebrand/tools/api_pair_check.py`, the LOCKED-22 list in
-both `CLAUDE.md` files + `MIGRATION_PLAN.md` §2.2, `docs/api_map.csv`, `GTEST`
-call sites (`tryAqRateFixingTable*` is used by ~6 swap/curve tests) + any
-`_inputs.csv` fixtures, `AQ_API` (none yet — no `aqRate*` binding files), and
-`src/AQ_XLL/src/aqRate.cpp` → `aqIR.cpp` / `aqInterestRate.cpp` (+ vcxproj/
-filters). Trade-off: `IR` is short but breaks the spelled-out,
-IntelliSense-groupable style of the other categories (`Bond`, `Swap`, `Curve`);
-`InterestRate` keeps the style but is long; `Rate` is consistent but vague.
-**Decide before the next category batch touches it.**
+### `Rate` category renamed → `InterestRate` (2026-09-11, decided + applied, NOT BUILT)
+
+Nicholas: `aqRate*` read oddly; chose **`InterestRate`** over `IR` (keeps the
+spelled-out, IntelliSense-groupable style of the other categories) and over
+leaving it as `Rate` (too vague — reads as FX/hazard rate). Applied as a full
+golden-source category rename, anchored to the 3 known function families only
+(`FixingTable`, `FutureFra`, `ObjectFra` — never a blind `Rate*` sweep, which
+would have hit unrelated tokens like local variables `aqRatesFixingDates` and
+the pre-existing `tryAqCurveCompoundRate` / `…EuroDollarConvexityAdjustment`
+`@brief` comments):
+
+- `validation`: 3 files renamed (`tryAqRateFixingTable.{h,cpp}` →
+  `tryAqInterestRateFixingTable.{h,cpp}`, similarly `FutureFra` / `ObjectFra`);
+  13 wrapper functions renamed; `validation.vcxproj` + `.filters` updated.
+- `AQ_XLL`: `aqRate.cpp → aqInterestRate.cpp`, 13 functions renamed to match;
+  `AQ_XLL.vcxproj` + `.filters` updated. `.arg()` count re-verified: 13/13.
+- `AQ_API`: `aqCurveObject.cpp/.h` — the 4 `aqRateFixingTable*` Python/SWIG
+  bindings renamed (this is the one place `Rate` had already reached a
+  consumer; filed under the Curve API source, not moved).
+- `GTEST`: 11 files' `tryAqRateFixingTable*` call sites updated.
+- 3 fixture files renamed (`resources/test/inputs/...`).
+- Docs: both `CLAUDE.md`, `MIGRATION_PLAN.md` §2.2/porting-order prose,
+  `rebrand/tools/api_pair_check.py` `CATEGORIES`, `docs/api_map.csv`
+  regenerated (118 rows, `InterestRate: 4` in the public-surface breakdown).
+- `src/AQ_API/source/swig_Python_wrap.cxx` still has the old `aqRateFixingTable*`
+  names — expected, it is generated and was reverted to `HEAD`, not hand-edited;
+  it picks up the new names on the next SWIG regen.
+- **Verification (no build):** HARD GATE = 0; tree-wide grep for
+  `tryAqRate(FixingTable|FutureFra|ObjectFra)` / `aqRate(FixingTable|FutureFra|ObjectFra)`
+  across `src/` + `projects/` = 0 (outside the generated SWIG file).
+- **Caught and fixed mid-rename:** the first sweep scoped its file list with
+  `git grep -l`, which only searches **tracked** files — it silently skipped
+  the then-untracked `aqInterestRate.cpp` (a `mv`, not `git mv`, since it had
+  never been committed) and missed the two `FutureFra` functions entirely,
+  because their real names (`tryAqRateFuturePriceToFraRate[FromConvAdj]`) don't
+  contain the anchor substring "FutureFra" — only their *file* does. Both fixed
+  with a second, targeted pass once found; the residual-grep check above is now
+  post-fix and clean. Lesson for future category renames: run the identifier
+  scan against the full symbol list (or `git grep --untracked`), not just
+  filename-shaped anchors.
+
+**Needs a full rebuild** (`validation` → `AQ_API` → `AQ_XLL` → `GTEST`) since it
+touches `validation` — larger than the AQ_XLL-only rebuilds this pause point
+otherwise needed.
+
+### `Ois` folded into `Swap` as a product variant (2026-09-11, DOCS ONLY — no code changed yet)
+
+Nicholas: `Ois` should not be its own category — it is a vanilla swap whose
+floating leg compounds an overnight index instead of a term rate, not a
+structurally distinct product the way `AssetSwap`/`CapFloor` are. Decision:
+category count drops **22 → 21**; the golden-source form is
+**`aqSwapOis<Function>`** (stateless; `aqSwapOisObject<Function>` if a stateful
+form is ever needed), living in `aqSwap.cpp` — **not** a separate `aqOis.cpp` —
+and in `src\validation\Swap\` alongside the vanilla-swap wrappers.
+
+**Docs updated now** (`CLAUDE.md` both copies §5.1/§5.1a, `MIGRATION_PLAN.md`
+§2.2/§2.7/D14, `rebrand/tools/api_pair_check.py` `CATEGORIES` — `Ois` removed
+from the list). Also added a standing **"category-migration sequence"** note
+(`AQ_LIB\CLAUDE.md` new §5.1a): validation (golden source, rename legacy
+wrappers here first) → `GTEST` → `AQ_API` → `AQ_XLL`, in that order, every time
+— codifying what this session has been doing ad hoc, per Nicholas's request to
+make sure all four surfaces stay synchronized to the `validation` name and any
+drift gets cleaned up as part of the migration, not deferred.
+
+**No code renamed yet — this is preparation for when `Swap` (and Ois within
+it) is next migrated.** What that migration will need to do, found while
+scoping this:
+
+- `validation` — **pre-existing** `tryAqOisPV` / `tryAqOisParRate` +
+  `*LVBKeys` companions (4 wrappers, `tryAqOisPV.{h,cpp}` /
+  `tryAqOisParRate.{h,cpp}`) predate the category scheme and must rename to
+  `tryAqSwapOisPV` / `tryAqSwapOisParRate` (+ files).
+- `AQ_API` — **already shipped** `aqOisPV` / `aqOisParRate` (Python/C#/Java/R
+  via SWIG, `aqOisPV.{h,cpp}` / `aqOisParRate.{h,cpp}`) rename to
+  `aqSwapOisPV` / `aqSwapOisParRate` (+ files + the 4 SWIG `.i`).
+- `GTEST` — `TryAqTestTradeEUROISParRate.cpp` call sites + likely the file name.
+- `AQ_XLL` — new functions `aqSwapOisPV`, `aqSwapOisParRate` (+ `LVBKeys`) in
+  `aqSwap.cpp`, alongside `aqSwapPV`/`aqSwapParRate` when that category is built.
+- `docs/api_map.csv` — **not regenerated this session on purpose.** Its 4
+  `aqOisPV*`/`aqOisParRate*` rows still say category `Ois`, which is accurate
+  until the rename above lands; regenerating now (after removing `Ois` from
+  `CATEGORIES`) would mislabel them via the script's no-match fallback
+  (observed: they fall into the `(lifecycle)` bucket in the console report —
+  cosmetic, `api_pair_check` HARD GATE is unaffected at 0). Regenerate
+  `api_map.csv` only once the rename lands.
 
 ### Bond / Tool / Date / Math XLL fill-in (2026-09-10) — BUILT GREEN, tests passing (Nicholas)
 
@@ -110,24 +502,25 @@ failure — see the `aqTool.cpp` note below.)
   `VolatilityType` marshalled via `etrading::toCallOrPutEnum` /
   `toVolatilityTypeEnum`.
 
-### Rate category → new `aqRate.cpp` (2026-09-10, uncommitted, NOT BUILT)
+### Rate category → new `aqInterestRate.cpp` (2026-09-10, uncommitted, NOT BUILT)
 
-**13 `XLO_FUNC` worksheet functions** in a **new file** `src/AQ_XLL/src/aqRate.cpp`,
+**13 `XLO_FUNC` worksheet functions** in a **new file** `src/AQ_XLL/src/aqInterestRate.cpp`,
 added to `AQ_XLL.vcxproj` + `.filters`. Param-vs-`.arg()`: 13/13, 0 mismatch.
 
 - Fixing table (a cached table of historical index fixings):
-  `aqRateFixingTableCreate` (currency / curve-tenor form), `…Display`,
+  `aqInterestRateFixingTableCreate` (currency / curve-tenor form), `…Display`,
   `…Value` (one date), `…Values` (a column of dates).
-- Rate future ↔ FRA (stateless): `aqRateFuturePriceToFraRate` (Hull-White
-  convexity), `aqRateFuturePriceToFraRateFromConvAdj` (explicit adjustment).
-- FRA object: `aqRateObjectFraCreate`, `…PV`, `…Display`, `…DisplayCashflows`,
+- Rate future ↔ FRA (stateless): `aqInterestRateFuturePriceToFraRate`
+  (Hull-White convexity), `aqInterestRateFuturePriceToFraRateFromConvAdj`
+  (explicit adjustment).
+- FRA object: `aqInterestRateObjectFraCreate`, `…PV`, `…Display`, `…DisplayCashflows`,
   `…Rate`, `…ToFuturePrice`, `…ToFuturePriceFromConvAdj`.
 
 File-local `toGregorian` / `toGregorianVector` (the fixing-table wrappers take
 `boost::gregorian::date`, not `AQLDate` — converted via
-`etrading::toGregorianDateFromAQLDate`). `aqRateFixingTableDisplay` uses the
+`etrading::toGregorianDateFromAQLDate`). `aqInterestRateFixingTableDisplay` uses the
 `toExcelMatrix(const etrading::VariantMatrix&)` overload added this session.
-`aqRateObjectFraCreate` follows the generator-create pattern (decorate + call +
+`aqInterestRateObjectFraCreate` follows the generator-create pattern (decorate + call +
 `appendInstanceCounter`, no create-vs-modify guard — matches
 `aqBondObjectCreateFromGenerator`). The three multi-overload wrappers
 (`FixingTableCreate`, `FixingTableValues`) are each exposed once, via the
@@ -169,15 +562,13 @@ the Curve category:
 
 ### Next steps on resume (priority order)
 
-0. **Rebuild `AQ_XLL`** with `aqRate.cpp` in — the only piece of the current
-   delta not yet build-verified.
-1. **Decide the `Rate` category name** (`Rate` / `IR` / `InterestRate`) before
-   any further work touches it — see the naming question in the PAUSE POINT
-   block above. If it changes, do it as a golden-source category rename
-   (`validation` first, then `api_pair_check` CATEGORIES, the docs, `GTEST`,
-   `aqRate.cpp` → new name + vcxproj/filters).
+0. **Rebuild `validation` → `AQ_API` → `AQ_XLL` → `GTEST`** — the `Rate` →
+   `InterestRate` rename touches `validation`, so this is a full rebuild, not
+   just `AQ_XLL`. Nothing else in the current delta needs more than that.
+1. ~~Decide the `Rate` category name~~ — **done**: `InterestRate` (Nicholas,
+   2026-09-11), applied.
 2. **Commit the small remaining delta** (see the PAUSE POINT table): the
-   Bond/Tool/Date/Math XLL fill-in + `aqRate.cpp` (+ vcxproj/filters) +
+   Bond/Tool/Date/Math XLL fill-in + `aqInterestRate.cpp` (+ vcxproj/filters) +
    `rebrand/phase2_validation_rename_MAP.csv` + the doc updates. Task 2.6, the
    Tool/Object port and Interpolation/PCA→Math are **already committed** in
    `22212bc5`. Before staging, check
@@ -189,9 +580,11 @@ the Curve category:
    `TestStructuredExceptionHandler.UNIT_IntegerDivideByZero`) also fail on a
    clean `3809f148` checkout — i.e. not caused by any of this work. If Nicholas's
    green run already showed them passing, this is moot.
-3. **New-category AQ_XLL files** `aqFuture.cpp` / `aqOis.cpp` — `Future` and
-   `Ois` are validation-only categories (`tryAqFutureTicker*`, `tryAqOis*`); no
-   XLL surface yet. Small: one/few functions each, same pattern as the Tool port.
+3. **New `AQ_XLL` file `aqFuture.cpp`** — `Future` is a validation-only category
+   (`tryAqFutureTicker*`); no XLL surface yet. Small, same pattern as the Tool
+   port. (`Ois` no longer gets its own file — see the "`Ois` folded into `Swap`"
+   section above; its 4 `tryAqOis*` wrappers rename to `tryAqSwapOis*` and land
+   in `aqSwap.cpp` when `Swap` is migrated.)
 4. **`meUtilityLWODecorateNames`** (Tool) + **`meUtilityMLIBSetUp` /
    `meUtilityMLIBTearDown`** — deferred from the Tool port because no
    golden-source wrapper exists. Decide: write conforming
