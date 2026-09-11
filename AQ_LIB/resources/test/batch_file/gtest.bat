@@ -6,7 +6,7 @@ rem Set the Test Environment
 rem -------------------
 echo.
 
-set /p Use64Bit="Run Tests in x64 Bit MLib? Y/N: "
+set /p Use64Bit="Run Tests in x64 Bit? Y/N: "
 if /I "%Use64Bit%"=="N" (
 set Platform="32"
 ) else (
@@ -16,10 +16,10 @@ set Platform="64"
 set /p mode="Run Tests in Release Mode? Y/N: "
 
 if /I "%mode%"=="N" (
-set GoogleTest="%MLIB%\mlib\target\%Platform%\Debug\google_test\out\google_test.exe"
+set GoogleTest="%AQ%\targets\%Platform%\Debug\GTEST\out\google_test.exe"
 set Environment="DEBUG"
 ) else (
-set GoogleTest="%MLIB%\mlib\target\%Platform%\Release\google_test\out\google_test.exe"
+set GoogleTest="%AQ%\targets\%Platform%\Release\GTEST\out\google_test.exe"
 set Environment="RELEASE"
 )
 
