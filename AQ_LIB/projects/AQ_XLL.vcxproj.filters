@@ -58,9 +58,6 @@
     <ClCompile Include="..\src\AQ_XLL\src\aqCredit.cpp">
       <Filter>src\Optional</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqCurve.cpp">
-      <Filter>src\Optional</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqFuture.cpp">
       <Filter>src\Optional</Filter>
     </ClCompile>
@@ -68,9 +65,6 @@
       <Filter>src\Optional</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqInflation.cpp">
-      <Filter>src\Optional</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqInterestRate.cpp">
       <Filter>src\Optional</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqSwap.cpp">
@@ -84,6 +78,12 @@
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqVolatility.cpp">
       <Filter>src\Optional</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_XLL\src\aqCurve.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_XLL\src\aqInterestRate.cpp">
+      <Filter>src\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

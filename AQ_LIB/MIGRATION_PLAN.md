@@ -661,6 +661,17 @@ is. Detail: `CLAUDE.md` (both) §4.4/§4.5, `AQ_LIB\CLAUDE.md` §6.3.
   (`ReleaseBonds`/`ReleaseSwaps`/`ReleaseCurves`/…), each excluding the
   `src\Optional` files its edition doesn't need; confirm each configuration
   builds green and its `.xll` registers only the intended categories.
+  **Dependency check before cutting configs (flagged 2026-09-12, not yet
+  resolved):** `aqCurve.cpp` currently sits in `src\Optional`, but every
+  priced product category depends on it (bonds/swaps/caps all discount off a
+  curve) — a `ReleaseBonds` config that excludes `aqCurve.cpp` would ship a
+  Bond edition that can't build or calibrate the curve it needs to price
+  against. Likely fix: **promote `aqCurve.cpp` (and probably
+  `aqInterestRate.cpp`, for the same reason — fixing tables and FRA/future
+  conversions cross-cut too) into `src\Core`** so every edition gets them for
+  free; a "Curves-only" SKU then falls out naturally as a `Core`-only build
+  with no `Optional` files added, rather than needing its own special case.
+  Decide and re-file before adding the actual configurations, not after.
 
 ---
 
@@ -770,11 +781,23 @@ against baseline.
   guard**, plus `bugprone-*` / `performance-*` / selected `modernize-*` as
   **advisory** (not build-breaking yet). Needs a `compile_commands.json` (MSBuild
   can emit one).
+- ☐ **6.10 Delete the `AQL Classic` `.vcxproj.filters` filter contents**
+  (Nicholas, 2026-09-12). Scoped, not actioned, this session — small and
+  tractable, unlike 8.1/8.2 below. **17 files, `GTEST.vcxproj.filters`
+  only:** 6 curve-fixture `.cpp`/`.h` pairs (`Curve{Accessors,Ois,FwdFxConst,
+  Std,TenorBasis,XccyBasis}`), `TestDatesCentralBank.cpp`,
+  `TestDatesSwapSchedule.cpp`, `TestRiskSwapDeltaLadder.cpp`,
+  `TestRiskTenorBasisCurve.cpp`, and `TestMirDateFunctions.cpp` (check this
+  one first — a `mir`-named test may already be dead per the "`mir*` stack
+  deleted wholesale" work; confirm before deleting rather than assuming).
+  `AQ_API.vcxproj.filters` declares the same filter with **zero files under
+  it** — delete the empty `<Filter Include="...AQL Classic">` declarations
+  there too. Detail: `rebrand\STATUS.md`.
 
 **Exit:** legacy projects gone or reduced to a documented `core`; resources,
 examples and config fully rebranded or removed; every header carries the
-proprietary notice; `clang-format` clean; `clang-tidy` naming check clean; docs
-current.
+proprietary notice; `clang-format` clean; `clang-tidy` naming check clean;
+`AQL Classic` filter contents gone; docs current.
 
 ---
 
@@ -805,13 +828,72 @@ current.
 
 ---
 
+## Phase 8 — Retire `AQLString` / `AQLDate` (scoped 2026-09-12, NOT started)  ☐
+
+**Deliberately its own phase, after Phase 7, not folded into Phase 6.** This
+is a genuinely separate initiative from the rebrand: it is a type-replacement
+across the whole codebase, not a rename, and the blast radius is an order of
+magnitude past anything else in this plan. Do not start it opportunistically
+mid-batch the way small fixes have been folded in elsewhere — it needs its
+own dedicated pass, tooling and regression budget.
+
+**Scale (measured 2026-09-12):** `AQLString` — **~36,962 occurrences across
+1,108 files.** `AQLDate` — **~9,904 occurrences across 585 files.** For
+comparison, the entire `me*`→`aq*` identifier rebrand (Phase 3, the biggest
+thing done so far) touched a fraction of this.
+
+**Why retire them at all (Nicholas asked directly — answered here):**
+- **`AQLString`** (`src\math\include\AQLString.h` + `.cpp`, ~1,550 lines) is
+  a hand-rolled, atomic-refcounted, copy-on-write string class — solving a
+  problem (expensive string copies) that C++11's move semantics and small-
+  string optimisation already solved natively in `std::string`, which this
+  codebase has had available since the C++17 retarget. No architectural
+  reason found to keep it; its extra convenience (numeric constructors,
+  `getDoubleValue()`/`getIntValue()`) is a thin, trivially-replaceable layer
+  over `std::to_string`/`std::stod`/`std::stoi`. **Target: `std::string`.**
+- **`AQLDate`** (`src\math\include\AQLDate.h`, 112 lines + 695-line `.cpp`) is
+  a hand-rolled, virtual, Julian-day calendar class. **Target:
+  `boost::gregorian::date`** — already a direct dependency (BSL-1.0, no
+  encumbrance), already the canonical date type taken directly by the newer
+  `Curve` validation headers, and the bridge functions
+  `etrading::toGregorianDateFromAQLDate`/`toAQLDateFromGregorianDate` already
+  exist and are proven correct in production use — the hard
+  conversion-correctness work is already done.
+- ☐ **8.1 Tooling first.** A libclang/clang-tidy-based codemod (not `sed`/
+  regex) that rewrites declarations, call sites and includes together,
+  batchable by project or by file, with a dry-run diff mode. Manual
+  batch-and-review (the Phase 3 approach) does not scale to 37k occurrences.
+- ☐ **8.2 `AQLString` → `std::string`**, one project at a time
+  (`math` → `etrading` → `validation` → `AQ_API`/`AQ_XLL` → `GTEST`), full
+  build + baseline-diff between each. Expect signature ripples through every
+  `validation` wrapper that takes `AQLString`/`AQLStringVector`/
+  `AQLStringMatrix` — i.e. most of them.
+- ☐ **8.3 `AQLDate` → `boost::gregorian::date`**, same batch discipline.
+  Retire the now-redundant `toGregorianDateFromAQLDate`/
+  `toAQLDateFromGregorianDate` bridge once nothing calls it.
+- ☐ **8.4** Once both are gone: `git grep -w AQLString` / `AQLDate` return
+  zero hits (bar `.APPLES`, read-only reference); delete
+  `src\math\{include,src}\AQLString.*` / `AQLDate.*`.
+
+**Exit:** `std::string` and `boost::gregorian::date` used throughout; no
+`AQLString`/`AQLDate` symbol remains in `AQ_LIB`; full green build and
+baseline-diff clean.
+
+---
+
 ## Suggested order of execution
 
 ```
-0 ─▶ 1 ─▶ 2 ─▶ 3 ─▶ 4 (+4a +4b) ─▶ 5 ─▶ 6 ─▶ 7
+0 ─▶ 1 ─▶ 2 ─▶ 3 ─▶ 4 (+4a +4b) ─▶ 5 ─▶ 6 ─▶ 7 ─▶ 8
          │                          ▲
          └── Phase 2 output feeds 3, 4, 4a, 4b and 5
 ```
+
+Phase 8 (`AQLString`/`AQLDate` retirement) is deliberately last and separate
+— a post-launch modernisation initiative, not a rebrand blocker. It could in
+principle start any time after Phase 3, but scheduling it after 7 keeps the
+rebrand's own timeline and regression baseline undisturbed by a
+much-larger-scale, higher-risk type change.
 
 **Status (2026-09-11): Phases 0-3 done. Phase 4 essentially complete** (466
 `AQ_XLL` functions, 458/467 `validation` wrappers covered — see Phase 4's

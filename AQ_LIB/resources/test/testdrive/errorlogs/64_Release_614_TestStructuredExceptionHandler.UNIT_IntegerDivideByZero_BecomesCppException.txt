@@ -6,16 +6,16 @@ Note: Google Test filter = TestStructuredExceptionHandler.UNIT_IntegerDivideByZe
 C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\LIBRARY_UPDATE\AQ_LIB\src\GTEST\src\TestStructuredExceptionHandler.cpp(72): error: Expected: forceIntegerDivideByZero() throws an exception of type AQLCoreError.
   Actual: it throws nothing.
 
-[  FAILED  ] TestStructuredExceptionHandler.UNIT_IntegerDivideByZero_BecomesCppException (0 ms)
-[----------] 1 test from TestStructuredExceptionHandler (0 ms total)
+[  FAILED  ] TestStructuredExceptionHandler.UNIT_IntegerDivideByZero_BecomesCppException (33 ms)
+[----------] 1 test from TestStructuredExceptionHandler (33 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (0 ms total)
+[==========] 1 test from 1 test suite ran. (33 ms total)
 [  PASSED  ] 0 tests.
 [  FAILED  ] 1 test, listed below:
 [  FAILED  ] TestStructuredExceptionHandler.UNIT_IntegerDivideByZero_BecomesCppException
 
  1 FAILED TEST
-Tests finished at: Fri Sep 11 17:12:18 2026
+Tests finished at: Sat Sep 12 16:23:53 2026
 
 didTestsFail: 1

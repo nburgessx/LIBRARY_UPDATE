@@ -1290,7 +1290,9 @@ XLO_FUNC_START( aqBondGeneratorDisplay(
         validation::tryAqBondGeneratorDisplay( getNameWithoutCounter( bondGeneratorName ),
                                                    etrading::trim_to_upper( toNarrowString( propertyKey ) ) );
 
-    return returnValue( toExcelMatrix( etrading::toAQLStringMatrixFromVariantMatrix( result, false ) ) );
+    // Transposed: the underlying block is column-major (one column per
+    // key/value pair); Excel users expect key/value rows instead.
+    return returnValue( toExcelMatrix( etrading::toAQLStringMatrixFromVariantMatrix( result, true ) ) );
 }
 XLO_FUNC_END( aqBondGeneratorDisplay )
     .help( L"Return a bond generator's configuration as a key/value block. Omit PropertyKey to return every block." )

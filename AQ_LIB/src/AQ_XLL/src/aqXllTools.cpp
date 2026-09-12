@@ -15,6 +15,7 @@
 #include <mutex>
 #include <string>
 #include <unordered_map>
+#include <functional>
 
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/variant/static_visitor.hpp>
@@ -31,8 +32,9 @@ namespace aq_xll
     namespace
     {
         // Handle behaviour switches.
-        bool instanceCountNames_            = true;
-        bool decorateNamesWithExcelAddress_ = false;
+        bool instanceCountNames_             = true;
+        bool decorateNamesWithExcelAddress_  = false;
+        bool convertExcelAddressToUniqueID_  = false;
 
         // objectName -> current instance counter
         std::unordered_map< std::string, int > namesToCounter_;
@@ -1084,7 +1086,20 @@ namespace aq_xll
             return "";
         }
 
-        return etrading::trim_to_upper( std::string( address.begin(), address.end() ) );
+        const std::string upperAddress = etrading::trim_to_upper( std::string( address.begin(), address.end() ) );
+
+        if ( !convertExcelAddressToUniqueID_ )
+        {
+            return upperAddress;
+        }
+
+        // A short, stable-within-this-session numeric ID standing in for the
+        // full cell address - the "Showing Excel Location as UNIQUE ID" mode
+        // (ported from the legacy convertExcelAddressToUniqueID switch).
+        // std::hash is only guaranteed stable within one process run, which is
+        // fine here: the whole point is a short handle, not a portable one.
+        const size_t hashed = std::hash<std::string>()( upperAddress ) % 100000;
+        return std::to_string( hashed );
     }
 
     std::string decorateWithExcelLocation( const std::string& objectName )
@@ -1121,4 +1136,6 @@ namespace aq_xll
     bool instanceCountNames()                          { return instanceCountNames_; }
     void setDecorateNamesWithExcelAddress( bool on )   { decorateNamesWithExcelAddress_ = on; }
     bool decorateNamesWithExcelAddress()               { return decorateNamesWithExcelAddress_; }
+    void setConvertExcelAddressToUniqueID( bool on )   { convertExcelAddressToUniqueID_ = on; }
+    bool convertExcelAddressToUniqueID()               { return convertExcelAddressToUniqueID_; }
 }

@@ -1,4 +1,103 @@
-# Rebrand status — 2026-09-11
+# Rebrand status — 2026-09-12
+
+## Two fixes (`aqObjectDecorateNames`, `aqBondGeneratorDisplay` transpose) + `AQL Classic`/`AQLString`/`AQLDate` scoped for the plan, not actioned (2026-09-12)
+
+**1. `meUtilityLWODecorateNames` was missing from the gap audit** because it
+has **no `validation` wrapper at all** (0 hits in `src\validation`) — the
+gap-audit script only compares against declared `validation` wrappers, so a
+function that was never given one couldn't show up as a gap. Traced to
+`.APPLES\...\meUtilities.cpp`: a session-wide control function that flips the
+AQObj handle-naming switches (instance counter / Excel-address decoration /
+address-vs-unique-ID). That state already lives entirely in `aq_xll`
+(`aqXllTools.h`'s "Handle behaviour switches" — `setInstanceCountNames`,
+`setDecorateNamesWithExcelAddress`), not in `etrading`, so there is nothing
+for `validation` to validate — same disposition as `aqToolEcho`/
+`aqToolBuildTime`/`aqToolSEH` (AQ_XLL-only, no `tryAq*`).
+
+Added:
+- **`etrading::HedgeCurveInfo`-style third switch, new this session:**
+  `convertExcelAddressToUniqueID_` in `aqXllTools.cpp`, wired into
+  `getExcelLocationAsString()` — when on, the location suffix is a short
+  `std::hash`-based numeric ID instead of the literal cell address (stable
+  only within the current session, which is fine — it exists to give a short
+  handle, not a portable one). Declared in `aqXllTools.h` next to the other
+  two switches.
+- **`aqObjectDecorateNames(enableCounter, appendLocation,
+  showExcelCellAddress)` → `aqObject.cpp`** (generic lifecycle, no category —
+  matches `aqObject<Lifecycle>`). Calls all three setters and returns a
+  status string in the same shape as the legacy function
+  ("AQObj Names: Instance Counting is ON, Append Excel Cell Location is ON,
+  Showing Excel Location as EXCEL ADDRESS"). Defaults match the legacy
+  function's own defaults (`enableCounter`/`appendLocation` default TRUE,
+  `showExcelCellAddress` defaults FALSE — i.e. unique-ID mode by default).
+
+**2. `aqBondGeneratorDisplay` output was untransposed.** Its single call to
+`etrading::toAQLStringMatrixFromVariantMatrix( result, false )` explicitly
+passed `false` for the `transpose` parameter — but that parameter's own
+default is `true`, and its doc comment says so directly: *"note transposes by
+default to match the default JSON schema convention."* The explicit `false`
+was silently overriding the sensible default, i.e. was almost certainly a
+copy/paste slip from an earlier function in the same file, not a considered
+choice. **Fixed: `false` → `true`.** Confirmed via `git grep` that this was
+the *only* call site anywhere in `AQ_XLL` passing `false` here — an isolated
+bug, not a systemic pattern across the other `*GeneratorDisplay`/
+`*Display` functions.
+
+**3. `AQL Classic` / `AQLString` / `AQLDate` — investigated, scoped into
+`MIGRATION_PLAN.md`, NOT actioned per explicit instruction.** Findings:
+
+- **The `AQL Classic` `.vcxproj.filters` filter is small and tractable.**
+  Only `GTEST.vcxproj.filters` actually has files under it: **17 entries** —
+  6 curve-fixture pairs (`Curve{Accessors,Ois,FwdFxConst,Std,TenorBasis,
+  XccyBasis}.{cpp,h}` under `src/GTEST/{src,include}`), `TestDatesCentralBank
+  .cpp`, `TestDatesSwapSchedule.cpp`, `TestRiskSwapDeltaLadder.cpp`,
+  `TestRiskTenorBasisCurve.cpp`, and — worth flagging on its own —
+  **`TestMirDateFunctions.cpp`**, a `mir`-named test that should probably
+  already have gone with the "`mir*` stack deleted wholesale" work from an
+  earlier phase; needs checking whether it still calls anything `mir*` before
+  deleting. `AQ_API.vcxproj.filters` **declares** the same filter
+  (`src\etrading\AQL Classic`, `include\etrading\AQL Classic`) but has **zero
+  files assigned to it** — an empty, unused filter, nothing to delete there
+  beyond the declaration itself. No other project (`math`, `etrading`,
+  `validation`, `calibration`, `models`, `AQ_XLL`) has this filter at all.
+- **`AQLString` and `AQLDate` are a much bigger undertaking than the filter
+  cleanup — do not conflate the two.** Repo-wide grep counts:
+  **`AQLString`: ~36,962 occurrences across 1,108 files. `AQLDate`: ~9,904
+  occurrences across 585 files.** This dwarfs every rename done in this
+  rebrand so far, including the `me*`→`aq*` sweep.
+- **`AQLString` (`src\math\{include,src}\AQLString.{h,cpp}`, ~1,550 lines):**
+  a hand-rolled, atomic-refcounted, copy-on-write string class from an era
+  before C++11 gave `std::string` move semantics and small-string
+  optimisation — the exact problem COW strings existed to solve. **No
+  architectural justification found for keeping it** in a C++17 codebase; its
+  extra convenience (numeric constructors, `getDoubleValue()`/
+  `getIntValue()`) is trivially replaced by `std::to_string`/`std::stod`/
+  `std::stoi` or small free functions. Recommendation: **`std::string`** as
+  the replacement, no custom type needed.
+- **`AQLDate` (`src\math\include\AQLDate.h`, 112 lines + 695-line `.cpp`):** a
+  hand-rolled Julian-day calendar class, **virtual** (`virtual ~AQLDate()`,
+  `virtual void setDate(...)`), storing `year/month/day` plus a cached
+  Julian long. Recommendation: **`boost::gregorian::date`** — Boost is
+  already a direct dependency (BSL-1.0, no encumbrance), already the
+  canonical date type in the newer `Curve` validation headers
+  (`tryAqCurveDiscountFactor.h` etc. take `std::vector<boost::gregorian::
+  date>` directly), and the bridge functions
+  `etrading::toGregorianDateFromAQLDate`/`toAQLDateFromGregorianDate` already
+  exist and are proven correct — meaning the hard conversion-correctness work
+  is already done, just not yet load-bearing everywhere.
+- **Scale means this is NOT a rebrand-timeline task.** A 37k/9.9k-occurrence
+  type swap needs an automated codemod (clang-tidy `readability-*` /
+  libclang-based rewrite, not manual `sed`) and a full regression run per
+  batch, run as its **own initiative after the rebrand ships**, not folded
+  into Phase 6. Scoped into `MIGRATION_PLAN.md` as a new **Phase 8** for
+  exactly this reason — see that file for the entry. The `AQL Classic` filter
+  deletion (17 files, isolated GTEST fixtures) is small enough to fold into
+  the existing Phase 6 resources/legacy-extraction pass instead.
+
+**No code deleted, no `AQLString`/`AQLDate` usage touched — per explicit
+instruction, this turn was investigate-and-plan only.**
+
+---
 
 ## ✅ BUILD CONFIRMED GREEN, ALL CONFIGS, TESTS PASS — Phase 4 XLL port essentially complete (2026-09-11)
 

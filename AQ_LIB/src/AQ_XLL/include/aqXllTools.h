@@ -252,4 +252,10 @@ namespace aq_xll
 
     void setDecorateNamesWithExcelAddress( bool on );
     bool decorateNamesWithExcelAddress();
+
+    // When decoration is on: FALSE (default) appends the real Excel cell
+    // address (e.g. "@[BOOK]SHEET!$A$1"); TRUE appends a short numeric ID
+    // standing in for it instead (stable within this session only).
+    void setConvertExcelAddressToUniqueID( bool on );
+    bool convertExcelAddressToUniqueID();
 }

@@ -5,6 +5,14 @@
  * aqObjectSave / aqObjectDelete / aqObjectDeleteAll / aqObjectLoadFromString /
  * aqObjectQuickLoad / aqObjectQuickSave / aqObjectClearCache) and route through
  * the matching validation wrappers.
+ *
+ * aqObjectDecorateNames is the exception: it controls the AQObj handle-naming
+ * switches themselves (instance counter / Excel-address decoration / unique-
+ * ID vs address), which are pure AQ_XLL-layer state (aq_xll::setInstanceCount
+ * Names et al. in aqXllTools) - there is nothing in etrading for `validation`
+ * to validate, so it has no tryAq* wrapper, the same disposition as
+ * aqToolEcho / aqToolBuildTime / aqToolSEH in aqTool.cpp. Ported from the
+ * legacy meUtilityLWODecorateNames (.APPLES\...\meUtilities.cpp).
  */
 
 #include <aqMain.h>
@@ -371,3 +379,31 @@ XLO_FUNC_START( aqObjectLoadAndReturnTupleResults(
 XLO_FUNC_END( aqObjectLoadAndReturnTupleResults )
     .help( L"Load a single AQObj object from a JSON file; returns a 2-row column [handle, cached object type]." )
     .arg( L"FileNameJSON", L"Full path to the .json file written by aqObjectSave" );
+
+
+// Control AQObj handle-name decoration for the rest of this Excel session.
+// No tryAq* wrapper - see the file header comment.
+XLO_FUNC_START( aqObjectDecorateNames(
+    const ExcelObj& enableCounter,
+    const ExcelObj& appendLocation,
+    const ExcelObj& showExcelCellAddress ) )
+{
+    AQ_XLL_GUARD
+
+    setInstanceCountNames( toBool( enableCounter, true ) );
+    setDecorateNamesWithExcelAddress( toBool( appendLocation, true ) );
+    setConvertExcelAddressToUniqueID( !toBool( showExcelCellAddress, false ) );
+
+    const std::string result = ( boost::format(
+        "AQObj Names: Instance Counting is %s, Append Excel Cell Location is %s, Showing Excel Location as %s" )
+        % ( instanceCountNames() ? "ON" : "OFF" )
+        % ( decorateNamesWithExcelAddress() ? "ON" : "OFF" )
+        % ( convertExcelAddressToUniqueID() ? "UNIQUE ID" : "EXCEL ADDRESS" ) ).str();
+
+    return returnValue( result );
+}
+XLO_FUNC_END( aqObjectDecorateNames )
+    .help( L"Control AQObj handle-name decoration (instance counter, Excel-address suffix) for this session." )
+    .arg( L"EnableCounter",         L"Optional. Default TRUE. Append an instance counter so recalculation fires dependents" )
+    .arg( L"AppendLocation",        L"Optional. Default TRUE. Append the calling cell's location to the handle" )
+    .arg( L"ShowExcelCellAddress",  L"Optional. Default FALSE. TRUE appends the real cell address; FALSE appends a short unique ID instead" );
