@@ -238,7 +238,7 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
   | `Date` | calendars, schedules, IMM / central-bank dates, year fractions | `aqDateYearFraction` |
   | `Curve` | **rates yield-curve framework only** — build, calibration, interpolation, DF / zero / forward queries, cross-currency. *Not* bond or credit curves. | `aqCurveObjectForwardRate` |
   | `Volatility` | vol surfaces, surface SABR calibration, cap / swaption vol utilities | `aqVolatilitySabrImplied` |
-  | `InterestRate` | Fixing tables, FRAs, rate-future <-> FRA conversion | `aqInterestRateFixingTableValues` |
+  | `IR` (was `InterestRate`, renamed 2026-09-12) | Fixing tables, FRAs, rate-future <-> FRA conversion | `aqIRFixingTableValues` |
   | `Future` | futures ticker / date-code helpers, futures conventions | `aqFutureTickerNext` |
   | `Swap` | vanilla / OIS / basis / cross-currency — creation, legs, schedules, pricing, risk. **OIS is a product variant here, not its own category** — `aqSwapOis<Function>` (§2.2 note below); Asset / CMS / total-return swaps *do* have their own categories. | `aqSwapObjectParRate`, `aqSwapOisParRate` |
   | `Bond` | bond creation, price / yield, repo / basis / CTD, **bond-curve fitting** (govie / spread curves) | `aqBondObjectYield`, `aqBondCurveYield` |
@@ -282,8 +282,8 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
 
   | Edition | Registers |
   |---|---|
-  | Swaps | Date, Curve, Volatility, InterestRate, Swap, Math, Generator, Object, Tool |
-  | Bonds | Date, Curve, InterestRate, Bond, Math, Generator, Object, Tool |
+  | Swaps | Date, Curve, Volatility, IR, Swap, Math, Generator, Object, Tool |
+  | Bonds | Date, Curve, IR, Bond, Math, Generator, Object, Tool |
   | Credit | Date, Curve, Credit, Bond, Math, Generator, Object, Tool |
   | Full | all 21, incl. options and Model |
 
@@ -510,13 +510,13 @@ canonical marshalling / handle-I/O / array-return / error-convention pattern.
   only; no `me*` aliases, hidden or otherwise. Finalise the `RELEASE_NOTES`
   renamed/removed-function list started in 3.3 so users can find replacements.
 - ☑ **4.7** Port functions **category by category** in the CLAUDE.md §9.4 order
-  (Date → Tool → Curve → Swap → Bond → Credit → InterestRate → Volatility → options →
+  (Date → Tool → Curve → Swap → Bond → Credit → IR → Volatility → options →
   Math → Model → Generator → Object), driven by the 0.7 inventory and the
   locked Phase 2 categories. Per function: confirm it is a "keep" → port `_Impl`
   → `validation` wrapper → `GTEST` case → tick the inventory row. Build +
   run suite per category. **Done (2026-09-11) for every category with an
   existing `validation` surface** — `Date, Curve, FX, Inflation, Volatility,
-  InterestRate, Future, Swap, AssetSwap, CMS, TRS, CapFloor, Swaption,
+  IR, Future, Swap, AssetSwap, CMS, TRS, CapFloor, Swaption,
   BondOption, BondFutureOption, Bond, Credit, Math, Tool, Object(-lifecycle)`
   all ported, build green, tests pass. `Model`/`Generator` remain: both have
   **0 `validation` wrappers today**, so there is nothing yet to port — see
@@ -640,9 +640,10 @@ gated at compile time.** A native `.xll` per edition is cheap for one add-in,
 so this project does the opposite of the `AQ_API` design above:
 `projects\AQ_XLL.vcxproj.filters` already splits every `src\AQ_XLL\src\*.cpp`
 file into **`src\Core`** (always-built: `aqXllTools.cpp`, `aqMain.cpp`,
-`aqDate.cpp`, `aqObject.cpp`, `aqMath.cpp`, `aqTool.cpp`) and
-**`src\Optional`** (one file per product category — every new category file
-goes here). New build configurations (`ReleaseBonds`, `ReleaseSwaps`,
+`aqDate.cpp`, `aqObject.cpp`, `aqMath.cpp`, `aqTool.cpp`, plus `aqCurve.cpp`
+and `aqIR.cpp` — promoted 2026-09-12, see 4a.5) and **`src\Optional`** (one
+file per product category — every new category file goes here). New build
+configurations (`ReleaseBonds`, `ReleaseSwaps`,
 `ReleaseCurves`, …), alongside the existing
 `Debug`/`DebugEditAndContinue`/`ReleaseProfiler`/`Release`, will each compile
 `Core` plus only the `Optional` file(s) that edition needs (marked excluded
@@ -661,17 +662,15 @@ is. Detail: `CLAUDE.md` (both) §4.4/§4.5, `AQ_LIB\CLAUDE.md` §6.3.
   (`ReleaseBonds`/`ReleaseSwaps`/`ReleaseCurves`/…), each excluding the
   `src\Optional` files its edition doesn't need; confirm each configuration
   builds green and its `.xll` registers only the intended categories.
-  **Dependency check before cutting configs (flagged 2026-09-12, not yet
-  resolved):** `aqCurve.cpp` currently sits in `src\Optional`, but every
-  priced product category depends on it (bonds/swaps/caps all discount off a
-  curve) — a `ReleaseBonds` config that excludes `aqCurve.cpp` would ship a
-  Bond edition that can't build or calibrate the curve it needs to price
-  against. Likely fix: **promote `aqCurve.cpp` (and probably
-  `aqInterestRate.cpp`, for the same reason — fixing tables and FRA/future
-  conversions cross-cut too) into `src\Core`** so every edition gets them for
-  free; a "Curves-only" SKU then falls out naturally as a `Core`-only build
-  with no `Optional` files added, rather than needing its own special case.
-  Decide and re-file before adding the actual configurations, not after.
+  **Dependency check flagged 2026-09-12, resolved same day:** `aqCurve.cpp`
+  sat in `src\Optional`, but every priced product category depends on it
+  (bonds/swaps/caps all discount off a curve) — a `ReleaseBonds` config that
+  excluded it would ship a Bond edition that can't build or calibrate the
+  curve it needs to price against. **Fixed: Nicholas promoted `aqCurve.cpp`
+  and `aqIR.cpp` (was `aqInterestRate.cpp` — fixing tables/FRA conversions
+  cross-cut the same way) into `src\Core`**, committed. A "Curves-only" SKU
+  now falls out naturally as a `Core`-only build with no `Optional` files
+  added. Still to do: the actual per-edition build configurations themselves.
 
 ---
 

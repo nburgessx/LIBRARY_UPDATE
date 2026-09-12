@@ -5,6 +5,7 @@
 #include "EnvironmentUtilities.h"
 #include "CoreEnumerations.h"
 #include "ObjectUtilities.h"
+#include "tryAqToolSetup.h"   // validation::tryAqToolLoadConfigurationFiles
 
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
@@ -58,6 +59,18 @@ namespace validation
     }
 
 
+    std::vector<std::string> tryAqObjectList()
+    {
+        std::vector<std::string> allNames;
+        for ( const etrading::CachedObjectEnum objEnum : etrading::Environment::STORED_TYPES )
+        {
+            const std::vector<std::string> namesOfType = etrading::Environment::defaultEnv().getObjectNames( objEnum );
+            allNames.insert( allNames.end(), namesOfType.begin(), namesOfType.end() );
+        }
+        return allNames;
+    }
+
+
     bool tryAqObjectDelete( const std::string& typeAsString, const std::string& objectName )
     {
         if ( !etrading::doesAQObjExist( objectName, typeAsString ) )
@@ -68,11 +81,32 @@ namespace validation
         return etrading::Environment::defaultEnv().deleteObject( objectName, objEnum );
     }
 
-    
+
     int tryAqObjectDeleteAll( const std::string& typeAsString )
     {
         const etrading::CachedObjectEnum objEnum = etrading::toCachedObjectEnum( etrading::trim_to_upper( typeAsString.c_str() ) );
-        return etrading::Environment::defaultEnv().deleteAllObjects( objEnum );
+        const int deletedCount = etrading::Environment::defaultEnv().deleteAllObjects( objEnum );
+
+        // A bulk delete can remove objects that were originally loaded from
+        // the AQObj configuration files (generators etc) - reload them so
+        // they come straight back, the same way tryAqObjectClearCache does
+        // (2026-09-12, Nicholas). Never throws (see tryAqToolLoadConfigurationFiles).
+        tryAqToolLoadConfigurationFiles();
+
+        return deletedCount;
+    }
+
+
+    int tryAqObjectDeleteAll()
+    {
+        const int deletedCount = etrading::deleteAllObjects( etrading::Environment::defaultEnv() );
+
+        // See the comment in the single-type overload above - deleting every
+        // object of every type is exactly the case tryAqObjectClearCache's
+        // own config-reload guards against, so this overload needs it too.
+        tryAqToolLoadConfigurationFiles();
+
+        return deletedCount;
     }
 
     

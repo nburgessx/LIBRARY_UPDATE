@@ -1,4 +1,4 @@
-// tryAqInterestRateFixingTable.h
+// tryAqIRFixingTable.h
 
 #pragma once
 
@@ -18,7 +18,7 @@ namespace validation
 	*  @param [in]		fixingValues	    The fixing values to store
 	*  @return			returns the name of the fixing table in the cache
 	*/
-    std::string tryAqInterestRateFixingTableCreate( const std::string& tableName,
+    std::string tryAqIRFixingTableCreate( const std::string& tableName,
                                            const std::string& currencyString,                                   
                                            const std::string& curveTenorString,
                                            const std::vector< boost::gregorian::date >& fixingDates,
@@ -33,7 +33,7 @@ namespace validation
 	*  @param [in]		fixingValues	    The fixing values to store
 	*  @return			returns the name of the fixing table in the cache
 	*/
-	std::string tryAqInterestRateFixingTableCreate( const std::string& tableName,
+	std::string tryAqIRFixingTableCreate( const std::string& tableName,
 										   const etrading::LabelValueBlock& parameterLVB,
 										   const std::vector< boost::gregorian::date >& fixingDates,
 										   const std::vector< double >& fixingValues );
@@ -42,14 +42,14 @@ namespace validation
 	*  @param [in]		tableName		    Fixing Table name
 	*  @return			returns a VariantMatrix representing the fixing currency, curveTenor, fixingDates and fixingValues
 	*/
-    etrading::VariantMatrix tryAqInterestRateFixingTableDisplay( const std::string& tableName );
+    etrading::VariantMatrix tryAqIRFixingTableDisplay( const std::string& tableName );
 
     /* @brief			function to get the fixing value for a particular date
 	*  @param [in]		tableName		    Fixing Table name
 	*  @param [in]		fixingDate	        Fixing Date
 	*  @return			swapName
 	*/
-    double tryAqInterestRateFixingTableValue( const std::string& tableName, const boost::gregorian::date fixingDate );
+    double tryAqIRFixingTableValue( const std::string& tableName, const boost::gregorian::date fixingDate );
 
     /* @brief			function to get fixing values for a vector of dates
 	*					NOTE: This function does not perform any validation of inputs
@@ -60,7 +60,7 @@ namespace validation
 	*  @param [in]		fixingDates     	Fixing Dates
 	*  @return			A vector of fixing values
 	*/
-    std::vector< double > tryAqInterestRateFixingTableValues( const std::string& tableName, const std::vector< boost::gregorian::date >& fixingDates );
+    std::vector< double > tryAqIRFixingTableValues( const std::string& tableName, const std::vector< boost::gregorian::date >& fixingDates );
 
 
 	/* @brief			function to get fixing values for a vector of dates and validate the fixing table currency and curve Tenor
@@ -72,7 +72,7 @@ namespace validation
 	*  @param [in]		fixingDates     	Fixing Dates
 	*  @return			A vector of fixing values
 	*/
-    std::vector< double > tryAqInterestRateFixingTableValues( const std::string& tableName, const std::string& currency, const std::string& curveTenor, const std::vector< boost::gregorian::date >& fixingDates );
+    std::vector< double > tryAqIRFixingTableValues( const std::string& tableName, const std::string& currency, const std::string& curveTenor, const std::vector< boost::gregorian::date >& fixingDates );
 
 	/* @brief			function to get fixing values for a vector of dates and validate the fixing table currency and curve Tenor
 	*					NOTE: This function works with all fixing table types. e.g. INTERESTRATE, INFLATION, FX
@@ -83,6 +83,6 @@ namespace validation
 	*  @param [in]		fixingDates     	Fixing Dates
 	*  @return			A vector of fixing values
 	*/
-	std::vector< double > tryAqInterestRateFixingTableValues( const std::string& tableName, const etrading::LabelValueBlock& parameterLVB, const std::vector< boost::gregorian::date >& fixingDates );
+	std::vector< double > tryAqIRFixingTableValues( const std::string& tableName, const etrading::LabelValueBlock& parameterLVB, const std::vector< boost::gregorian::date >& fixingDates );
 
 }

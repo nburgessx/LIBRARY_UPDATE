@@ -10259,7 +10259,7 @@ SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqObjCurvesMark
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInterestRateFixingTableCreate(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jlong jarg4, jobject jarg4_, jlong jarg5, jobject jarg5_) {
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqIRFixingTableCreate(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jlong jarg4, jobject jarg4_, jlong jarg5, jobject jarg5_) {
   jstring jresult = 0 ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -10309,13 +10309,13 @@ SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInterestRateF
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< double > const & reference is null");
     return 0;
   } 
-  result = aqInterestRateFixingTableCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::string > const &)*arg4,(std::vector< double > const &)*arg5);
+  result = aqIRFixingTableCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::string > const &)*arg4,(std::vector< double > const &)*arg5);
   jresult = jenv->NewStringUTF((&result)->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInterestRateFixingTableDisplay(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqIRFixingTableDisplay(JNIEnv *jenv, jclass jcls, jstring jarg1) {
   jlong jresult = 0 ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > result;
@@ -10331,13 +10331,13 @@ SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInterestRateFix
   std::string arg1_str(arg1_pstr);
   arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  result = aqInterestRateFixingTableDisplay((std::string const &)*arg1);
+  result = aqIRFixingTableDisplay((std::string const &)*arg1);
   *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
   return jresult;
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInterestRateFixingTableValue(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqIRFixingTableValue(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
   jdouble jresult = 0 ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -10363,13 +10363,13 @@ SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInterestRateF
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  result = (double)aqInterestRateFixingTableValue((std::string const &)*arg1,(std::string const &)*arg2);
+  result = (double)aqIRFixingTableValue((std::string const &)*arg1,(std::string const &)*arg2);
   jresult = (jdouble)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInterestRateFixingTableValues(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqIRFixingTableValues(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
   jlong jresult = 0 ;
   std::string *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -10392,7 +10392,7 @@ SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInterestRateFix
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
     return 0;
   } 
-  result = aqInterestRateFixingTableValues((std::string const &)*arg1,(std::vector< std::string > const &)*arg2);
+  result = aqIRFixingTableValues((std::string const &)*arg1,(std::vector< std::string > const &)*arg2);
   *(std::vector< double > **)&jresult = new std::vector< double >((const std::vector< double > &)result); 
   return jresult;
 }

@@ -34953,7 +34953,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableCreate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqIRFixingTableCreate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -34968,15 +34968,15 @@ SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableCreate(PyObject *SWIGUNUSEDP
   PyObject *swig_obj[5] ;
   std::string result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqInterestRateFixingTableCreate", 5, 5, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "aqIRFixingTableCreate", 5, 5, swig_obj)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInterestRateFixingTableCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRFixingTableCreate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableCreate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -34984,10 +34984,10 @@ SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableCreate(PyObject *SWIGUNUSEDP
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInterestRateFixingTableCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRFixingTableCreate" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableCreate" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -34995,10 +34995,10 @@ SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableCreate(PyObject *SWIGUNUSEDP
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInterestRateFixingTableCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqIRFixingTableCreate" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableCreate" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
@@ -35006,10 +35006,10 @@ SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableCreate(PyObject *SWIGUNUSEDP
     std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
     res4 = swig::asptr(swig_obj[3], &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqInterestRateFixingTableCreate" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqIRFixingTableCreate" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableCreate" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableCreate" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     arg4 = ptr;
   }
@@ -35017,17 +35017,17 @@ SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableCreate(PyObject *SWIGUNUSEDP
     std::vector< double,std::allocator< double > > *ptr = (std::vector< double,std::allocator< double > > *)0;
     res5 = swig::asptr(swig_obj[4], &ptr);
     if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqInterestRateFixingTableCreate" "', argument " "5"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqIRFixingTableCreate" "', argument " "5"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableCreate" "', argument " "5"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableCreate" "', argument " "5"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
     }
     arg5 = ptr;
   }
   {
     try
     {
-      result = aqInterestRateFixingTableCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::string,std::allocator< std::string > > const &)*arg4,(std::vector< double,std::allocator< double > > const &)*arg5);
+      result = aqIRFixingTableCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::string,std::allocator< std::string > > const &)*arg4,(std::vector< double,std::allocator< double > > const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -35051,7 +35051,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableDisplay(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqIRFixingTableDisplay(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   int res1 = SWIG_OLDOBJ ;
@@ -35064,17 +35064,17 @@ SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableDisplay(PyObject *SWIGUNUSED
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInterestRateFixingTableDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRFixingTableDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
   {
     try
     {
-      result = aqInterestRateFixingTableDisplay((std::string const &)*arg1);
+      result = aqIRFixingTableDisplay((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -35090,7 +35090,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableValue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqIRFixingTableValue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -35099,15 +35099,15 @@ SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableValue(PyObject *SWIGUNUSEDPA
   PyObject *swig_obj[2] ;
   double result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqInterestRateFixingTableValue", 2, 2, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "aqIRFixingTableValue", 2, 2, swig_obj)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInterestRateFixingTableValue" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRFixingTableValue" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableValue" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableValue" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -35115,17 +35115,17 @@ SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableValue(PyObject *SWIGUNUSEDPA
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInterestRateFixingTableValue" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRFixingTableValue" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableValue" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableValue" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   {
     try
     {
-      result = (double)aqInterestRateFixingTableValue((std::string const &)*arg1,(std::string const &)*arg2);
+      result = (double)aqIRFixingTableValue((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -35143,7 +35143,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableValues(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqIRFixingTableValues(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
@@ -35152,15 +35152,15 @@ SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableValues(PyObject *SWIGUNUSEDP
   PyObject *swig_obj[2] ;
   std::vector< double,std::allocator< double > > result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqInterestRateFixingTableValues", 2, 2, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "aqIRFixingTableValues", 2, 2, swig_obj)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInterestRateFixingTableValues" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRFixingTableValues" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableValues" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableValues" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -35168,17 +35168,17 @@ SWIGINTERN PyObject *_wrap_aqInterestRateFixingTableValues(PyObject *SWIGUNUSEDP
     std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
     res2 = swig::asptr(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInterestRateFixingTableValues" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRFixingTableValues" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableValues" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableValues" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     arg2 = ptr;
   }
   {
     try
     {
-      result = aqInterestRateFixingTableValues((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+      result = aqIRFixingTableValues((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -35835,10 +35835,10 @@ static PyMethodDef SwigMethods[] = {
 	 { "aqCurveObjectCalibrate", _wrap_aqCurveObjectCalibrate, METH_VARARGS, NULL},
 	 { "aqCurveMarketDataCreate", _wrap_aqCurveMarketDataCreate, METH_VARARGS, NULL},
 	 { "aqObjCurvesMarketDataCreateUsingMultipleBlocks", _wrap_aqObjCurvesMarketDataCreateUsingMultipleBlocks, METH_VARARGS, NULL},
-	 { "aqInterestRateFixingTableCreate", _wrap_aqInterestRateFixingTableCreate, METH_VARARGS, NULL},
-	 { "aqInterestRateFixingTableDisplay", _wrap_aqInterestRateFixingTableDisplay, METH_O, NULL},
-	 { "aqInterestRateFixingTableValue", _wrap_aqInterestRateFixingTableValue, METH_VARARGS, NULL},
-	 { "aqInterestRateFixingTableValues", _wrap_aqInterestRateFixingTableValues, METH_VARARGS, NULL},
+	 { "aqIRFixingTableCreate", _wrap_aqIRFixingTableCreate, METH_VARARGS, NULL},
+	 { "aqIRFixingTableDisplay", _wrap_aqIRFixingTableDisplay, METH_O, NULL},
+	 { "aqIRFixingTableValue", _wrap_aqIRFixingTableValue, METH_VARARGS, NULL},
+	 { "aqIRFixingTableValues", _wrap_aqIRFixingTableValues, METH_VARARGS, NULL},
 	 { "aqCurveObjectDiscountFactorsWithSpread", _wrap_aqCurveObjectDiscountFactorsWithSpread, METH_VARARGS, NULL},
 	 { "aqToolObjectGridDisplay", _wrap_aqToolObjectGridDisplay, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }

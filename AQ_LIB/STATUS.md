@@ -1,11 +1,14 @@
 # AlgoQuantLib — project status
 
-**As at 2026-09-11.** Committed HEAD is `d5dc37d7` ("AQ_XLL Function Category
-Updates" — the `src\Core`/`src\Optional` edition-gating filter split).
-Everything below this point is **uncommitted working-tree delta** (238 changed
-files) — Nicholas commits at his own pace; nothing in this session has been
-committed. Build is green in all configurations and GoogleTest passes
-(Nicholas-confirmed, twice, most recently after the batch described below).
+**As at 2026-09-12.** Committed HEAD is `f0dd6217` — includes `aqCurve.cpp`/
+`aqInterestRate.cpp` (now `aqIR.cpp`) promoted from `src\Optional` to
+`src\Core` (the dependency fix from the previous entry below). Everything
+below this point since is **uncommitted working-tree delta** — Nicholas
+commits at his own pace. Build is green in all configurations and GoogleTest
+passes (Nicholas-confirmed multiple times, most recently after the
+`InterestRate`→`IR` rename and the `aqObjectDeleteAll`/`aqObjectClearCache`
+changes described below — though those two specific changes are not yet
+build-confirmed themselves, see `rebrand\STATUS.md`'s latest entry).
 
 - The **phase-by-phase plan** is `MIGRATION_PLAN.md`.
 - The **detailed running record** of the rebrand (per-batch, per-decision) is
@@ -91,6 +94,14 @@ print(len(declared), 'wrappers,', len(missing), 'unmatched:'); [print(' -', m) f
 
 See `rebrand\STATUS.md` for full narrative detail on each of these; summary:
 
+0. **(2026-09-12, latest) `InterestRate`→`IR` category rename** (full-stack:
+   `validation`/`AQ_XLL`/`AQ_API`/`GTEST`, 3 fixture files); **`aqObjectDeleteAll`**
+   made category-optional (blank = every object of every category, via new
+   `tryAqObjectList()`/`tryAqObjectDeleteAll()` no-arg validation overloads);
+   **`aqObjectClearCache`** confirmed to already delete every category's
+   objects (traced to `etrading::deleteAllObjects` looping every
+   `CachedObjectEnum`) and fixed to also reset `AQ_XLL`'s own handle-name
+   counter map, which it wasn't. Not yet build-confirmed.
 1. **Gap-closing batch (23 functions, 5 existing files, no new files):**
    `aqObject.cpp` (+2, generic Object lifecycle), `aqCurve.cpp` (+1,
    `aqCurveUSDSpotDate`), `aqTool.cpp` (+4, incl. re-fixing the

@@ -219,6 +219,10 @@ namespace aq_xll
     // was being counted.
     bool stopCountingName( const std::string& objectName );
 
+    // Stop counting every name at once - pair this with a full object-cache
+    // clear (aqObjectClearCache / aqObjectDeleteAll with no type given).
+    void clearAllInstanceCounters();
+
     std::string getNameWithoutCounter( const std::string& handle );
     std::string getNameWithoutCounter( const xloil::ExcelObj& handle );
 

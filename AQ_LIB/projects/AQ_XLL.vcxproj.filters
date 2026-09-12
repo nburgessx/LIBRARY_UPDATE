@@ -82,7 +82,7 @@
     <ClCompile Include="..\src\AQ_XLL\src\aqCurve.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqInterestRate.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\aqIR.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
   </ItemGroup>

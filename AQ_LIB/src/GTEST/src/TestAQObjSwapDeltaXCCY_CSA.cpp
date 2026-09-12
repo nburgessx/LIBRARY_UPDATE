@@ -11,7 +11,7 @@
 
 // Risk calculation
 #include "tryAqSwapObjectDelta.h"
-#include "tryAqInterestRateFixingTable.h"
+#include "tryAqIRFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // Curve Macros are Here !!!

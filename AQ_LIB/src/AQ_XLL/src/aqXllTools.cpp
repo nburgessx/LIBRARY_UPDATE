@@ -1024,6 +1024,16 @@ namespace aq_xll
         return true;
     }
 
+    // Stop counting every name at once - the AQ_XLL-side counterpart of a
+    // full aqObjectClearCache / aqObjectDeleteAll( <no type> ): once every
+    // cached object is gone, the handle-name -> counter map would otherwise
+    // keep growing with entries for names that no longer exist.
+    void clearAllInstanceCounters()
+    {
+        std::lock_guard< std::mutex > lock( counterMutex_);
+        namesToCounter_.clear();
+    }
+
     std::string getNameWithoutCounter( const std::string& handle )
     {
         // The counter is the trailing "<delimiter><digits>", if present. Anything

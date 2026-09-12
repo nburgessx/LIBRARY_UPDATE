@@ -64,10 +64,10 @@ aqDateNthIMM,Date,stateless,tryAqDateNthIMM,src/AQ_API/source/aqDateIMM.h,src/va
 aqDateNthIMMFromStartDate,Date,stateless,tryAqDateNthIMMFromStartDate,src/AQ_API/source/aqDateIMM.h,src/validation/include/tryAqDateIMM.h
 aqDateShiftedSpotDate,Date,stateless,tryAqDateShiftedSpotDate,src/AQ_API/source/aqDate.h,src/validation/include/tryAqDate.h
 aqDateYearFraction,Date,stateless,tryAqDateYearFraction,src/AQ_API/source/aqDate.h,src/validation/include/tryAqDate.h
-aqInterestRateFixingTableCreate,InterestRate,stateless,tryAqInterestRateFixingTableCreate,src/AQ_API/source/aqCurveObject.h,src/validation/include/tryAqInterestRateFixingTable.h
-aqInterestRateFixingTableDisplay,InterestRate,stateless,tryAqInterestRateFixingTableDisplay,src/AQ_API/source/aqCurveObject.h,src/validation/include/tryAqInterestRateFixingTable.h
-aqInterestRateFixingTableValue,InterestRate,stateless,tryAqInterestRateFixingTableValue,src/AQ_API/source/aqCurveObject.h,src/validation/include/tryAqInterestRateFixingTable.h
-aqInterestRateFixingTableValues,InterestRate,stateless,tryAqInterestRateFixingTableValues,src/AQ_API/source/aqCurveObject.h,src/validation/include/tryAqInterestRateFixingTable.h
+aqIRFixingTableCreate,IR,stateless,tryAqIRFixingTableCreate,src/AQ_API/source/aqCurveObject.h,src/validation/include/tryAqIRFixingTable.h
+aqIRFixingTableDisplay,IR,stateless,tryAqIRFixingTableDisplay,src/AQ_API/source/aqCurveObject.h,src/validation/include/tryAqIRFixingTable.h
+aqIRFixingTableValue,IR,stateless,tryAqIRFixingTableValue,src/AQ_API/source/aqCurveObject.h,src/validation/include/tryAqIRFixingTable.h
+aqIRFixingTableValues,IR,stateless,tryAqIRFixingTableValues,src/AQ_API/source/aqCurveObject.h,src/validation/include/tryAqIRFixingTable.h
 aqMathInterpolation,Math,stateless,tryAqMathInterpolation,src/AQ_API/source/aqMathInterpolation.h,src/validation/include/tryAqMathInterpolation.h
 aqMathPCA,Math,stateless,tryAqMathPCA,src/AQ_API/source/aqMathPCA.h,src/validation/include/tryAqMathPCA.h
 aqObjCreditModelRiskyDiscountFactor,(lifecycle),stateless,tryAqCreditModelRiskyDiscountFactors,src/AQ_API/source/aqCreditObject.h,

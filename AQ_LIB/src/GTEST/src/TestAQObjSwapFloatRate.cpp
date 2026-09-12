@@ -6,7 +6,7 @@
 // Swap Creation and Pricing
 #include "tryAqSwapObjectCreation.h"
 #include "tryAqSwapObjectPricing.h"
-#include "tryAqInterestRateFixingTable.h"
+#include "tryAqIRFixingTable.h"
 #include "tryAqSwapObjectLeg.h"
 
 // Test Infrastructure
@@ -45,7 +45,7 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char fixingTableInputs[]	= TEST_DIR "EUR6M_FIXINGS@191_tryAqInterestRateFixingTableCreate_inputs";
+    extern const char fixingTableInputs[]	= TEST_DIR "EUR6M_FIXINGS@191_tryAqIRFixingTableCreate_inputs";
     extern const char swapInputs1[]	= TEST_DIR "SWAP_1@189_tryAqSwapObjectCreate_inputs";
     extern const char swapInputs2[]	= TEST_DIR "SWAP_2@7_tryAqSwapObjectCreate_inputs";
     extern const char swapInputs3[]	= TEST_DIR "SWAP_3@7_tryAqSwapObjectCreate_inputs";
@@ -111,7 +111,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryAqInterestRateFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqIRFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
 
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -165,7 +165,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryAqInterestRateFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqIRFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
 
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -263,7 +263,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryAqInterestRateFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqIRFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -318,7 +318,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryAqInterestRateFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqIRFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -381,7 +381,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryAqInterestRateFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqIRFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -432,7 +432,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryAqInterestRateFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqIRFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -524,7 +524,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryAqInterestRateFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqIRFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];

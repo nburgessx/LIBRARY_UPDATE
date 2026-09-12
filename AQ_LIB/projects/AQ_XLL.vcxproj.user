@@ -19,6 +19,26 @@
     </LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|Win32'">
+    <LocalDebuggerCommand />
+    <LocalDebuggerCommandArguments />
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|Win32'">
+    <LocalDebuggerCommand />
+    <LocalDebuggerCommandArguments />
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|Win32'">
+    <LocalDebuggerCommand />
+    <LocalDebuggerCommandArguments />
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|Win32'">
+    <LocalDebuggerCommand />
+    <LocalDebuggerCommandArguments />
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">
     <LocalDebuggerCommand />
     <LocalDebuggerCommandArguments />
@@ -36,6 +56,26 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LocalDebuggerCommand>"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>$(TargetPath)</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">
+    <LocalDebuggerCommand>"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>$(TargetPath)</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">
+    <LocalDebuggerCommand>"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>$(TargetPath)</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">
+    <LocalDebuggerCommand>"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>$(TargetPath)</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">
     <LocalDebuggerCommand>"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"</LocalDebuggerCommand>
     <LocalDebuggerCommandArguments>$(TargetPath)</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>

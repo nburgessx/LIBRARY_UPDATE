@@ -33,7 +33,7 @@
     <ClInclude Include="..\src\validation\include\tryAqCurveObjectDisplay.h" />
     <ClInclude Include="..\src\validation\include\tryAqCurveObjectEngineCalibrate.h" />
     <ClInclude Include="..\src\validation\include\tryAqCurveObjectJacobianDisplay.h" />
-    <ClInclude Include="..\src\validation\include\tryAqInterestRateObjectFra.h" />
+    <ClInclude Include="..\src\validation\include\tryAqIRObjectFra.h" />
     <ClInclude Include="..\src\validation\include\tryAqInflationObjectPricing.h" />
     <ClInclude Include="..\src\validation\include\tryAqSwaptionObject.h" />
     <ClInclude Include="..\src\validation\include\tryAqVolatilityObject.h" />
@@ -43,7 +43,7 @@
     <ClInclude Include="..\src\validation\include\tryAqMathForwardRate.h" />
     <ClInclude Include="..\src\validation\include\tryAqMathIntegrate.h" />
     <ClInclude Include="..\src\validation\include\tryAqMathPolynomial.h" />
-    <ClInclude Include="..\src\validation\include\tryAqInterestRateFutureFra.h" />
+    <ClInclude Include="..\src\validation\include\tryAqIRFutureFra.h" />
     <ClInclude Include="..\src\validation\include\tryAqVolatilitySABRCalibrate.h" />
     <ClInclude Include="..\src\validation\include\tryAqVolatilitySABRGetPrem.h" />
     <ClInclude Include="..\src\validation\include\tryAqVolatilitySABRGetVol.h" />
@@ -81,7 +81,7 @@
     <ClInclude Include="..\src\validation\include\tryAqCurveMarketData.h" />
     <ClInclude Include="..\src\validation\include\tryAqCurveObjectUtilities.h" />
     <ClInclude Include="..\src\validation\include\tryAqObject.h" />
-    <ClInclude Include="..\src\validation\include\tryAqInterestRateFixingTable.h" />
+    <ClInclude Include="..\src\validation\include\tryAqIRFixingTable.h" />
     <ClInclude Include="..\src\validation\include\tryAqFXObject.h" />
     <ClInclude Include="..\src\validation\include\tryAqSwapObjectLeg.h" />
     <ClInclude Include="..\src\validation\include\tryAqSwapObjectSchedule.h" />
@@ -148,7 +148,7 @@
     <ClCompile Include="..\src\validation\src\tryAqCurveObjectDisplay.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveObjectEngineCalibrate.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveObjectJacobianDisplay.cpp" />
-    <ClCompile Include="..\src\validation\src\tryAqInterestRateObjectFra.cpp" />
+    <ClCompile Include="..\src\validation\src\tryAqIRObjectFra.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqInflationObjectPricing.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqSwaptionObject.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqVolatilityObject.cpp" />
@@ -158,7 +158,7 @@
     <ClCompile Include="..\src\validation\src\tryAqMathForwardRate.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqMathIntegrate.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqMathPolynomial.cpp" />
-    <ClCompile Include="..\src\validation\src\tryAqInterestRateFutureFra.cpp" />
+    <ClCompile Include="..\src\validation\src\tryAqIRFutureFra.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqVolatilitySABRCalibrate.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqVolatilitySABRGetPrem.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqVolatilitySABRGetVol.cpp" />
@@ -183,7 +183,7 @@
     <ClCompile Include="..\src\validation\src\tryAqCurveMarketData.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveObjectUtilities.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqObject.cpp" />
-    <ClCompile Include="..\src\validation\src\tryAqInterestRateFixingTable.cpp" />
+    <ClCompile Include="..\src\validation\src\tryAqIRFixingTable.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqFXObject.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqSwapObjectLeg.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqSwapObjectSchedule.cpp" />

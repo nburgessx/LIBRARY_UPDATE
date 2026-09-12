@@ -22,7 +22,7 @@ os.chdir(ROOT)
 # Sec 5.1 / MIGRATION_PLAN.md Sec 2.7). Longest-first matching matters:
 # BondFutureOption before BondOption, TRS/AssetSwap/
 # CMS before Swap.
-CATEGORIES = ["Date", "Curve", "FX", "Inflation", "Volatility", "InterestRate", "Future",
+CATEGORIES = ["Date", "Curve", "FX", "Inflation", "Volatility", "IR", "Future",
               "Swap", "AssetSwap", "CMS", "TRS",
               "CapFloor", "Swaption", "BondOption", "BondFutureOption",
               "Bond", "Credit", "Math", "Model", "Generator", "Tool"]

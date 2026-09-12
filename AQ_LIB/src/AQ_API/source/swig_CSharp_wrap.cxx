@@ -13478,7 +13478,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_aqObjCurvesMarketDataCreateUsingMultipleBlo
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_aqInterestRateFixingTableCreate(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqIRFixingTableCreate(char * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5) {
   char * jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -13518,7 +13518,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_aqInterestRateFixingTableCreate(char * jarg
   {
     try
     {
-      result = aqInterestRateFixingTableCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::string > const &)*arg4,(std::vector< double > const &)*arg5);
+      result = aqIRFixingTableCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::string > const &)*arg4,(std::vector< double > const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -13532,7 +13532,7 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_aqInterestRateFixingTableCreate(char * jarg
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_aqInterestRateFixingTableDisplay(char * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqIRFixingTableDisplay(char * jarg1) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > result;
@@ -13546,7 +13546,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_aqInterestRateFixingTableDisplay(char * jar
   {
     try
     {
-      result = aqInterestRateFixingTableDisplay((std::string const &)*arg1);
+      result = aqIRFixingTableDisplay((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -13560,7 +13560,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_aqInterestRateFixingTableDisplay(char * jar
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_aqInterestRateFixingTableValue(char * jarg1, char * jarg2) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqIRFixingTableValue(char * jarg1, char * jarg2) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -13581,7 +13581,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_aqInterestRateFixingTableValue(char * jarg1
   {
     try
     {
-      result = (double)aqInterestRateFixingTableValue((std::string const &)*arg1,(std::string const &)*arg2);
+      result = (double)aqIRFixingTableValue((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -13595,7 +13595,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_aqInterestRateFixingTableValue(char * jarg1
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_aqInterestRateFixingTableValues(char * jarg1, void * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqIRFixingTableValues(char * jarg1, void * jarg2) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -13615,7 +13615,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_aqInterestRateFixingTableValues(char * jarg
   {
     try
     {
-      result = aqInterestRateFixingTableValues((std::string const &)*arg1,(std::vector< std::string > const &)*arg2);
+      result = aqIRFixingTableValues((std::string const &)*arg1,(std::vector< std::string > const &)*arg2);
     }
     catch (const std::exception& e)
     {

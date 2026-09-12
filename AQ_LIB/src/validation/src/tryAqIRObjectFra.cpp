@@ -1,4 +1,4 @@
-#include "tryAqInterestRateObjectFra.h"
+#include "tryAqIRObjectFra.h"
 #include "tryAqSwapObjectLeg.h"
 
 #include "Fra.h"
@@ -15,38 +15,38 @@ using etrading::CreateDataFile;
 namespace validation
 {
  
-	/* @brief			validation interface for the aqInterestRateObjectFraCreate method
+	/* @brief			validation interface for the aqIRObjectFraCreate method
 	*  @param [in]		fraObjectName	Fra object name
 	*  @param [in]		fraLVB			Fra label value block with Fras
 	*  @param [in]		validateKeys	True to validate the all keys provided are valid. Default to True
 	*  @return			fraObjectName
 	*/
-	std::string tryAqInterestRateObjectFraCreate(const std::string& fraObjectName, const LabelValueBlock& fraLVB, bool validateKeys)
+	std::string tryAqIRObjectFraCreate(const std::string& fraObjectName, const LabelValueBlock& fraLVB, bool validateKeys)
 	{
 		return tryAqSwapObjectLegCreate(fraObjectName, fraLVB, validateKeys);
 	}
     
-    /* @brief			validation interface for the aqInterestRateObjectFraPV method
+    /* @brief			validation interface for the aqIRObjectFraPV method
 	*  @param [in]		fraObjectName		Fra object name
 	*  @param [in]		valuationSettingsLVB	A LVB containing ModelName, CurveCollection, ValuationDate, etc.
 	*  @param [in]		fixingTableName	    Fixing table object name
 	*  @return			Fra PV
 	*/
-	double tryAqInterestRateObjectFraPV(const std::string& fraObjectName, const LabelValueBlock& valuationSettingsLVB)
+	double tryAqIRObjectFraPV(const std::string& fraObjectName, const LabelValueBlock& valuationSettingsLVB)
 	{
 		return tryAqSwapObjectLegPV(fraObjectName, valuationSettingsLVB);
 	}
 
-    /* @brief			validation interface for the aqInterestRateObjectFraDisplay method, which display the INPUT parameters of the cached swap
+    /* @brief			validation interface for the aqIRObjectFraDisplay method, which display the INPUT parameters of the cached swap
 	*  @param [in]		fraObjectName		Fra object name
 	*  @return			Fra display of the input parameters
 	*/
-	AQLStringMatrix tryAqInterestRateObjectFraDisplay(const std::string& fraObjectName)
+	AQLStringMatrix tryAqIRObjectFraDisplay(const std::string& fraObjectName)
 	{
 		return tryAqSwapObjectLegDisplay(fraObjectName);
 	}
 
-	/* @brief			validation interface for the aqInterestRateObjectFraDisplayCashflows method 
+	/* @brief			validation interface for the aqIRObjectFraDisplayCashflows method 
 	*  @param [in]		fraObjectName		Fra object name
 	*  @param [in]		valuationSettingsLVB	A LVB containing ModelName, CurveCollection, ValuationDate, etc.
 	*  @param [in]		fixingTableName	    Fixing table object name
@@ -54,18 +54,18 @@ namespace validation
 	*  @return			columnList      Column header names to show specified columns. Default to empty list showing all columns.
 	*  @return			Fra display of Fra output
 	*/
-	AnyTypeMatrix tryAqInterestRateObjectFraDisplayCashflows(const std::string& fraObjectName, const LabelValueBlock& valuationSettingsLVB, bool showColumnHeaders, const std::vector<std::string>& columnList)
+	AnyTypeMatrix tryAqIRObjectFraDisplayCashflows(const std::string& fraObjectName, const LabelValueBlock& valuationSettingsLVB, bool showColumnHeaders, const std::vector<std::string>& columnList)
 	{
 		return tryAqSwapObjectLegDisplayCashflows(fraObjectName, valuationSettingsLVB, "", showColumnHeaders, columnList);
 	}
 
-	/* @brief			validation interface for the aqInterestRateObjectFraRate method
+	/* @brief			validation interface for the aqIRObjectFraRate method
 	*  @param [in]		fraObjectName		Fra object name
 	*  @param [in]		valuationSettingsLVB	A LVB containing ModelName, CurveCollection, ValuationDate, etc.
 	*  @param [in]		fixingTableName	    Fixing table object name
 	*  @return			Fra rate (strikeRate that make the Fra PV Zero)
 	*/
-	double tryAqInterestRateObjectFraRate(const std::string& fraObjectName, const LabelValueBlock& valuationSettingsLVB)
+	double tryAqIRObjectFraRate(const std::string& fraObjectName, const LabelValueBlock& valuationSettingsLVB)
 	{
 		VALID_EXCEPTION_START
 
@@ -89,14 +89,14 @@ namespace validation
 
 	}
 
-	/* @brief			validation interface for the aqInterestRateObjectFraToFuturePrice method
+	/* @brief			validation interface for the aqIRObjectFraToFuturePrice method
 	*  @param [in]		fraObjectName		Fra object name
 	*  @param [in]		valuationSettingsLVB	A LVB containing ModelName, CurveCollection, ValuationDate, etc.
 	*  @param [in]		meanReversion       The Hull-White 1F Mean Reversion Parameter
 	*  @param [in]		volatility          The Hull-White 1F Volatility Parameter
 	*  @return			Fra rate (strikeRate that make the Fra PV Zero)
 	*/
-	double tryAqInterestRateObjectFraToFuturePrice(const std::string& fraObjectName, const LabelValueBlock& valuationSettingsLVB, const double& meanReversion, const double& volatility)
+	double tryAqIRObjectFraToFuturePrice(const std::string& fraObjectName, const LabelValueBlock& valuationSettingsLVB, const double& meanReversion, const double& volatility)
 	{
 		VALID_EXCEPTION_START
 
@@ -121,13 +121,13 @@ namespace validation
 
 	
 
-	/* @brief			validation interface for the aqInterestRateObjectFraToFuturePriceFromConvAdj method
+	/* @brief			validation interface for the aqIRObjectFraToFuturePriceFromConvAdj method
 	*  @param [in]		fraObjectName		Fra object name
 	*  @param [in]		valuationSettingsLVB	A LVB containing ModelName, CurveCollection, ValuationDate, etc.
 	*  @param [in]		convexityAdjustment	The convexity adjustment between FraRate and Future rate
 	*  @return			Future price
 	*/
-	double tryAqInterestRateObjectFraToFuturePriceFromConvAdj(const std::string& fraObjectName, const LabelValueBlock& valuationSettingsLVB, const double& convexityAdjustment)
+	double tryAqIRObjectFraToFuturePriceFromConvAdj(const std::string& fraObjectName, const LabelValueBlock& valuationSettingsLVB, const double& convexityAdjustment)
 	{
 		VALID_EXCEPTION_START
 

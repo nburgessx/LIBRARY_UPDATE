@@ -28,9 +28,21 @@ namespace validation
 
     std::vector<std::string> tryAqObjectList( const std::string& typeAsString );
 
+    // Every cached object name, across every object type. Backs aqObjectList
+    // / aqObjectDeleteAll when no type is given (2026-09-12, Nicholas).
+    std::vector<std::string> tryAqObjectList();
+
     bool tryAqObjectDelete( const std::string& typeAsString, const std::string& objectName );
 
     int tryAqObjectDeleteAll( const std::string& typeAsString );
+
+    // Delete every cached object of every type. Backs aqObjectDeleteAll with
+    // no ObjectType argument (2026-09-12, Nicholas) - the same
+    // etrading::deleteAllObjects(Environment&) call tryAqObjectClearCache
+    // already uses to clear every category, exposed here on its own so
+    // aqObjectDeleteAll can report a count without also resetting the
+    // config/entity-pool state that a full ClearCache does.
+    int tryAqObjectDeleteAll();
 
     // Helper Function:
     std::string getObjectName( const std::tuple<std::string, etrading::CachedObjectEnum> & aqObjLoadResultTuple );

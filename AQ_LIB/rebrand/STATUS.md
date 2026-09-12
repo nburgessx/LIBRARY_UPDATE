@@ -1,5 +1,139 @@
 # Rebrand status — 2026-09-12
 
+## Config-file preservation after a bulk delete; `aqToolInitialize` now reloads config too (2026-09-12)
+
+Nicholas flagged that the previous turn's `aqObjectDeleteAll`-with-no-argument
+path (see the entry below) deletes every cached object, **including** objects
+that were only there because a config file loaded them at startup (generator
+templates from `resources\config\{SWAP,BOND,CURVE}_GENERATOR`, etc.) — and
+nothing put them back. Unlike `tryAqObjectClearCache` (which already reloaded
+config at its end, see item 3 below), the new bulk-delete overloads didn't.
+Request: *"The initialize method and the delete methods need to load the
+configuration files at the end of their routines."*
+
+**Delete methods (`validation/src/tryAqObject.cpp`):** both
+`tryAqObjectDeleteAll` overloads (the single-type one and the new
+all-types one) now call `validation::tryAqToolLoadConfigurationFiles()`
+after deleting, before returning the count — same pattern
+`tryAqObjectClearCache` already used. Added `#include "tryAqToolSetup.h"` for
+the declaration. **`tryAqObjectDelete` (the single-object delete) was
+deliberately left unchanged** — reloading config does real disk I/O
+(`etrading::FolderConfig::setupOptionalStartupConfig()` re-reads a config-path
+file and every JSON generator file it lists), and a single-object delete is
+the kind of call a spreadsheet can make repeatedly; paying that I/O cost on
+every one of those calls, rather than just the bulk operations, wasn't asked
+for and looked like a performance regression waiting to happen. Flagging this
+scoping choice for Nicholas to confirm or override.
+
+**Initialize method (`AQ_XLL/src/aqTool.cpp`, `aqToolInitialize`):** added a
+call to `validation::tryAqToolLoadConfigurationFiles()` right after
+`etrading::InitializeETrading::instance(true, true)` and before building the
+returned status message. `aqToolInitialize` previously only loaded calendars/
+IR static data via the `InitializeETrading` singleton and never touched the
+generator config at all — so a fresh add-in load depended entirely on
+whatever `tryAqObjectClearCache`/`trySetupAQL` happened to have done, which
+isn't guaranteed at `xlAutoOpen`. Now it is loaded unconditionally on every
+initialize call, matching the delete methods and `tryAqObjectClearCache`.
+`tryAqToolLoadConfigurationFiles` never throws (returns an error string
+instead), so a missing/bad config file still doesn't stop the add-in loading.
+
+**Verified (static checks only — not yet through a real build):**
+`rebrand/tools/api_pair_check.py` HARD GATE still 0; whole-tree
+`validation/src/*.cpp` wiring check still 101/101, 0 gaps. No `.arg()`/param
+counts changed (no XLO_FUNC signature touched), so the runtime-registration
+landmine in `CLAUDE.md` §3.2 doesn't apply here. **This batch — the IR rename,
+`aqObjectDeleteAll`/`aqObjectClearCache` changes, and now this config-reload
+addition — has still not been through a real compiler.** Recommend building
+before relying on any of it further.
+
+---
+
+## `InterestRate`→`IR` rename + `aqObjectDeleteAll`/`aqObjectClearCache` behaviour changes (2026-09-12)
+
+Nicholas confirmed the build works and tests pass, and **promoted
+`aqCurve.cpp`/`aqInterestRate.cpp` into `src\Core`** (own commit) — resolving
+the dependency gap flagged in the previous entry (a `ReleaseBonds`-style
+edition needs curves/fixing tables to price against). Three requests landed
+this turn:
+
+**1. `InterestRate` category renamed to `IR`.** Full-stack, same discipline as
+the earlier `Ois`/`CMS`/`TRS` renames:
+- `validation`: `git mv` + content rename —
+  `tryAqInterestRateFixingTable.{h,cpp}` → `tryAqIRFixingTable.{h,cpp}`,
+  `tryAqInterestRateFutureFra.{h,cpp}` → `tryAqIRFutureFra.{h,cpp}`,
+  `tryAqInterestRateObjectFra.{h,cpp}` → `tryAqIRObjectFra.{h,cpp}`.
+- `AQ_XLL`: `git mv aqInterestRate.cpp → aqIR.cpp`; all 13 `XLO_FUNC` names
+  renamed (`aqInterestRate*` → `aqIR*`); file header comment updated.
+- `AQ_API`: the `InterestRate` bindings live inside `aqCurveObject.{h,cpp}`
+  (a pre-existing filing quirk — confirmed via grep before touching anything,
+  same pattern as Credit-in-Swap) — 4 functions renamed
+  (`aqInterestRateFixingTable*` → `aqIRFixingTable*`); no SWIG `.i` file
+  changes needed since they `%include` the whole header rather than naming
+  functions individually. Generated `swig_*_wrap.*` files deliberately left
+  untouched (will regenerate).
+- `GTEST`: 11 files' `#include`/call-site renames
+  (`tryAqInterestRateFixingTableCreate` → `tryAqIRFixingTableCreate`).
+- **3 fixture CSVs, all git-tracked this time** (unlike the 100 untracked
+  Ois ones) — `git mv`'d and their path-string literals inside the GTEST
+  files updated to match in the same sed pass.
+- `projects/validation.vcxproj`(`.filters`) and `projects/AQ_XLL.vcxproj`
+  (`.filters`) updated; both re-verified well-formed XML.
+- `rebrand/tools/api_pair_check.py` `CATEGORIES`: `InterestRate` → `IR`;
+  `docs/api_map.csv` regenerated (`IR: 4` in the public-surface breakdown,
+  replacing the old `InterestRate` bucket); HARD GATE stayed 0.
+- `CLAUDE.md` (both) and `MIGRATION_PLAN.md` updated: category list, the
+  `Core`/`Optional` file lists (now correctly showing `aqCurve.cpp`/
+  `aqIR.cpp` under `Core`, matching Nicholas's commit), the 4a.5 dependency
+  note marked resolved, and a new decision bullet recording the rename.
+- **Verified:** whole-tree audit 467/467 clean, 0 duplicate names, 0
+  unresolved `validation::tryAq*` symbols; `git grep` for every
+  `tryAqInterestRate`/`aqInterestRate` spelling across `src`/`projects`
+  returns nothing outside the generated SWIG wrap files (expected) and one
+  intentional historical mention in `aqIR.cpp`'s own header comment.
+
+**2. `aqObjectDeleteAll` — `ObjectType` is now optional; omitting it deletes
+every cached object of every type.** Added true no-arg overloads to
+`validation` rather than looping category strings in the XLL layer:
+`tryAqObjectList()` (every name, across `etrading::Environment::STORED_TYPES`)
+and `tryAqObjectDeleteAll()` (delegates to the same
+`etrading::deleteAllObjects(Environment&)` that `tryAqObjectClearCache`
+already used internally). The XLL wrapper checks `objectType.isMissing() ||
+!objectType.isNonEmpty()` and branches to the new no-arg pair instead of the
+existing per-type pair; stops the instance counter for every deleted name
+either way. `.help()`/`.arg()` updated to say `ObjectType` is now optional.
+
+**3. `aqObjectClearCache` — confirmed it already deletes objects from every
+category** (Nicholas asked for this explicitly). Traced
+`validation::tryAqObjectClearCache()` → it already calls
+`etrading::deleteAllObjects(etrading::Environment::defaultEnv())`, which
+loops every `CachedObjectEnum` in `Environment::STORED_TYPES` and deletes
+every object of every type — **this was already true before today**, found
+by reading the implementation rather than assuming a change was needed. What
+*was* missing: the `AQ_XLL`-side handle-name instance-counter map
+(`namesToCounter_`) was never reset after a full clear, so it would keep
+accumulating stale entries for names that no longer existed. Added
+`aq_xll::clearAllInstanceCounters()` (mutex-guarded `namesToCounter_.clear()`)
+and call it at the end of `aqObjectClearCache`. Help text updated to state
+explicitly what gets cleared (every category's objects, curve/swap/credit
+results, the entity pool) rather than the vague "the object cache" — the
+behaviour was already correct, the documentation wasn't.
+
+**Not asked for, flagged rather than done silently:** `aqObjectList` still
+requires `ObjectType` (mandatory) — the same "blank means all types"
+convenience just added to `aqObjectDeleteAll` could trivially be added here
+too, reusing the same new `tryAqObjectList()` no-arg overload, since it
+already exists. Left alone since it wasn't part of the request; flag to
+Nicholas as an easy follow-up if wanted.
+
+**Verified (static checks only, no compiler run yet on the DeleteAll/
+ClearCache changes):** whole-tree audit 467/467 clean throughout; every
+`validation/src/*.cpp` still wired into `validation.vcxproj` (101/101, 0
+gaps) after the file renames. **This batch has not yet been through a real
+build** — recommend building before relying on it further, per the pattern
+of the last few turns where static checks alone didn't catch everything.
+
+---
+
 ## Two fixes (`aqObjectDecorateNames`, `aqBondGeneratorDisplay` transpose) + `AQL Classic`/`AQLString`/`AQLDate` scoped for the plan, not actioned (2026-09-12)
 
 **1. `meUtilityLWODecorateNames` was missing from the gap audit** because it

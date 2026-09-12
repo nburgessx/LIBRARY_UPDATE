@@ -210,14 +210,32 @@ XLO_FUNC_END( aqObjectDelete )
 
 
 /*
- * Delete every cached object of a given type. Returns a count message and stops
- * the instance counter for each deleted name.
+ * Delete every cached object of a given type, or every cached object of
+ * every type if ObjectType is omitted (2026-09-12, Nicholas). Returns a
+ * count message and stops the instance counter for each deleted name.
  */
 XLO_FUNC_START( aqObjectDeleteAll(
     const ExcelObj& objectType ) )
 {
     AQ_XLL_GUARD
     AQ_INITIALIZE
+
+    if ( objectType.isMissing() || !objectType.isNonEmpty() )
+    {
+        const std::vector<std::string> deletedNames = validation::tryAqObjectList();
+        const int deletedCount = validation::tryAqObjectDeleteAll();
+
+        if ( deletedCount > 0 )
+        {
+            for ( const std::string& name : deletedNames )
+            {
+                stopCountingName( name );
+            }
+        }
+
+        return returnValue(
+            ( boost::format( "%i objects of all types were successfully deleted" ) % deletedCount ).str() );
+    }
 
     const std::string type = etrading::trim_to_upper( toNarrowString( objectType ) );
 
@@ -236,8 +254,8 @@ XLO_FUNC_START( aqObjectDeleteAll(
         ( boost::format( "%i objects of type %s were successfully deleted" ) % deletedCount % type ).str() );
 }
 XLO_FUNC_END( aqObjectDeleteAll )
-    .help( L"Delete every cached object of the given type. Returns a count message." )
-    .arg( L"ObjectType", L"Type of the objects to delete, e.g. BOND, CURVE, SWAP" );
+    .help( L"Delete every cached object of the given type, or every cached object of every type if ObjectType is omitted. Returns a count message." )
+    .arg( L"ObjectType", L"Optional. Type of the objects to delete, e.g. BOND, CURVE, SWAP; omit to delete every object of every type" );
 
 
 /*
@@ -323,7 +341,14 @@ XLO_FUNC_END( aqObjectQuickSave )
 
 
 /*
- * Clear the whole AQObj object cache. Returns an information string describing
+ * Clear the whole AQObj object cache. validation::tryAqObjectClearCache
+ * already deletes every cached object of every type (etrading::deleteAllObjects
+ * loops every CachedObjectEnum - see tryAqToolSetup.cpp), plus the curve/swap/
+ * credit results containers, the entity pool and reloads the config files.
+ * Confirmed 2026-09-12 (Nicholas asked that objects from every category be
+ * deleted here too - they already were at the validation layer; what this
+ * function was missing was resetting AQ_XLL's own handle-name instance
+ * counters to match, added below). Returns an information string describing
  * what was cleared.
  */
 XLO_FUNC_START( aqObjectClearCache() )
@@ -333,10 +358,15 @@ XLO_FUNC_START( aqObjectClearCache() )
 
     const std::string info = validation::tryAqObjectClearCache().getCString();
 
+    // Every cached object is now gone - the AQ_XLL handle-name counters
+    // tracking them would otherwise keep stale entries around.
+    clearAllInstanceCounters();
+
     return returnValue( info );
 }
 XLO_FUNC_END( aqObjectClearCache )
-    .help( L"Clear the entire AQObj object cache. Returns a summary of what was removed." );
+    .help( L"Clear the entire AQObj object cache - every cached object of every category, plus curve/swap/credit "
+           L"results and the entity pool. Returns a summary of what was removed." );
 
 
 // The single object type this name resolves to (the first match, where

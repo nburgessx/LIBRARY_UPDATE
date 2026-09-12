@@ -294,14 +294,19 @@ filters:
 
 - **`src\Core`** — files that must build into **every** edition
   (`aqXllTools.cpp`, `aqMain.cpp`, `aqDate.cpp`, `aqObject.cpp`, `aqMath.cpp`,
-  `aqTool.cpp`). These are infrastructure / always-needed categories, not
-  gated by any edition.
+  `aqTool.cpp`, plus **`aqCurve.cpp` and `aqIR.cpp` (was `aqInterestRate.cpp`,
+  renamed 2026-09-12 — Nicholas: `InterestRate`→`IR`), promoted 2026-09-12**:
+  every priced product depends on discount/forward curves and fixing tables,
+  so these two are infrastructure too, not a product edition of their own —
+  see §5.1a for the category rename detail and `MIGRATION_PLAN.md` §4a.5 for
+  why they moved out of `Optional`.
 - **`src\Optional`** — one file per product category (`aqBond.cpp`,
   `aqSwaption.cpp`, `aqCMS.cpp`, `aqTRS.cpp`, `aqCapFloor.cpp`, `aqFX.cpp`,
-  `aqFuture.cpp`, `aqInflation.cpp`, `aqInterestRate.cpp`, `aqVolatility.cpp`,
-  `aqAssetSwap.cpp`, and every new category file going forward). **Every new
-  `AQ_XLL` category file is added to `src\Optional`, never `src\Core`** — the
-  always-needed set is already complete.
+  `aqFuture.cpp`, `aqInflation.cpp`, `aqVolatility.cpp`, `aqAssetSwap.cpp`,
+  `aqCredit.cpp`, `aqSwap.cpp`, and every new category file going forward).
+  **Every new `AQ_XLL` category file is added to `src\Optional`, never
+  `src\Core`** — unless it turns out to be cross-cutting infrastructure like
+  `Curve`/`IR`, in which case flag it for `Core` rather than assuming.
 
 The filters are a visual map, prepared ahead of the actual mechanism: when
 per-edition build configurations are added (e.g. `ReleaseBonds`,
@@ -337,7 +342,7 @@ in every binding: type `aqDate` and the date functions surface together.
 
 **Canonical category list — LOCKED (21):**
 
-`Date`, `Curve`, `FX`, `Inflation`, `Volatility`, `InterestRate`, `Future`, `Swap`, `AssetSwap`,
+`Date`, `Curve`, `FX`, `Inflation`, `Volatility`, `IR`, `Future`, `Swap`, `AssetSwap`,
 `CMS`, `TRS`, `CapFloor`, `Swaption`, `BondOption`,
 `BondFutureOption`, `Bond`, `Credit`, `Math`, `Model`, `Generator`, `Tool`
 
@@ -368,6 +373,13 @@ in every binding: type `aqDate` and the date functions surface together.
   (`aqSwapOisPV`/`aqSwapOisParRate`) and `GTEST`
   (`TryAqTestTradeEUROISParRate.cpp`) renames. See `rebrand\STATUS.md` for
   the detail.
+- **`InterestRate` renamed to `IR`** (decided, Nicholas 2026-09-12) — shorter,
+  matches how the category reads in Excel's function list. Full-stack rename
+  (`validation`'s `tryAqInterestRate{FixingTable,FutureFra,ObjectFra}.{h,cpp}`
+  → `tryAqIR*`; `AQ_XLL`'s `aqInterestRate.cpp` → `aqIR.cpp`, all 13 functions;
+  `AQ_API`'s `aqInterestRateFixingTable*` bindings in `aqCurveObject.{h,cpp}`
+  → `aqIRFixingTable*`; the matching `GTEST` call sites and 3 fixture files).
+  Detail: `rebrand\STATUS.md`.
 
 Use these 21, identically in `validation` / `AQ_XLL` / `AQ_API` / `GTEST`.
 Detail: `MIGRATION_PLAN.md` §2.2.
@@ -380,7 +392,7 @@ category list and are told apart by the word `Object`:
 |---|---|---|
 | `aq<Category><Function>` | stateless — data in, value out | `aqBondScheduleKeys` |
 | `aq<Category>Object<Function>` | operates on a cached instance of the category's product | `aqBondObjectDirtyPrice`, `aqSwapObjectParRate` |
-| `aq<Category><SubObject><Function>` | operates on a cached *named* sub-object (Curve, Generator, MarketData, Model, FixingTable); the sub-object already denotes an object, so `Object` is not repeated | `aqBondCurveYield`, `aqBondGeneratorCreate`, `aqInterestRateFixingTableValues` |
+| `aq<Category><SubObject><Function>` | operates on a cached *named* sub-object (Curve, Generator, MarketData, Model, FixingTable); the sub-object already denotes an object, so `Object` is not repeated | `aqBondCurveYield`, `aqBondGeneratorCreate`, `aqIRFixingTableValues` |
 | `aq<Category><Variant><Function>` | a same-category **product variant** that doesn't earn its own top-level category — stateless (`<Variant>` before `Object`, no `Object` word) or, if ever needed, stateful (`<Variant>Object<Function>`) | `aqSwapOisPV`, `aqSwapOisParRate` (stateless OIS-swap forms; not `aqSwapObjectOis*`) |
 | `aqObject<Lifecycle>` | generic handle lifecycle, no category | `aqObjectLoad`, `aqObjectSave`, `aqObjectExists`, `aqObjectClearCache` |
 
@@ -555,9 +567,11 @@ Every `AQ_XLL` category `.cpp` under `projects\AQ_XLL.vcxproj.filters` sits in
 one of two filters — see §4.4 for the full edition-gating design:
 
 - **`src\Core`** — always-built infrastructure (`aqXllTools.cpp`,
-  `aqMain.cpp`, `aqDate.cpp`, `aqObject.cpp`, `aqMath.cpp`, `aqTool.cpp`).
+  `aqMain.cpp`, `aqDate.cpp`, `aqObject.cpp`, `aqMath.cpp`, `aqTool.cpp`,
+  `aqCurve.cpp`, `aqIR.cpp`).
 - **`src\Optional`** — one file per product category. **New category files go
-  here, not `Core`.**
+  here, not `Core`** — unless it's cross-cutting infrastructure every product
+  depends on, like `Curve`/`IR` turned out to be.
 
 This is a visual map today; it becomes load-bearing once per-edition build
 configurations (`ReleaseBonds`, `ReleaseSwaps`, `ReleaseCurves`, …) are added

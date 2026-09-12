@@ -9,7 +9,7 @@ using etrading::CreateDataFile;
 namespace validation
 {
 
-	/* @brief			Calculate the FRA rate from Future price, validation API for aqInterestRateFuturePriceToFraRate
+	/* @brief			Calculate the FRA rate from Future price, validation API for aqIRFuturePriceToFraRate
 	* @param [in]		futurePrice			The given future price
 	* @param [in]		curveAsOfDate       The yield curve as of or valuation date
 	* @param [in]		futuresStartDate    The futures start date
@@ -18,7 +18,7 @@ namespace validation
 	* @param [in]		volatility          The Hull-White 1F Volatility Parameter
 	* @param [out]		Returns Fra rate
 	*/
-	double tryAqInterestRateFuturePriceToFraRate(const double& futurePrice, const AQLDate& curveAsOfDate, const AQLDate& futuresStartDate, const AQLDate& futuresEndDate, const double& meanReversion, const double& volatility)
+	double tryAqIRFuturePriceToFraRate(const double& futurePrice, const AQLDate& curveAsOfDate, const AQLDate& futuresStartDate, const AQLDate& futuresEndDate, const double& meanReversion, const double& volatility)
 	{
 		VALID_EXCEPTION_START
 
@@ -36,12 +36,12 @@ namespace validation
 
 	}
 
-	/* @brief			Calculate the FRA rate from Future price, validation API for aqInterestRateFuturePriceToFraRateFromConvAdj
+	/* @brief			Calculate the FRA rate from Future price, validation API for aqIRFuturePriceToFraRateFromConvAdj
 	* @param [in]		futurePrice			The given future price
 	* @param [in]		convexityAdjustment The given convexity adjustment between Future rate and Fra rate
 	* @param [out]		Returns Fra rate
 	*/
-	double tryAqInterestRateFuturePriceToFraRateFromConvAdj(const double& futurePrice, const double& convexityAdjustment)
+	double tryAqIRFuturePriceToFraRateFromConvAdj(const double& futurePrice, const double& convexityAdjustment)
 	{
 
 		VALID_EXCEPTION_START

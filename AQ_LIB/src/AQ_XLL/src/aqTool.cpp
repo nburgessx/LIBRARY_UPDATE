@@ -138,6 +138,13 @@ XLO_FUNC_START( aqToolInitialize() )
     // the offending path, if the calendars or static data did not load.
     etrading::InitializeETrading::instance( true, true );
 
+    // Load the optional-config generator templates (SWAP/BOND/CURVE_GENERATOR
+    // etc.) at the end of initialisation, same as tryAqObjectClearCache and
+    // tryAqObjectDeleteAll do after a bulk delete (2026-09-12, Nicholas). Never
+    // throws (see tryAqToolLoadConfigurationFiles) - a missing/bad config file
+    // does not stop the add-in from loading.
+    validation::tryAqToolLoadConfigurationFiles();
+
     const AQLString* calendarPath = etrading::FolderConfig::calendar_path();
 
     std::string message = "AlgoQuantLib initialised. Calendar file: ";

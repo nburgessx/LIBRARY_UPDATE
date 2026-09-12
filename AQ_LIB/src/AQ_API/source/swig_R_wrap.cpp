@@ -23759,7 +23759,7 @@ R_swig_aqObjCurvesMarketDataCreateUsingMultipleBlocks ( SEXP objectName, SEXP ke
 
 
 SWIGEXPORT SEXP
-R_swig_aqInterestRateFixingTableCreate ( SEXP tableName, SEXP currency, SEXP curveTenor, SEXP fixingDates, SEXP fixingValues, SEXP s_swig_copy)
+R_swig_aqIRFixingTableCreate ( SEXP tableName, SEXP currency, SEXP curveTenor, SEXP fixingDates, SEXP fixingValues, SEXP s_swig_copy)
 {
   std::string result;
   std::string *arg1 = 0 ;
@@ -23780,10 +23780,10 @@ R_swig_aqInterestRateFixingTableCreate ( SEXP tableName, SEXP currency, SEXP cur
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(tableName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInterestRateFixingTableCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRFixingTableCreate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableCreate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -23791,10 +23791,10 @@ R_swig_aqInterestRateFixingTableCreate ( SEXP tableName, SEXP currency, SEXP cur
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(currency, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInterestRateFixingTableCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRFixingTableCreate" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableCreate" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -23802,10 +23802,10 @@ R_swig_aqInterestRateFixingTableCreate ( SEXP tableName, SEXP currency, SEXP cur
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(curveTenor, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInterestRateFixingTableCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqIRFixingTableCreate" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableCreate" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
@@ -23813,10 +23813,10 @@ R_swig_aqInterestRateFixingTableCreate ( SEXP tableName, SEXP currency, SEXP cur
     std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
     res4 = swig::asptr(fixingDates, &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqInterestRateFixingTableCreate" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqIRFixingTableCreate" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableCreate" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableCreate" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     arg4 = ptr;
   }
@@ -23824,17 +23824,17 @@ R_swig_aqInterestRateFixingTableCreate ( SEXP tableName, SEXP currency, SEXP cur
     std::vector< double,std::allocator< double > > *ptr = (std::vector< double,std::allocator< double > > *)0;
     res5 = swig::asptr(fixingValues, &ptr);
     if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqInterestRateFixingTableCreate" "', argument " "5"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqIRFixingTableCreate" "', argument " "5"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableCreate" "', argument " "5"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableCreate" "', argument " "5"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
     }
     arg5 = ptr;
   }
   {
     try
     {
-      result = aqInterestRateFixingTableCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::string,std::allocator< std::string > > const &)*arg4,(std::vector< double,std::allocator< double > > const &)*arg5);
+      result = aqIRFixingTableCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::vector< std::string,std::allocator< std::string > > const &)*arg4,(std::vector< double,std::allocator< double > > const &)*arg5);
     }
     catch (const std::exception& e)
     {
@@ -23855,7 +23855,7 @@ R_swig_aqInterestRateFixingTableCreate ( SEXP tableName, SEXP currency, SEXP cur
 
 
 SWIGEXPORT SEXP
-R_swig_aqInterestRateFixingTableDisplay ( SEXP tableName, SEXP s_swig_copy)
+R_swig_aqIRFixingTableDisplay ( SEXP tableName, SEXP s_swig_copy)
 {
   std::vector< std::string,std::allocator< std::string > > result;
   std::string *arg1 = 0 ;
@@ -23868,17 +23868,17 @@ R_swig_aqInterestRateFixingTableDisplay ( SEXP tableName, SEXP s_swig_copy)
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(tableName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInterestRateFixingTableDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRFixingTableDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
   {
     try
     {
-      result = aqInterestRateFixingTableDisplay((std::string const &)*arg1);
+      result = aqIRFixingTableDisplay((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -23895,7 +23895,7 @@ R_swig_aqInterestRateFixingTableDisplay ( SEXP tableName, SEXP s_swig_copy)
 
 
 SWIGEXPORT SEXP
-R_swig_aqInterestRateFixingTableValue ( SEXP tableName, SEXP fixingDate, SEXP s_swig_copy)
+R_swig_aqIRFixingTableValue ( SEXP tableName, SEXP fixingDate, SEXP s_swig_copy)
 {
   double result;
   std::string *arg1 = 0 ;
@@ -23910,10 +23910,10 @@ R_swig_aqInterestRateFixingTableValue ( SEXP tableName, SEXP fixingDate, SEXP s_
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(tableName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInterestRateFixingTableValue" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRFixingTableValue" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableValue" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableValue" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -23921,17 +23921,17 @@ R_swig_aqInterestRateFixingTableValue ( SEXP tableName, SEXP fixingDate, SEXP s_
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(fixingDate, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInterestRateFixingTableValue" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRFixingTableValue" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableValue" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableValue" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   {
     try
     {
-      result = (double)aqInterestRateFixingTableValue((std::string const &)*arg1,(std::string const &)*arg2);
+      result = (double)aqIRFixingTableValue((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -23949,7 +23949,7 @@ R_swig_aqInterestRateFixingTableValue ( SEXP tableName, SEXP fixingDate, SEXP s_
 
 
 SWIGEXPORT SEXP
-R_swig_aqInterestRateFixingTableValues ( SEXP tableName, SEXP fixingDates, SEXP s_swig_copy)
+R_swig_aqIRFixingTableValues ( SEXP tableName, SEXP fixingDates, SEXP s_swig_copy)
 {
   std::vector< double,std::allocator< double > > result;
   std::string *arg1 = 0 ;
@@ -23964,10 +23964,10 @@ R_swig_aqInterestRateFixingTableValues ( SEXP tableName, SEXP fixingDates, SEXP 
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(tableName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInterestRateFixingTableValues" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRFixingTableValues" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableValues" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableValues" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -23975,17 +23975,17 @@ R_swig_aqInterestRateFixingTableValues ( SEXP tableName, SEXP fixingDates, SEXP 
     std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
     res2 = swig::asptr(fixingDates, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInterestRateFixingTableValues" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRFixingTableValues" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInterestRateFixingTableValues" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFixingTableValues" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     arg2 = ptr;
   }
   {
     try
     {
-      result = aqInterestRateFixingTableValues((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+      result = aqIRFixingTableValues((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -24541,7 +24541,7 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_VecVecInteger_pop_back", (DL_FUNC) &R_swig_VecVecInteger_pop_back, 1},
    {"R_swig_VecVecDouble_pop_back", (DL_FUNC) &R_swig_VecVecDouble_pop_back, 1},
    {"R_swig_aqCurveMarketDataCreate", (DL_FUNC) &R_swig_aqCurveMarketDataCreate, 10},
-   {"R_swig_aqInterestRateFixingTableCreate", (DL_FUNC) &R_swig_aqInterestRateFixingTableCreate, 6},
+   {"R_swig_aqIRFixingTableCreate", (DL_FUNC) &R_swig_aqIRFixingTableCreate, 6},
    {"R_swig_VecString_pop", (DL_FUNC) &R_swig_VecString_pop, 2},
    {"R_swig_VecVecString_pop", (DL_FUNC) &R_swig_VecVecString_pop, 2},
    {"R_swig_aqCreditModelHazardRate", (DL_FUNC) &R_swig_aqCreditModelHazardRate, 3},
@@ -24614,7 +24614,7 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_VecInteger_front", (DL_FUNC) &R_swig_VecInteger_front, 2},
    {"R_swig_VecVecInteger_front", (DL_FUNC) &R_swig_VecVecInteger_front, 2},
    {"R_swig_aqBondObjectDirtyPrice", (DL_FUNC) &R_swig_aqBondObjectDirtyPrice, 5},
-   {"R_swig_aqInterestRateFixingTableValues", (DL_FUNC) &R_swig_aqInterestRateFixingTableValues, 3},
+   {"R_swig_aqIRFixingTableValues", (DL_FUNC) &R_swig_aqIRFixingTableValues, 3},
    {"R_swig_aqDateCentralBank", (DL_FUNC) &R_swig_aqDateCentralBank, 4},
    {"R_swig_aqSwapObjectDisplayCashflows", (DL_FUNC) &R_swig_aqSwapObjectDisplayCashflows, 6},
    {"R_swig_VecString___setitem__", (DL_FUNC) &R_swig_VecString___setitem__, 3},
@@ -24718,7 +24718,7 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_aqCurveDisplay", (DL_FUNC) &R_swig_aqCurveDisplay, 3},
    {"R_swig_aqCurveObjectDisplay", (DL_FUNC) &R_swig_aqCurveObjectDisplay, 2},
    {"R_swig_aqCurveMarketDataDisplay", (DL_FUNC) &R_swig_aqCurveMarketDataDisplay, 3},
-   {"R_swig_aqInterestRateFixingTableDisplay", (DL_FUNC) &R_swig_aqInterestRateFixingTableDisplay, 2},
+   {"R_swig_aqIRFixingTableDisplay", (DL_FUNC) &R_swig_aqIRFixingTableDisplay, 2},
    {"R_swig_VecVecString_assign", (DL_FUNC) &R_swig_VecVecString_assign, 3},
    {"R_swig_VecDouble_assign", (DL_FUNC) &R_swig_VecDouble_assign, 3},
    {"R_swig_VecInteger_assign", (DL_FUNC) &R_swig_VecInteger_assign, 3},
@@ -24837,7 +24837,7 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_aqToolClearEntityPool", (DL_FUNC) &R_swig_aqToolClearEntityPool, 1},
    {"R_swig_VecInteger_swap", (DL_FUNC) &R_swig_VecInteger_swap, 2},
    {"R_swig_VecVecInteger_swap", (DL_FUNC) &R_swig_VecVecInteger_swap, 2},
-   {"R_swig_aqInterestRateFixingTableValue", (DL_FUNC) &R_swig_aqInterestRateFixingTableValue, 3},
+   {"R_swig_aqIRFixingTableValue", (DL_FUNC) &R_swig_aqIRFixingTableValue, 3},
    {"R_swig_VecVecString_get_allocator", (DL_FUNC) &R_swig_VecVecString_get_allocator, 2},
    {"R_swig_VecDouble_get_allocator", (DL_FUNC) &R_swig_VecDouble_get_allocator, 2},
    {"R_swig_VecInteger_get_allocator", (DL_FUNC) &R_swig_VecInteger_get_allocator, 2},
