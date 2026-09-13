@@ -77,6 +77,7 @@ namespace
  *  Default swap (CDS) pricing driven directly by a hazard rate
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapPVFromHazardRate)
 XLO_FUNC_START( aqCreditObjectDefaultSwapPVFromHazardRate(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
@@ -101,8 +102,10 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapPVFromHazardRate )
     .arg( L"RecoveryRate",          L"The estimated recovery amount after default" )
     .arg( L"LegName",               L"Optional. Price just this leg; default prices the whole swap" )
     .arg( L"IncludeAccruedInterest", L"Optional. Default TRUE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapPV)
 XLO_FUNC_START( aqCreditObjectDefaultSwapPV(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
@@ -119,8 +122,10 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapPV )
     .arg( L"SwapName",         L"A cached CDS handle" )
     .arg( L"CreditModelName",  L"A cached credit-model handle" )
     .arg( L"LegName",          L"Optional. Price just this leg; default prices the whole swap" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapPVByIntegration)
 XLO_FUNC_START( aqCreditObjectDefaultSwapPVByIntegration(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
@@ -145,8 +150,10 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapPVByIntegration )
     .arg( L"NumberOfIntegrationPoints",         L"Number of (x,y) points to use in the numerical integration" )
     .arg( L"EvaluateInParallel",                L"Optional. Default TRUE. Evaluate loops in parallel where possible" )
     .arg( L"PayDefaultCashflowsOnNextCouponDate", L"Optional. Default TRUE. Wait to the next coupon date to pay protection/accrued on default" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapPVByMonteCarlo)
 XLO_FUNC_START( aqCreditObjectDefaultSwapPVByMonteCarlo(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
@@ -175,8 +182,10 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapPVByMonteCarlo )
     .arg( L"LegName",                           L"Optional. Price just this leg; default prices the whole swap" )
     .arg( L"McParametersLVB",                   L"Optional. Monte-Carlo / random-number-generator parameters" )
     .arg( L"PayDefaultCashflowsOnNextCouponDate", L"Optional. Default TRUE. Wait to the next coupon date to pay protection/accrued on default" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapRiskyAnnuityFromHazardRate)
 XLO_FUNC_START( aqCreditObjectDefaultSwapRiskyAnnuityFromHazardRate(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
@@ -201,8 +210,10 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapRiskyAnnuityFromHazardRate )
     .arg( L"RecoveryRate",          L"The estimated recovery amount after default" )
     .arg( L"LegName",               L"The premium leg to use (mandatory)" )
     .arg( L"IncludeAccruedInterest", L"Optional. Default TRUE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapRiskyAnnuity)
 XLO_FUNC_START( aqCreditObjectDefaultSwapRiskyAnnuity(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
@@ -219,8 +230,10 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapRiskyAnnuity )
     .arg( L"SwapName",         L"A cached CDS handle" )
     .arg( L"CreditModelName",  L"A cached credit-model handle" )
     .arg( L"LegName",          L"The premium leg to use (mandatory)" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapAccruedYearFraction)
 XLO_FUNC_START( aqCreditObjectDefaultSwapAccruedYearFraction(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
@@ -239,8 +252,10 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapAccruedYearFraction )
     .arg( L"CreditModelName",  L"A cached credit-model handle" )
     .arg( L"ToDate",           L"The date to calculate the year fraction to" )
     .arg( L"LegName",          L"The premium leg name" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapCS01)
 XLO_FUNC_START( aqCreditObjectDefaultSwapCS01(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
@@ -257,8 +272,10 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapCS01 )
     .arg( L"SwapName",         L"A cached CDS handle" )
     .arg( L"CreditModelName",  L"A cached credit-model handle" )
     .arg( L"LegName",          L"The premium leg to use (mandatory)" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapParSpreadFromHazardRate)
 XLO_FUNC_START( aqCreditObjectDefaultSwapParSpreadFromHazardRate(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
@@ -285,8 +302,10 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapParSpreadFromHazardRate )
     .arg( L"PremiumLegName",         L"The premium leg name" )
     .arg( L"ProtectionLegName",      L"The protection leg name" )
     .arg( L"IncludeAccruedInterest", L"Optional. Default TRUE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapParSpread)
 XLO_FUNC_START( aqCreditObjectDefaultSwapParSpread(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
@@ -306,8 +325,10 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapParSpread )
     .arg( L"CreditModelName",   L"A cached credit-model handle" )
     .arg( L"PremiumLegName",    L"The premium leg name" )
     .arg( L"ProtectionLegName", L"The protection leg name" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapHazardRateFromParSpread)
 XLO_FUNC_START( aqCreditObjectDefaultSwapHazardRateFromParSpread(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
@@ -335,6 +356,7 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapHazardRateFromParSpread )
     .arg( L"PremiumLegName",         L"The premium leg name" )
     .arg( L"ProtectionLegName",      L"The protection leg name" )
     .arg( L"IncludeAccruedInterest", L"Optional. Default TRUE" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -342,6 +364,7 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapHazardRateFromParSpread )
  * ---------------------------------------------------------------------- */
 
 // Create and store a credit model, calibrated from CDS or bond quotes.
+#if AQ_XLL_ENABLED(aqCreditModelCreate)
 XLO_FUNC_START( aqCreditModelCreate(
     const ExcelObj& objectName,
     const ExcelObj& key1,
@@ -377,8 +400,10 @@ XLO_FUNC_END( aqCreditModelCreate )
     .arg( L"Value1",     L"First data block, as a range" )
     .arg( L"Key2",       L"Optional. Name of the second data block, e.g. CDS_MARKETDATA / BOND_MARKETDATA" )
     .arg( L"Value2",     L"Optional. Second data block, as a range" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditModelAsOfDate)
 XLO_FUNC_START( aqCreditModelAsOfDate(
     const ExcelObj& creditModelName ) )
 {
@@ -391,8 +416,10 @@ XLO_FUNC_START( aqCreditModelAsOfDate(
 XLO_FUNC_END( aqCreditModelAsOfDate )
     .help( L"The as-of / valuation date of a cached credit model." )
     .arg( L"CreditModelName", L"A cached credit-model handle" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditModelCalibrationParameters)
 XLO_FUNC_START( aqCreditModelCalibrationParameters(
     const ExcelObj& creditModelName ) )
 {
@@ -405,8 +432,10 @@ XLO_FUNC_START( aqCreditModelCalibrationParameters(
 XLO_FUNC_END( aqCreditModelCalibrationParameters )
     .help( L"The calibrated payment dates and hazard rates of a cached credit model." )
     .arg( L"CreditModelName", L"A cached credit-model handle" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditModelHazardRate)
 XLO_FUNC_START( aqCreditModelHazardRate(
     const ExcelObj& creditModelName,
     const ExcelObj& paymentDate ) )
@@ -421,8 +450,10 @@ XLO_FUNC_END( aqCreditModelHazardRate )
     .help( L"The hazard rate at a given date from a cached credit model." )
     .arg( L"CreditModelName", L"A cached credit-model handle" )
     .arg( L"PaymentDate",     L"The date to extract the hazard rate at" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditModelSurvivalProbability)
 XLO_FUNC_START( aqCreditModelSurvivalProbability(
     const ExcelObj& creditModelName,
     const ExcelObj& toDate,
@@ -439,8 +470,10 @@ XLO_FUNC_END( aqCreditModelSurvivalProbability )
     .arg( L"CreditModelName", L"A cached credit-model handle" )
     .arg( L"ToDate",          L"The date survival is measured to" )
     .arg( L"FromDate",        L"The date survival is measured from" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditModelDefaultProbability)
 XLO_FUNC_START( aqCreditModelDefaultProbability(
     const ExcelObj& creditModelName,
     const ExcelObj& toDate,
@@ -457,8 +490,10 @@ XLO_FUNC_END( aqCreditModelDefaultProbability )
     .arg( L"CreditModelName", L"A cached credit-model handle" )
     .arg( L"ToDate",          L"The date default is measured to" )
     .arg( L"FromDate",        L"The date default is measured from" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditModelImpliedSurvivalDate)
 XLO_FUNC_START( aqCreditModelImpliedSurvivalDate(
     const ExcelObj& creditModelName,
     const ExcelObj& survivalProbability ) )
@@ -473,8 +508,10 @@ XLO_FUNC_END( aqCreditModelImpliedSurvivalDate )
     .help( L"The date implied by a target survival probability, from a cached credit model (inverse of aqCreditModelSurvivalProbability)." )
     .arg( L"CreditModelName",      L"A cached credit-model handle" )
     .arg( L"SurvivalProbability",  L"The target survival probability" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditModelRiskyDiscountFactors)
 XLO_FUNC_START( aqCreditModelRiskyDiscountFactors(
     const ExcelObj& creditModelName,
     const ExcelObj& paymentDates ) )
@@ -489,12 +526,14 @@ XLO_FUNC_END( aqCreditModelRiskyDiscountFactors )
     .help( L"Risky (survival-weighted) discount factors from a cached credit model at a column of payment dates." )
     .arg( L"CreditModelName", L"A cached credit-model handle" )
     .arg( L"PaymentDates",    L"Column of payment dates" );
+#endif
 
 
 /* -------------------------------------------------------------------------
  *  Credit spread and credit index options
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCreditObjectSpread)
 XLO_FUNC_START( aqCreditObjectSpread(
     const ExcelObj& creditModelName,
     const ExcelObj& startDate,
@@ -511,8 +550,10 @@ XLO_FUNC_END( aqCreditObjectSpread )
     .arg( L"CreditModelName", L"A cached credit-model handle" )
     .arg( L"StartDate",       L"The date protection begins" )
     .arg( L"EndDate",         L"The date protection ends" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectIndexSpread)
 XLO_FUNC_START( aqCreditObjectIndexSpread(
     const ExcelObj& creditModelName,
     const ExcelObj& startDate,
@@ -530,8 +571,10 @@ XLO_FUNC_END( aqCreditObjectIndexSpread )
     .arg( L"CreditModelName", L"A cached credit-model handle" )
     .arg( L"StartDate",       L"The date protection begins" )
     .arg( L"EndDate",         L"The date protection ends" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectOptionPV)
 XLO_FUNC_START( aqCreditObjectOptionPV(
     const ExcelObj& creditModelName,
     const ExcelObj& payerReceiver,
@@ -555,8 +598,10 @@ XLO_FUNC_END( aqCreditObjectOptionPV )
     .arg( L"OptionExpiryDate", L"The option expiry / underlying CDS effective date" )
     .arg( L"CdsMaturityDate",  L"The underlying CDS maturity date" )
     .arg( L"Volatility",       L"The underlying CDS spread volatility" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectOptionPVFromForward)
 XLO_FUNC_START( aqCreditObjectOptionPVFromForward(
     const ExcelObj& creditModelName,
     const ExcelObj& payerReceiver,
@@ -585,8 +630,10 @@ XLO_FUNC_END( aqCreditObjectOptionPVFromForward )
     .arg( L"CdsMaturityDate",  L"The underlying CDS maturity date" )
     .arg( L"Volatility",       L"The underlying CDS spread volatility" )
     .arg( L"ForwardSpread",    L"The CDS forward spread at the option expiry date" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectOptionImpliedVol)
 XLO_FUNC_START( aqCreditObjectOptionImpliedVol(
     const ExcelObj& creditModelName,
     const ExcelObj& payerReceiver,
@@ -610,8 +657,10 @@ XLO_FUNC_END( aqCreditObjectOptionImpliedVol )
     .arg( L"OptionExpiryDate",   L"The option expiry / underlying CDS effective date" )
     .arg( L"CdsMaturityDate",    L"The underlying CDS maturity date" )
     .arg( L"TargetOptionValue",  L"The target option value to solve the volatility for" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectOptionImpliedVolFromForward)
 XLO_FUNC_START( aqCreditObjectOptionImpliedVolFromForward(
     const ExcelObj& creditModelName,
     const ExcelObj& payerReceiver,
@@ -640,8 +689,10 @@ XLO_FUNC_END( aqCreditObjectOptionImpliedVolFromForward )
     .arg( L"CdsMaturityDate",    L"The underlying CDS maturity date" )
     .arg( L"TargetOptionValue",  L"The target option value to solve the volatility for" )
     .arg( L"ForwardSpread",      L"The CDS forward spread at the option expiry date" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectIndexOptionPV)
 XLO_FUNC_START( aqCreditObjectIndexOptionPV(
     const ExcelObj& creditModelName,
     const ExcelObj& optionLVB ) )
@@ -656,8 +707,10 @@ XLO_FUNC_END( aqCreditObjectIndexOptionPV )
     .help( L"PV of a credit index option (Bloomberg credit-index-option model)." )
     .arg( L"CreditModelName", L"A cached credit-model handle" )
     .arg( L"OptionLVB",       L"Strike, expiry date, CDS coupon, volatility etc, as a label/value block" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectIndexOptionImpliedVol)
 XLO_FUNC_START( aqCreditObjectIndexOptionImpliedVol(
     const ExcelObj& creditModelName,
     const ExcelObj& optionLVB ) )
@@ -672,8 +725,10 @@ XLO_FUNC_END( aqCreditObjectIndexOptionImpliedVol )
     .help( L"Implied volatility of a credit index option, given a target quote and forward." )
     .arg( L"CreditModelName", L"A cached credit-model handle" )
     .arg( L"OptionLVB",       L"Strike, expiry date, CDS coupon, target quote etc, as a label/value block" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectIndexOptionVega)
 XLO_FUNC_START( aqCreditObjectIndexOptionVega(
     const ExcelObj& creditModelName,
     const ExcelObj& optionLVB,
@@ -690,8 +745,10 @@ XLO_FUNC_END( aqCreditObjectIndexOptionVega )
     .arg( L"CreditModelName", L"A cached credit-model handle" )
     .arg( L"OptionLVB",       L"Strike, expiry date, CDS coupon, volatility etc, as a label/value block" )
     .arg( L"VolatilityBump",  L"The volatility bump size" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectIndexOptionCS01)
 XLO_FUNC_START( aqCreditObjectIndexOptionCS01(
     const ExcelObj& creditModelName,
     const ExcelObj& optionLVB ) )
@@ -706,8 +763,10 @@ XLO_FUNC_END( aqCreditObjectIndexOptionCS01 )
     .help( L"CS01 of a credit index option." )
     .arg( L"CreditModelName", L"A cached credit-model handle" )
     .arg( L"OptionLVB",       L"Strike, expiry date, CDS coupon, volatility etc, as a label/value block" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectIndexOptionTheta)
 XLO_FUNC_START( aqCreditObjectIndexOptionTheta(
     const ExcelObj& creditModelName,
     const ExcelObj& optionLVB ) )
@@ -722,12 +781,14 @@ XLO_FUNC_END( aqCreditObjectIndexOptionTheta )
     .help( L"Theta of a credit index option." )
     .arg( L"CreditModelName", L"A cached credit-model handle" )
     .arg( L"OptionLVB",       L"Strike, expiry date, CDS coupon, volatility etc, as a label/value block" );
+#endif
 
 
 /* -------------------------------------------------------------------------
  *  Credit basket model
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCreditObjectBasketModelCreate)
 XLO_FUNC_START( aqCreditObjectBasketModelCreate(
     const ExcelObj& objectName,
     const ExcelObj& key1,
@@ -763,8 +824,10 @@ XLO_FUNC_END( aqCreditObjectBasketModelCreate )
     .arg( L"Value1",     L"First data block, as a range" )
     .arg( L"Key2",       L"Optional. Name of the second data block, e.g. CREDIT_MODELS (CreditModelName + correlationBeta per row)" )
     .arg( L"Value2",     L"Optional. Second data block, as a range" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectBasketModelSurvivalProbability)
 XLO_FUNC_START( aqCreditObjectBasketModelSurvivalProbability(
     const ExcelObj& creditBasketModelName,
     const ExcelObj& toDate,
@@ -781,6 +844,7 @@ XLO_FUNC_END( aqCreditObjectBasketModelSurvivalProbability )
     .arg( L"CreditBasketModelName", L"A cached credit-basket-model handle" )
     .arg( L"ToDate",                L"The date survival is measured to" )
     .arg( L"FromDate",              L"The date survival is measured from" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -788,6 +852,7 @@ XLO_FUNC_END( aqCreditObjectBasketModelSurvivalProbability )
  *  and schedule validation headers - see the file header note)
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCreditObjectFeeLegCreate)
 XLO_FUNC_START( aqCreditObjectFeeLegCreate(
     const ExcelObj& legObjectName,
     const ExcelObj& feeProperties,
@@ -810,8 +875,10 @@ XLO_FUNC_END( aqCreditObjectFeeLegCreate )
     .arg( L"FeeProperties",  L"Fee leg properties as a label/value block" )
     .arg( L"FeeScheduleLVB", L"The fee schedule cashflows" )
     .arg( L"ValidateKeys",   L"Optional. Default TRUE. Check FeeProperties' keys" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCreditObjectFeeScheduleCreate)
 XLO_FUNC_START( aqCreditObjectFeeScheduleCreate(
     const ExcelObj& scheduleName,
     const ExcelObj& feeScheduleLVB,
@@ -832,3 +899,4 @@ XLO_FUNC_END( aqCreditObjectFeeScheduleCreate )
     .arg( L"ScheduleName",   L"Name for the fee-schedule object" )
     .arg( L"FeeScheduleLVB", L"The fee schedule cashflows" )
     .arg( L"ValidateKeys",   L"Optional. Default TRUE. Check the schedule keys" );
+#endif

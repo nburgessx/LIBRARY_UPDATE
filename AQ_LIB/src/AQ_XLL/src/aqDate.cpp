@@ -51,24 +51,29 @@ namespace
 }
 
 // Non-Volatile Today Method
+#if AQ_XLL_ENABLED(aqDateToday)
 XLO_FUNC_START( aqDateToday() )
 {
 	return returnValue( std::floor( excelLocalSerial() ) );
 }
 XLO_FUNC_END( aqDateToday )
     .help( L"Today's date as a non-volatile date serial. Format the cell as a date." );
+#endif
 
 
 // Non-Volatile Now Method
+#if AQ_XLL_ENABLED(aqDateNow)
 XLO_FUNC_START( aqDateNow() )
 {
 	return returnValue( excelLocalSerial() );
 }
 XLO_FUNC_END( aqDateNow )
     .help( L"Current date and time, non-volatile. Format the cell as date/time." );
+#endif
 
 
 // End date(s) from a start date (or range of start dates) plus a tenor.
+#if AQ_XLL_ENABLED(aqDateFromTenor)
 XLO_FUNC_START( aqDateFromTenor(
     const ExcelObj& startDates,
     const ExcelObj& tenor,
@@ -98,9 +103,11 @@ XLO_FUNC_END( aqDateFromTenor )
     .arg( L"BusinessDayAdj", L"Business day adjustment, e.g. Following, ModifiedFollowing, Preceding" )
     .arg( L"Calendar",       L"Holiday centre(s), e.g. LnB or LnB+NYB" )
     .arg( L"RollConvention", L"Normal, IMM, EOM, Lunar, etc" );
+#endif
 
 
 // End date from a start date plus a year fraction, under a day count.
+#if AQ_XLL_ENABLED(aqDateFromYearFraction)
 XLO_FUNC_START( aqDateFromYearFraction(
     const ExcelObj& startDate,
     const ExcelObj& yearFraction,
@@ -119,9 +126,11 @@ XLO_FUNC_END( aqDateFromYearFraction )
     .arg( L"StartDate",    L"The start date" )
     .arg( L"YearFraction", L"The year fraction to advance by" )
     .arg( L"DayCount",     L"Day count convention, e.g. ACT/360, ACT/365, 30/360" );
+#endif
 
 
 // Year fraction between two dates under a day count.
+#if AQ_XLL_ENABLED(aqDateYearFraction)
 XLO_FUNC_START( aqDateYearFraction(
     const ExcelObj& fromDate,
     const ExcelObj& toDate,
@@ -141,9 +150,11 @@ XLO_FUNC_END( aqDateYearFraction )
     .arg( L"ToDate",       L"The end date" )
     .arg( L"DayCount",     L"Day count convention, e.g. ACT/360, ACT/365, 30/360" )
     .arg( L"IncludeLast",  L"Optional. Default TRUE. Include the last day in the count" );
+#endif
 
 
 // Business days between two dates for a calendar.
+#if AQ_XLL_ENABLED(aqDateBusinessDays)
 XLO_FUNC_START( aqDateBusinessDays(
     const ExcelObj& fromDate,
     const ExcelObj& toDate,
@@ -160,9 +171,11 @@ XLO_FUNC_END( aqDateBusinessDays )
     .arg( L"FromDate", L"The start date" )
     .arg( L"ToDate",   L"The end date" )
     .arg( L"Calendar", L"Holiday centre(s), e.g. LnB or LnB+NYB" );
+#endif
 
 
 // Spot date implied by a fixing lag and a payment lag.
+#if AQ_XLL_ENABLED(aqDateShiftedSpotDate)
 XLO_FUNC_START( aqDateShiftedSpotDate(
     const ExcelObj& asOfDate,
     const ExcelObj& fixingLag,
@@ -195,9 +208,11 @@ XLO_FUNC_END( aqDateShiftedSpotDate )
     .arg( L"PaymentLag",       L"Payment lag, e.g. 2D" )
     .arg( L"PaymentCalendar",  L"Payment holiday centre(s)" )
     .arg( L"PaymentBusDayAdj", L"Payment business day adjustment" );
+#endif
 
 
 // TRUE if the date is a working day for the given holiday centre.
+#if AQ_XLL_ENABLED(aqDateIsWorkingDay)
 XLO_FUNC_START( aqDateIsWorkingDay(
     const ExcelObj& date,
     const ExcelObj& holidayCentre ) )
@@ -211,9 +226,11 @@ XLO_FUNC_END( aqDateIsWorkingDay )
     .help( L"TRUE if the date is a working day for the given holiday centre." )
     .arg( L"Date",          L"The date to test" )
     .arg( L"HolidayCentre", L"Holiday centre(s), e.g. LnB or LnB+NYB" );
+#endif
 
 
 // TRUE if the date is a holiday for the given holiday centre.
+#if AQ_XLL_ENABLED(aqDateIsHoliday)
 XLO_FUNC_START( aqDateIsHoliday(
     const ExcelObj& date,
     const ExcelObj& holidayCentre ) )
@@ -227,9 +244,11 @@ XLO_FUNC_END( aqDateIsHoliday )
     .help( L"TRUE if the date is a holiday for the given holiday centre." )
     .arg( L"Date",          L"The date to test" )
     .arg( L"HolidayCentre", L"Holiday centre(s), e.g. LnB or LnB+NYB" );
+#endif
 
 
 // TRUE if the date falls on a weekend.
+#if AQ_XLL_ENABLED(aqDateIsWeekend)
 XLO_FUNC_START( aqDateIsWeekend(
     const ExcelObj& date ) )
 {
@@ -240,9 +259,11 @@ XLO_FUNC_START( aqDateIsWeekend(
 XLO_FUNC_END( aqDateIsWeekend )
     .help( L"TRUE if the date falls on a Saturday or Sunday." )
     .arg( L"Date", L"The date to test" );
+#endif
 
 
 // TRUE if the date falls on a weekday.
+#if AQ_XLL_ENABLED(aqDateIsWeekday)
 XLO_FUNC_START( aqDateIsWeekday(
     const ExcelObj& date ) )
 {
@@ -253,9 +274,11 @@ XLO_FUNC_START( aqDateIsWeekday(
 XLO_FUNC_END( aqDateIsWeekday )
     .help( L"TRUE if the date falls on a Monday to Friday." )
     .arg( L"Date", L"The date to test" );
+#endif
 
 
 // Contract expiry date from a futures ticker.
+#if AQ_XLL_ENABLED(aqDateFuturesContract)
 XLO_FUNC_START( aqDateFuturesContract(
     const ExcelObj& futuresTicker ) )
 {
@@ -267,9 +290,11 @@ XLO_FUNC_START( aqDateFuturesContract(
 XLO_FUNC_END( aqDateFuturesContract )
     .help( L"Contract expiry date implied by a futures ticker. Format the cell as a date." )
     .arg( L"FuturesTicker", L"The futures ticker, e.g. EDZ25, FFF26" );
+#endif
 
 
 // Central-bank meeting date on or after (or strictly after) a date.
+#if AQ_XLL_ENABLED(aqDateCentralBank)
 XLO_FUNC_START( aqDateCentralBank(
     const ExcelObj& centralBankId,
     const ExcelObj& date,
@@ -286,9 +311,11 @@ XLO_FUNC_END( aqDateCentralBank )
     .arg( L"CentralBankId", L"Central bank identifier, e.g. ECB, FED, BOE" )
     .arg( L"Date",          L"The reference date" )
     .arg( L"StrictlyAfter", L"Optional. Default TRUE. TRUE skips a meeting that falls on Date itself" );
+#endif
 
 
 // Next ECB meeting date on (or strictly after) a date.
+#if AQ_XLL_ENABLED(aqDateECB)
 XLO_FUNC_START( aqDateECB(
     const ExcelObj& date,
     const ExcelObj& strictlyAfter ) )
@@ -302,9 +329,11 @@ XLO_FUNC_END( aqDateECB )
     .help( L"The next ECB meeting date on or after the given date. Format the cell as a date." )
     .arg( L"Date",          L"The reference date" )
     .arg( L"StrictlyAfter", L"Optional. Default TRUE. TRUE skips a meeting that falls on Date itself" );
+#endif
 
 
 // ECB swap start date for a date.
+#if AQ_XLL_ENABLED(aqDateECBSwapStart)
 XLO_FUNC_START( aqDateECBSwapStart(
     const ExcelObj& date ) )
 {
@@ -316,9 +345,11 @@ XLO_FUNC_START( aqDateECBSwapStart(
 XLO_FUNC_END( aqDateECBSwapStart )
     .help( L"The ECB-dated swap start date for the given date. Format the cell as a date." )
     .arg( L"Date", L"The reference date" );
+#endif
 
 
 // ECB swap end date for a date.
+#if AQ_XLL_ENABLED(aqDateECBSwapEnd)
 XLO_FUNC_START( aqDateECBSwapEnd(
     const ExcelObj& date ) )
 {
@@ -330,9 +361,11 @@ XLO_FUNC_START( aqDateECBSwapEnd(
 XLO_FUNC_END( aqDateECBSwapEnd )
     .help( L"The ECB-dated swap end date for the given date. Format the cell as a date." )
     .arg( L"Date", L"The reference date" );
+#endif
 
 
 // The Nth ECB meeting date from an as-of date.
+#if AQ_XLL_ENABLED(aqDateNthECBMeetingDate)
 XLO_FUNC_START( aqDateNthECBMeetingDate(
     const ExcelObj& asOfDate,
     const ExcelObj& n ) )
@@ -346,9 +379,11 @@ XLO_FUNC_END( aqDateNthECBMeetingDate )
     .help( L"The Nth ECB meeting date from an as-of date. Format the cell as a date." )
     .arg( L"AsOfDate", L"The as-of date" )
     .arg( L"N",        L"Which meeting (1 = the next one)" );
+#endif
 
 
 // The Nth ECB swap start date from an as-of date.
+#if AQ_XLL_ENABLED(aqDateNthECBSwapStartDate)
 XLO_FUNC_START( aqDateNthECBSwapStartDate(
     const ExcelObj& asOfDate,
     const ExcelObj& n ) )
@@ -362,9 +397,11 @@ XLO_FUNC_END( aqDateNthECBSwapStartDate )
     .help( L"The Nth ECB-dated swap start date from an as-of date. Format the cell as a date." )
     .arg( L"AsOfDate", L"The as-of date" )
     .arg( L"N",        L"Which one (1 = the next)" );
+#endif
 
 
 // The Nth ECB swap end date from an as-of date.
+#if AQ_XLL_ENABLED(aqDateNthECBSwapEndDate)
 XLO_FUNC_START( aqDateNthECBSwapEndDate(
     const ExcelObj& asOfDate,
     const ExcelObj& n ) )
@@ -378,9 +415,11 @@ XLO_FUNC_END( aqDateNthECBSwapEndDate )
     .help( L"The Nth ECB-dated swap end date from an as-of date. Format the cell as a date." )
     .arg( L"AsOfDate", L"The as-of date" )
     .arg( L"N",        L"Which one (1 = the next)" );
+#endif
 
 
 // The ECB meeting date after a given meeting date.
+#if AQ_XLL_ENABLED(aqDateNextECBMeetingDate)
 XLO_FUNC_START( aqDateNextECBMeetingDate(
     const ExcelObj& meetingDate ) )
 {
@@ -392,9 +431,11 @@ XLO_FUNC_START( aqDateNextECBMeetingDate(
 XLO_FUNC_END( aqDateNextECBMeetingDate )
     .help( L"The ECB meeting date immediately after the given meeting date. Format the cell as a date." )
     .arg( L"MeetingDate", L"An ECB meeting date" );
+#endif
 
 
 // The ECB swap start date after a given one.
+#if AQ_XLL_ENABLED(aqDateNextECBSwapStartDate)
 XLO_FUNC_START( aqDateNextECBSwapStartDate(
     const ExcelObj& swapStartDate ) )
 {
@@ -406,9 +447,11 @@ XLO_FUNC_START( aqDateNextECBSwapStartDate(
 XLO_FUNC_END( aqDateNextECBSwapStartDate )
     .help( L"The ECB-dated swap start date immediately after the given one. Format the cell as a date." )
     .arg( L"SwapStartDate", L"An ECB-dated swap start date" );
+#endif
 
 
 // The ECB swap end date after a given one.
+#if AQ_XLL_ENABLED(aqDateNextECBSwapEndDate)
 XLO_FUNC_START( aqDateNextECBSwapEndDate(
     const ExcelObj& swapEndDate ) )
 {
@@ -420,9 +463,11 @@ XLO_FUNC_START( aqDateNextECBSwapEndDate(
 XLO_FUNC_END( aqDateNextECBSwapEndDate )
     .help( L"The ECB-dated swap end date immediately after the given one. Format the cell as a date." )
     .arg( L"SwapEndDate", L"An ECB-dated swap end date" );
+#endif
 
 
 // The IMM date for a given year and month.
+#if AQ_XLL_ENABLED(aqDateIMMFromMonth)
 XLO_FUNC_START( aqDateIMMFromMonth(
     const ExcelObj& year,
     const ExcelObj& month,
@@ -441,9 +486,11 @@ XLO_FUNC_END( aqDateIMMFromMonth )
     .arg( L"Month",          L"Calendar month, 1-12" )
     .arg( L"Calendar",       L"Holiday centre(s)" )
     .arg( L"BusinessDayAdj", L"Business day adjustment" );
+#endif
 
 
 // The Nth IMM date of a year.
+#if AQ_XLL_ENABLED(aqDateNthIMM)
 XLO_FUNC_START( aqDateNthIMM(
     const ExcelObj& year,
     const ExcelObj& nth,
@@ -462,9 +509,11 @@ XLO_FUNC_END( aqDateNthIMM )
     .arg( L"Nth",            L"Which IMM date of the year, 1-4" )
     .arg( L"Calendar",       L"Holiday centre(s)" )
     .arg( L"BusinessDayAdj", L"Business day adjustment" );
+#endif
 
 
 // The Nth IMM date on or after a start date.
+#if AQ_XLL_ENABLED(aqDateNthIMMFromStartDate)
 XLO_FUNC_START( aqDateNthIMMFromStartDate(
     const ExcelObj& startDate,
     const ExcelObj& nth,
@@ -483,9 +532,11 @@ XLO_FUNC_END( aqDateNthIMMFromStartDate )
     .arg( L"Nth",            L"Which IMM date counting from StartDate, 1-based" )
     .arg( L"Calendar",       L"Holiday centre(s)" )
     .arg( L"BusinessDayAdj", L"Business day adjustment" );
+#endif
 
 
 // The current IMM date relative to a valuation date.
+#if AQ_XLL_ENABLED(aqDateIMMCurrent)
 XLO_FUNC_START( aqDateIMMCurrent(
     const ExcelObj& valuationDate,
     const ExcelObj& includeToday ) )
@@ -500,9 +551,11 @@ XLO_FUNC_END( aqDateIMMCurrent )
     .help( L"The current (most recent) IMM date relative to a valuation date. Format the cell as a date." )
     .arg( L"ValuationDate", L"The valuation date" )
     .arg( L"IncludeToday",  L"Optional. Default FALSE. TRUE lets an IMM date on the valuation date count as current" );
+#endif
 
 
 // The IMM date after a reference date.
+#if AQ_XLL_ENABLED(aqDateIMMNext)
 XLO_FUNC_START( aqDateIMMNext(
     const ExcelObj& referenceDate ) )
 {
@@ -514,9 +567,11 @@ XLO_FUNC_START( aqDateIMMNext(
 XLO_FUNC_END( aqDateIMMNext )
     .help( L"The IMM date immediately after a reference date. Format the cell as a date." )
     .arg( L"ReferenceDate", L"The reference date" );
+#endif
 
 
 // The IMM date before a reference date.
+#if AQ_XLL_ENABLED(aqDateIMMPrevious)
 XLO_FUNC_START( aqDateIMMPrevious(
     const ExcelObj& referenceDate ) )
 {
@@ -528,9 +583,11 @@ XLO_FUNC_START( aqDateIMMPrevious(
 XLO_FUNC_END( aqDateIMMPrevious )
     .help( L"The IMM date immediately before a reference date. Format the cell as a date." )
     .arg( L"ReferenceDate", L"The reference date" );
+#endif
 
 
 // The Nth IMM date relative to a valuation date.
+#if AQ_XLL_ENABLED(aqDateIMMNth)
 XLO_FUNC_START( aqDateIMMNth(
     const ExcelObj& valuationDate,
     const ExcelObj& nthIMM,
@@ -547,9 +604,11 @@ XLO_FUNC_END( aqDateIMMNth )
     .arg( L"ValuationDate", L"The valuation date" )
     .arg( L"NthIMM",        L"Which IMM date; positive is forward, negative is backward" )
     .arg( L"IncludeToday",  L"Optional. Default FALSE. TRUE lets an IMM date on the valuation date count" );
+#endif
 
 
 // TRUE if a start/maturity pair describes a regular (whole-period) swap schedule.
+#if AQ_XLL_ENABLED(aqDateIsRegularSwapSchedule)
 XLO_FUNC_START( aqDateIsRegularSwapSchedule(
     const ExcelObj& swapStart,
     const ExcelObj& swapMaturity,
@@ -583,3 +642,4 @@ XLO_FUNC_END( aqDateIsRegularSwapSchedule )
     .arg( L"Calendar",           L"Holiday centre(s)" )
     .arg( L"RollDay",            L"Roll day of month (0 to derive from the start date)" )
     .arg( L"RollConvention",     L"Optional. Roll convention, e.g. Normal, IMM, EOM" );
+#endif

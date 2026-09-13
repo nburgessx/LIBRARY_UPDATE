@@ -33,6 +33,7 @@ namespace
 
 
 // Present value of a cached total return swap.
+#if AQ_XLL_ENABLED(aqTRSObjectPV)
 XLO_FUNC_START( aqTRSObjectPV(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
@@ -54,9 +55,11 @@ XLO_FUNC_END( aqTRSObjectPV )
     .arg( L"CreditModelName",  L"A credit-model handle for the reference asset" )
     .arg( L"LegName",          L"Optional. The leg to value; blank values the whole swap" )
     .arg( L"FixingTableNames", L"Optional. Fixing-table name overrides as a label/value block" );
+#endif
 
 
 // Par rate of a cached total return swap.
+#if AQ_XLL_ENABLED(aqTRSObjectParRate)
 XLO_FUNC_START( aqTRSObjectParRate(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
@@ -75,9 +78,11 @@ XLO_FUNC_END( aqTRSObjectParRate )
     .arg( L"SwapName",         L"A swap handle" )
     .arg( L"CreditModelName",  L"A credit-model handle for the reference asset" )
     .arg( L"FixingTableNames", L"Optional. Fixing-table name overrides as a label/value block" );
+#endif
 
 
 // Par spread of a cached total return swap.
+#if AQ_XLL_ENABLED(aqTRSObjectParSpread)
 XLO_FUNC_START( aqTRSObjectParSpread(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
@@ -96,9 +101,11 @@ XLO_FUNC_END( aqTRSObjectParSpread )
     .arg( L"SwapName",         L"A swap handle" )
     .arg( L"CreditModelName",  L"A credit-model handle for the reference asset" )
     .arg( L"FixingTableNames", L"Optional. Fixing-table name overrides as a label/value block" );
+#endif
 
 
 // Annuity of a cached total return swap leg.
+#if AQ_XLL_ENABLED(aqTRSObjectAnnuity)
 XLO_FUNC_START( aqTRSObjectAnnuity(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
@@ -117,3 +124,4 @@ XLO_FUNC_END( aqTRSObjectAnnuity )
     .arg( L"SwapName",        L"A swap handle" )
     .arg( L"CreditModelName", L"A credit-model handle for the reference asset" )
     .arg( L"LegName",         L"The leg to value" );
+#endif

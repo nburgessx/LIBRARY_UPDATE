@@ -12,6 +12,9 @@
     <Filter Include="resources">
       <UniqueIdentifier>{2ac1a96b-236c-4c6e-a563-eb03b7179f86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resources\manifest">
+      <UniqueIdentifier>{9d2e0a2a-9d3f-4a7e-9d1a-6b6f6e0a5d3c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Core">
       <UniqueIdentifier>{8b54388f-3e49-4371-8531-e7eef24522f0}</UniqueIdentifier>
     </Filter>
@@ -22,6 +25,12 @@
   <ItemGroup>
     <None Include="..\src\AQ_XLL\resources\SetUp.md">
       <Filter>resources</Filter>
+    </None>
+    <None Include="..\src\AQ_XLL\resources\manifest\active.json">
+      <Filter>resources\manifest</Filter>
+    </None>
+    <None Include="..\src\AQ_XLL\resources\manifest\demo.json">
+      <Filter>resources\manifest</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +100,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_XLL\include\aqMain.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_XLL\include\generated\aqManifestFunctions.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

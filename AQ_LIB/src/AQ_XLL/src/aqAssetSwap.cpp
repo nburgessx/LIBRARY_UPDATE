@@ -38,6 +38,7 @@ namespace
 
 
 // Asset-swap spread for one bond price.
+#if AQ_XLL_ENABLED(aqAssetSwapObjectSpread)
 XLO_FUNC_START( aqAssetSwapObjectSpread(
     const ExcelObj& swapObjectName,
     const ExcelObj& bondObjectName,
@@ -62,9 +63,11 @@ XLO_FUNC_END( aqAssetSwapObjectSpread )
     .arg( L"BondPrice",            L"The bond price" )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" )
     .arg( L"FixingTableNames",     L"Optional. Fixing-table name overrides as a label/value block" );
+#endif
 
 
 // Asset-swap spread implied by one bond price (stateless bond/price pair).
+#if AQ_XLL_ENABLED(aqAssetSwapObjectSpreadFromPrice)
 XLO_FUNC_START( aqAssetSwapObjectSpreadFromPrice(
     const ExcelObj& bondPrice,
     const ExcelObj& bondAccrualStartDate,
@@ -92,9 +95,11 @@ XLO_FUNC_END( aqAssetSwapObjectSpreadFromPrice )
     .arg( L"SwapObjectName",        L"An asset-swap handle" )
     .arg( L"ValuationSettingsLVB",  L"Valuation settings as a label/value block" )
     .arg( L"FixingTableNames",      L"Optional. Fixing-table name overrides as a label/value block" );
+#endif
 
 
 // Bond clean price implied by an asset-swap par-par spread.
+#if AQ_XLL_ENABLED(aqAssetSwapObjectSpreadToCleanPrice)
 XLO_FUNC_START( aqAssetSwapObjectSpreadToCleanPrice(
     const ExcelObj& swapObjectName,
     const ExcelObj& assetSwapParSpread,
@@ -116,9 +121,11 @@ XLO_FUNC_END( aqAssetSwapObjectSpreadToCleanPrice )
     .arg( L"AssetSwapParSpread",    L"The par-par asset-swap spread" )
     .arg( L"ValuationSettingsLVB",  L"Valuation settings as a label/value block" )
     .arg( L"FixingTableNames",      L"Optional. Fixing-table name overrides as a label/value block" );
+#endif
 
 
 // Fixed-equivalent coupon of a cached asset swap.
+#if AQ_XLL_ENABLED(aqAssetSwapObjectFixedEqvCoupon)
 XLO_FUNC_START( aqAssetSwapObjectFixedEqvCoupon(
     const ExcelObj& swapObjectName,
     const ExcelObj& bondObjectName,
@@ -143,9 +150,11 @@ XLO_FUNC_END( aqAssetSwapObjectFixedEqvCoupon )
     .arg( L"BondPrice",            L"The bond price" )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" )
     .arg( L"FixingTableNames",     L"Optional. Fixing-table name overrides as a label/value block" );
+#endif
 
 
 // Asset-swap spread implied by a fixed-equivalent coupon.
+#if AQ_XLL_ENABLED(aqAssetSwapObjectSpreadFromFixedEqvCoupon)
 XLO_FUNC_START( aqAssetSwapObjectSpreadFromFixedEqvCoupon(
     const ExcelObj& swapObjectName,
     const ExcelObj& fixedEqvCoupon,
@@ -167,6 +176,7 @@ XLO_FUNC_END( aqAssetSwapObjectSpreadFromFixedEqvCoupon )
     .arg( L"FixedEqvCoupon",       L"The fixed-equivalent coupon" )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" )
     .arg( L"FixingTableNames",     L"Optional. Fixing-table name overrides as a label/value block" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -174,6 +184,7 @@ XLO_FUNC_END( aqAssetSwapObjectSpreadFromFixedEqvCoupon )
  * ---------------------------------------------------------------------- */
 
 // The expected keys for an asset-swap label/value block.
+#if AQ_XLL_ENABLED(aqAssetSwapSpreadLVBKeys)
 XLO_FUNC_START( aqAssetSwapSpreadLVBKeys() )
 {
     AQ_XLL_GUARD
@@ -182,9 +193,11 @@ XLO_FUNC_START( aqAssetSwapSpreadLVBKeys() )
 }
 XLO_FUNC_END( aqAssetSwapSpreadLVBKeys )
     .help( L"The expected keys for an asset-swap label/value block, as a column." );
+#endif
 
 
 // Asset-swap spread from a bond price and a label/value block.
+#if AQ_XLL_ENABLED(aqAssetSwapSpread)
 XLO_FUNC_START( aqAssetSwapSpread(
     const ExcelObj& bondPrice,
     const ExcelObj& assetSwapLVB,
@@ -201,3 +214,4 @@ XLO_FUNC_END( aqAssetSwapSpread )
     .arg( L"BondPrice",    L"The bond price" )
     .arg( L"AssetSwapLVB", L"The asset-swap definition as a label/value block" )
     .arg( L"ValidateKeys", L"Optional. Default TRUE. Check the LVB keys against aqAssetSwapSpreadLVBKeys" );
+#endif

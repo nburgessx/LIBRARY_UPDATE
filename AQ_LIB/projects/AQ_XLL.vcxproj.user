@@ -80,6 +80,16 @@
     <LocalDebuggerCommandArguments>$(TargetPath)</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">
+    <LocalDebuggerCommand>"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>$(TargetPath)</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|Win32'">
+    <LocalDebuggerCommand />
+    <LocalDebuggerCommandArguments />
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
     <LocalDebuggerCommand>"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"</LocalDebuggerCommand>
     <LocalDebuggerCommandArguments>$(TargetPath)</LocalDebuggerCommandArguments>

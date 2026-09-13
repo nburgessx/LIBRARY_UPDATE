@@ -130,6 +130,7 @@ namespace
  *   2. %AQ%\resources\config\        (the AQ environment variable)
  *   3. <folder of the .xll>\config\  (business-user layout)
  */
+#if AQ_XLL_ENABLED(aqToolInitialize)
 XLO_FUNC_START( aqToolInitialize() )
 {
     AQ_XLL_GUARD
@@ -158,9 +159,11 @@ XLO_FUNC_END( aqToolInitialize )
     .help( L"Load and verify the AlgoQuantLib configuration (holiday calendars, IR static data). "
            L"Runs automatically when the add-in opens; call it manually to re-check the setup "
            L"or to see which config path was used." );
+#endif
 
 
 // Test Function
+#if AQ_XLL_ENABLED(aqToolEcho)
 XLO_FUNC_START(aqToolEcho(const ExcelObj* arg))
 {
     return returnValue(arg->toString());
@@ -168,15 +171,18 @@ XLO_FUNC_START(aqToolEcho(const ExcelObj* arg))
 XLO_FUNC_END(aqToolEcho).threadsafe()
 .help(L"Returns the argument provided")
 .arg(L"Value", L"Any value");
+#endif
 
 
 // Build Version Time Stamp Method
+#if AQ_XLL_ENABLED(aqToolBuildTime)
 XLO_FUNC_START(aqToolBuildTime())
 {
     return returnValue(L"AQ_ADDIN built " L"" __DATE__ L" " __TIME__);
 }
 XLO_FUNC_END(aqToolBuildTime)
 .help(L"Build date and time of the loaded add-in.");
+#endif
 
 
 /*
@@ -186,6 +192,7 @@ XLO_FUNC_END(aqToolBuildTime)
  * array formula (Ctrl+Shift+Enter) over the target block, or rely on
  * dynamic-array spill.
  */
+#if AQ_XLL_ENABLED(aqToolResize)
 XLO_FUNC_START( aqToolResize(
     const ExcelObj& inputArray,
     const ExcelObj& numRows,
@@ -204,11 +211,13 @@ XLO_FUNC_END( aqToolResize )
     .arg( L"InputArray", L"The range to reshape" )
     .arg( L"NumRows",    L"Number of rows in the result" )
     .arg( L"NumCols",    L"Number of columns in the result" );
+#endif
 
 
 /*
  * Report the library version, and optionally the licence expiry.
  */
+#if AQ_XLL_ENABLED(aqToolVersion)
 XLO_FUNC_START( aqToolVersion(
     const ExcelObj& showLicenceExpiry ) )
 {
@@ -224,12 +233,14 @@ XLO_FUNC_START( aqToolVersion(
 XLO_FUNC_END( aqToolVersion )
     .help( L"The AlgoQuantLib version string. Pass ShowLicenceExpiry=TRUE to include the licence expiry." )
     .arg( L"ShowLicenceExpiry", L"Optional. Default FALSE. TRUE appends the licence expiry month/year" );
+#endif
 
 
 /*
  * Clear the entity pool (cached market data, curves and instruments held by the
  * pricing environment). Returns an information string.
  */
+#if AQ_XLL_ENABLED(aqToolClearEntityPool)
 XLO_FUNC_START( aqToolClearEntityPool() )
 {
     AQ_XLL_GUARD
@@ -239,12 +250,14 @@ XLO_FUNC_START( aqToolClearEntityPool() )
 }
 XLO_FUNC_END( aqToolClearEntityPool )
     .help( L"Clear the entity pool (cached market data, curves and instruments). Returns a summary." );
+#endif
 
 
 /*
  * Load an interest-rate static-data (properties) file at runtime. Returns an
  * information string.
  */
+#if AQ_XLL_ENABLED(aqToolLoadStaticData)
 XLO_FUNC_START( aqToolLoadStaticData(
     const ExcelObj& filePath ) )
 {
@@ -256,11 +269,13 @@ XLO_FUNC_START( aqToolLoadStaticData(
 XLO_FUNC_END( aqToolLoadStaticData )
     .help( L"Load an interest-rate static-data (properties) file at runtime. Returns a status string." )
     .arg( L"FilePath", L"Full path to the static-data properties file" );
+#endif
 
 
 /*
  * Load a holiday-calendar file at runtime. Returns an information string.
  */
+#if AQ_XLL_ENABLED(aqToolLoadCalendarFile)
 XLO_FUNC_START( aqToolLoadCalendarFile(
     const ExcelObj& filePath ) )
 {
@@ -272,12 +287,14 @@ XLO_FUNC_START( aqToolLoadCalendarFile(
 XLO_FUNC_END( aqToolLoadCalendarFile )
     .help( L"Load a holiday-calendar file at runtime. Returns a status string." )
     .arg( L"FilePath", L"Full path to the calendar file" );
+#endif
 
 
 /*
  * Reload the configuration files (calendars, static data, startup config) from
  * the resolved config folder. Returns a status string with the elapsed time.
  */
+#if AQ_XLL_ENABLED(aqToolLoadConfigurationFiles)
 XLO_FUNC_START( aqToolLoadConfigurationFiles() )
 {
     AQ_XLL_GUARD
@@ -295,11 +312,13 @@ XLO_FUNC_START( aqToolLoadConfigurationFiles() )
 }
 XLO_FUNC_END( aqToolLoadConfigurationFiles )
     .help( L"Reload the configuration files (calendars, static data, startup config). Returns a status string." );
+#endif
 
 
 /*
  * Enable or disable parallel pricing mode. Returns the resulting status string.
  */
+#if AQ_XLL_ENABLED(aqToolParallelModeEnable)
 XLO_FUNC_START( aqToolParallelModeEnable(
     const ExcelObj& enable ) )
 {
@@ -311,11 +330,13 @@ XLO_FUNC_START( aqToolParallelModeEnable(
 XLO_FUNC_END( aqToolParallelModeEnable )
     .help( L"Enable or disable parallel pricing mode. Returns the resulting status." )
     .arg( L"Enable", L"TRUE to enable parallel mode, FALSE to disable it" );
+#endif
 
 
 /*
  * Report whether parallel pricing mode is currently enabled.
  */
+#if AQ_XLL_ENABLED(aqToolParallelModeStatus)
 XLO_FUNC_START( aqToolParallelModeStatus() )
 {
     AQ_XLL_GUARD
@@ -325,12 +346,14 @@ XLO_FUNC_START( aqToolParallelModeStatus() )
 }
 XLO_FUNC_END( aqToolParallelModeStatus )
     .help( L"The current parallel-pricing-mode status." );
+#endif
 
 
 /*
  * Enable or disable capture of validation-layer inputs and outputs (the
  * recording that generates GoogleTest cases). Returns a status message.
  */
+#if AQ_XLL_ENABLED(aqToolRecord)
 XLO_FUNC_START( aqToolRecord(
     const ExcelObj& enable,
     const ExcelObj& folder,
@@ -357,12 +380,14 @@ XLO_FUNC_END( aqToolRecord )
     .arg( L"Repeat",     L"Optional. TRUE allows repeated tests. Default FALSE" )
     .arg( L"StartIndex", L"Optional. Start index for repeated tests. Default 0" )
     .arg( L"MaxIndex",   L"Optional. Maximum index for repeated tests. Default 0" );
+#endif
 
 
 /*
  * Replay a recorded input file back through the validation layer and return the
  * result string.
  */
+#if AQ_XLL_ENABLED(aqToolReplay)
 XLO_FUNC_START( aqToolReplay(
     const ExcelObj& filePath ) )
 {
@@ -374,6 +399,7 @@ XLO_FUNC_START( aqToolReplay(
 XLO_FUNC_END( aqToolReplay )
     .help( L"Replay a recorded input file through the validation layer. Returns the result string." )
     .arg( L"FilePath", L"Full path to the recorded input .csv file" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -384,6 +410,7 @@ XLO_FUNC_END( aqToolReplay )
  * Build a two-column label-value block from a column of keys and a column of
  * values, optionally prefixing every key.
  */
+#if AQ_XLL_ENABLED(aqToolLVBFromKeysValues)
 XLO_FUNC_START( aqToolLVBFromKeysValues(
     const ExcelObj& keys,
     const ExcelObj& values,
@@ -402,11 +429,13 @@ XLO_FUNC_END( aqToolLVBFromKeysValues )
     .arg( L"Keys",      L"Column of keys" )
     .arg( L"Values",    L"Column of values, aligned with Keys" )
     .arg( L"KeyPrefix", L"Optional. Text prepended to every key" );
+#endif
 
 
 /*
  * Build a label-value block from a key/value matrix and a list of key prefixes.
  */
+#if AQ_XLL_ENABLED(aqToolLVB)
 XLO_FUNC_START( aqToolLVB(
     const ExcelObj& keyValueMatrix,
     const ExcelObj& keyPrefixes,
@@ -427,12 +456,14 @@ XLO_FUNC_END( aqToolLVB )
     .arg( L"KeyValueMatrix", L"The key/value matrix" )
     .arg( L"KeyPrefixes",    L"List of key prefixes, one per key block" )
     .arg( L"VerticalKeys",   L"Optional. Default TRUE. FALSE reads keys then values as rows" );
+#endif
 
 
 /*
  * Concatenate up to ten label-value blocks into one. Blank arguments are
  * skipped.
  */
+#if AQ_XLL_ENABLED(aqToolLVBGroup)
 XLO_FUNC_START( aqToolLVBGroup(
     const ExcelObj& lvb1,  const ExcelObj& lvb2,  const ExcelObj& lvb3,
     const ExcelObj& lvb4,  const ExcelObj& lvb5,  const ExcelObj& lvb6,
@@ -462,12 +493,14 @@ XLO_FUNC_END( aqToolLVBGroup )
     .arg( L"LVB8",  L"Optional. Label-value block 8" )
     .arg( L"LVB9",  L"Optional. Label-value block 9" )
     .arg( L"LVB10", L"Optional. Label-value block 10" );
+#endif
 
 
 /*
  * Build a label-value block from up to five (keys, values, key-prefix) triples.
  * Blank key/value columns are skipped.
  */
+#if AQ_XLL_ENABLED(aqToolLVBFromMultipleKeysValues)
 XLO_FUNC_START( aqToolLVBFromMultipleKeysValues(
     const ExcelObj& keys1, const ExcelObj& values1, const ExcelObj& keyPrefix1,
     const ExcelObj& keys2, const ExcelObj& values2, const ExcelObj& keyPrefix2,
@@ -512,12 +545,14 @@ XLO_FUNC_END( aqToolLVBFromMultipleKeysValues )
     .arg( L"Keys5",      L"Optional. Keys column 5" )
     .arg( L"Values5",    L"Optional. Values column 5" )
     .arg( L"KeyPrefix5", L"Optional. Prefix for keys column 5" );
+#endif
 
 
 /*
  * Build a label-value block from one shared key column and up to five value
  * columns.
  */
+#if AQ_XLL_ENABLED(aqToolLVBFromKeysAndMultipleValues)
 XLO_FUNC_START( aqToolLVBFromKeysAndMultipleValues(
     const ExcelObj& keys,
     const ExcelObj& values1, const ExcelObj& values2, const ExcelObj& values3,
@@ -546,6 +581,7 @@ XLO_FUNC_END( aqToolLVBFromKeysAndMultipleValues )
     .arg( L"Values3", L"Optional. Values column 3" )
     .arg( L"Values4", L"Optional. Values column 4" )
     .arg( L"Values5", L"Optional. Values column 5" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -556,6 +592,7 @@ XLO_FUNC_END( aqToolLVBFromKeysAndMultipleValues )
  * Remove blank and/or error cells from a range, row by row or column by column.
  * Cell types (number, boolean, text) are preserved.
  */
+#if AQ_XLL_ENABLED(aqToolClean)
 XLO_FUNC_START( aqToolClean(
     const ExcelObj& inputMatrix,
     const ExcelObj& cleanByRow,
@@ -582,12 +619,14 @@ XLO_FUNC_END( aqToolClean )
     .arg( L"CheckRowColumnNumber", L"Optional. Row/column index whose blanks/errors drive the removal. Default 0" )
     .arg( L"RemoveBlanks",         L"Optional. Default TRUE. Remove blank cells" )
     .arg( L"RemoveErrors",         L"Optional. Default TRUE. Remove error cells" );
+#endif
 
 
 /*
  * Append up to ten ranges into one, stacking by row or by column. Cell types
  * are preserved.
  */
+#if AQ_XLL_ENABLED(aqToolAppend)
 XLO_FUNC_START( aqToolAppend(
     const ExcelObj& appendByRow,
     const ExcelObj& matrix1,  const ExcelObj& matrix2,  const ExcelObj& matrix3,
@@ -620,11 +659,13 @@ XLO_FUNC_END( aqToolAppend )
     .arg( L"Matrix8",     L"Optional. Range 8" )
     .arg( L"Matrix9",     L"Optional. Range 9" )
     .arg( L"Matrix10",    L"Optional. Range 10" );
+#endif
 
 
 /*
  * Split a single vector of mixed data into typed columns.
  */
+#if AQ_XLL_ENABLED(aqToolDataFilter)
 XLO_FUNC_START( aqToolDataFilter(
     const ExcelObj& dataVector,
     const ExcelObj& displayByRow ) )
@@ -641,12 +682,14 @@ XLO_FUNC_END( aqToolDataFilter )
     .help( L"Split a single vector of mixed data into typed columns." )
     .arg( L"DataVector",   L"The vector of mixed values" )
     .arg( L"DisplayByRow", L"Optional. Default FALSE. TRUE lays the result out by row" );
+#endif
 
 
 /*
  * Resolve a raw valuation-settings block (curve collection, fixing tables and
  * so on) into the settings actually used for pricing.
  */
+#if AQ_XLL_ENABLED(aqToolValuationSettingsDisplay)
 XLO_FUNC_START( aqToolValuationSettingsDisplay(
     const ExcelObj& rawInput ) )
 {
@@ -675,6 +718,7 @@ XLO_FUNC_END( aqToolValuationSettingsDisplay )
     .help( L"Resolve a raw valuation-settings block into the settings used for pricing. "
            L"Input is read as rows of (key, value) pairs." )
     .arg( L"RawInput", L"The raw valuation-settings block, rows of (key, value)" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -684,6 +728,7 @@ XLO_FUNC_END( aqToolValuationSettingsDisplay )
 /*
  * Convert a list of year-fraction terms, measured from AsOfDate, into dates.
  */
+#if AQ_XLL_ENABLED(aqToolTermsToDates)
 XLO_FUNC_START( aqToolTermsToDates(
     const ExcelObj& asOfDate,
     const ExcelObj& terms ) )
@@ -699,11 +744,13 @@ XLO_FUNC_END( aqToolTermsToDates )
     .help( L"Convert a list of year-fraction terms, measured from AsOfDate, into dates." )
     .arg( L"AsOfDate", L"The anchor date" )
     .arg( L"Terms",    L"Column of year-fraction terms" );
+#endif
 
 
 /*
  * Convert a list of dates into year-fraction terms measured from AsOfDate.
  */
+#if AQ_XLL_ENABLED(aqToolDatesToTerms)
 XLO_FUNC_START( aqToolDatesToTerms(
     const ExcelObj& asOfDate,
     const ExcelObj& paymentDates ) )
@@ -719,6 +766,7 @@ XLO_FUNC_END( aqToolDatesToTerms )
     .help( L"Convert a list of dates into year-fraction terms measured from AsOfDate." )
     .arg( L"AsOfDate",     L"The anchor date" )
     .arg( L"PaymentDates", L"Column of dates" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -726,6 +774,7 @@ XLO_FUNC_END( aqToolDatesToTerms )
  * ---------------------------------------------------------------------- */
 
 // Build a label/value block from a keys column and one or two values columns.
+#if AQ_XLL_ENABLED(aqToolLVBCreate)
 XLO_FUNC_START( aqToolLVBCreate(
     const ExcelObj& keys,
     const ExcelObj& values1,
@@ -765,6 +814,7 @@ XLO_FUNC_END( aqToolLVBCreate )
     .arg( L"Keys",    L"Column of keys" )
     .arg( L"Values1", L"Column of values, aligned with Keys" )
     .arg( L"Values2", L"Optional. A second column of values" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -772,6 +822,7 @@ XLO_FUNC_END( aqToolLVBCreate )
  * ---------------------------------------------------------------------- */
 
 // Create and store an object grid from a range.
+#if AQ_XLL_ENABLED(aqToolObjectGridCreate)
 XLO_FUNC_START( aqToolObjectGridCreate(
     const ExcelObj& objectName,
     const ExcelObj& data,
@@ -792,9 +843,11 @@ XLO_FUNC_END( aqToolObjectGridCreate )
     .arg( L"ObjectName",      L"Name for the grid object" )
     .arg( L"Data",            L"The range to store" )
     .arg( L"AllowJaggedData", L"Optional. Default FALSE. Allow columns of differing length" );
+#endif
 
 
 // Save an object grid to a file.
+#if AQ_XLL_ENABLED(aqToolObjectGridSave)
 XLO_FUNC_START( aqToolObjectGridSave(
     const ExcelObj& objectName,
     const ExcelObj& fileNameToWriteTo ) )
@@ -809,9 +862,11 @@ XLO_FUNC_END( aqToolObjectGridSave )
     .help( L"Save an object grid to a file. Returns a status string." )
     .arg( L"ObjectName",        L"A grid handle" )
     .arg( L"FileNameToWriteTo", L"Full path to write the grid to" );
+#endif
 
 
 // Load an object grid from a file.
+#if AQ_XLL_ENABLED(aqToolObjectGridLoad)
 XLO_FUNC_START( aqToolObjectGridLoad(
     const ExcelObj& fileName ) )
 {
@@ -823,9 +878,11 @@ XLO_FUNC_START( aqToolObjectGridLoad(
 XLO_FUNC_END( aqToolObjectGridLoad )
     .help( L"Load an object grid from a file. Returns a status string." )
     .arg( L"FileName", L"Full path to the grid file" );
+#endif
 
 
 // Display an object grid as a matrix, column names as the header row.
+#if AQ_XLL_ENABLED(aqToolObjectGridDisplay)
 XLO_FUNC_START( aqToolObjectGridDisplay(
     const ExcelObj& objectName ) )
 {
@@ -838,9 +895,11 @@ XLO_FUNC_START( aqToolObjectGridDisplay(
 XLO_FUNC_END( aqToolObjectGridDisplay )
     .help( L"Display an object grid as a matrix with the column names as a header row." )
     .arg( L"ObjectName", L"A grid handle" );
+#endif
 
 
 // The names of every cached object grid.
+#if AQ_XLL_ENABLED(aqToolObjectGridObjectNames)
 XLO_FUNC_START( aqToolObjectGridObjectNames() )
 {
     AQ_XLL_GUARD
@@ -850,9 +909,11 @@ XLO_FUNC_START( aqToolObjectGridObjectNames() )
 }
 XLO_FUNC_END( aqToolObjectGridObjectNames )
     .help( L"The names of every cached object grid, as a column." );
+#endif
 
 
 // Remove one object grid from the cache.
+#if AQ_XLL_ENABLED(aqToolObjectGridClearOne)
 XLO_FUNC_START( aqToolObjectGridClearOne(
     const ExcelObj& objectName ) )
 {
@@ -864,9 +925,11 @@ XLO_FUNC_START( aqToolObjectGridClearOne(
 XLO_FUNC_END( aqToolObjectGridClearOne )
     .help( L"Remove one object grid from the cache. Returns TRUE on success." )
     .arg( L"ObjectName", L"A grid handle" );
+#endif
 
 
 // Remove every object grid from the cache.
+#if AQ_XLL_ENABLED(aqToolObjectGridClearAll)
 XLO_FUNC_START( aqToolObjectGridClearAll() )
 {
     AQ_XLL_GUARD
@@ -876,6 +939,7 @@ XLO_FUNC_START( aqToolObjectGridClearAll() )
 }
 XLO_FUNC_END( aqToolObjectGridClearAll )
     .help( L"Remove every object grid from the cache. Returns TRUE on success." );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -883,6 +947,7 @@ XLO_FUNC_END( aqToolObjectGridClearAll )
  * ---------------------------------------------------------------------- */
 
 // Create and store a multi-grid from up to three named grids.
+#if AQ_XLL_ENABLED(aqToolObjectMultiGridCreate)
 XLO_FUNC_START( aqToolObjectMultiGridCreate(
     const ExcelObj& objectName,
     const ExcelObj& gridName1,
@@ -930,9 +995,11 @@ XLO_FUNC_END( aqToolObjectMultiGridCreate )
     .arg( L"GridName3",       L"Optional. Name of the third grid" )
     .arg( L"Grid3",           L"Optional. Third grid, as a range" )
     .arg( L"AllowJaggedData", L"Optional. Default FALSE. Allow columns of differing length" );
+#endif
 
 
 // Display one named grid of a multi-grid as a matrix.
+#if AQ_XLL_ENABLED(aqToolObjectMultiGridDisplay)
 XLO_FUNC_START( aqToolObjectMultiGridDisplay(
     const ExcelObj& objectName,
     const ExcelObj& gridName ) )
@@ -947,9 +1014,11 @@ XLO_FUNC_END( aqToolObjectMultiGridDisplay )
     .help( L"Display one named grid of a multi-grid as a matrix with a header row." )
     .arg( L"ObjectName", L"A multi-grid handle" )
     .arg( L"GridName",   L"The grid within the multi-grid to display" );
+#endif
 
 
 // The sub-grid names held by a multi-grid.
+#if AQ_XLL_ENABLED(aqToolObjectMultiGridSubNames)
 XLO_FUNC_START( aqToolObjectMultiGridSubNames(
     const ExcelObj& objectName ) )
 {
@@ -962,6 +1031,7 @@ XLO_FUNC_START( aqToolObjectMultiGridSubNames(
 XLO_FUNC_END( aqToolObjectMultiGridSubNames )
     .help( L"The sub-grid names held by a multi-grid, as a column." )
     .arg( L"ObjectName", L"A multi-grid handle" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -972,6 +1042,7 @@ XLO_FUNC_END( aqToolObjectMultiGridSubNames )
 // empty vector, undefined behaviour - typically an access violation) to
 // exercise AQ_XLL_GUARD / etrading::StructuredExceptionHandler. No tryAq*
 // wrapper - this is an AQ_XLL-only diagnostic, like aqToolEcho / aqToolBuildTime.
+#if AQ_XLL_ENABLED(aqToolSEH)
 XLO_FUNC_START( aqToolSEH() )
 {
     AQ_XLL_GUARD
@@ -982,10 +1053,12 @@ XLO_FUNC_START( aqToolSEH() )
 XLO_FUNC_END( aqToolSEH )
     .help( L"Diagnostic: deliberately triggers a structured exception (out-of-bounds access) "
            L"to test whether AQ_XLL_GUARD catches it or the add-in crashes." );
+#endif
 
 
 // Echo a double straight back through the validation layer. Diagnostic for
 // confirming a numeric argument round-trips validation unchanged.
+#if AQ_XLL_ENABLED(aqToolEchoDouble)
 XLO_FUNC_START( aqToolEchoDouble(
     const ExcelObj& value ) )
 {
@@ -997,9 +1070,11 @@ XLO_FUNC_START( aqToolEchoDouble(
 XLO_FUNC_END( aqToolEchoDouble )
     .help( L"Echo a double straight back through the validation layer." )
     .arg( L"Value", L"Any number" );
+#endif
 
 
 // The average of several underlying bond yields (filed under Bond, golden-named Tool).
+#if AQ_XLL_ENABLED(aqToolBondAverageYield)
 XLO_FUNC_START( aqToolBondAverageYield(
     const ExcelObj& underlyingBondYields ) )
 {
@@ -1012,9 +1087,11 @@ XLO_FUNC_START( aqToolBondAverageYield(
 XLO_FUNC_END( aqToolBondAverageYield )
     .help( L"The average of several underlying bond yields." )
     .arg( L"UnderlyingBondYields", L"Column of bond yields to average" );
+#endif
 
 
 // A bond yield implied by a bond-future price (filed under Bond, golden-named Tool).
+#if AQ_XLL_ENABLED(aqToolBondYieldFromFuturePrice)
 XLO_FUNC_START( aqToolBondYieldFromFuturePrice(
     const ExcelObj& futurePrice ) )
 {
@@ -1026,9 +1103,11 @@ XLO_FUNC_START( aqToolBondYieldFromFuturePrice(
 XLO_FUNC_END( aqToolBondYieldFromFuturePrice )
     .help( L"A bond yield implied by a bond-future price." )
     .arg( L"FuturePrice", L"The bond-future price" );
+#endif
 
 
 // A template of a swap's floating/fixing leg schedules (filed under Swap, golden-named Tool).
+#if AQ_XLL_ENABLED(aqToolSwapScheduleTemplate)
 XLO_FUNC_START( aqToolSwapScheduleTemplate(
     const ExcelObj& showColumnHeaders,
     const ExcelObj& swapScheduleLVB,
@@ -1050,3 +1129,4 @@ XLO_FUNC_END( aqToolSwapScheduleTemplate )
     .arg( L"SwapScheduleLVB",   L"The schedule configuration as a label/value block" )
     .arg( L"ValidateKeys",      L"Optional. Default TRUE. Check the LVB keys" )
     .arg( L"ColumnList",        L"Optional. Column names to include; default all columns" );
+#endif

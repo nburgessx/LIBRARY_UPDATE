@@ -24,6 +24,7 @@ using namespace aq_xll;
 
 
 // Create and store an inflation curve from one or two named data blocks.
+#if AQ_XLL_ENABLED(aqInflationCurveCreate)
 XLO_FUNC_START( aqInflationCurveCreate(
     const ExcelObj& inflationCurveName,
     const ExcelObj& key1,
@@ -60,9 +61,11 @@ XLO_FUNC_END( aqInflationCurveCreate )
     .arg( L"Value1",             L"First data block, as a range" )
     .arg( L"Key2",               L"Optional. Name of the second data block" )
     .arg( L"Value2",             L"Optional. Second data block, as a range" );
+#endif
 
 
 // The calibration parameters of a stored inflation curve.
+#if AQ_XLL_ENABLED(aqInflationCurveCalibrationParameters)
 XLO_FUNC_START( aqInflationCurveCalibrationParameters(
     const ExcelObj& inflationCurveName ) )
 {
@@ -75,9 +78,11 @@ XLO_FUNC_START( aqInflationCurveCalibrationParameters(
 XLO_FUNC_END( aqInflationCurveCalibrationParameters )
     .help( L"The calibration parameters of a stored inflation curve, as a matrix." )
     .arg( L"InflationCurveName", L"An inflation curve handle" );
+#endif
 
 
 // CPI index level from a stored inflation curve.
+#if AQ_XLL_ENABLED(aqInflationObjectCPI)
 XLO_FUNC_START( aqInflationObjectCPI(
     const ExcelObj& inflationCurveName,
     const ExcelObj& date,
@@ -99,9 +104,11 @@ XLO_FUNC_END( aqInflationObjectCPI )
     .arg( L"Date",               L"The date to read the index at" )
     .arg( L"InflationResetType", L"Reset convention, e.g. DAILY, MONTHLY" )
     .arg( L"Lag",                L"Publication lag, e.g. 3M" );
+#endif
 
 
 // Present value of a cached zero-coupon inflation swap, off a stored curve.
+#if AQ_XLL_ENABLED(aqInflationObjectZCSwapPV)
 XLO_FUNC_START( aqInflationObjectZCSwapPV(
     const ExcelObj& swapName,
     const ExcelObj& inflationCurveName,
@@ -123,9 +130,11 @@ XLO_FUNC_END( aqInflationObjectZCSwapPV )
     .arg( L"InflationCurveName",   L"An inflation curve handle" )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" )
     .arg( L"LegName",              L"The leg to value" );
+#endif
 
 
 // Present value of a cached zero-coupon inflation swap, off explicit index levels.
+#if AQ_XLL_ENABLED(aqInflationObjectZCSwapPVFromIndex)
 XLO_FUNC_START( aqInflationObjectZCSwapPVFromIndex(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
@@ -150,9 +159,11 @@ XLO_FUNC_END( aqInflationObjectZCSwapPVFromIndex )
     .arg( L"BaseIndex",            L"The base CPI index level" )
     .arg( L"ResetIndex",           L"The reset CPI index level" )
     .arg( L"LegName",              L"The leg to value" );
+#endif
 
 
 // Par rate of a cached zero-coupon inflation swap, off a stored curve.
+#if AQ_XLL_ENABLED(aqInflationObjectZCSwapParRate)
 XLO_FUNC_START( aqInflationObjectZCSwapParRate(
     const ExcelObj& swapName,
     const ExcelObj& inflationCurveName,
@@ -171,9 +182,11 @@ XLO_FUNC_END( aqInflationObjectZCSwapParRate )
     .arg( L"SwapName",             L"A swap handle" )
     .arg( L"InflationCurveName",   L"An inflation curve handle" )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" );
+#endif
 
 
 // Par rate of a cached zero-coupon inflation swap, off explicit index levels.
+#if AQ_XLL_ENABLED(aqInflationObjectZCSwapParRateFromIndex)
 XLO_FUNC_START( aqInflationObjectZCSwapParRateFromIndex(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
@@ -195,3 +208,4 @@ XLO_FUNC_END( aqInflationObjectZCSwapParRateFromIndex )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" )
     .arg( L"BaseIndex",            L"The base CPI index level" )
     .arg( L"ResetIndex",           L"The reset CPI index level" );
+#endif

@@ -187,6 +187,7 @@ namespace
  * ---------------------------------------------------------------------- */
 
 // The names of every cached curve.
+#if AQ_XLL_ENABLED(aqCurveObjectList)
 XLO_FUNC_START( aqCurveObjectList() )
 {
     AQ_XLL_GUARD
@@ -196,9 +197,11 @@ XLO_FUNC_START( aqCurveObjectList() )
 }
 XLO_FUNC_END( aqCurveObjectList )
     .help( L"The names of every cached curve, as a column." );
+#endif
 
 
 // Remove one curve from the cache.
+#if AQ_XLL_ENABLED(aqCurveObjectDelete)
 XLO_FUNC_START( aqCurveObjectDelete(
     const ExcelObj& curveName ) )
 {
@@ -210,9 +213,11 @@ XLO_FUNC_START( aqCurveObjectDelete(
 XLO_FUNC_END( aqCurveObjectDelete )
     .help( L"Remove one cached curve. Returns TRUE on success." )
     .arg( L"CurveName", L"A curve handle" );
+#endif
 
 
 // Remove every cached curve.
+#if AQ_XLL_ENABLED(aqCurveObjectDeleteAll)
 XLO_FUNC_START( aqCurveObjectDeleteAll() )
 {
     AQ_XLL_GUARD
@@ -222,9 +227,11 @@ XLO_FUNC_START( aqCurveObjectDeleteAll() )
 }
 XLO_FUNC_END( aqCurveObjectDeleteAll )
     .help( L"Remove every cached curve. Returns the number removed." );
+#endif
 
 
 // Save a cached curve to a file.
+#if AQ_XLL_ENABLED(aqCurveObjectSave)
 XLO_FUNC_START( aqCurveObjectSave(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& fileNameToWriteTo ) )
@@ -239,9 +246,11 @@ XLO_FUNC_END( aqCurveObjectSave )
     .help( L"Save a cached curve to a file. Returns a status string." )
     .arg( L"AqObjCurveName",   L"A curve handle" )
     .arg( L"FileNameToWriteTo", L"Full path to write the curve to" );
+#endif
 
 
 // Load a curve from a file.
+#if AQ_XLL_ENABLED(aqCurveObjectLoad)
 XLO_FUNC_START( aqCurveObjectLoad(
     const ExcelObj& fileName ) )
 {
@@ -253,9 +262,11 @@ XLO_FUNC_START( aqCurveObjectLoad(
 XLO_FUNC_END( aqCurveObjectLoad )
     .help( L"Load a curve from a file. Returns a status string." )
     .arg( L"FileName", L"Full path to the curve file" );
+#endif
 
 
 // Display a cached curve as a matrix.
+#if AQ_XLL_ENABLED(aqCurveObjectDisplay)
 XLO_FUNC_START( aqCurveObjectDisplay(
     const ExcelObj& curveObjectName ) )
 {
@@ -268,6 +279,7 @@ XLO_FUNC_START( aqCurveObjectDisplay(
 XLO_FUNC_END( aqCurveObjectDisplay )
     .help( L"Display a cached curve as a matrix." )
     .arg( L"CurveObjectName", L"A curve handle" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -275,6 +287,7 @@ XLO_FUNC_END( aqCurveObjectDisplay )
  * ---------------------------------------------------------------------- */
 
 // Calibrate and store a curve from a curve generator and market data.
+#if AQ_XLL_ENABLED(aqCurveObjectCalibrate)
 XLO_FUNC_START( aqCurveObjectCalibrate(
     const ExcelObj& objectName,
     const ExcelObj& curveGeneratorName,
@@ -303,9 +316,11 @@ XLO_FUNC_END( aqCurveObjectCalibrate )
     .arg( L"CurveMarketDataName",     L"A curve-market-data handle (rates)" )
     .arg( L"DomesticCurveCollection", L"Optional. Domestic discount curve collection, for cross-currency curves" )
     .arg( L"ForeignCurveCollection",  L"Optional. Foreign discount curve collection, for cross-currency curves" );
+#endif
 
 
 // Calibrate a hedge-curve pairing (OIS discounting + Libor forwarding).
+#if AQ_XLL_ENABLED(aqCurveObjectCalibrateHedge)
 XLO_FUNC_START( aqCurveObjectCalibrateHedge(
     const ExcelObj& oisCurveObjectName,
     const ExcelObj& swapCurveObjectName,
@@ -357,12 +372,14 @@ XLO_FUNC_END( aqCurveObjectCalibrateHedge )
     .arg( L"SwapCurveGeneratorName", L"A curve-generator handle for the swap curve" )
     .arg( L"SwapCurveMarketDataName", L"A curve-market-data handle for the swap curve" )
     .arg( L"SwapGeneratorName",      L"A swap-generator handle for the hedge instruments" );
+#endif
 
 
 /* -------------------------------------------------------------------------
  *  Discount factors
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveObjectDiscountFactorsFromYearFractions)
 XLO_FUNC_START( aqCurveObjectDiscountFactorsFromYearFractions(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& yearFractions,
@@ -381,8 +398,10 @@ XLO_FUNC_END( aqCurveObjectDiscountFactorsFromYearFractions )
     .arg( L"AqObjCurveName", L"A curve handle" )
     .arg( L"YearFractions",  L"Column of year fractions" )
     .arg( L"DayCount",       L"Day count convention, e.g. ACT/360, ACT/365" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectDiscountFactorsFromTenors)
 XLO_FUNC_START( aqCurveObjectDiscountFactorsFromTenors(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& tenors,
@@ -404,8 +423,10 @@ XLO_FUNC_END( aqCurveObjectDiscountFactorsFromTenors )
     .arg( L"Tenors",           L"Column of tenors, e.g. 3M, 5Y" )
     .arg( L"BusinessDayAdj",   L"Optional. Default NO_CHANGE" )
     .arg( L"Calendar",         L"Optional. Holiday centre(s) for the tenor roll" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectDiscountFactors)
 XLO_FUNC_START( aqCurveObjectDiscountFactors(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& paymentDates ) )
@@ -420,8 +441,10 @@ XLO_FUNC_END( aqCurveObjectDiscountFactors )
     .help( L"Discount factors from a cached curve at a column of payment dates." )
     .arg( L"AqObjCurveName", L"A curve handle" )
     .arg( L"PaymentDates",   L"Column of payment dates" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectDiscountFactorsForwardStarting)
 XLO_FUNC_START( aqCurveObjectDiscountFactorsForwardStarting(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& fromDates,
@@ -440,8 +463,10 @@ XLO_FUNC_END( aqCurveObjectDiscountFactorsForwardStarting )
     .arg( L"AqObjCurveName", L"A curve handle" )
     .arg( L"FromDates",      L"Column of forward-start dates" )
     .arg( L"ToDates",        L"Column of end dates, aligned with FromDates" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectDiscountFactorsForwardStartingFromYearFractions)
 XLO_FUNC_START( aqCurveObjectDiscountFactorsForwardStartingFromYearFractions(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& fromDates,
@@ -463,8 +488,10 @@ XLO_FUNC_END( aqCurveObjectDiscountFactorsForwardStartingFromYearFractions )
     .arg( L"FromDates",      L"Column of forward-start dates" )
     .arg( L"YearFractions",  L"Column of year fractions forward from FromDates, aligned" )
     .arg( L"DayCount",       L"Day count convention, e.g. ACT/360, ACT/365" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectDiscountFactorsForwardStartingFromTenors)
 XLO_FUNC_START( aqCurveObjectDiscountFactorsForwardStartingFromTenors(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& fromDates,
@@ -489,9 +516,11 @@ XLO_FUNC_END( aqCurveObjectDiscountFactorsForwardStartingFromTenors )
     .arg( L"Tenors",         L"Column of tenors forward from FromDates, aligned, e.g. 3M, 5Y" )
     .arg( L"BusinessDayAdj", L"Optional. Default NO_CHANGE" )
     .arg( L"Calendar",       L"Optional. Holiday centre(s) for the tenor roll" );
+#endif
 
 
 // Discount factor table across multiple curve indices in one curve collection.
+#if AQ_XLL_ENABLED(aqCurveObjectDiscountFactorsTable)
 XLO_FUNC_START( aqCurveObjectDiscountFactorsTable(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndices,
@@ -557,8 +586,10 @@ XLO_FUNC_END( aqCurveObjectDiscountFactorsTable )
     .arg( L"Calendar",           L"Holiday centre(s)" )
     .arg( L"RollConvention",     L"Roll convention, e.g. Normal, IMM, EOM" )
     .arg( L"Frequency",          L"Table row frequency, e.g. 3M, 6M" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectDiscountFactorsWithSpread)
 XLO_FUNC_START( aqCurveObjectDiscountFactorsWithSpread(
     const ExcelObj& paymentDates,
     const ExcelObj& curveCollection,
@@ -583,12 +614,14 @@ XLO_FUNC_END( aqCurveObjectDiscountFactorsWithSpread )
     .arg( L"CurveIndex",      L"The curve index" )
     .arg( L"Spread",          L"Spread to apply" )
     .arg( L"FixingTableName", L"A fixing table handle for the spread's reset basis" );
+#endif
 
 
 /* -------------------------------------------------------------------------
  *  Forward rates
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveObjectForwardRatesFromYearFraction)
 XLO_FUNC_START( aqCurveObjectForwardRatesFromYearFraction(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& fromDates,
@@ -610,8 +643,10 @@ XLO_FUNC_END( aqCurveObjectForwardRatesFromYearFraction )
     .arg( L"FromDates",      L"Column of forward-start dates" )
     .arg( L"YearFraction",   L"Forward period length, in years, common to every date" )
     .arg( L"DayCount",       L"Day count convention, e.g. ACT/360, ACT/365" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectForwardRatesFromForwardDates)
 XLO_FUNC_START( aqCurveObjectForwardRatesFromForwardDates(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& fromDates,
@@ -630,8 +665,10 @@ XLO_FUNC_END( aqCurveObjectForwardRatesFromForwardDates )
     .arg( L"AqObjCurveName", L"A curve handle" )
     .arg( L"FromDates",      L"Column of forward-start dates" )
     .arg( L"ToDates",        L"Column of forward-end dates, aligned with FromDates" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectForwardRates)
 XLO_FUNC_START( aqCurveObjectForwardRates(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& fixingDates ) )
@@ -646,12 +683,14 @@ XLO_FUNC_END( aqCurveObjectForwardRates )
     .help( L"Forward rates from a cached curve at a column of fixing dates (the curve's own tenor convention)." )
     .arg( L"AqObjCurveName", L"A curve handle" )
     .arg( L"FixingDates",    L"Column of fixing dates" );
+#endif
 
 
 /* -------------------------------------------------------------------------
  *  Zero rates (stateless - curve collection/index in, values out)
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveZeroRatesFromYearFractions)
 XLO_FUNC_START( aqCurveZeroRatesFromYearFractions(
     const ExcelObj& yearFractions,
     const ExcelObj& curveCollection,
@@ -679,8 +718,10 @@ XLO_FUNC_END( aqCurveZeroRatesFromYearFractions )
     .arg( L"Frequency",      L"Compounding frequency, e.g. Annual, SemiAnnual" )
     .arg( L"DayCount",       L"Day count convention, e.g. ACT/360, ACT/365" )
     .arg( L"FwdInter",       L"Optional. Forward-interpolation override" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveZeroRatesFromTenors)
 XLO_FUNC_START( aqCurveZeroRatesFromTenors(
     const ExcelObj& tenors,
     const ExcelObj& curveCollection,
@@ -714,6 +755,7 @@ XLO_FUNC_END( aqCurveZeroRatesFromTenors )
     .arg( L"Calendar",        L"Holiday centre(s) for the tenor roll" )
     .arg( L"BusinessDayAdj",  L"Business day adjustment for the tenor roll" )
     .arg( L"FwdInter",        L"Optional. Forward-interpolation override" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -721,6 +763,7 @@ XLO_FUNC_END( aqCurveZeroRatesFromTenors )
  * ---------------------------------------------------------------------- */
 
 // Create and store a curve generator from one or two named data blocks.
+#if AQ_XLL_ENABLED(aqCurveGeneratorCreate)
 XLO_FUNC_START( aqCurveGeneratorCreate(
     const ExcelObj& objectName,
     const ExcelObj& key1,
@@ -756,9 +799,11 @@ XLO_FUNC_END( aqCurveGeneratorCreate )
     .arg( L"Value1",     L"First data block, as a range" )
     .arg( L"Key2",       L"Optional. Name of the second data block" )
     .arg( L"Value2",     L"Optional. Second data block, as a range" );
+#endif
 
 
 // Display a stored curve generator's configuration.
+#if AQ_XLL_ENABLED(aqCurveGeneratorDisplay)
 XLO_FUNC_START( aqCurveGeneratorDisplay(
     const ExcelObj& objectName,
     const ExcelObj& propertyName ) )
@@ -773,9 +818,11 @@ XLO_FUNC_END( aqCurveGeneratorDisplay )
     .help( L"Display a stored curve generator's configuration block as a matrix." )
     .arg( L"ObjectName",   L"A curve-generator handle" )
     .arg( L"PropertyName", L"The configuration block to display" );
+#endif
 
 
 // Create a new curve generator by overriding values on an existing one.
+#if AQ_XLL_ENABLED(aqCurveGeneratorModify)
 XLO_FUNC_START( aqCurveGeneratorModify(
     const ExcelObj& newObjectName,
     const ExcelObj& baseObjectName,
@@ -796,9 +843,11 @@ XLO_FUNC_END( aqCurveGeneratorModify )
     .arg( L"NewObjectName",  L"Name for the new curve-generator object" )
     .arg( L"BaseObjectName", L"The existing curve-generator handle to copy from" )
     .arg( L"ModifiedValues", L"The overrides as a label/value block" );
+#endif
 
 
 // Display a curve object's resolved conventions.
+#if AQ_XLL_ENABLED(aqCurveObjectDisplayConventions)
 XLO_FUNC_START( aqCurveObjectDisplayConventions(
     const ExcelObj& objectName,
     const ExcelObj& propertyKey ) )
@@ -813,6 +862,7 @@ XLO_FUNC_END( aqCurveObjectDisplayConventions )
     .help( L"Display a curve object's resolved conventions as a matrix." )
     .arg( L"ObjectName",   L"A curve handle" )
     .arg( L"PropertyKey",  L"The convention block to display" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -820,6 +870,7 @@ XLO_FUNC_END( aqCurveObjectDisplayConventions )
  * ---------------------------------------------------------------------- */
 
 // Create and store curve market data from one or two named data blocks.
+#if AQ_XLL_ENABLED(aqCurveMarketDataCreate)
 XLO_FUNC_START( aqCurveMarketDataCreate(
     const ExcelObj& objectName,
     const ExcelObj& key1,
@@ -855,9 +906,11 @@ XLO_FUNC_END( aqCurveMarketDataCreate )
     .arg( L"Value1",     L"First data block, as a range" )
     .arg( L"Key2",       L"Optional. Name of the second data block" )
     .arg( L"Value2",     L"Optional. Second data block, as a range" );
+#endif
 
 
 // Clear every bump applied to stored curve market data.
+#if AQ_XLL_ENABLED(aqCurveMarketDataBumpClear)
 XLO_FUNC_START( aqCurveMarketDataBumpClear(
     const ExcelObj& objectName ) )
 {
@@ -869,9 +922,11 @@ XLO_FUNC_START( aqCurveMarketDataBumpClear(
 XLO_FUNC_END( aqCurveMarketDataBumpClear )
     .help( L"Clear every bump applied to stored curve market data. Returns a status string." )
     .arg( L"ObjectName", L"A curve-market-data handle" );
+#endif
 
 
 // Bump one instrument type in stored curve market data.
+#if AQ_XLL_ENABLED(aqCurveMarketDataBumpInstrument)
 XLO_FUNC_START( aqCurveMarketDataBumpInstrument(
     const ExcelObj& objectName,
     const ExcelObj& marketDataType,
@@ -891,9 +946,11 @@ XLO_FUNC_END( aqCurveMarketDataBumpInstrument )
     .arg( L"MarketDataType",      L"Which instrument type to bump" )
     .arg( L"BumpSize",            L"Bump size to apply" )
     .arg( L"ClearExistingBumps",  L"Optional. Default FALSE. Clear prior bumps first" );
+#endif
 
 
 // Bump one instrument type on a cached curve object.
+#if AQ_XLL_ENABLED(aqCurveObjectBumpInstrument)
 XLO_FUNC_START( aqCurveObjectBumpInstrument(
     const ExcelObj& objectName,
     const ExcelObj& marketDataType,
@@ -913,9 +970,11 @@ XLO_FUNC_END( aqCurveObjectBumpInstrument )
     .arg( L"MarketDataType",      L"Which instrument type to bump" )
     .arg( L"BumpSize",            L"Bump size to apply" )
     .arg( L"ClearExistingBumps",  L"Optional. Default FALSE. Clear prior bumps first" );
+#endif
 
 
 // Bump every instrument in stored curve market data.
+#if AQ_XLL_ENABLED(aqCurveMarketDataBumpAll)
 XLO_FUNC_START( aqCurveMarketDataBumpAll(
     const ExcelObj& objectName,
     const ExcelObj& bumpSize,
@@ -933,9 +992,11 @@ XLO_FUNC_END( aqCurveMarketDataBumpAll )
     .arg( L"ObjectName",                   L"A curve-market-data handle" )
     .arg( L"BumpSize",                     L"Bump size to apply" )
     .arg( L"OnlyBumpOutrightInstruments",  L"Optional. Default TRUE. Skip basis/spread instruments" );
+#endif
 
 
 // Bump every instrument on a cached curve object.
+#if AQ_XLL_ENABLED(aqCurveObjectBumpAll)
 XLO_FUNC_START( aqCurveObjectBumpAll(
     const ExcelObj& objectName,
     const ExcelObj& bumpSize,
@@ -953,9 +1014,11 @@ XLO_FUNC_END( aqCurveObjectBumpAll )
     .arg( L"ObjectName",                   L"A curve handle" )
     .arg( L"BumpSize",                     L"Bump size to apply" )
     .arg( L"OnlyBumpOutrightInstruments",  L"Optional. Default TRUE. Skip basis/spread instruments" );
+#endif
 
 
 // Display stored curve market data.
+#if AQ_XLL_ENABLED(aqCurveMarketDataDisplay)
 XLO_FUNC_START( aqCurveMarketDataDisplay(
     const ExcelObj& marketDataObjectName,
     const ExcelObj& marketDataKey,
@@ -974,9 +1037,11 @@ XLO_FUNC_END( aqCurveMarketDataDisplay )
     .arg( L"MarketDataObjectName", L"A curve-market-data handle" )
     .arg( L"MarketDataKey",        L"The data block to display" )
     .arg( L"ColumnIndexToDisplay", L"Optional. Default -1 (all columns). A single column index to display" );
+#endif
 
 
 // Display the curve market data referenced by a cached curve object.
+#if AQ_XLL_ENABLED(aqCurveMarketDataDisplayFromCurve)
 XLO_FUNC_START( aqCurveMarketDataDisplayFromCurve(
     const ExcelObj& curveObjectName,
     const ExcelObj& marketDataKey,
@@ -995,9 +1060,11 @@ XLO_FUNC_END( aqCurveMarketDataDisplayFromCurve )
     .arg( L"CurveObjectName",      L"A curve handle" )
     .arg( L"MarketDataKey",        L"The data block to display" )
     .arg( L"ColumnIndexToDisplay", L"Optional. Default -1 (all columns). A single column index to display" );
+#endif
 
 
 // One column of curve market data.
+#if AQ_XLL_ENABLED(aqCurveMarketDataColumn)
 XLO_FUNC_START( aqCurveMarketDataColumn(
     const ExcelObj& curveObjectName,
     const ExcelObj& marketDataKey,
@@ -1024,6 +1091,7 @@ XLO_FUNC_END( aqCurveMarketDataColumn )
     .arg( L"CurveObjectName", L"A curve handle" )
     .arg( L"MarketDataKey",   L"The data block to read from" )
     .arg( L"ColumnNumber",    L"Which column to return" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -1032,6 +1100,7 @@ XLO_FUNC_END( aqCurveMarketDataColumn )
  * ---------------------------------------------------------------------- */
 
 // Compounded interest rate over a schedule of accrual periods.
+#if AQ_XLL_ENABLED(aqCurveCompoundRate)
 XLO_FUNC_START( aqCurveCompoundRate(
     const ExcelObj& startDates,
     const ExcelObj& endDates,
@@ -1086,9 +1155,11 @@ XLO_FUNC_END( aqCurveCompoundRate )
     .arg( L"CompoundType",       L"NORMAL, FLAT, SIMPLE or AVERAGE" )
     .arg( L"FirstStubDate",      L"End date of the front stub period" )
     .arg( L"LastStubDate",       L"Start date of the end stub period" );
+#endif
 
 
 // As aqCurveCompoundRate, applying a spread over a cached fixing table.
+#if AQ_XLL_ENABLED(aqCurveCompoundRateWithFixingTable)
 XLO_FUNC_START( aqCurveCompoundRateWithFixingTable(
     const ExcelObj& startDates,
     const ExcelObj& endDates,
@@ -1149,9 +1220,11 @@ XLO_FUNC_END( aqCurveCompoundRateWithFixingTable )
     .arg( L"LastStubDate",       L"Start date of the end stub period" )
     .arg( L"FixingTableName",    L"A fixing table handle for the spread's reset basis" )
     .arg( L"Annualized",         L"Optional. Default TRUE. Return an annualized rate" );
+#endif
 
 
 // Remove one curve index from a curve collection (legacy stateless twin of aqCurveObjectDelete).
+#if AQ_XLL_ENABLED(aqCurveDelete)
 XLO_FUNC_START( aqCurveDelete(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex ) )
@@ -1165,9 +1238,11 @@ XLO_FUNC_END( aqCurveDelete )
     .help( L"Remove one curve index from a curve collection. Returns a status string." )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index to remove" );
+#endif
 
 
 // Terms and discount factors from a curve collection/index, as a 2-column array.
+#if AQ_XLL_ENABLED(aqCurveDisplay)
 XLO_FUNC_START( aqCurveDisplay(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex ) )
@@ -1182,9 +1257,11 @@ XLO_FUNC_END( aqCurveDisplay )
     .help( L"Terms and discount factors from a curve collection/index." )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" );
+#endif
 
 
 // The floating index frequency of a curve collection/index.
+#if AQ_XLL_ENABLED(aqCurveFrequency)
 XLO_FUNC_START( aqCurveFrequency(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex ) )
@@ -1198,9 +1275,11 @@ XLO_FUNC_END( aqCurveFrequency )
     .help( L"The floating index frequency of a curve collection/index, e.g. 3M." )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" );
+#endif
 
 
 // The interpolation join date of a curve collection/index.
+#if AQ_XLL_ENABLED(aqCurveGetInterpolationJoinDate)
 XLO_FUNC_START( aqCurveGetInterpolationJoinDate(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex,
@@ -1217,10 +1296,12 @@ XLO_FUNC_END( aqCurveGetInterpolationJoinDate )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" )
     .arg( L"Interpolation",   L"Optional. Interpolation type override" );
+#endif
 
 
 // As aqCurveGetInterpolationJoinDate (a separate validation wrapper, kept
 // distinct per the golden source rather than treated as a duplicate).
+#if AQ_XLL_ENABLED(aqCurveInterpolationJoinDate)
 XLO_FUNC_START( aqCurveInterpolationJoinDate(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex,
@@ -1237,9 +1318,11 @@ XLO_FUNC_END( aqCurveInterpolationJoinDate )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" )
     .arg( L"Interpolation",   L"Optional. Interpolation type override" );
+#endif
 
 
 // The EuroDollar futures convexity adjustment under a Hull-White 1F model.
+#if AQ_XLL_ENABLED(aqCurveEuroDollarConvexityAdjustment)
 XLO_FUNC_START( aqCurveEuroDollarConvexityAdjustment(
     const ExcelObj& curveAsOfDate,
     const ExcelObj& futuresStartDate,
@@ -1261,12 +1344,14 @@ XLO_FUNC_END( aqCurveEuroDollarConvexityAdjustment )
     .arg( L"FuturesEndDate",    L"The futures end date" )
     .arg( L"MeanReversion",     L"The Hull-White 1F mean reversion parameter" )
     .arg( L"Volatility",        L"The Hull-White 1F volatility parameter" );
+#endif
 
 
 /* -------------------------------------------------------------------------
  *  Legacy stateless discount factors (curveCollection+curveIndex)
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveDiscountFactorsFromYearFractions)
 XLO_FUNC_START( aqCurveDiscountFactorsFromYearFractions(
     const ExcelObj& yearFractions,
     const ExcelObj& dayCount,
@@ -1286,8 +1371,10 @@ XLO_FUNC_END( aqCurveDiscountFactorsFromYearFractions )
     .arg( L"DayCount",       L"Day count convention used to generate the year fraction" )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",     L"The curve index" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveDiscountFactorsFromTenors)
 XLO_FUNC_START( aqCurveDiscountFactorsFromTenors(
     const ExcelObj& tenors,
     const ExcelObj& businessDayAdj,
@@ -1309,8 +1396,10 @@ XLO_FUNC_END( aqCurveDiscountFactorsFromTenors )
     .arg( L"Calendar",        L"Holiday centre(s)" )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveDiscountFactors)
 XLO_FUNC_START( aqCurveDiscountFactors(
     const ExcelObj& toDates,
     const ExcelObj& curveCollectionOrHandle,
@@ -1327,8 +1416,10 @@ XLO_FUNC_END( aqCurveDiscountFactors )
     .arg( L"ToDates",               L"Column of payment dates" )
     .arg( L"CurveCollectionOrHandle", L"The curve collection (or a curve handle)" )
     .arg( L"CurveIndex",            L"The curve index" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveDiscountFactorsForwardStarting)
 XLO_FUNC_START( aqCurveDiscountFactorsForwardStarting(
     const ExcelObj& fromDates,
     const ExcelObj& toDates,
@@ -1348,8 +1439,10 @@ XLO_FUNC_END( aqCurveDiscountFactorsForwardStarting )
     .arg( L"ToDates",         L"Column of end dates, aligned with FromDates" )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveDiscountFactorsForwardStartingFromYearFractions)
 XLO_FUNC_START( aqCurveDiscountFactorsForwardStartingFromYearFractions(
     const ExcelObj& fromDates,
     const ExcelObj& yearFractions,
@@ -1371,8 +1464,10 @@ XLO_FUNC_END( aqCurveDiscountFactorsForwardStartingFromYearFractions )
     .arg( L"DayCount",        L"Day count convention" )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveDiscountFactorsForwardStartingFromTenor)
 XLO_FUNC_START( aqCurveDiscountFactorsForwardStartingFromTenor(
     const ExcelObj& fromDates,
     const ExcelObj& tenor,
@@ -1397,9 +1492,11 @@ XLO_FUNC_END( aqCurveDiscountFactorsForwardStartingFromTenor )
     .arg( L"CurveIndex",      L"The curve index" )
     .arg( L"BusinessDayAdj",  L"Business day adjustment for the tenor roll, e.g. NO_CHANGE" )
     .arg( L"Calendar",        L"Holiday centre(s)" );
+#endif
 
 
 // Override a curve's forward rates by setting equivalent discount factors.
+#if AQ_XLL_ENABLED(aqCurveForwardRatesOverride)
 XLO_FUNC_START( aqCurveForwardRatesOverride(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex,
@@ -1423,9 +1520,11 @@ XLO_FUNC_END( aqCurveForwardRatesOverride )
     .arg( L"FixingDates",                      L"Column of fixing dates" )
     .arg( L"ForwardRates",                     L"Column of new forward rates, aligned with FixingDates" )
     .arg( L"SetCorrespondingDiscountFactors",  L"Optional. Default TRUE. Also set STD-curve discount factors to 1.0 if FALSE" );
+#endif
 
 
 // Override a curve's discount factors directly.
+#if AQ_XLL_ENABLED(aqCurveDiscountFactorsOverride)
 XLO_FUNC_START( aqCurveDiscountFactorsOverride(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex,
@@ -1450,9 +1549,11 @@ XLO_FUNC_END( aqCurveDiscountFactorsOverride )
     .arg( L"PaymentDates",                L"Column of payment dates" )
     .arg( L"DiscountFactors",             L"Column of new discount factors, aligned with PaymentDates" )
     .arg( L"SetCorrespondingForwards",    L"Optional. Default TRUE. Sets STD-curve forwards to zero if FALSE" );
+#endif
 
 
 // Set every discount factor on a curve to one.
+#if AQ_XLL_ENABLED(aqCurveDiscountFactorsSetToOne)
 XLO_FUNC_START( aqCurveDiscountFactorsSetToOne(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex ) )
@@ -1467,9 +1568,11 @@ XLO_FUNC_END( aqCurveDiscountFactorsSetToOne )
     .help( L"Set every discount factor on a curve collection/index to one. Returns a status string." )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" );
+#endif
 
 
 // Every discount factor currently stored on a curve, as a terms/dates/DF table.
+#if AQ_XLL_ENABLED(aqCurveDiscountFactorsDisplay)
 XLO_FUNC_START( aqCurveDiscountFactorsDisplay(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex ) )
@@ -1502,8 +1605,10 @@ XLO_FUNC_END( aqCurveDiscountFactorsDisplay )
     .help( L"Every discount factor stored on a curve collection/index, as a Term/PaymentDate/DiscountFactor table." )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveTermsToDates)
 XLO_FUNC_START( aqCurveTermsToDates(
     const ExcelObj& curveCollection,
     const ExcelObj& terms ) )
@@ -1518,8 +1623,10 @@ XLO_FUNC_END( aqCurveTermsToDates )
     .help( L"Payment dates for a column of term year fractions, from a curve collection's as-of date." )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"Terms",           L"Column of term year fractions" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveDatesToTerms)
 XLO_FUNC_START( aqCurveDatesToTerms(
     const ExcelObj& curveCollection,
     const ExcelObj& paymentDates ) )
@@ -1534,12 +1641,14 @@ XLO_FUNC_END( aqCurveDatesToTerms )
     .help( L"Term year fractions for a column of payment dates, from a curve collection's as-of date." )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"PaymentDates",    L"Column of payment dates" );
+#endif
 
 
 /* -------------------------------------------------------------------------
  *  Legacy stateless forward rates (curveCollection+curveIndex)
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveForwardRatesFromYearFraction)
 XLO_FUNC_START( aqCurveForwardRatesFromYearFraction(
     const ExcelObj& fromDates,
     const ExcelObj& yearFraction,
@@ -1566,8 +1675,10 @@ XLO_FUNC_END( aqCurveForwardRatesFromYearFraction )
     .arg( L"CurveIndex",        L"The curve index" )
     .arg( L"FwdInter",          L"Optional. Forward-interpolation override; default uses the curve's own setting" )
     .arg( L"BusinessDayAdjust", L"Optional. Default MODFOLLOWING" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveForwardRatesFromForwardDates)
 XLO_FUNC_START( aqCurveForwardRatesFromForwardDates(
     const ExcelObj& fromDates,
     const ExcelObj& toDates,
@@ -1592,10 +1703,12 @@ XLO_FUNC_END( aqCurveForwardRatesFromForwardDates )
     .arg( L"CurveIndex",        L"The curve index" )
     .arg( L"FwdInter",          L"Optional. Forward-interpolation override; default uses the curve's own setting" )
     .arg( L"BusinessDayAdjust", L"Optional. Default MODFOLLOWING" );
+#endif
 
 
 // As aqCurveForwardRatesFromForwardDates; a separate validation wrapper
 // distinguished by taking a curve collection OR a curve handle.
+#if AQ_XLL_ENABLED(aqCurveForwardRatesFromForwardDatesFromObject)
 XLO_FUNC_START( aqCurveForwardRatesFromForwardDatesFromObject(
     const ExcelObj& fromDates,
     const ExcelObj& toDates,
@@ -1620,8 +1733,10 @@ XLO_FUNC_END( aqCurveForwardRatesFromForwardDatesFromObject )
     .arg( L"CurveIndex",              L"The curve index" )
     .arg( L"FwdInter",                L"Optional. Forward-interpolation override; default uses the curve's own setting" )
     .arg( L"BusinessDayAdjust",       L"Optional. Default MODFOLLOWING" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveForwardRates)
 XLO_FUNC_START( aqCurveForwardRates(
     const ExcelObj& fixingDates,
     const ExcelObj& curveCollectionOrHandle,
@@ -1644,9 +1759,11 @@ XLO_FUNC_END( aqCurveForwardRates )
     .arg( L"CurveIndex",              L"The curve index" )
     .arg( L"FwdInter",                L"Optional. Forward-interpolation override; default uses the curve's own setting" )
     .arg( L"BusinessDayAdjust",       L"Optional. Default MODFOLLOWING" );
+#endif
 
 
 // Forward rate table across multiple curve indices in one curve collection.
+#if AQ_XLL_ENABLED(aqCurveObjectForwardRatesTable)
 XLO_FUNC_START( aqCurveObjectForwardRatesTable(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndices,
@@ -1711,12 +1828,14 @@ XLO_FUNC_END( aqCurveObjectForwardRatesTable )
     .arg( L"RollConvention",    L"Roll convention, e.g. Normal, IMM, EOM" )
     .arg( L"Frequency",         L"Table row frequency, e.g. 3M, 6M" )
     .arg( L"FwdInterps",        L"Optional. Column of per-index forward-interpolation overrides" );
+#endif
 
 
 /* -------------------------------------------------------------------------
  *  Short-rate model checks (Hull-White, Vasicek)
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveHullWhiteForwardRates)
 XLO_FUNC_START( aqCurveHullWhiteForwardRates(
     const ExcelObj& fixingDates,
     const ExcelObj& curveCollection,
@@ -1743,8 +1862,10 @@ XLO_FUNC_END( aqCurveHullWhiteForwardRates )
     .arg( L"Alpha",          L"Optional. Default 0.03. The Hull-White 1F mean reversion speed parameter" )
     .arg( L"Rt",             L"Optional. Short rate at time t; default derives it from the curve" )
     .arg( L"ValuationDate",  L"Optional. Default the curve's as-of date" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveVasicekChecking)
 XLO_FUNC_START( aqCurveVasicekChecking(
     const ExcelObj& fixingDates,
     const ExcelObj& targetForwardRates,
@@ -1781,8 +1902,10 @@ XLO_FUNC_END( aqCurveVasicekChecking )
     .arg( L"Rt",                  L"Optional. Short rate at time t; default derives it from the curve" )
     .arg( L"ValuationDate",       L"Optional. Default the curve's as-of date" )
     .arg( L"ShowColumnHeaders",   L"Optional. Default TRUE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveVasicekForwardRates)
 XLO_FUNC_START( aqCurveVasicekForwardRates(
     const ExcelObj& fixingDates,
     const ExcelObj& curveCollection,
@@ -1811,6 +1934,7 @@ XLO_FUNC_END( aqCurveVasicekForwardRates )
     .arg( L"Alpha",          L"Optional. Default 0.03. The Vasicek 1F mean reversion speed parameter" )
     .arg( L"Rt",             L"Optional. Short rate at time t; default derives it from the curve" )
     .arg( L"ValuationDate",  L"Optional. Default the curve's as-of date" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -1819,6 +1943,7 @@ XLO_FUNC_END( aqCurveVasicekForwardRates )
  *  named data blocks the CurveMarketData family above consumes.
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveObjectDataCreate)
 XLO_FUNC_START( aqCurveObjectDataCreate(
     const ExcelObj& mdcName,
     const ExcelObj& currency,
@@ -1865,8 +1990,10 @@ XLO_FUNC_END( aqCurveObjectDataCreate )
     .arg( L"FxStringBlock",          L"Optional. FX rates block" )
     .arg( L"UnitCurrency",           L"Optional. FX unit currency" )
     .arg( L"IsInvertedFX",           L"Optional. Default FALSE. FX quote is inverted" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectDataDisplay)
 XLO_FUNC_START( aqCurveObjectDataDisplay(
     const ExcelObj& mdcName ) )
 {
@@ -1878,12 +2005,14 @@ XLO_FUNC_START( aqCurveObjectDataDisplay(
 XLO_FUNC_END( aqCurveObjectDataDisplay )
     .help( L"Display a curve market-data object built via aqCurveObjectDataCreate." )
     .arg( L"MdcName", L"A market-data object handle" );
+#endif
 
 
 /* -------------------------------------------------------------------------
  *  Dual bootstrap / engine calibration
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveObjectDualBootstrap)
 XLO_FUNC_START( aqCurveObjectDualBootstrap(
     const ExcelObj& objectName,
     const ExcelObj& curveCollection,
@@ -1924,8 +2053,10 @@ XLO_FUNC_END( aqCurveObjectDualBootstrap )
     .arg( L"AqObjSwapMarketObj",      L"A curve-market-data handle for the swap curve" )
     .arg( L"AqObjOISMarketObj",       L"A curve-market-data handle for the OIS curve" )
     .arg( L"CommonParams",            L"Optional. Parameters common across both curves" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectEngineCalibrate)
 XLO_FUNC_START( aqCurveObjectEngineCalibrate(
     const ExcelObj& engineObjectName,
     const ExcelObj& curveCollection,
@@ -1958,9 +2089,11 @@ XLO_FUNC_END( aqCurveObjectEngineCalibrate )
     .arg( L"EngineSettings",       L"Engine-level parameters, as a label/value block" )
     .arg( L"CurveGeneratorNames",  L"Column of curve-generator handles, one per curve" )
     .arg( L"MarketDataObjects",    L"Column of curve-market-data handles, aligned with CurveGeneratorNames" );
+#endif
 
 
 // Display the yield curve engine's full Jacobian matrix (multi-curve).
+#if AQ_XLL_ENABLED(aqCurveObjectEngineJacobianDisplay)
 XLO_FUNC_START( aqCurveObjectEngineJacobianDisplay(
     const ExcelObj& curveEngineObject,
     const ExcelObj& curveCollection,
@@ -1989,9 +2122,11 @@ XLO_FUNC_END( aqCurveObjectEngineJacobianDisplay )
     .arg( L"CurveCollection",        L"The curve collection" )
     .arg( L"DisplayLabels",          L"Optional. Default TRUE. Display the label matrix instead of the values" )
     .arg( L"DisplayInverseMatrix",   L"Optional. Default FALSE. Display the inverse Jacobian" );
+#endif
 
 
 // Display one yield curve's Jacobian matrix.
+#if AQ_XLL_ENABLED(aqCurveObjectJacobianDisplay)
 XLO_FUNC_START( aqCurveObjectJacobianDisplay(
     const ExcelObj& curveCollection,
     const ExcelObj& curveName,
@@ -2011,12 +2146,14 @@ XLO_FUNC_END( aqCurveObjectJacobianDisplay )
     .arg( L"CurveCollection",      L"The curve collection" )
     .arg( L"CurveName",            L"The curve index/name" )
     .arg( L"DisplayInverseMatrix", L"Optional. Default FALSE. Display the inverse Jacobian" );
+#endif
 
 
 /* -------------------------------------------------------------------------
  *  Curve results / Jacobian risk store
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveResultsEnable)
 XLO_FUNC_START( aqCurveResultsEnable(
     const ExcelObj& enable ) )
 {
@@ -2028,8 +2165,10 @@ XLO_FUNC_START( aqCurveResultsEnable(
 XLO_FUNC_END( aqCurveResultsEnable )
     .help( L"Enable or disable the curve results (Jacobian risk) store. Returns a status string." )
     .arg( L"Enable", L"TRUE to enable, FALSE to disable" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsIsEnabled)
 XLO_FUNC_START( aqCurveResultsIsEnabled() )
 {
     AQ_XLL_GUARD
@@ -2039,8 +2178,10 @@ XLO_FUNC_START( aqCurveResultsIsEnabled() )
 }
 XLO_FUNC_END( aqCurveResultsIsEnabled )
     .help( L"Whether the curve results (Jacobian risk) store is currently enabled." );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsDiscountFactorsUpdate)
 XLO_FUNC_START( aqCurveResultsDiscountFactorsUpdate(
     const ExcelObj& curveLVB,
     const ExcelObj& parameterLVB,
@@ -2060,8 +2201,10 @@ XLO_FUNC_END( aqCurveResultsDiscountFactorsUpdate )
     .arg( L"ParameterLVB",         L"Calibration parameters, as a label/value block" )
     .arg( L"DiscountFactorLVB",    L"Discount factors to store, as a label/value block" )
     .arg( L"ForwardAdjustments",   L"Optional. Forward-rate adjustments" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsDiscountFactorsDisplayAll)
 XLO_FUNC_START( aqCurveResultsDiscountFactorsDisplayAll(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex ) )
@@ -2076,8 +2219,10 @@ XLO_FUNC_END( aqCurveResultsDiscountFactorsDisplayAll )
     .help( L"Display every discount factor stored in a curve results object." )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsDiscountFactorsDisplay)
 XLO_FUNC_START( aqCurveResultsDiscountFactorsDisplay(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex,
@@ -2094,8 +2239,10 @@ XLO_FUNC_END( aqCurveResultsDiscountFactorsDisplay )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" )
     .arg( L"PaymentDates",    L"Column of payment dates" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsDelete)
 XLO_FUNC_START( aqCurveResultsDelete(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex ) )
@@ -2109,8 +2256,10 @@ XLO_FUNC_END( aqCurveResultsDelete )
     .help( L"Delete one curve results object. Returns a status string." )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsDeleteAll)
 XLO_FUNC_START( aqCurveResultsDeleteAll() )
 {
     AQ_XLL_GUARD
@@ -2120,8 +2269,10 @@ XLO_FUNC_START( aqCurveResultsDeleteAll() )
 }
 XLO_FUNC_END( aqCurveResultsDeleteAll )
     .help( L"Delete every curve results object. Returns a status string." );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsForwardRatesDisplay)
 XLO_FUNC_START( aqCurveResultsForwardRatesDisplay(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex,
@@ -2147,8 +2298,10 @@ XLO_FUNC_END( aqCurveResultsForwardRatesDisplay )
     .arg( L"IsFwdInter",             L"Optional. Default FALSE" )
     .arg( L"FixingBusinessDayAdj",   L"Optional. Default NONE. Business day adjustment for the fixing dates" )
     .arg( L"FixingCalendar",         L"Optional. Holiday centre(s) for the fixing dates" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsJacobianUpdate)
 XLO_FUNC_START( aqCurveResultsJacobianUpdate(
     const ExcelObj& curveLVB,
     const ExcelObj& discountFactorParameterLVB,
@@ -2176,8 +2329,10 @@ XLO_FUNC_END( aqCurveResultsJacobianUpdate )
     .arg( L"OutrightInstruments",            L"Column of TRUE/FALSE flags, one per calibration instrument" )
     .arg( L"MarketDataShiftSizeInPercent",   L"Column of market-data shift sizes used to build the Jacobian" )
     .arg( L"JacobianMatrix",                 L"The Jacobian matrix values" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsJacobianDisplay)
 XLO_FUNC_START( aqCurveResultsJacobianDisplay(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex,
@@ -2195,8 +2350,10 @@ XLO_FUNC_END( aqCurveResultsJacobianDisplay )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" )
     .arg( L"RiskType",        L"The risk type to display" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsJacobianDiscountFactorDelta)
 XLO_FUNC_START( aqCurveResultsJacobianDiscountFactorDelta(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex ) )
@@ -2211,8 +2368,10 @@ XLO_FUNC_END( aqCurveResultsJacobianDiscountFactorDelta )
     .help( L"Display the Jacobian discount-factor delta for a curve results object." )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsJacobianRiskTotals)
 XLO_FUNC_START( aqCurveResultsJacobianRiskTotals(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex,
@@ -2232,8 +2391,10 @@ XLO_FUNC_END( aqCurveResultsJacobianRiskTotals )
     .arg( L"CurveIndex",                  L"The curve index" )
     .arg( L"RiskType",                    L"The risk type to total" )
     .arg( L"UseOutrightInstrumentsOnly",  L"Optional. Default TRUE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveResultsJacobianImplyNewDiscountFactors)
 XLO_FUNC_START( aqCurveResultsJacobianImplyNewDiscountFactors(
     const ExcelObj& curveCollection,
     const ExcelObj& curveIndex ) )
@@ -2248,12 +2409,14 @@ XLO_FUNC_END( aqCurveResultsJacobianImplyNewDiscountFactors )
     .help( L"Discount factors implied by the Jacobian after a market-data shift, for a curve results object." )
     .arg( L"CurveCollection", L"The curve collection" )
     .arg( L"CurveIndex",      L"The curve index" );
+#endif
 
 
 /* -------------------------------------------------------------------------
  *  Curve groups
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveGroupCreate)
 XLO_FUNC_START( aqCurveGroupCreate(
     const ExcelObj& groupName,
     const ExcelObj& curveHandles ) )
@@ -2267,8 +2430,10 @@ XLO_FUNC_END( aqCurveGroupCreate )
     .help( L"Create a named group of curve handles. Returns a status string." )
     .arg( L"GroupName",    L"Name for the curve group" )
     .arg( L"CurveHandles", L"Column of curve handles to include" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveGroupCollectionName)
 XLO_FUNC_START( aqCurveGroupCollectionName(
     const ExcelObj& groupName ) )
 {
@@ -2280,6 +2445,7 @@ XLO_FUNC_START( aqCurveGroupCollectionName(
 XLO_FUNC_END( aqCurveGroupCollectionName )
     .help( L"The curve collection name for a given curve group." )
     .arg( L"GroupName", L"A curve group name" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -2288,6 +2454,7 @@ XLO_FUNC_END( aqCurveGroupCollectionName )
  *  step - see the file header for the "both families get ported" decision).
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveDualBootstrap)
 XLO_FUNC_START( aqCurveDualBootstrap(
     const ExcelObj& curveCollection,
     const ExcelObj& curveNameDb,
@@ -2362,6 +2529,7 @@ XLO_FUNC_END( aqCurveDualBootstrap )
     .arg( L"FutureConvSwap",      L"Futures conventions" )
     .arg( L"TenorBasisConvSwap",  L"Tenor basis conventions" )
     .arg( L"TenorBasisRatesSwap", L"Tenor basis market data" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -2370,6 +2538,7 @@ XLO_FUNC_END( aqCurveDualBootstrap )
  *  both get ported, verbatim golden names (no renaming).
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqCurveCalibrateBasis)
 XLO_FUNC_START( aqCurveCalibrateBasis(
     const ExcelObj& curveCollection,
     const ExcelObj& staticDataTable,
@@ -2410,8 +2579,10 @@ XLO_FUNC_END( aqCurveCalibrateBasis )
     .arg( L"FraRates",         L"Optional. FRA market data" )
     .arg( L"LiborConv",        L"Optional. Libor instrument conventions" )
     .arg( L"LiborRates",       L"Optional. Libor market data" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveCalibrateCTD)
 XLO_FUNC_START( aqCurveCalibrateCTD(
     const ExcelObj& curveCollection,
     const ExcelObj& curveName,
@@ -2433,8 +2604,10 @@ XLO_FUNC_END( aqCurveCalibrateCTD )
     .arg( L"CurveIndex",        L"Equivalent names of the curve being built" )
     .arg( L"CurveConv",         L"General curve properties: as-of date, ccy, interpolation, etc" )
     .arg( L"CollateralCurves",  L"The group of collateral curves the CTD curve is constructed from" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveCalibrateFXForwards)
 XLO_FUNC_START( aqCurveCalibrateFXForwards(
     const ExcelObj& curveCollection,
     const ExcelObj& staticDataTable,
@@ -2456,8 +2629,10 @@ XLO_FUNC_END( aqCurveCalibrateFXForwards )
     .arg( L"CurveIndex",       L"Equivalent names of the curve being built" )
     .arg( L"CurveConv",        L"General curve properties: as-of date, ccy, interpolation, etc" )
     .arg( L"FxFwdConv",        L"FX forward conventions" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveCalibrateOIS)
 XLO_FUNC_START( aqCurveCalibrateOIS(
     const ExcelObj& curveCollection,
     const ExcelObj& staticDataTable,
@@ -2493,8 +2668,10 @@ XLO_FUNC_END( aqCurveCalibrateOIS )
     .arg( L"LiborOisBasisRates",    L"Libor-OIS basis spreads" )
     .arg( L"SwapConv",              L"Libor swap conventions" )
     .arg( L"SwapRates",             L"Libor swap market rates" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveCalibrateSwap)
 XLO_FUNC_START( aqCurveCalibrateSwap(
     const ExcelObj& curveCollection,
     const ExcelObj& staticDataTable,
@@ -2543,8 +2720,10 @@ XLO_FUNC_END( aqCurveCalibrateSwap )
     .arg( L"FutureRates",       L"Futures market data" )
     .arg( L"TenorBasisConv",    L"Tenor basis market conventions" )
     .arg( L"TenorBasisRates",   L"Tenor basis market data" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectCreateBasis)
 XLO_FUNC_START( aqCurveObjectCreateBasis(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& curveCollection,
@@ -2581,8 +2760,10 @@ XLO_FUNC_END( aqCurveObjectCreateBasis )
     .arg( L"FxFwdConv",       L"FX forward market conventions" )
     .arg( L"FxFwdRates",      L"Forward FX rates" )
     .arg( L"SpotFxRates",     L"Spot FX rates" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectCreateFXForwards)
 XLO_FUNC_START( aqCurveObjectCreateFXForwards(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& curveCollection,
@@ -2610,8 +2791,10 @@ XLO_FUNC_END( aqCurveObjectCreateFXForwards )
     .arg( L"CurveIndex",      L"Equivalent names of the curve being built" )
     .arg( L"CurveConv",       L"General curve properties: as-of date, ccy, interpolation, etc" )
     .arg( L"FxFwdConv",       L"FX forward conventions" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectCreateOIS)
 XLO_FUNC_START( aqCurveObjectCreateOIS(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& curveCollection,
@@ -2653,8 +2836,10 @@ XLO_FUNC_END( aqCurveObjectCreateOIS )
     .arg( L"LiborOisBasisRates", L"Libor-OIS basis spreads" )
     .arg( L"SwapConv",           L"Libor swap conventions" )
     .arg( L"SwapRates",          L"Libor swap market rates" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqCurveObjectCreateSwap)
 XLO_FUNC_START( aqCurveObjectCreateSwap(
     const ExcelObj& aqObjCurveName,
     const ExcelObj& curveCollection,
@@ -2709,10 +2894,12 @@ XLO_FUNC_END( aqCurveObjectCreateSwap )
     .arg( L"FutureRates",      L"Futures market data" )
     .arg( L"ConvexityAdjConv", L"Convexity adjustment market conventions" )
     .arg( L"ConvexityAdjRates", L"Convexity adjustment market data" );
+#endif
 
 
 // The USD money-market spot date from a curve as-of date (filed under Date's
 // validation header, golden-named Curve - see the #include comment above).
+#if AQ_XLL_ENABLED(aqCurveUSDSpotDate)
 XLO_FUNC_START( aqCurveUSDSpotDate(
     const ExcelObj& curveAsOfDate,
     const ExcelObj& spotLag,
@@ -2736,3 +2923,4 @@ XLO_FUNC_END( aqCurveUSDSpotDate )
     .arg( L"PaymentCalendar", L"Holiday centre(s) for the payment" )
     .arg( L"BusinessDayAdj",  L"Business day adjustment, e.g. MODFOLLOWING" )
     .arg( L"RollConvention",  L"Roll convention, e.g. Normal, IMM, EOM" );
+#endif

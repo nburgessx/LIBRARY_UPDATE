@@ -1,0 +1,9 @@
+{
+  "edition": "DemoSmall",
+  "functions": [
+    "aqDateYearFraction",
+    "aqSwapPV",
+    "aqSwapParRate",
+    "aqBondObjectDirtyPrice"
+  ]
+}

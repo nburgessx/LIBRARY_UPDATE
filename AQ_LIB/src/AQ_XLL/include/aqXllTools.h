@@ -67,6 +67,27 @@ namespace aq_xll
     #define AQ_INITIALIZE  ::etrading::InitializeETrading::instance();
 
     // ---------------------------------------------------------------------
+    //  Manifest build gate (Release_XL_Manifest)
+    // ---------------------------------------------------------------------
+    //
+    //  Every worksheet function in AQ_XLL is wrapped
+    //  #if AQ_XLL_ENABLED(funcName) ... #endif. AQ_XLL_MANIFEST_BUILD is 0
+    //  here by default, so the macro is always true and the guard is a no-op
+    //  for every configuration except Release_XL_Manifest, which defines
+    //  AQ_XLL_MANIFEST_BUILD=1 as a project preprocessor definition and
+    //  force-includes a generated, per-function AQ_XLL_ENABLE_<funcName>
+    //  header (see rebrand\tools\generate_xll_manifest_header.py) listing
+    //  only the functions named in that build's manifest JSON. An undefined
+    //  AQ_XLL_ENABLE_<funcName> token evaluates to 0 in #if, so this is safe
+    //  even when the generated header is absent (every non-manifest config).
+
+    #ifndef AQ_XLL_MANIFEST_BUILD
+    #define AQ_XLL_MANIFEST_BUILD 0
+    #endif
+
+    #define AQ_XLL_ENABLED(name)  (!AQ_XLL_MANIFEST_BUILD || AQ_XLL_ENABLE_##name)
+
+    // ---------------------------------------------------------------------
     //  Marshalling: Excel  ->  AQ
     // ---------------------------------------------------------------------
 

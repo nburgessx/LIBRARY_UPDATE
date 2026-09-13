@@ -36,6 +36,7 @@ using namespace aq_xll;
 
 // Create and store a fixing table from a currency / curve tenor and a set of
 // (date, value) fixings.
+#if AQ_XLL_ENABLED(aqIRFixingTableCreate)
 XLO_FUNC_START( aqIRFixingTableCreate(
     const ExcelObj& tableName,
     const ExcelObj& currency,
@@ -64,9 +65,11 @@ XLO_FUNC_END( aqIRFixingTableCreate )
     .arg( L"CurveTenor",   L"Index curve tenor, e.g. 3M, 6M" )
     .arg( L"FixingDates",  L"Column of fixing dates" )
     .arg( L"FixingValues", L"Column of fixing values, aligned with FixingDates" );
+#endif
 
 
 // Display a stored fixing table as a matrix.
+#if AQ_XLL_ENABLED(aqIRFixingTableDisplay)
 XLO_FUNC_START( aqIRFixingTableDisplay(
     const ExcelObj& tableName ) )
 {
@@ -79,9 +82,11 @@ XLO_FUNC_START( aqIRFixingTableDisplay(
 XLO_FUNC_END( aqIRFixingTableDisplay )
     .help( L"Display a stored fixing table as a matrix." )
     .arg( L"TableName", L"A fixing table handle" );
+#endif
 
 
 // The fixing stored for one date.
+#if AQ_XLL_ENABLED(aqIRFixingTableValue)
 XLO_FUNC_START( aqIRFixingTableValue(
     const ExcelObj& tableName,
     const ExcelObj& fixingDate ) )
@@ -96,9 +101,11 @@ XLO_FUNC_END( aqIRFixingTableValue )
     .help( L"The fixing stored in a fixing table for one date." )
     .arg( L"TableName",  L"A fixing table handle" )
     .arg( L"FixingDate", L"The fixing date to read" );
+#endif
 
 
 // The fixings stored for a column of dates.
+#if AQ_XLL_ENABLED(aqIRFixingTableValues)
 XLO_FUNC_START( aqIRFixingTableValues(
     const ExcelObj& tableName,
     const ExcelObj& fixingDates ) )
@@ -113,6 +120,7 @@ XLO_FUNC_END( aqIRFixingTableValues )
     .help( L"The fixings stored in a fixing table for a column of dates." )
     .arg( L"TableName",   L"A fixing table handle" )
     .arg( L"FixingDates", L"Column of fixing dates" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -120,6 +128,7 @@ XLO_FUNC_END( aqIRFixingTableValues )
  * ---------------------------------------------------------------------- */
 
 // FRA rate implied by a rate-future price, with a Hull-White convexity model.
+#if AQ_XLL_ENABLED(aqIRFuturePriceToFraRate)
 XLO_FUNC_START( aqIRFuturePriceToFraRate(
     const ExcelObj& futurePrice,
     const ExcelObj& curveAsOfDate,
@@ -147,9 +156,11 @@ XLO_FUNC_END( aqIRFuturePriceToFraRate )
     .arg( L"FuturesEndDate",   L"End of the futures accrual period" )
     .arg( L"MeanReversion",    L"Hull-White mean reversion" )
     .arg( L"Volatility",       L"Hull-White short-rate volatility" );
+#endif
 
 
 // FRA rate implied by a rate-future price and an explicit convexity adjustment.
+#if AQ_XLL_ENABLED(aqIRFuturePriceToFraRateFromConvAdj)
 XLO_FUNC_START( aqIRFuturePriceToFraRateFromConvAdj(
     const ExcelObj& futurePrice,
     const ExcelObj& convexityAdjustment ) )
@@ -163,6 +174,7 @@ XLO_FUNC_END( aqIRFuturePriceToFraRateFromConvAdj )
     .help( L"FRA rate implied by a rate-future price and an explicit convexity adjustment." )
     .arg( L"FuturePrice",         L"The rate-future price" )
     .arg( L"ConvexityAdjustment", L"The futures / FRA convexity adjustment" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -170,6 +182,7 @@ XLO_FUNC_END( aqIRFuturePriceToFraRateFromConvAdj )
  * ---------------------------------------------------------------------- */
 
 // Create and store a FRA from a label/value block.
+#if AQ_XLL_ENABLED(aqIRObjectFraCreate)
 XLO_FUNC_START( aqIRObjectFraCreate(
     const ExcelObj& fraObjectName,
     const ExcelObj& fraLVB,
@@ -190,9 +203,11 @@ XLO_FUNC_END( aqIRObjectFraCreate )
     .arg( L"FraObjectName", L"Name for the FRA object" )
     .arg( L"FraLVB",        L"The FRA definition as a label/value block" )
     .arg( L"ValidateKeys",  L"Optional. Default TRUE. Check the LVB keys" );
+#endif
 
 
 // Present value of a cached FRA.
+#if AQ_XLL_ENABLED(aqIRObjectFraPV)
 XLO_FUNC_START( aqIRObjectFraPV(
     const ExcelObj& fraObjectName,
     const ExcelObj& valuationSettingsLVB ) )
@@ -207,9 +222,11 @@ XLO_FUNC_END( aqIRObjectFraPV )
     .help( L"Present value of a cached FRA under the given valuation settings." )
     .arg( L"FraObjectName",       L"A FRA handle" )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" );
+#endif
 
 
 // Display a cached FRA as a matrix.
+#if AQ_XLL_ENABLED(aqIRObjectFraDisplay)
 XLO_FUNC_START( aqIRObjectFraDisplay(
     const ExcelObj& fraObjectName ) )
 {
@@ -222,9 +239,11 @@ XLO_FUNC_START( aqIRObjectFraDisplay(
 XLO_FUNC_END( aqIRObjectFraDisplay )
     .help( L"Display a cached FRA as a matrix." )
     .arg( L"FraObjectName", L"A FRA handle" );
+#endif
 
 
 // Display the cashflows of a cached FRA.
+#if AQ_XLL_ENABLED(aqIRObjectFraDisplayCashflows)
 XLO_FUNC_START( aqIRObjectFraDisplayCashflows(
     const ExcelObj& fraObjectName,
     const ExcelObj& valuationSettingsLVB,
@@ -243,9 +262,11 @@ XLO_FUNC_END( aqIRObjectFraDisplayCashflows )
     .arg( L"FraObjectName",        L"A FRA handle" )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" )
     .arg( L"ShowColumnHeaders",    L"Optional. Default TRUE. Include a header row" );
+#endif
 
 
 // Fair FRA rate of a cached FRA.
+#if AQ_XLL_ENABLED(aqIRObjectFraRate)
 XLO_FUNC_START( aqIRObjectFraRate(
     const ExcelObj& fraObjectName,
     const ExcelObj& valuationSettingsLVB ) )
@@ -260,9 +281,11 @@ XLO_FUNC_END( aqIRObjectFraRate )
     .help( L"Fair forward rate of a cached FRA under the given valuation settings." )
     .arg( L"FraObjectName",        L"A FRA handle" )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" );
+#endif
 
 
 // Rate-future price implied by a cached FRA, with a Hull-White convexity model.
+#if AQ_XLL_ENABLED(aqIRObjectFraToFuturePrice)
 XLO_FUNC_START( aqIRObjectFraToFuturePrice(
     const ExcelObj& fraObjectName,
     const ExcelObj& valuationSettingsLVB,
@@ -284,9 +307,11 @@ XLO_FUNC_END( aqIRObjectFraToFuturePrice )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" )
     .arg( L"MeanReversion",        L"Hull-White mean reversion" )
     .arg( L"Volatility",           L"Hull-White short-rate volatility" );
+#endif
 
 
 // Rate-future price implied by a cached FRA and an explicit convexity adjustment.
+#if AQ_XLL_ENABLED(aqIRObjectFraToFuturePriceFromConvAdj)
 XLO_FUNC_START( aqIRObjectFraToFuturePriceFromConvAdj(
     const ExcelObj& fraObjectName,
     const ExcelObj& valuationSettingsLVB,
@@ -305,3 +330,4 @@ XLO_FUNC_END( aqIRObjectFraToFuturePriceFromConvAdj )
     .arg( L"FraObjectName",        L"A FRA handle" )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" )
     .arg( L"ConvexityAdjustment",  L"The futures / FRA convexity adjustment" );
+#endif

@@ -25,6 +25,7 @@ namespace
 
 
 // The current (most recent) futures ticker relative to a valuation date.
+#if AQ_XLL_ENABLED(aqFutureTickerCurrent)
 XLO_FUNC_START( aqFutureTickerCurrent(
     const ExcelObj& valuationDate,
     const ExcelObj& includeToday,
@@ -41,9 +42,11 @@ XLO_FUNC_END( aqFutureTickerCurrent )
     .arg( L"ValuationDate",         L"The valuation date" )
     .arg( L"IncludeToday",          L"Optional. Default FALSE. TRUE lets a contract dated on ValuationDate count as current" )
     .arg( L"ShowYearWithTwoDigits", L"Optional. Default FALSE. TRUE shows the year as 2 digits, e.g. Z25 not Z2025" );
+#endif
 
 
 // The futures ticker immediately after a reference date.
+#if AQ_XLL_ENABLED(aqFutureTickerNext)
 XLO_FUNC_START( aqFutureTickerNext(
     const ExcelObj& referenceDate,
     const ExcelObj& showYearWithTwoDigits ) )
@@ -58,9 +61,11 @@ XLO_FUNC_END( aqFutureTickerNext )
     .help( L"The futures ticker immediately after a reference date." )
     .arg( L"ReferenceDate",         L"The reference date" )
     .arg( L"ShowYearWithTwoDigits", L"Optional. Default FALSE. TRUE shows the year as 2 digits, e.g. Z25 not Z2025" );
+#endif
 
 
 // The futures ticker immediately before a reference date.
+#if AQ_XLL_ENABLED(aqFutureTickerPrevious)
 XLO_FUNC_START( aqFutureTickerPrevious(
     const ExcelObj& referenceDate,
     const ExcelObj& showYearWithTwoDigits ) )
@@ -75,9 +80,11 @@ XLO_FUNC_END( aqFutureTickerPrevious )
     .help( L"The futures ticker immediately before a reference date." )
     .arg( L"ReferenceDate",         L"The reference date" )
     .arg( L"ShowYearWithTwoDigits", L"Optional. Default FALSE. TRUE shows the year as 2 digits, e.g. Z25 not Z2025" );
+#endif
 
 
 // The Nth futures ticker relative to a valuation date.
+#if AQ_XLL_ENABLED(aqFutureTickerNth)
 XLO_FUNC_START( aqFutureTickerNth(
     const ExcelObj& valuationDate,
     const ExcelObj& nthIMM,
@@ -96,3 +103,4 @@ XLO_FUNC_END( aqFutureTickerNth )
     .arg( L"NthIMM",                L"Which contract; positive is forward, negative is backward" )
     .arg( L"IncludeToday",          L"Optional. Default FALSE. TRUE lets a contract dated on ValuationDate count" )
     .arg( L"ShowYearWithTwoDigits", L"Optional. Default FALSE. TRUE shows the year as 2 digits, e.g. Z25 not Z2025" );
+#endif

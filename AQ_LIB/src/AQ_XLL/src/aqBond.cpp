@@ -84,6 +84,7 @@ namespace
 }
 
 
+#if AQ_XLL_ENABLED(aqBondObjectCreate)
 XLO_FUNC_START( aqBondObjectCreate(
     const ExcelObj& bondName,
     const ExcelObj& bondLVB,
@@ -129,8 +130,10 @@ XLO_FUNC_END( aqBondObjectCreate )
     .arg( L"ScheduleLVB",  L"Schedule parameters as a two-column key/value range" )
     .arg( L"ValidateKeys", L"Optional. TRUE (default) rejects unknown keys" )
     .arg( L"AllowUpdates", L"Optional. FALSE returns the existing object unchanged if the name is in use; TRUE (default) rebuilds it" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectDisplay)
 XLO_FUNC_START( aqBondObjectDisplay(
     const ExcelObj& bondName ) )
 {
@@ -147,8 +150,10 @@ XLO_FUNC_START( aqBondObjectDisplay(
 XLO_FUNC_END( aqBondObjectDisplay )
     .help( L"Return a bond object's stored parameters as a key/value block." )
     .arg( L"BondName", L"A bond handle returned by aqBondObjectCreate" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectDisplaySchedule)
 XLO_FUNC_START( aqBondObjectDisplaySchedule(
     const ExcelObj& bondName,
     const ExcelObj& showColumnHeaders ) )
@@ -168,8 +173,10 @@ XLO_FUNC_END( aqBondObjectDisplaySchedule )
     .help( L"Return a bond object's cashflow schedule as a matrix." )
     .arg( L"BondName",          L"A bond handle returned by aqBondObjectCreate" )
     .arg( L"ShowColumnHeaders", L"Optional. TRUE (default) includes the header row" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectDisplayCashflows)
 XLO_FUNC_START( aqBondObjectDisplayCashflows(
     const ExcelObj& bondName,
     const ExcelObj& settlementDate,
@@ -198,8 +205,10 @@ XLO_FUNC_END( aqBondObjectDisplayCashflows )
     .arg( L"Yield",             L"Bond yield" )
     .arg( L"YieldCalcType",     L"Optional. Yield calculation type, e.g. ISMA, TRUE, SIMPLE" )
     .arg( L"ShowColumnHeaders", L"Optional. TRUE (default) includes the header row" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectDirtyPrice)
 XLO_FUNC_START( aqBondObjectDirtyPrice(
     const ExcelObj& bondName,
     const ExcelObj& settlementDates,
@@ -225,8 +234,10 @@ XLO_FUNC_END( aqBondObjectDirtyPrice )
     .arg( L"SettlementDates", L"Bond settlement date(s)" )
     .arg( L"Yields",          L"Bond yield(s)" )
     .arg( L"YieldCalcType",   L"Optional. Yield calculation type, e.g. ISMA, TRUE, SIMPLE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectAccruedInterestDays)
 XLO_FUNC_START( aqBondObjectAccruedInterestDays(
     const ExcelObj& bondName,
     const ExcelObj& settlementDates ) )
@@ -246,8 +257,10 @@ XLO_FUNC_END( aqBondObjectAccruedInterestDays )
     .help( L"Return a bond's accrued interest day count(s) for the given settlement date(s)." )
     .arg( L"BondName",        L"A bond handle returned by aqBondObjectCreate" )
     .arg( L"SettlementDates", L"Bond settlement date(s)" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectCleanPrice)
 XLO_FUNC_START( aqBondObjectCleanPrice(
     const ExcelObj& bondName,
     const ExcelObj& settlementDates,
@@ -273,8 +286,10 @@ XLO_FUNC_END( aqBondObjectCleanPrice )
     .arg( L"SettlementDates", L"Bond settlement date(s)" )
     .arg( L"Yields",          L"Bond yield(s)" )
     .arg( L"YieldCalcType",   L"Optional. Yield calculation type, e.g. ISMA, TRUE, SIMPLE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectAccruedInterest)
 XLO_FUNC_START( aqBondObjectAccruedInterest(
     const ExcelObj& bondName,
     const ExcelObj& valuationSettings ) )
@@ -294,8 +309,10 @@ XLO_FUNC_END( aqBondObjectAccruedInterest )
     .help( L"Return a bond's accrued interest. Set SettlementDate in the block; for an FRN also set FloatBondCoupon." )
     .arg( L"BondName",          L"A bond handle returned by aqBondObjectCreate" )
     .arg( L"ValuationSettings", L"A two-column (key, value) block; set SettlementDate (and FloatBondCoupon for an FRN)" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectYield)
 XLO_FUNC_START( aqBondObjectYield(
     const ExcelObj& bondName,
     const ExcelObj& valuationSettings,
@@ -321,8 +338,10 @@ XLO_FUNC_END( aqBondObjectYield )
     .arg( L"ValuationSettings", L"A two-column (key, value) block; set SettlementDate and, for an FRN, FloatBondCurrentCoupon / FloatBondAssumedRate / FloatBondIndexToNextCoupon / FloatBondQuotedMargin" )
     .arg( L"Price",             L"Bond price" )
     .arg( L"YieldCalcType",     L"Optional. Yield calculation type, e.g. ISMA, TRUE, SIMPLE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectCompoundYield)
 XLO_FUNC_START( aqBondObjectCompoundYield(
     const ExcelObj& bondName,
     const ExcelObj& settlementDates,
@@ -348,8 +367,10 @@ XLO_FUNC_END( aqBondObjectCompoundYield )
     .arg( L"SettlementDates", L"Bond settlement date(s)" )
     .arg( L"Prices",          L"Bond price(s)" )
     .arg( L"YieldCalcType",   L"Optional. Yield calculation type, e.g. ISMA, TRUE, SIMPLE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectPrice)
 XLO_FUNC_START( aqBondObjectPrice(
     const ExcelObj& bondName,
     const ExcelObj& settlementDates,
@@ -375,8 +396,10 @@ XLO_FUNC_END( aqBondObjectPrice )
     .arg( L"SettlementDates", L"Bond settlement date(s)" )
     .arg( L"Yields",          L"Bond yield(s)" )
     .arg( L"YieldCalcType",   L"Optional. Yield calculation type, e.g. ISMA, TRUE, SIMPLE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectDV01)
 XLO_FUNC_START( aqBondObjectDV01(
     const ExcelObj& bondName,
     const ExcelObj& settlementDates,
@@ -402,8 +425,10 @@ XLO_FUNC_END( aqBondObjectDV01 )
     .arg( L"SettlementDates", L"Bond settlement date(s)" )
     .arg( L"Yields",          L"Bond yield(s)" )
     .arg( L"YieldCalcType",   L"Optional. Yield calculation type, e.g. ISMA, TRUE, SIMPLE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectDV01Numerical)
 XLO_FUNC_START( aqBondObjectDV01Numerical(
     const ExcelObj& bondName,
     const ExcelObj& settlementDates,
@@ -439,8 +464,10 @@ XLO_FUNC_END( aqBondObjectDV01Numerical )
     .arg( L"BumpSize",        L"Optional. Bump size in bp; default 0.01" )
     .arg( L"BumpMode",        L"Optional. 'Up', 'Down' or 'Central'; default 'Up'" )
     .arg( L"YieldCalcType",   L"Optional. Yield calculation type, e.g. ISMA, TRUE, SIMPLE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectModifiedDuration)
 XLO_FUNC_START( aqBondObjectModifiedDuration(
     const ExcelObj& bondName,
     const ExcelObj& settlementDates,
@@ -466,8 +493,10 @@ XLO_FUNC_END( aqBondObjectModifiedDuration )
     .arg( L"SettlementDates", L"Bond settlement date(s)" )
     .arg( L"Yields",          L"Bond yield(s)" )
     .arg( L"YieldCalcType",   L"Optional. Yield calculation type, e.g. ISMA, TRUE, SIMPLE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectOisSpread)
 XLO_FUNC_START( aqBondObjectOisSpread(
     const ExcelObj& bondName,
     const ExcelObj& marketDataName,
@@ -491,8 +520,10 @@ XLO_FUNC_END( aqBondObjectOisSpread )
     .arg( L"MarketDataName",  L"An OIS market-data object handle" )
     .arg( L"SettlementDates", L"Bond settlement date(s)" )
     .arg( L"BondYields",      L"Bond yield(s)" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectLastCouponDate)
 XLO_FUNC_START( aqBondObjectLastCouponDate(
     const ExcelObj& bondName,
     const ExcelObj& settlementDates ) )
@@ -510,8 +541,10 @@ XLO_FUNC_END( aqBondObjectLastCouponDate )
     .help( L"Return the bond's last coupon date(s) for the given settlement date(s). Format the cells as dates." )
     .arg( L"BondName",        L"A bond handle returned by aqBondObjectCreate" )
     .arg( L"SettlementDates", L"Bond settlement date(s) / valuation date(s)" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectPriceFromDirtyToClean)
 XLO_FUNC_START( aqBondObjectPriceFromDirtyToClean(
     const ExcelObj& bondName,
     const ExcelObj& valuationSettings,
@@ -532,8 +565,10 @@ XLO_FUNC_END( aqBondObjectPriceFromDirtyToClean )
     .arg( L"BondName",          L"A bond handle returned by aqBondObjectCreate" )
     .arg( L"ValuationSettings", L"A two-column (key, value) block" )
     .arg( L"DirtyPrice",        L"Bond dirty price" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectPriceFromCleanToDirty)
 XLO_FUNC_START( aqBondObjectPriceFromCleanToDirty(
     const ExcelObj& bondName,
     const ExcelObj& valuationSettings,
@@ -554,8 +589,10 @@ XLO_FUNC_END( aqBondObjectPriceFromCleanToDirty )
     .arg( L"BondName",          L"A bond handle returned by aqBondObjectCreate" )
     .arg( L"ValuationSettings", L"A two-column (key, value) block" )
     .arg( L"CleanPrice",        L"Bond clean price" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectZSpreadFromRates)
 XLO_FUNC_START( aqBondObjectZSpreadFromRates(
     const ExcelObj& bondName,
     const ExcelObj& settlementDate,
@@ -582,8 +619,10 @@ XLO_FUNC_END( aqBondObjectZSpreadFromRates )
     .arg( L"BondPrice",               L"Bond price (clean or dirty per the bond's convention)" )
     .arg( L"ZeroRates",               L"The external curve's zero rates" )
     .arg( L"ContinuouslyCompounding", L"Optional. TRUE (default) uses continuous compounding; FALSE uses discrete" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectZSpread)
 XLO_FUNC_START( aqBondObjectZSpread(
     const ExcelObj& bondName,
     const ExcelObj& settlementDates,
@@ -613,8 +652,10 @@ XLO_FUNC_END( aqBondObjectZSpread )
     .arg( L"CurveCollections",        L"Curve collection name(s)" )
     .arg( L"ForecastCurves",          L"Forecast curve name(s)" )
     .arg( L"ContinuouslyCompounding", L"Optional. TRUE (default) uses continuous compounding; FALSE uses discrete" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectForwardPrice)
 XLO_FUNC_START( aqBondObjectForwardPrice(
     const ExcelObj& bondName,
     const ExcelObj& settleDate,
@@ -644,8 +685,10 @@ XLO_FUNC_END( aqBondObjectForwardPrice )
     .arg( L"Price",             L"Bond price at the settlement date" )
     .arg( L"RepoRate",          L"Bond repo rate" )
     .arg( L"RepoDayCount",      L"Repo rate day count" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectRepoRate)
 XLO_FUNC_START( aqBondObjectRepoRate(
     const ExcelObj& bondName,
     const ExcelObj& settlementDate,
@@ -675,8 +718,10 @@ XLO_FUNC_END( aqBondObjectRepoRate )
     .arg( L"Price",             L"Bond current price (clean or dirty)" )
     .arg( L"ForwardPrice",      L"Bond forward price (clean or dirty)" )
     .arg( L"RepoDayCount",      L"Repo day count" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectRepoRateFromFuture)
 XLO_FUNC_START( aqBondObjectRepoRateFromFuture(
     const ExcelObj& bondName,
     const ExcelObj& settlementDate,
@@ -709,8 +754,10 @@ XLO_FUNC_END( aqBondObjectRepoRateFromFuture )
     .arg( L"FuturePrice",      L"Actual / quoted future price" )
     .arg( L"ConversionFactor", L"Conversion factor" )
     .arg( L"RepoDayCount",     L"Repo day count" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectFuturePrice)
 XLO_FUNC_START( aqBondObjectFuturePrice(
     const ExcelObj& bondName,
     const ExcelObj& settleDate,
@@ -743,8 +790,10 @@ XLO_FUNC_END( aqBondObjectFuturePrice )
     .arg( L"RepoRate",         L"Bond repo rate" )
     .arg( L"RepoDayCount",     L"Repo rate day count" )
     .arg( L"ConversionFactor", L"Bond's conversion factor against the future" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectConversionFactor)
 XLO_FUNC_START( aqBondObjectConversionFactor(
     const ExcelObj& bondName,
     const ExcelObj& firstFutureSettleDate,
@@ -765,8 +814,10 @@ XLO_FUNC_END( aqBondObjectConversionFactor )
     .arg( L"BondName",               L"A bond handle returned by aqBondObjectCreate" )
     .arg( L"FirstFutureSettleDate",  L"The future's first settlement date" )
     .arg( L"NotionalBondCouponRate", L"The future's notional coupon rate" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectGrossBasis)
 XLO_FUNC_START( aqBondObjectGrossBasis(
     const ExcelObj& bondName,
     const ExcelObj& settleDate,
@@ -793,8 +844,10 @@ XLO_FUNC_END( aqBondObjectGrossBasis )
     .arg( L"BondPrice",        L"Bond price at the settlement date" )
     .arg( L"FuturePrice",      L"Future price" )
     .arg( L"ConversionFactor", L"Conversion factor of the underlying bond against the future" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectNetBasis)
 XLO_FUNC_START( aqBondObjectNetBasis(
     const ExcelObj& bondName,
     const ExcelObj& settleDate,
@@ -830,8 +883,10 @@ XLO_FUNC_END( aqBondObjectNetBasis )
     .arg( L"RepoDayCount",     L"Repo rate day count" )
     .arg( L"FuturePrice",      L"Future price" )
     .arg( L"ConversionFactor", L"Bond's conversion factor against the future" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectCheapestToDeliver)
 XLO_FUNC_START( aqBondObjectCheapestToDeliver(
     const ExcelObj& futurePrice,
     const ExcelObj& settleDate,
@@ -864,8 +919,10 @@ XLO_FUNC_END( aqBondObjectCheapestToDeliver )
     .arg( L"BondNames",         L"A list of bond object handles" )
     .arg( L"BondPrices",        L"A list of bond prices at the settlement date" )
     .arg( L"ConversionFactors", L"A list of bond conversion factors" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectCheapestToDeliverByNetBasis)
 XLO_FUNC_START( aqBondObjectCheapestToDeliverByNetBasis(
     const ExcelObj& futurePrice,
     const ExcelObj& settleDate,
@@ -901,8 +958,10 @@ XLO_FUNC_END( aqBondObjectCheapestToDeliverByNetBasis )
     .arg( L"BondPrices",        L"A list of bond prices at the settlement date" )
     .arg( L"ConversionFactors", L"A list of bond conversion factors" )
     .arg( L"ActualRepoRates",   L"A list of the bonds' actual repo rates" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectFRNPriceFromDiscountMargin)
 XLO_FUNC_START( aqBondObjectFRNPriceFromDiscountMargin(
     const ExcelObj& bondName,
     const ExcelObj& settlementDate,
@@ -932,8 +991,10 @@ XLO_FUNC_END( aqBondObjectFRNPriceFromDiscountMargin )
     .arg( L"AssumedRate",              L"Assumed index level for projected coupons" )
     .arg( L"IndexToNextCoupon",        L"Index discount rate for the next coupon period" )
     .arg( L"AnnualizedNextCouponRate", L"Annualized rate of the next (already fixed) coupon" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectFRNPriceFromYield)
 XLO_FUNC_START( aqBondObjectFRNPriceFromYield(
     const ExcelObj& bondName,
     const ExcelObj& settlementDate,
@@ -963,8 +1024,10 @@ XLO_FUNC_END( aqBondObjectFRNPriceFromYield )
     .arg( L"AssumedRate",              L"Assumed index level for projected coupons" )
     .arg( L"IndexToNextCoupon",        L"Index discount rate for the next coupon period" )
     .arg( L"AnnualizedNextCouponRate", L"Annualized rate of the next (already fixed) coupon" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectFRNYieldFromPrice)
 XLO_FUNC_START( aqBondObjectFRNYieldFromPrice(
     const ExcelObj& bondName,
     const ExcelObj& settlementDate,
@@ -994,8 +1057,10 @@ XLO_FUNC_END( aqBondObjectFRNYieldFromPrice )
     .arg( L"AssumedRate",              L"Assumed index level for projected coupons" )
     .arg( L"IndexToNextCoupon",        L"Index discount rate for the next coupon period" )
     .arg( L"AnnualizedNextCouponRate", L"Annualized rate of the next (already fixed) coupon" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectFRNDiscountMarginFromPrice)
 XLO_FUNC_START( aqBondObjectFRNDiscountMarginFromPrice(
     const ExcelObj& bondName,
     const ExcelObj& settlementDate,
@@ -1025,8 +1090,10 @@ XLO_FUNC_END( aqBondObjectFRNDiscountMarginFromPrice )
     .arg( L"AssumedRate",              L"Assumed index level for projected coupons" )
     .arg( L"IndexToNextCoupon",        L"Index discount rate for the next coupon period" )
     .arg( L"AnnualizedNextCouponRate", L"Annualized rate of the next (already fixed) coupon" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectPriceFromCreditModel)
 XLO_FUNC_START( aqBondObjectPriceFromCreditModel(
     const ExcelObj& bondName,
     const ExcelObj& settlementDate,
@@ -1047,8 +1114,10 @@ XLO_FUNC_END( aqBondObjectPriceFromCreditModel )
     .arg( L"BondName",        L"A bond handle returned by aqBondObjectCreate" )
     .arg( L"SettlementDate",  L"Bond settlement / valuation date" )
     .arg( L"CreditModelName", L"A credit model object handle" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectBPVPerTick)
 XLO_FUNC_START( aqBondObjectBPVPerTick(
     const ExcelObj& bondName,
     const ExcelObj& valuationSettings,
@@ -1075,8 +1144,10 @@ XLO_FUNC_END( aqBondObjectBPVPerTick )
     .arg( L"Price",             L"Bond price" )
     .arg( L"YieldCalcType",     L"Optional. Yield calculation type, e.g. ISMA, TRUE, SIMPLE" )
     .arg( L"TickSize",          L"Optional. Price tick size; default 0.01325" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondAverageYield)
 XLO_FUNC_START( aqBondAverageYield(
     const ExcelObj& underlyingBondYields ) )
 {
@@ -1091,8 +1162,10 @@ XLO_FUNC_START( aqBondAverageYield(
 XLO_FUNC_END( aqBondAverageYield )
     .help( L"Return the notional bond's yield as the average of the underlying bonds' yields." )
     .arg( L"UnderlyingBondYields", L"The bond future's underlying bonds' yields" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondYieldFromFuturePrice)
 XLO_FUNC_START( aqBondYieldFromFuturePrice(
     const ExcelObj& futurePrice ) )
 {
@@ -1107,8 +1180,10 @@ XLO_FUNC_START( aqBondYieldFromFuturePrice(
 XLO_FUNC_END( aqBondYieldFromFuturePrice )
     .help( L"Return the notional bond's yield implied by a bond future price." )
     .arg( L"FuturePrice", L"Bond future price" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectCreateFromLVB)
 XLO_FUNC_START( aqBondObjectCreateFromLVB(
     const ExcelObj& bondName,
     const ExcelObj& bondLVB,
@@ -1145,8 +1220,10 @@ XLO_FUNC_END( aqBondObjectCreateFromLVB )
     .arg( L"ValidateKeys",    L"Optional. TRUE (default) rejects unknown keys" )
     .arg( L"VerticalLVBKeys", L"Optional. TRUE (default) reads the block as two columns (key, value); FALSE reads two rows (keys, values)" )
     .arg( L"AllowUpdates",    L"Optional. FALSE returns the existing object unchanged if the name is in use; TRUE (default) rebuilds it" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectCreateFromGenerator)
 XLO_FUNC_START( aqBondObjectCreateFromGenerator(
     const ExcelObj& bondName,
     const ExcelObj& bondGeneratorName,
@@ -1184,8 +1261,10 @@ XLO_FUNC_END( aqBondObjectCreateFromGenerator )
     .arg( L"BondExpressionLVB",  L"Override parameters as a two-column key/value block" )
     .arg( L"ValidateKeys",       L"Optional. TRUE (default) rejects unknown keys" )
     .arg( L"AllowUpdates",       L"Optional. FALSE returns the existing object unchanged if the name is in use; TRUE (default) rebuilds it" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondObjectCreateAUDNotionalBond)
 XLO_FUNC_START( aqBondObjectCreateAUDNotionalBond(
     const ExcelObj& bondName,
     const ExcelObj& settleDate,
@@ -1238,8 +1317,10 @@ XLO_FUNC_END( aqBondObjectCreateAUDNotionalBond )
     .arg( L"DayCount",            L"Optional. Day count; default ACT/ACT" )
     .arg( L"BondQuoteConvention", L"Optional. Bond quote convention; default blank (AUD bonds are QUOTE_TO_3_DECIMAL_PLACES)" )
     .arg( L"AllowUpdates",        L"Optional. FALSE returns the existing object unchanged if the name is in use; TRUE (default) rebuilds it" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondGeneratorCreate)
 XLO_FUNC_START( aqBondGeneratorCreate(
     const ExcelObj& bondGeneratorName,
     const ExcelObj& key1,
@@ -1277,8 +1358,10 @@ XLO_FUNC_END( aqBondGeneratorCreate )
     .arg( L"Value1",            L"First configuration block, as a range of property values" )
     .arg( L"Key2",              L"Optional. Name of the second configuration block" )
     .arg( L"Value2",            L"Optional. Second configuration block, as a range of property values" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqBondGeneratorDisplay)
 XLO_FUNC_START( aqBondGeneratorDisplay(
     const ExcelObj& bondGeneratorName,
     const ExcelObj& propertyKey ) )
@@ -1298,6 +1381,7 @@ XLO_FUNC_END( aqBondGeneratorDisplay )
     .help( L"Return a bond generator's configuration as a key/value block. Omit PropertyKey to return every block." )
     .arg( L"BondGeneratorName", L"A bond generator handle" )
     .arg( L"PropertyKey",       L"Optional. The configuration block to return; blank returns all blocks" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -1305,6 +1389,7 @@ XLO_FUNC_END( aqBondGeneratorDisplay )
  * ---------------------------------------------------------------------- */
 
 // Create and store a fitted bond curve from one or two named data blocks.
+#if AQ_XLL_ENABLED(aqBondCurveCreate)
 XLO_FUNC_START( aqBondCurveCreate(
     const ExcelObj& bondCurveName,
     const ExcelObj& key1,
@@ -1342,9 +1427,11 @@ XLO_FUNC_END( aqBondCurveCreate )
     .arg( L"Value1",        L"First data block, as a range" )
     .arg( L"Key2",          L"Optional. Name of the second data block" )
     .arg( L"Value2",        L"Optional. Second data block, as a range" );
+#endif
 
 
 // Display a stored bond curve as a matrix.
+#if AQ_XLL_ENABLED(aqBondCurveDisplay)
 XLO_FUNC_START( aqBondCurveDisplay(
     const ExcelObj& bondCurveName ) )
 {
@@ -1357,9 +1444,11 @@ XLO_FUNC_START( aqBondCurveDisplay(
 XLO_FUNC_END( aqBondCurveDisplay )
     .help( L"Display a stored bond curve as a matrix." )
     .arg( L"BondCurveName", L"A bond curve handle" );
+#endif
 
 
 // Interpolated yield off a stored bond curve at a reference date.
+#if AQ_XLL_ENABLED(aqBondCurveYield)
 XLO_FUNC_START( aqBondCurveYield(
     const ExcelObj& bondCurveName,
     const ExcelObj& referenceDate ) )
@@ -1374,9 +1463,11 @@ XLO_FUNC_END( aqBondCurveYield )
     .help( L"Interpolated yield off a stored bond curve at a reference date." )
     .arg( L"BondCurveName", L"A bond curve handle" )
     .arg( L"ReferenceDate", L"The date to read the yield at" );
+#endif
 
 
 // Calibrate Nelson-Siegel parameters to a set of (maturity, yield) points.
+#if AQ_XLL_ENABLED(aqBondCurveNelsonSiegelCalibrate)
 XLO_FUNC_START( aqBondCurveNelsonSiegelCalibrate(
     const ExcelObj& bondMaturities,
     const ExcelObj& bondYields,
@@ -1410,9 +1501,11 @@ XLO_FUNC_END( aqBondCurveNelsonSiegelCalibrate )
     .arg( L"MaxStationaryStateIterations", L"Maximum iterations with no improvement before stopping" )
     .arg( L"LowerBounds",                  L"4 lower bounds, aligned with InitialGuess" )
     .arg( L"UpperBounds",                  L"4 upper bounds, aligned with InitialGuess" );
+#endif
 
 
 // Nelson-Siegel yields for a set of maturities from fitted parameters.
+#if AQ_XLL_ENABLED(aqBondCurveNelsonSiegelYield)
 XLO_FUNC_START( aqBondCurveNelsonSiegelYield(
     const ExcelObj& beta0,
     const ExcelObj& beta1,
@@ -1433,9 +1526,11 @@ XLO_FUNC_END( aqBondCurveNelsonSiegelYield )
     .arg( L"Beta2",          L"Curvature" )
     .arg( L"Lambda",         L"Time-decay" )
     .arg( L"BondMaturities", L"Column of maturities in years" );
+#endif
 
 
 // Calibrate polynomial coefficients to a set of (maturity, yield) points.
+#if AQ_XLL_ENABLED(aqBondCurvePolynomialCalibrate)
 XLO_FUNC_START( aqBondCurvePolynomialCalibrate(
     const ExcelObj& polynomialOrder,
     const ExcelObj& bondMaturities,
@@ -1490,9 +1585,11 @@ XLO_FUNC_END( aqBondCurvePolynomialCalibrate )
     .arg( L"MaxStationaryStateIterations", L"Maximum iterations with no improvement before stopping" )
     .arg( L"LowerBound",                   L"Lower bound applied to every coefficient" )
     .arg( L"UpperBound",                   L"Upper bound applied to every coefficient" );
+#endif
 
 
 // Polynomial yields for a set of maturities from fitted coefficients.
+#if AQ_XLL_ENABLED(aqBondCurvePolynomialYield)
 XLO_FUNC_START( aqBondCurvePolynomialYield(
     const ExcelObj& coefficients,
     const ExcelObj& bondMaturities ) )
@@ -1507,9 +1604,11 @@ XLO_FUNC_END( aqBondCurvePolynomialYield )
     .help( L"Polynomial yields for a column of maturities from fitted coefficients." )
     .arg( L"Coefficients",   L"Column of polynomial coefficients, lowest order first" )
     .arg( L"BondMaturities", L"Column of maturities in years" );
+#endif
 
 
 // Calibrate Svensson parameters to a set of (maturity, yield) points.
+#if AQ_XLL_ENABLED(aqBondCurveSvenssonCalibrate)
 XLO_FUNC_START( aqBondCurveSvenssonCalibrate(
     const ExcelObj& bondMaturities,
     const ExcelObj& bondYields,
@@ -1543,9 +1642,11 @@ XLO_FUNC_END( aqBondCurveSvenssonCalibrate )
     .arg( L"MaxStationaryStateIterations", L"Maximum iterations with no improvement before stopping" )
     .arg( L"LowerBounds",                  L"6 lower bounds, aligned with InitialGuess" )
     .arg( L"UpperBounds",                  L"6 upper bounds, aligned with InitialGuess" );
+#endif
 
 
 // Svensson yields for a set of maturities from fitted parameters.
+#if AQ_XLL_ENABLED(aqBondCurveSvenssonYield)
 XLO_FUNC_START( aqBondCurveSvenssonYield(
     const ExcelObj& beta0,
     const ExcelObj& beta1,
@@ -1571,6 +1672,7 @@ XLO_FUNC_END( aqBondCurveSvenssonYield )
     .arg( L"Lambda1",        L"Time-decay" )
     .arg( L"Lambda2",        L"Secondary time-decay" )
     .arg( L"BondMaturities", L"Column of maturities in years" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -1578,6 +1680,7 @@ XLO_FUNC_END( aqBondCurveSvenssonYield )
  * ---------------------------------------------------------------------- */
 
 // Price a cached bond off a fitted bond curve at a settlement date.
+#if AQ_XLL_ENABLED(aqBondObjectPriceFromBondCurve)
 XLO_FUNC_START( aqBondObjectPriceFromBondCurve(
     const ExcelObj& bondObjectName,
     const ExcelObj& settlementDate,
@@ -1596,9 +1699,11 @@ XLO_FUNC_END( aqBondObjectPriceFromBondCurve )
     .arg( L"BondObjectName", L"A bond handle" )
     .arg( L"SettlementDate", L"The settlement date" )
     .arg( L"BondCurveName",  L"A bond curve handle" );
+#endif
 
 
 // Yield of a cached bond implied by a fitted bond curve at a settlement date.
+#if AQ_XLL_ENABLED(aqBondObjectYieldFromBondCurve)
 XLO_FUNC_START( aqBondObjectYieldFromBondCurve(
     const ExcelObj& bondObjectName,
     const ExcelObj& settlementDate,
@@ -1617,9 +1722,11 @@ XLO_FUNC_END( aqBondObjectYieldFromBondCurve )
     .arg( L"BondObjectName", L"A bond handle" )
     .arg( L"SettlementDate", L"The settlement date" )
     .arg( L"BondCurveName",  L"A bond curve handle" );
+#endif
 
 
 // Forward reinvested coupon for a cached bond over a repo period.
+#if AQ_XLL_ENABLED(aqBondObjectForwardReinvestedCoupon)
 XLO_FUNC_START( aqBondObjectForwardReinvestedCoupon(
     const ExcelObj& bondObjectName,
     const ExcelObj& settleDate,
@@ -1647,9 +1754,11 @@ XLO_FUNC_END( aqBondObjectForwardReinvestedCoupon )
     .arg( L"Price",             L"The spot price" )
     .arg( L"RepoRate",          L"The repo rate over the period" )
     .arg( L"RepoDayCount",      L"Day count for the repo accrual, e.g. ACT/360" );
+#endif
 
 
 // Quote (yield -> price) for a cached bond at one or more settlement dates.
+#if AQ_XLL_ENABLED(aqBondObjectQuote)
 XLO_FUNC_START( aqBondObjectQuote(
     const ExcelObj& bondObjectName,
     const ExcelObj& settlementDates,
@@ -1671,9 +1780,11 @@ XLO_FUNC_END( aqBondObjectQuote )
     .arg( L"SettlementDates",      L"Column of settlement dates" )
     .arg( L"Yields",               L"Column of yields, aligned with SettlementDates" )
     .arg( L"YieldCalculationType", L"Optional. Yield convention, e.g. STREET, TRUE" );
+#endif
 
 
 // Yield (price -> yield) for a cached bond at a settlement date.
+#if AQ_XLL_ENABLED(aqBondObjectYieldFromObject)
 XLO_FUNC_START( aqBondObjectYieldFromObject(
     const ExcelObj& bondObjectName,
     const ExcelObj& settlementDate,
@@ -1695,9 +1806,11 @@ XLO_FUNC_END( aqBondObjectYieldFromObject )
     .arg( L"SettlementDate",       L"The settlement date" )
     .arg( L"Price",                L"The price to solve the yield from" )
     .arg( L"YieldCalculationType", L"Optional. Yield convention, e.g. STREET, TRUE" );
+#endif
 
 
 // Optimised yield solve (price -> yield) for a cached bond at multiple dates.
+#if AQ_XLL_ENABLED(aqBondObjectYieldOptimized)
 XLO_FUNC_START( aqBondObjectYieldOptimized(
     const ExcelObj& bondObjectName,
     const ExcelObj& settlementDates,
@@ -1719,6 +1832,7 @@ XLO_FUNC_END( aqBondObjectYieldOptimized )
     .arg( L"SettlementDates",      L"Column of settlement dates" )
     .arg( L"Prices",               L"Column of prices, aligned with SettlementDates" )
     .arg( L"YieldCalculationType", L"Optional. Yield convention, e.g. STREET, TRUE" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -1726,6 +1840,7 @@ XLO_FUNC_END( aqBondObjectYieldOptimized )
  * ---------------------------------------------------------------------- */
 
 // The expected keys for a bond schedule label/value block.
+#if AQ_XLL_ENABLED(aqBondScheduleLVBKeys)
 XLO_FUNC_START( aqBondScheduleLVBKeys() )
 {
     AQ_XLL_GUARD
@@ -1734,9 +1849,11 @@ XLO_FUNC_START( aqBondScheduleLVBKeys() )
 }
 XLO_FUNC_END( aqBondScheduleLVBKeys )
     .help( L"The expected keys for a bond schedule label/value block, as a column." );
+#endif
 
 
 // Build a bond schedule from a label/value block.
+#if AQ_XLL_ENABLED(aqBondSchedule)
 XLO_FUNC_START( aqBondSchedule(
     const ExcelObj& bondScheduleLVB,
     const ExcelObj& validateKeys,
@@ -1755,6 +1872,7 @@ XLO_FUNC_END( aqBondSchedule )
     .arg( L"BondScheduleLVB",   L"The bond schedule label/value block" )
     .arg( L"ValidateKeys",      L"Optional. Default TRUE. Check the keys against aqBondScheduleLVBKeys" )
     .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -1762,6 +1880,7 @@ XLO_FUNC_END( aqBondSchedule )
  * ---------------------------------------------------------------------- */
 
 // Create and store a bond option from a label/value block.
+#if AQ_XLL_ENABLED(aqBondOptionObjectCreate)
 XLO_FUNC_START( aqBondOptionObjectCreate(
     const ExcelObj& objectName,
     const ExcelObj& optionLVB,
@@ -1782,9 +1901,11 @@ XLO_FUNC_END( aqBondOptionObjectCreate )
     .arg( L"ObjectName",   L"Name for the bond-option object" )
     .arg( L"OptionLVB",    L"The bond-option definition as a label/value block" )
     .arg( L"ValidateKeys", L"Optional. Default TRUE. Check the LVB keys" );
+#endif
 
 
 // Display a cached bond option as a matrix.
+#if AQ_XLL_ENABLED(aqBondOptionObjectDisplay)
 XLO_FUNC_START( aqBondOptionObjectDisplay(
     const ExcelObj& objectName ) )
 {
@@ -1797,9 +1918,11 @@ XLO_FUNC_START( aqBondOptionObjectDisplay(
 XLO_FUNC_END( aqBondOptionObjectDisplay )
     .help( L"Display a cached bond option as a matrix." )
     .arg( L"ObjectName", L"A bond-option handle" );
+#endif
 
 
 // Present value of a cached bond option.
+#if AQ_XLL_ENABLED(aqBondOptionObjectPV)
 XLO_FUNC_START( aqBondOptionObjectPV(
     const ExcelObj& objectName,
     const ExcelObj& valuationSettings,
@@ -1830,9 +1953,11 @@ XLO_FUNC_END( aqBondOptionObjectPV )
     .arg( L"RepoDaycount",      L"Day count for the repo accrual, e.g. ACT/360" )
     .arg( L"DiscountRate",      L"Discount rate for the option" )
     .arg( L"DiscountDayCount",  L"Day count for the discount accrual" );
+#endif
 
 
 // Greeks of a cached bond option.
+#if AQ_XLL_ENABLED(aqBondOptionObjectGreeks)
 XLO_FUNC_START( aqBondOptionObjectGreeks(
     const ExcelObj& greekType,
     const ExcelObj& objectName,
@@ -1884,6 +2009,7 @@ XLO_FUNC_END( aqBondOptionObjectGreeks )
     .arg( L"ThetaBump",         L"Bump size for theta (days)" )
     .arg( L"RhoBump",           L"Bump size for rho" )
     .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -1893,6 +2019,7 @@ XLO_FUNC_END( aqBondOptionObjectGreeks )
  * ---------------------------------------------------------------------- */
 
 // Present value of a cached bond-future option.
+#if AQ_XLL_ENABLED(aqBondFutureOptionObjectPV)
 XLO_FUNC_START( aqBondFutureOptionObjectPV(
     const ExcelObj& objectName,
     const ExcelObj& valuationSettings,
@@ -1917,9 +2044,11 @@ XLO_FUNC_END( aqBondFutureOptionObjectPV )
     .arg( L"BondFuturePrice",   L"The bond-future price" )
     .arg( L"DiscountRate",      L"Discount rate for the option" )
     .arg( L"DiscountDayCount",  L"Day count for the discount accrual" );
+#endif
 
 
 // Greeks of a cached bond-future option.
+#if AQ_XLL_ENABLED(aqBondFutureOptionObjectGreeks)
 XLO_FUNC_START( aqBondFutureOptionObjectGreeks(
     const ExcelObj& greekType,
     const ExcelObj& objectName,
@@ -1965,3 +2094,4 @@ XLO_FUNC_END( aqBondFutureOptionObjectGreeks )
     .arg( L"ThetaBump",         L"Bump size for theta (days)" )
     .arg( L"RhoBump",           L"Bump size for rho" )
     .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );
+#endif

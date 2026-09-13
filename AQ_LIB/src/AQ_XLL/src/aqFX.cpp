@@ -33,6 +33,7 @@ namespace
 
 
 // Create and store an FX curve from a curve generator and market data.
+#if AQ_XLL_ENABLED(aqFXCurveCreate)
 XLO_FUNC_START( aqFXCurveCreate(
     const ExcelObj& objectName,
     const ExcelObj& curveGeneratorName,
@@ -53,9 +54,11 @@ XLO_FUNC_END( aqFXCurveCreate )
     .arg( L"ObjectName",          L"Name for the FX curve object" )
     .arg( L"CurveGeneratorName",  L"A curve-generator handle" )
     .arg( L"CurveMarketDataName", L"A curve-market-data handle" );
+#endif
 
 
 // FX forwards from discount curves.
+#if AQ_XLL_ENABLED(aqFXObjectForwardsFromDiscountCurves)
 XLO_FUNC_START( aqFXObjectForwardsFromDiscountCurves(
     const ExcelObj& objectName,
     const ExcelObj& settleDatesOrTenors,
@@ -83,9 +86,11 @@ XLO_FUNC_END( aqFXObjectForwardsFromDiscountCurves )
     .arg( L"TermCurveCollection",  L"Term-currency discount curve collection" )
     .arg( L"ShowColumnHeaders",    L"Optional. Default FALSE. Include a header row" )
     .arg( L"ColumnList",           L"Optional. Columns to include" );
+#endif
 
 
 // FX forwards from a cached FX curve.
+#if AQ_XLL_ENABLED(aqFXObjectForwards)
 XLO_FUNC_START( aqFXObjectForwards(
     const ExcelObj& objectName,
     const ExcelObj& settleDatesOrTenors,
@@ -107,9 +112,11 @@ XLO_FUNC_END( aqFXObjectForwards )
     .arg( L"SettleDatesOrTenors", L"Column of settlement dates or tenors" )
     .arg( L"ShowColumnHeaders",   L"Optional. Default FALSE. Include a header row" )
     .arg( L"ColumnList",          L"Optional. Columns to include" );
+#endif
 
 
 // FX swap points from discount curves.
+#if AQ_XLL_ENABLED(aqFXObjectSwapFromDiscountCurves)
 XLO_FUNC_START( aqFXObjectSwapFromDiscountCurves(
     const ExcelObj& objectName,
     const ExcelObj& nearLegSettlementDatesOrTenors,
@@ -143,9 +150,11 @@ XLO_FUNC_END( aqFXObjectSwapFromDiscountCurves )
     .arg( L"OutputFarLeg",                   L"TRUE to output the far leg, FALSE the near leg" )
     .arg( L"ShowColumnHeaders",              L"Optional. Default FALSE. Include a header row" )
     .arg( L"ColumnList",                     L"Optional. Columns to include" );
+#endif
 
 
 // FX swap points from a cached FX curve.
+#if AQ_XLL_ENABLED(aqFXObjectSwap)
 XLO_FUNC_START( aqFXObjectSwap(
     const ExcelObj& objectName,
     const ExcelObj& nearLegSettlementDatesOrTenors,
@@ -173,9 +182,11 @@ XLO_FUNC_END( aqFXObjectSwap )
     .arg( L"OutputFarLeg",                   L"TRUE to output the far leg, FALSE the near leg" )
     .arg( L"ShowColumnHeaders",              L"Optional. Default FALSE. Include a header row" )
     .arg( L"ColumnList",                     L"Optional. Columns to include" );
+#endif
 
 
 // FX forwards from a cached cross-currency curve object.
+#if AQ_XLL_ENABLED(aqFXObjectForwardsFromXccyCurveObject)
 XLO_FUNC_START( aqFXObjectForwardsFromXccyCurveObject(
     const ExcelObj& xccyCurveObjectName,
     const ExcelObj& settleDatesOrTenors,
@@ -200,9 +211,11 @@ XLO_FUNC_END( aqFXObjectForwardsFromXccyCurveObject )
     .arg( L"XccyCurveSwapRateBumpSize", L"Bump size applied to the xccy swap rate" )
     .arg( L"ShowColumnHeaders",         L"Optional. Default FALSE. Include a header row" )
     .arg( L"ColumnList",                L"Optional. Columns to include" );
+#endif
 
 
 // FX forwards from base/term curve collections via a cross-currency basis.
+#if AQ_XLL_ENABLED(aqFXObjectForwardsFromXccyCurve)
 XLO_FUNC_START( aqFXObjectForwardsFromXccyCurve(
     const ExcelObj& baseCurveCollection,
     const ExcelObj& baseCurveIndex,
@@ -242,9 +255,11 @@ XLO_FUNC_END( aqFXObjectForwardsFromXccyCurve )
     .arg( L"SettleDatesOrTenors",       L"Column of settlement dates or tenors" )
     .arg( L"ShowColumnHeaders",         L"Optional. Default FALSE. Include a header row" )
     .arg( L"ColumnList",                L"Optional. Columns to include" );
+#endif
 
 
 // FX swap points from a cached cross-currency curve object.
+#if AQ_XLL_ENABLED(aqFXObjectSwapFromXccyCurveObject)
 XLO_FUNC_START( aqFXObjectSwapFromXccyCurveObject(
     const ExcelObj& xccyCurveObjectName,
     const ExcelObj& nearLegSettlementDatesOrTenors,
@@ -272,9 +287,11 @@ XLO_FUNC_END( aqFXObjectSwapFromXccyCurveObject )
     .arg( L"OutputFarLeg",                   L"TRUE to output the far leg, FALSE the near leg" )
     .arg( L"ShowColumnHeaders",              L"Optional. Default FALSE. Include a header row" )
     .arg( L"ColumnList",                     L"Optional. Columns to include" );
+#endif
 
 
 // FX swap points from base/term curve collections via a cross-currency basis.
+#if AQ_XLL_ENABLED(aqFXObjectSwapFromXccyCurve)
 XLO_FUNC_START( aqFXObjectSwapFromXccyCurve(
     const ExcelObj& baseCurveCollection,
     const ExcelObj& baseCurveIndex,
@@ -317,9 +334,11 @@ XLO_FUNC_END( aqFXObjectSwapFromXccyCurve )
     .arg( L"OutputFarLeg",                   L"TRUE to output the far leg, FALSE the near leg" )
     .arg( L"ShowColumnHeaders",              L"Optional. Default FALSE. Include a header row" )
     .arg( L"ColumnList",                     L"Optional. Columns to include" );
+#endif
 
 
 // FX spot implied by an as-of-date rate.
+#if AQ_XLL_ENABLED(aqFXObjectSpotToAsOfDate)
 XLO_FUNC_START( aqFXObjectSpotToAsOfDate(
     const ExcelObj& fxSpot,
     const ExcelObj& fxSpotDate,
@@ -347,9 +366,11 @@ XLO_FUNC_END( aqFXObjectSpotToAsOfDate )
     .arg( L"BaseDiscountCurveIndex",  L"Base-currency discount curve index" )
     .arg( L"TermCurveCollection",     L"Term-currency discount curve collection" )
     .arg( L"TermDiscountCurveIndex",  L"Term-currency discount curve index" );
+#endif
 
 
 // FX as-of-date rate implied by a spot rate.
+#if AQ_XLL_ENABLED(aqFXObjectAsOfDateToSpot)
 XLO_FUNC_START( aqFXObjectAsOfDateToSpot(
     const ExcelObj& fxAsOfDateRate,
     const ExcelObj& fxSpotDate,
@@ -377,3 +398,4 @@ XLO_FUNC_END( aqFXObjectAsOfDateToSpot )
     .arg( L"BaseDiscountCurveIndex",  L"Base-currency discount curve index" )
     .arg( L"TermCurveCollection",     L"Term-currency discount curve collection" )
     .arg( L"TermDiscountCurveIndex",  L"Term-currency discount curve index" );
+#endif

@@ -18,6 +18,7 @@ using namespace aq_xll;
 
 
 // Create and store a cap/floor from a label/value block.
+#if AQ_XLL_ENABLED(aqCapFloorObjectCreate)
 XLO_FUNC_START( aqCapFloorObjectCreate(
     const ExcelObj& objectName,
     const ExcelObj& tradeLVB,
@@ -38,9 +39,11 @@ XLO_FUNC_END( aqCapFloorObjectCreate )
     .arg( L"ObjectName",   L"Name for the cap/floor object" )
     .arg( L"TradeLVB",     L"The cap/floor definition as a label/value block" )
     .arg( L"ValidateKeys", L"Optional. Default TRUE. Check the LVB keys" );
+#endif
 
 
 // Display a cached cap/floor as a matrix.
+#if AQ_XLL_ENABLED(aqCapFloorObjectDisplay)
 XLO_FUNC_START( aqCapFloorObjectDisplay(
     const ExcelObj& objectName ) )
 {
@@ -53,9 +56,11 @@ XLO_FUNC_START( aqCapFloorObjectDisplay(
 XLO_FUNC_END( aqCapFloorObjectDisplay )
     .help( L"Display a cached cap/floor as a matrix." )
     .arg( L"ObjectName", L"A cap/floor handle" );
+#endif
 
 
 // Display the cashflows of a cached cap/floor, priced off a volatility and a curve.
+#if AQ_XLL_ENABLED(aqCapFloorObjectDisplayCashflows)
 XLO_FUNC_START( aqCapFloorObjectDisplayCashflows(
     const ExcelObj& objectName,
     const ExcelObj& volObjectName,
@@ -80,9 +85,11 @@ XLO_FUNC_END( aqCapFloorObjectDisplayCashflows )
     .arg( L"CurveCollection",   L"Discount / forward curve collection" )
     .arg( L"FixingTableName",   L"Optional. Fixing table for past fixings" )
     .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );
+#endif
 
 
 // Present value of a cached cap/floor, priced off a volatility and a curve.
+#if AQ_XLL_ENABLED(aqCapFloorObjectPV)
 XLO_FUNC_START( aqCapFloorObjectPV(
     const ExcelObj& objectName,
     const ExcelObj& volObjectName,
@@ -104,9 +111,11 @@ XLO_FUNC_END( aqCapFloorObjectPV )
     .arg( L"VolObjectName",   L"A volatility-surface handle" )
     .arg( L"CurveCollection", L"Discount / forward curve collection" )
     .arg( L"FixingTableName", L"Optional. Fixing table for past fixings" );
+#endif
 
 
 // Analytical greeks of a cached cap/floor.
+#if AQ_XLL_ENABLED(aqCapFloorObjectGreeksAnalytical)
 XLO_FUNC_START( aqCapFloorObjectGreeksAnalytical(
     const ExcelObj& objectName,
     const ExcelObj& volObjectName,
@@ -131,9 +140,11 @@ XLO_FUNC_END( aqCapFloorObjectGreeksAnalytical )
     .arg( L"CurveCollection",   L"Discount / forward curve collection" )
     .arg( L"FixingTableName",   L"Optional. Fixing table for past fixings" )
     .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );
+#endif
 
 
 // Greeks of a cached cap/floor, by bump-and-revalue.
+#if AQ_XLL_ENABLED(aqCapFloorObjectGreeks)
 XLO_FUNC_START( aqCapFloorObjectGreeks(
     const ExcelObj& objectName,
     const ExcelObj& volObjectName,
@@ -170,9 +181,11 @@ XLO_FUNC_END( aqCapFloorObjectGreeks )
     .arg( L"ThetaBump",         L"Bump size for theta (days)" )
     .arg( L"FixingTableName",   L"Optional. Fixing table for past fixings" )
     .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );
+#endif
 
 
 // Display the cashflows of a cached cap/floor, priced off an explicit rate matrix.
+#if AQ_XLL_ENABLED(aqCapFloorObjectDisplayCashflowsFromRates)
 XLO_FUNC_START( aqCapFloorObjectDisplayCashflowsFromRates(
     const ExcelObj& objectName,
     const ExcelObj& volObjectName,
@@ -194,9 +207,11 @@ XLO_FUNC_END( aqCapFloorObjectDisplayCashflowsFromRates )
     .arg( L"VolObjectName",     L"A volatility-surface handle" )
     .arg( L"RateData",          L"Explicit forward/discount rate matrix" )
     .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );
+#endif
 
 
 // Analytical greeks of a cached cap/floor, priced off an explicit rate matrix.
+#if AQ_XLL_ENABLED(aqCapFloorObjectGreeksAnalyticalFromRates)
 XLO_FUNC_START( aqCapFloorObjectGreeksAnalyticalFromRates(
     const ExcelObj& objectName,
     const ExcelObj& volObjectName,
@@ -218,9 +233,11 @@ XLO_FUNC_END( aqCapFloorObjectGreeksAnalyticalFromRates )
     .arg( L"VolObjectName",     L"A volatility-surface handle" )
     .arg( L"RateData",          L"Explicit forward/discount rate matrix" )
     .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );
+#endif
 
 
 // Greeks of a cached cap/floor, by bump-and-revalue, priced off an explicit rate matrix.
+#if AQ_XLL_ENABLED(aqCapFloorObjectGreeksFromRates)
 XLO_FUNC_START( aqCapFloorObjectGreeksFromRates(
     const ExcelObj& objectName,
     const ExcelObj& volObjectName,
@@ -254,9 +271,11 @@ XLO_FUNC_END( aqCapFloorObjectGreeksFromRates )
     .arg( L"VegaBump",          L"Bump size for vega" )
     .arg( L"ThetaBump",         L"Bump size for theta (days)" )
     .arg( L"ShowColumnHeaders", L"Optional. Default TRUE. Include a header row" );
+#endif
 
 
 // Present value of a cached cap/floor, priced off an explicit rate matrix.
+#if AQ_XLL_ENABLED(aqCapFloorObjectPVFromRates)
 XLO_FUNC_START( aqCapFloorObjectPVFromRates(
     const ExcelObj& objectName,
     const ExcelObj& volObjectName,
@@ -275,3 +294,4 @@ XLO_FUNC_END( aqCapFloorObjectPVFromRates )
     .arg( L"ObjectName",    L"A cap/floor handle" )
     .arg( L"VolObjectName", L"A volatility-surface handle" )
     .arg( L"RateData",      L"Explicit forward/discount rate matrix" );
+#endif

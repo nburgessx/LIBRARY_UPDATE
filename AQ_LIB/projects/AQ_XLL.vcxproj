@@ -57,6 +57,14 @@
       <Configuration>Release_XL_Swap</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_XL_Manifest|Win32">
+      <Configuration>Release_XL_Manifest</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_XL_Manifest|x64">
+      <Configuration>Release_XL_Manifest</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -92,6 +100,14 @@
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>NotSet</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>NotSet</CharacterSet>
@@ -149,6 +165,9 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -166,6 +185,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
+    <!-- Manifest JSON consumed by Release_XL_Manifest's PreBuildEvent
+         (CLAUDE.md Sec 4.4/9.5). Always active.json by default; to switch
+         which functions a local build exposes, edit active.json's CONTENT
+         directly in Solution Explorer (resources\manifest filter) and
+         rebuild - no property pages, no VS restart. For scripted/CI
+         generation of many customer editions, override the file instead:
+         msbuild /p:AQ_XLL_MANIFEST_FILE=path\to\edition.json -->
+    <AQ_XLL_MANIFEST_FILE Condition="'$(AQ_XLL_MANIFEST_FILE)'==''">$(SolutionDir)src\$(ProjectName)\resources\manifest\active.json</AQ_XLL_MANIFEST_FILE>
+  </PropertyGroup>
+  <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
@@ -180,18 +209,21 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">false</LinkIncremental>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
@@ -200,12 +232,14 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">AlgoQuantLib</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">AlgoQuantLib</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">AlgoQuantLib</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">AlgoQuantLib</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">AlgoQuantLib</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.xll</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">.xll</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">.xll</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">.xll</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">.xll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">.xll</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">.xll</TargetExt>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AlgoQuantLib</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">AlgoQuantLib</TargetName>
@@ -565,6 +599,57 @@
       </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\include;$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\external\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_WINDOWS;_USRDLL;_CONSOLE;XLL_LIB_STL;_MT;%(PreprocessorDefinitions);UNICODE;_UNICODE;XLOIL_STATIC_LIB;SPDLOG_COMPILED_LIB;AQ_XLL_MANIFEST_BUILD=1</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267;4251</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <OpenMPSupport>true</OpenMPSupport>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <!-- Force-include the per-function enable header the PreBuildEvent below
+           regenerates from AQ_XLL_MANIFEST_FILE (CLAUDE.md Sec 4.4/9.5). Every
+           XLO_FUNC_START/END site is wrapped #if AQ_XLL_ENABLED(name)...#endif;
+           AQ_XLL_ENABLED itself is defined once in aqXllTools.h. Written to a
+           fixed path (not $(IntDir)) so it can be a normal ClInclude item and
+           show up in Solution Explorer under the "include" filter. -->
+      <AdditionalOptions>/FI"$(SolutionDir)src\$(ProjectName)\include\generated\aqManifestFunctions.h" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>math.lib;models.lib;calibration.lib;etrading.lib;validation.lib;QuantLib-vc143-x64-mt-s.lib;Adept203-vc143-x64.lib;xlOil-COM.lib;xlOil-Dynamic.lib;xlOil-External.lib;xlOil-Funcs.lib;xlOil-XLL.lib;xlOilHelpers.lib;Oleacc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)AlgoQuantLib.xll</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)targets\$(PlatformArchitecture)\Release\math\out;$(SolutionDir)targets\$(PlatformArchitecture)\Release\models\out;$(SolutionDir)targets\$(PlatformArchitecture)\Release\calibration\out;$(SolutionDir)targets\$(PlatformArchitecture)\Release\etrading\out;$(SolutionDir)targets\$(PlatformArchitecture)\Release\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib;%(AdditionalLibraryDirectories);$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\build\x64\ReleaseStatic</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
+      <ForceSymbolReferences>DllMain;%(ForceSymbolReferences)</ForceSymbolReferences>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+    <PreBuildEvent>
+      <Command>python "$(SolutionDir)resources\scripts\generate_xll_manifest_header.py" "$(AQ_XLL_MANIFEST_FILE)" "$(SolutionDir)src\$(ProjectName)\include\generated\aqManifestFunctions.h"</Command>
+      <Message>Generating aqManifestFunctions.h from $(AQ_XLL_MANIFEST_FILE)</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
@@ -686,6 +771,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
     </None>
+    <None Include="..\src\AQ_XLL\resources\manifest\active.json" />
+    <None Include="..\src\AQ_XLL\resources\manifest\demo.json" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp" />
@@ -769,6 +856,11 @@
   <ItemGroup>
     <ClInclude Include="..\src\AQ_XLL\include\aqXllTools.h" />
     <ClInclude Include="..\src\AQ_XLL\include\aqMain.h" />
+    <!-- Regenerated by Release_XL_Manifest's PreBuildEvent from
+         AQ_XLL_MANIFEST_FILE (see the ItemDefinitionGroup above); not
+         checked in, see .gitignore. Referenced here only so it shows up in
+         Solution Explorer; absent until the first Release_XL_Manifest build. -->
+    <ClInclude Include="..\src\AQ_XLL\include\generated\aqManifestFunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -33,6 +33,7 @@ namespace
 
 
 // Present value of a cached CMS swap, using an explicit convexity adjustment.
+#if AQ_XLL_ENABLED(aqCMSObjectPVUsingConvexityAdjustment)
 XLO_FUNC_START( aqCMSObjectPVUsingConvexityAdjustment(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
@@ -57,9 +58,11 @@ XLO_FUNC_END( aqCMSObjectPVUsingConvexityAdjustment )
     .arg( L"ConvexityAdjustment",  L"The CMS convexity adjustment to apply" )
     .arg( L"LegName",              L"The CMS leg to value" )
     .arg( L"FixingTableNames",     L"Optional. Fixing-table name overrides as a label/value block" );
+#endif
 
 
 // Par rate of a cached CMS swap, using an explicit convexity adjustment.
+#if AQ_XLL_ENABLED(aqCMSObjectParRateUsingConvexityAdjustment)
 XLO_FUNC_START( aqCMSObjectParRateUsingConvexityAdjustment(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
@@ -81,3 +84,4 @@ XLO_FUNC_END( aqCMSObjectParRateUsingConvexityAdjustment )
     .arg( L"ValuationSettingsLVB", L"Valuation settings as a label/value block" )
     .arg( L"ConvexityAdjustment",  L"The CMS convexity adjustment to apply" )
     .arg( L"FixingTableNames",     L"Optional. Fixing-table name overrides as a label/value block" );
+#endif

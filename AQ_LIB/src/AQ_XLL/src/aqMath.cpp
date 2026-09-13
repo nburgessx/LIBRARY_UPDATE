@@ -105,6 +105,7 @@ namespace
 
 
 // Black-Scholes Price Method
+#if AQ_XLL_ENABLED(aqMathBlackScholesPrice)
 XLO_FUNC_START( aqMathBlackScholesPrice(
     const ExcelObj& callOrPut,
     const ExcelObj& spot,
@@ -149,11 +150,13 @@ XLO_FUNC_END( aqMathBlackScholesPrice )
 .arg(L"Rate", L"Interest Rate (%)")
 .arg(L"Carry", L"Cost of Carry (%) - Defaults to Zero")
 .arg(L"Shift", L"[Optional] Apply a lognormal shift, defaults to zero");
+#endif
 
 
 /*
  * Interpolate a Y value at XPoint from the (XValues, YValues) data.
  */
+#if AQ_XLL_ENABLED(aqMathInterpolation)
 XLO_FUNC_START( aqMathInterpolation(
     const ExcelObj& xValues,
     const ExcelObj& yValues,
@@ -180,12 +183,14 @@ XLO_FUNC_END( aqMathInterpolation )
     .arg( L"XPoint",        L"The x value to interpolate at" )
     .arg( L"Interpolation", L"Interpolation method, e.g. LINEAR, MONOTONE_CONVEX, SPLINE" )
     .arg( L"JoinXValue",    L"Optional. Join x value for piecewise schemes. Default 0" );
+#endif
 
 
 /*
  * Principal-component analysis of a data matrix. Returns the factor loadings as
  * a labelled matrix.
  */
+#if AQ_XLL_ENABLED(aqMathPCA)
 XLO_FUNC_START( aqMathPCA(
     const ExcelObj& key,
     const ExcelObj& data,
@@ -207,6 +212,7 @@ XLO_FUNC_END( aqMathPCA )
     .arg( L"Data",                 L"The data matrix (observations x variables)" )
     .arg( L"UseCorrelationMatrix", L"Optional. Default FALSE. TRUE uses the correlation matrix, FALSE the covariance matrix" )
     .arg( L"NFactors",             L"Number of factors (principal components) to return" );
+#endif
 
 
 /* =========================================================================
@@ -214,6 +220,7 @@ XLO_FUNC_END( aqMathPCA )
  * ====================================================================== */
 
 // Implied volatility from a Black-Scholes price.
+#if AQ_XLL_ENABLED(aqMathBlackScholesImpliedVol)
 XLO_FUNC_START( aqMathBlackScholesImpliedVol(
     const ExcelObj& price,
     const ExcelObj& callOrPut,
@@ -242,9 +249,11 @@ XLO_FUNC_END( aqMathBlackScholesImpliedVol )
     .arg( L"Rate",      L"Interest rate" )
     .arg( L"Carry",     L"Cost of carry" )
     .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+#endif
 
 
 // Black-Scholes forward delta.
+#if AQ_XLL_ENABLED(aqMathBlackScholesDeltaForward)
 XLO_FUNC_START( aqMathBlackScholesDeltaForward(
     const ExcelObj& callOrPut,
     const ExcelObj& spot,
@@ -272,9 +281,11 @@ XLO_FUNC_END( aqMathBlackScholesDeltaForward )
     .arg( L"Rate",      L"Interest rate" )
     .arg( L"Carry",     L"Cost of carry" )
     .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+#endif
 
 
 // Black-Scholes spot delta.
+#if AQ_XLL_ENABLED(aqMathBlackScholesDeltaSpot)
 XLO_FUNC_START( aqMathBlackScholesDeltaSpot(
     const ExcelObj& callOrPut,
     const ExcelObj& spot,
@@ -302,9 +313,11 @@ XLO_FUNC_END( aqMathBlackScholesDeltaSpot )
     .arg( L"Rate",      L"Interest rate" )
     .arg( L"Carry",     L"Cost of carry" )
     .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+#endif
 
 
 // Black-Scholes gamma.
+#if AQ_XLL_ENABLED(aqMathBlackScholesGamma)
 XLO_FUNC_START( aqMathBlackScholesGamma(
     const ExcelObj& callOrPut,
     const ExcelObj& spot,
@@ -332,9 +345,11 @@ XLO_FUNC_END( aqMathBlackScholesGamma )
     .arg( L"Rate",      L"Interest rate" )
     .arg( L"Carry",     L"Cost of carry" )
     .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+#endif
 
 
 // Black-Scholes vega.
+#if AQ_XLL_ENABLED(aqMathBlackScholesVega)
 XLO_FUNC_START( aqMathBlackScholesVega(
     const ExcelObj& callOrPut,
     const ExcelObj& spot,
@@ -362,9 +377,11 @@ XLO_FUNC_END( aqMathBlackScholesVega )
     .arg( L"Rate",      L"Interest rate" )
     .arg( L"Carry",     L"Cost of carry" )
     .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+#endif
 
 
 // Black-Scholes theta.
+#if AQ_XLL_ENABLED(aqMathBlackScholesTheta)
 XLO_FUNC_START( aqMathBlackScholesTheta(
     const ExcelObj& callOrPut,
     const ExcelObj& spot,
@@ -392,9 +409,11 @@ XLO_FUNC_END( aqMathBlackScholesTheta )
     .arg( L"Rate",      L"Interest rate" )
     .arg( L"Carry",     L"Cost of carry" )
     .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+#endif
 
 
 // Black-Scholes rho.
+#if AQ_XLL_ENABLED(aqMathBlackScholesRho)
 XLO_FUNC_START( aqMathBlackScholesRho(
     const ExcelObj& callOrPut,
     const ExcelObj& spot,
@@ -422,6 +441,7 @@ XLO_FUNC_END( aqMathBlackScholesRho )
     .arg( L"Rate",      L"Interest rate" )
     .arg( L"Carry",     L"Cost of carry" )
     .arg( L"Shift",     L"Optional. Lognormal shift. Default 0" );
+#endif
 
 
 /* =========================================================================
@@ -429,6 +449,7 @@ XLO_FUNC_END( aqMathBlackScholesRho )
  * ====================================================================== */
 
 // Black caplet / floorlet price.
+#if AQ_XLL_ENABLED(aqMathCapletFloorletPrice)
 XLO_FUNC_START( aqMathCapletFloorletPrice(
     const ExcelObj& capletOrFloorlet,
     const ExcelObj& annuityFactor,
@@ -457,9 +478,11 @@ XLO_FUNC_END( aqMathCapletFloorletPrice )
     .arg( L"Time",             L"Time to expiry in years" )
     .arg( L"Shift",            L"Optional. Lognormal shift. Default 0" )
     .arg( L"VolatilityType",   L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+#endif
 
 
 // Implied volatility from a caplet / floorlet price.
+#if AQ_XLL_ENABLED(aqMathCapletFloorletImpliedVol)
 XLO_FUNC_START( aqMathCapletFloorletImpliedVol(
     const ExcelObj& price,
     const ExcelObj& capletOrFloorlet,
@@ -489,12 +512,14 @@ XLO_FUNC_END( aqMathCapletFloorletImpliedVol )
     .arg( L"Time",             L"Time to expiry in years" )
     .arg( L"Shift",            L"Optional. Lognormal shift. Default 0" )
     .arg( L"VolatilityType",   L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+#endif
 
 
 /* =========================================================================
  *  Volatility conversion + Libor-in-arrears convexity
  * ====================================================================== */
 
+#if AQ_XLL_ENABLED(aqMathVolatilityToNormalFromLognormal)
 XLO_FUNC_START( aqMathVolatilityToNormalFromLognormal(
     const ExcelObj& lognormalVol,
     const ExcelObj& underlyingRate ) )
@@ -507,8 +532,10 @@ XLO_FUNC_END( aqMathVolatilityToNormalFromLognormal )
     .help( L"Convert a lognormal volatility to a normal (basis-point) volatility." )
     .arg( L"LognormalVol",   L"The lognormal volatility" )
     .arg( L"UnderlyingRate", L"The underlying forward rate" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathVolatilityToLognormalFromNormal)
 XLO_FUNC_START( aqMathVolatilityToLognormalFromNormal(
     const ExcelObj& normalVol,
     const ExcelObj& underlyingRate ) )
@@ -521,8 +548,10 @@ XLO_FUNC_END( aqMathVolatilityToLognormalFromNormal )
     .help( L"Convert a normal (basis-point) volatility to a lognormal volatility." )
     .arg( L"NormalVol",      L"The normal volatility" )
     .arg( L"UnderlyingRate", L"The underlying forward rate" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathVolatilityToShiftedLognormalFromLognormal)
 XLO_FUNC_START( aqMathVolatilityToShiftedLognormalFromLognormal(
     const ExcelObj& lognormalVol,
     const ExcelObj& underlyingRate,
@@ -537,8 +566,10 @@ XLO_FUNC_END( aqMathVolatilityToShiftedLognormalFromLognormal )
     .arg( L"LognormalVol",   L"The lognormal volatility" )
     .arg( L"UnderlyingRate", L"The underlying forward rate" )
     .arg( L"ShiftSize",      L"The lognormal shift" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathVolatilityToLognormalFromShiftedLognormal)
 XLO_FUNC_START( aqMathVolatilityToLognormalFromShiftedLognormal(
     const ExcelObj& shiftedLognormalVol,
     const ExcelObj& underlyingRate,
@@ -553,8 +584,10 @@ XLO_FUNC_END( aqMathVolatilityToLognormalFromShiftedLognormal )
     .arg( L"ShiftedLognormalVol", L"The shifted-lognormal volatility" )
     .arg( L"UnderlyingRate",      L"The underlying forward rate" )
     .arg( L"ShiftSize",           L"The lognormal shift" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathVolatilityToShiftedLognormalFromNormal)
 XLO_FUNC_START( aqMathVolatilityToShiftedLognormalFromNormal(
     const ExcelObj& normalVol,
     const ExcelObj& underlyingRate,
@@ -569,8 +602,10 @@ XLO_FUNC_END( aqMathVolatilityToShiftedLognormalFromNormal )
     .arg( L"NormalVol",      L"The normal volatility" )
     .arg( L"UnderlyingRate", L"The underlying forward rate" )
     .arg( L"ShiftSize",      L"The lognormal shift" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathVolatilityToNormalFromShiftedLognormal)
 XLO_FUNC_START( aqMathVolatilityToNormalFromShiftedLognormal(
     const ExcelObj& shiftedLognormalVol,
     const ExcelObj& underlyingRate,
@@ -585,8 +620,10 @@ XLO_FUNC_END( aqMathVolatilityToNormalFromShiftedLognormal )
     .arg( L"ShiftedLognormalVol", L"The shifted-lognormal volatility" )
     .arg( L"UnderlyingRate",      L"The underlying forward rate" )
     .arg( L"ShiftSize",           L"The lognormal shift" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathLiborConvexityAdjustmentInArrears)
 XLO_FUNC_START( aqMathLiborConvexityAdjustmentInArrears(
     const ExcelObj& liborRate,
     const ExcelObj& couponYearFraction,
@@ -613,8 +650,10 @@ XLO_FUNC_END( aqMathLiborConvexityAdjustmentInArrears )
     .arg( L"VolatilityType",      L"LOGNORMAL, NORMAL or SHIFTED_LOGNORMAL" )
     .arg( L"VolatilityShift",     L"Optional. Shift for a shifted-lognormal vol. Default 0" )
     .arg( L"UseHullApproximation", L"Optional. Default FALSE. Use Hull's approximation" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathLiborRateInArrears)
 XLO_FUNC_START( aqMathLiborRateInArrears(
     const ExcelObj& liborRate,
     const ExcelObj& couponYearFraction,
@@ -641,8 +680,10 @@ XLO_FUNC_END( aqMathLiborRateInArrears )
     .arg( L"VolatilityType",      L"LOGNORMAL, NORMAL or SHIFTED_LOGNORMAL" )
     .arg( L"VolatilityShift",     L"Optional. Shift for a shifted-lognormal vol. Default 0" )
     .arg( L"UseHullApproximation", L"Optional. Default FALSE. Use Hull's approximation" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathLiborConvexityAdjustmentForArbitraryFixingDate)
 XLO_FUNC_START( aqMathLiborConvexityAdjustmentForArbitraryFixingDate(
     const ExcelObj& liborRate,
     const ExcelObj& couponYearFraction,
@@ -676,8 +717,10 @@ XLO_FUNC_END( aqMathLiborConvexityAdjustmentForArbitraryFixingDate )
     .arg( L"VolatilityType",         L"LOGNORMAL, NORMAL or SHIFTED_LOGNORMAL" )
     .arg( L"VolatilityShift",        L"Optional. Shift for a shifted-lognormal vol. Default 0" )
     .arg( L"UseHullApproximation",   L"Optional. Default FALSE. Use Hull's approximation" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathLiborRateForArbitraryFixingDate)
 XLO_FUNC_START( aqMathLiborRateForArbitraryFixingDate(
     const ExcelObj& liborRate,
     const ExcelObj& couponYearFraction,
@@ -711,12 +754,14 @@ XLO_FUNC_END( aqMathLiborRateForArbitraryFixingDate )
     .arg( L"VolatilityType",         L"LOGNORMAL, NORMAL or SHIFTED_LOGNORMAL" )
     .arg( L"VolatilityShift",        L"Optional. Shift for a shifted-lognormal vol. Default 0" )
     .arg( L"UseHullApproximation",   L"Optional. Default FALSE. Use Hull's approximation" );
+#endif
 
 
 /* =========================================================================
  *  European IR swaption - price, implied vol, Greeks, cash annuity
  * ====================================================================== */
 
+#if AQ_XLL_ENABLED(aqMathEuropeanIRSwaptionPrice)
 XLO_FUNC_START( aqMathEuropeanIRSwaptionPrice(
     const ExcelObj& payerReceiver,
     const ExcelObj& annuity,
@@ -745,8 +790,10 @@ XLO_FUNC_END( aqMathEuropeanIRSwaptionPrice )
     .arg( L"Time",           L"Time to expiry in years" )
     .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
     .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathEuropeanIRSwaptionImpliedVol)
 XLO_FUNC_START( aqMathEuropeanIRSwaptionImpliedVol(
     const ExcelObj& price,
     const ExcelObj& payerReceiver,
@@ -776,8 +823,10 @@ XLO_FUNC_END( aqMathEuropeanIRSwaptionImpliedVol )
     .arg( L"Time",           L"Time to expiry in years" )
     .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
     .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathEuropeanIRSwaptionDelta)
 XLO_FUNC_START( aqMathEuropeanIRSwaptionDelta(
     const ExcelObj& payerReceiver,
     const ExcelObj& annuity,
@@ -806,8 +855,10 @@ XLO_FUNC_END( aqMathEuropeanIRSwaptionDelta )
     .arg( L"Time",           L"Time to expiry in years" )
     .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
     .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathEuropeanIRSwaptionGamma)
 XLO_FUNC_START( aqMathEuropeanIRSwaptionGamma(
     const ExcelObj& payerReceiver,
     const ExcelObj& annuity,
@@ -836,8 +887,10 @@ XLO_FUNC_END( aqMathEuropeanIRSwaptionGamma )
     .arg( L"Time",           L"Time to expiry in years" )
     .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
     .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathEuropeanIRSwaptionVega)
 XLO_FUNC_START( aqMathEuropeanIRSwaptionVega(
     const ExcelObj& payerReceiver,
     const ExcelObj& annuity,
@@ -866,8 +919,10 @@ XLO_FUNC_END( aqMathEuropeanIRSwaptionVega )
     .arg( L"Time",           L"Time to expiry in years" )
     .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
     .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathEuropeanIRSwaptionTheta)
 XLO_FUNC_START( aqMathEuropeanIRSwaptionTheta(
     const ExcelObj& payerReceiver,
     const ExcelObj& annuity,
@@ -896,8 +951,10 @@ XLO_FUNC_END( aqMathEuropeanIRSwaptionTheta )
     .arg( L"Time",           L"Time to expiry in years" )
     .arg( L"Shift",          L"Optional. Lognormal shift. Default 0" )
     .arg( L"VolatilityType", L"Optional. LOGNORMAL or NORMAL. Default LOGNORMAL" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathEuropeanIRSwaptionCashAnnuity)
 XLO_FUNC_START( aqMathEuropeanIRSwaptionCashAnnuity(
     const ExcelObj& notional,
     const ExcelObj& swapRate,
@@ -919,12 +976,14 @@ XLO_FUNC_END( aqMathEuropeanIRSwaptionCashAnnuity )
     .arg( L"NCouponsPerYear", L"Fixed-leg coupons per year" )
     .arg( L"TenorInYears",    L"Swap tenor in years" )
     .arg( L"StubType",        L"Optional. SHORT_START, LONG_START, SHORT_END, LONG_END. Default SHORT_START" );
+#endif
 
 
 /* =========================================================================
  *  Normal distribution
  * ====================================================================== */
 
+#if AQ_XLL_ENABLED(aqMathNormalDistributionStandard)
 XLO_FUNC_START( aqMathNormalDistributionStandard( const ExcelObj& z ) )
 {
     AQ_XLL_GUARD
@@ -933,8 +992,10 @@ XLO_FUNC_START( aqMathNormalDistributionStandard( const ExcelObj& z ) )
 XLO_FUNC_END( aqMathNormalDistributionStandard )
     .help( L"Standard normal cumulative distribution function N(z)." )
     .arg( L"Z", L"The argument" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathNormalDistributionStandardPDF)
 XLO_FUNC_START( aqMathNormalDistributionStandardPDF( const ExcelObj& z ) )
 {
     AQ_XLL_GUARD
@@ -943,8 +1004,10 @@ XLO_FUNC_START( aqMathNormalDistributionStandardPDF( const ExcelObj& z ) )
 XLO_FUNC_END( aqMathNormalDistributionStandardPDF )
     .help( L"Standard normal probability density function n(z)." )
     .arg( L"Z", L"The argument" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathNormalDistributionStandardInverse)
 XLO_FUNC_START( aqMathNormalDistributionStandardInverse( const ExcelObj& phi ) )
 {
     AQ_XLL_GUARD
@@ -953,8 +1016,10 @@ XLO_FUNC_START( aqMathNormalDistributionStandardInverse( const ExcelObj& phi ) )
 XLO_FUNC_END( aqMathNormalDistributionStandardInverse )
     .help( L"Inverse standard normal CDF (probit)." )
     .arg( L"Phi", L"A probability in (0, 1)" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathNormalDistribution)
 XLO_FUNC_START( aqMathNormalDistribution(
     const ExcelObj& x,
     const ExcelObj& mean,
@@ -969,8 +1034,10 @@ XLO_FUNC_END( aqMathNormalDistribution )
     .arg( L"X",        L"The argument" )
     .arg( L"Mean",     L"Distribution mean" )
     .arg( L"Variance", L"Distribution variance" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathNormalDistributionPDF)
 XLO_FUNC_START( aqMathNormalDistributionPDF(
     const ExcelObj& x,
     const ExcelObj& mean,
@@ -985,8 +1052,10 @@ XLO_FUNC_END( aqMathNormalDistributionPDF )
     .arg( L"X",        L"The argument" )
     .arg( L"Mean",     L"Distribution mean" )
     .arg( L"Variance", L"Distribution variance" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathNormalDistributionInverse)
 XLO_FUNC_START( aqMathNormalDistributionInverse(
     const ExcelObj& phi,
     const ExcelObj& mean,
@@ -1001,12 +1070,14 @@ XLO_FUNC_END( aqMathNormalDistributionInverse )
     .arg( L"Phi",      L"A probability in (0, 1)" )
     .arg( L"Mean",     L"Distribution mean" )
     .arg( L"Variance", L"Distribution variance" );
+#endif
 
 
 /* =========================================================================
  *  Polynomial interpolation / integration
  * ====================================================================== */
 
+#if AQ_XLL_ENABLED(aqMathPolynomialInterpolation)
 XLO_FUNC_START( aqMathPolynomialInterpolation(
     const ExcelObj& xValues,
     const ExcelObj& yValues,
@@ -1026,8 +1097,10 @@ XLO_FUNC_END( aqMathPolynomialInterpolation )
     .arg( L"YValues", L"Column of y values, aligned with XValues" )
     .arg( L"Degree",  L"Polynomial degree" )
     .arg( L"X",       L"The point to evaluate at" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathPolynomialInterpolations)
 XLO_FUNC_START( aqMathPolynomialInterpolations(
     const ExcelObj& xValues,
     const ExcelObj& yValues,
@@ -1048,8 +1121,10 @@ XLO_FUNC_END( aqMathPolynomialInterpolations )
     .arg( L"YValues", L"Column of y values, aligned with XValues" )
     .arg( L"Degree",  L"Polynomial degree" )
     .arg( L"X",       L"Column of points to evaluate at" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathPoynomialIntegration)
 XLO_FUNC_START( aqMathPoynomialIntegration(
     const ExcelObj& xValues,
     const ExcelObj& yValues,
@@ -1071,8 +1146,10 @@ XLO_FUNC_END( aqMathPoynomialIntegration )
     .arg( L"Degree",     L"Polynomial degree" )
     .arg( L"LowerBound", L"Lower integration bound" )
     .arg( L"UpperBound", L"Upper integration bound" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathPoynomialIntegrations)
 XLO_FUNC_START( aqMathPoynomialIntegrations(
     const ExcelObj& xValues,
     const ExcelObj& yValues,
@@ -1096,12 +1173,14 @@ XLO_FUNC_END( aqMathPoynomialIntegrations )
     .arg( L"Degree",      L"Polynomial degree" )
     .arg( L"LowerBounds", L"Column of lower bounds" )
     .arg( L"UpperBounds", L"Column of upper bounds, aligned with LowerBounds" );
+#endif
 
 
 /* =========================================================================
  *  Curve integration
  * ====================================================================== */
 
+#if AQ_XLL_ENABLED(aqMathIntegrateUsingTerms)
 XLO_FUNC_START( aqMathIntegrateUsingTerms(
     const ExcelObj& terms,
     const ExcelObj& values,
@@ -1134,8 +1213,10 @@ XLO_FUNC_END( aqMathIntegrateUsingTerms )
     .arg( L"UpperBounds",       L"Column of upper term bounds, aligned with LowerBounds" )
     .arg( L"NSteps",            L"Number of integration steps" )
     .arg( L"Optimize",          L"Optional. Default FALSE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathIntegrate)
 XLO_FUNC_START( aqMathIntegrate(
     const ExcelObj& asOfDate,
     const ExcelObj& dates,
@@ -1175,6 +1256,7 @@ XLO_FUNC_END( aqMathIntegrate )
     .arg( L"UpperBoundDates",   L"Column of upper bound dates, aligned with LowerBoundDates" )
     .arg( L"NSteps",            L"Number of integration steps" )
     .arg( L"Optimize",          L"Optional. Default FALSE" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -1182,6 +1264,7 @@ XLO_FUNC_END( aqMathIntegrate )
  *  this session alongside the Curve/Bond vector forms, now ported.
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqMathBlackScholesPrices)
 XLO_FUNC_START( aqMathBlackScholesPrices(
     const ExcelObj& callOrPut,
     const ExcelObj& spot,
@@ -1213,8 +1296,10 @@ XLO_FUNC_END( aqMathBlackScholesPrices )
     .arg( L"Carry",     L"Column of cost-of-carry rates" )
     .arg( L"Shift",     L"Optional. Column of shifts" )
     .arg( L"Optimize",  L"Optional. Default FALSE. Use OMP threading" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathBlackScholesImpliedVols)
 XLO_FUNC_START( aqMathBlackScholesImpliedVols(
     const ExcelObj& price,
     const ExcelObj& callOrPut,
@@ -1246,8 +1331,10 @@ XLO_FUNC_END( aqMathBlackScholesImpliedVols )
     .arg( L"Carry",     L"Column of cost-of-carry rates" )
     .arg( L"Shift",     L"Optional. Column of shifts" )
     .arg( L"Optimize",  L"Optional. Default FALSE. Use OMP threading" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathCapletFloorletPrices)
 XLO_FUNC_START( aqMathCapletFloorletPrices(
     const ExcelObj& capletOrFloorlet,
     const ExcelObj& annuityFactor,
@@ -1278,8 +1365,10 @@ XLO_FUNC_END( aqMathCapletFloorletPrices )
     .arg( L"Shift",            L"Optional. Column of shifts" )
     .arg( L"VolatilityType",   L"Optional. Column of LOGNORMAL/NORMAL, default LOGNORMAL" )
     .arg( L"Optimize",         L"Optional. Default FALSE. Use OMP threading" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathCapletFloorletImpliedVols)
 XLO_FUNC_START( aqMathCapletFloorletImpliedVols(
     const ExcelObj& price,
     const ExcelObj& capletOrFloorlet,
@@ -1310,8 +1399,10 @@ XLO_FUNC_END( aqMathCapletFloorletImpliedVols )
     .arg( L"Shift",            L"Optional. Column of shifts" )
     .arg( L"VolatilityType",   L"Optional. Column of LOGNORMAL/NORMAL, default LOGNORMAL" )
     .arg( L"Optimize",         L"Optional. Default FALSE. Use OMP threading" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathEuropeanIRSwaptionPrices)
 XLO_FUNC_START( aqMathEuropeanIRSwaptionPrices(
     const ExcelObj& payerReceiver,
     const ExcelObj& annuity,
@@ -1342,8 +1433,10 @@ XLO_FUNC_END( aqMathEuropeanIRSwaptionPrices )
     .arg( L"Shift",          L"Optional. Column of shifts" )
     .arg( L"VolatilityType", L"Optional. Column of LOGNORMAL/NORMAL, default LOGNORMAL" )
     .arg( L"Optimize",       L"Optional. Default FALSE. Use OMP threading" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathEuropeanIRSwaptionImpliedVols)
 XLO_FUNC_START( aqMathEuropeanIRSwaptionImpliedVols(
     const ExcelObj& price,
     const ExcelObj& payerReceiver,
@@ -1374,6 +1467,7 @@ XLO_FUNC_END( aqMathEuropeanIRSwaptionImpliedVols )
     .arg( L"Shift",          L"Optional. Column of shifts" )
     .arg( L"VolatilityType", L"Optional. Column of LOGNORMAL/NORMAL, default LOGNORMAL" )
     .arg( L"Optimize",       L"Optional. Default FALSE. Use OMP threading" );
+#endif
 
 
 /* -------------------------------------------------------------------------
@@ -1384,6 +1478,7 @@ XLO_FUNC_END( aqMathEuropeanIRSwaptionImpliedVols )
  *  is ported here, per that labelling.
  * ---------------------------------------------------------------------- */
 
+#if AQ_XLL_ENABLED(aqMathForwardRate)
 XLO_FUNC_START( aqMathForwardRate(
     const ExcelObj& fixingDate,
     const ExcelObj& asOfDate,
@@ -1430,8 +1525,10 @@ XLO_FUNC_END( aqMathForwardRate )
     .arg( L"PolynomialOrder",              L"Optional. Default 0" )
     .arg( L"ForwardAdjustmentTable",       L"Optional. A forward-adjustment override table" )
     .arg( L"CompoundFreq",                 L"Optional. Default SIMPLE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathForwardRates)
 XLO_FUNC_START( aqMathForwardRates(
     const ExcelObj& fixingDates,
     const ExcelObj& asOfDate,
@@ -1478,8 +1575,10 @@ XLO_FUNC_END( aqMathForwardRates )
     .arg( L"PolynomialOrder",              L"Optional. Default 0" )
     .arg( L"ForwardAdjustmentTable",       L"Optional. A forward-adjustment override table" )
     .arg( L"CompoundFreq",                 L"Optional. Default SIMPLE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathDiscountFactor)
 XLO_FUNC_START( aqMathDiscountFactor(
     const ExcelObj& paymentDate,
     const ExcelObj& asOfDate,
@@ -1526,8 +1625,10 @@ XLO_FUNC_END( aqMathDiscountFactor )
     .arg( L"PolynomialOrder",              L"Optional. Default 0" )
     .arg( L"ForwardAdjustmentTable",       L"Optional. A forward-adjustment override table" )
     .arg( L"CompoundFreq",                 L"Optional. Default SIMPLE" );
+#endif
 
 
+#if AQ_XLL_ENABLED(aqMathDiscountFactors)
 XLO_FUNC_START( aqMathDiscountFactors(
     const ExcelObj& paymentDates,
     const ExcelObj& asOfDate,
@@ -1574,3 +1675,4 @@ XLO_FUNC_END( aqMathDiscountFactors )
     .arg( L"PolynomialOrder",              L"Optional. Default 0" )
     .arg( L"ForwardAdjustmentTable",       L"Optional. A forward-adjustment override table" )
     .arg( L"CompoundFreq",                 L"Optional. Default SIMPLE" );
+#endif

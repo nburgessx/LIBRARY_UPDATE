@@ -27,6 +27,7 @@ using namespace aq_xll;
 
 
 // Create and store a volatility surface from a label/value block.
+#if AQ_XLL_ENABLED(aqVolatilityObjectCreate)
 XLO_FUNC_START( aqVolatilityObjectCreate(
     const ExcelObj& objectName,
     const ExcelObj& volLVB,
@@ -47,9 +48,11 @@ XLO_FUNC_END( aqVolatilityObjectCreate )
     .arg( L"ObjectName",   L"Name for the volatility-surface object" )
     .arg( L"VolLVB",       L"The volatility-surface definition as a label/value block" )
     .arg( L"ValidateKeys", L"Optional. Default TRUE. Check the LVB keys" );
+#endif
 
 
 // Create and store SABR market data from one or two named data blocks.
+#if AQ_XLL_ENABLED(aqVolatilityObjectSabrMarketDataCreate)
 XLO_FUNC_START( aqVolatilityObjectSabrMarketDataCreate(
     const ExcelObj& objectName,
     const ExcelObj& key1,
@@ -86,9 +89,11 @@ XLO_FUNC_END( aqVolatilityObjectSabrMarketDataCreate )
     .arg( L"Value1",     L"First data block, as a range" )
     .arg( L"Key2",       L"Optional. Name of the second data block" )
     .arg( L"Value2",     L"Optional. Second data block, as a range" );
+#endif
 
 
 // Calibrate and store a SABR model from one or two named data blocks.
+#if AQ_XLL_ENABLED(aqVolatilityObjectSabrModelCalibrate)
 XLO_FUNC_START( aqVolatilityObjectSabrModelCalibrate(
     const ExcelObj& objectName,
     const ExcelObj& key1,
@@ -125,9 +130,11 @@ XLO_FUNC_END( aqVolatilityObjectSabrModelCalibrate )
     .arg( L"Value1",     L"First data block, as a range" )
     .arg( L"Key2",       L"Optional. Name of the second data block" )
     .arg( L"Value2",     L"Optional. Second data block, as a range" );
+#endif
 
 
 // SABR-implied volatility at an expiry/tenor/strike/forward point.
+#if AQ_XLL_ENABLED(aqVolatilityObjectSabrVolatility)
 XLO_FUNC_START( aqVolatilityObjectSabrVolatility(
     const ExcelObj& volSurfaceName,
     const ExcelObj& expiry,
@@ -152,9 +159,11 @@ XLO_FUNC_END( aqVolatilityObjectSabrVolatility )
     .arg( L"Tenor",          L"Underlying tenor, e.g. 5Y, 10Y" )
     .arg( L"Strike",         L"Strike" )
     .arg( L"Forward",        L"Forward rate" );
+#endif
 
 
 // One SABR parameter at an expiry/tenor point.
+#if AQ_XLL_ENABLED(aqVolatilityObjectSabrParameter)
 XLO_FUNC_START( aqVolatilityObjectSabrParameter(
     const ExcelObj& volSurfaceName,
     const ExcelObj& expiry,
@@ -176,9 +185,11 @@ XLO_FUNC_END( aqVolatilityObjectSabrParameter )
     .arg( L"Expiry",         L"Option expiry, e.g. 3M, 1Y" )
     .arg( L"Tenor",          L"Underlying tenor, e.g. 5Y, 10Y" )
     .arg( L"ParamName",      L"Which parameter, e.g. ALPHA, BETA, RHO, NU" );
+#endif
 
 
 // Display stored SABR market data.
+#if AQ_XLL_ENABLED(aqVolatilityObjectSabrMarketDataDisplay)
 XLO_FUNC_START( aqVolatilityObjectSabrMarketDataDisplay(
     const ExcelObj& marketDataObjectName,
     const ExcelObj& marketDataKey ) )
@@ -193,9 +204,11 @@ XLO_FUNC_END( aqVolatilityObjectSabrMarketDataDisplay )
     .help( L"Display stored SABR market data as a matrix." )
     .arg( L"MarketDataObjectName", L"A SABR market-data handle" )
     .arg( L"MarketDataKey",        L"The data block to display" );
+#endif
 
 
 // Display a stored SABR model.
+#if AQ_XLL_ENABLED(aqVolatilityObjectSabrModelDisplay)
 XLO_FUNC_START( aqVolatilityObjectSabrModelDisplay(
     const ExcelObj& modelObjectName,
     const ExcelObj& modelKey ) )
@@ -210,3 +223,4 @@ XLO_FUNC_END( aqVolatilityObjectSabrModelDisplay )
     .help( L"Display a stored SABR model as a matrix." )
     .arg( L"ModelObjectName", L"A SABR model handle" )
     .arg( L"ModelKey",        L"The model block to display" );
+#endif
