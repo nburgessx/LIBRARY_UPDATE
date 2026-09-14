@@ -29,20 +29,11 @@ namespace etrading
 
         // 2. Check Test Parameters
         // ------------------------
-        if ( !generateProps.empty() && generateProps[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "GenerateProps Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !generateProps.empty() && generateProps[0].size() < 2, "GenerateProps Matrix column size must be 2" );
 
-        if ( !oisConv.empty() && oisConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "OisConv Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !oisConv.empty() && oisConv[0].size() < 2, "OisConv Matrix column size must be 2" );
 
-        if ( !oisRates.empty() && oisRates[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "OisRates Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !oisRates.empty() && oisRates[0].size() < 2, "OisRates Matrix column size must be 2" );
 
         // 3. Build the OIS Curve
         // ----------------------

@@ -160,7 +160,7 @@ namespace etrading
 
     void Schedule::createUpfrontCashflow(const AQLDate& paymentDate, double leverage)
     {
-    	throw AQLCoreInvalidData( "#Error: createUpfrontCashflow method not supported for this leg or product", __FILE__, __LINE__ );
+    	AQ_THROW( "createUpfrontCashflow method not supported for this leg or product" );
     }
 
     void Schedule::createCashflows() 
@@ -248,7 +248,7 @@ namespace etrading
 			break;
 		}
 		default:
-			throw ETradingException("#Error: bespokeScheduleType value invalid, must be 'BESPOKE_SCHEDULE_WITH_PROPERTIES' or 'BESPOKE_SCHEDULE'.");
+			AQ_THROW( "bespokeScheduleType value invalid, must be 'BESPOKE_SCHEDULE_WITH_PROPERTIES' or 'BESPOKE_SCHEDULE'." );
 			break;
 		}
 
@@ -505,10 +505,7 @@ namespace etrading
         DateVector accrualDates = accrualEndDates_;
         accrualDates.push_back(accrualEndDates_.back());
 
-        if (!etrading::AQLCurveForwardRateHelpers::isFixingInAdvance(fixingAdvanceOrArrears_))
-        {
-           throw AQLCoreInvalidData( "#Error: For OIS Swap, fixing in arrears is not supported.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !etrading::AQLCurveForwardRateHelpers::isFixingInAdvance(fixingAdvanceOrArrears_), "For OIS Swap, fixing in arrears is not supported." );
 
         fixingEndDates = validateAndGenerateFixingSchedule( accrualDates,
 															toString(fixingbusinessDayAdj_).c_str(),
@@ -530,7 +527,7 @@ namespace etrading
 
 	void Schedule::createBespokeCashflows(const std::vector<LabelValueBlock>& cashflowLVBs) 
 	{
-    	throw AQLCoreInvalidData( "#Error: createBespokeCashflows method not supported for this leg or product", __FILE__, __LINE__ );
+    	AQ_THROW( "createBespokeCashflows method not supported for this leg or product" );
 	}
 
 	double Schedule::getFinalCashflowNotionalExchange(const double& notional) const
@@ -622,17 +619,11 @@ namespace etrading
         //Set floatRates and DFs for the non-upfront cashflows
 
         size_t cashflowSize = getCashflowSize();
-        if (cashflowSize != discountFactors.size())
-		{
-			throw AQLCoreInvalidData( "#Error: DiscountFactors and Cashflows should have the same size", __FILE__, __LINE__ );
-		}
+        AQ_THROW_IF( cashflowSize != discountFactors.size(), "DiscountFactors and Cashflows should have the same size" );
 
         bool hasFloatRates = (floatRates.size() != 0);
 
-        if (hasFloatRates && cashflowSize != floatRates.size())
-		{
-			throw AQLCoreInvalidData( "#Error: FloatRates and Cashflows should have the same size", __FILE__, __LINE__ );
-		}
+        AQ_THROW_IF( hasFloatRates && cashflowSize != floatRates.size(), "FloatRates and Cashflows should have the same size" );
 
 		dataProvider.setDiscountFactors( discountFactors );
 		if ( hasFloatRates )
@@ -791,10 +782,7 @@ namespace etrading
 
 	double Schedule::getNotional() const
 	{
-		if (cashflows_.size() == 0)
-		{
-			throw AQLCoreInvalidData( "#Error: Cashflow has not been populated", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( cashflows_.size() == 0, "Cashflow has not been populated" );
 		return cashflows_[0]->getNotional();
 	}
 
@@ -851,19 +839,13 @@ namespace etrading
 
 	double Schedule::getLeverage() const
 	{
-		if (cashflows_.size() == 0)
-		{
-			throw AQLCoreInvalidData( "#Error: Cashflow has not been populated", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( cashflows_.size() == 0, "Cashflow has not been populated" );
 		return cashflows_[0]->getLeverage();
 	}
 
 	double Schedule::getCouponMultiplier() const
 	{
-		if (cashflows_.size() == 0)
-		{
-			throw AQLCoreInvalidData("#Error: Cashflow has not been populated", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( cashflows_.size() == 0, "Cashflow has not been populated" );
 		return cashflows_[0]->getCouponMultiplier();
 	}
 
@@ -1097,7 +1079,7 @@ namespace etrading
 	    }
 	    else
 	    {
-		    throw AQLCoreInvalidData("#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__ );
+		    AQ_THROW( "Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE)." );
 	    }
     }
 
@@ -1171,17 +1153,17 @@ namespace etrading
     //dummy methods, just to avoid downcasting
     double Schedule::getFixedRate() const
     {
-    	throw AQLCoreInvalidData( "#Error: getFixedRate not supported", __FILE__, __LINE__ );
+    	AQ_THROW( "getFixedRate not supported" );
     }
 
     double Schedule::getSpread() const
     {
-    	throw AQLCoreInvalidData( "#Error: getSpread not supported", __FILE__, __LINE__ );
+    	AQ_THROW( "getSpread not supported" );
     }
 
    	bool Schedule::isVariableSpread() const 
     {
-    	throw AQLCoreInvalidData( "#Error: isVariableSpread method for floating spreads not supported on a fixed leg", __FILE__, __LINE__ );
+    	AQ_THROW( "isVariableSpread method for floating spreads not supported on a fixed leg" );
     }
 
     //end of dummy methods
@@ -1493,7 +1475,7 @@ namespace etrading
 
     const DataSchema Schedule::generateCashflowSchema(const std::string& schemaName) const
     {
-    	throw AQLCoreInvalidData( "#Error: Bespoke cashflows not supported on base class Schedule", __FILE__, __LINE__ );
+    	AQ_THROW( "Bespoke cashflows not supported on base class Schedule" );
     }
 
     std::map<std::string, std::vector<std::string>> Schedule::getCashflowDataMap() const

@@ -5,6 +5,7 @@
 
 
 
+#include "ExceptionMacros.h"
 #include <map>
 #include <string>
 #include <vector>
@@ -48,11 +49,11 @@ namespace etrading
 
         StaticStructureStore( const StaticStructureStore& )
         {
-            throw etrading::ETradingException( "Copy constructor of StaticStructureStore should never get called" );
+            AQ_THROW( "Copy constructor of StaticStructureStore should never get called" );
         }; // TODO: C++11 = delete
         StaticStructureStore& operator=( const StaticStructureStore& )
         {
-            throw etrading::ETradingException( "Assignment operator of StaticStructureStore should never get called" ) ;
+            AQ_THROW( "Assignment operator of StaticStructureStore should never get called" );
         }; // TODO: C++11 = delete
 
     };

@@ -15,7 +15,8 @@ namespace etrading
         // AQLSplineInterpolation.cpp:   void AQLSplineInterpolation::set(const DoubleArray& index, const DoubleArray& value)  - line 166
         if ( xs.size() != ys.size() || ys.size() <= 1 || xs.size() == 0 )
         {
-            throw ETradingException( ( boost::format( "SplineInterpolation: Illegal sizes => x-vector size (%i) and y-vector size (%i)" ) % xs.size() % ys.size() ).str() );
+            { std::ostringstream aqMsg240;
+aqMsg240 << "SplineInterpolation: Illegal sizes => x-vector size (" << xs.size() << ") and y-vector size (" << ys.size() << ")"; AQ_THROW( aqMsg240.str() ); }
         }
 
         unsigned int i, k;
@@ -85,7 +86,8 @@ namespace etrading
 
         if ( h == 0.0 )
         {
-            throw ETradingException( ( boost::format( "SplineInterpolation::interpolate: Invalid Index data is thrown to spline to set method at AQLSplineinterpolation (x1 : %f)" ) % x1 ).str() );
+            { std::ostringstream aqMsg241;
+aqMsg241 << "SplineInterpolation::interpolate: Invalid Index data is thrown to spline to set method at AQLSplineinterpolation (x1 : " << x1 << ")"; AQ_THROW( aqMsg241.str() ); }
         }
 
         a = ( index_[khi - 1] - x1 ) / h;

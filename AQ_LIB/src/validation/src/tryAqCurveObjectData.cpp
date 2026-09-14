@@ -1,5 +1,7 @@
 #include "tryAqCurveObjectData.h"
 
+#include <sstream>
+
 
 #include "RecordMacros.h"
 #include "CurveData.h"
@@ -85,7 +87,7 @@ namespace validation
 			} 
 			else
 			{
-			   throw AQLCoreInvalidData( "Swap Quotes column size must be 2", __FILE__, __LINE__ );
+			   AQ_THROW( "Swap Quotes column size must be 2" );
 			}
 		}
 
@@ -159,7 +161,9 @@ namespace validation
         }
         else
         {
-            std::string errString =  ( boost::format( "Unable to create AQObjCurveData named %s" ) % mdcName.c_str() ).str();
+            std::ostringstream errStream;
+            errStream << "Unable to create AQObjCurveData named " << mdcName;
+            std::string errString = errStream.str();
             AQ_RECORD_DECORATED_OUTPUTS( mdcName.c_str(), "", errString.c_str() );
             AQ_THROW( errString );
         }

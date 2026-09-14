@@ -57,7 +57,7 @@ namespace etrading
 		}
 		else
 		{
-            throw AQLCoreInvalidData( "#Error: Currency format should be either 'BaseCcy,TermCcy' or 'BaseCcyTermCcy', e.g. 'EUR,USD' or 'EURUSD'" , __FILE__, __LINE__ );
+            AQ_THROW( "Currency format should be either 'BaseCcy,TermCcy' or 'BaseCcyTermCcy', e.g. 'EUR,USD' or 'EURUSD'" );
 		}
 
         return std::make_pair(toCCYEnum(baseCurrency), toCCYEnum(termCurrency));
@@ -366,7 +366,8 @@ namespace etrading
 				//We do not extrapolate, throw an error instead
 				if (settleDate > latestQuotedSettleDate)
 				{
-					throw ETradingException(( boost::format( "#Error: Extrapolation not supported: settleDate '%s' is later than the largest quoted settle date '%s'." ) % settleDate % latestQuotedSettleDate).str()  );
+					{ std::ostringstream aqMsg133;
+aqMsg133 << "Extrapolation not supported: settleDate '" << settleDate << "' is later than the largest quoted settle date '" << latestQuotedSettleDate << "'."; AQ_THROW( aqMsg133.str() ); }
 				}
 
 				FxFwd fxFwdRate;

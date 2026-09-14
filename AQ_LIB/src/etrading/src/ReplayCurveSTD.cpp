@@ -32,70 +32,31 @@ namespace etrading
 
         // 2. Check Test Parameters
         // ------------------------
-        if ( !generalProps.empty() && generalProps[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "GeneralProps Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !generalProps.empty() && generalProps[0].size() < 2, "GeneralProps Matrix column size must be 2" );
 
-        if ( !moneyConv.empty() && moneyConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "MoneyConv Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !moneyConv.empty() && moneyConv[0].size() < 2, "MoneyConv Matrix column size must be 2" );
 
-        if ( !liborConv.empty() && liborConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "LiborConv Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !liborConv.empty() && liborConv[0].size() < 2, "LiborConv Matrix column size must be 2" );
 
-        if ( !liborRates.empty() && liborRates[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "LiborRates Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !liborRates.empty() && liborRates[0].size() < 2, "LiborRates Matrix column size must be 2" );
 
-        if ( !swapConv.empty() && swapConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "SwapConv Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !swapConv.empty() && swapConv[0].size() < 2, "SwapConv Matrix column size must be 2" );
 
-        if ( !swapRates.empty() && swapRates[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "SwapRates Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !swapRates.empty() && swapRates[0].size() < 2, "SwapRates Matrix column size must be 2" );
 
-        if ( !fraConv.empty() && fraConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "FraConv Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !fraConv.empty() && fraConv[0].size() < 2, "FraConv Matrix column size must be 2" );
 
-        if ( !fra3mRates.empty() && fra3mRates[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "Fra3mRates Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !fra3mRates.empty() && fra3mRates[0].size() < 2, "Fra3mRates Matrix column size must be 2" );
 
-        if ( !fra6mRates.empty() && fra6mRates[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "Fra6mRates Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !fra6mRates.empty() && fra6mRates[0].size() < 2, "Fra6mRates Matrix column size must be 2" );
 
-        if ( !futureConv.empty() && futureConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "FutureConv Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !futureConv.empty() && futureConv[0].size() < 2, "FutureConv Matrix column size must be 2" );
 
-        if ( !futureRates.empty() && futureRates[0].size() < 3 )
-        {
-            throw AQLCoreInvalidData( "FutureRates Matrix column size must be greater or equal to 3", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !futureRates.empty() && futureRates[0].size() < 3, "FutureRates Matrix column size must be greater or equal to 3" );
 
-        if ( !adjustSwapConv.empty() && adjustSwapConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "AdjustSwapConv Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !adjustSwapConv.empty() && adjustSwapConv[0].size() < 2, "AdjustSwapConv Matrix column size must be 2" );
 
-        if ( !adjustSwapRates.empty() && adjustSwapRates[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "AdjustSwapRates Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !adjustSwapRates.empty() && adjustSwapRates[0].size() < 2, "AdjustSwapRates Matrix column size must be 2" );
 
         // 3. Build the STD Curve
         // ----------------------

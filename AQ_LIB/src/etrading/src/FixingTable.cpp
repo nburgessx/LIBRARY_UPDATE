@@ -183,7 +183,8 @@ namespace etrading
 
 		if (dateIndex < 0)
 		{
-			throw ETradingException((boost::format("#Error: Fixing Date %s not found in fixing table %s") % toYYYYMMDDFromGregorianDate(fixingDate) % getRefToName()).str().c_str());
+			{ std::ostringstream aqMsg134;
+aqMsg134 << "Fixing Date " << toYYYYMMDDFromGregorianDate(fixingDate) << " not found in fixing table " << getRefToName(); AQ_THROW( aqMsg134.str() ); }
 		}
 
 		double fixingValue = getData(dateIndex).second;
@@ -227,14 +228,16 @@ namespace etrading
 		std::string fixingTableCurrency = toString(currency_);
 		if (currency != fixingTableCurrency)
 		{
-			throw ETradingException((boost::format("#Error: Invalid Currency; Cannot request currency '%s' fixing from a %s fixing table") % currency % fixingTableCurrency).str().c_str());
+			{ std::ostringstream aqMsg135;
+aqMsg135 << "Invalid Currency; Cannot request currency '" << currency << "' fixing from a " << fixingTableCurrency << " fixing table"; AQ_THROW( aqMsg135.str() ); }
 		}
 
 		// Check the Fixing Table being queried has the correct currency
 		std::string fixingTableCurveTenor = toString(curveTenor_);
 		if (curveTenor != fixingTableCurveTenor)
 		{
-			throw ETradingException((boost::format("#Error: Invalid Curve Tenor; Cannot request curve tenor '%s' fixing from a %s fixing table") % curveTenor % fixingTableCurveTenor).str().c_str());
+			{ std::ostringstream aqMsg136;
+aqMsg136 << "Invalid Curve Tenor; Cannot request curve tenor '" << curveTenor << "' fixing from a " << fixingTableCurveTenor << " fixing table"; AQ_THROW( aqMsg136.str() ); }
 		}
 
 		std::vector<double> results;
@@ -320,12 +323,14 @@ namespace etrading
 		auto fixingTableMatrix = getVariantMatrix();
 		if (fixingTableMatrix.size() < 1)
 		{
-			throw etrading::ETradingException((boost::format("#Error: Fixing Table %s results are empty or incomplete") % getName()).str().c_str());
+			{ std::ostringstream aqMsg137;
+aqMsg137 << "Fixing Table " << getName() << " results are empty or incomplete"; AQ_THROW( aqMsg137.str() ); }
 		}
 
 		if (fixingTableMatrix[0].size() < 3)
 		{
-			throw etrading::ETradingException((boost::format("#Error: Fixing Table %s results are empty or incomplete") % getName()).str().c_str());
+			{ std::ostringstream aqMsg138;
+aqMsg138 << "Fixing Table " << getName() << " results are empty or incomplete"; AQ_THROW( aqMsg138.str() ); }
 		}
 
 		// Get the fixing dates and values: ignoring the 3 text fields at the start of each vector i.e. ignoring currency, curveTenor and fixingHeader

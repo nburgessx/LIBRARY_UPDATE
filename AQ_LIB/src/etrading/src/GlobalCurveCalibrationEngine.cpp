@@ -1,3 +1,4 @@
+#include "ExceptionMacros.h"
 #include "GlobalCurveCalibrationEngine.h"
 #include "AQLBasic.h"
 #include "AQLObjectHolder.h"
@@ -312,10 +313,7 @@ void GlobalCurveCalibrationEngine::calibrate()
 		}
 	}
 
-	if (!solutionFound)
-	{
-		throw AQLCoreInvalidData("#Error: Global yield curve calibration engine can't converge in newton raphson method!", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( !solutionFound, "Global yield curve calibration engine can't converge in newton raphson method!" );
 
 }
 

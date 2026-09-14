@@ -85,7 +85,7 @@ namespace etrading
     {
         if( _ctxts.empty() )
         {
-            throw ETradingException( "#Error: EnvironmentPool is empty - cannot retrieve any Environment" );
+            AQ_THROW( "EnvironmentPool is empty - cannot retrieve any Environment" );
         }
         return std::find_if(	_ctxts.begin(), _ctxts.end(),
                                 [&uid]( const std::shared_ptr<Environment>& toCheck ) -> bool

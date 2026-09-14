@@ -307,7 +307,7 @@ namespace
             sst << "#Error: Cannot open calendar file: " << std::endl
 				<< fname 
 				;
-			throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+			AQ_THROW( sst.str().c_str() );
 		}
 		AQLStringVector namevec;
 		std::vector<DateVector> dvec;
@@ -348,7 +348,7 @@ namespace
 			std::stringstream sst;
             sst << "#Error: Cannot open schedule file: " << std::endl
 				<< fname;
-			throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+			AQ_THROW( sst.str().c_str() );
 		}
 
 		AQLStringVector namevec;

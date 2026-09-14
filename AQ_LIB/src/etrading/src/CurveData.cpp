@@ -1,5 +1,4 @@
 
-#include <boost/format.hpp>
 
 #include "CurveData.h"
 #include "CoreEnumerations.h"
@@ -87,7 +86,8 @@ namespace etrading
                 }
                 break;
                 default:
-                    throw ETradingException( ( boost::format( "MarketQuote of type %s is not accepted in a MarketDataColleciton" ) % toString( typeOfQuote ) ).str() );
+                    { std::ostringstream aqMsg90;
+aqMsg90 << "MarketQuote of type " << toString( typeOfQuote ) << " is not accepted in a MarketDataColleciton"; AQ_THROW( aqMsg90.str() ); }
                     break;
             }
         }
@@ -101,10 +101,8 @@ namespace etrading
 		} 
 		else
 		{
-			throw ETradingException( ( boost::format( "FRA Quotes had tenor of %s but Market Data (%s) has tenor %s: FRA Quotes cannot be accepted") 
-										% toString(fraData.getCurveTenorEnum()) 
-										% this->getRefToName() 
-										% toString(etrading::HasConstInstance<CurveTenorEnum>::getRefToInstance()) ).str() );
+			{ std::ostringstream aqMsg91;
+aqMsg91 << "FRA Quotes had tenor of " << toString(fraData.getCurveTenorEnum()) << " but Market Data (" << this->getRefToName() << ") has tenor " << toString(etrading::HasConstInstance<CurveTenorEnum>::getRefToInstance()) << ": FRA Quotes cannot be accepted"; AQ_THROW( aqMsg91.str() ); }
 		}
     };
 
@@ -123,11 +121,8 @@ namespace etrading
                 basisSwapQuotes_ =  basisSwapQuotes;   
             } else
             {
-                throw ETradingException( ( boost::format( "Basis Swap Quotes had fromTenor of %s and toTenor of %s but Market Data (%s) has tenor %s: Basis Swap Quotes cannot be accepted") 
-										    % toString(basisSwapQuotes->getFromTenor())
-                                            % toString(basisSwapQuotes->getToTenor())
-										    % this->getRefToName() 
-										    % toString(etrading::HasConstInstance<CurveTenorEnum>::getRefToInstance()) ).str() );   
+                { std::ostringstream aqMsg92;
+aqMsg92 << "Basis Swap Quotes had fromTenor of " << toString(basisSwapQuotes->getFromTenor()) << " and toTenor of " << toString(basisSwapQuotes->getToTenor()) << " but Market Data (" << this->getRefToName() << ") has tenor " << toString(etrading::HasConstInstance<CurveTenorEnum>::getRefToInstance()) << ": Basis Swap Quotes cannot be accepted"; AQ_THROW( aqMsg92.str() ); }   
             }
         }
         else
@@ -139,10 +134,8 @@ namespace etrading
 		    } 
 		    else
 		    {
-			    throw ETradingException( ( boost::format( "Swap Quotes had tenor of %s but Market Data (%s) has tenor %s: Swap Quotes cannot be accepted") 
-										    % toString(swapData.getCurveTenorEnum()) 
-										    % this->getRefToName() 
-										    % toString(etrading::HasConstInstance<CurveTenorEnum>::getRefToInstance()) ).str() );
+			    { std::ostringstream aqMsg93;
+aqMsg93 << "Swap Quotes had tenor of " << toString(swapData.getCurveTenorEnum()) << " but Market Data (" << this->getRefToName() << ") has tenor " << toString(etrading::HasConstInstance<CurveTenorEnum>::getRefToInstance()) << ": Swap Quotes cannot be accepted"; AQ_THROW( aqMsg93.str() ); }
 		    }
         }
     };
@@ -156,10 +149,8 @@ namespace etrading
 		} 
 		else
 		{
-			throw ETradingException( ( boost::format( "IR Futures Quotes had tenor of %s but Market Data (%s) has tenor %s: IR Futures Quotes cannot be accepted") 
-										% toString(futuresData.getCurveTenorEnum()) 
-										% this->getRefToName() 
-										% toString(etrading::HasConstInstance<CurveTenorEnum>::getRefToInstance()) ).str() );
+			{ std::ostringstream aqMsg94;
+aqMsg94 << "IR Futures Quotes had tenor of " << toString(futuresData.getCurveTenorEnum()) << " but Market Data (" << this->getRefToName() << ") has tenor " << toString(etrading::HasConstInstance<CurveTenorEnum>::getRefToInstance()) << ": IR Futures Quotes cannot be accepted"; AQ_THROW( aqMsg94.str() ); }
 		}
     };
 
@@ -176,10 +167,8 @@ namespace etrading
 		} 
 		else
 		{
-			throw ETradingException( ( boost::format( "Central Bank Swap Quotes had tenor of %s but Market Data (%s) has tenor %s: CB Swap Quotes cannot be accepted") 
-										% toString(cbSwapData.getCurveTenorEnum()) 
-										% this->getRefToName() 
-										% toString(etrading::HasConstInstance<CurveTenorEnum>::getRefToInstance()) ).str() );
+			{ std::ostringstream aqMsg95;
+aqMsg95 << "Central Bank Swap Quotes had tenor of " << toString(cbSwapData.getCurveTenorEnum()) << " but Market Data (" << this->getRefToName() << ") has tenor " << toString(etrading::HasConstInstance<CurveTenorEnum>::getRefToInstance()) << ": CB Swap Quotes cannot be accepted"; AQ_THROW( aqMsg95.str() ); }
 		}
 	}
 

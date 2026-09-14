@@ -2,7 +2,6 @@
 #include <map>
 #include <utility>
 #include <algorithm>
-#include <boost/format.hpp>
 
 #include "MonotoneConvexInterpolation.h"
 #include "ETradingException.h"
@@ -19,7 +18,8 @@ namespace etrading
     {
         if ( inXs.size() != inYs.size() || inYs.size() <= 1 || inXs.size() == 0 )
         {
-            throw ETradingException( ( boost::format( "SplineInterpolation: Illegal sizes => x-vector size (%i) and y-vector size (%i)" ) % inXs.size() % inYs.size() ).str() );
+            { std::ostringstream aqMsg147;
+aqMsg147 << "SplineInterpolation: Illegal sizes => x-vector size (" << inXs.size() << ") and y-vector size (" << inYs.size() << ")"; AQ_THROW( aqMsg147.str() ); }
         }
 
         const unsigned int n = inXs.size();

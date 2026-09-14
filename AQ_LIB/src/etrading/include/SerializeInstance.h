@@ -54,7 +54,7 @@ namespace etrading
             {
                 for( unsigned int varCounter = 0u; varCounter < variableNames.size(); varCounter++ )
                 {
-                    std::string toAddHere = ( boost::format( ", \"%s\" : " ) % variableNames[ varCounter ].c_str() ).str();
+                    std::string toAddHere = ", \"" + variableNames[ varCounter ] + "\" : ";
                     const Variant& cv = variableValues[ varCounter ];
                     toAddHere += cv.toString( true );
                     startingString += toAddHere;
@@ -87,8 +87,8 @@ namespace etrading
 
             return std::move( SerializationResult( methodType, targetType, wrap, targetInfo ) );
         }
-        throw ETradingException( ( boost::format( "serializeContainedData not implemented for serializaiton method: %s" )
-                                   % StaticStructureStore::getInstance().toString( methodType ).c_str() ).str() );
+        { std::ostringstream aqMsg25;
+aqMsg25 << "serializeContainedData not implemented for serializaiton method: " << StaticStructureStore::getInstance().toString( methodType ).c_str(); AQ_THROW( aqMsg25.str() ); }
     };
 
 

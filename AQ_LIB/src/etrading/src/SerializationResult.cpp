@@ -4,7 +4,6 @@
 
 
 #include <boost/lexical_cast.hpp>
-#include <boost/format.hpp>
 #include <boost/optional.hpp>
 
 #include <rapidjson/document.h>
@@ -32,12 +31,12 @@ namespace etrading
         {
 			if(result_ == nullptr)
 			{
-                throw ETradingException( "SerializationResultWrapper was a nullptr" );
+                AQ_THROW( "SerializationResultWrapper was a nullptr" );
 			}
 
             if( result_->jsonDocument == nullptr )
             {
-                throw ETradingException( "No object of type rapidjson::Document available to convert to JSON" );
+                AQ_THROW( "No object of type rapidjson::Document available to convert to JSON" );
             }
 
             std::string jsonString =  createStringFromJSON( *( result_->jsonDocument.get() ) );
@@ -45,13 +44,14 @@ namespace etrading
             {
                 if( info_ == "" )
                 {
-                    throw ETradingException( "Requested JSON serialiazation to file but no valid file name was set" );
+                    AQ_THROW( "Requested JSON serialiazation to file but no valid file name was set" );
                 }
                 std::ofstream outputFileStream( info_ );
                 outputFileStream << jsonString;
                 if ( !outputFileStream.good() )
                 {
-                    throw ETradingException( ( boost::format( "Cannot write the JSON string to the file %s" ) % info_.c_str() ).str() );
+                    { std::ostringstream aqMsg229;
+aqMsg229 << "Cannot write the JSON string to the file " << info_.c_str(); AQ_THROW( aqMsg229.str() ); }
                 }
                 outputFileStream.close();  // is this really necessary?
             }

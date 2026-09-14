@@ -88,14 +88,14 @@ namespace
 						AQLString err = "#Error: Cut off date is not defined when using mixed hybrid interpolation.";
 						err += indexName;
 						err += "'. Is the correct interpolation method being used?";
-						throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+						AQ_THROW( err.getCString() );
 					}
 				}
 			}
 			else
 			{
 				AQLString msg = "#Error: Curve '" + indexName + "' is NOT a swap or basis curve and won't work with mixed hybrid interpolation.";
-				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQ_THROW( msg.getCString() );
 			}
 		}
 	}
@@ -297,7 +297,7 @@ void BasisComponentCurve::initialise()
 	if (data_.empty() && data_fwd.empty())
 	{
 		AQLString msg = "#Error: CurveName = " + curveName_ + ", basis/fwdfx data is not set.";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 	else if (data_fwd.empty() && data_.empty() && !data_fwd.empty()) // only fwdfx case
 	{
@@ -307,7 +307,7 @@ void BasisComponentCurve::initialise()
 	else if (!data_fra.empty() && !data_fwd.empty())
 	{
 		AQLString msg = "#Error: FX forwards and FRAs must not be used at the same time to calibrate basis curve";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	is_fra_use_ = false;
@@ -323,10 +323,7 @@ void BasisComponentCurve::initialise()
 	if (!data_fwd.empty())
 	{
 		sort(data_fwd.begin(), data_fwd.end(), comp);
-		if (!fxfwd_only && comp(data_.front(), data_fwd.back()))
-		{
-			throw AQLCoreInvalidData("#Error: ForwardFX Term must be smaller than CCS Term", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !fxfwd_only && comp(data_.front(), data_fwd.back()), "ForwardFX Term must be smaller than CCS Term" );
 	}
 
 	if (!data_fra.empty())
@@ -356,23 +353,11 @@ void BasisComponentCurve::initialise()
 	const AQLString &a_dCurve = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTDISCOUNT, ISNOTNULL).get()).get();
 
 	// check Dummy
-	if (fCurve == DUMMY || dCurve == DUMMY)
-	{
-		throw AQLCoreInvalidData("#Error: Dummy curve must be used for against curve only.", __FILE__, __LINE__);
-	}
-	if ((a_fCurve == DUMMY && a_dCurve != DUMMY) || (a_fCurve != DUMMY && a_dCurve == DUMMY))
-	{
-		throw AQLCoreInvalidData("#Error: If DUMMY curve is used, both forecast and discount must be DUMMY curve.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( fCurve == DUMMY || dCurve == DUMMY, "Dummy curve must be used for against curve only." );
+	AQ_THROW_IF( (a_fCurve == DUMMY && a_dCurve != DUMMY) || (a_fCurve != DUMMY && a_dCurve == DUMMY), "If DUMMY curve is used, both forecast and discount must be DUMMY curve." );
 	// check FixedRate
-	if (a_fCurve == FIXEDRATE || a_dCurve == FIXEDRATE)
-	{
-		throw AQLCoreInvalidData("#Error: FIXEDRATE must be used for target curve only.", __FILE__, __LINE__);
-	}
-	if ((fCurve == FIXEDRATE && dCurve != FIXEDRATE) || (fCurve != FIXEDRATE && dCurve == FIXEDRATE))
-	{
-		throw AQLCoreInvalidData("#Error: If FIXEDRATE is used, both forecast and discount must be FIXEDRATE.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( a_fCurve == FIXEDRATE || a_dCurve == FIXEDRATE, "FIXEDRATE must be used for target curve only." );
+	AQ_THROW_IF( (fCurve == FIXEDRATE && dCurve != FIXEDRATE) || (fCurve != FIXEDRATE && dCurve == FIXEDRATE), "If FIXEDRATE is used, both forecast and discount must be FIXEDRATE." );
 
 	isDiscount_ = dynamic_cast<const AQLDataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_ISDISCOUNT, ISNOTNULL).get()).get();
 	isSpreadOnAgainstLeg_ = dynamic_cast<const AQLDataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL).get()).get();
@@ -399,16 +384,10 @@ void BasisComponentCurve::initialise()
 	{
 		// if forecast only
 		i_freq.toUpper();
-		if (i_freq != SIMPLE)
-		{
-			throw AQLCoreInvalidData("#Error: If forecast mode, only simple is possible in frequency.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( i_freq != SIMPLE, "If forecast mode, only simple is possible in frequency." );
 
 		// if FixedRate
-		if (fCurve == FIXEDRATE)
-		{
-			throw AQLCoreInvalidData("#Error: If FIXEDRATE is used, target must be discount curve.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( fCurve == FIXEDRATE, "If FIXEDRATE is used, target must be discount curve." );
 	}
 
 	// against cashlet
@@ -459,13 +438,10 @@ void BasisComponentCurve::initialise()
 
 	//	if (isForeignCcyLeg && isYieldSpreadCalc_)
 	//	{
-	//		throw AQLCoreInvalidData("#Error: yield spread calc flag must be FALSE when building xccy curves.", __FILE__, __LINE__);
+	//		AQ_THROW( "yield spread calc flag must be FALSE when building xccy curves." );
 	//	}
 
-	if (is_fra_use_ && isYieldSpreadCalc_)
-	{
-		throw AQLCoreInvalidData("#Error: yield spread calc flag must be FALSE when FRAs are used.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( is_fra_use_ && isYieldSpreadCalc_, "yield spread calc flag must be FALSE when FRAs are used." );
 
 	//iseomroll
 	bool isEomRoll = false;
@@ -545,14 +521,14 @@ void BasisComponentCurve::initialise()
 	else
 	{
 		AQLString msg = "#Error: frequency is wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	// check can be divided ?
 	if (m % mUnit != 0 || d != 0)
 	{
 		AQLString msg = "#Error: frequency is wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	a_c_freq.toUpper();
@@ -581,13 +557,13 @@ void BasisComponentCurve::initialise()
 	else
 	{
 		AQLString msg = "#Error: frequency is wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	if ((c_freq == LUNAR && a_c_freq != LUNAR) || (c_freq != LUNAR && a_c_freq == LUNAR))
 	{
 		AQLString msg = "#Error: if the one frequency is LUNAR, the other must be LUNAR";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 	unsigned int step = 1;
 	unsigned int a_step = 1;
@@ -638,10 +614,7 @@ void BasisComponentCurve::initialise()
 	{
 		stateVariable = etrading::toStateVariableEnum(dynamic_cast<const AQLDataString&>(handle->get()).get().getCString());
 
-		if (stateVariable != STATE_VARIABLE_DF)
-		{
-			throw AQLCoreInvalidData("#Error: For Basis Curve, interpolator's StateVariable only supports DF", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( stateVariable != STATE_VARIABLE_DF, "For Basis Curve, interpolator's StateVariable only supports DF" );
 	}
 
 	const StateVariableEnum stateVariableFutureFra = STATE_VARIABLE_LOG_DF;
@@ -816,13 +789,13 @@ void BasisComponentCurve::initialise()
 
 	//			if (spotfx_unitccy == 0.0 || spotfx_usd_unitccy == 0.0)
 	//			{
-	//				throw AQLCoreInvalidData("#Error: SpotFX rates do not exist!", __FILE__, __LINE__);
+	//				{ AQ_THROW( "SpotFX rates do not exist!" ); }
 	//			}
 	//			spotfx = fwd_ispriceccy ? spotfx_usd_unitccy / spotfx_unitccy : spotfx_unitccy / spotfx_usd_unitccy;
 	//		}
 	//		else
 	//		{
-	//			throw AQLCoreInvalidData("#Error: Please provide one or two FX Spot rates", __FILE__, __LINE__);
+	//			AQ_THROW( "Please provide one or two FX Spot rates" );
 	//		}
 
 	//		//search ON&TN fwd spread
@@ -981,7 +954,7 @@ void BasisComponentCurve::initialise()
 		else if (spotDate_ != spotdate)
 		{
 			AQLString msg = "#Error: Same rate type must have same spotdate";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 	}
 
@@ -997,7 +970,7 @@ void BasisComponentCurve::initialise()
 		if (data_libor.size() == 0)
 		{
 			AQLString msg = "#Error: " + refRateTerm + " when FRAs are used in the Basis Curve then Libor fixings must be populated in the corresponding STD swap curve.";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 
 		bool is_fwdswap = false;
@@ -1044,7 +1017,7 @@ void BasisComponentCurve::initialise()
 			else
 			{
 				AQLString err = "#Error: Can not locate FRA/Futures interpolation method for curve '" + curveName_ + "'";
-				throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+				AQ_THROW( err.getCString() );
 			}
 		}
 		setLinearSplineCutoffDate(pInter_fw, yieldData, curveName_, nullptr, true);
@@ -1151,16 +1124,10 @@ void BasisComponentCurve::initialise()
 	}
 
 	// Calibrate DFs using basis swap instruments		
-	if (!isSimuEq)
-	{
-		throw AQLCoreInvalidData("#Error: Invalid Curve Calibration Method. We support Simultaneous-Equation method only.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( !isSimuEq, "Invalid Curve Calibration Method. We support Simultaneous-Equation method only." );
 
 	unsigned int b_size = data_.size();
-	if (!b_size)
-	{
-		throw AQLCoreInvalidData("#Error: Basis data is empty.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( !b_size, "Basis data is empty." );
 
 	// Initialise the following list of variables most concerned with internal basis swap pricing
 	spreadVec_.resize(b_size, 0.0);
@@ -1606,7 +1573,7 @@ void BasisComponentCurve::initialise()
 			else
 			{
 				AQLString msg = "#Error: spotrateterm is after basis first term. spotrateterm = " + spotRateTerm_ + ", basis first term = " + firstInstrumentTerm_;
-				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQ_THROW( msg.getCString() );
 			}
 		}
 	}
@@ -2076,10 +2043,7 @@ double BasisComponentCurve::calcTargetPV_calibDfCurve(const double spread,
 
 	for (unsigned int j = 0; j < terms_grid.size(); j++)
 	{
-		if (b_yieldTimeMat[j].empty())
-		{
-			throw AQLCoreInvalidData("#Error: size is not consistent.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( b_yieldTimeMat[j].empty(), "size is not consistent." );
 	}
 
 	double df = 1.0;
@@ -2176,10 +2140,7 @@ double BasisComponentCurve::calcTargetPV_calibDfCurve_MTM(const double spread,
 
 	for (unsigned int j = 0; j < terms_grid.size(); j++)
 	{
-		if (b_yieldTimeMat[j].empty())
-		{
-			throw AQLCoreInvalidData("#Error: size is not consistent.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( b_yieldTimeMat[j].empty(), "size is not consistent." );
 	}
 
 	const double a_df_spot = AQLMath::exp(-pInter_df_againstLeg->value(swapSpotDateAsTerm));
@@ -2309,10 +2270,7 @@ double BasisComponentCurve::calcTargetPV_calibFwdCurve(const double spread,
 
 	for (unsigned int j = 0; j < terms_grid.size(); j++)
 	{
-		if (b_yieldTimeMat[j].empty())
-		{
-			throw AQLCoreInvalidData("#Error: size is not consistent.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( b_yieldTimeMat[j].empty(), "size is not consistent." );
 	}
 	const double spotDiscountFactor = AQLMath::exp(-pInter_df_targetLeg->value(swapSpotDateAsTerm));
 	double df_d = spotDiscountFactor;
@@ -2350,10 +2308,7 @@ double BasisComponentCurve::calcTargetPV_calibFwdCurve(const double spread,
 			const double yield_time1 = y_spread_time1 + b_yieldTimeMat[j][0];
 			const double df1 = AQLMath::exp(-yield_time1);
 
-			if (annuity == 0)
-			{
-				throw AQLCoreInvalidData("#Error: Unable to solve for the par rate. The swap annuity term is zero.", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( annuity == 0, "Unable to solve for the par rate. The swap annuity term is zero." );
 
 			// r = (df1 - df)/tau*df
 			const double pvFloat = (df1 - df);
@@ -2388,10 +2343,7 @@ double BasisComponentCurve::calcTargetPV_calibFwdCurve(const double spread,
 			const double yield_time1 = y_spread_time1 + b_yieldTimeMat[j][0];
 			const double df1 = AQLMath::exp(-yield_time1);
 
-			if (annuity == 0)
-			{
-				throw AQLCoreInvalidData("#Error: Unable to solve for the par rate. The swap annuity term is zero.", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( annuity == 0, "Unable to solve for the par rate. The swap annuity term is zero." );
 
 			const double rate = (df1 - df) / annuity;
 			const double endTerm = terms_grid[j] + swapSpotDateAsTerm;
@@ -2509,10 +2461,7 @@ void BasisComponentCurve::postProcessing(AQLObject& yieldCurveProEntity)
 		}
 	}
 
-	if (terms_mod.empty())
-	{
-		throw AQLCoreInvalidData("#Error: Dependency curves have not been built. The dependency curve(s) term and/or discount factor lookup table is empty", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( terms_mod.empty(), "Dependency curves have not been built. The dependency curve(s) term and/or discount factor lookup table is empty" );
 
 	// Insert FRA dates to terms_mod (node points)
 	if (!isDiscount_ && is_fra_use_)
@@ -2710,13 +2659,13 @@ void BasisComponentCurve::postProcessing(AQLObject& yieldCurveProEntity)
 	if (!_terms.empty() && *min_it < 0.0)
 	{
 		AQLString msg = curveName_ + " terms, term must be positive.";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 	min_it = min_element(termsmtx_fwd[0].begin(), termsmtx_fwd[0].end());
 	if (!termsmtx_fwd[0].empty() && *min_it < 0.0)
 	{
 		AQLString msg = curveName_ + " terms_fwd, term must be positive.";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	// Determine the interpolation scheme adopted by the target curve

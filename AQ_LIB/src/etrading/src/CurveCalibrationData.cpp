@@ -83,7 +83,7 @@ namespace
 		}
 		else
 		{
-			throw AQLCoreInvalidData("#Error: Frequency, must be Annual, Semi-Annual, Quarterly, Monthly, Weekly, or Business_Days.", __FILE__, __LINE__);
+			AQ_THROW( "Frequency, must be Annual, Semi-Annual, Quarterly, Monthly, Weekly, or Business_Days." );
 		}
 
 		return term;
@@ -133,14 +133,14 @@ namespace
 						AQLString err = "#Error: Cut off date is not defined when using Linear Spline interpolation on curve '";
 						err += indexName;
 						err += "'. Is the correct interpolation method being used?";
-						throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+						AQ_THROW( err.getCString() );
 					}
 				}
 			}
 			else
 			{
 				AQLString msg = "#Error: Curve '" + indexName + "' is NOT a swap or basis curve and won't work with linear spline interpolation.";
-				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQ_THROW( msg.getCString() );
 			}
 		}
 	}
@@ -637,7 +637,7 @@ CurveCalibrationData::clone() const
 		return pCurve;
 	}
 	catch (std::bad_alloc e) {
-		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
+		AQ_THROW( e.what() );
 	}
 }
 void
@@ -714,7 +714,7 @@ CurveCalibrationData::copy(
 	{
 		AQLString err = "Assignement error for CurveCalibrationData : from ";
 		err += AQLString(e.getType());
-		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQ_THROW( err.getCString() );
 	}
 	mpAsOfDate = &getData(CALIBRATION_DATA_ASOFDATE);
 	mpProcedure = &getData(CALIBRATION_DATA_CURVEGENERATOR);
@@ -800,7 +800,7 @@ CurveCalibrationData::calcDiscountFactor(const AQLDate& asof)
 	{
 		AQLString msg("#Error: DiscountFactor Calculation at ");
 		msg += getName().get();
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 }
 /*!
@@ -828,7 +828,7 @@ CurveCalibrationData::setDFByShiftZero(double width, unsigned int pos, const Uin
 		// error
 		AQLString msg = getName();
 		msg += " : Input pos or grids are something wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	i = grids[pos];
@@ -946,7 +946,7 @@ CurveCalibrationData::setDFByShiftZero(double width, FloorType type, double floo
 			}
 			break;
 		default:
-			throw AQLCoreInvalidData("#Error: Not Supported Floor Type", __FILE__, __LINE__);
+			AQ_THROW( "Not Supported Floor Type" );
 		}
 		rates.set(1 / AQLPriceDataConvention::rateToRet(rnew, terms[i], conv), i);
 	}
@@ -992,7 +992,7 @@ CurveCalibrationData::setBasisDFByShiftZero(double width, unsigned int pos, cons
 		// error
 		AQLString msg = getName();
 		msg += " : Input pos or grids are something wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	unsigned int center = grids[pos];
@@ -1052,10 +1052,7 @@ CurveCalibrationData::setBasisDFByShiftZero(double width, unsigned int pos, cons
 	{
 		// calc df 
 		const double val = AQLPriceDataConvention::rateToRet(rates[i], terms[i], conv);
-		/*if (val < 1.0)
-		{
-			throw AQLCoreInvalidData("DF is over one.", __FILE__, __LINE__);
-		}*/
+		/*if ( val < 1.0, "DF is over one." );*/
 		rates.set(1.0 / val, i);
 	}
 
@@ -1123,13 +1120,10 @@ CurveCalibrationData::setBasisDFByShiftZero(double width, FloorType type, double
 			}
 			break;
 		default:
-			throw AQLCoreInvalidData("#Error: Not Supported Floor Type", __FILE__, __LINE__);
+			AQ_THROW( "Not Supported Floor Type" );
 		}
 		const double val = AQLPriceDataConvention::rateToRet(rnew, terms[i], conv);
-		/*if (val < 1.0)
-		{
-			throw AQLCoreInvalidData("DF is over one.", __FILE__, __LINE__);
-		}*/
+		/*AQ_THROW_IF( val < 1.0, "DF is over one." );*/
 
 		rates.set(1.0 / val, i);
 	}
@@ -1248,7 +1242,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	if (data_.empty() && data_fwd.empty())
 	{
 		AQLString msg = "#Error: CurveName = " + curveType + ", basis/fwdfx data is not set.";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 	else if (data_.empty() && !data_fwd.empty()) // only fwdfx case
 	{
@@ -1258,7 +1252,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	else if (!data_fra.empty() && !data_fwd.empty())
 	{
 		AQLString msg = "#Error: FX forwards and FRAs must not be used at the same time to calibrate basis curve";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	bool is_fra_use = false;
@@ -1274,10 +1268,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	if (!data_fwd.empty())
 	{
 		sort(data_fwd.begin(), data_fwd.end(), comp);
-		if (!fwd_isonly && comp(data_.front(), data_fwd.back()))
-		{
-			throw AQLCoreInvalidData("#Error: ForwardFX Term must be smaller than CCS Term", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !fwd_isonly && comp(data_.front(), data_fwd.back()), "ForwardFX Term must be smaller than CCS Term" );
 	}
 
 	if (!data_fra.empty())
@@ -1329,23 +1320,11 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	}
 
 	// check Dummy
-	if (fCurve == DUMMY || dCurve == DUMMY)
-	{
-		throw AQLCoreInvalidData("#Error: Dummy curve must be used for against curve only.", __FILE__, __LINE__);
-	}
-	if ((a_fCurve == DUMMY && a_dCurve != DUMMY) || (a_fCurve != DUMMY && a_dCurve == DUMMY))
-	{
-		throw AQLCoreInvalidData("#Error: If DUMMY curve is used, both forecast and discount must be DUMMY curve.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( fCurve == DUMMY || dCurve == DUMMY, "Dummy curve must be used for against curve only." );
+	AQ_THROW_IF( (a_fCurve == DUMMY && a_dCurve != DUMMY) || (a_fCurve != DUMMY && a_dCurve == DUMMY), "If DUMMY curve is used, both forecast and discount must be DUMMY curve." );
 	// check FixedRate
-	if (a_fCurve == FIXEDRATE || a_dCurve == FIXEDRATE)
-	{
-		throw AQLCoreInvalidData("#Error: FIXEDRATE must be used for target curve only.", __FILE__, __LINE__);
-	}
-	if ((fCurve == FIXEDRATE && dCurve != FIXEDRATE) || (fCurve != FIXEDRATE && dCurve == FIXEDRATE))
-	{
-		throw AQLCoreInvalidData("#Error: If FIXEDRATE is used, both forecast and discount must be FIXEDRATE.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( a_fCurve == FIXEDRATE || a_dCurve == FIXEDRATE, "FIXEDRATE must be used for target curve only." );
+	AQ_THROW_IF( (fCurve == FIXEDRATE && dCurve != FIXEDRATE) || (fCurve != FIXEDRATE && dCurve == FIXEDRATE), "If FIXEDRATE is used, both forecast and discount must be FIXEDRATE." );
 
 	const bool isTargetDiscountCurve = dynamic_cast<const AQLDataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_ISDISCOUNT, ISNOTNULL).get()).get();
 	const bool isTimeInter = dynamic_cast<const AQLDataBool &>((data_[0]->getData(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONBS, ISNOTNULL)).get()).get();
@@ -1373,16 +1352,10 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	{
 		// if forecast only
 		i_freq.toUpper();
-		if (i_freq != SIMPLE)
-		{
-			throw AQLCoreInvalidData("#Error: If forecast mode, only simple is possible in frequency.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( i_freq != SIMPLE, "If forecast mode, only simple is possible in frequency." );
 
 		// if FixedRate
-		if (fCurve == FIXEDRATE)
-		{
-			throw AQLCoreInvalidData("#Error: If FIXEDRATE is used, target must be discount curve.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( fCurve == FIXEDRATE, "If FIXEDRATE is used, target must be discount curve." );
 	}
 
 	// against cashlet
@@ -1440,15 +1413,9 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 		isYieldSpreadCalc = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
-	if (isForeignCcyLeg && isYieldSpreadCalc)
-	{
-		throw AQLCoreInvalidData("#Error: yield spread calc flag must be FALSE when building xccy curves.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( isForeignCcyLeg && isYieldSpreadCalc, "yield spread calc flag must be FALSE when building xccy curves." );
 
-	if (is_fra_use && isYieldSpreadCalc)
-	{
-		throw AQLCoreInvalidData("#Error: yield spread calc flag must be FALSE when FRAs are used.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( is_fra_use && isYieldSpreadCalc, "yield spread calc flag must be FALSE when FRAs are used." );
 
 	//iseomroll
 	bool isEomRoll = false;
@@ -1522,14 +1489,14 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	else
 	{
 		AQLString msg = "#Error: frequency is wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	// check can be divided ?
 	if (m % mUnit != 0 || d != 0)
 	{
 		AQLString msg = "#Error: frequency is wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	a_c_freq.toUpper();
@@ -1558,13 +1525,13 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	else
 	{
 		AQLString msg = "#Error: frequency is wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	if ((c_freq == LUNAR && a_c_freq != LUNAR) || (c_freq != LUNAR && a_c_freq == LUNAR))
 	{
 		AQLString msg = "#Error: if the one frequency is LUNAR, the other must be LUNAR";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 	unsigned int step = 1;
 	unsigned int a_step = 1;
@@ -1618,10 +1585,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	{
 		stateVariable = etrading::toStateVariableEnum(dynamic_cast<const AQLDataString&>(handle->get()).get().getCString());
 
-		if (stateVariable != STATE_VARIABLE_DF)
-		{
-			throw AQLCoreInvalidData("#Error: For Basis Curve, interpolator's StateVariable only supports DF", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( stateVariable != STATE_VARIABLE_DF, "For Basis Curve, interpolator's StateVariable only supports DF" );
 	}
 
 	const StateVariableEnum stateVariableFutureFra = STATE_VARIABLE_LOG_DF;
@@ -1775,10 +1739,10 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	if (isForeignCcyLeg)
 	{
 		AQLObjectHolder &eh_fy = getForeignYieldData().get();
-		if (!eh_fy.isDefined())
-		{
-			throw AQLCoreInvalidData("#Error: Foreign Yield Data does not exist!", __FILE__, __LINE__);
-		}
+		if ( !eh_fy.isDefined() )
+{
+    AQ_THROW( "Foreign Yield Data does not exist!" );
+}
 		else
 		{
 			/*
@@ -1873,10 +1837,10 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	if (isForeignCcyLeg)
 	{
 		AQLObjectHolder &eh_fy = getForeignYieldData().get();
-		if (!eh_fy.isDefined())
-		{
-			throw AQLCoreInvalidData("#Error: Foreign Yield Data does not exist!", __FILE__, __LINE__);
-		}
+		if ( !eh_fy.isDefined() )
+{
+    AQ_THROW( "Foreign Yield Data does not exist!" );
+}
 		else
 		{
 			AQLObject &fYieldData = eh_fy.get();
@@ -2094,15 +2058,12 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 					}
 				}
 
-				if (spotfx_unitccy == 0.0 || spotfx_usd_unitccy == 0.0)
-				{
-					throw AQLCoreInvalidData("#Error: SpotFX rates do not exist!", __FILE__, __LINE__);
-				}
+				AQ_THROW_IF( spotfx_unitccy == 0.0 || spotfx_usd_unitccy == 0.0, "SpotFX rates do not exist!" );
 				spotfx = fwd_ispriceccy ? spotfx_usd_unitccy / spotfx_unitccy : spotfx_unitccy / spotfx_usd_unitccy;
 			}
 			else
 			{
-				throw AQLCoreInvalidData("#Error: Please provide one or two FX Spot rates", __FILE__, __LINE__);
+				AQ_THROW( "Please provide one or two FX Spot rates" );
 			}
 
 			//search ON&TN fwd spread
@@ -2266,7 +2227,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 		else if (spotdate_l != spotdate)
 		{
 			AQLString msg = "#Error: Same rate type must have same spotdate";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 	}
 
@@ -2282,7 +2243,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 		if (data_libor.size() == 0)
 		{
 			AQLString msg = "#Error: " + refRateTerm + " when FRAs are used in the Basis Curve then Libor fixings must be populated in the corresponding STD swap curve.";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 
 		bool is_fwdswap = false;
@@ -2329,7 +2290,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 			else
 			{
 				AQLString err = "#Error: Can not locate FRA/Futures interpolation method for curve '" + curveType + "'";
-				throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+				AQ_THROW( err.getCString() );
 			}
 		}
 		setLinearSplineCutoffDate(fraInterp, yieldData, curveType, this, true);
@@ -2471,10 +2432,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	if (isSimuEq)
 	{
 		unsigned int numberOfBasisSwaps = data_.size();
-		if (!numberOfBasisSwaps)
-		{
-			throw AQLCoreInvalidData("#Error: Basis data is empty.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !numberOfBasisSwaps, "Basis data is empty." );
 
 		DoubleArray againstLegPVs(numberOfBasisSwaps, 0.0);
 		DoubleArray swapSpreads(numberOfBasisSwaps, 0.0);
@@ -2604,10 +2562,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 				curveType = dynamic_cast<AQLDataString&>(dh->get()).get();
 			}
 
-			if (curveType != SWAP)
-			{
-				throw AQLCoreInvalidData("#Error: Basis curve Error; isFwdInter can only be set to TRUE when the dependency curve is a STD Swap Curve. Basis curves do not support interpolation on forwards.", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( curveType != SWAP, "Basis curve Error; isFwdInter can only be set to TRUE when the dependency curve is a STD Swap Curve. Basis curves do not support interpolation on forwards." );
 
 			// Check if the curve type of 'fCurve' on the target leg is suitable for useForwardInterpolation
 			curve = getMarketForCurve(fCurve);
@@ -2618,10 +2573,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 				curveType = dynamic_cast<AQLDataString&>(dh->get()).get();
 			}
 
-			if (curveType != SWAP)
-			{
-				throw AQLCoreInvalidData("#Error: Basis curve Error; isFwdInter can only be set to TRUE when the dependency curve is a STD Swap Curve. Basis curves do not support interpolation on forwards.", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( curveType != SWAP, "Basis curve Error; isFwdInter can only be set to TRUE when the dependency curve is a STD Swap Curve. Basis curves do not support interpolation on forwards." );
 
 			// ----------------------------------------------
 
@@ -3039,10 +2991,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 				}
 				else if (date_l == date)
 				{
-					if (paymentDatesTargetLeg[0].size() != 1)
-					{
-						throw AQLCoreInvalidData("#Error: basis first term, cashlet size must be one", __FILE__, __LINE__);
-					}
+					AQ_THROW_IF( paymentDatesTargetLeg[0].size() != 1, "basis first term, cashlet size must be one" );
 					const double term = paymentDatesTargetLeg[0][0];
 					const double tau = accrualPeriodsTargetLeg[0][0];
 					const double df = discountFactorsTargetLeg.value(term + spotTermTargetLeg) / d_spotdf;	// Discount factor off the discount curve on the target leg
@@ -3091,7 +3040,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 				else
 				{
 					AQLString msg = "#Error: spotrateterm is after basis first term. spotrateterm = " + strTerm_s + ", basis first term = " + strTerm;
-					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQ_THROW( msg.getCString() );
 				}
 			}
 		}
@@ -3211,10 +3160,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 					basisCurveRateTimesTimeVector, againstLegPVs, vals, false, spotLag);
 				for (unsigned int j = 0; j < numberOfBasisSwaps; ++j)
 				{
-					if (vals.size() != numberOfBasisSwaps)
-					{
-						throw AQLCoreInvalidData("size error!", __FILE__, __LINE__);
-					}
+					AQ_THROW_IF( vals.size() != numberOfBasisSwaps, "size error!" );
 					const double divVal = (vals[j] + targetValVec1[j]) / delta;
 					divMat.setValue(j, i, divVal);
 				}
@@ -3403,10 +3349,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 			}
 		}
 
-		if (terms_mod.empty())
-		{
-			throw AQLCoreInvalidData("#Error: Dependency curves have not been built. The dependency curve(s) term and/or discount factor lookup table is empty", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( terms_mod.empty(), "Dependency curves have not been built. The dependency curve(s) term and/or discount factor lookup table is empty" );
 
 		// Insert FRA dates to terms_mod (node points)
 		if (!isTargetDiscountCurve && is_fra_use)
@@ -3609,7 +3552,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	}
 	else
 	{
-		throw AQLCoreInvalidData("#Error: Invalid Curve Calibration Method. We support Simultaneous-Equation method only.", __FILE__, __LINE__);
+		AQ_THROW( "Invalid Curve Calibration Method. We support Simultaneous-Equation method only." );
 	}
 
 	// calc modify df
@@ -3623,13 +3566,13 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 	if (!_terms.empty() && *min_it < 0.0)
 	{
 		AQLString msg = curveType + " terms, term must be positive.";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 	min_it = min_element(termsmtx_fwd[0].begin(), termsmtx_fwd[0].end());
 	if (!termsmtx_fwd[0].empty() && *min_it < 0.0)
 	{
 		AQLString msg = curveType + " terms_fwd, term must be positive.";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	// Determine the interpolation scheme adopted by the target curve
@@ -3878,7 +3821,7 @@ void CurveCalibrationData::calcCheapestToDeliverCurve(const AQLString& curveName
 		catch (std::exception&)
 		{
 			AQLString err = "#Error: Curve '" + curve + "' does not exist in the object pool. Has it been built?";
-			throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+			AQ_THROW( err.getCString() );
 		}
 
 		inters.push_back(inter);
@@ -4022,10 +3965,10 @@ CurveCalibrationData::getMarketDataRef(const AQLString& mktName) const
 	if (tmpMktNames.size() == 2)
 	{
 		const AQLObjectHolder &eh_fy = getForeignYieldData().get();
-		if (!eh_fy.isDefined())
-		{
-			throw AQLCoreInvalidData("#Error: Foreign Yield Data does not exist!", __FILE__, __LINE__);
-		}
+		if ( !eh_fy.isDefined() )
+{
+    AQ_THROW( "Foreign Yield Data does not exist!" );
+}
 		else
 		{
 			suffix = "_" + tmpMktNames[1];
@@ -4120,7 +4063,7 @@ CurveCalibrationData::setCurveInterpolation(const AQLString& curveName, const AQ
 		}
 		else
 		{
-			throw AQLCoreInvalidData("#Error: Join date is required when mixed hybrid interpolation types are used.", __FILE__, __LINE__);
+			AQ_THROW( "Join date is required when mixed hybrid interpolation types are used." );
 		}
 	}
 
@@ -4180,14 +4123,8 @@ CurveCalibrationData::calcIndexGrid(const AQLDate &asofdate, const AQLDate &date
 
 	unsigned int size = 0;
 	unsigned int addmonth = 0;
-	if (d != 0)
-	{
-		throw AQLCoreInvalidData("d != 0 is not support", __FILE__, __LINE__);
-	}
-	if (0 == y && 0 == m)
-	{
-		throw AQLCoreInvalidData("#Error: Curve Frequency Accessory input supports only y,m,d", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( d != 0, "d != 0 is not support" );
+	AQ_THROW_IF( 0 == y && 0 == m, "Curve Frequency Accessory input supports only y,m,d" );
 
 	if (freq == SIMPLE)
 	{
@@ -4201,30 +4138,21 @@ CurveCalibrationData::calcIndexGrid(const AQLDate &asofdate, const AQLDate &date
 	}
 	else if (freq == QUARTERLY)
 	{
-		if (m % 3 != 0)
-		{
-			throw AQLCoreInvalidData("#Error: Frequency and Accessory are not consistent", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( m % 3 != 0, "Frequency and Accessory are not consistent" );
 		size = y * 4 + m / 3 + 1;
 		addmonth = 3;
 
 	}
 	else if (freq == SEMI_ANNUAL)
 	{
-		if (m % 6 != 0)
-		{
-			throw AQLCoreInvalidData("#Error: Frequency and Accessory are not consistent", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( m % 6 != 0, "Frequency and Accessory are not consistent" );
 		size = y * 2 + m / 6 + 1;
 		addmonth = 6;
 
 	}
 	else if (freq == ANNUAL)
 	{
-		if (m % 12 != 0)
-		{
-			throw AQLCoreInvalidData("#Error: Frequency and Accessory are not consistent", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( m % 12 != 0, "Frequency and Accessory are not consistent" );
 		size = y + m / 12 + 1;
 		addmonth = 12;
 	}
@@ -4234,7 +4162,7 @@ CurveCalibrationData::calcIndexGrid(const AQLDate &asofdate, const AQLDate &date
 		AQLString err = "Frequency: ";
 		err += freq;
 		err += " is not support";
-		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQ_THROW( err.getCString() );
 	}
 
 	AQLPriceDataDayCount dc_act365(ACT_365);
@@ -4314,25 +4242,19 @@ CurveCalibrationData::calcBasisCF(const AQLPriceDataInterpolation &spreadTimesTi
 	const std::vector<double>& spotLag)
 {
 	unsigned int numberOfBasisSwaps = swapSpreads.size();
-	if (paymentDatesTargetLeg.size() != numberOfBasisSwaps ||
+	AQ_THROW_IF( paymentDatesTargetLeg.size() != numberOfBasisSwaps ||
 		accrualPeriodsTargetLeg.size() != numberOfBasisSwaps ||
 		fixingDatesTargetLeg.size() != numberOfBasisSwaps ||
 		indexTermsTargetLeg.size() != numberOfBasisSwaps ||
 		basisCurveRateTimesTimeVector.size() != numberOfBasisSwaps ||
-		againstLegPVs.size() != numberOfBasisSwaps)
-	{
-		throw AQLCoreInvalidData("Invalid Basis Swap Data with inconsistent dimensions", __FILE__, __LINE__);
-	}
+		againstLegPVs.size() != numberOfBasisSwaps, "Invalid Basis Swap Data with inconsistent dimensions" );
 
 	for (unsigned int i = 0; i < numberOfBasisSwaps; ++i)
 	{
 		const unsigned int gridSize = paymentDatesTargetLeg[i].size();
-		if (fixingDatesTargetLeg[i].size() != gridSize ||
+		AQ_THROW_IF( fixingDatesTargetLeg[i].size() != gridSize ||
 			accrualPeriodsTargetLeg[i].size() != gridSize ||
-			basisCurveRateTimesTimeVector[i].size() != gridSize)
-		{
-			throw AQLCoreInvalidData("Invalid Basis Swap Data with inconsistent dimensions", __FILE__, __LINE__);
-		}
+			basisCurveRateTimesTimeVector[i].size() != gridSize, "Invalid Basis Swap Data with inconsistent dimensions" );
 	}
 
 	DoubleArray basisSpreadTargetLeg(numberOfBasisSwaps, 0.0);
@@ -4739,10 +4661,7 @@ CurveCalibrationData::calcTargetPV(const AQLPriceDataInterpolation &spreadTimesT
 
 	for (unsigned int compoundEndIndex = 0; compoundEndIndex < cashflowDates.size(); compoundEndIndex++)
 	{
-		if (basisCurveRateTimesTime[compoundEndIndex].empty())
-		{
-			throw AQLCoreInvalidData("#Error: size is not consistent.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( basisCurveRateTimesTime[compoundEndIndex].empty(), "size is not consistent." );
 	}
 
 	double df = 1.0;
@@ -4848,10 +4767,7 @@ CurveCalibrationData::calcTargetPV(const AQLPriceDataInterpolation &spreadTimesT
 
 	for (unsigned int compoundEndIndex = 0; compoundEndIndex < cashflowDates.size(); compoundEndIndex++)
 	{
-		if (basisCurveRateTimesTime[compoundEndIndex].empty())
-		{
-			throw AQLCoreInvalidData("#Error: size is not consistent.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( basisCurveRateTimesTime[compoundEndIndex].empty(), "size is not consistent." );
 	}
 
 	const double a_df_spot = discountFactorsAgainstLeg.value(spotDate);
@@ -5215,7 +5131,7 @@ CurveCalibrationData::setBasisRates_old(void)
 	if (data_basis.empty())
 	{
 		return;
-		//throw AQLCoreInvalidData("basis data is not set.", __FILE__, __LINE__);
+		//AQ_THROW( "basis data is not set." );
 	}
 	// sort
 	sort(data_basis.begin(), data_basis.end(), InstrumentComp());
@@ -5226,10 +5142,7 @@ CurveCalibrationData::setBasisRates_old(void)
 	const AQLMathYieldCurve &baseYieldCurve = dynamic_cast<const AQLMathYieldCurve &>(getBaseYieldCurve().get().get());
 	const AQLDate &asof = dynamic_cast<const AQLDataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());
 	// asof and spot check
-	if (asof > spotdate)
-	{
-		throw AQLCoreInvalidData("#Error: asofdate > spotdate, cannnot calc basis DF", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( asof > spotdate, "asofdate > spotdate, cannnot calc basis DF" );
 
 	// get first element val
 	const AQLPriceDataDayCount &dcbs = dynamic_cast<const AQLPriceDataDayCount &>((data_basis[0]->getData(IR_CALIBRATION_DATA_DAYCOUNTBASE, ISNOTNULL)).get());
@@ -5303,14 +5216,14 @@ CurveCalibrationData::setBasisRates_old(void)
 	else
 	{
 		AQLString msg = "#Error: frequency is wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	// check can be divided ?
 	if (m % mUnit != 0 || d != 0)
 	{
 		AQLString msg = "#Error: frequency is wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	AQLObjectHolder objHolder = getYieldData().get();
@@ -5366,10 +5279,7 @@ CurveCalibrationData::setBasisRates_old(void)
 		fdate = ldate;
 		//DFs included basisrates.
 		const double df = (1.0 - sum) / (1.0 + (libor + basis) * delta);
-		if (df <= 0.0)
-		{
-			throw AQLCoreInvalidData("#Error: Df is below zero.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( df <= 0.0, "Df is below zero." );
 		df_mod.push_back(df);
 		b_t.push_back(termaa);
 	}
@@ -5377,10 +5287,7 @@ CurveCalibrationData::setBasisRates_old(void)
 	//DFs from T+2 to  T+0 is non modified.
 	const double asofterm = dc.getTerm(asof, spotdate);
 	const double asofdf = getDF(asof, spotdate);
-	if (asofdf <= 0.0)
-	{
-		throw AQLCoreInvalidData("#Error: Df from asofdate to spotdate is below zero.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( asofdf <= 0.0, "Df from asofdate to spotdate is below zero." );
 
 	DoubleArray b_t_2(1, 0.0);
 	DoubleArray df_mod_2(1, 1.0);
@@ -5404,10 +5311,7 @@ CurveCalibrationData::setBasisRates_old(void)
 	for (unsigned int i = 1; i < terms.size(); i++)
 	{
 		const double df = inter.value(terms[i]);
-		if (df <= 0.0)
-		{
-			throw AQLCoreInvalidData("#Error: Df is below zero.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( df <= 0.0, "Df is below zero." );
 		b_mod[i] = -AQLMath::log(df) / terms[i];
 	}
 
@@ -5451,10 +5355,7 @@ CurveCalibrationData::setBasisRates2(const AQLString& basisCurveID)
 		}
 	}
 	// data exist check
-	if (data_basis.empty())
-	{
-		throw AQLCoreInvalidData("#Error: basis data is not set.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( data_basis.empty(), "basis data is not set." );
 	// sort
 	sort(data_basis.begin(), data_basis.end(), InstrumentComp());
 
@@ -5464,10 +5365,7 @@ CurveCalibrationData::setBasisRates2(const AQLString& basisCurveID)
 	const AQLMathYieldCurve &baseYieldCurve = dynamic_cast<const AQLMathYieldCurve &>(getBaseYieldCurve().get().get());
 	const AQLDate &asof = dynamic_cast<const AQLDataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());
 	// asof and spot check
-	if (asof > spotdate)
-	{
-		throw AQLCoreInvalidData("#Error: asofdate > spotdate, cannnot calc basis DF", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( asof > spotdate, "asofdate > spotdate, cannnot calc basis DF" );
 
 	// get first element val
 	const AQLPriceDataDayCount &dcbs = dynamic_cast<const AQLPriceDataDayCount &>((data_basis[0]->getData(IR_CALIBRATION_DATA_DAYCOUNTBASE, ISNOTNULL)).get());
@@ -5541,14 +5439,14 @@ CurveCalibrationData::setBasisRates2(const AQLString& basisCurveID)
 	else
 	{
 		AQLString msg = "#Error: frequency is wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	// check can be divided ?
 	if (m % mUnit != 0 || d != 0)
 	{
 		AQLString msg = "frequency is wrong";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	AQLObjectHolder objHolder = getYieldData().get();
@@ -5598,10 +5496,7 @@ CurveCalibrationData::setBasisRates2(const AQLString& basisCurveID)
 
 		//DFs included basisrates.
 		const double df = (1.0 - sum) / (1.0 + (temp_val + basis) * delta);
-		if (df <= 0.0)
-		{
-			throw AQLCoreInvalidData("Df is below zero.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( df <= 0.0, "Df is below zero." );
 		df_mod.push_back(df);
 		b_t.push_back(termaa);
 
@@ -5616,10 +5511,7 @@ CurveCalibrationData::setBasisRates2(const AQLString& basisCurveID)
 	//DFs from T+2 to  T+0 is non modified.
 	const double asofterm = dc.getTerm(asof, spotdate);
 	const double asofdf = getDF(asof, spotdate);
-	if (asofdf <= 0.0)
-	{
-		throw AQLCoreInvalidData("Df from asofdate to spotdate is below zero.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( asofdf <= 0.0, "Df from asofdate to spotdate is below zero." );
 
 	DoubleArray b_t_2(1, 0.0);
 	DoubleArray df_mod_2(1, 1.0);
@@ -5643,10 +5535,7 @@ CurveCalibrationData::setBasisRates2(const AQLString& basisCurveID)
 	for (unsigned int i = 1; i < terms.size(); i++)
 	{
 		const double df = inter.value(terms[i]);
-		if (df <= 0.0)
-		{
-			throw AQLCoreInvalidData("Df is below zero.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( df <= 0.0, "Df is below zero." );
 		b_mod[i] = -AQLMath::log(df) / terms[i];
 	}
 
@@ -5790,10 +5679,10 @@ CurveCalibrationData::setdNPVdm(const AQLString &curveType)
 	if (tmpMktNames.size() == 2)
 	{
 		AQLObjectHolder &eh_fy = getForeignYieldData().get();
-		if (!eh_fy.isDefined())
-		{
-			throw AQLCoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__);
-		}
+		if ( !eh_fy.isDefined() )
+{
+    AQ_THROW( "Foreign Yield Data does not exist!" );
+}
 		else
 		{
 			mr_ = &dynamic_cast<const AQLDataMultiReference&>(eh_fy.get().getData(CALIBRATION_DATA_MARKETDATA + AQLString("_") + tmpMktNames[1], ISNOTNULL).get());
@@ -5911,10 +5800,7 @@ CurveCalibrationData::setdNPVdm(const AQLString &curveType)
 		//Libor, O_N or T_N case
 		if (typevec[i] == ZERO || typevec[i] == O_N || typevec[i] == T_N || typevec[i] == BOJ || typevec[i] == FEDFUNDRATE)
 		{
-			if (dateMat[i].size() != 2)
-			{
-				throw AQLCoreInvalidData("dNPVdzero Error", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( dateMat[i].size() != 2, "dNPVdzero Error" );
 
 			dh = &(dataall[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL));
 			double mrate = dynamic_cast<const AQLDataDouble &>(dh->get());
@@ -5933,10 +5819,7 @@ CurveCalibrationData::setdNPVdm(const AQLString &curveType)
 		}//swap case 
 		else if (typevec[i] == PAR)
 		{
-			if (dateMat[i].size() < 2)
-			{
-				throw AQLCoreInvalidData("dNPVdzero Error", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( dateMat[i].size() < 2, "dNPVdzero Error" );
 
 			double dfterm1 = dc_act365.getTerm(asOfDate, dateMat[i][0]);
 			double dftermLast = dc_act365.getTerm(asOfDate, dateMat[i].back());
@@ -5948,7 +5831,7 @@ CurveCalibrationData::setdNPVdm(const AQLString &curveType)
 			double mrate = dynamic_cast<const AQLDataDouble &>(dh->get());
 			if (mrate == 0.0)
 			{
-				//throw AQLCoreInvalidData("Market rate 0", __FILE__,__LINE__);
+				//AQ_THROW( "Market rate 0" );
 				mrate = EPS;
 				dNPVdm[i] = EPS;
 			}
@@ -5977,10 +5860,7 @@ CurveCalibrationData::setdNPVdm(const AQLString &curveType)
 		{
 			// in case of basis there are 3cases, discountcase, forecastAndagainstspreadcase,
 			//and forecastAndnotspreadcase
-			if (dateMat[i].size() < 2)
-			{
-				throw AQLCoreInvalidData("dNPVdzero Error", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( dateMat[i].size() < 2, "dNPVdzero Error" );
 
 			if (0 == i)
 			{
@@ -6063,10 +5943,7 @@ CurveCalibrationData::setdNPVdm(const AQLString &curveType)
 		}//future case
 		else if (typevec[i] == FUTURE)
 		{
-			if (dateMat[i].size() != 2)
-			{
-				throw AQLCoreInvalidData("dNPVdzero Error", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( dateMat[i].size() != 2, "dNPVdzero Error" );
 
 			double mrate = 0.0;
 			dh = &(dataall[i]->getData(CALIBRATION_DATA_RATE, NOCHECK));
@@ -6091,16 +5968,13 @@ CurveCalibrationData::setdNPVdm(const AQLString &curveType)
 			dNPVdzero[i][1] = dfterm2 * (1.0 + calcterm * mrate) * df2;
 			mratevec[i] = mrate;
 		}
-		else if (typevec[i] == BASIS)
-		{
-			throw AQLCoreInvalidData("Not Support Now", __FILE__, __LINE__);
-		}
+		else if ( typevec[i] == BASIS )
+{
+    AQ_THROW( "Not Support Now" );
+}
 		else if (typevec[i] == FRA3M || typevec[i] == FRA6M)
 		{
-			if (dateMat[i].size() != 2)
-			{
-				throw AQLCoreInvalidData("dNPVdzero Error", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( dateMat[i].size() != 2, "dNPVdzero Error" );
 
 			double mrate = 0.0;
 			dh = &(dataall[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL));
@@ -6146,10 +6020,7 @@ CurveCalibrationData::setdNPVdm(const AQLString &curveType)
 			else
 			{
 				double diffD = static_cast<double>(gridvec[gridpos - 1].intervalDays(gridvec[gridpos]));
-				if (diffD == 0.0)
-				{
-					throw AQLCoreInvalidData("DateMatrix Error", __FILE__, __LINE__);
-				}
+				AQ_THROW_IF( diffD == 0.0, "DateMatrix Error" );
 
 				double ratio1 = targetdate.intervalDays(gridvec[gridpos]) / diffD;
 
@@ -6162,10 +6033,7 @@ CurveCalibrationData::setdNPVdm(const AQLString &curveType)
 	//dMdZ
 	for (unsigned int i = 0; i < sizeAll; i++)
 	{
-		if (dNPVdm[i] == 0.0)
-		{
-			throw AQLCoreInvalidData("dNPVdm 0 Error", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( dNPVdm[i] == 0.0, "dNPVdm 0 Error" );
 		DoubleVector div_vec(sizeAll, dNPVdm[i]);
 		transform(decompMat[i].begin(), decompMat[i].end(), div_vec.begin(), decompMat[i].begin(), std::divides<double>());
 	}
@@ -6311,10 +6179,10 @@ CurveCalibrationData::setCurveDependencyMap(void)
 		if (tmpMktNames.size() == 2)
 		{
 			AQLObjectHolder &eh_fy = getForeignYieldData().get();
-			if (!eh_fy.isDefined())
-			{
-				throw AQLCoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__);
-			}
+			if ( !eh_fy.isDefined() )
+{
+    AQ_THROW( "Foreign Yield Data does not exist!" );
+}
 			else
 			{
 				mr_ = &dynamic_cast<const AQLDataMultiReference&>(eh_fy.get().getData(CALIBRATION_DATA_MARKETDATA + AQLString("_") + tmpMktNames[1], ISNOTNULL).get());
@@ -6336,10 +6204,7 @@ CurveCalibrationData::setCurveDependencyMap(void)
 			}
 		}
 
-		if (bpos == mr_->getSize())
-		{
-			throw AQLCoreInvalidData("Not found DataType = BASIS", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( bpos == mr_->getSize(), "Not found DataType = BASIS" );
 
 		AQLObject& ebasis = mr_->get(bpos).get();
 		bool isdiscount = dynamic_cast<const AQLDataBool &>(ebasis.getData(IR_CALIBRATION_DATA_ISDISCOUNT, ISNOTNULL).get()).get();
@@ -6416,11 +6281,8 @@ CurveCalibrationData::getCurveDependeny(const AQLString &curveType) const
 	}
 	//std, 6mlibor each shift case
 
-	if (mBCurveGenMap.find(curveType) == mBCurveGenMap.end() ||
-		mDpnCurveMap.find(curveType) == mDpnCurveMap.end())
-	{
-		throw AQLCoreInvalidData("Curve Generate Map Error", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( mBCurveGenMap.find(curveType) == mBCurveGenMap.end() ||
+		mDpnCurveMap.find(curveType) == mDpnCurveMap.end(), "Curve Generate Map Error" );
 
 	AQLString nameTmp = curveType;
 	bool iscomplete = false;
@@ -6428,16 +6290,10 @@ CurveCalibrationData::getCurveDependeny(const AQLString &curveType) const
 	{
 
 		itdpn = mDpnCurveMap.find(nameTmp);
-		if (itdpn->second.size() != 1)
-		{
-			throw AQLCoreInvalidData("Not Support Now", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( itdpn->second.size() != 1, "Not Support Now" );
 
 		std::map<AQLString, double>::const_iterator itTmp = itdpn->second.begin();
-		if (itTmp->first == nameTmp)
-		{
-			throw AQLCoreInvalidData("Loop Error", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( itTmp->first == nameTmp, "Loop Error" );
 
 		//std, 6mlibor both shift case
 		//if (itTmp->first == "GenCurve")
@@ -6497,10 +6353,7 @@ CurveCalibrationData::changeZeroRiskIntoMarketRisk(AQLString curveType, const Do
 		else
 		{
 			double diffD = termvec[gridpos] - termvec[gridpos - 1];
-			if (diffD == 0.0)
-			{
-				throw AQLCoreInvalidData("TermVec Error", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( diffD == 0.0, "TermVec Error" );
 
 			double ratio1 = (termvec[gridpos] - term) / diffD;
 			dNPVdzero[gridpos - 1] += riskval * ratio1;
@@ -6691,7 +6544,7 @@ CurveCalibrationData::setFloater(const AQLString& curveName)
 		if (data.empty())
 		{
 			AQLString msg = "CurveName = " + basisMkt + ", basis data is not set.";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 
 		// sort
@@ -6780,7 +6633,7 @@ CurveCalibrationData::setFloater(const AQLString& curveName)
 		else
 		{
 			AQLString msg = "frequency is wrong";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 
 		// set roll convention
@@ -6903,7 +6756,7 @@ CurveCalibrationData::setFloater(const AQLString& curveName)
 				}
 				else
 				{
-					throw AQLCoreInvalidData("BasisGrid Search Error", __FILE__, __LINE__);
+					AQ_THROW( "BasisGrid Search Error" );
 				}
 			}
 
@@ -6974,7 +6827,7 @@ CurveCalibrationData::setFloater(const AQLString& curveName)
 		if (data.empty())
 		{
 			AQLString msg = "swap market is not set.";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 
 		// sort
@@ -7056,7 +6909,7 @@ CurveCalibrationData::setFloater(const AQLString& curveName)
 		else
 		{
 			AQLString msg = "frequency is wrong";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 		AQLString i_accessary = AQLString(static_cast<int> (mUnit)) + AQLString("M");
 		// set roll convention
@@ -7207,7 +7060,7 @@ CurveCalibrationData::removeCuveData(AQLObject &yieldData, const AQLString& mktN
 	if (mNonRemovableMarket.end() != mNonRemovableMarket.find(mktName))
 	{
 		AQLString msg = "This market cannot be removed. market = " + mktName;
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 	for (std::map<AQLString, AQLString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
 	{
@@ -7308,7 +7161,7 @@ CurveCalibrationData::getForwardConvention(const AQLString &curveName, AQLPriceD
 			if (data_basis.empty())
 			{
 				AQLString msg = "Basis Data is empty. curveName = " + curveName;
-				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQ_THROW( msg.getCString() );
 			}
 			dc = dynamic_cast<const AQLPriceDataDayCount &>(data_basis[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL).get());
 			sld = dynamic_cast<const AQLPriceDataSlidingRule &>(data_basis[0]->getData(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, ISNOTNULL).get());
@@ -7376,7 +7229,7 @@ CurveCalibrationData::getForwardConvention(const AQLString &curveName, AQLPriceD
 				accessary = def_accessary;
 				return;
 				//AQLString msg = "Libor or Swap Data is empty. curveName = " + curveName;
-				//throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				//AQ_THROW( msg.getCString() );
 			}
 			dc = dynamic_cast<const AQLPriceDataDayCount &>(data_libor[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL).get());
 			sld = dynamic_cast<const AQLPriceDataSlidingRule &>(data_libor[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
@@ -7658,10 +7511,7 @@ CurveCalibrationData::setCurveConvention(AQLObjectHolder& objHolder,
 		suffix = "_" + curveName;
 	}
 
-	if (mktData.size() == 0)
-	{
-		throw AQLCoreInvalidData("#Error: Missing Swap Market Data. Swap size must be more than one", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( mktData.size() == 0, "Missing Swap Market Data. Swap size must be more than one" );
 
 	AQLString freq = dynamic_cast<const AQLDataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_INDEXFREQUENCY, ISNOTNULL).get()).get();
 	const AQLPriceDataCalendar* cal = &dynamic_cast<const AQLPriceDataCalendar&> ((mktData[0]->getData(IR_CALIBRATION_DATA_INDEXFIXINGCALENDAR, ISNOTNULL)).get());
@@ -7722,7 +7572,7 @@ CurveCalibrationData* CurveCalibrationData::getYieldCurvePro(AQLObjectPool& objP
 		}
 		else
 		{
-			throw AQLCoreInvalidData(errMsg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( errMsg.getCString() );
 		}
 	}
 	else

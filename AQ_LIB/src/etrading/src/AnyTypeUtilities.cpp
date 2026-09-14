@@ -4,6 +4,7 @@
  * @brief			Utility file for Boost Variant or Any Type Helpers
  */
 
+#include "ExceptionMacros.h"
 #include "AnyTypeUtilities.h"
 #include <sstream>
 
@@ -52,7 +53,7 @@ namespace etrading
         }
         else
         {
-            throw AQLCoreInvalidData( "#Error: Unable to display AnyTypeMatrix data.", __FILE__, __LINE__ );
+            AQ_THROW( "Unable to display AnyTypeMatrix data." );
         }
         return "";
     }

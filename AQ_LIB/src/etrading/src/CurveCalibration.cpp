@@ -1,4 +1,4 @@
-﻿//
+//
 //  CurveCalibration.cpp
 //
 #ifdef __GNUG__
@@ -7,7 +7,6 @@
 #pragma warning(disable:4786)
 #endif
 
-#include <boost/format.hpp>
 #include <algorithm>
 #include <numeric>
 
@@ -126,17 +125,11 @@ SwapCurveDiscountFactors initialiseSwapCurveDiscountFactors( AQLCurveStaticDataH
 		}
 
 		// Get Terms from Discount Curve
-		if (!staticDataObj.curveDataObjectHolder_.getData(CALIBRATION_DATA_TERMS + suffix).isDefined())
-		{
-			throw AQLCoreInvalidData("Error: Dependency curves have not been built. Terms error", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !staticDataObj.curveDataObjectHolder_.getData(CALIBRATION_DATA_TERMS + suffix).isDefined(), "Error: Dependency curves have not been built. Terms error" );
 		const DoubleVector &terms = dynamic_cast<const AQLDataDoubles&> (staticDataObj.curveDataObjectHolder_.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL).get()).get();
 
 		// Get Discount Factors from Discount Curve
-		if (!staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_DFS + suffix).isDefined())
-		{
-			throw AQLCoreInvalidData("Error: Dependency curves have not been built. Discount error", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_DFS + suffix).isDefined(), "Error: Dependency curves have not been built. Discount error" );
 		const DoubleVector &dfs = dynamic_cast<const AQLDataDoubles&> (staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL).get()).get();
 
 		// Copy Terms and DFs to our Results Interpolator
@@ -2796,7 +2789,7 @@ AQLCoreFunctionBase* CurveCalibration::clone() const
 	}
 	catch (std::bad_alloc & e)
 	{
-		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
+		AQ_THROW( e.what() );
 	}
 }
 

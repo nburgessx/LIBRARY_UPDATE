@@ -22,7 +22,6 @@
 #include <boost/assign.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/algorithm_ext/push_back.hpp>
-#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
 #include "DataSchema.h"
@@ -66,9 +65,8 @@ namespace etrading
             }
             else
             {
-                throw ETradingException( ( boost::format( "Unable to find Column Name %s For Data Set called %s" )
-                                           % columnName.c_str()
-                                           % keyName.c_str() ).str().c_str() );
+                { std::ostringstream aqMsg1;
+aqMsg1 << "Unable to find Column Name " << columnName.c_str() << " For Data Set called " << keyName.c_str(); AQ_THROW( aqMsg1.str() ); }
             }
         }
 
@@ -89,7 +87,8 @@ namespace etrading
             }
             else
             {
-                throw ETradingException( ( boost::format( "No Structured key with name %s exists" ) % keyName.c_str() ).str().c_str() );
+                { std::ostringstream aqMsg2;
+aqMsg2 << "No Structured key with name " << keyName.c_str() << " exists"; AQ_THROW( aqMsg2.str() ); }
             }
         }
 
@@ -144,7 +143,7 @@ namespace etrading
                 {
                     for( unsigned int varCounter = 0u; varCounter < variableNames.size(); varCounter++ )
                     {
-                        std::string toAddHere = ( boost::format( ", \"%s\" : " ) % variableNames.at( varCounter ).c_str() ).str();
+                        std::string toAddHere = ", \"" + variableNames.at( varCounter ) + "\" : ";
                         const Variant& cv = variableValues.at( varCounter );
                         toAddHere += cv.toString( true );
                         startingString += toAddHere;
@@ -179,8 +178,8 @@ namespace etrading
                 // TODO: make this move constructed in C++11
                 return SerializationResult( methodType, targetType, wrap, targetInfo );
             }
-            throw ETradingException( ( boost::format( "serializeContainedData not implemented for serializaiton method: %s" )
-                                       % StaticStructureStore::getInstance().toString( methodType ).c_str() ).str() );
+            { std::ostringstream aqMsg3;
+aqMsg3 << "serializeContainedData not implemented for serializaiton method: " << StaticStructureStore::getInstance().toString( methodType ).c_str(); AQ_THROW( aqMsg3.str() ); }
         };
 
 
@@ -208,11 +207,8 @@ namespace etrading
             {
                 // _theColumnNameMapping
                 std::string columnNameInfo  = ( _theColumnNameMapping.count( columnIndex ) > 0 ) ? _theColumnNameMapping.at( columnIndex ) + " column name" : "NO column name";
-                throw ETradingException( ( boost::format( "Repository Data Column %s (%s) requires type %s but the input vector is of type %s" )
-                                           % boost::lexical_cast<std::string>( columnIndex ).c_str()
-                                           % columnNameInfo.c_str()
-                                           % StaticStructureStore::getInstance().toString( targetType ).c_str()
-                                           % TypeName::get<S>() ).str().c_str() );
+                { std::ostringstream aqMsg4;
+aqMsg4 << "Repository Data Column " << boost::lexical_cast<std::string>( columnIndex ).c_str() << " (" << columnNameInfo.c_str() << ") requires type " << StaticStructureStore::getInstance().toString( targetType ).c_str() << " but the input vector is of type " << TypeName::get<S>(); AQ_THROW( aqMsg4.str() ); }
             }
         };
 

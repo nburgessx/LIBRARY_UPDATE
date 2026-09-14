@@ -2,6 +2,7 @@
 // @Description: Implementation of DataSchema
 
 
+#include "ExceptionMacros.h"
 #include <locale>
 #include <algorithm>
 #include <string>
@@ -25,11 +26,11 @@ namespace etrading
     {
         if( _numberOfColumns < 1 )
         {
-            throw ETradingException( "#Error: Cannot Create DataSchema with less than 1 column" );
+            AQ_THROW( "Cannot Create DataSchema with less than 1 column" );
         }
         if( aColumnTypes.size()  != _numberOfColumns )
         {
-            throw ETradingException( "#Error: DataSchema number of columns does correspond ot the number of Column Types" );
+            AQ_THROW( "DataSchema number of columns does correspond ot the number of Column Types" );
         }
         setColumnNames( aColumnNames );
         _columnTypes = aColumnTypes;
@@ -66,7 +67,7 @@ namespace etrading
         {
             std::string errString = 	std::string( "#Error: Number of Column Names: " ) + boost::lexical_cast<std::string>( sizeOfNames ) +
                                         std::string( " does not correspond with number of columns requested: " ) + boost::lexical_cast<std::string>( sizeOfNames ) ;
-            throw ETradingException( errString.c_str() );
+            AQ_THROW( errString.c_str() );
         }
     };
 

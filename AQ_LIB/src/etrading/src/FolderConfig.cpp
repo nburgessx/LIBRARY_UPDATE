@@ -76,10 +76,7 @@ namespace etrading
         // $(AQ)\resources\test\inputs. $(AQ) is set by SetEnvironmentVariables.bat.
         const char* environmentVariablePath = std::getenv( "AQ" );
 
-        if ( environmentVariablePath == nullptr )
-        {
-            throw AQLCoreInvalidData("#Error: The 'AQ' environment variable has not been set.",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( environmentVariablePath == nullptr, "The 'AQ' environment variable has not been set." );
 
         boost::filesystem::path resultPath = boost::filesystem::path( environmentVariablePath ) / "resources" / "test" / "inputs";
         return resultPath;
@@ -325,7 +322,7 @@ namespace etrading
 				std::stringstream sst;
                 sst << "#Error: Cannot open optional config file " << std::endl 
 					<< *filepath;
-				throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+				AQ_THROW( sst.str().c_str() );
 			}
 			else
 			{
@@ -360,7 +357,7 @@ namespace etrading
 						<< "line : " << line_num << std::endl
 						<< "contents : " << line
 						<< "Expected format: ObjectEnum,FilenamePath";
-					throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+					AQ_THROW( sst.str().c_str() );
 				}
 				else
 				{
@@ -385,7 +382,7 @@ namespace etrading
 						<< "file : " << *filepath << std::endl
 						<< "line : " << line_num << std::endl
 						<< "contents : " << line;
-					throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+					AQ_THROW( sst.str().c_str() );
 				}
 				else
 				{
@@ -432,7 +429,7 @@ namespace etrading
 			{
 				std::stringstream sst;
 				sst << "In Optional Config, cannot open configuration file " << std::endl << configFileWithFolderPath;
-				throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+				AQ_THROW( sst.str().c_str() );
 			}
 			else
 			{
@@ -455,7 +452,7 @@ namespace etrading
 				// Deserialize the JSON file and populate the default environment cache.
 				cacheInfoOnDeserialization = etrading::deSerializeFromJSON(etrading::serialize::FILE, jsonFilePath.string().c_str());
 			}
-			catch (ETradingException e)
+			catch (AQLCoreInvalidData&)
 			{
 				if (reportErrors)
 				{
@@ -466,7 +463,7 @@ namespace etrading
 						<< "line : " << line_num << std::endl
 						<< "contents : " << line << std::endl
 						<< "JSON file path : " << jsonFilePath.string();
-					throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+					AQ_THROW( sst.str().c_str() );
 				}
 				else
 				{
@@ -481,7 +478,7 @@ namespace etrading
 					<< "Expected Type: " << toString(requiredEnumType) << std::endl
 					<< "Deserialised Type: " << toString(cacheInfoOnDeserialization.second) << std::endl
 					<< "JSON file path: " << jsonFilePath.string();
-				throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+				AQ_THROW( sst.str().c_str() );
 			}
 		}
 		fin.close();

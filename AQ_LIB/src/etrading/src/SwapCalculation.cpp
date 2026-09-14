@@ -102,10 +102,7 @@ namespace etrading
         {
             spreadLeg = legs.findLegByName(spreadLegName);
 
-            if (spreadLeg == nullptr)
-            {
-			    throw AQLCoreInvalidData( "#Error: Invalid Leg Name: The specified leg name does not match any of the name of the Swap Leg", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( spreadLeg == nullptr, "Invalid Leg Name: The specified leg name does not match any of the name of the Swap Leg" );
         }
         else if (leg1->getType() == FIXED_SCHEDULE_TYPE && leg2->getType() == FLOAT_SCHEDULE_TYPE )
         {
@@ -134,10 +131,7 @@ namespace etrading
         if (spreadLegName.size() != 0)
         {
             spreadLeg = legs.findLegByName(spreadLegName);
-            if (spreadLeg == nullptr)
-            {
-			    throw AQLCoreInvalidData( "#Error: Invalid Leg Name: The specified leg name does not match any of the Swap Legs", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( spreadLeg == nullptr, "Invalid Leg Name: The specified leg name does not match any of the Swap Legs" );
         }
         else if (leg1->getType() == FIXED_SCHEDULE_TYPE && leg2->getType() == FLOAT_SCHEDULE_TYPE )
         {
@@ -170,7 +164,7 @@ namespace etrading
 		    }
 		    else
 		    {
-			    throw AQLCoreInvalidData( "#Error: Missing Leg Name: Please specified a leg name, so that the spread can be applied to", __FILE__, __LINE__ );
+			    AQ_THROW( "Missing Leg Name: Please specified a leg name, so that the spread can be applied to" );
 		    }
         }
 
@@ -260,10 +254,7 @@ namespace etrading
         {  
             //Note: this is the case for EUR and GBP tenor basis swap, e.g. 3M leg pay Quartly
             annuityWithSign = spreadLeg->annuityWithNotional(dataProviderSpreadLeg) * spreadLeg->getSchedule()->getPayRecIndicator();
-            if (annuityWithSign == 0)
-		    {
-			    throw AQLCoreInvalidData( "#Error: Zero Notional or PV: Cannot calculate spread since the notional is zero or one of the legs has zero PV.", __FILE__, __LINE__ );
-		    }
+            AQ_THROW_IF( annuityWithSign == 0, "Zero Notional or PV: Cannot calculate spread since the notional is zero or one of the legs has zero PV." );
             // Spread will be added to the LOWER tenor leg, in basis points
             spread = -1.0 * pvWithZeroSpread / annuityWithSign * 10000;
 
@@ -279,10 +270,7 @@ namespace etrading
 
 			annuityWithSign = firstRefLeg->annuityWithNotional(dataProviderFirstRefLeg) * firstRefLeg->getSchedule()->getPayRecIndicator();
             
-            if (annuityWithSign == 0)
-		    {
-			    throw AQLCoreInvalidData( "#Error: Zero Notional or PV: Cannot calculate spread since the notional is zero or one of the legs has zero PV.", __FILE__, __LINE__ );
-		    }
+            AQ_THROW_IF( annuityWithSign == 0, "Zero Notional or PV: Cannot calculate spread since the notional is zero or one of the legs has zero PV." );
             //spread of the higher tenor leg, in basis points
             spread = -1.0 * pvWithZeroSpread / annuityWithSign * 10000;
 
@@ -460,7 +448,7 @@ namespace etrading
 		else
 		{
 			//It should not happen, as the check has been done in the swap constructor
-			throw AQLCoreInvalidData("#Error: Invalid NotionalResetLeg: The NotionalResetLeg need to match the name (LegType) one of the swap first two legs", __FILE__, __LINE__);
+			AQ_THROW( "Invalid NotionalResetLeg: The NotionalResetLeg need to match the name (LegType) one of the swap first two legs" );
 		}
 
 		AQLString resetLegCurveCollection = getAQObjCurveCollectionFromValuationSettings(valuationSettingsLVB, resetLeg->getLegName());
@@ -512,10 +500,7 @@ namespace etrading
 
 		auto resetLegCashflowSize = resetLeg->getSchedule()->getCashflowSize();
 
-		if (resetLegCashflowSize != resetLegDFs.size() || resetLegCashflowSize != normalLegDFs.size())
-		{
-			throw AQLCoreInvalidData("#Error: Inconsistent Data: The size of DiscountFactors based on FxFixingDates from two legs do not match", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( resetLegCashflowSize != resetLegDFs.size() || resetLegCashflowSize != normalLegDFs.size(), "Inconsistent Data: The size of DiscountFactors based on FxFixingDates from two legs do not match" );
 
 		auto resetLegSign = resetLeg->getSchedule()->getPayRecIndicator();
 
@@ -559,7 +544,7 @@ namespace etrading
 				if (boost::math::isnan(absNormalLegNotional))
 				{
 					//Should not happen
-					throw AQLCoreInvalidData("#Error: Invalid Notional: The Non-Reset leg's cashflow notional cannot be found for the fxFixingDate", __FILE__, __LINE__);
+					AQ_THROW( "Invalid Notional: The Non-Reset leg's cashflow notional cannot be found for the fxFixingDate" );
 				}
 
 				normalLegNotionals.push_back(absNormalLegNotional);
@@ -609,10 +594,7 @@ namespace etrading
     {
         double parRate = 0.;
 
-        if(legs.size() < 2)
-		{
-			throw AQLCoreInvalidData( "#Error: Invalid Swap Leg: One of the legs is NOT set on the Swap", __FILE__, __LINE__ );
-		}
+        AQ_THROW_IF( legs.size() < 2, "Invalid Swap Leg: One of the legs is NOT set on the Swap" );
 		
 		LegPtr leg1 = legs.get(0);
 		LegPtr leg2 = legs.get(1);
@@ -623,10 +605,7 @@ namespace etrading
         bool fixedFloatSwap = (firstFixedLeg->getType() == FIXED_SCHEDULE_TYPE && secondLeg->getType() == FLOAT_SCHEDULE_TYPE);
         bool fixedFixedSwap = (firstFixedLeg->getType() == FIXED_SCHEDULE_TYPE && secondLeg->getType() == FIXED_SCHEDULE_TYPE);
 
-        if (!fixedFloatSwap && !fixedFixedSwap)
-        {
-		    throw AQLCoreInvalidData( "#Error: ParRate function only supports a Swap with FixedFloat legs or FixedFixed legs", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !fixedFloatSwap && !fixedFixedSwap, "ParRate function only supports a Swap with FixedFloat legs or FixedFixed legs" );
 
 		// The first fixed leg is the spread leg, other legs are reference legs:
 		LegCollection refLegs;
@@ -694,20 +673,14 @@ namespace etrading
     {
         double irr = 0.; //internal rate of return
 
-        if(legs.size() < 2)
-		{
-			throw AQLCoreInvalidData( "#Error: Invalid Swap Leg: One of the legs is NOT set on the Swap", __FILE__, __LINE__ );
-		}
+        AQ_THROW_IF( legs.size() < 2, "Invalid Swap Leg: One of the legs is NOT set on the Swap" );
 		LegPtr leg1 = legs.get(0);
 		LegPtr leg2 = legs.get(1);
 
 	
 		bool fixedFloatSwap = (leg1->getType() == FIXED_SCHEDULE_TYPE && leg2->getType() == FLOAT_SCHEDULE_TYPE);
 
-        if (!fixedFloatSwap)
-        {
-		    throw AQLCoreInvalidData( "#Error: ParRate function only supports a Swap with FixedFloat legs", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !fixedFloatSwap, "ParRate function only supports a Swap with FixedFloat legs" );
 
 		DataProvider dataProvider1(ValuationSettings(valuationSettingsLVB, fixingTableNames, leg1->getLegName()));
 		DataProvider dataProvider2(ValuationSettings(valuationSettingsLVB, fixingTableNames, leg2->getLegName()));
@@ -726,10 +699,7 @@ namespace etrading
         }
 
         //formula: firstFixedPV + firstFixedExchangeNotionalPV + otherLegsTotalPV = 0, where otherLegsTotalPV includes exchangeNotionalPV 
-        if (leg1->getSchedule()->getNotional() ==0)
-		{
-			throw AQLCoreInvalidData( "#Error: Zero Notional: Cannot calculate IRR since the notional is zero", __FILE__, __LINE__ );
-		}
+        AQ_THROW_IF( leg1->getSchedule()->getNotional() ==0, "Zero Notional: Cannot calculate IRR since the notional is zero" );
 
 		//Get DF from curve and update compoundInterest
         leg1->initializeDataProvider( dataProvider1 );
@@ -814,10 +784,7 @@ namespace etrading
         }
 
         bool solutionFound = result.first;
-        if (!solutionFound)
-        {
-   			throw AQLCoreInvalidData( "#Error: Solver Fails to Converge to a Solution: Cannot find a IRR to make the swap pv close to zero (smaller or equal to 1-e8)", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !solutionFound, "Solver Fails to Converge to a Solution: Cannot find a IRR to make the swap pv close to zero (smaller or equal to 1-e8)" );
            
         irr = result.second;
 
@@ -854,16 +821,10 @@ namespace etrading
         bool leg2WithFVNotional = !boost::math::isnan(leg2->getSchedule()->getFutureValueNotional());
 
         bool fixedFixedSwap = (leg1->getType() == FIXED_SCHEDULE_TYPE && leg2->getType() == FIXED_SCHEDULE_TYPE);
-        if (fixedFixedSwap && (leg1WithFVNotional || leg2WithFVNotional))
-        {
-		    throw AQLCoreInvalidData( "#Error: Invalid Notional: For FixedFixed Zero Coupon Swap, FVNotional is not supported, please specify Notional", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fixedFixedSwap && (leg1WithFVNotional || leg2WithFVNotional), "Invalid Notional: For FixedFixed Zero Coupon Swap, FVNotional is not supported, please specify Notional" );
 
         //*** Note that for a FixedFixedSwap, we only allow the first fixedLeg to have FVNotional
-        if (leg2WithFVNotional)
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Notional: Only the first fixed leg can have FV Notional.",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( leg2WithFVNotional, "Invalid Notional: Only the first fixed leg can have FV Notional." );
 
         // The case when FVNotional and Notinoal are both provided have been validated in Schedule's populateNotionalAndPaymentFreqEnum()
         // When leg1WithFVNotinoal, it cannot be a float leg. For a fixedfloatSwap/fixedfixedSwap, we know that the first leg is always fixed, from createSwapFromLegs() of SwapUtilities.cpp
@@ -885,10 +846,7 @@ namespace etrading
         }
         else
         {
-            if (boost::math::isnan(leg1->getSchedule()->getNotional()) || boost::math::isnan(leg2->getSchedule()->getNotional()))
-            {
-        	    throw AQLCoreInvalidData( "#Error: Invalid Notional: If FVNotional is not provided for a Zero Coupon Swap, notional for both legs must be provided.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( boost::math::isnan(leg1->getSchedule()->getNotional()) || boost::math::isnan(leg2->getSchedule()->getNotional()), "Invalid Notional: If FVNotional is not provided for a Zero Coupon Swap, notional for both legs must be provided." );
         }
     }
 

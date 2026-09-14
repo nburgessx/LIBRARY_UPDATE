@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <memory>
-#include <boost/format.hpp>
+#include <sstream>
 #include <boost/range/irange.hpp>
 #include <boost/assign.hpp>
 #include <boost/date_time.hpp>
@@ -310,7 +310,9 @@ namespace validation
         }
         else
         {
-            std::string errString =  ( boost::format( "Unable to create AQObjCurve named %s" ) % aqObjCurveName.c_str() ).str();
+            std::ostringstream errStream;
+            errStream << "Unable to create AQObjCurve named " << aqObjCurveName;
+            std::string errString = errStream.str();
             if ( CreateDataFile::recordEnabled() )
             {
                 CreateDataFile file( decorateCurvename( "tryAqCurveObjectCreateOIS_outputs", curveCollection, staticDataTable ) );

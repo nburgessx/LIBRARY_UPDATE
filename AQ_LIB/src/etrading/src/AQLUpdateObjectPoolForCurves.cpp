@@ -168,10 +168,10 @@ AQLUpdateObjectPoolForCurves::generateInitialValueFwdFXConst(const AQLString &cu
 	AQLString suffix   = "." + AQLString(market).toLower();
 	AQLString epSuffix = AQLString(market).toUpper();
 	AQLString basisTarget = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_BASIS_TARGET + suffix).toUpper();
-	if (basisTarget == LEG1FORECAST || basisTarget == LEG2FORECAST)
-	{
-		throw AQLCoreInvalidData("fwdfx constant curve must be discount curve!", __FILE__, __LINE__);
-	}
+	if ( basisTarget == LEG1FORECAST || basisTarget == LEG2FORECAST )
+{
+    AQ_THROW( "fwdfx constant curve must be discount curve!" );
+}
 	else if (basisTarget == LEG1DISCOUNT)
 	{
 		strFCurve = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_BASIS_LEG1FORECAST + suffix);
@@ -188,14 +188,14 @@ AQLUpdateObjectPoolForCurves::generateInitialValueFwdFXConst(const AQLString &cu
 	}
 	else
 	{
-		throw AQLCoreInvalidData("basisTarget curve is invalid!", __FILE__, __LINE__);
+		AQ_THROW( "basisTarget curve is invalid!" );
 	}
 	convertCurveName(strFCurve, ccy, ccy_fCurve, fCurve, isPricer, objPool);
 	convertCurveName(strDCurve, ccy, ccy_dCurve, dCurve, isPricer, objPool);
 	convertCurveName(strA_fCurve, ccy, ccy_a_fCurve, a_fCurve, isPricer, objPool);
 	convertCurveName(strA_dCurve, ccy, ccy_a_dCurve, a_dCurve, isPricer, objPool);
 	if (ccy_dCurve != ccy || ccy_fCurve != ccy || ccy_a_dCurve != ccy_a_fCurve)
-		throw AQLCoreInvalidData("currency of curve is inconsistent!", __FILE__, __LINE__);
+		AQ_THROW( "currency of curve is inconsistent!" );
 
 	const AQLString &ycProName = AQLMarketData::getBaseYieldProName(ccy);
 	BasisCurveCalibration &basisCurveEngine = dynamic_cast<BasisCurveCalibration &>(objPool.getObject(ycProName).get());
@@ -363,7 +363,7 @@ void AQLUpdateObjectPoolForCurves::generateInitialValueCheapestToDeliver(const A
 	if (!objHolder.isDefined())
 	{
 		AQLString err = "#Error: CurveCollection for currency '" + ccy + "' is not defined. Please check your CurveCollection";
-		throw AQLCoreInvalidData(err.getCString(),__FILE__,__LINE__);
+		AQ_THROW( err.getCString() );
 	}
 	BasisCurveCalibration &basisCurveEngine = dynamic_cast<BasisCurveCalibration &>(objHolder.get());
 
@@ -455,7 +455,7 @@ void AQLUpdateObjectPoolForCurves::generateInitialValueCheapestToDeliver(const A
 	}
 	else
 	{
-		throw AQLCoreInvalidData("#Error: Must provide at least one CSA curve",__FILE__,__LINE__);
+		AQ_THROW( "Must provide at least one CSA curve" );
 	}
 
 	// set interpolation
@@ -543,7 +543,7 @@ AQLUpdateObjectPoolForCurves::convertCurveName(const AQLString &propCurve, const
 		}
 		else
 		{
-			throw AQLCoreInvalidData("currency and curve name are not set!", __FILE__, __LINE__);
+			AQ_THROW( "currency and curve name are not set!" );
 		}
 	}
 }
@@ -579,7 +579,7 @@ AQLUpdateObjectPoolForCurves::getAccFromFreq(const AQLString &freq_) const
 	else 
 	{
 		AQLString msg = "can't convert this frequency(" + freq_ + ") to accessory.";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 	return acc;
 }
@@ -665,10 +665,10 @@ AQLUpdateObjectPoolForCurves::generateInitialValueDualBootstrap(const AQLString 
 	bool enableCalculation = true;
 	AQLString target = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET);
 	
-	if (target == AQ_NO_DATA) 
-	{
-		throw AQLCoreInvalidData("#Error: Dual bootstrapping curve name is not detected",__FILE__,__LINE__);
-	}
+	if ( target == AQ_NO_DATA )
+{
+    AQ_THROW( "Dual bootstrapping curve name is not detected" );
+}
 	else
 	{
 		enableCalculation = false;
@@ -684,10 +684,7 @@ AQLUpdateObjectPoolForCurves::generateInitialValueDualBootstrap(const AQLString 
 	
 	// OIS curve name and suffix
 	AQLString currentCurveName_ois = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_OISCURVENAME + suffix).toUpper();
-	if (currentCurveName_ois == AQ_NO_DATA) 
-	{
-		throw AQLCoreInvalidData("#Error: OIS curve name is not found in performing dual bootstrapping", __FILE__, __LINE__); 
-	}
+	AQ_THROW_IF( currentCurveName_ois == AQ_NO_DATA, "OIS curve name is not found in performing dual bootstrapping" );
 
 	AQLString suffix_ois = (currentCurveName_ois == STD || currentCurveName_ois == SWAP) ? "" : "." + currentCurveName_ois;
 	suffix_ois.toLower();
@@ -698,10 +695,7 @@ AQLUpdateObjectPoolForCurves::generateInitialValueDualBootstrap(const AQLString 
 	// Swap curve name and suffix
 	AQLString currentCurveName_swap = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_SWAPCURVENAME + suffix);
 	currentCurveName_swap.toUpper();
-	if (currentCurveName_swap == AQ_NO_DATA) 
-	{
-		throw AQLCoreInvalidData("#Error: Swap curve name is not found in performing dual bootstrapping", __FILE__, __LINE__); 
-	}
+	AQ_THROW_IF( currentCurveName_swap == AQ_NO_DATA, "Swap curve name is not found in performing dual bootstrapping" );
 
 	AQLString suffix_swap = (currentCurveName_swap == STD || currentCurveName_swap == SWAP) ? "" : "." + currentCurveName_swap;
 	suffix_swap.toLower();
@@ -953,10 +947,10 @@ void AQLUpdateObjectPoolForCurves::generateInitialValueGlobalEngineCurves(const 
 	bool enableCalculation = true;
 	AQLString engineName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET);
 
-	if (engineName == AQ_NO_DATA)
-	{
-		throw AQLCoreInvalidData("#Error: Name of the global yield curve calibration engine is not detected", __FILE__, __LINE__);
-	}
+	if ( engineName == AQ_NO_DATA )
+{
+    AQ_THROW( "Name of the global yield curve calibration engine is not detected" );
+}
 	else
 	{
 		enableCalculation = false;
@@ -1414,7 +1408,7 @@ void AQLUpdateObjectPoolForCurves::configureCurve(AQLStaticData *mpStaticData,
 			}
 			else
 			{
-				throw AQLCoreInvalidData("Market type is not supported!!", __FILE__, __LINE__); 
+				AQ_THROW( "Market type is not supported!!" ); 
 			}
 
 			// set yield curve pro
@@ -2103,7 +2097,7 @@ AQLUpdateObjectPoolForCurves::generateInitialValue(const AQLString &currency, AQ
 			}
 			else
 			{
-				throw AQLCoreInvalidData("Market type is not supported!!", __FILE__, __LINE__); 
+				AQ_THROW( "Market type is not supported!!" ); 
 			}
 
 			// set yield curve pro
@@ -2181,7 +2175,7 @@ AQLUpdateObjectPoolForCurves::generateInitialValue(const AQLString &currency, AQ
 			}
 			else
 			{
-				throw AQLCoreInvalidData("No target df!", __FILE__, __LINE__); 
+				AQ_THROW( "No target df!" ); 
 			}
 
 			if (isCurveTargetFound)
@@ -2572,7 +2566,7 @@ AQLUpdateObjectPoolForCurves::generateInitialValueArbfree(const AQLString &curre
 		xccyBasis->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_BASIS);
 		// set curve name
 		AQLStringVector usd3mlFloaterInfo = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_USD3MLFLOATER).toToken(':');
-		if (usd3mlFloaterInfo.size() != 2) throw AQLCoreInvalidData("No XccyBasis information!",__FILE__,__LINE__);
+		if (usd3mlFloaterInfo.size() != 2) AQ_THROW( "No XccyBasis information!" );
 		xccyBasis->add(IR_CALIBRATION_DATA_AGTFORECAST, new AQLDataString()).convertFromString(usd3mlFloaterInfo[1]);
 		// set foreign ccy info
 		AQLString ccy_floater, fYieldDataName;
@@ -2617,7 +2611,7 @@ AQLUpdateObjectPoolForCurves::generateInitialValueArbfree(const AQLString &curre
 				ycPro_fccy.setAffectingCcy(baseCcy.toUpper());
 				const AQLString& affectedCcy_fccy = ycPro_fccy.getAffectedCcy();
 				if (affectedCcy_fccy == domCcy) 
-					throw AQLCoreInvalidData("The affected currency includes in Affecting currencies!", __FILE__, __LINE__);
+					AQ_THROW( "The affected currency includes in Affecting currencies!" );
 
 				ycPro_dccy.setAffectedCcy(forCcy.toUpper());
 				
@@ -2632,8 +2626,8 @@ AQLUpdateObjectPoolForCurves::generateInitialValueArbfree(const AQLString &curre
 		if (isRenAdj)
 		{
 			AQLStringVector baseCcyDFInfo = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_BASECCYDF).toToken(':');
-			if (baseCcyDFInfo.size() != 2) throw AQLCoreInvalidData("No XccyBasis information!",__FILE__,__LINE__);
-			if (usd3mlFloaterInfo[0] != baseCcyDFInfo[0]) throw AQLCoreInvalidData("Reference currencies are inconsistent!",__FILE__,__LINE__);
+			if (baseCcyDFInfo.size() != 2) AQ_THROW( "No XccyBasis information!" );
+			if (usd3mlFloaterInfo[0] != baseCcyDFInfo[0]) AQ_THROW( "Reference currencies are inconsistent!" );
 			xccyBasis->add(IR_CALIBRATION_DATA_AGTDISCOUNT, new AQLDataString()).convertFromString(baseCcyDFInfo[1]);
 		}
 
@@ -2655,7 +2649,7 @@ AQLUpdateObjectPoolForCurves::generateInitialValueArbfree(const AQLString &curre
 		markets = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toToken(MULTI_STATIC_DATA_DELIMITER);
 	}
 	uppervec(markets);
-	if (currency != CURRENCY_USD && find(markets.begin(), markets.end(), XCCYBASIS) == markets.end()) throw AQLCoreInvalidData("XCCYBASIS is not in generate dfs!!", __FILE__, __LINE__); 
+	if (currency != CURRENCY_USD && find(markets.begin(), markets.end(), XCCYBASIS) == markets.end()) AQ_THROW( "XCCYBASIS is not in generate dfs!!" ); 
 	if (find(markets.begin(), markets.end(), THREESIXBASIS) == markets.end())
 	{
 		AQLString refData_;
@@ -2779,7 +2773,7 @@ AQLUpdateObjectPoolForCurves::generateInitialValueArbfree(const AQLString &curre
 			}
 			else
 			{
-				throw AQLCoreInvalidData("Market type is not supported!!", __FILE__, __LINE__); 
+				AQ_THROW( "Market type is not supported!!" ); 
 			}
 
 			// set yield curve pro
@@ -2964,7 +2958,7 @@ AQLUpdateObjectPoolForCurves::generateCorrelation(const AQLString &currency, AQL
 		}
 		else 
 		{
-			throw AQLCoreInvalidData("Volatility input type. only function or data is support", __FILE__, __LINE__); 
+			AQ_THROW( "Volatility input type. only function or data is support" ); 
 		}
 	}
 	// set data as reference
@@ -3237,10 +3231,7 @@ AQLUpdateObjectPoolForCurves::setUpGenerateConfig
 	if (isSwapTenorAdjust)
 	{
 		AQLString tenorSwapName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TENORSWAPNAME).toUpper();
-		if (tenorSwapName == AQ_NO_DATA) 
-		{
-			throw AQLCoreInvalidData("Set tenor swap name!", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( tenorSwapName == AQ_NO_DATA, "Set tenor swap name!" );
 		
 		basisCurveEngine.AQLObject::remove(IR_CALIBRATION_DATA_TENORSWAPNAME);
 		basisCurveEngine.AQLObject::add(IR_CALIBRATION_DATA_TENORSWAPNAME, new AQLDataString(tenorSwapName));
@@ -3299,10 +3290,7 @@ AQLUpdateObjectPoolForCurves::setUpGenerateConfig
 		isAudExtra = tmpIsAudExtra.get();
 	}
 
-	if (isAudExtra && isSwapTenorAdjust) 
-	{
-		throw AQLCoreInvalidData("We can not set AUD extra and swap tenor adjust at a same time!", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( isAudExtra && isSwapTenorAdjust, "We can not set AUD extra and swap tenor adjust at a same time!" );
 
 	// spotDate use flag
 	AQLString isSpotUseStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISSPOTUSE);
@@ -3338,10 +3326,7 @@ AQLUpdateObjectPoolForCurves::setUpGenerateConfig
 			maxFreq = mpStaticData->getStaticData(KEY_SIMULATION_TERM_MAX_FREQ);
 		}
 		
-		if (maxFreq == AQ_NO_DATA)
-		{
-			throw AQLCoreInvalidData("Max term frequency is needed for curve extrapolation!", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( maxFreq == AQ_NO_DATA, "Max term frequency is needed for curve extrapolation!" );
 		
 		ycData.remove(IR_CALIBRATION_DATA_MAXTERMFREQ);
 		ycData.add(IR_CALIBRATION_DATA_MAXTERMFREQ, new AQLDataString(maxFreq.toUpper()));
@@ -3613,7 +3598,7 @@ AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance,
 		AQLStringVector virtualRate = tmp.toToken(':');
 		// size check
 		if (virtualRate.size() != virtualGrid.size())
-			throw AQLCoreInvalidData("virtual grids and virtual rates are not same size!!", __FILE__, __LINE__);
+			AQ_THROW( "virtual grids and virtual rates are not same size!!" );
 		for (size_t i = 0; i < virtualRate.size(); ++i)
 		{
 			AQLStringVector tmp2;
@@ -3643,7 +3628,7 @@ AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance,
 	if (adjustValueMtx.size() != 0 && adjustValueMtx[0].size() < 2 )
 	{
 		AQLString msg = marketName + ", basis adjust file is empty";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 	DoubleArray adjustValue_term,adjustValue;
 	for (size_t i=0; i<adjustValueMtx.size(); i++)
@@ -3664,10 +3649,7 @@ AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance,
 	convertCurveName(tmp_dCurve, curveCurrency, ccy_dCurve, dCurve, isPricer, objPool);
 	convertCurveName(tmp_a_fCurve, curveCurrency, ccy_a_fCurve, a_fCurve, isPricer, objPool);
 	convertCurveName(tmp_a_dCurve, curveCurrency, ccy_a_dCurve, a_dCurve, isPricer, objPool);
-	if (ccy_dCurve != curveCurrency || ccy_fCurve != curveCurrency || ccy_a_dCurve != ccy_a_fCurve)
-	{
-		throw AQLCoreInvalidData("currency of curve is inconsistent!", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( ccy_dCurve != curveCurrency || ccy_fCurve != curveCurrency || ccy_a_dCurve != ccy_a_fCurve, "currency of curve is inconsistent!" );
 
 	// Get curve collection ID
 	AQLObjectHolder& yData = basisCurveEngine.getYieldData().get();
@@ -3689,10 +3671,7 @@ AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance,
 		AQLString curveID2 = a_dCurves_partitioned[0].toUpper();
 		if (curveID1 == curveID2)
 		{
-			if (curveID1 == ydName)
-			{
-				throw AQLCoreInvalidData("#Error: Please don't prefix dependent curves with a curve collection name that is the same as the target curve.", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( curveID1 == ydName, "Please don't prefix dependent curves with a curve collection name that is the same as the target curve." );
 
 			useAgainstCurveCollection = true;
 		}
@@ -3709,16 +3688,13 @@ AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance,
 				
 		if (curveID1 == curveID2)
 		{
-			if (curveID1 == ydName)
-			{
-				throw AQLCoreInvalidData("#Error: Please don't prefix dependent curves with a curve collection name that is the same as the target curve.", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( curveID1 == ydName, "Please don't prefix dependent curves with a curve collection name that is the same as the target curve." );
 
 			basisCurveEngine.AQLObject::add(IR_CALIBRATION_DATA_EXTERNALCURVECOLLECTION + AQLString("_") + curveMktName, new AQLDataString(fCurves_partitioned[0]));
 		}
 		else
 		{
-			throw AQLCoreInvalidData("#Error: Forecast curve and discount curve of the target leg must have the same curve collection prefix", __FILE__, __LINE__);
+			AQ_THROW( "Forecast curve and discount curve of the target leg must have the same curve collection prefix" );
 		}
 	}
 
@@ -3756,7 +3732,7 @@ AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance,
 			}
 			else
 			{
-				throw AQLCoreInvalidData("no foreign yield data!", __FILE__, __LINE__);
+				AQ_THROW( "no foreign yield data!" );
 			}
 		}
 		else
@@ -3784,7 +3760,7 @@ AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance,
 				ycPro_fccy.setAffectingCcy(baseCcy.toUpper());
 				const AQLString& affectedCcy_fccy = ycPro_fccy.getAffectedCcy();
 				if (affectedCcy_fccy == baseCcy) 
-					throw AQLCoreInvalidData("The affected currency includes in Affecting currencies!", __FILE__, __LINE__);
+					AQ_THROW( "The affected currency includes in Affecting currencies!" );
 
 				ycPro_dccy.setAffectedCcy(forCcy.toUpper());
 				
@@ -3925,7 +3901,7 @@ AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance,
 				else
 				{
 					AQLString err = "#Error: Could not locate the foreign Yield Curve data using '" + foreignYcProName + "'";
-					throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__); 
+					AQ_THROW( err.getCString() ); 
 				}
 
 				marketRef = foreignYieldCurvePro->getMarketData();
@@ -4102,7 +4078,7 @@ AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance,
 		if (fwdFXDataMtx.size() == 0 || fwdFXDataMtx[0].size() < 2)
 		{
 			AQLString msg = marketName + ", forward fx file is empty";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 		fwdFXSize = fwdFXDataMtx.size();
 
@@ -4115,7 +4091,7 @@ AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance,
 	if ((basisDataMtx.size() == 0 || basisDataMtx[0].size() < 2) && !isFwdFX)
 	{
 		AQLString msg = marketName + ", basis file is empty";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	// get fwd basis
@@ -4248,7 +4224,7 @@ AQLUpdateObjectPoolForCurves::setUpBasisCurveData(AQLDataInstance &dataInstance,
 			{
 				mktData->add(IR_CALIBRATION_DATA_ISFWDBASIS, new AQLDataBool(isFwdBasis) );
 				if (basisDataMtx[j2].size() != 5)
-					throw AQLCoreInvalidData("FwdBasis File format is wrong", __FILE__,__LINE__);
+					AQ_THROW( "FwdBasis File format is wrong" );
 				const bool isDate = basisDataMtx[j2][2].toUpper() == "TRUE";
 				mktData->add(PRICING_DATA_ISDATE, new AQLDataBool(isDate) );
 				if (isDate)
@@ -4523,7 +4499,7 @@ AQLUpdateObjectPoolForCurves::setUp36BasisDummyData(AQLDataInstance &dataInstanc
 	if (swapDataMtx.size() == 0 || swapDataMtx[0].size() < 2 )
 	{
 		AQLString msg = "swap file is empty";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 	const int swapSize = swapDataMtx.size();
 	AQLString daycSStr_float = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_DAYCOUNTFLOAT).toUpper();
@@ -4541,10 +4517,10 @@ AQLUpdateObjectPoolForCurves::setUp36BasisDummyData(AQLDataInstance &dataInstanc
 	{
 		AQLString reseLag_str = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_RESETLAG);
 		resetLag = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_RESETLAG).getIntValue();
-		if (reseLag_str == AQ_NO_DATA)
-		{
-			throw AQLCoreInvalidData("Reset Lag is not set !!", __FILE__, __LINE__); 
-		}
+		if ( reseLag_str == AQ_NO_DATA )
+{
+    AQ_THROW( "Reset Lag is not set !!" );
+}
 		else
 		{
 			spotDate = cal.getBusinessDay(asOfDate, resetLag);
@@ -4883,10 +4859,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveData(AQLDataInstance &dataInstance, A
         const int futureSize = futureDataMtx.size();
 		for (int i = 0; i < futureSize; ++i)
 		{
-			if (futureDataMtx[i].size() != 5 && futureDataMtx[i].size() != 3)
-			{
-				throw AQLCoreInvalidData("Future File format is wrong", __FILE__,__LINE__);
-			}
+			AQ_THROW_IF( futureDataMtx[i].size() != 5 && futureDataMtx[i].size() != 3, "Future File format is wrong" );
 			AQLString term;
 			AQLDate startDate,endDate;
 			double futurePrice(0.0), rate(0.0), futureVol(0.0), convexAdj(0.0);
@@ -4932,7 +4905,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveData(AQLDataInstance &dataInstance, A
 			}
 			else
 			{
-				throw AQLCoreInvalidData("Future File format is wrong", __FILE__,__LINE__);
+				AQ_THROW( "Future File format is wrong" );
 			}
 
 			AQLObject *mktData = NULL;
@@ -5008,7 +4981,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveData(AQLDataInstance &dataInstance, A
 	if ((swapDataMtx.size() == 0 || swapDataMtx[0].size() < 2) && !isFwdFX)
 	{
 		AQLString msg = "swap file is empty";
-		throw AQLCoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	// get cal and calc spot date
@@ -5026,10 +4999,10 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveData(AQLDataInstance &dataInstance, A
 	{
 		AQLString resetLag_str = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_RESETLAG + staticDataSuffix);
 		resetLag = resetLag_str.getIntValue();
-		if (resetLag_str == AQ_NO_DATA)
-		{
-			throw AQLCoreInvalidData("Reset Lag is not set !!", __FILE__, __LINE__); 
-		}
+		if ( resetLag_str == AQ_NO_DATA )
+{
+    AQ_THROW( "Reset Lag is not set !!" );
+}
 		else
 		{
 			spotDateS = calS.getBusinessDay(asOfDate, resetLag);
@@ -5280,7 +5253,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveData(AQLDataInstance &dataInstance, A
 		{
 			mktData->add(PRICING_DATA_ISFWDSWAP, new AQLDataBool(isFwdSwap) );
 			if (swapDataMtx[j].size() != 5)
-				throw AQLCoreInvalidData("FwdSwap File format is wrong", __FILE__,__LINE__);
+				AQ_THROW( "FwdSwap File format is wrong" );
 			const bool isDate = swapDataMtx[j][2].toUpper() == "TRUE";
 			mktData->add(PRICING_DATA_ISDATE, new AQLDataBool(isDate) );
 			if (isDate)
@@ -5355,36 +5328,33 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveData(AQLDataInstance &dataInstance, A
 		}
 		// set frequency
 		if ((!checkFrequency(freqSStr, term) || !checkFrequency(freqSStr_Fix, term)) && isUse)
-				throw AQLCoreInvalidData("frequency fix and term of swap rate are inconsistent!!", __FILE__, __LINE__);
+				AQ_THROW( "frequency fix and term of swap rate are inconsistent!!" );
 		mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString()).convertFromString(freqSStr);
 		mktData->add(IR_CALIBRATION_DATA_BASEFREQUENCY_FIX, new AQLDataString()).convertFromString(freqSStr_Fix);
 		// set base frequency
 		if (baseFreqSStr_float != AQ_NO_DATA)
 		{
 			if (!checkFrequency(baseFreqSStr_float, term) && isUse)
-				throw AQLCoreInvalidData("base frequency and term of swap rate are inconsistent!!", __FILE__, __LINE__);
+				AQ_THROW( "base frequency and term of swap rate are inconsistent!!" );
 			mktData->add(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, new AQLDataString()).convertFromString(baseFreqSStr_float);
 		}
 		// set frequency of floating leg
 		if (freqSStr_float != AQ_NO_DATA)
 		{
 			if (!checkFrequency(freqSStr_float, term) && isUse)
-				throw AQLCoreInvalidData("frequency float and term of swap rate are inconsistent!!", __FILE__, __LINE__);
+				AQ_THROW( "frequency float and term of swap rate are inconsistent!!" );
 			mktData->add(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, new AQLDataString()).convertFromString(freqSStr_float);
 		}
 		// set frequency of compounding
 		if (freqSStr_cpd != AQ_NO_DATA)
 		{
 			if (!checkFrequency(freqSStr_cpd, term) && isUse)
-				throw AQLCoreInvalidData("frequency compound and term of swap rate are inconsistent!!", __FILE__, __LINE__);
+				AQ_THROW( "frequency compound and term of swap rate are inconsistent!!" );
 			mktData->add(IR_CALIBRATION_DATA_FREQUENCY_COMPOUND, new AQLDataString()).convertFromString(freqSStr_cpd);
 		}
 	}
 
-	if (refData.size() < 2)
-	{
-        throw AQLCoreInvalidData("#Error: Missing Market Data. Market Data is not set !!", __FILE__, __LINE__); 
-	}
+	AQ_THROW_IF( refData.size() < 2, "Missing Market Data. Market Data is not set !!" );
 
 	AQLString tmpAssignedCurves = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + staticDataSuffix);
 	if (tmpAssignedCurves != AQ_NO_DATA)
@@ -5457,10 +5427,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance
 
 	oisFile.close();
 
-	if (oisDataMtx.size() == 0 || oisDataMtx[0].size() < 2 )
-	{
-		throw AQLCoreInvalidData("Error: OIS Swap Data is missing. OisFile is empty", __FILE__,__LINE__);
-	}
+	AQ_THROW_IF( oisDataMtx.size() == 0 || oisDataMtx[0].size() < 2, "Error: OIS Swap Data is missing. OisFile is empty" );
 
 	// get cal and calc spot date
 	AQLPriceDataCalendar calOIS;
@@ -5632,10 +5599,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance
 
     if (longTermConv == "LOBASIS")
 	{
-		if (longTerm == AQ_NO_DATA)
-		{
-            throw AQLCoreInvalidData("#Error: LongTerm parameter is needed, when the LongTermConvention 'LOBASIS' is specified.", __FILE__,__LINE__);
-		}
+		AQ_THROW_IF( longTerm == AQ_NO_DATA, "LongTerm parameter is needed, when the LongTermConvention 'LOBASIS' is specified." );
 		if (longTermGen == AQ_NO_DATA)
 		{
             // LongTermGenerate Methodolgy Defaults are managed within the in calcEffectiveOISRate method, see CurveCalibration.cpp
@@ -5646,10 +5610,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance
 		AQLFileAccessor lobasisFile(AQLMarketData::getNumFileName(lobasisFileName));
 		lobasisFile.readAllData(MARKET_DATA_DELIMITER, lobasisDataMtx);
 		lobasisFile.close();
-		if (lobasisDataMtx.size() == 0 || lobasisDataMtx[0].size() < 2 )
-		{
-            throw AQLCoreInvalidData("#Error: Missing Libor-OIS Basis Market Data. LOBasisFile is empty", __FILE__,__LINE__);
-		}
+		AQ_THROW_IF( lobasisDataMtx.size() == 0 || lobasisDataMtx[0].size() < 2, "Missing Libor-OIS Basis Market Data. LOBasisFile is empty" );
 		AQLString swapFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix);
 		if (swapFileName != AQ_NO_DATA)
 		{
@@ -5658,18 +5619,12 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance
 			swapFile.close();
 			if (swapDataMtx.size() == 0 || swapDataMtx[0].size() < 2)
 			{
-				if (!isDualBootstrapping)
-				{
-					throw AQLCoreInvalidData("#Error: Missing Libor-OIS Swap Market Data. SwapFile is empty", __FILE__, __LINE__);
-				}
+				AQ_THROW_IF( !isDualBootstrapping, "Missing Libor-OIS Swap Market Data. SwapFile is empty" );
 			}
 
 			if (swapDataMtx.size() != lobasisDataMtx.size())
 			{
-				if (!isDualBootstrapping)
-				{
-					throw AQLCoreInvalidData("#Error: Not the same number of LOBasis spreads and Libor swaps are provided ", __FILE__, __LINE__);
-				}
+				AQ_THROW_IF( !isDualBootstrapping, "Not the same number of LOBasis spreads and Libor swaps are provided " );
 			}
 		}
 	}
@@ -5799,10 +5754,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance
         // Allow Central Bank Swap instruments to be specified in the OIS curve for all markets ...
         if (etrading::isCentralBankSwap(term))     
 		{
-			if (oisDataMtx[i].size() != 4)
-			{
-                throw AQLCoreInvalidData("#Error: OIS Market Data must contain 4 columns. OIS Market Data column size is incorrect.", __FILE__,__LINE__);
-			}
+			AQ_THROW_IF( oisDataMtx[i].size() != 4, "OIS Market Data must contain 4 columns. OIS Market Data column size is incorrect." );
 			// boj type
 			// ** Currently all Central Bank swaps are labelled as BOJ regardless of currency. **
 			mktData->add(IR_CALIBRATION_DATA_DATATYPE,   new AQLDataString()).convertFromString(YIELD_TYPE_BOJ);
@@ -5822,10 +5774,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance
 		else if (etrading::isARRFuture(term))
 		{
 			const int NUM_COLUMNS_FUTURE = 5; // Term, Rate, StartDate, EndDate, VolOrConvAdj
-			if (oisDataMtx[i].size() != NUM_COLUMNS_FUTURE)
-			{
-				throw AQLCoreInvalidData("#Error: OIS Market Data must contain 4 columns. OIS Market Data column size is incorrect.", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( oisDataMtx[i].size() != NUM_COLUMNS_FUTURE, "OIS Market Data must contain 4 columns. OIS Market Data column size is incorrect." );
 
 			// ARR Future type
 			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_ARR_FUTURE);
@@ -6128,10 +6077,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance
 		AQLDate startDate, endDate;
 		AQLString term = fedFundFutureDataMtx[i][0].toUpper();
 
-		if (fedFundFutureDataMtx[i].size() < 2)
-		{
-            throw AQLCoreInvalidData("#Error: FF Futures data cannot contain more than 2 columns. FF Future File format is wrong", __FILE__,__LINE__);
-		}
+		AQ_THROW_IF( fedFundFutureDataMtx[i].size() < 2, "FF Futures data cannot contain more than 2 columns. FF Future File format is wrong" );
 
 		mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_FF);
 		if (fedFundFutureDataMtx[i].size() == 4)
@@ -6146,7 +6092,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance
 			AQLString term = fedFundFutureDataMtx[i][0].toUpper();
 			DateVector ffdates = etrading::AQLDateHelpers::getFFDatesFromTerm(asOfDate,term);
 			if (ffdates.size() != 2)
-                throw AQLCoreInvalidData("#Error: FF Dates Data must contain 2 columns. FF dates error",__FILE__,__LINE__);
+                AQ_THROW( "FF Dates Data must contain 2 columns. FF dates error" );
 
 			startDate = ffdates[0];
 			endDate = ffdates[1];
@@ -6208,10 +6154,7 @@ AQLUpdateObjectPoolForCurves::setUpGenCurveDataOIS(AQLDataInstance &dataInstance
 
 	}
 
-	if (refData.size() < 2)
-	{
-		throw AQLCoreInvalidData("Market Data is not set !!", __FILE__, __LINE__); 
-	}
+	AQ_THROW_IF( refData.size() < 2, "Market Data is not set !!" );
 
 	//DF curve name
 	AQLString dfCurveName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_DFCURVENAME + suffix); 
@@ -6270,10 +6213,7 @@ AQLUpdateObjectPoolForCurves::setUpFloater(const AQLString &currency, BasisCurve
 		AQLString basisMkt = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FLOATER_BASISNAME);
 		if (basisMkt != AQ_NO_DATA)
 		{
-			if (std::find(markets.begin(), markets.end(), basisMkt) == markets.end())
-			{
-				throw AQLCoreInvalidData("Basis market does not exist!", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( std::find(markets.begin(), markets.end(), basisMkt) == markets.end(), "Basis market does not exist!" );
 			basisCurveEngine.AQLObject::remove(IR_CALIBRATION_DATA_BASISDATA + AQLString("_") + tmpGenFloaterName);
 			basisCurveEngine.AQLObject::add(IR_CALIBRATION_DATA_BASISDATA + AQLString("_") + tmpGenFloaterName, new AQLDataString(basisMkt));
 		}
@@ -6305,7 +6245,7 @@ AQLUpdateObjectPoolForCurves::setUpCurveDataByReadFile( AQLDataInstance &dataIns
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	AQLObjectHolder objHolder = objPool.getObject(yieldDataName, ENCHKTYPE_NOCHECK );
 	if (!objHolder.isDefined() )
-		throw AQLCoreInvalidData("yield Object is not set! AQLUpdateObjectPoolForCurves::setUpCurveDataByReadFile", __FILE__, __LINE__ );
+		AQ_THROW( "yield Object is not set! AQLUpdateObjectPoolForCurves::setUpCurveDataByReadFile" );
 	
 	AQLObject &eData = objHolder.get();
 
@@ -6319,7 +6259,7 @@ AQLUpdateObjectPoolForCurves::setUpCurveDataByReadFile( AQLDataInstance &dataIns
 	dfFile.close();
 
 	if (dfDataMtx.size() == 0 || dfDataMtx[0].size() < 2 )
-		throw AQLCoreInvalidData("dfFile is empty", __FILE__,__LINE__);
+		AQ_THROW( "dfFile is empty" );
 
 	DoubleArray terms;
 	DoubleArray dfs;
@@ -6431,10 +6371,7 @@ AQLUpdateObjectPoolForCurves::dataoutCurve(const AQLStringVector &curveNames, AQ
 				dynamic_cast<const AQLDataDoubles &>(eData.getData(IR_CALIBRATION_DATA_DFS + curveSuffix, ISNOTNULL).get()).get();
 
 			int size = terms.size();
-			if (size != static_cast<int>(dfs.size()))
-			{
-				throw AQLCoreInvalidData("Term size and df size must be same !!", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( size != static_cast<int>(dfs.size()), "Term size and df size must be same !!" );
 			fout.open(fileName.getCString());
 
 			const AQLDataHolder &dfsH2 = eData.getData(IR_CALIBRATION_DATA_DFS2 + curveSuffix, NOCHECK);
@@ -6638,7 +6575,7 @@ AQLUpdateObjectPoolForCurves::setUpCurveDataByContext(BasisCurveCalibration &bas
 	{
 		AQLString msg = "context data for generated dfs don't exist.";
 		msg += "(" + contextKey + ")";
-		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQ_THROW( msg.getCString() );
 	}
 
 	AQLDataDoubleMatrix matrix;

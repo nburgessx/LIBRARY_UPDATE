@@ -53,9 +53,8 @@ namespace etrading
             boost::push_back( mergedKeyNames, theirKeyNames );
             if( !is_unique( mergedKeyNames ) )
             {
-                throw ETradingException( ( boost::format( "#Error: Cannot duplicate Schema names when adding two FreeObjects (%s) and (%s)" )
-                                           % containerAsString( myKeyNames ).c_str()
-                                           % containerAsString( theirKeyNames ).c_str() ).str()  ) ;
+                { std::ostringstream aqMsg141;
+aqMsg141 << "Cannot duplicate Schema names when adding two FreeObjects (" << containerAsString( myKeyNames ).c_str() << ") and (" << containerAsString( theirKeyNames ).c_str() << ")"; AQ_THROW( aqMsg141.str() ); }
             }
 
             auto mergedData( this->viewAllData() );
@@ -69,7 +68,7 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( "#Error: Cannot add a FreeObject to itself because it generates duplicate Schemas" );
+            AQ_THROW( "Cannot add a FreeObject to itself because it generates duplicate Schemas" );
         }
     };
 

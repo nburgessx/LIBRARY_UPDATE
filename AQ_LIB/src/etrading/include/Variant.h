@@ -9,7 +9,6 @@
 #include <locale>
 #include <utility>
 #include <vector>
-#include <boost/format.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/date_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
@@ -233,10 +232,9 @@ namespace etrading
             }
             else
             {
-                std::string errString( boost::str( boost::format( "#Error: createVariantVector: Cannot covert from Vector of %s to Vector Variant with type %s" )
-                                                   % TypeName::get<A>()
-                                                   % etrading::toString( targetType ) ) );
-                throw ETradingException( errString.c_str() );
+                std::ostringstream errStream;
+                errStream << "createVariantVector: Cannot covert from Vector of " << TypeName::get<A>() << " to Vector Variant with type " << etrading::toString( targetType );
+                AQ_THROW( errStream.str() );
             }
         };
 

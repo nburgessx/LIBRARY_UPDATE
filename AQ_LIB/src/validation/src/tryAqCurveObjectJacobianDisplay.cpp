@@ -31,15 +31,9 @@ namespace validation
 		// Record Inputs for logs, tests and playback
         AQ_RECORD_INPUTS(curveEngineObject, displayLabels, displayInverseMatrix);
 		
-		if (curveCollection.size() == 0)
-		{
-			throw AQLCoreInvalidData("#Error: Curve collection name has not been provided.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( curveCollection.size() == 0, "Curve collection name has not been provided." );
 
-		if (curveEngineObject.size() == 0)
-		{
-			throw AQLCoreInvalidData("#Error: Curve engine object name has not been provided.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( curveEngineObject.size() == 0, "Curve engine object name has not been provided." );
 
 		etrading::displayCurveEngineJacobian(matrix,
 											labelMatrix,
@@ -67,15 +61,9 @@ namespace validation
 		// Record Inputs for logs, tests and playback
 		AQ_RECORD_INPUTS(curveCollection, curveName, displayInverseMatrix);
 
-		if (curveCollection.size() == 0)
-		{
-			throw AQLCoreInvalidData("#Error: Curve collection name has not been provided.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( curveCollection.size() == 0, "Curve collection name has not been provided." );
 
-		if (curveName.size() == 0)
-		{
-			throw AQLCoreInvalidData("#Error: Curve name has not been provided.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( curveName.size() == 0, "Curve name has not been provided." );
 
 		etrading::displayCurveJacobian(matrix,
 										curveCollection,

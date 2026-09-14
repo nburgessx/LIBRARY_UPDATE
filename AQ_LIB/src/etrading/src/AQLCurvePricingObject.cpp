@@ -106,7 +106,7 @@ namespace
             if ( i == floatAccrualDates.size()-1  )
             {
                 if ( floatAccrualDates[i] < asOf ) 
-                    throw AQLCoreInvalidData("#Error: Par rate error; The underlying swap has expired.", __FILE__, __LINE__ );
+                    AQ_THROW( "Par rate error; The underlying swap has expired." );
 
                 nextCashflowIndex++;
                 break; 
@@ -134,10 +134,7 @@ namespace
 							const AQLString& interpolation,
 							const AQLString& oisCompoundingType)
 	{
-		if (floatAccrualDates[0] < asOf)
-		{
-			throw AQLCoreInvalidData("#Error: Only Spot or Forward Starting OIS Swaps supported", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( floatAccrualDates[0] < asOf, "Only Spot or Forward Starting OIS Swaps supported" );
 
 		// Get equivalent rates over accrual periods
 		for( size_t i = 1; i < floatAccrualDates.size(); ++i )
@@ -699,7 +696,7 @@ namespace etrading
 	    if (fromDate > toDate)
 	    {
 		    AQLString err = "#Error: Unable to calculate a zero rate in the past. The toDate must be after fromDate";
-            throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+            AQ_THROW( err.getCString() );
 	    }
 
         RateConvention rc = setRC(getFrequency().get());
@@ -745,7 +742,7 @@ namespace etrading
 	    if (fromDate > toDate)
 	    {
 		    AQLString err = "#Error: Unable to calculate a zero rate in the past. The toDate must be after fromDate";
-            throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+            AQ_THROW( err.getCString() );
 	    }
 
 	    RateConvention rc = setRC(getFrequency().get());
@@ -794,7 +791,7 @@ namespace etrading
 	    if (term < 0.0)
 	    {
             AQLString err = "#Error: Unable to calculate a zero rate in the past";
-            throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+            AQ_THROW( err.getCString() );
 	    }
 	    RateConvention rc = setRC(getFrequency().get());
 	    AQLPriceDataConvention conv(getDayCount().getDayCount(), rc);
@@ -846,7 +843,7 @@ namespace etrading
 	    if (term < 0.0)
 	    {
             AQLString err = "#Error: Unable to calculate a zero rate in the past";
-            throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+            AQ_THROW( err.getCString() );
 	    }
 
         RateConvention rc = setRC(getFrequency().get());
@@ -1096,7 +1093,7 @@ namespace etrading
             tmpPaymentDate = sr.getDate( tmpPaymentDate, cal );
 
             if ( tmpPaymentDate < tmpAccrualEndDate )
-                throw AQLCoreInvalidData("#Error: Annuity Payment Date cannot be before the Accrual End Date.", __FILE__, __LINE__ );
+                AQ_THROW( "Annuity Payment Date cannot be before the Accrual End Date." );
             
             // ret += discount factor * year fraction
             // discount factor is based on ACT/ACT daycount
@@ -1114,10 +1111,7 @@ namespace etrading
                 // Optional: Deduct Accrued Interest - This is for Bond / Asset Swap Spread Calculations
                 if ( deductAccruedInterest && accrualStartDate < asOf)
                 {
-                    if ( settlementDate == AQLDate() )
-                    {
-                        throw AQLCoreInvalidData("#Error: Annuity Calculation Error: For Bond-type calculations the settlement date is required to deduct accrued interest.", __FILE__, __LINE__ );
-                    }
+                    AQ_THROW_IF( settlementDate == AQLDate(), "Annuity Calculation Error: For Bond-type calculations the settlement date is required to deduct accrued interest." );
 
                     const double accruedYearFraction    = daycount.getTerm( accrualStartDate, settlementDate );
                     const double accruedInterest        = accruedYearFraction;
@@ -1199,7 +1193,7 @@ namespace etrading
                 if ( i == dates_float.size()-1  )
                 {
                     if ( dates_float[i] < asOf ) 
-                        throw AQLCoreInvalidData("#Error: Par rate error; the underlying swap has expired.", __FILE__, __LINE__ );
+                        AQ_THROW( "Par rate error; the underlying swap has expired." );
                 
 				    nextCashflowIndex++;
                     break; 
@@ -1438,10 +1432,7 @@ namespace etrading
 	    floatingLegDateCount.convertFromString(DATECOUNT);	
 
         // Bounds Check
-        if ( fixingDates.size() < 2 )
-        {
-            throw AQLCoreInvalidData("#Error: Unable to calculate the swap stub rate. Invalid fixing dates.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fixingDates.size() < 2, "Unable to calculate the swap stub rate. Invalid fixing dates." );
 
 	    // Determine the exact stub period. Must guaranteee that stub end date is after the asOf date.
 	    AQLDate stubStart;
@@ -1455,10 +1446,7 @@ namespace etrading
             if ( fixingDates[0] < asOf )
 	        {
                 // Throw an error if the stub rate is in the past, but paying in the future. Such a front stub needs to be set using the 'FirstFixing' parameter
-                if ( stubEnd >= asOf )
-                {
-                    throw AQLCoreInvalidData("#Error: Front stub fixing rate required.", __FILE__, __LINE__ );
-                }
+                AQ_THROW_IF( stubEnd >= asOf, "Front stub fixing rate required." );
 
                 // Set the Stub to Zero if it is in the past and the payment date is also in the past
 		        stubRate = 0.0;
@@ -1491,7 +1479,7 @@ namespace etrading
 	    }
 	    else
 	    {
-		    throw AQLCoreInvalidData("#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__ );
+		    AQ_THROW( "Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE)." );
 	    }
 
 	    // Calculate stub rate - either (1) use a given curve, (2.a) pick the nearest curve, or (2.b) interpolate between adjacent curves
@@ -1516,10 +1504,7 @@ namespace etrading
 			    }
 		    }
 
-		    if (idx == -1)
-		    {
-			    throw AQLCoreInvalidData("#Error: The 'useCurveName' should also be part of the curveNames list", __FILE__, __LINE__ );
-		    }
+		    AQ_THROW_IF( idx == -1, "The 'useCurveName' should also be part of the curveNames list" );
 
 		    if (useGivenFixings)
 		    {
@@ -1541,10 +1526,10 @@ namespace etrading
 			    if (isFwdInter && !isCurveTypeOIS)
 			    {
 				    AQLPriceDataDayCount dc;
-				    if (!AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, useCurveNameTemp, dc))
-				    {
-					    throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!",__FILE__,__LINE__);
-				    }
+				    if ( !AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, useCurveNameTemp, dc) )
+{
+    AQ_THROW( "Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!" );
+}
 				    else
 				    {
 					    getDayCount(useCurveNameTemp) = dc;
@@ -1564,7 +1549,7 @@ namespace etrading
 				    }
 				    else
 				    {
-					    throw AQLCoreInvalidData("#Error: Do not support past starting swap when isFwdInter is set FALSE", __FILE__, __LINE__ );
+					    AQ_THROW( "Do not support past starting swap when isFwdInter is set FALSE" );
 				    }
 			    }
 		    }
@@ -1581,10 +1566,7 @@ namespace etrading
 		    AQLDate upperDate;
 
 		    size_t curveCount = curveNames.size();
-		    if (curveCount == 0)
-		    {
-			    throw AQLCoreInvalidData("#Error: Please provide at least one curve to calculate stub rate", __FILE__, __LINE__ );
-		    }
+		    AQ_THROW_IF( curveCount == 0, "Please provide at least one curve to calculate stub rate" );
 
 		    // Pick the curves to interpolate from
 		    AQLDate firstTenorDate = AQLDateHelpers::getDate(stubStart, curveTenors.at(0), sr, &cal, true, NULL);
@@ -1625,14 +1607,11 @@ namespace etrading
 				    }
 			    }		
 
-			    if (upperIndex == 0)
-			    {
-				    throw AQLCoreInvalidData("#Error: Stub term is shorter than the shortest tenor term available in the curves. Stub rate can't be interpolated.", __FILE__, __LINE__ );
-			    }
-			    else if (lowerIndex == curveCount - 1)
-			    {
-				    throw AQLCoreInvalidData("#Error: Stub term is longer than the longest tenor term available in the curves. Stub rate can't be interpolated.", __FILE__, __LINE__ );
-			    }
+			    if ( upperIndex == 0 )
+{
+    AQ_THROW( "Stub term is shorter than the shortest tenor term available in the curves. Stub rate can't be interpolated." );
+}
+			    else AQ_THROW_IF( lowerIndex == curveCount - 1, "Stub term is longer than the longest tenor term available in the curves. Stub rate can't be interpolated." );
 		    }
 
 		
@@ -1680,10 +1659,10 @@ namespace etrading
                         if (isFwdInter && !isCurveTypeOIS )
 					    {						
 						    AQLPriceDataDayCount dc;
-						    if (!AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveName, dc))
-						    {
-							    throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!",__FILE__,__LINE__);
-						    }
+						    if ( !AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveName, dc) )
+{
+    AQ_THROW( "Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!" );
+}
 						    else
 						    {
 							    getDayCount(curveName) = dc;
@@ -1705,7 +1684,7 @@ namespace etrading
 						    {
 							    stringstream s;
 							    s << "Error: Curve name '" << curveNames[nearbyIndex] << "' is chosen as the approximate curve but this curve's tenor is too short";
-							    throw AQLCoreInvalidData(s.str().c_str(), __FILE__, __LINE__ );
+							    AQ_THROW( s.str().c_str() );
 						    }
 					    }
 				    }
@@ -1749,10 +1728,10 @@ namespace etrading
 
 						    AQLPriceDataDayCount dc;
 						    setCurveType(curveNames[lowerIndex]);
-						    if (!AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveNames[lowerIndex], dc))
-						    {
-							    throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!",__FILE__,__LINE__);
-						    }
+						    if ( !AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveNames[lowerIndex], dc) )
+{
+    AQ_THROW( "Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!" );
+}
 						    else
 						    {
 							    getDayCount(curveNames[lowerIndex]) = dc;
@@ -1764,10 +1743,10 @@ namespace etrading
 
 						    // get upper rate
 						    setCurveType(curveNames[upperIndex]);
-						    if (!AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveNames[upperIndex], dc))
-						    {
-							    throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!",__FILE__,__LINE__);
-						    }
+						    if ( !AQLCurveForwardRateHelpers::setUpForwardDayCount(getDataInstance(), curveid, curveNames[upperIndex], dc) )
+{
+    AQ_THROW( "Interpolation on forward rate failed. Check whether the forward rate was generated by AQLMathYieldCurvePro !!" );
+}
 						    else
 						    {
 							    getDayCount(curveNames[upperIndex]) = dc;
@@ -1793,7 +1772,7 @@ namespace etrading
 						    }
 						    else
 						    {
-							    throw AQLCoreInvalidData("#Error: Do not support past starting swap when isFwdInter is set FALSE", __FILE__, __LINE__ );
+							    AQ_THROW( "Do not support past starting swap when isFwdInter is set FALSE" );
 						    }
 					    }				
 			
@@ -1938,7 +1917,7 @@ namespace etrading
         DoubleArray fixedLegDiscFactors( fixedPaymentDates.size() -1 );
         
         if ( fixedAccrualDates.size() != fixedPaymentDates.size() )
-            throw AQLCoreInvalidData("#Error: Fixed schedule error. Inconsistent number of acrrual and payment dates.", __FILE__, __LINE__ );
+            AQ_THROW( "Fixed schedule error. Inconsistent number of acrrual and payment dates." );
 
         for( size_t i = 1; i < fixedAccrualDates.size(); i++ )
         {
@@ -1972,7 +1951,7 @@ namespace etrading
         DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
         if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-            throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
+            AQ_THROW( "Floating schedule error. Inconsistent number of fixing, acrrual and payment dates." );
              
         // Calculate the floating coupon accrual periods
         for( size_t i = 1; i < floatAccrualDates.size(); i++ )
@@ -2253,7 +2232,7 @@ namespace etrading
 	    const AQLDate& asOf              = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
     
         if ( floatPaymentDates[floatPaymentDates.size()-1] < asOf && fixedPaymentDates[fixedPaymentDates.size()-1] < asOf) 
-            throw AQLCoreInvalidData("#Error: Par rate error; the underlying swap has expired.", __FILE__, __LINE__ );
+            AQ_THROW( "Par rate error; the underlying swap has expired." );
     
         const AQLPriceDataCalendar& cal       = getCalendar();
 	    const AQLPriceDataSlidingRule& sr     = getSlidingRule();
@@ -2366,7 +2345,7 @@ namespace etrading
 			    DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
 			    if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-				    throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
+				    AQ_THROW( "Floating schedule error. Inconsistent number of fixing, acrrual and payment dates." );
          			
 			    // Get forward rates from interpolation
 			    if ( isFWDInter )
@@ -2542,7 +2521,7 @@ namespace etrading
         DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
         if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-            throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
+            AQ_THROW( "Floating schedule error. Inconsistent number of fixing, acrrual and payment dates." );
          
         // Calculate the floating coupon accrual periods
         for( size_t i = 1; i < floatAccrualDates.size(); i++ )
@@ -2812,7 +2791,7 @@ namespace etrading
 	    const AQLDate& asOf              = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
     
         if ( floatPaymentDates[floatPaymentDates.size()-1] < asOf && fixedPaymentDates[fixedPaymentDates.size()-1] < asOf) 
-            throw AQLCoreInvalidData("#Error: Asset swap spread error; the underlying swap has expired.", __FILE__, __LINE__ );
+            AQ_THROW( "Asset swap spread error; the underlying swap has expired." );
     
         const AQLPriceDataCalendar& cal       = getCalendar();
 	    const AQLPriceDataSlidingRule& sr     = getSlidingRule();
@@ -2865,7 +2844,7 @@ namespace etrading
         DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
         if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-            throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
+            AQ_THROW( "Floating schedule error. Inconsistent number of fixing, acrrual and payment dates." );
 
         // Calculate the floating coupon accrual periods
         for( size_t i = 1; i < floatAccrualDates.size(); i++ )
@@ -2881,7 +2860,7 @@ namespace etrading
             if ( i == floatAccrualDates.size()-1  )
             {
                 if ( floatAccrualDates[i] < asOf ) 
-                    throw AQLCoreInvalidData("#Error: Asset swap spread error; the underlying swap has expired.", __FILE__, __LINE__ );
+                    AQ_THROW( "Asset swap spread error; the underlying swap has expired." );
 			
 			    nextCashflowIndex++;                
                 break; 
@@ -2991,7 +2970,7 @@ namespace etrading
         // Asset Swap Spread
         //
         if ( floatAnnuity == 0 )
-            throw AQLCoreInvalidData("#Error: Floating schedule error. The float leg annuity value cannot be zero.", __FILE__, __LINE__ );
+            AQ_THROW( "Floating schedule error. The float leg annuity value cannot be zero." );
 
         // Note: Accrued Interest is deducted from the fixedLegPV ( via the Fixed Annuity ) when working with the dirty bond price
         swapSpread    = ( fixedLegPV - floatLegPV + parParAdjustmentInPercent ) / floatAnnuity;
@@ -3034,17 +3013,14 @@ namespace etrading
 		    AQLString accessary_forecast = "";
 		
 		    getCurveConvention(freq_forecast, cal_forecast, sld_forecast, dc_forecast, accessary_forecast, foreCurveName);
-		    if (accessary_forecast == "" || dc_forecast.isNull())
-		    {
-			    throw AQLCoreInvalidData("getParRate failed. Check whether daycount and frequency were set in forecast curve!!",__FILE__,__LINE__);
-		    }
+		    AQ_THROW_IF( accessary_forecast == "" || dc_forecast.isNull(), "getParRate failed. Check whether daycount and frequency were set in forecast curve!!" );
 
 		    AQLString freq_float = "";
 		    if (accessary_forecast == AQLString("12M")) freq_float = ANNUAL;
 		    else if (accessary_forecast == AQLString("6M")) freq_float = SEMI_ANNUAL;
 		    else if (accessary_forecast == AQLString("3M")) freq_float = QUARTERLY;
 		    else if (accessary_forecast == AQLString("1M")) freq_float = MONTHLY;
-		    else throw AQLCoreInvalidData("getParRate failed. Check accessary of forecast curve!!",__FILE__,__LINE__);
+		    else AQ_THROW( "getParRate failed. Check accessary of forecast curve!!" );
 
 		    AQLDateHelpers::generateSchedule(fromDate, toDate, freq_float,
 								    true, firstStubDate, lastStubDate, pday, dates_float, &getSlidingRule(), &getCalendar(), true, roll_convention);
@@ -3098,7 +3074,7 @@ namespace etrading
 	    if (fromDate > toDate)
 	    {
 		    AQLString err = "#Error: Unable to calculate a discount factor in the past. The toDate must be after fromDate";
-            throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+            AQ_THROW( err.getCString() );
 	    }
 
 	    const AQLPriceDataCalendar& cal = getCalendar();
@@ -3138,7 +3114,7 @@ namespace etrading
 	    if (fromDate > toDate)
 	    {
             AQLString err = "#Error: Unable to calculate a discount factor in the past. The toDate must be after fromDate";
-            throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+            AQ_THROW( err.getCString() );
 	    }
 
 	    const AQLPriceDataCalendar& cal = getCalendar();
@@ -3182,12 +3158,12 @@ namespace etrading
 	    if (term < 0.0)
 	    {
             AQLString err = "#Error: Unable to calculate a discount factor in the past";
-            throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+            AQ_THROW( err.getCString() );
 	    }
 	    //if (fromDate < asOf)
 	    //{
 	    //	AQLString err = "fromDate must be after asOf";
-	    //       throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+	    //       AQ_THROW( err.getCString() );
 	    //}
 	    AQLPriceDataDayCount dc(getDayCount());
 	    const AQLPriceDataCalendar& cal = getCalendar();
@@ -3217,7 +3193,7 @@ namespace etrading
 	    if (term < 0.0)
 	    {
             AQLString err = "#Error unable to calculate a discount factor in the past";
-            throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+            AQ_THROW( err.getCString() );
 	    }
 
         AQLPriceDataDayCount dc(getDayCount());
@@ -3258,7 +3234,7 @@ namespace etrading
 	    else if (interpmethod == "RateTerm")
 		    isinterprateterm = true;
 	    else
-		    throw AQLCoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
+		    AQ_THROW( "DFInterpolation Error" );
 	
         if (mCurveVersionMap[mCurveType] != getModel())
 	    {
@@ -3268,7 +3244,7 @@ namespace etrading
 	    if (term < 0.0)
 	    {
             AQLString err = "#Error: Unable to calculate a discount factor in the past";
-            throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+            AQ_THROW( err.getCString() );
 	    }
 	    if (term < EPS) return 1.0;
 
@@ -3327,7 +3303,7 @@ namespace etrading
 	    else if (interpmethod == "RateTerm")
 		    isinterprateterm = true;
 	    else
-		    throw AQLCoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
+		    AQ_THROW( "DFInterpolation Error" );
 
 	    const AQLDataHolder* dh;
 	    dh = &(YieldData.getData(IR_CALIBRATION_DATA_DFS2,NOCHECK));
@@ -3349,7 +3325,7 @@ namespace etrading
 	    if (term < 0.0)
 	    {
             AQLString err = "#Error: Unable to calculate a discount factor in the past";
-            throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+            AQ_THROW( err.getCString() );
 	    }
 	    if (term < EPS) return 1.0;
 
@@ -3488,7 +3464,7 @@ namespace etrading
 	    else if (interpmethod == "RateTerm")
 		    isinterprateterm = true;
 	    else
-		    throw AQLCoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
+		    AQ_THROW( "DFInterpolation Error" );
 
 	    const AQLString interpmethod2 = getDF2InterpolationMethod().get();
 	    bool isinterprateterm2 = false;
@@ -3497,7 +3473,7 @@ namespace etrading
 	    else if (interpmethod2 == "RateTerm")
 		    isinterprateterm2 = true;
 	    else
-		    throw AQLCoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
+		    AQ_THROW( "DFInterpolation Error" );
 
 
 	    const AQLObject& YieldData = getYieldData().get().get();
@@ -3520,7 +3496,7 @@ namespace etrading
 			    for (unsigned int i = 0; i < _dfs.size(); i++)
 			    {
 				    if (_dfs[i] <= 0.0)
-					    throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
+					    AQ_THROW( "Discount Error" );
 				
 				    _dfs[i] = -AQLMath::log(_dfs[i]);
 			    }
@@ -3544,7 +3520,7 @@ namespace etrading
 				    for (unsigned int i = 0; i < _dfs2.size(); i++)
 				    {
 					    if (_dfs2[i] <= 0.0)
-						    throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
+						    AQ_THROW( "Discount Error" );
 					
 					    _dfs2[i] = -AQLMath::log(_dfs2[i]);
 				    }
@@ -3561,7 +3537,7 @@ namespace etrading
 			    for (unsigned int i = 0; i < _dfs.size(); i++)
 			    {
 				    if (_dfs[i] <= 0.0)
-					    throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
+					    AQ_THROW( "Discount Error" );
 				
 				    _dfs[i] = -AQLMath::log(_dfs[i]);
 			    }
@@ -3585,7 +3561,7 @@ namespace etrading
 				    for (unsigned int i = 0; i < _dfs2.size(); i++)
 				    {
 					    if (_dfs2[i] <= 0.0)
-						    throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
+						    AQ_THROW( "Discount Error" );
 					
 					    _dfs2[i] = -AQLMath::log(_dfs2[i]);
 				    }
@@ -3617,7 +3593,7 @@ namespace etrading
 				    for (unsigned int i = 0; i < _dfs.size(); i++)
 				    {
 					    if (_dfs[i] <= 0.0)
-						    throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
+						    AQ_THROW( "Discount Error" );
 					
 					    _dfs[i] = -AQLMath::log(_dfs[i]);
 				    }
@@ -3632,7 +3608,7 @@ namespace etrading
 				    for (unsigned int i = 0; i < _dfs.size(); i++)
 				    {
 					    if (_dfs[i] <= 0.0)
-						    throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
+						    AQ_THROW( "Discount Error" );
 					
 					    _dfs[i] = -AQLMath::log(_dfs[i]);
 				    }
@@ -4040,20 +4016,14 @@ namespace etrading
 
 	    const AQLObject& yieldData = getYieldData().get().get();
 	    const DoubleMatrix &fwd_termsmtx = dynamic_cast<const AQLDataDoubleMatrix &>(yieldData.getData(CALIBRATION_DATA_FWDTERMSMATRIX + suffix, ISNOTNULL).get()).get();
-	    if (fwd_termsmtx.size() != 2 || fwd_termsmtx[0].size() != fwd_termsmtx[1].size())
-	    {
-		    throw AQLCoreInvalidData("forward terms matrix is invalid.", __FILE__, __LINE__);
-	    }
+	    AQ_THROW_IF( fwd_termsmtx.size() != 2 || fwd_termsmtx[0].size() != fwd_termsmtx[1].size(), "forward terms matrix is invalid." );
 	    terms = fwd_termsmtx[0];
 
 	    const double DAY_EPS = 0.1 / 365.25;
 
 	    const AQLDate& asofDate = dynamic_cast<const AQLDataDate&> ((yieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	    const double term_end = dynamic_cast<const AQLDataDoubles &>(yieldData.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL).get()).get().back();
-	    if (fwd_termsmtx[0].back() >= term_end)
-	    {
-		    throw AQLCoreInvalidData("Forward Term is not consistent with DF Term", __FILE__, __LINE__);
-	    }
+	    AQ_THROW_IF( fwd_termsmtx[0].back() >= term_end, "Forward Term is not consistent with DF Term" );
 	    //terms_.push_back(term_end);
 	    vector<DateVector> fwd_datesmtx;
 	    if (pDateMat_in)
@@ -4074,7 +4044,7 @@ namespace etrading
 			    if (!AQLAlgorithm::find<DoubleArray, double>(s_fwdtermsmtx_1, fwd_termsmtx[1][i], 0, s_fwdtermsmtx_1.size() - 1, pos))
 			    {
 				    //error
-				    throw AQLCoreInvalidData("forward rate grid is invalid", __FILE__, __LINE__);
+				    AQ_THROW( "forward rate grid is invalid" );
 			    }
 			    fwd_datesmtx[1].push_back(tmpDates[pos]);
 		    }
@@ -4151,23 +4121,11 @@ namespace etrading
 	    vector<DateVector> dateMat;
 	    getBaseForwardRate(curveType, terms, termsMat, taus, rates, &dateMat, pDateMat_in);
 
-	    if (dateMat.size() != 2)
-	    {
-		    throw AQLCoreInvalidData("Date Matrix format is wrong.", __FILE__, __LINE__);
-	    }
+	    AQ_THROW_IF( dateMat.size() != 2, "Date Matrix format is wrong." );
 	    unsigned int size = dateMat[0].size();
-	    if (dateMat[1].size() != size)
-	    {
-		    throw AQLCoreInvalidData("Date Matrix format is wrong.", __FILE__, __LINE__);
-	    }
-	    if (taus.size() != size)
-	    {
-		    throw AQLCoreInvalidData("tau vector format is wrong.", __FILE__, __LINE__);
-	    }
-	    if (rates.size() != size)
-	    {
-		    throw AQLCoreInvalidData("forward rate vector format is wrong.", __FILE__, __LINE__);
-	    }
+	    AQ_THROW_IF( dateMat[1].size() != size, "Date Matrix format is wrong." );
+	    AQ_THROW_IF( taus.size() != size, "tau vector format is wrong." );
+	    AQ_THROW_IF( rates.size() != size, "forward rate vector format is wrong." );
 	    // adjust daycount
 	    for (unsigned int i = 0; i < size; ++i)
 	    {
@@ -4189,7 +4147,7 @@ namespace etrading
     	    return pCurve;
         }
         catch (bad_alloc & e){
-            throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
+            AQ_THROW( e.what() );
         }
     }
 
@@ -4298,7 +4256,7 @@ namespace etrading
 	    {
 		    AQLString err = "Assignement error for AQLCurvePricingObject : from ";
 		    err += AQLString(e.getType());
-		    throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		    AQ_THROW( err.getCString() );
 	    }
 	    mpName		 = &getData(CALIBRATION_DATA_NAME);
 	    mpInter		 = &getData(CALIBRATION_DATA_INTERPOLATION);
@@ -4355,7 +4313,7 @@ namespace etrading
 	    else
 	    {
 		    AQLString msg = "Frequency is wrong";
-		    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		    AQ_THROW( msg.getCString() );
 	    }
     }
 
@@ -4369,7 +4327,7 @@ namespace etrading
 	    else 
 	    {
 		    AQLString msg = "frequency is wrong";
-		    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		    AQ_THROW( msg.getCString() );
 	    }
     }
 
@@ -4415,7 +4373,7 @@ namespace etrading
 
 	    size_t legSize = payDates.size();
 	    if( legSize != accruTerms.size() ) 
-		    throw AQLCoreInvalidData("fixing,payment and accrual times are not same!",__FILE__,__LINE__);
+		    AQ_THROW( "fixing,payment and accrual times are not same!" );
 	
 	    DoubleArray rates(legSize, 0.);
 	    AQLString indexTerm;
@@ -4811,7 +4769,7 @@ namespace etrading
         }
         catch (bad_alloc & e)
 	    {
-            throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
+            AQ_THROW( e.what() );
         }
     }
 
@@ -4821,7 +4779,7 @@ namespace etrading
 	    if(T < m_t)
 	    {
 		    AQLString msg = "T is before BaseDate";
-		    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		    AQ_THROW( msg.getCString() );
 	    }
     //	DayCount dc = mpYC->getDayCount().getDayCount();
     //	if (mDC == dc)

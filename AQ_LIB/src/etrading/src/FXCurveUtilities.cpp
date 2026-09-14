@@ -201,10 +201,7 @@ namespace etrading
 
 		if (farLegFwdFxBidAsks.size() != 0)
 		{
-			if (farLegFwdFxBidAsks.size() != nearLegFwdFxBidAsks.size())
-			{
-				throw AQLCoreInvalidData( "#Error: farLegFwdFxBids and nearLegFwdFxAsks must have same columns: bidPoints, askPoints, bidOutright, askOutright" , __FILE__, __LINE__ );
-			}
+			AQ_THROW_IF( farLegFwdFxBidAsks.size() != nearLegFwdFxBidAsks.size(), "farLegFwdFxBids and nearLegFwdFxAsks must have same columns: bidPoints, askPoints, bidOutright, askOutright" );
 
 			double farLegFwdFxPointsBid = farLegFwdFxBidAsks[0].bid;
 			double farLegFwdFxPointsAsk = farLegFwdFxBidAsks[0].ask;
@@ -281,10 +278,7 @@ namespace etrading
 
 		bool outputFarLeg = (farLegFwdFxBidAskMatrix.size() != 0);
 
-        if (outputFarLeg && nearLegFwdFxBidAskMatrix.size() != farLegFwdFxBidAskMatrix.size())
-        {
-            throw AQLCoreInvalidData( "#Error: nearLegFwdFxBidAskMatrix and farLegFwdFxBidAskMatrix must have same number of rows" , __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( outputFarLeg && nearLegFwdFxBidAskMatrix.size() != farLegFwdFxBidAskMatrix.size(), "nearLegFwdFxBidAskMatrix and farLegFwdFxBidAskMatrix must have same number of rows" );
 
 		std::vector<std::vector<FxFwd>> fwdFwdFxRateMatrix;
 
@@ -308,10 +302,7 @@ namespace etrading
 	AnyTypeVector  outputFxPriceBody(const std::vector<FxFwd>& fxFwd, const std::unordered_set<FXPriceEnum, EnumClassHash>& columnList)
     {
 
-		if (fxFwd.size() < 2)
-		{
-            throw AQLCoreInvalidData( "fwdFxRates vector must have at least 2 items: point and outright.", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( fxFwd.size() < 2, "fwdFxRates vector must have at least 2 items: point and outright." );
 
 		FxFwd fxFwdPoint = fxFwd[0];
 		FxFwd fxFwdRate = fxFwd[1];
@@ -416,7 +407,8 @@ namespace etrading
 
 			if (std::abs(termDF) <= epsilon)
 			{
-				throw AQLCoreInvalidData((boost::format("#Error: Cannot imply FxForward from discount curves as term discount factor is smaller than \"%s\"") % epsilon).str().c_str(), __FILE__, __LINE__);
+				{ std::ostringstream aqCoreMsg16;
+aqCoreMsg16 << "Cannot imply FxForward from discount curves as term discount factor is smaller than \"" << epsilon << "\""; AQ_THROW( aqCoreMsg16.str() ); }
 			}
 
 			double bidTermDF = termDF, askTermDF = termDF;
@@ -537,7 +529,7 @@ namespace etrading
 		}
 		else
 		{
-			throw AQLCoreInvalidData("#Error: either baseCurve or termCurve must be XccyBasis or FxConst Curve", __FILE__, __LINE__);
+			AQ_THROW( "either baseCurve or termCurve must be XccyBasis or FxConst Curve" );
 		}
 
 		AQLDate curveAsOfDate = getCurveAsOfDate(xccyCurveCollection);
@@ -576,7 +568,7 @@ namespace etrading
 			}
 			else 
 			{
-				AQ_THROW("#Error: FWDFXCONST's Target must be either Leg2Discount or Leg1Discount");
+				AQ_THROW("FWDFXCONST's Target must be either Leg2Discount or Leg1Discount");
 			}
 		}
 				

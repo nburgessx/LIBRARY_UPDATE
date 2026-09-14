@@ -258,7 +258,8 @@ namespace etrading
     {
         if( !FRAQuotes::verifyTenors( tenors ) )
         {
-            throw ETradingException( ( boost::format( "Some FRA tenor string are not in a correct format (NNxNN), check:  %s" ) % containerAsString( tenors ) ).str() );
+            { std::ostringstream aqMsg146;
+aqMsg146 << "Some FRA tenor string are not in a correct format (NNxNN), check:  " << containerAsString( tenors ); AQ_THROW( aqMsg146.str() ); }
         }
         // TODO: C++11 std::any usage
         // if(!std::any(tenors.begin(), tenors.end(), [&](const std::string& inputTenor) { return (idxOfRegexMatch(inputTenor, FRAQuotes::FRA_TERM_REGEX)>=0);   } ))

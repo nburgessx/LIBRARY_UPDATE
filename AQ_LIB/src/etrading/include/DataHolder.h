@@ -19,7 +19,6 @@
 #include <boost/assign.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/algorithm_ext/push_back.hpp>
-#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
 #include "Cacheable.h"
@@ -59,9 +58,8 @@ namespace etrading
             }
             else
             {
-                throw ETradingException( ( boost::format( "Unable to find Column Name %s For Data Set called %s" )
-                                           % columnName.c_str()
-                                           % schemaName.c_str() ).str().c_str() );
+                { std::ostringstream aqMsg7;
+aqMsg7 << "Unable to find Column Name " << columnName.c_str() << " For Data Set called " << schemaName.c_str(); AQ_THROW( aqMsg7.str() ); }
             }
         }
 
@@ -82,7 +80,8 @@ namespace etrading
             }
             else
             {
-                throw ETradingException( ( boost::format( "#Error: No Schema with name %s exists" ) % schemaName.c_str() ).str().c_str() );
+                { std::ostringstream aqMsg8;
+aqMsg8 << "No Schema with name " << schemaName.c_str() << " exists"; AQ_THROW( aqMsg8.str() ); }
             }
         }
 
@@ -126,11 +125,8 @@ namespace etrading
             {
                 // _theColumnNameMapping
                 std::string columnNameInfo  = ( _theColumnNameMapping.count( columnIndex ) > 0 ) ? _theColumnNameMapping[ columnIndex ] + " column name" : "NO column name";
-                throw ETradingException( ( boost::format( "#Error: DataSchema column %s with column name %s requires type %s but input data is of type %s" )
-                                           % boost::lexical_cast<std::string>( columnIndex ).c_str()
-                                           % columnNameInfo.c_str()
-                                           % toString( targetType )
-                                           % TypeName::get<S>() ).str().c_str() );
+                { std::ostringstream aqMsg9;
+aqMsg9 << "DataSchema column " << boost::lexical_cast<std::string>( columnIndex ).c_str() << " with column name " << columnNameInfo.c_str() << " requires type " << toString( targetType ) << " but input data is of type " << TypeName::get<S>(); AQ_THROW( aqMsg9.str() ); }
             }
         };
 

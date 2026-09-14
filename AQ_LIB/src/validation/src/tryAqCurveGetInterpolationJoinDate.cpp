@@ -36,7 +36,7 @@ namespace validation
 		}
 		else
 		{
-			throw AQLCoreInvalidData( "#Error: Unsupported interpolation method", __FILE__, __LINE__ );
+			AQ_THROW( "Unsupported interpolation method" );
 		}
 
 		if ( CreateDataFile::recordEnabled() )

@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <vector>
 #include <functional>
-#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 #include <boost/date_time.hpp>
@@ -113,9 +112,8 @@ namespace etrading
     std::vector<ReturnType> zip_paste(  const Container1& c1, const Container2& c2 )
     {
         if( !is_container<Container1>::value || !is_container<Container2>::value )
-            throw ETradingException( ( boost::format( "One of the following types is not a Container (custom_for_each): %s %s" )
-                                       % TypeName::get<Container1>()
-                                       % TypeName::get<Container2>() ).str() );
+            { std::ostringstream aqMsg6;
+aqMsg6 << "One of the following types is not a Container (custom_for_each): " << TypeName::get<Container1>() << " " << TypeName::get<Container2>(); AQ_THROW( aqMsg6.str() ); }
 
         std::vector<ReturnType> retValues;
         auto i1 = c1.cbegin();

@@ -62,10 +62,7 @@ namespace etrading
 
     AQLString FloatStaticData::getForecastCurveMarketName() const
     {
-		if (forecastCurve_.size() != 0 && forecastCurveMarketName_.size() == 0 )
-		{
-	    	throw AQLCoreInvalidData( "#Error: Float's forecastCurveMarketName has not been populated", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( forecastCurve_.size() != 0 && forecastCurveMarketName_.size() == 0, "Float's forecastCurveMarketName has not been populated" );
         return forecastCurveMarketName_;
     }
 

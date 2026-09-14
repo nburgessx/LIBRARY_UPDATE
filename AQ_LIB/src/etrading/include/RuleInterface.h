@@ -14,6 +14,7 @@
 //	For further examples, verify the TestBusinessObject.RuleInterface test
 
 
+#include "ExceptionMacros.h"
 #include <typeinfo>
 #include <memory>
 #include <iostream>
@@ -21,7 +22,6 @@
 #include <type_traits>
 #include <vector>
 #include <utility>
-#include <boost/format.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/date_time.hpp>
 
@@ -65,7 +65,7 @@ namespace etrading
         }
         RuleInterface& operator=( const RuleInterface<A>& rhs )
         {
-            throw ETradingException( "Assignment operator of RuleInterface should never get called" );
+            AQ_THROW( "Assignment operator of RuleInterface should never get called" );
         }  // TODO: C++11 =delete
     };
 
@@ -77,7 +77,8 @@ namespace etrading
         {
             if( !is_etrading_container<C>::value )
             {
-                throw ETradingException(  ( boost::format( "Using ContainerInterface on a type that is not a container : %s" ) % TypeName::get<C>() ).str().c_str()  );
+                { std::ostringstream aqMsg17;
+aqMsg17 << "Using ContainerInterface on a type that is not a container : " << TypeName::get<C>(); AQ_THROW( aqMsg17.str() ); }
             }
         };
         ContainerInterface( const ContainerInterface<C>& rhs ) : RuleInterface<C>( rhs )
@@ -118,17 +119,19 @@ namespace etrading
         {
             if( !std::is_arithmetic<N>::value )
             {
-                throw ETradingException( ( boost::format( "The boundaries in BoundaryRule are not of a numeric type: %s" ) % TypeName::get<N>() ).str() );
+                { std::ostringstream aqMsg18;
+aqMsg18 << "The boundaries in BoundaryRule are not of a numeric type: " << TypeName::get<N>(); AQ_THROW( aqMsg18.str() ); }
             }
             if( max < min )
             {
-                throw ETradingException( "max > min in the boundaries of BoundaryRule" );
+                AQ_THROW( "max > min in the boundaries of BoundaryRule" );
             }
 
             // TODO: replace this with a verify for all the comparison operators...
             if( !std::is_arithmetic<ElementType>::value )
             {
-                throw ETradingException( ( boost::format( "The values in %s are not a numeric type and cannot be checked by BoundaryRule" ) % TypeName::get<A>() ).str() );
+                { std::ostringstream aqMsg20;
+aqMsg20 << "The values in " << TypeName::get<A>() << " are not a numeric type and cannot be checked by BoundaryRule"; AQ_THROW( aqMsg20.str() ); }
             }
         };
 
@@ -166,11 +169,12 @@ namespace etrading
         {
             if( !std::is_arithmetic<A>::value )
             {
-                throw ETradingException( ( boost::format( "BoundaryRule applied on non-numeric type: %s" ) % TypeName::get<A>() ).str() );
+                { std::ostringstream aqMsg21;
+aqMsg21 << "BoundaryRule applied on non-numeric type: " << TypeName::get<A>(); AQ_THROW( aqMsg21.str() ); }
             }
             if( max < min )
             {
-                throw ETradingException( "max > min in the boundaries of BoundaryRule" );
+                AQ_THROW( "max > min in the boundaries of BoundaryRule" );
             }
         };
 
@@ -202,7 +206,7 @@ namespace etrading
         {
             if( ptrCalendar_ == nullptr )
             {
-                throw ETradingException( "Cannot initialize IsWorkingDayRule with a NULL ptr for the Calendar!" );
+                AQ_THROW( "Cannot initialize IsWorkingDayRule with a NULL ptr for the Calendar!" );
             }
         };
 
@@ -240,7 +244,7 @@ namespace etrading
         {
             if( ptrCalendar_ == nullptr )
             {
-                throw ETradingException( "Cannot initialize IsWorkingDayRule with a NULL ptr for the Calendar!" );
+                AQ_THROW( "Cannot initialize IsWorkingDayRule with a NULL ptr for the Calendar!" );
             }
         };
 

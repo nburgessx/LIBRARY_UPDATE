@@ -1,5 +1,5 @@
 
-#include <boost/format.hpp>
+#include <sstream>
 
 #include "tryAqCurveObjectUtilities.h"
 #include "AQObjUtilities.h"
@@ -39,7 +39,9 @@ namespace validation
     {
         if ( !etrading::doesAQObjExist( curveName, "CURVE" ) )
         {
-            AQ_THROW( ( boost::format( "Object %s does not exist." ) % curveName.c_str() ).str().c_str() );
+            std::ostringstream msg;
+            msg << "Object " << curveName << " does not exist.";
+            AQ_THROW( msg.str() );
         }
         return etrading::Environment::defaultEnv().deleteObject<etrading::AQObjCurve>(curveName);
     };
@@ -59,7 +61,9 @@ namespace validation
 
         if( !aqObjCurve )
         {
-            AQ_THROW( ( boost::format( "AQObjCurve %s does not exist" ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream msg;
+            msg << "AQObjCurve " << aqObjCurveName << " does not exist";
+            AQ_THROW( msg.str() );
         }
         
         // Append the file extension if missing
@@ -72,7 +76,9 @@ namespace validation
         etrading::checkFileExists( filenameWithExtension, fileType );
 
         // Return Result
-        return ( boost::format( "Curve %s was written to file %s" ) % aqObjCurveName.c_str() % filenameWithExtension.c_str() ).str();
+        std::ostringstream msg;
+        msg << "Curve " << aqObjCurveName << " was written to file " << filenameWithExtension;
+        return msg.str();
         
     };
 
@@ -92,9 +98,9 @@ namespace validation
         auto& curveStore = etrading::getObjectStore<etrading::AQObjCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( !curveStore.has( objectName ) )
         {
-            throw AQLCoreAppError( ( boost::format( "File (%s) was loaded and read but was not a Curve, found object of type %s" )
-                                % fileName.c_str()
-                                % toString( cacheInfoOnDeserialization.second ) ).str().c_str(), __FILE__, __LINE__ );
+            std::ostringstream msg;
+            msg << "File (" << fileName << ") was loaded and read but was not a Curve, found object of type " << toString( cacheInfoOnDeserialization.second );
+            AQ_THROW( msg.str() );
         }
         return std::make_pair( true, objectName );
     };

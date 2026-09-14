@@ -9,7 +9,6 @@
 #include "CurveCalibration.h"
 
 // External Headers
-#include <boost/format.hpp>
 #include <map>
 
 // LA Headers - Put these last so that legacy defines don't conflict
@@ -107,7 +106,7 @@ namespace etrading
 				}
 				else
 				{
-					throw AQLCoreInvalidData("#Error: Third column of the FRA market data block only takes boolean value", __FILE__, __LINE__);
+					AQ_THROW( "Third column of the FRA market data block only takes boolean value" );
 				}
 
 				// set use grid
@@ -138,10 +137,7 @@ namespace etrading
 					useGrid_FRA += "NONE:";
 				}
 			}
-			else if (fraRates[i].size() == 4)
-			{
-				throw AQLCoreInvalidData("#Error: FRA market data block does not accept four columns", __FILE__, __LINE__);
-			}
+			else AQ_THROW_IF( fraRates[i].size() == 4, "FRA market data block does not accept four columns" );
 
 			fraMarketStream += "\n";
 		}
@@ -206,7 +202,7 @@ namespace etrading
 			curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_ISFRAUSE + suffix_data);
 			curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_ISFRAUSE + suffix_data, new AQLDataBool(isFRAUse));
 		}
-		if (isAudExtra && isFRAUse) throw AQLCoreInvalidData("We can not set AUD extra and FRA use at a same time!", __FILE__, __LINE__);
+		if (isAudExtra && isFRAUse) AQ_THROW( "We can not set AUD extra and FRA use at a same time!" );
 
 		if (isFRAUse)
 		{
@@ -220,10 +216,7 @@ namespace etrading
 
 			// get market rate
 			AQLString fraFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
-			if (fraFileName == AQ_NO_DATA)
-			{
-				throw AQLCoreInvalidData("No FRA File", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( fraFileName == AQ_NO_DATA, "No FRA File" );
 			AQLFileAccessor fraFile(AQLMarketData::getNumFileName(fraFileName));
 			AQLStringMatrix fraDataMtx;
 			fraFile.readAllData(MARKET_DATA_DELIMITER, fraDataMtx);
@@ -349,10 +342,7 @@ namespace etrading
 					mktDataFRA->add(PRICING_DATA_ISFWDSWAP, new AQLDataBool(true));
 
 					AQLString isDateStr = fraDataMtx[i][2].toUpper();
-					if (isDateStr != "TRUE" && isDateStr != "FALSE")
-					{
-						throw AQLCoreInvalidData("#Error: Third column of the FRA market data block only takes boolean value", __FILE__, __LINE__);
-					}
+					AQ_THROW_IF( isDateStr != "TRUE" && isDateStr != "FALSE", "Third column of the FRA market data block only takes boolean value" );
 
 					bool isDate = isDateStr == "TRUE";
 					mktDataFRA->add(PRICING_DATA_ISDATE, new AQLDataBool(isDate));
@@ -550,10 +540,7 @@ namespace etrading
 	void insertDFData(DoubleVector& dfTerms, DoubleVector& dfValues, DateVector& dfDates, double df_insert, double term_insert, const AQLDate& date_insert, DoubleVector& yields, const double yield_insert, const bool overrideIfDatesClash)
 	{
 
-		if (dfTerms.size() != dfDates.size())
-		{
-			throw AQLCoreInvalidData("Size of DF data and Size of dates must be same!", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( dfTerms.size() != dfDates.size(), "Size of DF data and Size of dates must be same!" );
 
 		if (dfDates.back() < date_insert)
 		{
@@ -635,7 +622,7 @@ namespace etrading
 	{
 		// Data Validation
 		if (fwd_termsmtx.size() != 2)
-			throw AQLCoreInvalidData("#Error: Unable to update forward rates, fwd_termsmtx size must be 2", __FILE__, __LINE__);
+			AQ_THROW( "Unable to update forward rates, fwd_termsmtx size must be 2" );
 
 		// Sort and Insert Forward Data into "fwd_termsmtx" and "fwds" containers
 		unsigned int pos = 0;
@@ -674,10 +661,7 @@ namespace etrading
 	{
 		int pos = -1;
 		pos = AQLString(inputTerm).toUpper().findString("X");
-		if (pos == -1)
-		{
-			throw AQLCoreInvalidData("x does not exist in FRA Term.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( pos == -1, "x does not exist in FRA Term." );
 		return inputTerm.subString(0, pos - 1) + AQLString("M");
 	}
 
@@ -693,20 +677,11 @@ namespace etrading
 	void insertForwardRatesData(DoubleMatrix &fwd_termsmtx, DoubleArray &fwds, const DoubleArray &insesrtStartTerms, const DoubleArray &insertEndTerms, const DoubleArray &insertFwdRates)
 	{
 		// Data Validation
-		if (fwd_termsmtx.size() != 2)
-		{
-			throw AQLCoreInvalidData("#Error: Unable to update forward rates, fwd_termsmtx size must be 2", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( fwd_termsmtx.size() != 2, "Unable to update forward rates, fwd_termsmtx size must be 2" );
 
-		if (insesrtStartTerms.empty() || insertEndTerms.empty() || insertFwdRates.empty())
-		{
-			throw AQLCoreInvalidData("#Error: Unable to update forward rates, startTerms, endTerms and fwdRates data cannot be empty", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( insesrtStartTerms.empty() || insertEndTerms.empty() || insertFwdRates.empty(), "Unable to update forward rates, startTerms, endTerms and fwdRates data cannot be empty" );
 
-		if (insesrtStartTerms.size() != insertEndTerms.size() || insesrtStartTerms.size() != insertFwdRates.size())
-		{
-			throw AQLCoreInvalidData("#Error: Unable to update forward rates, inconsistent startTerms, endTerms and fwdRates data", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( insesrtStartTerms.size() != insertEndTerms.size() || insesrtStartTerms.size() != insertFwdRates.size(), "Unable to update forward rates, inconsistent startTerms, endTerms and fwdRates data" );
 
 		// Sort and Insert Forward Data into "fwd_termsmtx" and "fwds" containers
 		unsigned int pos = 0;
@@ -799,7 +774,7 @@ namespace etrading
 		if (applyTensionFRAs && tensionGapFRAs < 1)
 		{
 			AQLString msg = "#Error: The TensionGap parameter in the FRA conventions table must be a positive integer.";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 
 		// get SmoothShortEnd		
@@ -1285,7 +1260,7 @@ namespace etrading
 				}
 				else
 				{
-					throw AQLCoreInvalidData("#Error: Failed to read interpolation method from the curve.", __FILE__, __LINE__);
+					AQ_THROW( "Failed to read interpolation method from the curve." );
 				}
 			}
 		}
@@ -1947,7 +1922,8 @@ namespace etrading
 			const AQLString& previousTermString = dynamic_cast<const AQLDataString&> ((data_item[i - 1]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			if (previousTermString == maturityTermString)
 			{
-				throw AQLCoreInvalidData((boost::format("#Error: Duplicate Swap Instrument Detected, Duplicate Maturity Term: '%s'.") % maturityTermString.getCString()).str().c_str(), __FILE__, __LINE__);
+				{ std::ostringstream aqCoreMsg5;
+aqCoreMsg5 << "Duplicate Swap Instrument Detected, Duplicate Maturity Term: '" << maturityTermString.getCString() << "'."; AQ_THROW( aqCoreMsg5.str() ); }
 			}
 		}
 
@@ -2021,10 +1997,7 @@ namespace etrading
 			liborFile.close();
 		}
 
-		if ((liborDataMtx.size() == 0 || liborDataMtx[0].size() < 2) && !isFwdFX)
-		{
-			throw AQLCoreInvalidData("#Error: This curve requires Libor fixing rates to be provided as its inputs which are currently missing", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( (liborDataMtx.size() == 0 || liborDataMtx[0].size() < 2) && !isFwdFX, "This curve requires Libor fixing rates to be provided as its inputs which are currently missing" );
 
 		double firstVal = 0.0;
 		if (!isFwdFX)
@@ -2844,7 +2817,8 @@ namespace etrading
 		if (str_v.size() != 2 || str_v[0].size() < 2 || str_v[1].size() < 2)
 		{
 			//error
-			throw AQLCoreInvalidData((boost::format("#Error: Date Error: Invalid term string %s. Acceptable formats include: '2D_1D' or '2D_1W'") % str.getCString()).str().c_str(), __FILE__, __LINE__);
+			{ std::ostringstream aqCoreMsg6;
+aqCoreMsg6 << "Date Error: Invalid term string " << str.getCString() << ". Acceptable formats include: '2D_1D' or '2D_1W'"; AQ_THROW( aqCoreMsg6.str() ); }
 		}
 		unsigned int size = str_v[0].size();
 		str = str_v[0].subString(size - 1, size - 1);
@@ -2852,7 +2826,8 @@ namespace etrading
 		if (str != "D")
 		{
 			//error
-			throw AQLCoreInvalidData((boost::format("#Error: Date Error: Invalid term string: '%s'") % str_v[0].getCString()).str().c_str(), __FILE__, __LINE__);
+			{ std::ostringstream aqCoreMsg7;
+aqCoreMsg7 << "Date Error: Invalid term string: '" << str_v[0].getCString() << "'"; AQ_THROW( aqCoreMsg7.str() ); }
 		}
 		AQLString str2 = str_v[0].subString(0, size - 2);
 		char * pFirstNonNumber;
@@ -2888,7 +2863,8 @@ namespace etrading
 		else
 		{
 			//error
-			throw AQLCoreInvalidData((boost::format("#Error: Date Error: Invalid term string %s, must use 'D', 'W', 'M' or 'Y'") % termstr.getCString()).str().c_str(), __FILE__, __LINE__);
+			{ std::ostringstream aqCoreMsg8;
+aqCoreMsg8 << "Date Error: Invalid term string " << termstr.getCString() << ", must use 'D', 'W', 'M' or 'Y'"; AQ_THROW( aqCoreMsg8.str() ); }
 		}
 		end = srule.getDate(end, cal);
 	}
@@ -3419,10 +3395,7 @@ namespace etrading
 
 					// refer to a document of Bloomberg about convexity adjust of euro dollar future
 					double tau = dc.getTerm(futuresStartDate, futuresEndDate);
-					if (tau <= 0.0)
-					{
-						throw AQLCoreInvalidData("#Error: CurveCalibration::calcDiscountFactor failed. Invalid futures market data, a futures end date is before it's start date", __FILE__, __LINE__);
-					}
+					AQ_THROW_IF( tau <= 0.0, "CurveCalibration::calcDiscountFactor failed. Invalid futures market data, a futures end date is before it's start date" );
 
 					convexityAdjustment = (1.0 - AQLMath::exp(-convexityAdjustment * tau)) * (futureRate + 1.0 / tau);
 				}
@@ -3567,14 +3540,8 @@ namespace etrading
 	void updateImpliedForwardRates(const AQLInterpolationBase &inter, const StateVariableEnum& stateVariable, const DoubleArray &fixingStarts, const DoubleArray &fixingEnds, const DoubleArray &tau_swap, bool generateForwardsFromSwapsOnly, const AQLDate & asOfDate, const DayCountEnum & accrualDaycount, DoubleMatrix &fwd_termsmtx, DoubleArray &fwds)
 	{
 
-		if (fwd_termsmtx.size() != 2)
-		{
-			throw AQLCoreInvalidData("Error: Unable to calculate forward rates. The fwd_termsmtx size must be 2", __FILE__, __LINE__);
-		}
-		if (fixingStarts.empty() || fixingEnds.empty())
-		{
-			throw AQLCoreInvalidData("#Error Unable to calculate forward rates. The fwd_grid is empty", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( fwd_termsmtx.size() != 2, "Error: Unable to calculate forward rates. The fwd_termsmtx size must be 2" );
+		AQ_THROW_IF( fixingStarts.empty() || fixingEnds.empty(), "#Error Unable to calculate forward rates. The fwd_grid is empty" );
 
 
 		DoubleArray fwds_swap(fixingStarts.size());
@@ -3730,7 +3697,7 @@ namespace etrading
 			{
 				//error
 				AQLString msg = "#Error: Invalid Money Market data, money market end dates must not overlap the start date of next instrument";
-				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQ_THROW( msg.getCString() );
 			}
 
 			double rate = dynamic_cast<const AQLDataDouble&> ((it->second->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
@@ -4987,7 +4954,7 @@ namespace etrading
 			}
 			default:
 			{
-				throw etrading::ETradingException("#Error: Invalid Serial Calulation Type, must be 'CONTIGUOUS', 'RATE' or 'DF'");
+				AQ_THROW( "Invalid Serial Calulation Type, must be 'CONTIGUOUS', 'RATE' or 'DF'" );
 				break;
 			}
 		}

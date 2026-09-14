@@ -12,10 +12,7 @@ namespace etrading
         validateLegs(leg1, leg2);
 
         //Single Currency
-        if ( leg1->getStaticData()->getCurrency() != leg2->getStaticData()->getCurrency() )
-        {
-  		    throw AQLCoreInvalidData( "#Error: It is not a single currency Swap", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( leg1->getStaticData()->getCurrency() != leg2->getStaticData()->getCurrency(), "It is not a single currency Swap" );
 
         setNotionalFromFutureValueNotional(leg1, leg2);
 

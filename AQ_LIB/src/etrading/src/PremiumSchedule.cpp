@@ -143,10 +143,7 @@ namespace etrading
 
 		notional_ = scheduleLVB.getOptionalValueAsDoubleFromKeys( IRS_KEY::NOTIONAL, BOND_KEY::FACE_VALUE, std::numeric_limits<double>::quiet_NaN() ); 
 
-		if (boost::math::isnan(notional_))
-        {
-        	throw AQLCoreInvalidData( "#Error: Notional is a mandatory field for PremiumSchedule", __FILE__, __LINE__ );
-        }
+		AQ_THROW_IF( boost::math::isnan(notional_), "Notional is a mandatory field for PremiumSchedule" );
     }
 
 	void PremiumSchedule::createUpfrontCashflow( const AQLDate& paymentDate, double leverage ) 

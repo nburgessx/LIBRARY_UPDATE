@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <sstream>
 
 #include "tryAqObject.h"
 #include "AQObjUtilities.h"
@@ -75,7 +76,9 @@ namespace validation
     {
         if ( !etrading::doesAQObjExist( objectName, typeAsString ) )
         {
-            AQ_THROW( ( boost::format( "Object %s does not exist." ) % objectName.c_str() ).str().c_str() );
+            std::ostringstream msg;
+            msg << "Object " << objectName << " does not exist.";
+            AQ_THROW( msg.str() );
         }
         const etrading::CachedObjectEnum objEnum = etrading::toCachedObjectEnum( etrading::trim_to_upper( typeAsString.c_str() ) );
         return etrading::Environment::defaultEnv().deleteObject( objectName, objEnum );

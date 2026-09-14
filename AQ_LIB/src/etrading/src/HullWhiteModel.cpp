@@ -181,7 +181,7 @@ namespace etrading
 		// ref: (3.34) on page 73 of Brigo book 
 
 		// theta is required when simulating zero rates, e.g. using Euler discretization: r(i+1) = r(i) + (theta(i) - a*r(i))*dt + sigma*sqrt(dt)*N(0,1)
-    	throw AQLCoreInvalidData( "#Error: HullWhiteModel calculateTheta method is not supported (TODO)", __FILE__, __LINE__ );
+    	AQ_THROW( "HullWhiteModel calculateTheta method is not supported (TODO)" );
 	}
 
 	// Get Accessors

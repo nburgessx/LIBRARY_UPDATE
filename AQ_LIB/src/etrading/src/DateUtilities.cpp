@@ -11,7 +11,8 @@
 #include <iterator>
 #include <vector>
 #include <cmath>
-#include <boost/format.hpp>
+#include <sstream>
+#include <iomanip>
 #include <boost/assign.hpp>
 #include <boost/date_time.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -179,12 +180,14 @@ namespace etrading
         // std::string::npos is -1 ...
         if ( pl_y == std::string::npos && pl_m == std::string::npos && pl_d == std::string::npos && pl_w == std::string::npos )
         {
-            throw ETradingException( ( boost::format( "#Error Invalid Tenor String: TenorString must be ON, TN, Y, M, D or W but found %s" ) % str.c_str() ).str() );
+            { std::ostringstream aqMsg116;
+aqMsg116 << "Invalid Tenor String: TenorString must be ON, TN, Y, M, D or W but found " << str.c_str(); AQ_THROW( aqMsg116.str() ); }
         }
         // week
         if ( ( pl_y != std::string::npos || pl_m != std::string::npos || pl_d != std::string::npos ) && pl_w != std::string::npos )
         {
-            throw ETradingException( ( boost::format( "#Error Invalid Tenor String: TenorString must not be a combination of W and one of ON, TN, Y, M, D but found %s" ) % str.c_str() ).str() );
+            { std::ostringstream aqMsg117;
+aqMsg117 << "Invalid Tenor String: TenorString must not be a combination of W and one of ON, TN, Y, M, D but found " << str.c_str(); AQ_THROW( aqMsg117.str() ); }
         }
 
         std::string tmp = str;
@@ -192,7 +195,8 @@ namespace etrading
         tmp.erase( std::remove_if( tmp.begin(), tmp.end(), boost::is_any_of( "1234567890YMDW-" ) ), tmp.end() );
         if ( tmp.size() != 0 )
         {
-            throw ETradingException( ( boost::format( "#Error Invalid Tenor String: TenorString must be ON, TN, Y, M, D or W but found %s" ) % str.c_str() ).str() );
+            { std::ostringstream aqMsg118;
+aqMsg118 << "Invalid Tenor String: TenorString must be ON, TN, Y, M, D or W but found " << str.c_str(); AQ_THROW( aqMsg118.str() ); }
         }
 
         // assume YMDW
@@ -290,12 +294,14 @@ namespace etrading
     {
         if( yearFraction < 0.0 )
         {
-            throw ETradingException( ( boost::format( "#Error Invalid Year Fraction: Only positive yearFraction arguments are allowed (supplied: %f)" ) % yearFraction ).str() );
+            { std::ostringstream aqMsg119;
+aqMsg119 << "Invalid Year Fraction: Only positive yearFraction arguments are allowed (supplied: " << yearFraction << ")"; AQ_THROW( aqMsg119.str() ); }
         }
 
         if( yearFraction > 1000.0 )
         {
-            throw ETradingException( ( boost::format( "#Error Invalid Year Fraction: Only yearFraction arguments less than 1000 are allowed (supplied: %f)" ) % yearFraction ).str() );
+            { std::ostringstream aqMsg120;
+aqMsg120 << "Invalid Year Fraction: Only yearFraction arguments less than 1000 are allowed (supplied: " << yearFraction << ")"; AQ_THROW( aqMsg120.str() ); }
         }
 
         if( dayCount == etrading::ACT_ACT_DAYCOUNT )
@@ -392,7 +398,7 @@ namespace etrading
         else
         {
             // cfr. double AQLPriceDataDayCount::getDayTerm(const AQLDate& fromDate, const double& termY, bool includelast) const
-            throw ETradingException( "N30_360, E30_360 and ACT_365_FJ are not supported this method" );
+            AQ_THROW( "N30_360, E30_360 and ACT_365_FJ are not supported this method" );
         }
 
     };
@@ -585,12 +591,16 @@ namespace etrading
     std::string getCurrentDateTime()
     {
         boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
-        return ( boost::format( "%04i%02i%02i %02i:%02i:%02i" ) % now.date().year()
-                                                                % now.date().month().as_number()
-                                                                % now.date().day()
-                                                                % now.time_of_day().hours()
-                                                                % now.time_of_day().minutes()
-                                                                % now.time_of_day().seconds() ).str();
+        std::ostringstream msg;
+        msg << std::setfill('0')
+            << std::setw(4) << static_cast<int>( now.date().year() )
+            << std::setw(2) << static_cast<int>( now.date().month().as_number() )
+            << std::setw(2) << static_cast<int>( now.date().day() )
+            << " "
+            << std::setw(2) << static_cast<long>( now.time_of_day().hours() )
+            << ":" << std::setw(2) << static_cast<long>( now.time_of_day().minutes() )
+            << ":" << std::setw(2) << static_cast<long>( now.time_of_day().seconds() );
+        return msg.str();
     };
 
     AQLDate getCurrentAqDate()
@@ -626,9 +636,12 @@ namespace etrading
     std::string getCurrentTime()
     {
         boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
-        return ( boost::format( "%02i:%02i:%02i" ) % now.time_of_day().hours()
-                                                   % now.time_of_day().minutes()
-                                                   % now.time_of_day().seconds() ).str();
+        std::ostringstream msg;
+        msg << std::setfill('0')
+            << std::setw(2) << static_cast<long>( now.time_of_day().hours() )
+            << ":" << std::setw(2) << static_cast<long>( now.time_of_day().minutes() )
+            << ":" << std::setw(2) << static_cast<long>( now.time_of_day().seconds() );
+        return msg.str();
     };
 
     AQLDate toAQLDateFromGregorianDate( const boost::gregorian::date& gregorian_date )
@@ -657,7 +670,12 @@ namespace etrading
     // returns a date string "YYYYMMDD" from a boost::gregorian::date
     std::string toYYYYMMDDFromGregorianDate( const boost::gregorian::date& gregorian_date )
     {
-        return std::string(  ( boost::format( "%04i%02i%02i" ) % static_cast<short>( gregorian_date.year() ) % static_cast<short>( gregorian_date.month() ) % static_cast<short>( gregorian_date.day() ) ).str() ) ;
+        std::ostringstream msg;
+        msg << std::setfill('0')
+            << std::setw(4) << static_cast<short>( gregorian_date.year() )
+            << std::setw(2) << static_cast<short>( gregorian_date.month() )
+            << std::setw(2) << static_cast<short>( gregorian_date.day() );
+        return msg.str();
     };
 
     // returns a date string "YYYYMMDD" from an AQLDate
@@ -707,7 +725,8 @@ namespace etrading
         int idx = ( cit != DATE_REGEX.cend() ? cit - DATE_REGEX.cbegin() : -1 );
         if( idx < 0 )
         {
-            throw ETradingException( ( boost::format( "#Error: Unable to convert string to date: %s" ) % inString.c_str() ).str() );
+            { std::ostringstream aqMsg122;
+aqMsg122 << "Unable to convert string to date: " << inString.c_str(); AQ_THROW( aqMsg122.str() ); }
         }
 
         // ("\\d{5}")("\\d{8}")("\\d{4}-\\d{2}-\\d{2}")("(\\d{2,4})\\/(\\d{2})(?:\\/?(\\d{2}))?")("\\d{4}\\\\\\d{2}\\\\\\d{2}")("(\\d{2})\\/(\\d{2})(?:\\/?(\\d{2,4}))?")("\\d{2}-\\d{2}-\\d{4}")("\\d{2}\\\\\\d{2}\\\\\\d{4}")
@@ -737,7 +756,8 @@ namespace etrading
             }
             else
             {
-                throw ETradingException( (  boost::format( "#Error: Unable to generate date from year %i month %i day %i" ) %  year % month % day ).str() );
+                { std::ostringstream aqMsg123;
+aqMsg123 << "Unable to generate date from year " << year << " month " << month << " day " << day; AQ_THROW( aqMsg123.str() ); }
             }
         }
         return boost::gregorian::date( boost::gregorian::min_date_time ); // should never get here
@@ -845,7 +865,8 @@ namespace etrading
                 rate = ( std::pow( returnValue, 1.0 / ( yearFraction * 52.0 ) ) - 1.0 ) * 52.0;
                 break;
             default:
-                throw ETradingException( ( boost::format( "getRateFromReturn: unhandled CompoundingFrequency: %s" ) % toString( compFreq ) ).str() );
+                { std::ostringstream aqMsg124;
+aqMsg124 << "getRateFromReturn: unhandled CompoundingFrequency: " << toString( compFreq ); AQ_THROW( aqMsg124.str() ); }
                 break;
         }
         return rate;
@@ -874,7 +895,8 @@ namespace etrading
                 // nothing to be done
                 break;
             default:
-                throw ETradingException( ( boost::format( "convertRateFromAnnualTo: unhandled CompoundingFrequency: %s" ) % toString( targetCompoundingFreq ) ).str() );
+                { std::ostringstream aqMsg125;
+aqMsg125 << "convertRateFromAnnualTo: unhandled CompoundingFrequency: " << toString( targetCompoundingFreq ); AQ_THROW( aqMsg125.str() ); }
                 break;
         }
         return rate;
@@ -925,8 +947,8 @@ namespace etrading
 
 			if ( ! parseSuccessful && throwOnFailure )
 			{
-				throw AQLCoreInvalidData( ( boost::format("#Error: Invalid tenor \"%s\". Expecting format \"nnY\" ." )
-									   % tenor ).str().c_str(), __FILE__, __LINE__ );
+				{ std::ostringstream aqCoreMsg11;
+aqCoreMsg11 << "Invalid tenor \"" << tenor << "\". Expecting format \"nnY\" ."; AQ_THROW( aqCoreMsg11.str() ); }
 			}
 		}
 		return tenorYears;

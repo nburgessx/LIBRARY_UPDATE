@@ -176,7 +176,7 @@ namespace etrading
 
         ConcurrentMap( const ConcurrentMap<Key, Value>& )
         {
-            throw ETradingException( "ConcurrentMap Copy CTOR should never be called" ); // TODO: C++11 =delete
+            AQ_THROW( "ConcurrentMap Copy CTOR should never be called" ); // TODO: C++11 =delete
         }
 
     };

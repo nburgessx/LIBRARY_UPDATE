@@ -99,10 +99,7 @@ namespace validation
         }
 
         // Validate parameters
-        if( tenors.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "a size of vector is zero.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( tenors.size() == 0, "a size of vector is zero." );
 
         AQLString curIndex( curveIndex );
         AQLString interp;

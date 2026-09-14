@@ -3,8 +3,8 @@
 
 #include <utility>
 #include <algorithm>
+#include <sstream>
 #include <boost/foreach.hpp>
-#include <boost/format.hpp>
 #include <boost/range/algorithm_ext/push_back.hpp>
 #include <boost/range.hpp>
 #include <boost/range/adaptor/map.hpp>
@@ -52,7 +52,8 @@ namespace etrading
 
         if( !is_unique( keyNames ) )
         {
-            throw ETradingException( ( boost::format( "DataSchemas do not have unique names: %s" ) % containerAsString( keyNames ) ).str() );
+            { std::ostringstream aqMsg97;
+aqMsg97 << "DataSchemas do not have unique names: " << containerAsString( keyNames ); AQ_THROW( aqMsg97.str() ); }
         }
 
         // re-initialize the object
@@ -90,8 +91,8 @@ namespace etrading
         const auto keyNames = this->keyNames();
         if( std::find( keyNames.cbegin(), keyNames.cend(), dataSchema.getName() ) != keyNames.cend() )
         {
-            throw ETradingException( ( boost::format( "%s creation: %s already exists as a DataSchema in %s" )
-                                       % toString( getEnumType() ) % dataSchema.getName() % containerAsString( keyNames ) ).str() );
+            { std::ostringstream aqMsg98;
+aqMsg98 << toString( getEnumType() ) << " creation: " << dataSchema.getName() << " already exists as a DataSchema in " << containerAsString( keyNames ); AQ_THROW( aqMsg98.str() ); }
         }
         _theKeys.push_back( dataSchema );
         auto dataColumnsToConcatenate = std::vector<std::vector<Variant>>( dataSchema.getNumberOfColumns(), std::vector<Variant>( 0 ) );
@@ -160,14 +161,16 @@ namespace etrading
                 auto citColName = std::find( columnNamesHere.cbegin(), columnNamesHere.cend(), columnName );
                 if( citColName == columnNamesHere.cend() )
                 {
-                    throw ETradingException( ( boost::format( "#Error: Unable to find Column Name %s inside the Schema %s despite presence in Column Name Mapping" ) % columnName.c_str() % schemaName.c_str() ).str().c_str() );
+                    { std::ostringstream aqMsg99;
+aqMsg99 << "Unable to find Column Name " << columnName.c_str() << " inside the Schema " << schemaName.c_str() << " despite presence in Column Name Mapping"; AQ_THROW( aqMsg99.str() ); }
                 }
                 size_t idx = citColName - columnNamesHere.cbegin();
                 return std::make_pair( ( *it ), cit->getColumnType( idx ) );
             }
             else
             {
-                throw ETradingException( ( boost::format( "#Error: Unable to find the Schema called %s despite existing mapping to column indices " ) % schemaName.c_str() ).str().c_str() );
+                { std::ostringstream aqMsg100;
+aqMsg100 << "Unable to find the Schema called " << schemaName.c_str() << " despite existing mapping to column indices "; AQ_THROW( aqMsg100.str() ); }
             }
             // return std::make_pair(-1, etrading::ContainedTypeEnum::VARIANT);   // should never be called ...
         }
@@ -205,14 +208,15 @@ namespace etrading
         const bool keyNameExists = 	( _theKeyColumnMapping.find( schemaName ) != _theKeyColumnMapping.end() );
         if( !keyNameExists )
         {
-            throw ETradingException( createUnableToFindKey( schemaName ).c_str() );
+            AQ_THROW( createUnableToFindKey( schemaName ).c_str() );
         }
 
         const std::vector<int> relevantColumns = _theKeyColumnMapping.at( schemaName );
         const unsigned int numOfColumns = relevantColumns.size();
         if( numOfColumns < ( columnIndex + 1 ) )
         {
-            throw ETradingException( ( boost::format( "#Error: Schema %s has %i columns, requested column was %i " ) % schemaName.c_str() % numOfColumns % columnIndex ).str().c_str() );
+            { std::ostringstream aqMsg102;
+aqMsg102 << "Schema " << schemaName.c_str() << " has " << numOfColumns << " columns, requested column was " << columnIndex << " "; AQ_THROW( aqMsg102.str() ); }
         }
 
         const unsigned int relevantColumn = relevantColumns[ columnIndex ];
@@ -220,7 +224,8 @@ namespace etrading
         const unsigned int numOfRows = relData.size();
         if( numOfRows < ( rowIndex + 1 ) )
         {
-            throw ETradingException( ( boost::format( "#Error: Schema %s has %i rows, requested row was %i " ) % schemaName.c_str() % numOfRows % rowIndex ).str().c_str() );
+            { std::ostringstream aqMsg103;
+aqMsg103 << "Schema " << schemaName.c_str() << " has " << numOfRows << " rows, requested row was " << rowIndex << " "; AQ_THROW( aqMsg103.str() ); }
         }
 
         return relData[ rowIndex ];
@@ -231,7 +236,7 @@ namespace etrading
     {
         if( index > ( _theData.size() - 1 ) )
         {
-            throw ETradingException( constructColOverflowString( index ).c_str() );
+            AQ_THROW( constructColOverflowString( index ).c_str() );
         }
 
         const std::vector<Variant>& testVec = _theData[ index ];
@@ -264,7 +269,7 @@ namespace etrading
         const bool keyNameExists = 	( _theKeyColumnMapping.find( schemaName ) != _theKeyColumnMapping.end() );
         if( !keyNameExists )
         {
-            throw ETradingException( createUnableToFindKey( schemaName ).c_str() );
+            AQ_THROW( createUnableToFindKey( schemaName ).c_str() );
         }
 
         const std::vector<int> relevantColumns = _theKeyColumnMapping.at( schemaName );
@@ -273,7 +278,8 @@ namespace etrading
         {
             if( numOfColumns < ( index + 1 ) )
             {
-                throw ETradingException( ( boost::format( "#Error: Schema %s has %i columns, requested column was %i " ) % schemaName.c_str() % numOfColumns % index ).str().c_str() );
+                { std::ostringstream aqMsg106;
+aqMsg106 << "Schema " << schemaName.c_str() << " has " << numOfColumns << " columns, requested column was " << index << " "; AQ_THROW( aqMsg106.str() ); }
             }
             return _theData[ relevantColumns[index] ];
         }
@@ -286,7 +292,8 @@ namespace etrading
                 const unsigned int numOfRows = relData.size();
                 if( numOfRows < ( index + 1 ) )
                 {
-                    throw ETradingException( ( boost::format( "#Error: Schema %s has %i rows, requested row was %i " ) % schemaName.c_str() % numOfRows % index ).str().c_str() );
+                    { std::ostringstream aqMsg107;
+aqMsg107 << "Schema " << schemaName.c_str() << " has " << numOfRows << " rows, requested row was " << index << " "; AQ_THROW( aqMsg107.str() ); }
                 }
                 retValues.push_back( _theData[ colIdx ][ index ] );
             }
@@ -297,7 +304,9 @@ namespace etrading
     // helper function given a string saying it is unable to find a certain key
     std::string DataHolder::createUnableToFindKey( const std::string& schemaName )
     {
-        return std::string(  ( boost::format( "#Error: Unable to find Schema called %s despite existing mapping to column indices " ) % schemaName.c_str() ).str() );
+        std::ostringstream msg;
+        msg << "Unable to find Schema called " << schemaName << " despite existing mapping to column indices ";
+        return msg.str();
     }
 
     // given a series for schema, tell me how many columns this would translate to
@@ -317,7 +326,7 @@ namespace etrading
     {
         if( idx >= _theData.size() )
         {
-            throw ETradingException( constructColOverflowString( idx ).c_str() );
+            AQ_THROW( constructColOverflowString( idx ).c_str() );
         }
         return _theData[ idx ];
     }
@@ -331,7 +340,8 @@ namespace etrading
     {
         if( size_t(idx) >= _theKeys.size() || idx < 0 )
         {
-            throw ETradingException( ( boost::format( "#Error: Object has %i Schema, requested key index was %i " ) % _theKeys.size() % idx ).str() );
+            { std::ostringstream aqMsg109;
+aqMsg109 << "Object has " << _theKeys.size() << " Schema, requested key index was " << idx << " "; AQ_THROW( aqMsg109.str() ); }
         }
         return _theKeys[ idx ];
     }
@@ -357,8 +367,8 @@ namespace etrading
 		}
 		catch (std::out_of_range&)
 		{
-			throw AQLCoreInvalidData( ( boost::format( "#Error: Could not find required property key '%s' in object with name '%s'." )  
-						% skName % getRefToName() ).str().c_str(), __FILE__, __LINE__ );
+			{ std::ostringstream aqCoreMsg10;
+aqCoreMsg10 << "Could not find required property key '" << skName << "' in object with name '" << getRefToName() << "'."; AQ_THROW( aqCoreMsg10.str() ); }
 		}
         return columns;
     }
@@ -387,7 +397,9 @@ namespace etrading
     // helper function giving an error string
     std::string DataHolder::constructColOverflowString( int index ) const
     {
-        return std::string( ( boost::format( "Data matrix has %i columns, requested information column was %i " ) % _theData.size() % index ).str() );
+        std::ostringstream msg;
+        msg << "Data matrix has " << _theData.size() << " columns, requested information column was " << index << " ";
+        return msg.str();
     }
 
     void DataHolder::setDataForSchema( const std::string& schemaName,
@@ -413,10 +425,8 @@ namespace etrading
 			const size_t number_of_columns = usedTypes.size();
             if( number_of_columns != cit->getNumberOfColumns() )
             {
-                throw ETradingException( ( boost::format( "#Error: DataSchema %s expects %i columns, however input data has %s columns" )
-                                           % schemaName.c_str()
-                                           % cit->getNumberOfColumns()
-                                           % number_of_columns ).str() );
+                { std::ostringstream aqMsg110;
+aqMsg110 << "DataSchema " << schemaName.c_str() << " expects " << cit->getNumberOfColumns() << " columns, however input data has " << number_of_columns << " columns"; AQ_THROW( aqMsg110.str() ); }
             }
 
 			// Check Used Types Match Schema ... Except ...
@@ -435,12 +445,8 @@ namespace etrading
 
 				if( cit->getColumnType( colCounter ) != usedTypes[ colCounter ] )
 				{
-					throw ETradingException( ( boost::format( "#Error: DataSchema %s expects column %i with type %s, however input data column %i has type %s" )
-												% schemaName.c_str()
-												% ( colCounter + 1 )
-												% toString( cit->getColumnType( colCounter ) ).c_str()
-												% ( colCounter + 1 )
-												% toString( usedTypes[ colCounter ] ).c_str() ).str() );
+					{ std::ostringstream aqMsg111;
+aqMsg111 << "DataSchema " << schemaName.c_str() << " expects column " << ( colCounter + 1 ) << " with type " << toString( cit->getColumnType( colCounter ) ).c_str() << ", however input data column " << ( colCounter + 1 ) << " has type " << toString( usedTypes[ colCounter ] ).c_str(); AQ_THROW( aqMsg111.str() ); }
 				}
 			}
 
@@ -457,7 +463,8 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( ( boost::format( "#Error: No Schema with name %s exists" ) % schemaName.c_str() ).str().c_str() );
+            { std::ostringstream aqMsg112;
+aqMsg112 << "No Schema with name " << schemaName.c_str() << " exists"; AQ_THROW( aqMsg112.str() ); }
         }
     };
 

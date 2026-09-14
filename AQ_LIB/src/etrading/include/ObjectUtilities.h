@@ -316,7 +316,7 @@ namespace etrading
     template<CachedObjectEnum Z>
     inline typename to_cached_object_type<Z>::type createCacheableObject( const rapidjson::Value& jsonDoc )
     {
-        throw ETradingException("createCacheableObject was called on a Cached Object Type without its de-serialization implemented");
+        AQ_THROW( "createCacheableObject was called on a Cached Object Type without its de-serialization implemented" );
         //std::string objectName = jsonDoc[CachedObject::OBJECT_NAME_LABEL.c_str()].GetString();
         //return createEmptyCachedObjectType<Z>( objectName )
     };

@@ -75,10 +75,7 @@ namespace validation
 		auto leg = etrading::getLeg(fraObjectName);
 
 		auto fraObject = std::dynamic_pointer_cast<etrading::Fra>(leg);
-		if (fraObject == nullptr)
-		{
-			throw AQLCoreInvalidData("#Error: The leg is not a Fra type", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( fraObject == nullptr, "The leg is not a Fra type" );
 
 		auto result = fraObject->fraRate(valuationSettingsLVB);
 
@@ -106,10 +103,7 @@ namespace validation
 		auto leg = etrading::getLeg(fraObjectName);
 
 		auto fraObject = std::dynamic_pointer_cast<etrading::Fra>(leg);
-		if (fraObject == nullptr)
-		{
-			throw AQLCoreInvalidData("#Error: The leg is not a Fra type", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( fraObject == nullptr, "The leg is not a Fra type" );
 
 		double result = fraObject->fraRateToFuturePrice(valuationSettingsLVB, meanReversion, volatility);
 
@@ -137,10 +131,7 @@ namespace validation
 		auto leg = etrading::getLeg(fraObjectName);
 
 		auto fraObject = std::dynamic_pointer_cast<etrading::Fra>(leg);
-		if (fraObject == nullptr)
-		{
-			throw AQLCoreInvalidData("#Error: The leg is not a Fra type", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( fraObject == nullptr, "The leg is not a Fra type" );
 
 		double result = fraObject->fraRateToFuturePrice(valuationSettingsLVB, convexityAdjustment);
 

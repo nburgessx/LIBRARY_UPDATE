@@ -34,10 +34,7 @@ namespace etrading
 			{
 				compoundingMethod = "NORMAL";
 			}
-			else if ( !( boost::iequals( compoundingMethod.getCString(), "FLAT" ) || boost::iequals( compoundingMethod.getCString(), "SIMPLE" ) ) )
-			{
-				throw AQLCoreInvalidData( "#Error: Invalid compounding method, 'CompMethod' should either be 'Arithmetic', 'Geometric', 'FLAT', or 'SIMPLE'", __FILE__, __LINE__ );
-			}
+			else AQ_THROW_IF( !( boost::iequals( compoundingMethod.getCString(), "FLAT" ) || boost::iequals( compoundingMethod.getCString(), "SIMPLE" ) ), "Invalid compounding method, 'CompMethod' should either be 'Arithmetic', 'Geometric', 'FLAT', or 'SIMPLE'" );
 		}
 
         if ( eomRoll )
@@ -209,7 +206,7 @@ namespace etrading
             if ( **rollDay < 1 || **rollDay > 31 )
             {
                 AQLString msg = "#Error: The rollDay must be a day of the month i.e. a number from 1 to 31 or a convention e.g. 'IMM' or 'EOM'.";
-                throw AQLCoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
+                AQ_THROW( msg.getCString() );
             }
 
             // Update Roll Conventions
@@ -267,7 +264,7 @@ namespace etrading
             {
                 // Possible choices of roll convention are: IMM and EOM (End-Of-Month)
                 AQLString msg = "#Error: The rollDay must be a day of the month i.e. a  from 1 to 31 or a convention e.g. 'IMM' or 'EOM'.";
-                throw AQLCoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
+                AQ_THROW( msg.getCString() );
             }
         }
     }
@@ -344,14 +341,8 @@ namespace etrading
     {
         bool sameCurrency = ( leg1Currency == leg2Currency );
 
-        if (!isXccySwap && !sameCurrency)
-        {
-            throw AQLCoreInvalidData( "#Error: For Single Currency Swap, two legs should have same Currency", __FILE__, __LINE__ );
-        }
-        if (isXccySwap && sameCurrency)
-        {
-            throw AQLCoreInvalidData( "#Error: For Cross Currency Swap, two legs should have different Currencies", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !isXccySwap && !sameCurrency, "For Single Currency Swap, two legs should have same Currency" );
+        AQ_THROW_IF( isXccySwap && sameCurrency, "For Cross Currency Swap, two legs should have different Currencies" );
     }
 
     /* @brief			Validate two swap legs' currecies matching the isXccySwap flag

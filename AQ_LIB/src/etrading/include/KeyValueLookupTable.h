@@ -1,9 +1,9 @@
 #pragma once
 
+#include "ExceptionMacros.h"
 #include <string>
 #include <unordered_map>
 #include <sstream>
-#include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>   // For boost::to_upper and boost:iequals i.e. case insensitve string comparison
 
 #include "AQLCoreTemplateType.h"
@@ -115,7 +115,7 @@ namespace etrading
                     s << ", '" + labelValueBlockName + "'.";
                 }
 
-                throw AQLCoreInvalidData( s.str().c_str(), __FILE__, __LINE__ );
+                AQ_THROW( s.str().c_str() );
             }
 
             T ret = iter->second;
@@ -143,7 +143,8 @@ namespace etrading
             }
             else
             {
-                throw ETradingException(  ( boost::format( "#Error: LVB has duplicated key '%s'" ) % key ).str()  );
+                { std::ostringstream aqMsg11;
+aqMsg11 << "LVB has duplicated key '" << key << "'"; AQ_THROW( aqMsg11.str() ); }
             }
         }
 

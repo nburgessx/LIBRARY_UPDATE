@@ -55,7 +55,7 @@ namespace etrading
                     {
                         ss << "#Error: Key " << key << " is not an expected key in the " << LVBname << " Label Value Block";
                     }
-                    throw AQLCoreInvalidData( ss.str().c_str(), __FILE__, __LINE__ );
+                    AQ_THROW( ss.str().c_str() );
                 }
             }
         }
@@ -70,10 +70,7 @@ namespace etrading
     LabelValueBlock populateLabelValueBlock( const AQLStringVector& keys, const AQLStringVector& values, const AQLString& keyPrefix )
     {
 
-        if ( keys.size() != values.size() )
-        {
-            throw AQLCoreInvalidData( "#Error: Keys and Values are not the same size.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( keys.size() != values.size(), "Keys and Values are not the same size." );
 
         AQLStringVector decoratedKeys( keys.size() );
 
@@ -236,10 +233,7 @@ namespace etrading
     */
     void validateLVBStringMatrix( const AQLStringMatrix& lvb )
     {
-        if ( lvb.size() != 0 && lvb[0].size() != 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: the Matrix is not a valid label value block.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( lvb.size() != 0 && lvb[0].size() != 2, "the Matrix is not a valid label value block." );
     }
 
     /* @brief			Appends the rhs string matrix to the lhs Matrix 

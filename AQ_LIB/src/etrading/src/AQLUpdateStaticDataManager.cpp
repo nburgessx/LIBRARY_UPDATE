@@ -835,7 +835,7 @@ namespace etrading
 	    AQLString tmpCurrency = currency; tmpCurrency.toLower();
 
 	    if (marketName == "" || marketName == STD) 
-		    throw AQLCoreInvalidData("Do not use STD or blank for ois curve name!",__FILE__,__LINE__);
+		    AQ_THROW( "Do not use STD or blank for ois curve name!" );
 	    AQLString staticDataSuffix;
 	    AQLString suffix_data;
 	    staticDataSuffix = "." + marketName;
@@ -952,7 +952,7 @@ namespace etrading
 			    fedFundFutureStream += oisRates[i][0];
 
 			    if (oisRates[i].size() != 3 && oisRates[i].size() != 5)
-				    throw AQLCoreInvalidData("FF input size error",__FILE__,__LINE__);
+				    AQ_THROW( "FF input size error" );
 
 			    //in case of FF, quoted value is price
 			    double oisRate = oisRates[i][1].getDoubleValue();
@@ -991,7 +991,7 @@ namespace etrading
                 if (isCentralBankSwap(oisRates[i][0]))     
 			    {
 				    if (oisRates[i].size() < 4)
-					    throw AQLCoreInvalidData("#Error: short term market needs StartDate and EndDate",__FILE__,__LINE__);
+					    AQ_THROW( "short term market needs StartDate and EndDate" );
 
 				    double oisRate = oisRates[i][1].getDoubleValue() * 100.0;
 				    oisStream += "," + AQLString(oisRate);
@@ -1007,10 +1007,7 @@ namespace etrading
 				else if (isFuture(oisRates[i][0]))
 				{
 					const int NUM_COLUMNS_FUTURE = 5; // Term, Rate, StartDate, EndDate, VolOrConvAdj
-					if (oisRates[i].size() < NUM_COLUMNS_FUTURE)
-					{
-						throw AQLCoreInvalidData("#Error: future part needs VolOrConvexAdj", __FILE__, __LINE__);
-					}
+					AQ_THROW_IF( oisRates[i].size() < NUM_COLUMNS_FUTURE, "future part needs VolOrConvexAdj" );
 
 					double futurePrice = oisRates[i][1].getDoubleValue();
 					oisStream += "," + AQLString(futurePrice);
@@ -1034,7 +1031,7 @@ namespace etrading
 					if( ( oisRates[i].size() > 3 ) && ( oisRates[i][2].size() > 0 || oisRates[i][3].size() > 0 ) )
 					{
 						AQLString msg = "#Error: Invalid Term: Instrument " + AQLString( int(i) + 1 ) + " must have FUTURE or MPC term prefix, since futures start- and/or end-date provided";
-						throw AQLCoreInvalidData( msg.c_str(), __FILE__, __LINE__ );
+						AQ_THROW( msg.c_str() );
 					}
 
 				    double oisRate = oisRates[i][1].getDoubleValue() * 100.0;
@@ -1642,10 +1639,7 @@ namespace etrading
 		    // for fwd swap
 		    if (areSwapsForwardStarting)
 		    {
-			    if (swapRates[i].size() < 5)
-			    {
-                    throw AQLCoreInvalidData("FwdSwap size error",__FILE__,__LINE__);
-			    }
+			    AQ_THROW_IF( swapRates[i].size() < 5, "FwdSwap size error" );
 
 			    AQLString isDate_str = swapRates[i][2];
 			    swapstream += "," + isDate_str.toUpper();
@@ -1736,7 +1730,7 @@ namespace etrading
 		    }
 		    else
 		    {
-			    throw AQLCoreInvalidData("#Error - No FRA market data is provided",__FILE__,__LINE__);
+			    AQ_THROW( "#Error - No FRA market data is provided" );
 		    }
 	    }
 
@@ -1971,10 +1965,7 @@ namespace etrading
 	    AQLString tmpCurrency = currency; tmpCurrency.toLower();
 	
 	    //set market rate	
-	    if (marketName == "" || marketName == STD) 
-	    {
-		    throw AQLCoreInvalidData("Do not use STD or blank for basis curve name!",__FILE__,__LINE__);
-	    }
+	    AQ_THROW_IF( marketName == "" || marketName == STD, "Do not use STD or blank for basis curve name!" );
 
 	    AQLString staticDataSuffix;
 	    AQLString suffix_data;
@@ -2204,10 +2195,7 @@ namespace etrading
 		    // for fwd basis
 		    if (isFwdBasis)
 		    {
-			    if (basisRates[i].size() < 5)
-			    {
-                    throw AQLCoreInvalidData("#Error: Invalid Tenor Basis market data, wrong number of columns. Market Data should consist of 5 columns specifiying forward dates when the 'isFwdBasis' flag is set to true.",__FILE__,__LINE__);
-			    }
+			    AQ_THROW_IF( basisRates[i].size() < 5, "Invalid Tenor Basis market data, wrong number of columns. Market Data should consist of 5 columns specifiying forward dates when the 'isFwdBasis' flag is set to true." );
 
 			    AQLString isDate_str = basisRates[i][2];
 			    basisstream += "," + isDate_str.toUpper();
@@ -2376,15 +2364,9 @@ namespace etrading
 	    unitccy.toUpper();
 	    for(unsigned int i = 0; i < (size_t)ccySize; ++i)
 	    {
-            if (spotFXs[i].size() < 3)
-		    {
-			    throw AQLCoreInvalidData("spotrate file size error", __FILE__, __LINE__);
-		    }
+            AQ_THROW_IF( spotFXs[i].size() < 3, "spotrate file size error" );
 		    AQLString tmpccy = spotFXs[i][0];
-		    /*if (tmpccy.toUpper() != unitccy)
-		    {
-			    throw AQLCoreInvalidData("The first column of a spot rate file must be unit currency", __FILE__, __LINE__);
-		    }*/
+		    /*AQ_THROW_IF( tmpccy.toUpper() != unitccy, "The first column of a spot rate file must be unit currency" );*/
 		    ccys[i] = spotFXs[i][1];
 		    ccys[i].toUpper();
 		    spotrates[i] = spotFXs[i][2].getDoubleValue();
@@ -2523,7 +2505,7 @@ namespace etrading
 	
 	    //set market rate	
 	    if (marketName == "" || marketName == STD) 
-		    throw AQLCoreInvalidData("Do not use STD or blank for basis curve name!",__FILE__,__LINE__);
+		    AQ_THROW( "Do not use STD or blank for basis curve name!" );
 
 	    AQLString staticDataSuffix;
 	    AQLString suffix_data;
@@ -2957,10 +2939,7 @@ namespace etrading
 		    // for fwd swap
 		    if (areSwapsForwardStarting)
 		    {
-			    if (swapRates_swap[i].size() < 5)
-			    {
-				    throw AQLCoreInvalidData("FwdSwap size error", __FILE__, __LINE__);
-			    }
+			    AQ_THROW_IF( swapRates_swap[i].size() < 5, "FwdSwap size error" );
 
 			    AQLString isDate_str = swapRates_swap[i][2];
 			    swapstream += "," + isDate_str.toUpper();
@@ -3051,7 +3030,7 @@ namespace etrading
 		    }
 		    else
 		    {
-			    throw AQLCoreInvalidData("#Error - No FRA market data is provided", __FILE__, __LINE__);
+			    AQ_THROW( "#Error - No FRA market data is provided" );
 		    }
 	    }
 
@@ -3292,7 +3271,7 @@ namespace etrading
 			    fedFundFutureStream += oisRates_OIS[i][0];
 
 			    if (oisRates_OIS[i].size() != 3 && oisRates_OIS[i].size() != 5)
-				    throw AQLCoreInvalidData("FF input size error", __FILE__, __LINE__);
+				    AQ_THROW( "FF input size error" );
 
 			    //in case of FF, quoted value is price
 			    double oisRate = oisRates_OIS[i][1].getDoubleValue();
@@ -3336,7 +3315,7 @@ namespace etrading
                     || oisRates_OIS[i][0].findString("MPC") != -1 )     // *** GENERIC *** Monetary Policy Committee Swaps
 			    {
 				    if (oisRates_OIS[i].size() < 4)
-					    throw AQLCoreInvalidData("short term market needs StartDate and EndDate", __FILE__, __LINE__);
+					    AQ_THROW( "short term market needs StartDate and EndDate" );
 
 				    double oisRate = oisRates_OIS[i][1].getDoubleValue() * 100.0;
 				    oisStream += "," + AQLString(oisRate);
@@ -3719,10 +3698,7 @@ namespace etrading
 		    // for fwd basis
 		    if (isFwdBasis)
 		    {
-			    if (basisRates[i].size() < 5)
-			    {
-				    throw AQLCoreInvalidData("#Error: Invalid Tenor Basis market data, wrong number of columns. Market Data should consist of 5 columns specifiying forward dates when the 'isFwdBasis' flag is set to true.", __FILE__, __LINE__);
-			    }
+			    AQ_THROW_IF( basisRates[i].size() < 5, "Invalid Tenor Basis market data, wrong number of columns. Market Data should consist of 5 columns specifiying forward dates when the 'isFwdBasis' flag is set to true." );
 
 			    AQLString isDate_str = basisRates[i][2];
 			    basisstream += "," + isDate_str.toUpper();
@@ -4527,10 +4503,7 @@ namespace etrading
 		    // for fwd swap
 		    if (areSwapsForwardStarting)
 		    {
-			    if (swapRates_swap[i].size() < 5)
-			    {
-                    throw AQLCoreInvalidData("FwdSwap size error",__FILE__,__LINE__);
-			    }
+			    AQ_THROW_IF( swapRates_swap[i].size() < 5, "FwdSwap size error" );
 
 			    AQLString isDate_str = swapRates_swap[i][2];
 			    swapstream += "," + isDate_str.toUpper();
@@ -4621,7 +4594,7 @@ namespace etrading
 		    }
 		    else
 		    {
-			    throw AQLCoreInvalidData("#Error - No FRA market data is provided",__FILE__,__LINE__);
+			    AQ_THROW( "#Error - No FRA market data is provided" );
 		    }
 	    }
 
@@ -4854,7 +4827,7 @@ namespace etrading
 			    fedFundFutureStream += oisRates_OIS[i][0];
 
 			    if (oisRates_OIS[i].size() != 3 && oisRates_OIS[i].size() != 5)
-				    throw AQLCoreInvalidData("FF input size error",__FILE__,__LINE__);
+				    AQ_THROW( "FF input size error" );
 
 			    //in case of FF, quoted value is price
 			    double oisRate = oisRates_OIS[i][1].getDoubleValue();
@@ -4898,7 +4871,7 @@ namespace etrading
                     || oisRates_OIS[i][0].findString("MPC") != -1)      // *** GENERIC *** Monetary Policy Committee Swaps
 			    {
 				    if (oisRates_OIS[i].size() < 4)
-					    throw AQLCoreInvalidData("short term market needs StartDate and EndDate",__FILE__,__LINE__);
+					    AQ_THROW( "short term market needs StartDate and EndDate" );
 
 				    double oisRate = oisRates_OIS[i][1].getDoubleValue() * 100.0;
 				    oisStream += "," + AQLString(oisRate);
@@ -5153,7 +5126,7 @@ namespace etrading
             sst << "#Error: Cannot open ir properties configuration file" << std::endl 
 			    << filepath
 			    ;
-		    throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+		    AQ_THROW( sst.str().c_str() );
 	    }
 
         AQLStaticData &irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
@@ -5171,7 +5144,7 @@ namespace etrading
 				    << "line : " << line_num << std::endl
 				    << "contents : " << line
 				    ;
-			    throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+			    AQ_THROW( sst.str().c_str() );
 		    }
 
 		    irStaticData.setStaticData(tmp[0],tmp[1]);
@@ -5205,7 +5178,7 @@ namespace etrading
 		    sst << "cannot open calib properties file" << std::endl 
 			    << filepath
 			    ;
-		    throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+		    AQ_THROW( sst.str().c_str() );
 	    }
 
         AQLStaticData &calibprop = AQLCoreDataService::getStaticDataManager().getCalibStaticData();
@@ -5223,7 +5196,7 @@ namespace etrading
 				    << "line : " << line_num << std::endl
 				    << "contents : " << line
 				    ;
-			    throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+			    AQ_THROW( sst.str().c_str() );
 		    }
 
 		    calibprop.setStaticData(tmp[0],tmp[1]);
@@ -5263,7 +5236,7 @@ namespace etrading
             if (future_rates[i].size() <= 4)
             {
                 if (future_rates[i][0].size() < 3)
-                    throw AQLCoreInvalidData("Invalid Futures Data: TICKER code should have 4 characters.",__FILE__,__LINE__);
+                    AQ_THROW( "Invalid Futures Data: TICKER code should have 4 characters." );
 
                 futureStream += future_rates[i][0];
                 double futureRate = future_rates[i][1].getDoubleValue();
@@ -5284,7 +5257,7 @@ namespace etrading
 					}
 					else
 					{
-						throw AQLCoreInvalidData("Invalid Futures Data: In 4-column format, expected a boolean flag in column 4. Expected format: TICKER  PRICE  VOL/CONV  USE", __FILE__, __LINE__);
+						AQ_THROW( "Invalid Futures Data: In 4-column format, expected a boolean flag in column 4. Expected format: TICKER  PRICE  VOL/CONV  USE" );
 					}
                 }
             }
@@ -5315,7 +5288,7 @@ namespace etrading
 					}
 					else
 					{
-						throw AQLCoreInvalidData("Invalid Futures Data: In 6-column format, expected a boolean flag in column 6. Expected format: TICKER  STARTDATE  ENDDATE  PRICE  VOL/CONV  USE", __FILE__, __LINE__);
+						AQ_THROW( "Invalid Futures Data: In 6-column format, expected a boolean flag in column 6. Expected format: TICKER  STARTDATE  ENDDATE  PRICE  VOL/CONV  USE" );
 					}
                 }
             }
@@ -5423,7 +5396,7 @@ namespace etrading
 	    }
 
 	    if (no_factors > corr.size())
-		    throw AQLCoreInvalidData("factornumber is bigger than correlation size", __FILE__, __LINE__);
+		    AQ_THROW( "factornumber is bigger than correlation size" );
 
 	    DoubleArray dummy_tgrid(corr.size());
 	    for(size_t i = 0; i < corr.size(); i++)
@@ -5471,7 +5444,7 @@ namespace etrading
 	    else
 	    {
 		    AQLString msg = AQLString("Unknown result type: ") + type;
-            throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+            AQ_THROW( msg.getCString() );
 	    }
 
 	    return ret;
@@ -5538,10 +5511,7 @@ namespace etrading
 	    tmpCurrency.toLower();
 	
 	    //set market rate	
-	    if (curveName == "" || curveName == STD) 
-	    {
-		    throw AQLCoreInvalidData("#Error: Do not use STD or blank for CTD curve name!",__FILE__,__LINE__);
-	    }
+	    AQ_THROW_IF( curveName == "" || curveName == STD, "Do not use STD or blank for CTD curve name!" );
 
 	    AQLString staticDataSuffix;	
 	    staticDataSuffix = "." + curveName;
@@ -5574,10 +5544,10 @@ namespace etrading
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATECURVEID, curveCollection);
 
 	    // set collateral curves
-	    if (collateralCurves.size() == 0)
-	    {
-		    throw AQLCoreInvalidData("#Error: Must provide at least one CSA curve",__FILE__,__LINE__);
-	    }
+	    if ( collateralCurves.size() == 0 )
+{
+    AQ_THROW( "Must provide at least one CSA curve" );
+}
 	    else
 	    {
 		    AQLString collCurves;

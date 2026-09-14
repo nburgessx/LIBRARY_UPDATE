@@ -341,7 +341,8 @@ namespace etrading
 
         if (ret < 0)
         {
-            throw ETradingException(  ( boost::format( "#Error: key '%i' need to have positive value" ) % key  ).str()  );
+            { std::ostringstream aqMsg143;
+aqMsg143 << "key '" << key << "' need to have positive value"; AQ_THROW( aqMsg143.str() ); }
         }
 
         return unsigned(ret);
@@ -464,7 +465,7 @@ namespace etrading
         {
             std::stringstream s;
             s << "key '" << key << "' should carry a TRUE/FALSE value in the named collection.";
-            throw AQLCoreInvalidData( s.str().c_str(), __FILE__, __LINE__ );
+            AQ_THROW( s.str().c_str() );
         }
 
         return ret;
@@ -492,7 +493,7 @@ namespace etrading
         {
             std::stringstream s;
             s << "key '" << key << "' should carry a TRUE/FALSE value in the named collection.";
-            throw AQLCoreInvalidData( s.str().c_str(), __FILE__, __LINE__ );
+            AQ_THROW( s.str().c_str() );
         }
 
         return ret;
@@ -556,7 +557,7 @@ namespace etrading
 				s << ", '" + labelValueBlockName + "'.";
 			}
 
-			throw AQLCoreInvalidData(s.str().c_str(), __FILE__, __LINE__);
+			AQ_THROW( s.str().c_str() );
 		}
 
 		return value;
@@ -688,7 +689,7 @@ namespace etrading
                 s << ", '" + labelValueBlockName + "'.";
             }
             
-            throw AQLCoreInvalidData( s.str().c_str(), __FILE__, __LINE__ );
+            AQ_THROW( s.str().c_str() );
         }
 
         return value.c_str();
@@ -717,7 +718,7 @@ namespace etrading
                 s << ", '" + labelValueBlockName + "'.";
             }
             
-            throw AQLCoreInvalidData( s.str().c_str(), __FILE__, __LINE__ );
+            AQ_THROW( s.str().c_str() );
         }
 
         return value.c_str();
@@ -747,7 +748,7 @@ namespace etrading
                 s << ", '" + labelValueBlockName + "'.";
             }
             
-            throw AQLCoreInvalidData( s.str().c_str(), __FILE__, __LINE__ );
+            AQ_THROW( s.str().c_str() );
         }
 
         return value;
@@ -771,7 +772,7 @@ namespace etrading
                     std::stringstream s;
                     s << "#Error: Label Value Block cannot have multiple keys at the same time: '"; 
                     std::copy(keys.begin(), keys.end(),std::ostream_iterator<std::string>(s, ", "));
-                    throw AQLCoreInvalidData( s.str().c_str(), __FILE__, __LINE__ );
+                    AQ_THROW( s.str().c_str() );
                 }
             }
         }
@@ -871,10 +872,7 @@ namespace etrading
     */
     LabelValueBlock buildSingleLabelValueBlock( const AQLStringMatrix& input, const bool& makeAllKeysUppercase )
     {
-        if ( input.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: an empty Label Value Block object is given", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( input.size() == 0, "an empty Label Value Block object is given" );
 
         LabelValueBlock a( input, makeAllKeysUppercase );
         return a;
@@ -887,16 +885,10 @@ namespace etrading
     std::vector<LabelValueBlock> buildMultiLabelValueBlock( const AQLStringMatrix& input, const bool& makeAllKeysUppercase )
     {
         size_t keyCount = input.size();
-        if ( keyCount == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: an empty Label Value Block object is given", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( keyCount == 0, "an empty Label Value Block object is given" );
 
         size_t componentStringMatrixCount = input[0].size() - 1;
-        if ( componentStringMatrixCount == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: the input Label Value Block only has one column", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( componentStringMatrixCount == 0, "the input Label Value Block only has one column" );
 
         // Break up the input AQLStringMatrix and convert it to a vector of smaller
         // AQLStringMatrix objects each of which will have only one column of keys and one column of values

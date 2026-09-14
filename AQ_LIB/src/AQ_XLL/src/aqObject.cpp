@@ -22,8 +22,7 @@
 #include <string>
 #include <tuple>
 #include <vector>
-
-#include <boost/format.hpp>
+#include <sstream>
 
 #include <aqXllTools.h>
 #include <tryAqObject.h>      // validation::tryAqObject{Exists,Type,List,Load,Save,Delete,DeleteAll,QuickLoad,QuickSave,LoadFromString}
@@ -198,21 +197,23 @@ XLO_FUNC_START( aqObjectDelete(
 
     if ( !validation::tryAqObjectExists( type, name ) )
     {
-        return returnValue(
-            ( boost::format( "No object named %s of type %s currently exists" ) % name % type ).str() );
+        std::ostringstream msg;
+        msg << "No object named " << name << " of type " << type << " currently exists";
+        return returnValue( msg.str() );
     }
 
     const bool stillExists = validation::tryAqObjectDelete( type, name );
     if ( stillExists )
     {
-        return returnValue(
-            ( boost::format( "Unable to delete object %s of type %s; use aqObjectType / aqObjectList to check available types and names" )
-              % name % type ).str() );
+        std::ostringstream msg;
+        msg << "Unable to delete object " << name << " of type " << type << "; use aqObjectType / aqObjectList to check available types and names";
+        return returnValue( msg.str() );
     }
 
     stopCountingName( name );
-    return returnValue(
-        ( boost::format( "Object %s of type %s was successfully deleted" ) % name % type ).str() );
+    std::ostringstream msg;
+    msg << "Object " << name << " of type " << type << " was successfully deleted";
+    return returnValue( msg.str() );
 }
 XLO_FUNC_END( aqObjectDelete )
     .help( L"Delete one cached object of the given type and name. Returns a status message." )
@@ -246,8 +247,9 @@ XLO_FUNC_START( aqObjectDeleteAll(
             }
         }
 
-        return returnValue(
-            ( boost::format( "%i objects of all types were successfully deleted" ) % deletedCount ).str() );
+        std::ostringstream msg;
+        msg << deletedCount << " objects of all types were successfully deleted";
+        return returnValue( msg.str() );
     }
 
     const std::string type = etrading::trim_to_upper( toNarrowString( objectType ) );
@@ -263,8 +265,9 @@ XLO_FUNC_START( aqObjectDeleteAll(
         }
     }
 
-    return returnValue(
-        ( boost::format( "%i objects of type %s were successfully deleted" ) % deletedCount % type ).str() );
+    std::ostringstream msg;
+    msg << deletedCount << " objects of type " << type << " were successfully deleted";
+    return returnValue( msg.str() );
 }
 XLO_FUNC_END( aqObjectDeleteAll )
     .help( L"Delete every cached object of the given type, or every cached object of every type if ObjectType is omitted. Returns a count message." )
@@ -451,13 +454,12 @@ XLO_FUNC_START( aqObjectDecorateNames(
     setDecorateNamesWithExcelAddress( toBool( appendLocation, true ) );
     setConvertExcelAddressToUniqueID( !toBool( showExcelCellAddress, false ) );
 
-    const std::string result = ( boost::format(
-        "AQObj Names: Instance Counting is %s, Append Excel Cell Location is %s, Showing Excel Location as %s" )
-        % ( instanceCountNames() ? "ON" : "OFF" )
-        % ( decorateNamesWithExcelAddress() ? "ON" : "OFF" )
-        % ( convertExcelAddressToUniqueID() ? "UNIQUE ID" : "EXCEL ADDRESS" ) ).str();
+    std::ostringstream resultStream;
+    resultStream << "AQObj Names: Instance Counting is " << ( instanceCountNames() ? "ON" : "OFF" )
+                 << ", Append Excel Cell Location is " << ( decorateNamesWithExcelAddress() ? "ON" : "OFF" )
+                 << ", Showing Excel Location as " << ( convertExcelAddressToUniqueID() ? "UNIQUE ID" : "EXCEL ADDRESS" );
 
-    return returnValue( result );
+    return returnValue( resultStream.str() );
 }
 XLO_FUNC_END( aqObjectDecorateNames )
     .help( L"Control AQObj handle-name decoration (instance counter, Excel-address suffix) for this session." )

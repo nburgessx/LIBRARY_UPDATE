@@ -12,7 +12,6 @@
 #include <limits>
 #include <memory>
 #include <boost/assign.hpp>
-#include <boost/format.hpp>
 #include <boost/date_time.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/thread.hpp>
@@ -26,6 +25,7 @@
 #include "DateUtilities.h"
 #include "ContainerUtilities.h"
 #include "ETradingException.h"
+#include "AQLCoreAppError.h"
 #include "TableDateDouble.h"
 #include "ContainerUtilities.h"
 #include "ConcurrentMap.h"
@@ -106,14 +106,14 @@ namespace google_test
 
         t2.clear();
 
-        EXPECT_THROW( t2.getData( 1 ), ETradingException );
+        EXPECT_THROW( t2.getData( 1 ), AQLCoreInvalidData );
         try
         {
             t2.getData( 0 );
         }
-        catch( ETradingException& eEx )
+        catch( AQLCoreInvalidData& eEx )
         {
-            EXPECT_STREQ( eEx.what(), "Illegal Date index requested: 0 when there are 0 dates available" );
+            EXPECT_STREQ( eEx.what(), "#Error: Illegal Date index requested: 0 when there are 0 dates available" );
         }
 
         TableDateDouble t3( "ThirdTable" );

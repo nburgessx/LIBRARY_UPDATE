@@ -16,7 +16,6 @@
 #include <iostream>
 #include <map>
 #include <boost/date_time/gregorian/gregorian.hpp>
-#include <boost/format.hpp>
 #include <boost/utility/enable_if.hpp>
 
 
@@ -123,7 +122,7 @@ namespace etrading
             {
                 containerType = "(List) ";
             }
-            return ( boost::format( "Container %s of type %s" ) % containerType % get<ElementType>() ).str();
+            return "Container " + containerType + " of type " + get<ElementType>();
         }
 
     };

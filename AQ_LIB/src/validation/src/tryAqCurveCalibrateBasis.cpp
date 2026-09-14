@@ -75,7 +75,7 @@ namespace validation
 
         if( ( fxFwdRates.empty() && basisRates.empty() ) || basisConv.empty() || curveConv.empty() )
         {
-            throw AQLCoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
+            AQ_THROW( "Input Matrix is empty" );
             AQ_THROW("Invalid Data: Input data is missing")
         }
 

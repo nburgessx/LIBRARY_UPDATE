@@ -51,10 +51,7 @@ namespace etrading
 
 		notional_ = scheduleLVB.getOptionalValueAsDoubleFromKeys(IRS_KEY::NOTIONAL, BOND_KEY::FACE_VALUE, std::numeric_limits<double>::quiet_NaN());
 
-		if (boost::math::isnan(notional_))
-		{
-			throw AQLCoreInvalidData("#Error: Notional is a mandatory field for PremiumSchedule", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( boost::math::isnan(notional_), "Notional is a mandatory field for PremiumSchedule" );
 	}
 
 	void BondSchedule::populateExDividendDates()
@@ -404,7 +401,8 @@ namespace etrading
 				break;
 			}
 			default:
-				throw ETradingException((boost::format("#Error: For Bond StubType value '%i' invalid, must be 'NONE', 'SHORT_START' or 'LONG_START'.") % frontStubType).str());
+				{ std::ostringstream aqMsg75;
+aqMsg75 << "For Bond StubType value '" << frontStubType << "' invalid, must be 'NONE', 'SHORT_START' or 'LONG_START'."; AQ_THROW( aqMsg75.str() ); }
 				break;
 			} // end of switch
 
@@ -453,7 +451,8 @@ namespace etrading
 				break;
 			}
 			default:
-				throw ETradingException((boost::format("#Error: For Bond StubType value '%i' invalid, must be 'NONE', 'SHORT_START' or 'LONG_START'.") % endStubType).str());
+				{ std::ostringstream aqMsg76;
+aqMsg76 << "For Bond StubType value '" << endStubType << "' invalid, must be 'NONE', 'SHORT_START' or 'LONG_START'."; AQ_THROW( aqMsg76.str() ); }
 				break;
 			} // end of switch
 		}
@@ -517,17 +516,11 @@ namespace etrading
 
 		// Set floatRates and DFs for the non-upfront cashflows
 		size_t cashflowSize = getCashflowSize();
-		if (cashflowSize != discountFactors.size())
-		{
-			throw AQLCoreInvalidData("#Error: DiscountFactors and Cashflows should have the same size", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( cashflowSize != discountFactors.size(), "DiscountFactors and Cashflows should have the same size" );
 
 		bool hasFloatRates = (floatRates.size() != 0);
 
-		if (hasFloatRates && cashflowSize != floatRates.size())
-		{
-			throw AQLCoreInvalidData("#Error: FloatRates and Cashflows should have the same size", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( hasFloatRates && cashflowSize != floatRates.size(), "FloatRates and Cashflows should have the same size" );
 
 		dataProvider.setDiscountFactors(discountFactors);
 		if (hasFloatRates)

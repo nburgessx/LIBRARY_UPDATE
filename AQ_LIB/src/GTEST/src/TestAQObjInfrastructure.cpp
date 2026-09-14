@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <boost/assign.hpp>
 #include <boost/date_time.hpp>
@@ -322,10 +323,9 @@ namespace google_test
         auto envToBreak = EnvironmentPool::getInstance().getEnvironment(EnvironmentAttacker::CTXT_TOBREAK);
         std::string keysInContainer = containerAsString( envToBreak->getCache<FreeObject>().keys() );
 
-        std::string toLog = ( boost::format( "Main Thread sees the FreeObject Cache for the Workcontext %s with Keys: %s" )
-                              % EnvironmentAttacker::CTXT_TOBREAK
-                              % keysInContainer.c_str() ).str();
-        logToConsole( toLog );
+        std::ostringstream logMsg;
+        logMsg << "Main Thread sees the FreeObject Cache for the Workcontext " << EnvironmentAttacker::CTXT_TOBREAK << " with Keys: " << keysInContainer;
+        logToConsole( logMsg.str() );
 
         auto& tableDateDoubleStore = getObjectStore<TableDateDouble>( env.getUID() );
 

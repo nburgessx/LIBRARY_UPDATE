@@ -12,20 +12,14 @@ namespace etrading
 		validateLegs(leg1, leg2);
 
         //Cross Currency
-        if (leg1->getStaticData()->getCurrency() == leg2->getStaticData()->getCurrency())
-        {
-  		    throw AQLCoreInvalidData( "#Error: Invalid XCCY Swap: Xccy Swap legs cannot have the same currency", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( leg1->getStaticData()->getCurrency() == leg2->getStaticData()->getCurrency(), "Invalid XCCY Swap: Xccy Swap legs cannot have the same currency" );
 
         //Handle XccySwap properties
         populateAndValidateXccySwapStaticDataObject(leg1, leg2, swapPropertiesLVB);
 
         auto notionalAdjustedLeg = legs_.findLegByName(notionalResetLegName_);
 
-        if (isMTM_ && notionalAdjustedLeg != nullptr && notionalAdjustedLeg->getSchedule()->isPaymentFreqEnumAtMaturity())
-        {
-            throw AQLCoreInvalidData("#Error: For MTM XCCY Swap, NotionalAdjustedLeg's payment frequency cannot be 'AT_MATURITY'.",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( isMTM_ && notionalAdjustedLeg != nullptr && notionalAdjustedLeg->getSchedule()->isPaymentFreqEnumAtMaturity(), "For MTM XCCY Swap, NotionalAdjustedLeg's payment frequency cannot be 'AT_MATURITY'." );
 
         addToLegCollection(leg1);
 		addToLegCollection(leg2);

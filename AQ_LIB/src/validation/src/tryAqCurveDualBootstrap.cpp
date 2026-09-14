@@ -115,95 +115,41 @@ namespace validation
 			file.write("tenorBasisRates_swap", tenorBasisRates_swap);
         }
 
-        if ( !oisRates_OIS.empty() && oisRates_OIS[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: OIS Rates column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !oisRates_OIS.empty() && oisRates_OIS[0].size() < 2, "OIS Rates column size must be 2" );
 
-        if ( !oisConv_OIS.empty() && oisConv_OIS[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: OIS Convention column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !oisConv_OIS.empty() && oisConv_OIS[0].size() < 2, "OIS Convention column size must be 2" );
 
-        if ( !histRates_OIS.empty() && histRates_OIS[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: OIS Historical Rates column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !histRates_OIS.empty() && histRates_OIS[0].size() < 2, "OIS Historical Rates column size must be 2" );
 
-        if ( !lobasisRates_OIS.empty() && lobasisRates_OIS[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Libor-OIS Basis Rates column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !lobasisRates_OIS.empty() && lobasisRates_OIS[0].size() < 2, "Libor-OIS Basis Rates column size must be 2" );
 
-        if ( !lobasisConv_OIS.empty() && lobasisConv_OIS[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Libor-OIS Basis Conventions column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !lobasisConv_OIS.empty() && lobasisConv_OIS[0].size() < 2, "Libor-OIS Basis Conventions column size must be 2" );
 
-        if ( !swapConv_OIS.empty() && swapConv_OIS[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: OIS curve's Swap Convention column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !swapConv_OIS.empty() && swapConv_OIS[0].size() < 2, "OIS curve's Swap Convention column size must be 2" );
 
-        if ( !moneyConv_swap.empty() && moneyConv_swap[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Swap curve Money Market Conventions column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !moneyConv_swap.empty() && moneyConv_swap[0].size() < 2, "Swap curve Money Market Conventions column size must be 2" );
 
-        if ( !liborRates_swap.empty() && liborRates_swap[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Swap curve Libor Rates column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !liborRates_swap.empty() && liborRates_swap[0].size() < 2, "Swap curve Libor Rates column size must be 2" );
 
-        if ( !liborConv_swap.empty() && liborConv_swap[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Swap curve Libor Convention column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !liborConv_swap.empty() && liborConv_swap[0].size() < 2, "Swap curve Libor Convention column size must be 2" );
 
-        if ( !swapRates_swap.empty() && swapRates_swap[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Swap Rates column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !swapRates_swap.empty() && swapRates_swap[0].size() < 2, "Swap Rates column size must be 2" );
 
-        if ( !swapConv_swap.empty() && swapConv_swap[0].size() < 3 )
-        {
-            throw AQLCoreInvalidData( "#Error: Swap curve Swap Convention column size must be greater or equal to 3", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !swapConv_swap.empty() && swapConv_swap[0].size() < 3, "Swap curve Swap Convention column size must be greater or equal to 3" );
         
-		if (!fra3mRates_swap.empty() && fra3mRates_swap[0].size() < 2)
-		{
-			throw AQLCoreInvalidData("#Error: 3M FRA Rates column size must be 2", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !fra3mRates_swap.empty() && fra3mRates_swap[0].size() < 2, "3M FRA Rates column size must be 2" );
 
-		if (!fra6mRates_swap.empty() && fra6mRates_swap[0].size() < 2)
-		{
-			throw AQLCoreInvalidData("#Error: 6M FRA Rates column size must be 2", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !fra6mRates_swap.empty() && fra6mRates_swap[0].size() < 2, "6M FRA Rates column size must be 2" );
 
-		if (!fraConv_swap.empty() && fraConv_swap[0].size() < 2)
-		{
-			throw AQLCoreInvalidData("#Error: FRA Conventions column size must be 2", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !fraConv_swap.empty() && fraConv_swap[0].size() < 2, "FRA Conventions column size must be 2" );
 
-		if (!futureRates_swap.empty() && futureRates_swap[0].size() < 2)
-		{
-			throw AQLCoreInvalidData("#Error: Future Rates column size must be 2", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !futureRates_swap.empty() && futureRates_swap[0].size() < 2, "Future Rates column size must be 2" );
 
-		if (!futureConv_swap.empty() && futureConv_swap[0].size() < 2)
-		{
-			throw AQLCoreInvalidData("#Error: Future Convention column size must be 2", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !futureConv_swap.empty() && futureConv_swap[0].size() < 2, "Future Convention column size must be 2" );
 
-		if (!tenorBasisConv_swap.empty() && tenorBasisConv_swap[0].size() < 2)
-		{
-			throw AQLCoreInvalidData("#Error: Tenor Basis Adjustment Conventions column size must be 2", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !tenorBasisConv_swap.empty() && tenorBasisConv_swap[0].size() < 2, "Tenor Basis Adjustment Conventions column size must be 2" );
 
-		if (!tenorBasisRates_swap.empty() && tenorBasisRates_swap[0].size() < 2)
-		{
-			throw AQLCoreInvalidData("#Error: Tenor Basis Adjustment Rates column size must be 2", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !tenorBasisRates_swap.empty() && tenorBasisRates_swap[0].size() < 2, "Tenor Basis Adjustment Rates column size must be 2" );
 
 		etrading::AQLUpdateStaticDataManager::setUpDualBootstrapCurve(etrading::getDataInstance(),
 													                      curveCollection,

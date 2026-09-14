@@ -37,10 +37,7 @@ namespace etrading
         // Initialise yield curve by reference only once
         if ( !isYieldCurveReady_ )
         {
-            if ( interpolation_.size() == 0 )
-            {
-                throw AQLCoreInvalidData( "#Error: Interpolation has not been specified for PV", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( interpolation_.size() == 0, "Interpolation has not been specified for PV" );
 
             AQLString inter =  AQLCoreComponentManager::getInterpolation( interpolation_ );
             yc.setInterpolation( inter );
@@ -60,33 +57,24 @@ namespace etrading
             isYieldCurveReady_ = true;
         }
 
-        if ( fixedAccrualDates_.size() == 0
+        AQ_THROW_IF( fixedAccrualDates_.size() == 0
                 || fixedPaymentDates_.size() == 0
                 || floatFixingDates_.size() == 0
                 || floatAccrualDates_.size() == 0
-                || floatPaymentDates_.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Swap cash flow schedule has not been completely generated", __FILE__, __LINE__ );
-        }
+                || floatPaymentDates_.size() == 0, "Swap cash flow schedule has not been completely generated" );
 
         AQLString floatCalendar = floatCalendar_;
         if ( floatCalendar.size() == 0 )
         {
             floatCalendar = floatAccrualCalendar_;
-            if ( floatCalendar.size() == 0 )
-            {
-                throw AQLCoreInvalidData( "#Error: Calendar is missing on the floating leg for compounding purpose", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( floatCalendar.size() == 0, "Calendar is missing on the floating leg for compounding purpose" );
         }
 
         AQLString floatBusinessDayAdj = floatBusinessDayAdjustment_;
         if ( floatBusinessDayAdj.size() == 0 )
         {
             floatBusinessDayAdj = floatAccrualBusinessDayAdjustment_;
-            if ( floatBusinessDayAdj.size() == 0 )
-            {
-                throw AQLCoreInvalidData( "#Error: Roll Convention (or Business Day Adjustment) is missing on the floating leg for compounding purpose", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( floatBusinessDayAdj.size() == 0, "Roll Convention (or Business Day Adjustment) is missing on the floating leg for compounding purpose" );
         }
 
         AQLString slidingRule( AQLString( "NORMAL" ) );

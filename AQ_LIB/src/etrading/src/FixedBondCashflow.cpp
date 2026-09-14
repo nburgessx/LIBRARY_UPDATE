@@ -22,10 +22,7 @@ namespace etrading
 
 	double FixedBondCashflow::getCompoundRate(const CashflowData& cashflowData) const
 	{
-		if (boost::math::isnan(getFixedRate()))
-		{
-			throw AQLCoreInvalidData("#Error: fixedRate is not set for the cashflow", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( boost::math::isnan(getFixedRate()), "fixedRate is not set for the cashflow" );
 		//When includeCouponRate is false, the couponRate need to be excluded
 		return cashflowData.includeCouponRate ? getFixedRate() : 0.0;
 	}

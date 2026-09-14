@@ -1,4 +1,6 @@
 #include "tryAqCurveObjectForwardRate.h"
+
+#include <sstream>
 #include "tryAqCurveForwardRate.h" // needed for the utility functions
 #include "tryAqDate.h"
 #include "AQLCurveForwardRateHelpers.h"
@@ -60,8 +62,9 @@ namespace validation
             }
             else
             {
-                std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % aqObjCurveName.c_str() ).str();
-                throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
+                std::ostringstream errStream;
+                errStream << "Curve  " << aqObjCurveName << " does not exist";
+                AQ_THROW( errStream.str() );
             }
         }
 
@@ -119,8 +122,9 @@ namespace validation
             }
             else
             {
-                std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % aqObjCurveName.c_str() ).str();
-                throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
+                std::ostringstream errStream;
+                errStream << "Curve  " << aqObjCurveName << " does not exist";
+                AQ_THROW( errStream.str() );
             }
         }
 
@@ -176,8 +180,9 @@ namespace validation
             }
             else
             {
-                std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % aqObjCurveName.c_str() ).str();
-                throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
+                std::ostringstream errStream;
+                errStream << "Curve  " << aqObjCurveName << " does not exist";
+                AQ_THROW( errStream.str() );
             }
         }
 

@@ -146,7 +146,7 @@ namespace etrading
                 break;
 
             default:
-		        throw AQLCoreInvalidData("#Error: Invalid accrual frequency. Only 'ANNUAL', 'SEMI-ANNUAL', 'QUARTERLY', 'MONTHLY', 'WEEKLY' or 'DAILY' supported.",__FILE__,__LINE__);
+		        AQ_THROW( "Invalid accrual frequency. Only 'ANNUAL', 'SEMI-ANNUAL', 'QUARTERLY', 'MONTHLY', 'WEEKLY' or 'DAILY' supported." );
                 break;
         }
 	}
@@ -177,10 +177,7 @@ namespace etrading
     unsigned int getBondCashflowIndex( const AQLDate& searchDate, const std::vector< AQLDate >& bondPaymentlDatesForIndexation )
     {
         const size_t numberOfCashflows = bondPaymentlDatesForIndexation.size();
-        if ( numberOfCashflows == 0 )
-        {
-            throw AQLCoreInvalidData("#Error: The Bond has no Cashflows. Unable to find the active cashflow.",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( numberOfCashflows == 0, "The Bond has no Cashflows. Unable to find the active cashflow." );
 
         // Iterate over the Bond Payment dates, which are sored and return the first cashflow yet to pay i.e. the active bond coupon
         // LOWER_BOND: Find First Element in Payment Dates NOT LESS than the Settlement Date i.e. GREATER THAN OR EQUAL to the Settlement Date
@@ -207,16 +204,10 @@ namespace etrading
     unsigned int getBondRelativeCashflowIndex( unsigned int& firstActiveCashflowIndex, const AQLDate& searchPaymentDate, const std::vector< AQLDate >& bondPaymentlDatesForIndexation )
     {
         const size_t numberOfCashflows = bondPaymentlDatesForIndexation.size();
-        if ( numberOfCashflows == 0 )
-        {
-            throw AQLCoreInvalidData("#Error: The Bond has no Cashflows. Unable to find the active cashflow.",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( numberOfCashflows == 0, "The Bond has no Cashflows. Unable to find the active cashflow." );
 
         // Check if the searchDate is in the list of bond cashflow Dates
-        if ( std::find( bondPaymentlDatesForIndexation.begin(), bondPaymentlDatesForIndexation.end(), searchPaymentDate ) == bondPaymentlDatesForIndexation.end() )
-        {
-            throw AQLCoreInvalidData("#Error: Unable to evaluate the Bond Cashflow. Invalid bond payment dates(s) provided.",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( std::find( bondPaymentlDatesForIndexation.begin(), bondPaymentlDatesForIndexation.end(), searchPaymentDate ) == bondPaymentlDatesForIndexation.end(), "Unable to evaluate the Bond Cashflow. Invalid bond payment dates(s) provided." );
 
         // Get the Active Cashflow Index and SearchPaymentDate Index
         unsigned int resultIndex                        = 0;
@@ -251,16 +242,10 @@ namespace etrading
     */
     std::pair<AQLDate, size_t> getActiveCashflowDateAndIndex( const AQLDate& settlementDate, const std::vector< AQLDate >& bondCashflowDates, const std::vector< AQLDate >& bondPaymentlDatesForIndexation )
     {
-        if ( bondPaymentlDatesForIndexation.size() != bondCashflowDates.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Inconsistent Bond Schedule. The number of bond cashflows does not match the number of bond payment dates.",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( bondPaymentlDatesForIndexation.size() != bondCashflowDates.size(), "Inconsistent Bond Schedule. The number of bond cashflows does not match the number of bond payment dates." );
         
         const size_t numberOfCashflows = bondPaymentlDatesForIndexation.size();
-        if ( numberOfCashflows == 0 ) 
-        {
-            throw AQLCoreInvalidData("#Error: There are no Bond Cashflows to evaluate.",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( numberOfCashflows == 0, "There are no Bond Cashflows to evaluate." );
         
         // Get the Result Index as the distance from the start of the Payment Date Vector
         auto resultIndex = getBondActiveCashflowIndex(settlementDate,  bondPaymentlDatesForIndexation);
@@ -303,14 +288,11 @@ namespace etrading
                 break;
             }
            default:
-                throw AQLCoreInvalidData("#Error: Bond only support the following daycount methods: 'ACT/ACT', 'ACT/365', 'NL/365', '30/360', '30/360 ISMA', '30E/360 ISDA', 'ACT/360'",__FILE__,__LINE__);
+                AQ_THROW( "Bond only support the following daycount methods: 'ACT/ACT', 'ACT/365', 'NL/365', '30/360', '30/360 ISMA', '30E/360 ISDA', 'ACT/360'" );
                 break;
         }
 
-        if ( totalCouponDays == 0 )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Bond Coupon Dates. Cannot evaluate a Bond Coupon with full coupon period as zero days.",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( totalCouponDays == 0, "Invalid Bond Coupon Dates. Cannot evaluate a Bond Coupon with full coupon period as zero days." );
         
         return totalCouponDays;
     }
@@ -347,7 +329,7 @@ namespace etrading
                 break;
             }
            default:
-                throw AQLCoreInvalidData("#Error: Bond only support the following daycount methods: 'ACT/ACT', 'ACT/365', 'NL/365', '30/360', '30/360 ISMA', '30E/360 ISDA', 'ACT/360'",__FILE__,__LINE__);
+                AQ_THROW( "Bond only support the following daycount methods: 'ACT/ACT', 'ACT/365', 'NL/365', '30/360', '30/360 ISMA', '30E/360 ISDA', 'ACT/360'" );
                 break;
         }
 
@@ -422,7 +404,8 @@ namespace etrading
             {
                 if (boost::math::isnan(issuePrice))
                 {
-                	throw ETradingException(  ( boost::format( "#Error: issuePrice is mandatory for bond calculationType523 when first accrualStartDt is earlier than '%i'" ) % italianBTPSMarketConventionChangeDate.stringWithFormat()  ).str()  );
+                	{ std::ostringstream aqMsg77;
+aqMsg77 << "issuePrice is mandatory for bond calculationType523 when first accrualStartDt is earlier than '" << italianBTPSMarketConventionChangeDate.stringWithFormat() << "'"; AQ_THROW( aqMsg77.str() ); }
                 }
 
                 if (boost::math::isnan(taxRate))
@@ -440,7 +423,8 @@ namespace etrading
                 auto targetPaymentDtIter = std::find_if(paymentDates.begin(), paymentDates.end(), [italianBTPSMarketConventionChangeDate](const AQLDate& paymentDate) { return paymentDate >= italianBTPSMarketConventionChangeDate;});
                 if (targetPaymentDtIter == paymentDates.end())
                 {
-                	throw ETradingException(  ( boost::format( "#Error: cannot find a payment date later than '%i'" ) % italianBTPSMarketConventionChangeDate.stringWithFormat()  ).str()  );
+                	{ std::ostringstream aqMsg78;
+aqMsg78 << "cannot find a payment date later than '" << italianBTPSMarketConventionChangeDate.stringWithFormat() << "'"; AQ_THROW( aqMsg78.str() ); }
                 }
                 AQLDate targetPaymentDt = *targetPaymentDtIter;
 
@@ -453,7 +437,8 @@ namespace etrading
 
                 if (iv < 0)
                 {
-                	throw ETradingException(  ( boost::format( "#Error: Gross principal cannot be negative '%i'" ) % iv  ).str()  );
+                	{ std::ostringstream aqMsg79;
+aqMsg79 << "Gross principal cannot be negative '" << iv << "'"; AQ_THROW( aqMsg79.str() ); }
                 }
 
 
@@ -512,7 +497,8 @@ namespace etrading
         }
         else 
         {
-            throw ETradingException(  ( boost::format( "#Error: Convertion only supports between Semi-Annual and Annual" )).str()  );
+            { std::ostringstream aqMsg80;
+aqMsg80 << "Convertion only supports between Semi-Annual and Annual"; AQ_THROW( aqMsg80.str() ); }
         }
     
         return toYield;

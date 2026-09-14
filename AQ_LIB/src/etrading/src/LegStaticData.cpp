@@ -47,10 +47,7 @@ namespace etrading
 
     void LegStaticData::validateCurveInput(const AQLString& curveCollection)
     {
-        if (curveCollection.size() == 0)
-        {
-    	    throw AQLCoreInvalidData( "#Error: curveCollection must be provided", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( curveCollection.size() == 0, "curveCollection must be provided" );
 
         //Throw exception if the curve has not been built.
         discountCurveMarketName_ = getCurveStaticDataTableName( curveCollection, discountCurve_ );
@@ -142,42 +139,42 @@ namespace etrading
     //dummy methods, just to avoid downcasting
     AQLString LegStaticData::getForecastCurve() const
     {
-    	throw AQLCoreInvalidData( "#Error: getForecastCurve method not supported on a fixed leg", __FILE__, __LINE__ );
+    	AQ_THROW( "getForecastCurve method not supported on a fixed leg" );
     }
     
     AQLString LegStaticData::getForecastCurveMarketName() const
     {
-    	throw AQLCoreInvalidData( "#Error: getForecastCurveMarketName method not supported for this product", __FILE__, __LINE__ );
+    	AQ_THROW( "getForecastCurveMarketName method not supported for this product" );
     }
 
     double LegStaticData::getFirstFixing() const
     {
-    	throw AQLCoreInvalidData( "#Error: getFirstFixing method not supported for this product", __FILE__, __LINE__ );
+    	AQ_THROW( "getFirstFixing method not supported for this product" );
     }
 
     double LegStaticData::getLastFixing() const
     {
-    	throw AQLCoreInvalidData( "#Error: getLastFixing method not supported for this product", __FILE__, __LINE__ );
+    	AQ_THROW( "getLastFixing method not supported for this product" );
     }
     
     AQLString LegStaticData::getFirstStubCurveIndex() const
     {
-    	throw AQLCoreInvalidData( "#Error: getFirstStubCurveIndex method not supported for this product", __FILE__, __LINE__ );
+    	AQ_THROW( "getFirstStubCurveIndex method not supported for this product" );
     }
 
     AQLString LegStaticData::getLastStubCurveIndex() const
     {
-    	throw AQLCoreInvalidData( "#Error: getLastStubCurveIndex method not supported for this product", __FILE__, __LINE__ );
+    	AQ_THROW( "getLastStubCurveIndex method not supported for this product" );
     }
 
     BooleanEnum LegStaticData::getFwdInter() const
     {
-    	throw AQLCoreInvalidData( "#Error: getFwdInter method not supported for this product", __FILE__, __LINE__ );
+    	AQ_THROW( "getFwdInter method not supported for this product" );
     }
 
     void LegStaticData::setFwdInter(const BooleanEnum& fwdInter)
     {
-    	throw AQLCoreInvalidData( "#Error: setFwdInter method not supported for this product", __FILE__, __LINE__ );
+    	AQ_THROW( "setFwdInter method not supported for this product" );
     }
 
 

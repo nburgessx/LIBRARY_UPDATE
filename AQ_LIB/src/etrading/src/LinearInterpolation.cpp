@@ -1,7 +1,6 @@
 
 #include <utility>
 #include <algorithm>
-#include <boost/format.hpp>
 
 #include "LinearInterpolation.h"
 #include "ETradingException.h"
@@ -52,7 +51,7 @@ namespace etrading
             auto idxOfFirstLargerOrEqual = getIndexOf( *it, xs_ );
             if ( idxOfFirstLargerOrEqual  < 0 )
             {
-                throw ETradingException( "#Error: Linear Interpolation: Extrapolation below the Interpolation Range is Not Supported" );
+                AQ_THROW( "Linear Interpolation: Extrapolation below the Interpolation Range is Not Supported" );
             }
             else
             {
@@ -62,7 +61,7 @@ namespace etrading
             }
         }
         // Should never reach here
-		throw ETradingException( "#Error: Linear Interpolation: Unable to evaluate the interpolation point." );
+		AQ_THROW( "Linear Interpolation: Unable to evaluate the interpolation point." );
     };
 
 }

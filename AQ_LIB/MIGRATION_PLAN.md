@@ -36,7 +36,8 @@ Status legend: ☐ not started · ◐ in progress · ☑ done
 | D7 | `readme.md` to be rebranded and made current. (Phase 6.) |
 | D8 | Env vars set once via `SetEnvironmentVariables.bat`, then restart VS. |
 | D9 | **Q1 — Excel names: clean break.** Migrate every `me*` spelling (including any currently-hidden `me*` aliases) to `aq*`. **No** backward-compatibility aliases; old names simply cease to exist. Removed names are listed in the release notes. |
-| D10 | **Q2 — Licence: proprietary, no redistribution, as a drop-in placeholder.** A short interim `LICENSE` (proprietary notice + "AS IS" + "no redistribution") and a per-file header that points at `LICENSE` by name, both written so the final EULA text replaces `LICENSE` in full later **without touching a single source header**. Header wording is frozen now; only `LICENSE` / `EULA.md` content changes later. The contractor/client IP-provenance check with a solicitor is still advised before commercial release but does not block the rebrand. |
+| D10 | **Q2 — Licence: proprietary, no redistribution, as a drop-in placeholder.** A short interim `LICENSE` (proprietary notice + "AS IS" + "no redistribution"), written so the final EULA text replaces `LICENSE` in full later **without touching any source file**. The contractor/client IP-provenance check with a solicitor is still advised before commercial release but does not block the rebrand. |
+| D10.1 | **Q2.1 — Banners are minimal and technical-only (supersedes the earlier frozen per-file header).** No file or console banner carries copyright text, a company/person name (`AlgoQuantHub`, `Nicholas Burgess`, `Claude`, `Anthropic`, any client/contractor), or a reference to the old/new library name, the rebrand, or the migration effort. Banners are restricted to technical help (what the code does, params, units, preconditions); citations to external research sources are allowed. Copyright/licence text lives only in `LICENSE`. See `CLAUDE.md` §7.1. |
 | D11 | **Q3 — `AQ_API` confirmed.** |
 | D12 | **Q4 — holiday-centre join is `+` only** (Nicholas, this session). Reason: clean break (D9), fresh clients, no legacy user sheets to protect; the only `:`-form data that ships is the ~103 generator JSON, which we migrate ourselves; and `:` is heavily overloaded (`DATA_COLL_DEL`, curve-name lists in the same generator files). The `splitCalendarCentres()` helper is written so accepting `:` again is a **one-line toggle** if field feedback ever demands it — but it ships `+`-only. Migrate the 103 JSON calendar fields to `+`. |
 | D13 | **Q5 — Linux / CMake build is in scope**, lower priority (late phase). **End-state gate: not one file anywhere in the tree — source, Makefiles, `make.*`, CMake, `.sln`/`.vcxproj`, scripts, resources, examples, docs — may contain a legacy client name or an old prefix.** Many `resources\` and `examples\` items will be rewritten or removed for the final version. |
@@ -764,14 +765,12 @@ against baseline.
   Add the config-folder / generators / editions sections.
 - ☐ **6.6** Finalise `THIRD_PARTY_LICENSES.md` / `NOTICE` (Boost, QuantLib,
   **patched** xlOil — mark modified files, Eigen, Adept; GoogleTest test-only).
-- ☐ **6.7** **Copyright / licence headers** (D10). Bulk-replace the ~1,470
-  `Mizuho` / `MHI` / `MHSC` header and `@Department` lines across `src\` with the
-  frozen proprietary header — `Copyright (c) 2026 Nicholas Burgess / AlgoQuantHub`
-  + "distributed under the terms of the AlgoQuantHub End User Licence Agreement,
-  see LICENSE" + "AS IS, no warranty". The header names `LICENSE`; it does not
-  quote licence terms, so dropping in the final EULA later is a one-file change
-  to `LICENSE` with **no header churn**. Replace `LICENSE` placeholder content
-  when the EULA is ready.
+- ☐ **6.7** **Banner cleanup** (D10.1). Bulk-remove the ~1,470 `Mizuho` / `MHI` /
+  `MHSC` header and `@Department` lines across `src\` and replace with, at most,
+  a minimal technical banner — no copyright, no company/person name, no
+  tool/migration reference. Do **not** insert a copyright or licence statement
+  into source files; that text lives only in `LICENSE`. Replace `LICENSE`
+  placeholder content when the EULA is ready.
 - ☐ **6.8 Bulk `clang-format` pass** (see Tooling appendix). One normalization
   commit now that the mass renames are done. Then it stays green.
 - ☐ **6.9 `clang-tidy` config.** Add `.clang-tidy` with

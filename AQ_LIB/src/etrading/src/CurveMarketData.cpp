@@ -8,7 +8,7 @@
 
 #include <vector>
 #include <string>
-#include <boost/format.hpp>		// iequals case insensitive string comparison
+// iequals case insensitive string comparison
 
 
 namespace etrading

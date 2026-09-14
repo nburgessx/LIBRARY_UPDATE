@@ -24,7 +24,6 @@
 #include <set>
 #include <algorithm>
 #include <locale>
-#include <boost/format.hpp>
 
 using etrading::CreateDataFile;
 using etrading::decorateFilename;

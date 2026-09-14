@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ExceptionMacros.h"
 #include <map>
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -39,7 +40,7 @@ namespace etrading
 			{
 				// Terminate the construction of this object and atomic decrement the instance count
 				instanceCount_.fetch_sub( 1, boost::memory_order_relaxed ); 
-				throw AQLCoreError( "#Error: Thread Guard: Calling AlgoQuantLib from multiple threads is not currently supported.", __FILE__, __LINE__ );
+				AQ_THROW( "Thread Guard: Calling AlgoQuantLib from multiple threads is not currently supported." );
 			}
 		}
 

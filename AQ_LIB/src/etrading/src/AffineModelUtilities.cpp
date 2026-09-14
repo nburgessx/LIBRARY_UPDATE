@@ -108,7 +108,7 @@ namespace etrading
 		}
 		else
 		{
-			throw AQLCoreInvalidData("#Error: Valuation Date cannot be earlier than curve's asOfDate.",__FILE__,__LINE__);
+			AQ_THROW( "Valuation Date cannot be earlier than curve's asOfDate." );
 		}
 		return futureValuation;
 	}
@@ -126,10 +126,10 @@ namespace etrading
 
 		if (boost::math::isnan(shortRate))
 		{
-			if (futureValuation)
-			{
-				throw AQLCoreInvalidData("#Error: For future curve, rt must be provided.",__FILE__,__LINE__);
-			}
+			if ( futureValuation )
+{
+    AQ_THROW( "For future curve, rt must be provided." );
+}
 			else
 			{
 				// If it's current curve, and the shortRate is not provided, the shortRate is default to be the shortRate at asOfDate

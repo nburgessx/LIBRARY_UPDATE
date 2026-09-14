@@ -82,15 +82,9 @@ namespace validation
         //	file.write("verticalKeys", verticalKeys);
         //}
 
-        if ( sMatrix.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: the Matrix size is zero.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( sMatrix.size() == 0, "the Matrix size is zero." );
 
-        if ( sMatrix[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: the Matrix needs to have more than one column.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( sMatrix[0].size() < 2, "the Matrix needs to have more than one column." );
 
 
         // we assume all rows have the same column size
@@ -219,10 +213,7 @@ namespace validation
         //	}
         //}
 
-        if ( keys.size() != values.size() )
-        {
-            throw AQLCoreInvalidData( "#Error: Keys and Values are not the same size.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( keys.size() != values.size(), "Keys and Values are not the same size." );
 
         AQLStringMatrix ret;
         for ( size_t i = 0; i < keys.size(); ++i )
@@ -263,10 +254,7 @@ namespace validation
             for ( size_t j = 0; j < multiValues.size(); ++j )
             {
                 auto values = multiValues[j];
-                if ( keysSize != values.size())
-                {
-                    throw AQLCoreInvalidData( "#Error: Keys and Values are not the same size.", __FILE__, __LINE__ );
-                }
+                AQ_THROW_IF( keysSize != values.size(), "Keys and Values are not the same size." );
                 auto value = values[i];
                 tempVec.push_back(value);
             }

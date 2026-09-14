@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <boost/format.hpp>
 
 
 #include "CoreEnumerations.h"

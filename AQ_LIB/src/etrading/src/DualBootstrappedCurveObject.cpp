@@ -8,7 +8,6 @@
 
 #include <vector>
 #include <string>
-#include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>
 #include <algorithm>
 
@@ -137,15 +136,9 @@ namespace etrading
 		swapCurveName_ = curveName_swap;
 		swapCurveIndexNames_ = curveIndex_swap;
 
-		if (! boost::iequals( marketDataAsOfDate_ois.c_str(), marketDataAsOfDate_swap.c_str()) )
-		{
-			throw AQLCoreInvalidData("#Error: OIS curve and swap curve are given different asof dates", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( ! boost::iequals( marketDataAsOfDate_ois.c_str(), marketDataAsOfDate_swap.c_str()), "OIS curve and swap curve are given different asof dates" );
 
-		if (! boost::iequals(curveCollection_ois, curveCollection_swap) )
-		{
-			throw AQLCoreInvalidData("#Error: OIS curve and swap curve are from different curve collections", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( ! boost::iequals(curveCollection_ois, curveCollection_swap), "OIS curve and swap curve are from different curve collections" );
 
 		// Create OIS curve data object that supplies curve data for OIS curve build
 		CurveGeneratorPtr oisCurveGeneratorObj	= oisCurveObj_->getCurveGeneratorObj();

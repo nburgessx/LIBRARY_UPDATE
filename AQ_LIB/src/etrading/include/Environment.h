@@ -15,7 +15,6 @@
 
 #include <boost/type_traits.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/format.hpp>
 #include <boost/fusion/adapted/std_pair.hpp>  // make sure we use the boost adaptation of the std::pair ...
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/assign.hpp>
@@ -280,8 +279,8 @@ namespace etrading
             }
             else
             {
-                throw ETradingException( ( boost::format( "Environment %s does not contain an object named %s in its Cache for %s" )
-                                           % getUID().c_str() % objectName.c_str() % TypeName::get<Z>().c_str() ).str().c_str() );
+                { std::ostringstream aqMsg10;
+aqMsg10 << "Environment " << getUID().c_str() << " does not contain an object named " << objectName.c_str() << " in its Cache for " << TypeName::get<Z>().c_str(); AQ_THROW( aqMsg10.str() ); }
             }
         };
 

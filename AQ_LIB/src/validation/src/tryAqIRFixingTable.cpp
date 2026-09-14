@@ -1,5 +1,7 @@
 // tryAqIRFixingTable.cpp
 
+#include <sstream>
+
 #include "tryAqIRFixingTable.h"
 #include "FixingTableSet.h"
 #include "ObjectUtilities.h"
@@ -64,7 +66,9 @@ namespace validation
         }
         else
         {
-            std::string errString =  ( boost::format( "Unable to create AQObj Fixing Table named %s" ) % tableName.c_str() ).str();
+            std::ostringstream errStream;
+            errStream << "Unable to create AQObj Fixing Table named " << tableName;
+            std::string errString = errStream.str();
             AQ_RECORD_DECORATED_OUTPUTS( tableName.c_str(), "", errString.c_str() );
             AQ_THROW( errString );
         }
@@ -146,7 +150,9 @@ namespace validation
         }
         else
         {
-            std::string errString =  ( boost::format( "Fixing table %s does not exist" ) % tableName.c_str() ).str();
+            std::ostringstream errStream;
+            errStream << "Fixing table " << tableName << " does not exist";
+            std::string errString = errStream.str();
             AQ_RECORD_DECORATED_OUTPUTS( tableName.c_str(), "", errString.c_str() );
             AQ_THROW( errString );
         }
@@ -176,7 +182,9 @@ namespace validation
         }
         else
         {
-            throw etrading::ETradingException( ( boost::format( "#Error: Fixing Table %s does not exist" ) % tableName ).str().c_str() );
+            std::ostringstream errStream;
+            errStream << "Fixing Table " << tableName << " does not exist";
+            AQ_THROW( errStream.str() );
         }
         
         VALID_EXCEPTION_END
@@ -254,7 +262,9 @@ namespace validation
         }
         else
         {
-            throw etrading::ETradingException( ( boost::format( "#Error: Fixing Table %s does not exist" ) % tableName ).str().c_str() );
+            std::ostringstream errStream;
+            errStream << "Fixing Table " << tableName << " does not exist";
+            AQ_THROW( errStream.str() );
         }
 
         VALID_EXCEPTION_END

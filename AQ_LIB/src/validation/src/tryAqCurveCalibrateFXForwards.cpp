@@ -49,10 +49,7 @@ namespace validation
             file.write( "fxFwdConv", fxFwdConv );
         }
 
-        if( fxFwdConv.empty() )
-        {
-            throw AQLCoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fxFwdConv.empty(), "Input Matrix is empty" );
 
         if( fxFwdConv[0].size() < 2 )
         {

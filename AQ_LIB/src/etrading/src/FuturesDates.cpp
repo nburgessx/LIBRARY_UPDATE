@@ -25,10 +25,7 @@ namespace etrading
     {
         // Futures Ticker must be in the format futures contract + year e.g. Dec-19 as Z9 or Z2019.
         // This means the futures ticker must be of size 2, 3 or 5 to be valid.
-        if ( futuresTicker.size() != 2 && futuresTicker.size() != 3 && futuresTicker.size() != 5 )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid futures ticker. The futures ticker must be input as contract + year. For example Dec-19 can be entered as Z9, Z19 or Z2019.", __FILE__, __LINE__);
-        }
+        AQ_THROW_IF( futuresTicker.size() != 2 && futuresTicker.size() != 3 && futuresTicker.size() != 5, "Invalid futures ticker. The futures ticker must be input as contract + year. For example Dec-19 can be entered as Z9, Z19 or Z2019." );
 
         AQLDate futuresStartDate = AQLDate();
 

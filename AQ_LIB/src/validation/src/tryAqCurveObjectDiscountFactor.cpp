@@ -1,5 +1,7 @@
 #include "tryAqCurveObjectDiscountFactor.h"
 
+#include <sstream>
+
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "CurveStreaming.h"
@@ -44,10 +46,7 @@ namespace validation
         }
 
         // Input validations
-        if( yearFractions.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Size of input 'yearFractions' is zero.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( yearFractions.size() == 0, "Size of input 'yearFractions' is zero." );
 
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
@@ -64,7 +63,9 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream curveMsg;
+            curveMsg << "Curve " << aqObjCurveName << " does not exist.";
+            AQ_THROW( curveMsg.str() );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -106,10 +107,7 @@ namespace validation
         }
 
         // Input validations
-        if( tenors.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Size of input 'tenors' is zero.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( tenors.size() == 0, "Size of input 'tenors' is zero." );
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( businessDayAdj );
 
@@ -122,13 +120,12 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream curveMsg;
+            curveMsg << "Curve " << aqObjCurveName << " does not exist.";
+            AQ_THROW( curveMsg.str() );
         }
 
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -160,14 +157,8 @@ namespace validation
 
         size_t M = fromDates.size();
         size_t N = toDates.size();
-        if( M != N && M != 1 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'", __FILE__, __LINE__ );
-        }
-        if( N == 0 || M == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'toDates' must not be empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( M != N && M != 1, "'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'" );
+        AQ_THROW_IF( N == 0 || M == 0, "'fromDates' and 'toDates' must not be empty" );
 
         // Create pairs of fromDate and toDate even when there is only one fromDate
         std::vector<boost::gregorian::date> fromDateVec;
@@ -198,13 +189,12 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream curveMsg;
+            curveMsg << "Curve " << aqObjCurveName << " does not exist.";
+            AQ_THROW( curveMsg.str() );
         }
 
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -245,15 +235,9 @@ namespace validation
 
         size_t M = fromDates.size();
         size_t N = yearFractions.size();
-        if( M != N )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must be of equal size'", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( M != N, "'fromDates' and 'yearFractions' must be of equal size'" );
 
-        if( N == 0 || M == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must not be empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( N == 0 || M == 0, "'fromDates' and 'yearFractions' must not be empty" );
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( "NO_CHANGE" );
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
@@ -273,13 +257,12 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream curveMsg;
+            curveMsg << "Curve " << aqObjCurveName << " does not exist.";
+            AQ_THROW( curveMsg.str() );
         }
 
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -321,15 +304,13 @@ namespace validation
             file.write( "calendar",			calendar );
         }
 
-        if( fromDates.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' must not be empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fromDates.size() == 0, "'fromDates' must not be empty" );
 
         if( fromDates.size() != tenors.size() )
         {
-            std::string errString = ( boost::format( "Number of fromDates (%i) is not equal to the number of tenors (%i)" ) % fromDates.size() % tenors.size() ).str();
-            throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
+            std::ostringstream errStream;
+            errStream << "Number of fromDates (" << fromDates.size() << ") is not equal to the number of tenors (" << tenors.size() << ")";
+            AQ_THROW( errStream.str() );
         }
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( businessDayAdj );
@@ -343,13 +324,12 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream curveMsg;
+            curveMsg << "Curve " << aqObjCurveName << " does not exist.";
+            AQ_THROW( curveMsg.str() );
         }
 
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -393,13 +373,12 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream curveMsg;
+            curveMsg << "Curve " << aqObjCurveName << " does not exist.";
+            AQ_THROW( curveMsg.str() );
         }
 
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -441,30 +420,12 @@ namespace validation
         // Record Inputs for logs, tests and playback
 		AQ_RECORD_INPUTS( curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency );
 
-		if ( curveCollection.size() == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: No curve collection have been provided.",__FILE__,__LINE__);
-		}
-		if (curveIndices.empty() )
-		{
-			throw AQLCoreInvalidData("#Error: No curve indices have been provided.",__FILE__,__LINE__);
-		}
-		if ( maturity.size() == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: No maturity tenor has been provided.",__FILE__,__LINE__);
-		}
-		if ( businessDayAdjust.size() == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: No business day adjustment has been provided.",__FILE__,__LINE__);
-		}
-		if ( rollConvention.size() == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: No roll convention has been provided.",__FILE__,__LINE__);
-		}
-		if ( frequency.size() == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: No frequency has been provided.",__FILE__,__LINE__);
-		}
+		AQ_THROW_IF( curveCollection.size() == 0, "No curve collection have been provided." );
+		AQ_THROW_IF( curveIndices.empty(), "No curve indices have been provided." );
+		AQ_THROW_IF( maturity.size() == 0, "No maturity tenor has been provided." );
+		AQ_THROW_IF( businessDayAdjust.size() == 0, "No business day adjustment has been provided." );
+		AQ_THROW_IF( rollConvention.size() == 0, "No roll convention has been provided." );
+		AQ_THROW_IF( frequency.size() == 0, "No frequency has been provided." );
 
 		// Calculate the discount factors
         etrading::getDiscountFactorsForCurveIndices( paymentDates, discountFactors, curveCollection, curveIndices, startDate, maturity, etrading::toBusinessDayAdjustmentEnum(businessDayAdjust.getCString()), calendar, rollConvention, frequency );

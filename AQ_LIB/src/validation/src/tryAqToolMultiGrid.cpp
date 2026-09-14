@@ -3,11 +3,9 @@
 #include <utility>
 #include <tuple>
 #include <string>
-#include <boost/format.hpp>
-
+#include <sstream>
 
 #include "tryAqToolMultiGrid.h"
-#include "ETradingException.h"
 #include "DataSchema.h"
 #include "EnvironmentUtilities.h"
 #include "FreeObject.h"
@@ -25,16 +23,13 @@ namespace validation
                                             const std::vector<TableInfo>& infoBlocks,
                                             const bool allowJaggedData )
     {
-        if( infoBlocks.size() <= 0 )
-        {
-			throw AQLCoreInvalidData( "#Error: No Grid Information provided to tryAqToolObjectMultiGridCreate", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( infoBlocks.size() <= 0, "No Grid Information provided to tryAqToolObjectMultiGridCreate" );
 
         if( gridNames.size() != infoBlocks.size() )
         {
-			throw AQLCoreInvalidData( ( boost::format( "#Error: Number of Grid names (%i) does not match number of grid data ranges (%i)." )
-                                   % gridNames.size()
-                                   % infoBlocks.size() ).str().c_str(), __FILE__, __LINE__ );
+			std::ostringstream msg;
+			msg << "Number of Grid names (" << gridNames.size() << ") does not match number of grid data ranges (" << infoBlocks.size() << ").";
+			AQ_THROW( msg.str() );
         }
 
         const bool hasAnEmptyName = std::any_of( gridNames.cbegin(),
@@ -45,8 +40,9 @@ namespace validation
         } );
         if( hasAnEmptyName )
         {
-			throw AQLCoreInvalidData( ( boost::format( "#Error: One of the individual grid names is empty or invalid (%s)" )
-                                   % etrading::containerAsString( gridNames ).c_str() ).str().c_str(), __FILE__, __LINE__ );
+			std::ostringstream msg;
+			msg << "One of the individual grid names is empty or invalid (" << etrading::containerAsString( gridNames ) << ")";
+			AQ_THROW( msg.str() );
         }
 
         // TODO:  encapsulate this in another function to clean up interface
@@ -66,10 +62,9 @@ namespace validation
         etrading::copyToCache<etrading::FreeObject>( fo );
         return objectName;
 
-        //return (	boost::format( "%s available as range (Environment: %s  Time: %s) " )
-        //            %  objectName
-        //            % etrading::Environment::DEFAULT_ENV_NAME
-        //            % etrading::getCurrentDateTime() ).str();
+        //std::ostringstream msg;
+        //msg << objectName << " available as range (Environment: " << etrading::Environment::DEFAULT_ENV_NAME << "  Time: " << etrading::getCurrentDateTime() << ") ";
+        //return msg.str();
 
     };
 
@@ -97,8 +92,9 @@ namespace validation
 				}
 				catch (std::out_of_range e)
 				{
-					throw AQLCoreInvalidData (  ( boost::format("#Error: Unable to retrieve GridName \"%s\" from the MultiGrid object." ) 
-											 % gridName.c_str()).str().c_str(), __FILE__, __LINE__);
+					std::ostringstream msg;
+					msg << "Unable to retrieve GridName \"" << gridName << "\" from the MultiGrid object.";
+					AQ_THROW( msg.str() );
 				}
 
                 // extract the column name of the gridName
@@ -109,14 +105,16 @@ namespace validation
             }
             else
             {
-				throw AQLCoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
-										  % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
+				std::ostringstream msg;
+				msg << "Found object \"" << objectName << "\", but data is NULL";
+				AQ_THROW( msg.str() );
             }
         }
         else
         {
-			throw AQLCoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
-                                      % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
+			std::ostringstream msg;
+			msg << "Unable to find object with name \"" << objectName << "\"";
+			AQ_THROW( msg.str() );
         }
     };
 
@@ -140,14 +138,16 @@ namespace validation
             }
             else
             {
-				throw AQLCoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
-										  % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
+				std::ostringstream msg;
+				msg << "Found object \"" << objectName << "\", but data is NULL";
+				AQ_THROW( msg.str() );
             }
         }
         else
         {
-			throw AQLCoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
-                                      % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
+			std::ostringstream msg;
+			msg << "Unable to find object with name \"" << objectName << "\"";
+			AQ_THROW( msg.str() );
         }
 
     };

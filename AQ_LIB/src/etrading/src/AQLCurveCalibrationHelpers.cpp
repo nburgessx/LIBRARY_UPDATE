@@ -120,17 +120,17 @@ namespace etrading
 	
 	    it = ivar.find(chgrow(ylddata,CURVEINPUT_FUTUREINTERPOLATION,1		));
 	    if(it==ivar.end())
-		    throw AQLCoreInvalidData("Future interpolation is not registered in interpolation methods", __FILE__,__LINE__);
+		    AQ_THROW( "Future interpolation is not registered in interpolation methods" );
 	    AQLString futureinterpolation	= it->second;
 	
 	    it = ivar.find(chgrow(ylddata,CURVEINPUT_YIELDGENINTERPOLATION,1	));
 	    if(it==ivar.end())
-		    throw AQLCoreInvalidData("YieldGenInterpolation is not registered in interpolation methods", __FILE__,__LINE__);
+		    AQ_THROW( "YieldGenInterpolation is not registered in interpolation methods" );
 	    AQLString yieldgeninterpolation	= it->second;
 	
 	    it = ivar.find(chgrow(ylddata,CURVEINPUT_INTERPOLATION,1			));
 	    if(it==ivar.end())
-		    throw AQLCoreInvalidData("Interpolation is not registered in interpolation methods",			__FILE__,__LINE__);
+		    AQ_THROW( "Interpolation is not registered in interpolation methods" );
 	    AQLString interpolation = it->second;
 
 	    AQLDataBool bl;
@@ -192,7 +192,7 @@ namespace etrading
 		    curveCalibrationData->getRatePriority().set(tmpstrvec);
 	    }
 	    else
-		    throw AQLCoreInvalidData("RatePriority is incorrect",			__FILE__,__LINE__);
+		    AQ_THROW( "RatePriority is incorrect" );
 	
 	    //daycount
 	    std::map<AQLString, AQLString>& dvar = AQLCoreComponentManager::getDayCountMap();
@@ -211,7 +211,7 @@ namespace etrading
         //spotdate	= AQLDateScheduleHelpers::getAQLDate(chgrow(mdata,CURVEINPUT_SPOTDATE,1));
 	    itd			= dvar.find(chgrow(mdata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
-		    throw AQLCoreInvalidData("Money Market Daycount is not registered ", __FILE__,__LINE__);
+		    AQ_THROW( "Money Market Daycount is not registered " );
 	    dc			= itd->second;
 	    city		= splitCalendarCentres( chgrow(mdata,CURVEINPUT_CALENDAR,1) );
         calendar    = chgrow(mdata,CURVEINPUT_CALENDAR,1);
@@ -221,14 +221,14 @@ namespace etrading
         int tmprow1,tmprow2;
         tmprow1 = AQLFunctionUtilities::findRowsNumber(mdata,CURVEINPUT_SPOTLAG);
         tmprow2= AQLFunctionUtilities::findRowsNumber(mdata,CURVEINPUT_SPOTDATE);
-        if( tmprow1<0 && tmprow2<0) 
-        {
-            throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-        }
-        else if(tmprow1>=0 && tmprow2>=0)
-        {
-		    throw AQLCoreInvalidData("do not input spot date and spot lag", __FILE__,__LINE__);
-	    }
+        if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
+        else if ( tmprow1>=0 && tmprow2>=0 )
+{
+    AQ_THROW( "do not input spot date and spot lag" );
+}
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(mdata,CURVEINPUT_SPOTLAG,0,1,true);
@@ -275,7 +275,7 @@ namespace etrading
 	    //spotdate	= AQLDateScheduleHelpers::getAQLDate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
 	    itd			= dvar.find(chgrow(ldata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
-		    throw AQLCoreInvalidData("Libor Daycount is not registered ", __FILE__,__LINE__);
+		    AQ_THROW( "Libor Daycount is not registered " );
 	    dc			= itd->second;
 	    city		= splitCalendarCentres( chgrow(ldata,CURVEINPUT_CALENDAR,1) );
         calendar	= chgrow(ldata,CURVEINPUT_CALENDAR,1);
@@ -294,14 +294,14 @@ namespace etrading
 
         tmprow1= AQLFunctionUtilities::findRowsNumber(ldata,CURVEINPUT_SPOTLAG);
         tmprow2= AQLFunctionUtilities::findRowsNumber(ldata,CURVEINPUT_SPOTDATE);
-        if( tmprow1<0 && tmprow2<0) 
-        {
-            throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-        }
-	    else if(tmprow1>=0 && tmprow2>=0)
-        {
-		    throw AQLCoreInvalidData("do not input spot date and spot lag", __FILE__,__LINE__);
-	    }
+        if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
+	    else if ( tmprow1>=0 && tmprow2>=0 )
+{
+    AQ_THROW( "do not input spot date and spot lag" );
+}
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(ldata,CURVEINPUT_SPOTLAG,0,1,true);
@@ -353,7 +353,7 @@ namespace etrading
 	    //spotdate	= AQLDateScheduleHelpers::getAQLDate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
 	    itd			= dvar.find(chgrow(sdata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
-		    throw AQLCoreInvalidData("Swap Daycount is not registered ", __FILE__,__LINE__);
+		    AQ_THROW( "Swap Daycount is not registered " );
 	    dc			= itd->second;
 	    city		= splitCalendarCentres( chgrow(sdata,CURVEINPUT_CALENDAR,1) );
         calendar    = chgrow(sdata,CURVEINPUT_CALENDAR,1);
@@ -373,14 +373,14 @@ namespace etrading
 
         tmprow1= AQLFunctionUtilities::findRowsNumber(sdata,CURVEINPUT_SPOTLAG);
         tmprow2= AQLFunctionUtilities::findRowsNumber(sdata,CURVEINPUT_SPOTDATE);
-        if( tmprow1<0 && tmprow2<0) 
-        {
-            throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-        }
-	    else if(tmprow1>=0 && tmprow2>=0)
-        {
-		    throw AQLCoreInvalidData("do not input spot date and spot lag", __FILE__,__LINE__);
-	    }
+        if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
+	    else if ( tmprow1>=0 && tmprow2>=0 )
+{
+    AQ_THROW( "do not input spot date and spot lag" );
+}
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(sdata,CURVEINPUT_SPOTLAG,0,1,true);
@@ -470,7 +470,7 @@ namespace etrading
 		    //spotdate	= AQLDateScheduleHelpers::getAQLDate(chgrow(fdata,CURVEINPUT_SPOTDATE,1));
 		    itd			= dvar.find(chgrow(fdata,CURVEINPUT_DAYCOUNT,1));
 		    if(itd==dvar.end())
-			    throw AQLCoreInvalidData("Future Daycount is not registered ", __FILE__,__LINE__);
+			    AQ_THROW( "Future Daycount is not registered " );
 		    dc			= itd->second;
 		    city		= splitCalendarCentres( chgrow(fdata,CURVEINPUT_CALENDAR,1) );
             calendar		= chgrow(fdata,CURVEINPUT_CALENDAR,1);
@@ -479,14 +479,14 @@ namespace etrading
 
             tmprow1= AQLFunctionUtilities::findRowsNumber(fdata,CURVEINPUT_SPOTLAG);
             tmprow2= AQLFunctionUtilities::findRowsNumber(fdata,CURVEINPUT_SPOTDATE);
-            if( tmprow1<0 && tmprow2<0) 
-            {
-                throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-            }
-		    else if(tmprow1>=0 && tmprow2>=0)
-		    {
-			    throw AQLCoreInvalidData("do not input spot date and spot lag", __FILE__,__LINE__);
-		    }
+            if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
+		    else if ( tmprow1>=0 && tmprow2>=0 )
+{
+    AQ_THROW( "do not input spot date and spot lag" );
+}
             else if(tmprow1>=0)
             {
                 AQLString spotLag = AQLFunctionUtilities::findElement(fdata,CURVEINPUT_SPOTLAG,0,1,true);
@@ -532,7 +532,7 @@ namespace etrading
 	    }
 	    //set market object
 	    if (ref.size() < 2)
-		    throw AQLCoreInvalidData("Market Data is not set !!", __FILE__, __LINE__); 
+		    AQ_THROW( "Market Data is not set !!" ); 
 	    ref = ref.subString(0, ref.size() - 2);
 	    if (isSTD)
 	    {
@@ -635,7 +635,7 @@ namespace etrading
 	    std::map<AQLString, AQLString>::iterator itb;
 	    itb = bvar.find(chgrow(bdata,CURVEINPUT_BASISTYPE,1));
 	    if(itb == bvar.end())
-		    throw AQLCoreInvalidData("BasisType is not registered ", __FILE__,__LINE__);
+		    AQ_THROW( "BasisType is not registered " );
 	    AQLString basistype = itb->second;
 
 	    //daycount
@@ -646,7 +646,7 @@ namespace etrading
 	    {
 		    itd = dvar.find(chgrow(bdata,CURVEINPUT_BASISDAYCOUNT1,1));
 		    if(itd == dvar.end())
-			    throw AQLCoreInvalidData("basisDaycount is not registered ", __FILE__,__LINE__);
+			    AQ_THROW( "basisDaycount is not registered " );
 	    }
 	    AQLString bdaycount = itd->second;
 	
@@ -669,10 +669,10 @@ namespace etrading
         int tmprow2= AQLFunctionUtilities::findRowsNumber(bdata,CURVEINPUT_SPOTDATE);
         const AQLDate asofdate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(BCurveID,ENCHKTYPE_ISDEFINED).
                                     get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
-        if( tmprow1<0 && tmprow2<0) 
-        {
-            throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-        }
+        if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(bdata,CURVEINPUT_SPOTLAG,0,1,true);
@@ -688,13 +688,13 @@ namespace etrading
 	    std::map<AQLString, AQLString>::iterator iti;
 	    iti = ivar.find(chgrow(ylddata,CURVEINPUT_INTERPOLATION,1));
 	    if(iti == ivar.end())
-		    throw AQLCoreInvalidData("Interpolation is not registered ", __FILE__,__LINE__);
+		    AQ_THROW( "Interpolation is not registered " );
 	    AQLString interpolation = iti->second;
 	
 	    AQLObjectPool& objPool = dataInstance->getObjectPool(); 
 	    //first check isYieldCurveIDexist
 	    if(!objPool.getObject(BCurveID).isDefined())
-		    throw AQLCoreInvalidData("CurveID does not exsist",__FILE__,__LINE__);
+		    AQ_THROW( "CurveID does not exsist" );
 
 
 	    int N=bgrid.size();
@@ -833,7 +833,7 @@ namespace etrading
 	    std::map<AQLString, AQLString>::iterator itb;
 	    itb = bvar.find(chgrow(bdata,CURVEINPUT_BASISTYPE,1));
 	    if(itb == bvar.end())
-		    throw AQLCoreInvalidData("BasisType is not registered ", __FILE__,__LINE__);
+		    AQ_THROW( "BasisType is not registered " );
 	    AQLString basistype = itb->second;
 
 	    //daycount
@@ -844,7 +844,7 @@ namespace etrading
 	    {
 		    itd = dvar.find(chgrow(bdata,CURVEINPUT_BASISDAYCOUNT1,1));
 		    if(itd == dvar.end())
-			    throw AQLCoreInvalidData("basisDaycount is not registered ", __FILE__,__LINE__);
+			    AQ_THROW( "basisDaycount is not registered " );
 	    }
 	    AQLString bdaycount = itd->second;
 	
@@ -862,10 +862,10 @@ namespace etrading
         int tmprow2= AQLFunctionUtilities::findRowsNumber(bdata,CURVEINPUT_SPOTDATE);
         const AQLDate asofdate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(stdCurveID,ENCHKTYPE_ISDEFINED).
                                     get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
-        if( tmprow1<0 && tmprow2<0) 
-        {
-            throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-        }
+        if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(bdata,CURVEINPUT_SPOTLAG,0,1,true);
@@ -881,13 +881,13 @@ namespace etrading
 	    std::map<AQLString, AQLString>::iterator iti;
 	    iti = ivar.find(chgrow(ylddata,CURVEINPUT_INTERPOLATION,1));
 	    if(iti == ivar.end())
-		    throw AQLCoreInvalidData("Interpolation is not registered ", __FILE__,__LINE__);
+		    AQ_THROW( "Interpolation is not registered " );
 	    AQLString interpolation = iti->second;
 	
 	    AQLObjectPool& objPool = dataInstance->getObjectPool(); 
 	    //first check isYieldCurveIDexist
 	    if(!objPool.getObject(stdCurveID).isDefined())
-		    throw AQLCoreInvalidData("CurveID does not exsist",__FILE__,__LINE__);
+		    AQ_THROW( "CurveID does not exsist" );
 
 
 	    int N=bgrid.size();
@@ -1050,18 +1050,18 @@ namespace etrading
 	    {
 		    isFRAUse = true;
 		    if(1>fraGrid3M.size() || 1>fraGrid6M.size())
-			    throw AQLCoreInvalidData("Input FRA Data",__FILE__,__LINE__);
+			    AQ_THROW( "Input FRA Data" );
 		    if(2>fraGrid3M[0].size() || 2>fraGrid6M[0].size())
-			    throw AQLCoreInvalidData("Matrix column size must be 2",__FILE__,__LINE__);
+			    AQ_THROW( "Matrix column size must be 2" );
 		    if(fraConv.empty())
-			    throw AQLCoreInvalidData("Input Matrix is empty",__FILE__,__LINE__);
+			    AQ_THROW( "Input Matrix is empty" );
 	    }
 
         //intertplation 
 	    std::map<AQLString, AQLString>& ivar = AQLCoreComponentManager::getInterpolationMap();
         std::map<AQLString, AQLString>::iterator it = ivar.find(chgrow(yldData,CURVEINPUT_INTERPOLATION,1			));
 	    if(it==ivar.end())
-		    throw AQLCoreInvalidData("Interpolation is not registered in interpolation methods",			__FILE__,__LINE__);
+		    AQ_THROW( "Interpolation is not registered in interpolation methods" );
 	    AQLString interpolation = it->second;
 
 	    //YieldData
@@ -1145,7 +1145,7 @@ namespace etrading
 	    //Money Market
 	    itd			= dvar.find(chgrow(monConv,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
-		    throw AQLCoreInvalidData("Money Market Daycount is not registered ", __FILE__,__LINE__);
+		    AQ_THROW( "Money Market Daycount is not registered " );
 	    dc			= itd->second;
 	    city		= splitCalendarCentres( chgrow(monConv,CURVEINPUT_CALENDAR,1) );
         calendar    = chgrow(monConv,CURVEINPUT_CALENDAR,1);
@@ -1195,7 +1195,7 @@ namespace etrading
 	    ////LiborData
 	    itd			= dvar.find(chgrow(libConv,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
-		    throw AQLCoreInvalidData("Libor Daycount is not registered ", __FILE__,__LINE__);
+		    AQ_THROW( "Libor Daycount is not registered " );
 	    AQLString ldc			= itd->second;
 	    const AQLStringVector term_tmp = searchvecbycol(libGrid,CURVEINPUT_TERM,true);
         const AQLStringVector rate_str = searchvecbycol(libGrid,CURVEINPUT_RATE,true);
@@ -1206,14 +1206,14 @@ namespace etrading
 	    calL.convertFromString(calendar);
 	    ltmprow1= AQLFunctionUtilities::findRowsNumber(swapConv,CURVEINPUT_SPOTLAG);
         ltmprow2= AQLFunctionUtilities::findRowsNumber(swapConv,CURVEINPUT_SPOTDATE);
-        if( ltmprow1<0 && ltmprow2<0 ) 
-        {
-            throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-        }
-	    else if(ltmprow1>=0 && ltmprow2>=0)
-        {
-		    throw AQLCoreInvalidData("do not input spot date and spot lag", __FILE__,__LINE__);
-	    }
+        if ( ltmprow1<0 && ltmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
+	    else if ( ltmprow1>=0 && ltmprow2>=0 )
+{
+    AQ_THROW( "do not input spot date and spot lag" );
+}
         else if(ltmprow1>=0)
         {
             AQLString lspotLag = AQLFunctionUtilities::findElement(swapConv,CURVEINPUT_SPOTLAG,0,1,true);
@@ -1227,10 +1227,10 @@ namespace etrading
 
 	    //set three month libor
 	    const int row_3M = AQLCoreUtility::findRowsNumber(libGrid,"3M");
-	    if( row_3M<0 ) throw AQLCoreInvalidData("3 month libor does not exist.", __FILE__,__LINE__);
+	    if( row_3M<0 ) AQ_THROW( "3 month libor does not exist." );
 	    //set six month libor
 	    const int row_6M = AQLCoreUtility::findRowsNumber(libGrid,"6M");
-	    if( row_6M<0 ) throw AQLCoreInvalidData("6 month libor does not exist.", __FILE__,__LINE__);
+	    if( row_6M<0 ) AQ_THROW( "6 month libor does not exist." );
 
 	    for (size_t i=0; i<term_tmp.size(); i++)
 	    {
@@ -1276,18 +1276,18 @@ namespace etrading
 	    ////SwapData
 	    itd			= dvar.find(chgrow(swapConv,"DAYCOUNTFIX",1));
         itd2		= dvar.find(chgrow(swapConv,"DAYCOUNTFLOAT",1));
-	    if ( itd==dvar.end() && itd2==dvar.end() ) 
-        {
-            throw AQLCoreInvalidData("Swap Daycount is not registered ", __FILE__,__LINE__);
-        }
-        else if ( itd == dvar.end() && itd2 != dvar.end() ) 
-        {
-		    throw AQLCoreInvalidData("Libor Basis Daycount is not registered ", __FILE__,__LINE__);
-        }
-        else if ( itd != dvar.end() && itd2 == dvar.end() ) 
-        {
-		    throw AQLCoreInvalidData("Libor Basis Daycount is not registered ", __FILE__,__LINE__);
-        }
+	    if ( itd==dvar.end() && itd2==dvar.end() )
+{
+    AQ_THROW( "Swap Daycount is not registered " );
+}
+        else if ( itd == dvar.end() && itd2 != dvar.end() )
+{
+    AQ_THROW( "Libor Basis Daycount is not registered " );
+}
+        else if ( itd != dvar.end() && itd2 == dvar.end() )
+{
+    AQ_THROW( "Libor Basis Daycount is not registered " );
+}
         else
         {
             dc	= itd->second;
@@ -1305,23 +1305,23 @@ namespace etrading
 	    term = searchvecbycol(swapGrid,CURVEINPUT_TERM,true);
 	    rate = AQLCoreUtility::changeDoubleFromString(searchvecbycol(swapGrid,CURVEINPUT_RATE,true));
 	
-	    if( rate.size() == 0 ) throw AQLCoreInvalidData("input swap market data.", __FILE__,__LINE__);
+	    if( rate.size() == 0 ) AQ_THROW( "input swap market data." );
 	    if( Currency == CURRENCY_USD && !isFRAUse )
 	    {
 		    tmprow1= AQLFunctionUtilities::findRowsNumber(swapGrid,"6M");
-		    if( tmprow1 < 0 ) throw AQLCoreInvalidData("input 6M swap market data.", __FILE__,__LINE__);
+		    if( tmprow1 < 0 ) AQ_THROW( "input 6M swap market data." );
 	    }
 
         tmprow1= AQLFunctionUtilities::findRowsNumber(swapConv,CURVEINPUT_SPOTLAG);
         tmprow2= AQLFunctionUtilities::findRowsNumber(swapConv,CURVEINPUT_SPOTDATE);
-        if( tmprow1<0 && tmprow2<0 ) 
-        {
-            throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-        }
-	    else if(tmprow1>=0 && tmprow2>=0)
-        {
-		    throw AQLCoreInvalidData("do not input spot date and spot lag", __FILE__,__LINE__);
-	    }
+        if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
+	    else if ( tmprow1>=0 && tmprow2>=0 )
+{
+    AQ_THROW( "do not input spot date and spot lag" );
+}
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(swapConv,CURVEINPUT_SPOTLAG,0,1,true);
@@ -1351,7 +1351,7 @@ namespace etrading
 		    //intertplation 
 		    it = ivar.find(chgrow(swapConv,CURVEINPUT_INTERPOLATION,1			));
 		    if(it==ivar.end())
-			    throw AQLCoreInvalidData("Interpolation is not registered in interpolation methods",			__FILE__,__LINE__);
+			    AQ_THROW( "Interpolation is not registered in interpolation methods" );
 		    interpolation = it->second;
 
 		    se->add(CALIBRATION_DATA_NAME,				new AQLDataString(name)							);
@@ -1452,10 +1452,10 @@ namespace etrading
 			    }
 			    be->add(CALIBRATION_DATA_NAME,				new AQLDataString(name)							);
 
-			    if( currConv.empty() ) throw AQLCoreInvalidData("input currency basis swap convention.", __FILE__,__LINE__);
+			    if( currConv.empty() ) AQ_THROW( "input currency basis swap convention." );
 			    itd			= dvar.find(chgrow(currConv,CURVEINPUT_BASISDAYCOUNT,1));
 			    if(itd==dvar.end())
-				    throw AQLCoreInvalidData("Currency Basis Daycount is not registered ", __FILE__,__LINE__);
+				    AQ_THROW( "Currency Basis Daycount is not registered " );
 			    dc			= itd->second;
 			    if( dc != ldc ) warning += AQLString(" Currency basis daycount is not Libor's!");
 			    be->add(IR_CALIBRATION_DATA_INDEXDAYCOUNT,	new AQLPriceDataDayCount() ).convertFromString(dc);
@@ -1470,14 +1470,14 @@ namespace etrading
 
 			    tmprow1= AQLFunctionUtilities::findRowsNumber(currConv,CURVEINPUT_SPOTLAG);
 			    tmprow2= AQLFunctionUtilities::findRowsNumber(currConv,CURVEINPUT_SPOTDATE);
-			    if( tmprow1<0 && tmprow2<0) 
-			    {
-				    throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-			    }
-			    else if(tmprow1>=0 && tmprow2>=0)
-			    {
-				    throw AQLCoreInvalidData("do not input spot date and spot lag", __FILE__,__LINE__);
-			    }
+			    if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
+			    else if ( tmprow1>=0 && tmprow2>=0 )
+{
+    AQ_THROW( "do not input spot date and spot lag" );
+}
 			    else if(tmprow1>=0)
 			    {
 				    AQLString spotLag = AQLFunctionUtilities::findElement(currConv,CURVEINPUT_SPOTLAG,0,1,true);
@@ -1488,13 +1488,13 @@ namespace etrading
 				    spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(currConv,CURVEINPUT_SPOTDATE,1));
 			    }
 
-			    if( rate.size() == 0 ) throw AQLCoreInvalidData("input currency basis market data.", __FILE__,__LINE__);
+			    if( rate.size() == 0 ) AQ_THROW( "input currency basis market data." );
 			    tmprow1= AQLFunctionUtilities::findRowsNumber(currGrid,"3M");
-			    if( tmprow1 < 0 ) throw AQLCoreInvalidData("input 3M currency basis market data.", __FILE__,__LINE__);
+			    if( tmprow1 < 0 ) AQ_THROW( "input 3M currency basis market data." );
 
 			    it = ivar.find(chgrow(currConv,CURVEINPUT_INTERPOLATION,1			));
 			    if(it==ivar.end())
-				    throw AQLCoreInvalidData("Interpolation is not registered in interpolation methods",			__FILE__,__LINE__);
+				    AQ_THROW( "Interpolation is not registered in interpolation methods" );
 			    interpolation = it->second;
 			    be->add(CALIBRATION_DATA_INTERPOLATION, new AQLPriceDataInterpolation() ).convertFromString(interpolation);
 			    be->add(IR_CALIBRATION_DATA_TERM, new AQLDataString(term[i]) );
@@ -1555,7 +1555,7 @@ namespace etrading
 			    const AQLObject& object = objPool.getObject(parCurve, ENCHKTYPE_ISDEFINED).get();
 			    const AQLString& parCurve_baseccy = dynamic_cast<const AQLDataString& > ((object.getData(IR_CALIBRATION_DATA_PARCURVE, ISNOTNULL)).get()).get();
 			    if( parCurve_baseccy == CURRENCY_USD )
-				    throw AQLCoreInvalidData("par curves are inconsistent!",__FILE__,__LINE__);
+				    AQ_THROW( "par curves are inconsistent!" );
 			    be->add(IR_CALIBRATION_DATA_AGTFORECAST, new AQLDataString()).convertFromString("FLOATER");
 			    curveCalibrationData->getForeignYieldData().convertFromString(parCurve);
 			    if (isRenAdj)
@@ -1575,18 +1575,18 @@ namespace etrading
         //3MLibor 6MLibor Basis Data
 	    itd			= dvar.find(chgrow(libBasisConv,"DAYCOUNTTHREE",1));
         itd2		= dvar.find(chgrow(libBasisConv,"DAYCOUNTSIX",1));
-	    if(itd==dvar.end() && itd2==dvar.end() ) 
-        {
-            throw AQLCoreInvalidData("Libor Basis Daycount is not registered ", __FILE__,__LINE__);
-        }
-        else if(itd == dvar.end() && itd2 != dvar.end()) 
-        {
-		    throw AQLCoreInvalidData("Libor Basis Daycount is not registered ", __FILE__,__LINE__);
-        }
-        else if(itd != dvar.end() && itd2 == dvar.end()) 
-        {
-		    throw AQLCoreInvalidData("Libor Basis Daycount is not registered ", __FILE__,__LINE__);
-        }
+	    if ( itd==dvar.end() && itd2==dvar.end() )
+{
+    AQ_THROW( "Libor Basis Daycount is not registered " );
+}
+        else if ( itd == dvar.end() && itd2 != dvar.end() )
+{
+    AQ_THROW( "Libor Basis Daycount is not registered " );
+}
+        else if ( itd != dvar.end() && itd2 == dvar.end() )
+{
+    AQ_THROW( "Libor Basis Daycount is not registered " );
+}
         else
         {
             dc	= itd->second;
@@ -1596,11 +1596,11 @@ namespace etrading
 	    if( dc2 != ldc ) warning += AQLString(" 6ML Leg daycount is not Libor's!");
 	    term = searchvecbycol(libBasisGrid,CURVEINPUT_TERM,true);
 	    rate = AQLCoreUtility::changeDoubleFromString(searchvecbycol(libBasisGrid,CURVEINPUT_RATE,true));
-	    if( rate.size() == 0 ) throw AQLCoreInvalidData("input 3M/6M Libor basis market data.", __FILE__,__LINE__);
+	    if( rate.size() == 0 ) AQ_THROW( "input 3M/6M Libor basis market data." );
 	    if( Currency != CURRENCY_USD && !isFRAUse )
 	    {
 		    tmprow1= AQLFunctionUtilities::findRowsNumber(libBasisGrid,"6M");
-		    if( tmprow1 < 0 ) throw AQLCoreInvalidData("input 6M 3M/6M Libor basis market data.", __FILE__,__LINE__);
+		    if( tmprow1 < 0 ) AQ_THROW( "input 6M 3M/6M Libor basis market data." );
 	    }
 
 	    AQLString ref_36Basis = "";
@@ -1623,7 +1623,7 @@ namespace etrading
 		    //intertplation 
 		    it = ivar.find(chgrow(libBasisConv,CURVEINPUT_INTERPOLATION,1			));
 		    if(it==ivar.end())
-			    throw AQLCoreInvalidData("Interpolation is not registered in interpolation methods",			__FILE__,__LINE__);
+			    AQ_THROW( "Interpolation is not registered in interpolation methods" );
 		    interpolation = it->second;
 		
 		    lbe->add(CALIBRATION_DATA_NAME,						new AQLDataString(name) );
@@ -1659,20 +1659,20 @@ namespace etrading
 	        srule = chgrow(fraConv,CURVEINPUT_SLIDINGRULE,1);
 		    itd			= dvar.find(chgrow(fraConv,CURVEINPUT_DAYCOUNT,1));
 		    if(itd==dvar.end())
-			    throw AQLCoreInvalidData("FRA Daycount is not registered ", __FILE__,__LINE__);
+			    AQ_THROW( "FRA Daycount is not registered " );
 		    dc	= itd->second;
 		    if( dc != ldc ) warning += AQLString(" FRA daycount is not Libor's!");
 
             tmprow1= AQLFunctionUtilities::findRowsNumber(fraConv,CURVEINPUT_SPOTLAG);
             tmprow2= AQLFunctionUtilities::findRowsNumber(fraConv,CURVEINPUT_SPOTDATE);
-            if( tmprow1<0 && tmprow2<0) 
-            {
-                throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-            }
-	        else if(tmprow1>=0 && tmprow2>=0)
-            {
-		        throw AQLCoreInvalidData("do not input spot date and spot lag", __FILE__,__LINE__);
-	        }
+            if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
+	        else if ( tmprow1>=0 && tmprow2>=0 )
+{
+    AQ_THROW( "do not input spot date and spot lag" );
+}
             else if(tmprow1>=0)
             {
                 AQLString spotLag = AQLFunctionUtilities::findElement(fraConv,CURVEINPUT_SPOTLAG,0,1,true);
@@ -1760,7 +1760,7 @@ namespace etrading
 
 	    //set market object
 	    if (ref.size() < 2)
-		    throw AQLCoreInvalidData("Market Data is not set !!", __FILE__, __LINE__); 
+		    AQ_THROW( "Market Data is not set !!" ); 
 	    ref = ref.subString(0, ref.size() - 2);
 	    curveCalibrationData->getMarketData().convertFromString(ref);
 	    //generate Object
@@ -1815,11 +1815,11 @@ namespace etrading
 	    //BasisType
 	    std::map<AQLString, AQLString>& dvar = AQLCoreComponentManager::getDayCountMap();
 	    std::map<AQLString, AQLString>::iterator itd = dvar.find(chgrow(bdata,"SETUPCURVEDAYCOUNT",1));
-        if(itd == dvar.end()) throw AQLCoreInvalidData("basisDaycount is not registered ", __FILE__,__LINE__);
+        if(itd == dvar.end()) AQ_THROW( "basisDaycount is not registered " );
 	    AQLString sDaycount = itd->second;
 
         itd = dvar.find(chgrow(bdata,"BASECURVEDAYCOUNT",1));
-        if(itd == dvar.end()) throw AQLCoreInvalidData("basisDaycount is not registered ", __FILE__,__LINE__);
+        if(itd == dvar.end()) AQ_THROW( "basisDaycount is not registered " );
 	    AQLString bDaycount = itd->second;
 	
 	    AQLString bcalendar	= chgrow(bdata,CURVEINPUT_BASISCALENDAR,1);
@@ -1840,7 +1840,7 @@ namespace etrading
 	    else
 	    {
 		    //error
-		    throw AQLCoreInvalidData("Input freq type is not supported", __FILE__, __LINE__);
+		    AQ_THROW( "Input freq type is not supported" );
 	    }
         if (sFreq == ANNUAL) setSpan = 12;
 	    else if (sFreq == SEMI_ANNUAL) setSpan = 6;
@@ -1849,7 +1849,7 @@ namespace etrading
 	    else
 	    {
 		    //error
-		    throw AQLCoreInvalidData("Input freq type is not supported", __FILE__, __LINE__);
+		    AQ_THROW( "Input freq type is not supported" );
 	    }
         int tempRow = AQLFunctionUtilities::findRowsNumber(bdata,CURVEINPUT_BASISINITIALRATE);
         AQLString isIniRateUse_str = chgrow(bdata,"ISINITIALRATEUSE",1);
@@ -1858,20 +1858,20 @@ namespace etrading
         {
             if( isIniRateUse_str == "TRUE" ) isIniRateUse = true;
             else if( isIniRateUse_str == "FALSE" ) isIniRateUse = false;
-            else throw AQLCoreInvalidData("Input initial rate use", __FILE__, __LINE__);
+            else AQ_THROW( "Input initial rate use" );
         }
         if( isIniRateUse == true && (tempRow < 0 || chgrow(bdata,CURVEINPUT_BASISINITIALRATE,1) == "" ) ) 
-            throw AQLCoreInvalidData("Input initial rate", __FILE__, __LINE__);
+            AQ_THROW( "Input initial rate" );
         double initialRate	= chgrow(bdata,CURVEINPUT_BASISINITIALRATE,1).getDoubleValue();
 
         int tmprow1= AQLFunctionUtilities::findRowsNumber(bdata,CURVEINPUT_SPOTLAG);
         int tmprow2= AQLFunctionUtilities::findRowsNumber(bdata,CURVEINPUT_SPOTDATE);
         const AQLDate asofdate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(arbFreeCurveID,ENCHKTYPE_ISDEFINED).
                                     get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
-        if( tmprow1<0 && tmprow2<0) 
-        {
-            throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-        }
+        if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(bdata,CURVEINPUT_SPOTLAG,0,1,true);
@@ -1885,7 +1885,7 @@ namespace etrading
 	    AQLObjectPool& objPool = dataInstance->getObjectPool(); 
 	    //first check isYieldCurveIDexist
 	    if(!objPool.getObject(arbFreeCurveID).isDefined())
-		    throw AQLCoreInvalidData("CurveID does not exsist",__FILE__,__LINE__);
+		    AQ_THROW( "CurveID does not exsist" );
 
 	    double rate =0.0;
 
@@ -1935,7 +1935,7 @@ namespace etrading
 	    if (ratesize < 2)
 	    {
 		    AQLString msg = "rate matrix size must be more than 2";
-		    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		    AQ_THROW( msg.getCString() );
 	    }
         AQLObjectPool &objPool = dataInstance->getObjectPool();
         AQLString name = arbFreeCurveID + "_" + forecastCurveID;
@@ -1979,7 +1979,7 @@ namespace etrading
         //daycount
 	    std::map<AQLString, AQLString>& dvar = AQLCoreComponentManager::getDayCountMap();
 	    std::map<AQLString, AQLString>::iterator itd = dvar.find(chgrow(data,CURVEINPUT_DAYCOUNT,1));
-	    if(itd==dvar.end()) throw AQLCoreInvalidData("Money Market Daycount is not registered ", __FILE__,__LINE__);
+	    if(itd==dvar.end()) AQ_THROW( "Money Market Daycount is not registered " );
 	    AQLPriceDataDayCount dc;
         dc.convertFromString(itd->second);
         //calendar,slidingrule,frequency
@@ -1992,14 +1992,14 @@ namespace etrading
         int tmprow1,tmprow2;
         tmprow1 = AQLFunctionUtilities::findRowsNumber(data,CURVEINPUT_SPOTLAG);
         tmprow2= AQLFunctionUtilities::findRowsNumber(data,CURVEINPUT_SPOTDATE);
-        if( tmprow1<0 && tmprow2<0) 
-        {
-            throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-        }
-        else if(tmprow1>=0 && tmprow2>=0)
-        {
-		    throw AQLCoreInvalidData("do not input spot date and spot lag", __FILE__,__LINE__);
-	    }
+        if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
+        else if ( tmprow1>=0 && tmprow2>=0 )
+{
+    AQ_THROW( "do not input spot date and spot lag" );
+}
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(data,CURVEINPUT_SPOTLAG,0,1,true);
@@ -2027,7 +2027,7 @@ namespace etrading
 	    const AQLObjectHolder& objHolder = dataInstance->getObjectPool().getObject(CurveManager,ENCHKTYPE_NOCHECK);
 	    if(!objHolder.isDefined())
 	    {		AQLString msg = "Curve :" + curveid + " was not generated by the curve generator";
-		    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		    AQ_THROW( msg.getCString() );		
 	    }
 	    const AQLDataString &str = dynamic_cast<const AQLDataString &>(objHolder.getData("Time",ISDEFINED).get());
 	    AQLString ret = curveid + " is generated at " + str.convertToString();
@@ -2053,7 +2053,7 @@ namespace etrading
 	    if (N < 2) 
 	    {
 		    AQLString msg = "rate matrix size must be more than 2";
-		    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		    AQ_THROW( msg.getCString() );		
 	    }
 	    AQLObjectPool& objPool  = dataInstance->getObjectPool();
 	    AQLObject& e = objPool.getObject(curveid,ENCHKTYPE_ISDEFINED).get();
@@ -2073,7 +2073,7 @@ namespace etrading
 	    if (N < 2) 
 	    {
 		    AQLString msg = "rate matrix size must be more than 2";
-		    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		    AQ_THROW( msg.getCString() );		
 	    }
 	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 	    AQLObjectHolder objHolder = objPool.getObject(curveid,ENCHKTYPE_NOCHECK);
@@ -2116,7 +2116,7 @@ namespace etrading
 	    if (N < 2) 
 	    {
 		    AQLString msg = "rate matrix size must be more than 2";
-		    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		    AQ_THROW( msg.getCString() );		
 	    }
 	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 	    AQLObjectHolder objHolder = objPool.getObject(curveid,ENCHKTYPE_NOCHECK);
@@ -2183,10 +2183,7 @@ namespace etrading
     AQLCurveCalibrationHelpers::setUpCurve(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate,
 										     DoubleArray& termarray, DoubleArray& dfarray, const AQLString& curveName)
     {
-	    if(termarray.size() != dfarray.size())
-	    {
-		    throw AQLCoreInvalidData("Input the same data size between Term and DF",__FILE__,__LINE__);
-	    }
+	    AQ_THROW_IF( termarray.size() != dfarray.size(), "Input the same data size between Term and DF" );
 
 	    unsigned int col = termarray.size();
 	    DoubleVector tmp(col, 0.0);
@@ -2335,10 +2332,7 @@ namespace etrading
         DoubleArray	dfsVector       = dfs.get();
     
         // Check Result Dimensions
-        if ( termsVector.size() != dfsVector.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Curve Results - Inconsistent number of discount factor dates and values",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( termsVector.size() != dfsVector.size(), "Invalid Curve Results - Inconsistent number of discount factor dates and values" );
     
         // Get the Payment Dates corresponding to the terms daycount fractions
         // --------------------------------------
@@ -2380,10 +2374,7 @@ namespace etrading
         DoubleArray	dfsVector       = discountFactorTable.discountFactors_;
     
         // Check Input Dimensions
-        if ( termsVector.size() != dfsVector.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Curve Inputs - Inconsistent number of discount factor dates and values",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( termsVector.size() != dfsVector.size(), "Invalid Curve Inputs - Inconsistent number of discount factor dates and values" );
 
         // 2. Initialize the Yield Curve Properties; Required to Get and Set Curve Index Info
         // ---------------------------------------
@@ -2453,19 +2444,16 @@ namespace etrading
          // Check Input Dimensions
         if ( termsMatrix.size() != 2 ) // Matrix with 2 rows: terms[0] forward start date terms, terms[1] forward end date terms
         {
-            throw AQLCoreInvalidData("#Error: Invalid Curve Inputs - Inconsistent forward date dimensions; A matrix of forward start and end dates are required",__FILE__,__LINE__);
+            AQ_THROW( "Invalid Curve Inputs - Inconsistent forward date dimensions; A matrix of forward start and end dates are required" );
         }
 
         if ( termsMatrix[0].size() != termsMatrix[1].size() ) // Matrix with 2 rows: terms[0] forward start date terms, terms[1] forward end date terms
         {
-            throw AQLCoreInvalidData("#Error: Invalid Curve Inputs - Inconsistent number of forward start- and end dates",__FILE__,__LINE__);
+            AQ_THROW( "Invalid Curve Inputs - Inconsistent number of forward start- and end dates" );
         }
 
         // Check Input Dimensions
-        if ( termsMatrix[0].size() != forwardsVector.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Curve Inputs - Inconsistent number of forward rate dates and values",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( termsMatrix[0].size() != forwardsVector.size(), "Invalid Curve Inputs - Inconsistent number of forward rate dates and values" );
 
         // Get the Fixing Dates corresponding to the terms daycount fractions
         // --------------------------------------
@@ -2517,20 +2505,14 @@ namespace etrading
         // Check Input Dimensions
         if ( termsMatrix.size() != 2 ) // Matrix with 2 rows: terms[0] forward start date terms, terms[1] forward end date terms
         {
-            throw AQLCoreInvalidData("#Error: Invalid Curve Inputs - Inconsistent forward date dimensions; A matrix of forward start and end dates are required",__FILE__,__LINE__);
+            AQ_THROW( "Invalid Curve Inputs - Inconsistent forward date dimensions; A matrix of forward start and end dates are required" );
         }
 
         // Matrix with 2 rows: terms[0] forward start date terms, terms[1] forward end date terms
-        if ( termsMatrix[0].size() != termsMatrix[1].size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Curve Inputs - Inconsistent number of forward start- and end dates", __FILE__,__LINE__);
-        }
+        AQ_THROW_IF( termsMatrix[0].size() != termsMatrix[1].size(), "Invalid Curve Inputs - Inconsistent number of forward start- and end dates" );
 
         // Check Input Dimensions
-        if ( termsMatrix[0].size() != forwardsVector.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Curve Inputs - Inconsistent number of forward rate dates and values", __FILE__,__LINE__);
-        }
+        AQ_THROW_IF( termsMatrix[0].size() != forwardsVector.size(), "Invalid Curve Inputs - Inconsistent number of forward rate dates and values" );
 
         // 2. Initialize the Yield Curve Properties; Required to Get and Set Curve Index Info
         // ---------------------------------------
@@ -2580,7 +2562,7 @@ namespace etrading
 	    std::map<AQLString, AQLString>& dvar = AQLCoreComponentManager::getDayCountMap();
 	    std::map<AQLString, AQLString>::iterator itd = dvar.find(chgrow(sdata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
-		    throw AQLCoreInvalidData("Swap Daycount is not registered ", __FILE__,__LINE__);
+		    AQ_THROW( "Swap Daycount is not registered " );
 	    AQLString dcStr			= itd->second;
 	    AQLString calStr			= chgrow(sdata,CURVEINPUT_CALENDAR,1);
 	    AQLString slidingStr		= chgrow(sdata,CURVEINPUT_SLIDINGRULE,1);
@@ -2605,14 +2587,14 @@ namespace etrading
 	    int tmprow1,tmprow2;
         tmprow1 = AQLFunctionUtilities::findRowsNumber(sdata,CURVEINPUT_SPOTLAG);
         tmprow2= AQLFunctionUtilities::findRowsNumber(sdata,CURVEINPUT_SPOTDATE);
-        if( tmprow1<0 && tmprow2<0) 
-        {
-            throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-        }
-        else if(tmprow1>=0 && tmprow2>=0)
-        {
-		    throw AQLCoreInvalidData("do not input spot date and spot lag", __FILE__,__LINE__);
-	    }
+        if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
+        else if ( tmprow1>=0 && tmprow2>=0 )
+{
+    AQ_THROW( "do not input spot date and spot lag" );
+}
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(sdata,CURVEINPUT_SPOTLAG,0,1,true);
@@ -2623,7 +2605,7 @@ namespace etrading
             spotDate = AQLDateScheduleHelpers::getAQLDate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
         }
 	    if (asOfDate > spotDate)
-		    throw AQLCoreInvalidData("AsofDate > spotDate, cannnot calc. ", __FILE__, __LINE__);
+		    AQ_THROW( "AsofDate > spotDate, cannnot calc. " );
 
 	    for (size_t i = 0; i < size_t(mSize); ++i)
 	    {
@@ -2674,7 +2656,7 @@ namespace etrading
 	    std::map<AQLString, AQLString>& dvar = AQLCoreComponentManager::getDayCountMap();
 	    std::map<AQLString, AQLString>::iterator itd = dvar.find(chgrow(ldata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
-		    throw AQLCoreInvalidData("Libor Daycount is not registered ", __FILE__,__LINE__);
+		    AQ_THROW( "Libor Daycount is not registered " );
 	    AQLString dcStr			= itd->second;
 	    AQLString calStr			= chgrow(ldata,CURVEINPUT_CALENDAR,1);
 	    AQLString slidingStr		= chgrow(ldata,CURVEINPUT_SLIDINGRULE,1);
@@ -2698,14 +2680,14 @@ namespace etrading
 	    int tmprow1,tmprow2;
         tmprow1 = AQLFunctionUtilities::findRowsNumber(ldata,CURVEINPUT_SPOTLAG);
         tmprow2= AQLFunctionUtilities::findRowsNumber(ldata,CURVEINPUT_SPOTDATE);
-        if( tmprow1<0 && tmprow2<0) 
-        {
-            throw AQLCoreInvalidData("input spot date or spot lag", __FILE__,__LINE__);
-        }
-        else if(tmprow1>=0 && tmprow2>=0)
-        {
-		    throw AQLCoreInvalidData("do not input spot date and spot lag", __FILE__,__LINE__);
-	    }
+        if ( tmprow1<0 && tmprow2<0 )
+{
+    AQ_THROW( "input spot date or spot lag" );
+}
+        else if ( tmprow1>=0 && tmprow2>=0 )
+{
+    AQ_THROW( "do not input spot date and spot lag" );
+}
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(ldata,CURVEINPUT_SPOTLAG,0,1,true);
@@ -2716,7 +2698,7 @@ namespace etrading
             spotDate = AQLDateScheduleHelpers::getAQLDate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
         }
 	    if (asOfDate > spotDate)
-		    throw AQLCoreInvalidData("AsofDate > spotDate, cannnot calc. ", __FILE__, __LINE__);
+		    AQ_THROW( "AsofDate > spotDate, cannnot calc. " );
 
 	    double termSpot = dc.getTerm(asOfDate, spotDate);
 	    double dfSpot   = curve.getDF(termSpot);

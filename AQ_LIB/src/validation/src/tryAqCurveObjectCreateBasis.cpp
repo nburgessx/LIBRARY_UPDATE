@@ -1,4 +1,5 @@
 #include <memory>
+#include <sstream>
 
 #include "tryAqCurveObjectCreateBasis.h"
 
@@ -98,10 +99,7 @@ namespace validation
             file.write( "spotFxRates", spotFxRates );
         }
 
-        if( ( fxFwdRates.empty() && basisRates.empty() ) || basisConv.empty() || curveConv.empty() )
-        {
-            throw AQLCoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ( fxFwdRates.empty() && basisRates.empty() ) || basisConv.empty() || curveConv.empty(), "Input Matrix is empty" );
 
         if( ( fxFwdRates.empty() && 2 > basisRates[0].size() ) || 2 > basisConv[0].size() || 2 > curveConv[0].size() )
         {
@@ -264,7 +262,9 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Unable to create AQObjCurve named %s" ) % newCurveName.c_str() ).str().c_str() );
+            std::ostringstream msg;
+            msg << "Unable to create AQObjCurve named " << newCurveName;
+            AQ_THROW( msg.str() );
         }
 
         /*

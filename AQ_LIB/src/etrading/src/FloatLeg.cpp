@@ -115,14 +115,8 @@ namespace etrading
 
 				    const AQLString& curveCurrency = getCurveCurrency( curveCollection );
 				    const AQLString& curveFrequencyTenor = validateCurveAndGetCurveFrequency( curveCollection, legStaticData_->getForecastCurve() );
-				    if (fixingTable->getCurrency() != toCCYEnum( curveCurrency.getCString() ))
-				    {
-					    throw AQLCoreInvalidData("#Error: FixingTable currency does not match the forecast curve currency. ", __FILE__, __LINE__ );
-				    }
-				    if (fixingTable->getCurveTenor() != toCurveTenorEnum( curveFrequencyTenor.getCString() ))
-				    {
-					    throw AQLCoreInvalidData("#Error: FixingTable curve frequency tenor does not match the forecast curve frequency tenor ", __FILE__, __LINE__ );
-				    }
+				    AQ_THROW_IF( fixingTable->getCurrency() != toCCYEnum( curveCurrency.getCString() ), "FixingTable currency does not match the forecast curve currency. " );
+				    AQ_THROW_IF( fixingTable->getCurveTenor() != toCurveTenorEnum( curveFrequencyTenor.getCString() ), "FixingTable curve frequency tenor does not match the forecast curve frequency tenor " );
 			    }
 
 				std::vector<FloatRateData> floatRates;
@@ -219,10 +213,7 @@ namespace etrading
 
 			AQLString crvFreqTenor = validateCurveAndGetCurveFrequency(curveCollection, legStaticData_->getForecastCurve());
 
-			if (!isOISOrARR && getFrequencyOrTenorMonth(crvFreqTenor) != getFrequencyOrTenorMonth(toString(schedule_->getAccrualFrequency()).c_str()))
-			{
-				throw AQLCoreInvalidData("#Error: Accrual Frequency is not the same as Curve Frequency.", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( !isOISOrARR && getFrequencyOrTenorMonth(crvFreqTenor) != getFrequencyOrTenorMonth(toString(schedule_->getAccrualFrequency()).c_str()), "Accrual Frequency is not the same as Curve Frequency." );
 
 			// *** Special treatment for OIS leg without compoundMethod: use leg's accrual freq instead of curve's freq to calculate Forward Rates
 			CurveTenorEnum curveFreqTenorOverride = NONE_CURVE_TENOR;
@@ -345,10 +336,7 @@ namespace etrading
                 else if ( frontStub && irregularStub && i==0 && curveIndicesSize > 1)
                 { 
                     // If a front stub exists, has fixed already, is the current fixing and has not yet been paid out then the firstFixingRate must be provided
-                    if ( fixingDate < valuationDate && paymentDate >= valuationDate && !hasFirstFixing )
-                    {
-                    	throw AQLCoreInvalidData("#Error: The float leg 'firstFixing' is required for the front stub rate.", __FILE__, __LINE__ );
-                    }
+                    AQ_THROW_IF( fixingDate < valuationDate && paymentDate >= valuationDate && !hasFirstFixing, "The float leg 'firstFixing' is required for the front stub rate." );
                     
                     auto stubRate = calculateStubRate(curveCollection, firstStubCurveIndex, curveIndices, curveTenors, crvFreqTenor);
 
@@ -367,10 +355,7 @@ namespace etrading
                     // Therefore throw and error to request the fix be input by the end user. T
                     
                     // If a back stub exists, has fixed already, is the current fixing and has not yet been paid out then the lastFixingRate must be provided
-                    if ( fixingDate <= valuationDate && paymentDate >= valuationDate && !hasLastFixing && !hasFirstFixing )
-                    {
-                    	throw AQLCoreInvalidData("#Error: The float leg 'lastFixing' is required for the back stub rate.", __FILE__, __LINE__ );
-                    }
+                    AQ_THROW_IF( fixingDate <= valuationDate && paymentDate >= valuationDate && !hasLastFixing && !hasFirstFixing, "The float leg 'lastFixing' is required for the back stub rate." );
                     
 					auto stubRate = calculateStubRate(curveCollection, lastStubCurveIndex, curveIndices, curveTenors, crvFreqTenor);
 				
@@ -400,10 +385,7 @@ namespace etrading
 
 		// Get the equivalent rate of each accrual period. 
 		// The equivalent rate is obtained either through daily compounding over this period or finding the arithmetic average.
-		if (schedule_->getAccrualbusinessDayAdj() == NONE_BUSINESS_DAY_ADJ || schedule_->getAccrualCalendar().size() == 0)
-		{
-			throw AQLCoreInvalidData( "#Error: OIS average rate cannot be calculated without AccrualbusinessDayAdj or AccrualCalendar, please update the float leg schedule", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( schedule_->getAccrualbusinessDayAdj() == NONE_BUSINESS_DAY_ADJ || schedule_->getAccrualCalendar().size() == 0, "OIS average rate cannot be calculated without AccrualbusinessDayAdj or AccrualCalendar, please update the float leg schedule" );
 
 		size_t expectedSize = schedule_->getCashflowSize();
 

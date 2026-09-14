@@ -22,15 +22,9 @@ namespace etrading
 
         // 2. Check Test Parameters
         // ------------------------
-        if( fwdfxconstConv.empty() )
-        {
-            throw AQLCoreInvalidData( "FwdFXConstConv Matrix is empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fwdfxconstConv.empty(), "FwdFXConstConv Matrix is empty" );
 
-        if( fwdfxconstConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "FwdFXConstConv Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fwdfxconstConv[0].size() < 2, "FwdFXConstConv Matrix column size must be 2" );
 
         // 3. Build the Fwd FX Curve
         // -------------------------

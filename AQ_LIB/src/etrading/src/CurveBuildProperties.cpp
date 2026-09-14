@@ -178,11 +178,8 @@ namespace etrading
         if( !isConsistent() )
         {
             // aqCalendar_.reset();
-            throw ETradingException( ( boost::format( "Inconsistency between curve of type (%s) and float rate compounding method (%s) and float rate tenor (%s) or interpolationMethod (%s) and supplied interpolation data" )
-                                       % toString( getCurveTypeEnum() ).c_str()
-                                       % toString( oisCompoundingMethod_ ).c_str()
-                                       % toString( floatRateTenor_ ).c_str()
-                                       % toString( interpMethod_ ).c_str() ).str() );
+            { std::ostringstream aqMsg86;
+aqMsg86 << "Inconsistency between curve of type (" << toString( getCurveTypeEnum() ).c_str() << ") and float rate compounding method (" << toString( oisCompoundingMethod_ ).c_str() << ") and float rate tenor (" << toString( floatRateTenor_ ).c_str() << ") or interpolationMethod (" << toString( interpMethod_ ).c_str() << ") and supplied interpolation data"; AQ_THROW( aqMsg86.str() ); }
         };
     };
 
@@ -208,7 +205,8 @@ namespace etrading
             size_t position = calendar.find(':');
             if ( position == 0 )
             {
-                throw ETradingException( ( boost::format( "#Error: Curve Build Property Error; holiday city calendars cannot begin with the ':' character." ) ).str() );
+                { std::ostringstream aqMsg87;
+aqMsg87 << "Curve Build Property Error; holiday city calendars cannot begin with the ':' character."; AQ_THROW( aqMsg87.str() ); }
             }
             useFirstHolidayCity = calendar.substr( 0, position );
 
@@ -245,7 +243,8 @@ namespace etrading
             size_t position = calendar.find(':');
             if ( position == 0 )
             {
-                throw ETradingException( ( boost::format( "#Error: Curve Build Property Error; holiday city calendars cannot begin with the ':' character." ) ).str() );
+                { std::ostringstream aqMsg88;
+aqMsg88 << "Curve Build Property Error; holiday city calendars cannot begin with the ':' character."; AQ_THROW( aqMsg88.str() ); }
             }
             useFirstHolidayCity = calendar.substr( 0, position );
 
@@ -282,7 +281,8 @@ namespace etrading
             size_t position = calendar.find(':');
             if ( position == 0 )
             {
-                throw ETradingException( ( boost::format( "#Error: Curve Build Property Error; holiday city calendars cannot begin with the ':' character." ) ).str() );
+                { std::ostringstream aqMsg89;
+aqMsg89 << "Curve Build Property Error; holiday city calendars cannot begin with the ':' character."; AQ_THROW( aqMsg89.str() ); }
             }
             useFirstHolidayCity = calendar.substr( 0, position );
 

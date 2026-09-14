@@ -62,10 +62,7 @@ namespace etrading
 		
 		//get all the cashflows including the upfrontCashflow
 		auto cashflows = schedule_->getAllCashflows();
-		if (cashflows.size() == 0)
-		{
-			throw AQLCoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( cashflows.size() == 0, "No cashflow has been built yet" );
 
 		double pv = 0;
 		for (size_t i = 0; i < cashflows.size(); i++)

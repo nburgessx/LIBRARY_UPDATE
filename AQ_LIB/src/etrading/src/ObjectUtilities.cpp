@@ -67,11 +67,8 @@ namespace etrading
 	                if( numberOfRowsHere  != numberOfRows )
 	                {
 	                    // +1 because this display is not zero-indexed
-	                    throw AQLCoreInvalidData( ( boost::format( "#Error: Number of data points in data range is not equal for every column. For column %i there are %i data points, but for column %i there are %i data points" )
-	                                                            % ( colCounter + 1 )
-	                                                            % numberOfRowsHere
-	                                                            %  colCounter
-	                                                            %  numberOfRows ).str().c_str(), __FILE__, __LINE__ );
+	                    { std::ostringstream aqCoreMsg23;
+aqCoreMsg23 << "Number of data points in data range is not equal for every column. For column " << ( colCounter + 1 ) << " there are " << numberOfRowsHere << " data points, but for column " << colCounter << " there are " << numberOfRows << " data points"; AQ_THROW( aqCoreMsg23.str() ); }
 	                }
                 }
             }
@@ -93,7 +90,8 @@ namespace etrading
     {
         if(!jsonDoc.HasMember(objectLabelName))
         {
-            throw ETradingException( (boost::format("#Error: JSON document does not contain a '%s' member ") % objectLabelName ).str());
+            { std::ostringstream aqMsg148;
+aqMsg148 << "JSON document does not contain a '" << objectLabelName << "' member "; AQ_THROW( aqMsg148.str() ); }
         }
     };
 
@@ -103,11 +101,13 @@ namespace etrading
         checkObjectLabel(jsonDoc, DATASCHEMAS);
         if(!jsonDoc[DATASCHEMAS].IsArray())
         {
-            throw ETradingException( (boost::format("Error reading file: JSON Element '%s' is not an array ") % DATASCHEMAS ).str());                    
+            { std::ostringstream aqMsg149;
+aqMsg149 << "Error reading file: JSON Element '" << DATASCHEMAS << "' is not an array "; AQ_THROW( aqMsg149.str() ); }                    
         }
         if(jsonDoc[DATASCHEMAS].Size()<1)
         {
-            throw ETradingException( (boost::format("Error reading file: JSON Element '%s' is an empty array ") % DATASCHEMAS ).str());                    
+            { std::ostringstream aqMsg150;
+aqMsg150 << "Error reading file: JSON Element '" << DATASCHEMAS << "' is an empty array "; AQ_THROW( aqMsg150.str() ); }                    
         }
     };
 
@@ -119,34 +119,41 @@ namespace etrading
 
         if(!inputValue.HasMember(SK_NAME))
         {
-            throw ETradingException( (boost::format("JSON Element does not have a '%s' member: '%s' ") % SK_NAME % createStringFromJSONValue(inputValue)).str());
+            { std::ostringstream aqMsg151;
+aqMsg151 << "JSON Element does not have a '" << SK_NAME << "' member: '" << createStringFromJSONValue(inputValue) << "' "; AQ_THROW( aqMsg151.str() ); }
         }
         rapidjson::Type nameType = inputValue[SK_NAME].GetType();
         if(nameType != rapidjson::kStringType)
         {
-            throw ETradingException( (boost::format("JSON Element '%s' should hold a string: '%s' ") % SK_NAME % createStringFromJSONValue(inputValue[SK_NAME])).str());            
+            { std::ostringstream aqMsg152;
+aqMsg152 << "JSON Element '" << SK_NAME << "' should hold a string: '" << createStringFromJSONValue(inputValue[SK_NAME]) << "' "; AQ_THROW( aqMsg152.str() ); }            
         }
         if(!inputValue.HasMember(SK_NUMBER_OF_COLUMNS))
         {
-            throw ETradingException( (boost::format("JSON Element does not have a '%s' member: '%s' ") % SK_NUMBER_OF_COLUMNS % createStringFromJSONValue(inputValue)).str());
+            { std::ostringstream aqMsg153;
+aqMsg153 << "JSON Element does not have a '" << SK_NUMBER_OF_COLUMNS << "' member: '" << createStringFromJSONValue(inputValue) << "' "; AQ_THROW( aqMsg153.str() ); }
         }
         if(!inputValue.HasMember(SK_COLUMN_TYPES))
         {
-            throw ETradingException( (boost::format("JSON Element does not have a '%s' member: '%s' ") % SK_COLUMN_TYPES % createStringFromJSONValue(inputValue)).str());
+            { std::ostringstream aqMsg154;
+aqMsg154 << "JSON Element does not have a '" << SK_COLUMN_TYPES << "' member: '" << createStringFromJSONValue(inputValue) << "' "; AQ_THROW( aqMsg154.str() ); }
         }
         rapidjson::Type type = inputValue[SK_NUMBER_OF_COLUMNS].GetType();
         if(type != rapidjson::kNumberType)
         {
-            throw ETradingException( (boost::format("JSON Element '%s' should hold an integer: '%s' ") % SK_NUMBER_OF_COLUMNS % createStringFromJSONValue(inputValue[SK_NUMBER_OF_COLUMNS])).str());
+            { std::ostringstream aqMsg155;
+aqMsg155 << "JSON Element '" << SK_NUMBER_OF_COLUMNS << "' should hold an integer: '" << createStringFromJSONValue(inputValue[SK_NUMBER_OF_COLUMNS]) << "' "; AQ_THROW( aqMsg155.str() ); }
         }
         const int numberOfColumns =  inputValue[SK_NUMBER_OF_COLUMNS].GetInt();
         if(memberCount(inputValue) < (3 + numberOfColumns))
         {
-            throw ETradingException( (boost::format("JSON Element has less than %i members: '%s' ") % (3 + numberOfColumns) % createStringFromJSONValue(inputValue)).str());
+            { std::ostringstream aqMsg156;
+aqMsg156 << "JSON Element has less than " << (3 + numberOfColumns) << " members: '" << createStringFromJSONValue(inputValue) << "' "; AQ_THROW( aqMsg156.str() ); }
         }
         if(inputValue[SK_COLUMN_TYPES].Size() != numberOfColumns)
         {
-            throw ETradingException( (boost::format("JSON Error: number of column types does correspond to number of columns ('%i') : '%s' ") % numberOfColumns % createStringFromJSONValue(inputValue[SK_COLUMN_TYPES])).str());                    
+            { std::ostringstream aqMsg157;
+aqMsg157 << "JSON Error: number of column types does correspond to number of columns ('" << numberOfColumns << "') : '" << createStringFromJSONValue(inputValue[SK_COLUMN_TYPES]) << "' "; AQ_THROW( aqMsg157.str() ); }                    
         }
     };
 
@@ -155,12 +162,14 @@ namespace etrading
     {
         if(!inputValue.IsArray())
         {
-            throw ETradingException( (boost::format("Error reading file: JSON Element '%s' is not an array ") % createStringFromJSONValue(inputValue) ).str() );                    
+            { std::ostringstream aqMsg158;
+aqMsg158 << "Error reading file: JSON Element '" << createStringFromJSONValue(inputValue) << "' is not an array "; AQ_THROW( aqMsg158.str() ); }                    
         }
 
         if(minSize > inputValue.Size())
         {
-            throw ETradingException( (boost::format("Error reading file: JSON Array Size is less than %i : '%s'") % minSize % createStringFromJSONValue(inputValue) ).str() );                            
+            { std::ostringstream aqMsg159;
+aqMsg159 << "Error reading file: JSON Array Size is less than " << minSize << " : '" << createStringFromJSONValue(inputValue) << "'"; AQ_THROW( aqMsg159.str() ); }                            
         }
     };
 
@@ -186,7 +195,8 @@ namespace etrading
         auto scheduleMap = createSchedulesFromFreeObject(freeObject, objectName, false);
         if (scheduleMap.size() != 1)
         {
-          throw ETradingException( ( boost::format( "#Error: A Schedule jason file must have one schedule section %s" ) % objectName ).str() );
+          { std::ostringstream aqMsg160;
+aqMsg160 << "A Schedule jason file must have one schedule section " << objectName; AQ_THROW( aqMsg160.str() ); }
         }
         auto mySchedule = scheduleMap.begin()->second;
         return mySchedule;
@@ -202,7 +212,8 @@ namespace etrading
 		auto legPropertiesMap = createLegInputParametersFromFreeObject(freeObject, objectName, false);
 		if (legPropertiesMap.size() != 1)
 		{
-			throw ETradingException( ( boost::format( "#Error: A Leg jason file must have a legProperties section %s" ) % objectName ).str() );
+			{ std::ostringstream aqMsg161;
+aqMsg161 << "A Leg jason file must have a legProperties section " << objectName; AQ_THROW( aqMsg161.str() ); }
 		}
 
 		//Get Bespoke schedule
@@ -212,7 +223,8 @@ namespace etrading
 
 		if (bespokeScheduleSize != 0 && bespokeScheduleSize != 1)
         {
-          throw ETradingException( ( boost::format( "#Error: A Leg jason file must have a schedule section %s" ) % objectName ).str() );
+          { std::ostringstream aqMsg162;
+aqMsg162 << "A Leg jason file must have a schedule section " << objectName; AQ_THROW( aqMsg162.str() ); }
         }
 
 		SchedulePtr schedule = (bespokeScheduleSize != 0) ? bespokeScheduleMap.begin()->second : SchedulePtr();
@@ -233,7 +245,8 @@ namespace etrading
         
         if (bondLVB.size() == 0 )
         {
-          throw ETradingException( ( boost::format( "#Error: The Bond file for %s does not contain a Bond Description Label Value Block, which is required." ) % objectName ).str() );
+          { std::ostringstream aqMsg163;
+aqMsg163 << "The Bond file for " << objectName << " does not contain a Bond Description Label Value Block, which is required."; AQ_THROW( aqMsg163.str() ); }
         }
 
 		BondPtr myBond = createBondFromSingleLVB( objectName, bondLVB);
@@ -284,13 +297,15 @@ namespace etrading
 
         if (legPropertiesMap.size() < 2 )
         {
-          throw ETradingException( ( boost::format( "#Error: A Swap jason file must have at least two pairs of legProperties %s" ) % objectName ).str() );
+          { std::ostringstream aqMsg164;
+aqMsg164 << "A Swap jason file must have at least two pairs of legProperties " << objectName; AQ_THROW( aqMsg164.str() ); }
         }
 
 		//If bespoke schedule is not empty, it must have the same side as leg's properties map
         if (scheduleMapSize > 0 && legPropertiesMap.size() != scheduleMapSize)
         {
-          throw ETradingException( ( boost::format( "#Error: A Swap jason file must have same numbers of legProperties and schedules %s" ) % objectName ).str() );
+          { std::ostringstream aqMsg165;
+aqMsg165 << "A Swap jason file must have same numbers of legProperties and schedules " << objectName; AQ_THROW( aqMsg165.str() ); }
         }
 
         std::vector<LegPtr> legs;
@@ -327,7 +342,8 @@ namespace etrading
         
         if (legGeneratorsMap.size() != 2 )
         {
-          throw ETradingException( ( boost::format( "#Error: A SwapGenerator jason file must have two of legGenerators%s" ) % objectName ).str() );
+          { std::ostringstream aqMsg166;
+aqMsg166 << "A SwapGenerator jason file must have two of legGenerators" << objectName; AQ_THROW( aqMsg166.str() ); }
         }
 
         std::vector<LegGenerator> legGenerators;
@@ -354,8 +370,8 @@ namespace etrading
 				auto information = freeObject.getValuesCopy(schemaNames[i],0);
 				if(information.size() != 4)
 				{
-					throw ETradingException((boost::format("DataSchema with name %s in object named %s (read from JSON) is not a Swap Quote" ) 
-											% schemaNames[i] % freeObject.getRefToName()).str() );
+					{ std::ostringstream aqMsg167;
+aqMsg167 << "DataSchema with name " << schemaNames[i] << " in object named " << freeObject.getRefToName() << " (read from JSON) is not a Swap Quote"; AQ_THROW( aqMsg167.str() ); }
 				};
 				const CurveTenorEnum curveTenor = etrading::toCurveTenorEnum(information[1].toString());
 				if(ptrMktData == nullptr)
@@ -376,8 +392,8 @@ namespace etrading
 				auto information = freeObject.getValuesCopy(schemaNames[i],0);
 				if(information.size() != 5)
 				{
-					throw ETradingException((boost::format("DataSchema with name %s in object named %s (read from JSON) is not a Basis Swap Quote" ) 
-											% schemaNames[i] % freeObject.getRefToName()).str() );
+					{ std::ostringstream aqMsg168;
+aqMsg168 << "DataSchema with name " << schemaNames[i] << " in object named " << freeObject.getRefToName() << " (read from JSON) is not a Basis Swap Quote"; AQ_THROW( aqMsg168.str() ); }
 				};
 				const CurveTenorEnum curveTenor = etrading::toCurveTenorEnum(information[1].toString());
 				const CurveTenorEnum toCurveTenor = etrading::toCurveTenorEnum(information[2].toString());
@@ -397,8 +413,8 @@ namespace etrading
 				auto information = freeObject.getValuesCopy(schemaNames[i],0);
 				if(information.size() != 4)
 				{
-					throw ETradingException((boost::format("DataSchema with name %s in object named %s (read from JSON) is not a Central Bank Swap Quote" ) 
-											% schemaNames[i] % freeObject.getRefToName()).str() );
+					{ std::ostringstream aqMsg169;
+aqMsg169 << "DataSchema with name " << schemaNames[i] << " in object named " << freeObject.getRefToName() << " (read from JSON) is not a Central Bank Swap Quote"; AQ_THROW( aqMsg169.str() ); }
 				};
 				const CurveTenorEnum curveTenor = etrading::toCurveTenorEnum(information[1].toString());
 				if(ptrMktData == nullptr)
@@ -419,8 +435,8 @@ namespace etrading
 				auto information = freeObject.getValuesCopy(schemaNames[i],0);
 				if(information.size() != 3)
 				{
-					throw ETradingException((boost::format("DataSchema with name %s in object named %s (read from JSON) is not a FRA Quote" ) 
-											% schemaNames[i] % freeObject.getRefToName()).str() );
+					{ std::ostringstream aqMsg170;
+aqMsg170 << "DataSchema with name " << schemaNames[i] << " in object named " << freeObject.getRefToName() << " (read from JSON) is not a FRA Quote"; AQ_THROW( aqMsg170.str() ); }
 				};
 				const CurveTenorEnum curveTenor = etrading::toCurveTenorEnum(information[1].toString());
 				if(ptrMktData == nullptr)
@@ -437,8 +453,8 @@ namespace etrading
 				auto information = freeObject.getValuesCopy(schemaNames[i],0);
 				if(information.size() != 3)
 				{
-					throw ETradingException((boost::format("DataSchema with name %s in object named %s (read from JSON) is not an IR Futures Quote" ) 
-											% schemaNames[i] % freeObject.getRefToName()).str() );
+					{ std::ostringstream aqMsg171;
+aqMsg171 << "DataSchema with name " << schemaNames[i] << " in object named " << freeObject.getRefToName() << " (read from JSON) is not an IR Futures Quote"; AQ_THROW( aqMsg171.str() ); }
 				};
 				const CurveTenorEnum curveTenor = etrading::toCurveTenorEnum(information[1].toString());
 				if(ptrMktData == nullptr)
@@ -464,8 +480,8 @@ namespace etrading
 				auto information = freeObject.getValuesCopy(schemaNames[i],0);
 				if(information.size() != 5)
 				{
-					throw ETradingException((boost::format("DataSchema with name %s in object named %s (read from JSON) is not an FX Quote" ) 
-											% schemaNames[i] % freeObject.getRefToName()).str() );
+					{ std::ostringstream aqMsg172;
+aqMsg172 << "DataSchema with name " << schemaNames[i] << " in object named " << freeObject.getRefToName() << " (read from JSON) is not an FX Quote"; AQ_THROW( aqMsg172.str() ); }
 				};
 				const CurveTenorEnum curveTenor = etrading::toCurveTenorEnum(information[3].toString());
 				if(ptrMktData == nullptr)
@@ -485,8 +501,8 @@ namespace etrading
 
 		if(ptrMktData == nullptr)
 		{
-			throw ETradingException((boost::format("No Market Data Quotes were found in the file, available schema names were: %s" ) 
-									% etrading::containerAsString(schemaNames) ).str());
+			{ std::ostringstream aqMsg173;
+aqMsg173 << "No Market Data Quotes were found in the file, available schema names were: " << etrading::containerAsString(schemaNames); AQ_THROW( aqMsg173.str() ); }
 		}
 			
 		return CurveData(*ptrMktData.get());
@@ -538,7 +554,8 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( ( boost::format( "JSON file is missing CurveBuildProperties when attempting to load curve named %s" ) % objectName ).str() );
+            { std::ostringstream aqMsg174;
+aqMsg174 << "JSON file is missing CurveBuildProperties when attempting to load curve named " << objectName; AQ_THROW( aqMsg174.str() ); }
         };
     };
 
@@ -704,7 +721,8 @@ namespace etrading
 			const Value& nestedJSONDocs = jsonDoc[NESTED_OBJECTS];
 			if ( ! jsonDoc[DATASCHEMAS].IsArray() )
 			{
-				throw ETradingException( (boost::format("Error deserialising CURVE: JSON Element '%s' is not an array ") % NESTED_OBJECTS ).str());                    
+				{ std::ostringstream aqMsg175;
+aqMsg175 << "Error deserialising CURVE: JSON Element '" << NESTED_OBJECTS << "' is not an array "; AQ_THROW( aqMsg175.str() ); }                    
 			}
 
 			for ( SizeType counter = 0; counter < nestedJSONDocs.Size(); counter++ )
@@ -713,9 +731,8 @@ namespace etrading
 				std::pair<std::string, CachedObjectEnum> result = env.deSerializeJSONDoc( nestedJSONDocs[counter] );
 				if ( result.second != CURVE_GENERATOR && result.second != CURVE_MARKETDATA )
 				{
-					throw AQLCoreInvalidData( ( boost::format( "#Error: Unexpected nested object when deserializing Curve Object. Expecting CURVE_GENERATOR or CURVE_MARKETDATA, but found object handle `%s` of type `%s` " )
-												% result.first
-												% toString( result.second ) ).str().c_str(), __FILE__, __LINE__ );
+					{ std::ostringstream aqCoreMsg24;
+aqCoreMsg24 << "Unexpected nested object when deserializing Curve Object. Expecting CURVE_GENERATOR or CURVE_MARKETDATA, but found object handle `" << result.first << "` of type `" << toString( result.second ) << "` "; AQ_THROW( aqCoreMsg24.str() ); }
 				}
 			}
 		}
@@ -740,7 +757,8 @@ namespace etrading
 			const Value& nestedJSONDocs = jsonDoc[NESTED_OBJECTS];
 			if (!jsonDoc[DATASCHEMAS].IsArray())
 			{
-				throw ETradingException((boost::format("Error deserialising CURVE: JSON Element '%s' is not an array ") % NESTED_OBJECTS).str());
+				{ std::ostringstream aqMsg176;
+aqMsg176 << "Error deserialising CURVE: JSON Element '" << NESTED_OBJECTS << "' is not an array "; AQ_THROW( aqMsg176.str() ); }
 			}
 
 			for (SizeType counter = 0; counter < nestedJSONDocs.Size(); counter++)
@@ -749,9 +767,8 @@ namespace etrading
 				std::pair<std::string, CachedObjectEnum> result = env.deSerializeJSONDoc(nestedJSONDocs[counter]);
 				if (result.second != CURVE_GENERATOR && result.second != CURVE_MARKETDATA)
 				{
-					throw AQLCoreInvalidData((boost::format("#Error: Unexpected nested object when deserializing Curve Object. Expecting CURVE_GENERATOR or CURVE_MARKETDATA, but found object handle `%s` of type `%s` ")
-						% result.first
-						% toString(result.second)).str().c_str(), __FILE__, __LINE__);
+					{ std::ostringstream aqCoreMsg25;
+aqCoreMsg25 << "Unexpected nested object when deserializing Curve Object. Expecting CURVE_GENERATOR or CURVE_MARKETDATA, but found object handle `" << result.first << "` of type `" << toString(result.second) << "` "; AQ_THROW( aqCoreMsg25.str() ); }
 				}
 			}
 		}
@@ -811,7 +828,8 @@ namespace etrading
 
 		if (optionLVB.size() == 0 )
 		{
-			throw ETradingException((boost::format("#Error: An Option jason file must have option properties LVB %s") % objectName).str());
+			{ std::ostringstream aqMsg177;
+aqMsg177 << "An Option jason file must have option properties LVB " << objectName; AQ_THROW( aqMsg177.str() ); }
 		}
 
 		OptionPtr option = createOption(objectName, optionLVB, false);
@@ -848,7 +866,8 @@ namespace etrading
 
 		if (volLVB.size() == 0 )
 		{
-			throw ETradingException((boost::format("#Error: An Volatility jason file must have vol properties LVB %s") % objectName).str());
+			{ std::ostringstream aqMsg178;
+aqMsg178 << "An Volatility jason file must have vol properties LVB " << objectName; AQ_THROW( aqMsg178.str() ); }
 		}
 
 		Volatility volObject(volLVB, objectName);

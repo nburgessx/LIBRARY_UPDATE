@@ -33,11 +33,11 @@ namespace validation
 		// Perform initial basic sanity checks
 		if ( aqObjCurveGeneratorName.size() == 0 )
 		{
-				throw AQLCoreInvalidData(	( "#Error: Missing aqObjCurveGenerator name" ), __FILE__, __LINE__ );
+				AQ_THROW( ( "Missing aqObjCurveGenerator name" ) );
 		}
 		if ( aqObjCurveMarketDataName.size() == 0 )
 		{
-				throw AQLCoreInvalidData(	( "#Error: Missing aqObjCurveMarketData name" ), __FILE__, __LINE__ );
+				AQ_THROW( ( "Missing aqObjCurveMarketData name" ) );
 		}
 
 		// Attempt to retrieve AQObjCurveMarketData object from the AQObj object cache
@@ -59,18 +59,21 @@ namespace validation
 
         if ( configCurrency != marketDataCurrency )
 		{
-			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator currency \"%s\" does not match MarketData Currency \"%s\"" )
-                                   % configCurrency % marketDataCurrency ).str().c_str(), __FILE__, __LINE__ );
+			std::ostringstream msg;
+			msg << "CurveGenerator currency \"" << configCurrency << "\" does not match MarketData Currency \"" << marketDataCurrency << "\"";
+			AQ_THROW( msg.str() );
 		}
 		if ( configCurveType != marketDataCurveType )
 		{
-			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator CurveType \"%s\" does not match MarketData CurveType \"%s\"" )
-                                   % configCurveType % marketDataCurveType ).str().c_str(), __FILE__, __LINE__ );
+			std::ostringstream msg;
+			msg << "CurveGenerator CurveType \"" << configCurveType << "\" does not match MarketData CurveType \"" << marketDataCurveType << "\"";
+			AQ_THROW( msg.str() );
 		}
 		if (curveTypeEnum != etrading::FX_CURVETYPE)
 		{
-			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator CurveType \"%s\" is not FX" )
-                                   % configCurveType ).str().c_str(), __FILE__, __LINE__ );
+			std::ostringstream msg;
+			msg << "CurveGenerator CurveType \"" << configCurveType << "\" is not FX";
+			AQ_THROW( msg.str() );
 		}
 
 		// Create the FxCurve object

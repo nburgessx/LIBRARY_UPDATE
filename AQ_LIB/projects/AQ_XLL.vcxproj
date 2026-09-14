@@ -185,14 +185,15 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <!-- Manifest JSON consumed by Release_XL_Manifest's PreBuildEvent
-         (CLAUDE.md Sec 4.4/9.5). Always active.json by default; to switch
-         which functions a local build exposes, edit active.json's CONTENT
-         directly in Solution Explorer (resources\manifest filter) and
-         rebuild - no property pages, no VS restart. For scripted/CI
-         generation of many customer editions, override the file instead:
-         msbuild /p:AQ_XLL_MANIFEST_FILE=path\to\edition.json -->
-    <AQ_XLL_MANIFEST_FILE Condition="'$(AQ_XLL_MANIFEST_FILE)'==''">$(SolutionDir)src\$(ProjectName)\resources\manifest\active.json</AQ_XLL_MANIFEST_FILE>
+    <!-- Manifest text file consumed by Release_XL_Manifest's PreBuildEvent
+         (CLAUDE.md Sec 4.4/9.5; format documented in active.txt itself).
+         Always active.txt by default; to switch which functions a local
+         build exposes, edit active.txt's CONTENT directly in Solution
+         Explorer (resources\manifest filter) and rebuild - no property
+         pages, no VS restart. For scripted/CI generation of many customer
+         editions, override the file instead:
+         msbuild /p:AQ_XLL_MANIFEST_FILE=path\to\edition.txt -->
+    <AQ_XLL_MANIFEST_FILE Condition="'$(AQ_XLL_MANIFEST_FILE)'==''">$(SolutionDir)src\$(ProjectName)\resources\manifest\active.txt</AQ_XLL_MANIFEST_FILE>
   </PropertyGroup>
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
@@ -625,7 +626,7 @@
            AQ_XLL_ENABLED itself is defined once in aqXllTools.h. Written to a
            fixed path (not $(IntDir)) so it can be a normal ClInclude item and
            show up in Solution Explorer under the "include" filter. -->
-      <AdditionalOptions>/FI"$(SolutionDir)src\$(ProjectName)\include\generated\aqManifestFunctions.h" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/FI"$(SolutionDir)src\$(ProjectName)\include\generated\aqManifestList.h" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>math.lib;models.lib;calibration.lib;etrading.lib;validation.lib;QuantLib-vc143-x64-mt-s.lib;Adept203-vc143-x64.lib;xlOil-COM.lib;xlOil-Dynamic.lib;xlOil-External.lib;xlOil-Funcs.lib;xlOil-XLL.lib;xlOilHelpers.lib;Oleacc.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -646,8 +647,8 @@
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(SolutionDir)resources\scripts\generate_xll_manifest_header.py" "$(AQ_XLL_MANIFEST_FILE)" "$(SolutionDir)src\$(ProjectName)\include\generated\aqManifestFunctions.h"</Command>
-      <Message>Generating aqManifestFunctions.h from $(AQ_XLL_MANIFEST_FILE)</Message>
+      <Command>call "$(SolutionDir)src\$(ProjectName)\resources\manifest\generateManifestList.bat" "$(SolutionDir)" "$(AQ_XLL_MANIFEST_FILE)" "$(SolutionDir)src\$(ProjectName)\include\generated\aqManifestList.h"</Command>
+      <Message>Generating aqManifestList.h from $(AQ_XLL_MANIFEST_FILE)</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
@@ -761,6 +762,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\src\AQ_XLL\resources\manifest\generateManifestList.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
+    </None>
     <None Include="..\src\AQ_XLL\resources\SetUp.md">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">true</ExcludedFromBuild>
@@ -771,8 +792,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_XLL\resources\manifest\active.json" />
-    <None Include="..\src\AQ_XLL\resources\manifest\demo.json" />
+    <None Include="..\src\AQ_XLL\resources\manifest\active.txt" />
+    <None Include="..\src\AQ_XLL\resources\manifest\demo.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp" />
@@ -860,7 +881,7 @@
          AQ_XLL_MANIFEST_FILE (see the ItemDefinitionGroup above); not
          checked in, see .gitignore. Referenced here only so it shows up in
          Solution Explorer; absent until the first Release_XL_Manifest build. -->
-    <ClInclude Include="..\src\AQ_XLL\include\generated\aqManifestFunctions.h" />
+    <ClInclude Include="..\src\AQ_XLL\include\generated\aqManifestList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

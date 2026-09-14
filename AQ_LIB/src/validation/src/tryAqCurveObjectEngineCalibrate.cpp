@@ -12,7 +12,7 @@
 #include <string>
 #include <set>
 #include <algorithm>
-#include <boost/format.hpp>
+#include <sstream>
 #include "ExceptionMacros.h"
 #include "CurveResultsContainer.h"
 
@@ -42,10 +42,9 @@ namespace validation
 
 		if (curveGeneratorNames.size() != marketDataObjects.size())
 		{
-			std::string error = (boost::format("#Error: Number of curve generators (%i) does not match number of market data objects (%i).")
-				% curveGeneratorNames.size()
-				% marketDataObjects.size()).str();
-			AQ_THROW(error);
+			std::ostringstream errStream;
+			errStream << "Number of curve generators (" << curveGeneratorNames.size() << ") does not match number of market data objects (" << marketDataObjects.size() << ").";
+			AQ_THROW(errStream.str());
 		}
 
 		// Recording of inputs for playback

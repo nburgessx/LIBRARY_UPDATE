@@ -1,8 +1,6 @@
-#include <boost/format.hpp>
-
+#include <sstream>
 
 #include "tryAqToolGrid.h"
-#include "ETradingException.h"
 #include "DataSchema.h"
 #include "ObjectUtilities.h"
 #include "EnvironmentUtilities.h"
@@ -30,23 +28,20 @@ namespace validation
         const FlexibleData& rangeData = std::get<2>( tableInfo );
         const int numberOfColumns = colTypes.size();
 
-        if( rangeData.size() <= 0 )
-        {
-            throw AQLCoreInvalidData( "Empty data table was supplied to tryAqToolObjectGridCreate", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( rangeData.size() <= 0, "Empty data table was supplied to tryAqToolObjectGridCreate" );
 
         if( columnNames.size() != rangeData.size() )
         {
-            throw AQLCoreInvalidData( ( boost::format( "Number of Column Names (%i) does not match number of data columns (%i)." )
-                                   % columnNames.size()
-                                   % rangeData.size() ).str().c_str(), __FILE__, __LINE__ );
+            std::ostringstream msg;
+            msg << "Number of Column Names (" << columnNames.size() << ") does not match number of data columns (" << rangeData.size() << ").";
+            AQ_THROW( msg.str() );
         }
 
         if( numberOfColumns != columnNames.size() )
         {
-            throw AQLCoreInvalidData( ( boost::format( "Number of Column Names (%i) does not match number of column types (%i)." )
-                                   % columnNames.size()
-                                   % colTypes.size() ).str().c_str() , __FILE__, __LINE__ );
+            std::ostringstream msg;
+            msg << "Number of Column Names (" << columnNames.size() << ") does not match number of column types (" << colTypes.size() << ").";
+            AQ_THROW( msg.str() );
         }
 
         etrading::FreeObject fo = createFreeObjectFromGrid( objectName, columnNames, colTypes, rangeData, objectName, allowJaggedData );
@@ -55,10 +50,9 @@ namespace validation
 
         return objectName;
 
-        //return (	boost::format( "%s available as grid object (Environment: %s  Time: %s) " )
-        //            %  objectName
-        //            % etrading::Environment::DEFAULT_ENV_NAME
-        //            % etrading::getCurrentDateTime() ).str();
+        //std::ostringstream msg;
+        //msg << objectName << " available as grid object (Environment: " << etrading::Environment::DEFAULT_ENV_NAME << "  Time: " << etrading::getCurrentDateTime() << ") ";
+        //return msg.str();
     }
 
     std::pair<const FlexibleData, std::vector<std::string>>  tryAqToolObjectGridDisplay(
@@ -76,13 +70,17 @@ namespace validation
             }
             else
             {
-				throw AQLCoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
-										  % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
+				std::ostringstream msg;
+				msg << "Found object \"" << objectName << "\", but data is NULL";
+				AQ_THROW( msg.str() );
             }
         }
         else
-			throw AQLCoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
-                                      % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
+        {
+			std::ostringstream msg;
+			msg << "Unable to find object with name \"" << objectName << "\"";
+			AQ_THROW( msg.str() );
+        }
     };
 
     std::pair<const bool, std::string> tryAqToolObjectGridLoad(	const std::string& fileName )
@@ -92,7 +90,9 @@ namespace validation
 
         if( !etrading::fileExists( filenameWithExtension ) )
         {
-            throw AQLCoreInvalidData(	( boost::format( "#Error: File %s does not exist" )  % filenameWithExtension.c_str() ).str().c_str(), __FILE__, __LINE__ );
+            std::ostringstream msg;
+            msg << "File " << filenameWithExtension << " does not exist";
+            AQ_THROW( msg.str() );
         }
 
         auto cacheInfoOnDeserialization = etrading::deSerializeFromJSON( etrading::serialize::FILE, filenameWithExtension );
@@ -115,24 +115,30 @@ namespace validation
                 objectWithData->serialize( etrading::serialize::JSON, etrading::serialize::FILE, filenameWithExtension );
                 if( !etrading::fileExists( filenameWithExtension ) )
                 {
-					throw AQLCoreAppError( ( boost::format( "#Error: Unable to write existing %s object to file %s (check permission, directory, etc.)" )
-                                        % objectName
-                                        % filenameWithExtension ).str().c_str(), __FILE__, __LINE__ );
+					std::ostringstream msg;
+					msg << "Unable to write existing " << objectName << " object to file " << filenameWithExtension << " (check permission, directory, etc.)";
+					AQ_THROW( msg.str() );
                 }
                 else
                 {
-                    return ( boost::format( "Object %s was written to file %s" ) % objectName.c_str() % filenameWithExtension.c_str() ).str();
+                    std::ostringstream msg;
+                    msg << "Object " << objectName << " was written to file " << filenameWithExtension;
+                    return msg.str();
                 }
             }
             else
             {
-				throw AQLCoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
-                                          % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
+				std::ostringstream msg;
+				msg << "Found object \"" << objectName << "\", but data is NULL";
+				AQ_THROW( msg.str() );
             }
         }
         else
-			throw AQLCoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
-                                      % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
+        {
+			std::ostringstream msg;
+			msg << "Unable to find object with name \"" << objectName << "\"";
+			AQ_THROW( msg.str() );
+        }
     };
 
     std::vector<std::string>
@@ -154,8 +160,9 @@ namespace validation
         }
         else
         {
-			throw AQLCoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
-                                      % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
+			std::ostringstream msg;
+			msg << "Unable to find object with name \"" << objectName << "\"";
+			AQ_THROW( msg.str() );
             return false;  // not hit
         }
     };

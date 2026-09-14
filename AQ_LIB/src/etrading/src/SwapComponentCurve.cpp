@@ -333,20 +333,11 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 	}
     // ------------------------------------------------------------
 		
-	if (!isO_N || !isT_N)
-	{
-        throw AQLCoreInvalidData("#Error: Both O_N and T_N calibration instruments are required", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( !isO_N || !isT_N, "Both O_N and T_N calibration instruments are required" );
 	
-	if (size_l == 0 || size_s == 0)
-	{
-        throw AQLCoreInvalidData("#Error: Libor Fixings and Swap calibration instruments cannot be empty", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( size_l == 0 || size_s == 0, "Libor Fixings and Swap calibration instruments cannot be empty" );
 	
-	if (is_fra_use_ && is_f_use_) 
-	{
-        throw AQLCoreInvalidData("#Error: We can not use fra and futures calibration instruments at a same time!", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( is_fra_use_ && is_f_use_, "We can not use fra and futures calibration instruments at a same time!" );
 	
 	//////////////////////
 	//Spot date of Libor//
@@ -362,7 +353,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 		else if (spotdate_l != spotdate)
 		{
             AQLString msg = "#Error: Calibration instruments must have the same spotdate";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+			AQ_THROW( msg.getCString() );			
 		}
 	}
 	const AQLPriceDataDayCount &dc_l = dynamic_cast<const AQLPriceDataDayCount&> ((data_libor[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
@@ -392,7 +383,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 		if (freq_s[i] == SIMPLE)
 		{
 			//error
-            throw AQLCoreInvalidData("#Error: Simple frequency is not supported in IRS Market", __FILE__, __LINE__);
+            AQ_THROW( "Simple frequency is not supported in IRS Market" );
 		}
 		cal_s[i] =  &dynamic_cast<const AQLPriceDataCalendar&> ((data_swap[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 		sld_s[i]  = &dynamic_cast<const AQLPriceDataSlidingRule&> ((data_swap[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
@@ -431,7 +422,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 		else if (spotdate_s != spotdate)
 		{
             AQLString msg = "#Error: Each swap calibration instrument must have the same spotdate";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+			AQ_THROW( msg.getCString() );			
 		}
 
 		if (i == 0)
@@ -506,10 +497,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 	{
 		stateVariable = etrading::toStateVariableEnum(dynamic_cast<const AQLDataString&>(handle->get()).get().getCString());
 
-		if (stateVariable != STATE_VARIABLE_DF && stateVariable != STATE_VARIABLE_ZERO_RATE_TIMES_TIME)
-		{
-			throw AQLCoreInvalidData("#Error: For SWAP/STD Curve, interpolator's StateVariable only supports DF or RateTime", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( stateVariable != STATE_VARIABLE_DF && stateVariable != STATE_VARIABLE_ZERO_RATE_TIMES_TIME, "For SWAP/STD Curve, interpolator's StateVariable only supports DF or RateTime" );
 	}
 
 	const StateVariableEnum stateVariableFutureFra = STATE_VARIABLE_LOG_DF;
@@ -600,7 +588,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 					}
 					else
 					{
-						throw AQLCoreInvalidData("#Error: Linear-Spline Interpolation Error. Unable to calculate the FRA end date needed for the Linear-Spline join date", __FILE__, __LINE__);
+						AQ_THROW( "Linear-Spline Interpolation Error. Unable to calculate the FRA end date needed for the Linear-Spline join date" );
 					}
 
 					AQLString refRateTerm;
@@ -614,7 +602,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 					}
 					else
 					{
-						throw AQLCoreInvalidData("#Error: STD Curve only supports swaps with 3M or 6M floating leg frequency", __FILE__, __LINE__);
+						AQ_THROW( "STD Curve only supports swaps with 3M or 6M floating leg frequency" );
 					}
 
 					AQLDate lastFraStartDate, lastFraEndDate;
@@ -675,7 +663,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 			{
                 //error
 				AQLString msg = "#Error: Invalid Rate priority specified.";
-				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQ_THROW( msg.getCString() );
 			}
 			else 
 			{
@@ -683,7 +671,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
                 if (pRatePriority->size() < 2)
                 {
 					AQLString msg = "#Error: Invalid Rate priority. This parameter must be a list of colon separated parameters of size 2.";
-					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQ_THROW( msg.getCString() );
                 }
 
 				AQLString str = (*pRatePriority)[1];
@@ -692,7 +680,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 				{
 	                //error
                     AQLString msg = "#Error: Invalid Rate priority. 'Swap' must not be between other rates";
-					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);					
+					AQ_THROW( msg.getCString() );					
 				}
 			}
 		}
@@ -705,7 +693,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
             if (pRatePriority->size() < 2)
             {
                 AQLString msg = "#Error: Invalid Rate priority. Must be a list of colon separated parameters of size 2";
-				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQ_THROW( msg.getCString() );
             }
 
 			isSwapPriority = true;
@@ -808,7 +796,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 			if ( applyTensionFutures && tensionGapFutures < 1 )
 			{
 				AQLString msg = "#Error: The TensionGap parameter in the Futures conventions table must be a positive integer.";
-  				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+  				AQ_THROW( msg.getCString() );
 			}
 
 			// *** CONVEXITY QUOTE PARAMETERS ***
@@ -934,10 +922,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 					double start_term = dc_act365.getTerm(baseDate_, sdate);
 					double end_term = dc_act365.getTerm(baseDate_, edate);
 
-					if ( start_term > end_term )
-					{
-                        throw AQLCoreInvalidData("#Error: CurveCalibration::calcDiscountFactor failed. Invalid futures market data, a futures end date is before it's start date", __FILE__, __LINE__);
-					}
+					AQ_THROW_IF( start_term > end_term, "CurveCalibration::calcDiscountFactor failed. Invalid futures market data, a futures end date is before it's start date" );
 
 					bool isConvAdjPrecise = false;
 					dh = &(data_future[i]->getData(IR_CALIBRATION_DATA_ISCONVADJPRECISE, NOCHECK));
@@ -955,19 +940,13 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 					}
                     
 					// The Hull-White mean reversion parameter must be a value between 0 and 1. Throw an error if this is not the case.
-					if ( meanReversion < 0.0 || meanReversion > 1.0 )
-					{
-                        throw AQLCoreInvalidData("#Error: CurveCalibration::calcDiscountFactor failed. Invalid futures market data, the convexity mean reversion parameter must be a value between 0 and 1", __FILE__, __LINE__);
-					}
+					AQ_THROW_IF( meanReversion < 0.0 || meanReversion > 1.0, "CurveCalibration::calcDiscountFactor failed. Invalid futures market data, the convexity mean reversion parameter must be a value between 0 and 1" );
                     
 					if (isConvAdjPrecise)
 					{
 						// refer to a document of Bloomberg about convexity adjust of euro dollar future
 						double tau = dc.getTerm(sdate, edate);
-						if (tau <= 0.0)
-						{
-							throw AQLCoreInvalidData("#Error: CurveCalibration::calcDiscountFactor failed. Invalid futures market data, a futures end date is before it's start date", __FILE__, __LINE__);
-						}
+						AQ_THROW_IF( tau <= 0.0, "CurveCalibration::calcDiscountFactor failed. Invalid futures market data, a futures end date is before it's start date" );
 
 						double rate_continuous = AQLMath::log(1. + tau * rate) / tau;
 						double conv_adjust_continuous = 0.0;
@@ -1231,10 +1210,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 	AQLString roll_conv_ts("");
 	if (isSwapTenorAdjust_)
 	{
-		if (data_tenorswap.size() == 0) 
-		{
-			throw AQLCoreInvalidData("#Error: Swap Curves with Tenor Basis instruments are only supported using the STD staticDataTable keyword. Please check the 'IsTenorSwapAdjust' and StaticDataTable / MarketData parameter settings.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( data_tenorswap.size() == 0, "Swap Curves with Tenor Basis instruments are only supported using the STD staticDataTable keyword. Please check the 'IsTenorSwapAdjust' and StaticDataTable / MarketData parameter settings." );
 		isLeg2Spread = dynamic_cast<const AQLDataBool&> ((data_tenorswap[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL)).get()).get();
 		
 		// set frequency 
@@ -1260,7 +1236,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 		}
 		else 
 		{
-            throw AQLCoreInvalidData("#Error: Invalid frequency specified. The Tenor basis swap and underlying swap frequencies do not match!", __FILE__, __LINE__);
+            AQ_THROW( "Invalid frequency specified. The Tenor basis swap and underlying swap frequencies do not match!" );
 		}
 
 		dh = &(data_tenorswap[0]->getData(CALIBRATION_DATA_INTERPOLATION, NOCHECK));
@@ -1436,15 +1412,9 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 	AQLString fixingLag("0D");
 
 	// Eligibility checkings prior to swap solving
-	if (!is_newton)
-	{
-        throw AQLCoreInvalidData("#Error: Only the Newton-Raphson method is supported", __FILE__, __LINE__); 
-	}
+	AQ_THROW_IF( !is_newton, "Only the Newton-Raphson method is supported" );
 
-	if (!is_simueq)
-	{
-        throw AQLCoreInvalidData("#Error: Only the Simultaneous-Equation method is supported", __FILE__, __LINE__); 
-	}
+	AQ_THROW_IF( !is_simueq, "Only the Simultaneous-Equation method is supported" );
 	
 	std::vector<DateVector> datesVec_ts(size_s);
 	datesVec_.resize(size_s);
@@ -1920,7 +1890,7 @@ void SwapComponentCurve::postProcessing(AQLObject& yieldCurveProEntity)
 		{
 			//error
             AQLString msg = "#Error: Invalid Money Market data, money market end dates must not overlap the start date of next instrument";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 
 		double rate = dynamic_cast<const AQLDataDouble&> ((it->second->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();

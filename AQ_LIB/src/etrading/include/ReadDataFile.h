@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ExceptionMacros.h"
 #include "AQLString.h"
 #include "AQLDate.h"
 #include "AQLCoreTemplateType.h"
@@ -274,7 +275,7 @@ inline etrading::ReadDataFile::operator T() const
 {
     if ( type() != Scalar )
     {
-        throw Exception( "#Error Reading Data File: Cannot convert non-scalar to requested type" );
+        AQ_THROW( "Reading Data File: Cannot convert non-scalar to requested type" );
     }
     return boost::lexical_cast<T>( ( *this )() );
 }
@@ -284,7 +285,7 @@ etrading::ReadDataFile::operator std::vector<T>() const
 {
     if ( type() != Vector )
     {
-        throw Exception( "#Error Reading Data File: Cannot convert non-vector type to std::vector" );
+        AQ_THROW( "Reading Data File: Cannot convert non-vector type to std::vector" );
     }
     std::vector<T> res( size() );
     for ( std::size_t i = 0; i < size(); ++i )
@@ -301,7 +302,7 @@ etrading::ReadDataFile::operator std::vector<std::vector<T> >() const
 {
     if ( type() != AssociativeArray && type() != Table )
     {
-        throw Exception( "#Error Reading Data File: Cannot convert non-matrix type to matrix type std::vector< std::vector<> > " );
+        AQ_THROW( "Reading Data File: Cannot convert non-matrix type to matrix type std::vector< std::vector<> > " );
     }
     std::vector<std::vector<T> > res( size() );
     for ( std::size_t i = 0; i < size(); ++i )

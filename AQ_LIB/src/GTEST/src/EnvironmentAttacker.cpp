@@ -13,6 +13,8 @@
 #include "ContainerUtilities.h"
 #include "ConcurrentMap.h"
 #include "UserUtilities.h"
+#include <sstream>
+#include <thread>
 
 using etrading::ETradingException;
 using etrading::FreeObject;
@@ -54,20 +56,15 @@ namespace google_test
                 // Comment this out or run the RELEASE mode if you really want to test this because the logToConsole creates unnatural throttling
                 if( counter % 120 == 0 )
                 {
-                    std::string toLog = ( boost::format( "Thread %s (%i of %i) cleared the FreeObject Cache for the Workcontext %s" )
-                                          % boost::lexical_cast<std::string>( boost::this_thread::get_id() )
-                                          % boost::lexical_cast<std::string>( counter )
-                                          % boost::lexical_cast<std::string>( numberOfAttempts_ )
-                                          % wrkContextToCrack_.get()->getUID().c_str() ).str();
-                    logToConsole( toLog );
-                    std::string toLogAfter = ( boost::format( "Thread %s (%i of %i) sees a FreeObject Cache of size %i for the Workcontext %s" )
-                                               % boost::lexical_cast<std::string>( boost::this_thread::get_id() )
-                                               % boost::lexical_cast<std::string>( counter )
-                                               % boost::lexical_cast<std::string>( numberOfAttempts_ )
-                                               % wrkContextToCrack_.get()->getCache<FreeObject>().size()
-                                               % wrkContextToCrack_.get()->getUID().c_str()
-                                             ).str();
-                    logToConsole( toLogAfter );
+                    std::ostringstream logMsg;
+                    logMsg << "Thread " << boost::this_thread::get_id() << " (" << counter << " of " << numberOfAttempts_
+                           << ") cleared the FreeObject Cache for the Workcontext " << wrkContextToCrack_.get()->getUID();
+                    logToConsole( logMsg.str() );
+                    std::ostringstream logMsgAfter;
+                    logMsgAfter << "Thread " << boost::this_thread::get_id() << " (" << counter << " of " << numberOfAttempts_
+                                << ") sees a FreeObject Cache of size " << wrkContextToCrack_.get()->getCache<FreeObject>().size()
+                                << " for the Workcontext " << wrkContextToCrack_.get()->getUID();
+                    logToConsole( logMsgAfter.str() );
                 }
 #endif
             }
@@ -97,32 +94,29 @@ namespace google_test
                 // Comment this out or run the RELEASE mode if you really want to test this because the logToConsole creates unnatural throttling
                 if( counter % 120 == 0 )
                 {
-                    std::string toLog = ( boost::format( "Thread %s (%i of %i) set %s on the FreeObject Cache for the Workcontext %s" )
-                                          % boost::lexical_cast<std::string>( boost::this_thread::get_id() )
-                                          % boost::lexical_cast<std::string>( counter )
-                                          % boost::lexical_cast<std::string>( numberOfAttempts_ )
-                                          % objectName
-                                          % wrkContextToCrack_.get()->getUID().c_str() ).str();
-                    logToConsole( toLog );
-                    std::string toLogAfter = ( boost::format( "Thread %s (%i of %i) sees a FreeObject Cache of size %i with Keys %s for the Workcontext %s" )
-                                               % boost::lexical_cast<std::string>( boost::this_thread::get_id() )
-                                               % boost::lexical_cast<std::string>( counter )
-                                               % boost::lexical_cast<std::string>( numberOfAttempts_ )
-                                               % wrkContextToCrack_.get()->getCache<FreeObject>().size()
-                                               % containerAsString( wrkContextToCrack_.get()->getCache<FreeObject>().keys() )
-                                               % wrkContextToCrack_.get()->getUID().c_str()
-                                             ).str();
-                    logToConsole( toLogAfter );
+                    std::ostringstream logMsg;
+                    logMsg << "Thread " << boost::this_thread::get_id() << " (" << counter << " of " << numberOfAttempts_
+                           << ") set " << objectName << " on the FreeObject Cache for the Workcontext " << wrkContextToCrack_.get()->getUID();
+                    logToConsole( logMsg.str() );
+                    std::ostringstream logMsgAfter;
+                    logMsgAfter << "Thread " << boost::this_thread::get_id() << " (" << counter << " of " << numberOfAttempts_
+                                << ") sees a FreeObject Cache of size " << wrkContextToCrack_.get()->getCache<FreeObject>().size()
+                                << " with Keys " << containerAsString( wrkContextToCrack_.get()->getCache<FreeObject>().keys() )
+                                << " for the Workcontext " << wrkContextToCrack_.get()->getUID();
+                    logToConsole( logMsgAfter.str() );
                 }
 #endif
             }
 
             if( counter % 150 == 0 )
             {
-                std::string toLog = ( boost::format( "Thread %s at (%i of %i)" )
-                                      % boost::lexical_cast<std::string>( boost::this_thread::get_id() )
-                                      % boost::lexical_cast<std::string>( counter )
-                                      % boost::lexical_cast<std::string>( numberOfAttempts_ ) ).str();
+				std::ostringstream stream;
+
+                stream << "Thread " << std::this_thread::get_id()
+				       << " at (" << counter
+				       << " of " << numberOfAttempts_ << ")";
+
+				std::string toLog = stream.str();
                 logToConsole( toLog );
             }
         } // for(int counter = 0; counter < numberOfAttempts_; counter++)

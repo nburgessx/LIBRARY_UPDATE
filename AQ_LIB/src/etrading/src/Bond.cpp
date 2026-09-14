@@ -1,11 +1,10 @@
-﻿#include "Bond.h"
+#include "Bond.h"
 #include "SwapValidation.h"
 #include "SwapUtilities.h"
 #include <iomanip>
 #include "StaticStructureStore.h"
 #include "Variant.h"
 #include "AQLString.h"
-#include <boost/format.hpp>
 #include <FixedBondCashflow.h>
 
 
@@ -228,10 +227,7 @@ namespace etrading
 			cashflowMatrix.push_back(bodyBlock[i]);
 		}
 
-		if ( cashflowMatrix.size() == 0 )
-		{
-			throw AQLCoreInvalidData( "#Error: Unable to display cashflows. There are no cashflows to display.", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( cashflowMatrix.size() == 0, "Unable to display cashflows. There are no cashflows to display." );
 		
 		return cashflowMatrix;
 	}
@@ -294,21 +290,20 @@ namespace etrading
     void Bond::checkSettlementDateValid( const AQLDate & settlementDate ) const
     {
         const unsigned int cashflowSize = schedule_->getCashflowSize();
-        if ( cashflowSize == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: Unable to evaluate the Bond Cashflows. The bond has no cashflows.", __FILE__, __LINE__ );
-		}
+        AQ_THROW_IF( cashflowSize == 0, "Unable to evaluate the Bond Cashflows. The bond has no cashflows." );
 
         AQLDate bondStartDate = schedule_->getEffectiveDate();
         if ( settlementDate < bondStartDate )
         {
-            throw AQLCoreInvalidData( ( boost::format( "#Error: Invalid Settlement Date: SettlementDate '%s'is before the Bond Start Date. " ) % settlementDate.convertDateToString().getCString() ).str().c_str() , __FILE__, __LINE__ );
+            { std::ostringstream aqCoreMsg1;
+aqCoreMsg1 << "Invalid Settlement Date: SettlementDate '" << settlementDate.convertDateToString().getCString() << "'is before the Bond Start Date. "; AQ_THROW( aqCoreMsg1.str() ); }
         }
 
         AQLDate bondMaturityDate = schedule_->getUnadjustedMaturityDate();
         if ( settlementDate >= bondMaturityDate )
         {
-            throw AQLCoreInvalidData( ( boost::format( "#Error: Invalid Settlement Date: SettlementDate  '%s' should be before Bond Maturity Date. " ) % settlementDate.convertDateToString().getCString() ).str().c_str() , __FILE__, __LINE__ );
+            { std::ostringstream aqCoreMsg2;
+aqCoreMsg2 << "Invalid Settlement Date: SettlementDate  '" << settlementDate.convertDateToString().getCString() << "' should be before Bond Maturity Date. "; AQ_THROW( aqCoreMsg2.str() ); }
         }
         
         return;
@@ -375,7 +370,7 @@ namespace etrading
 		}
 		else
 		{
-			throw AQLCoreInvalidData( "#Error: BumpMode must be either 'UP, or 'DOWN', or 'CENTRAL'", __FILE__, __LINE__ );
+			AQ_THROW( "BumpMode must be either 'UP, or 'DOWN', or 'CENTRAL'" );
 		}
 
 		// Undo bond price() scaling
@@ -631,10 +626,7 @@ namespace etrading
 		// The future contract is traded on exchange and the underlying bond is 'standardized' (theoretical). The real bonds that can be delivered into the contract are translated into units of the standardized bond through conversion factors.
 
 		// Aussie future is special, there is no CTD bond
-		if (bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS)
-		{
-			throw AQLCoreInvalidData("#Error: Implied repo rate is not supported for Australian Bond Future.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS, "Implied repo rate is not supported for Australian Bond Future." );
 
 		// *** Note that FUTURE is a theoretical bond, so the forward price from the future price is always CLEAN price
 		double impliedFwdCleanPrice = toImpliedForwardCleanPrice(futurePrice, conversionFactor);
@@ -662,10 +654,7 @@ namespace etrading
 	double Bond::futurePrice(const double& bondPrice, const AQLDate& settleDate, const AQLDate& futureSettleDate, const double& repoRate, const DayCountEnum& repoDayCount, const double& conversionFactor) const
 	{
 		// Aussie future is special, there is no CTD bond
-		if (bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS)
-		{
-			throw AQLCoreInvalidData("#Error: This function is not supported for Australian Bond Future.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS, "This function is not supported for Australian Bond Future." );
 
 		const double fwdPrice = forwardPrice(bondPrice, settleDate, futureSettleDate, repoRate, repoDayCount);
 
@@ -890,10 +879,7 @@ namespace etrading
 	double Bond::grossBasis(const double& price, const AQLDate& settleDate, const double& futurePrice, const double& conversionFactor) const
 	{
 		// Aussie future is special, there is no CTD bond
-		if (bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS)
-		{
-			throw AQLCoreInvalidData("#Error: This function is not supported for Australian Bond Future.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS, "This function is not supported for Australian Bond Future." );
 
 		// Gross basis = currentCleanPrice - futurePrice * conversionFactor
 		double cleanPrice = price;
@@ -911,10 +897,7 @@ namespace etrading
 	double Bond::netBasis(const double& bondForwardPrice, const AQLDate& forwardSettleDate, const double& futurePrice, const double& conversionFactor) const
 	{
 		// Aussie future is special, there is no CTD bond
-		if (bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS)
-		{
-			throw AQLCoreInvalidData("#Error: This function is not supported for Australian Bond Future.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS, "This function is not supported for Australian Bond Future." );
 
 		// Formula derivation:
 		//GrossBasis = cleanPrice - futurePrice * CF

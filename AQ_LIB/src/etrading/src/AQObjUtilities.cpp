@@ -1,5 +1,7 @@
 
 
+#include <sstream>
+
 #include "AQObjUtilities.h"
 #include "Environment.h"
 #include "CurveResultsContainer.h"	// Curve Group & Curve Results Logic
@@ -12,7 +14,7 @@ namespace etrading
 		auto swap  = Environment::defaultEnv().accessObject<Swap>(objectName);
 		if(!swap)
 		{
-            AQ_THROW( (boost::format("Swap %s does not exist") % objectName.c_str()).str().c_str() );			
+            { std::ostringstream aqObjMsg1; aqObjMsg1 << "Swap " << objectName << " does not exist"; AQ_THROW( aqObjMsg1.str() ); }			
 		}
 		return swap;
 	}
@@ -22,7 +24,7 @@ namespace etrading
 		auto schedule  = Environment::defaultEnv().accessObject<Schedule>(objectName);
 		if(!schedule)
 		{
-            AQ_THROW( (boost::format("Schedule %s does not exist") % objectName.c_str()).str().c_str() );			
+            { std::ostringstream aqObjMsg2; aqObjMsg2 << "Schedule " << objectName << " does not exist"; AQ_THROW( aqObjMsg2.str() ); }			
 		}
 		return schedule;
 	}
@@ -32,7 +34,7 @@ namespace etrading
 		auto creditModel  = Environment::defaultEnv().accessObject<CreditModel>(objectName);
 		if ( !creditModel && throwIfMissing )
 		{
-            AQ_THROW( (boost::format("CreditModel %s does not exist") % objectName.c_str()).str().c_str() );			
+            { std::ostringstream aqObjMsg3; aqObjMsg3 << "CreditModel " << objectName << " does not exist"; AQ_THROW( aqObjMsg3.str() ); }			
 		}
 		return creditModel;
 	}
@@ -42,7 +44,7 @@ namespace etrading
 		auto creditBasketModel  = Environment::defaultEnv().accessObject<CreditBasketModel>(objectName);
 		if ( !creditBasketModel && throwIfMissing )
 		{
-            AQ_THROW( (boost::format("CreditBasketModel %s does not exist") % objectName.c_str()).str().c_str() );			
+            { std::ostringstream aqObjMsg4; aqObjMsg4 << "CreditBasketModel " << objectName << " does not exist"; AQ_THROW( aqObjMsg4.str() ); }			
 		}
 		return creditBasketModel;
 	}
@@ -52,7 +54,7 @@ namespace etrading
 		auto bondCurve  = Environment::defaultEnv().accessObject<BondCurve>(objectName);
 		if ( !bondCurve && throwIfMissing )
 		{
-            AQ_THROW( (boost::format("BondCurve %s does not exist") % objectName.c_str()).str().c_str() );			
+            { std::ostringstream aqObjMsg5; aqObjMsg5 << "BondCurve " << objectName << " does not exist"; AQ_THROW( aqObjMsg5.str() ); }			
 		}
 		return bondCurve;
 	}
@@ -62,7 +64,7 @@ namespace etrading
 		auto inflationCurve = Environment::defaultEnv().accessObject<InflationCurve>(objectName);
 		if ( ! inflationCurve && throwIfMissing )
 		{
-			AQ_THROW( (boost::format("InflationCurve %s does not exist") % objectName.c_str()).str().c_str() );
+			{ std::ostringstream aqObjMsg6; aqObjMsg6 << "InflationCurve " << objectName << " does not exist"; AQ_THROW( aqObjMsg6.str() ); }
 		}
 		return inflationCurve;
 	}
@@ -85,7 +87,7 @@ namespace etrading
 		auto leg  = Environment::defaultEnv().accessObject<Leg>(objectName);
 		if(!leg)
 		{
-			AQ_THROW( (boost::format("Leg %s does not exist") % objectName.c_str()).str().c_str() );			
+			{ std::ostringstream aqObjMsg7; aqObjMsg7 << "Leg " << objectName << " does not exist"; AQ_THROW( aqObjMsg7.str() ); }			
 		}
 		return leg;
 	}
@@ -95,7 +97,7 @@ namespace etrading
 		auto bond  = Environment::defaultEnv().accessObject< Bond >( objectName );
 		if( !bond )
 		{
-			AQ_THROW( (boost::format("Bond %s does not exist") % objectName.c_str()).str().c_str() );			
+			{ std::ostringstream aqObjMsg8; aqObjMsg8 << "Bond " << objectName << " does not exist"; AQ_THROW( aqObjMsg8.str() ); }			
 		}
 		return bond;
 	}
@@ -105,7 +107,7 @@ namespace etrading
 		auto bondGen  = Environment::defaultEnv().accessObject<BondGenerator>( objectName );
 		if ( ! bondGen )
 		{
-            AQ_THROW( (boost::format( "Bond %s does not exist") % objectName.c_str()).str().c_str() );			
+            { std::ostringstream aqObjMsg9; aqObjMsg9 << "Bond " << objectName << " does not exist"; AQ_THROW( aqObjMsg9.str() ); }			
 		}
 		return bondGen;
 	}
@@ -115,7 +117,7 @@ namespace etrading
 		auto swapGen  = Environment::defaultEnv().accessObject<SwapGenerator>( objectName );
 		if(!swapGen)
 		{
-            AQ_THROW( (boost::format("Swap Generator '%s' does not exist") % objectName.c_str()).str().c_str() );			
+            { std::ostringstream aqObjMsg10; aqObjMsg10 << "Swap Generator '" << objectName << "' does not exist"; AQ_THROW( aqObjMsg10.str() ); }			
 		}
 		return swapGen;
 	}
@@ -125,7 +127,7 @@ namespace etrading
 		auto fixingTable  = Environment::defaultEnv().accessObject<FixingTable>( objectName );
 		if(!fixingTable && throwIfMissing)
 		{
-            AQ_THROW( (boost::format("Fixing Table %s does not exist") % objectName.c_str()).str().c_str() );			
+            { std::ostringstream aqObjMsg11; aqObjMsg11 << "Fixing Table " << objectName << " does not exist"; AQ_THROW( aqObjMsg11.str() ); }			
 		}
 		return fixingTable;
 	}
@@ -135,7 +137,7 @@ namespace etrading
 		auto curveGenerator  = Environment::defaultEnv().accessObject<CurveGenerator>( objectName );
 		if ( !curveGenerator )
 		{
-            AQ_THROW( (boost::format("CurveGenerator %s does not exist") % objectName.c_str()).str().c_str() );			
+            { std::ostringstream aqObjMsg12; aqObjMsg12 << "CurveGenerator " << objectName << " does not exist"; AQ_THROW( aqObjMsg12.str() ); }			
 		}
 		return curveGenerator;
 	}
@@ -145,7 +147,7 @@ namespace etrading
 		auto curveMarketData = Environment::defaultEnv().accessObject<CurveMarketData>( objectName );
 		if ( !curveMarketData )
 		{
-            AQ_THROW( (boost::format("CurveMarketData %s does not exist") % objectName.c_str()).str().c_str() );			
+            { std::ostringstream aqObjMsg13; aqObjMsg13 << "CurveMarketData " << objectName << " does not exist"; AQ_THROW( aqObjMsg13.str() ); }			
 		}
 		return curveMarketData;
 	}
@@ -155,7 +157,7 @@ namespace etrading
 		auto fxCurve = Environment::defaultEnv().accessObject<FXCurve>( objectName );
 		if ( !fxCurve )
 		{
-            AQ_THROW( (boost::format( "FXCurve %s does not exist") % objectName.c_str()).str().c_str() );			
+            { std::ostringstream aqObjMsg14; aqObjMsg14 << "FXCurve " << objectName << " does not exist"; AQ_THROW( aqObjMsg14.str() ); }			
 		}
 		return fxCurve;
 	}
@@ -165,7 +167,7 @@ namespace etrading
 		auto option = Environment::defaultEnv().accessObject<Option>(objectName);
 		if (!option)
 		{
-			AQ_THROW((boost::format("Option %s does not exist") % objectName.c_str()).str().c_str());
+			{ std::ostringstream aqObjMsg15; aqObjMsg15 << "Option " << objectName << " does not exist"; AQ_THROW( aqObjMsg15.str() ); }
 		}
 		return option;
 	}
@@ -175,7 +177,7 @@ namespace etrading
 		auto vol = Environment::defaultEnv().accessObject<Volatility>(objectName);
 		if (!vol && throwIfMissing)
 		{
-			AQ_THROW((boost::format("Volatility %s does not exist") % objectName.c_str()).str().c_str());
+			{ std::ostringstream aqObjMsg16; aqObjMsg16 << "Volatility " << objectName << " does not exist"; AQ_THROW( aqObjMsg16.str() ); }
 		}
 		return vol;
 	}
@@ -185,7 +187,7 @@ namespace etrading
 		auto sabrModel = Environment::defaultEnv().accessObject<SabrModel>(objectName);
 		if (!sabrModel && throwIfMissing)
 		{
-			AQ_THROW((boost::format("SabrModel %s does not exist") % objectName.c_str()).str().c_str());
+			{ std::ostringstream aqObjMsg17; aqObjMsg17 << "SabrModel " << objectName << " does not exist"; AQ_THROW( aqObjMsg17.str() ); }
 		}
 		return sabrModel;
 	}
@@ -195,7 +197,7 @@ namespace etrading
 		auto sabrMktData = Environment::defaultEnv().accessObject<SabrMarketData>(objectName);
 		if (!sabrMktData && throwIfMissing)
 		{
-			AQ_THROW((boost::format("SabrMarketData %s does not exist") % objectName.c_str()).str().c_str());
+			{ std::ostringstream aqObjMsg18; aqObjMsg18 << "SabrMarketData " << objectName << " does not exist"; AQ_THROW( aqObjMsg18.str() ); }
 		}
 		return sabrMktData;
 	}
@@ -207,7 +209,7 @@ namespace etrading
 
 		if (!freeObject)
 		{
-			AQ_THROW((boost::format("FreeObject %s does not exist") % objectName.c_str()).str().c_str());
+			{ std::ostringstream aqObjMsg19; aqObjMsg19 << "FreeObject " << objectName << " does not exist"; AQ_THROW( aqObjMsg19.str() ); }
 		}
 		return freeObject;
 	}

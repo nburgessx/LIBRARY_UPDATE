@@ -340,7 +340,7 @@ namespace validation
                     expiryMonthString = "Dec";
                     break;
                 default:
-                    throw AQLCoreInvalidData( "#Error: Invalid License Expiry Month", __FILE__, __LINE__ );
+                    AQ_THROW( "Invalid License Expiry Month" );
             }
         }
 

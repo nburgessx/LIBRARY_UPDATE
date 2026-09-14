@@ -1,3 +1,4 @@
+#include "ExceptionMacros.h"
 #include "StructuredExceptionHandler.h"
 #include "AQLCoreError.h"
 #include <stdlib.h>
@@ -149,14 +150,14 @@ namespace etrading
     */
     void StructuredExceptionHandler::TerminateHandler()
     {
-        throw AQLCoreError( "Terminator Handler hit. Please exit the current session and reload the DLL.", __FILE__, __LINE__ );
+        AQ_THROW( "Terminator Handler hit. Please exit the current session and reload the DLL." );
     }
 
     /* @brief		Custom unexpected handler
     */
     void StructuredExceptionHandler::UnexpectedHandler()
     {
-        throw AQLCoreError( "Unexpected Exception Handler hit. Please exit the current session and reload the DLL.", __FILE__, __LINE__ );
+        AQ_THROW( "Unexpected Exception Handler hit. Please exit the current session and reload the DLL." );
     }
 
     /* @brief	Custom signal handler
@@ -165,7 +166,7 @@ namespace etrading
     {
         // cleanup and close up stuff here
         // terminate program
-        throw AQLCoreError( "Program interruption signals encountered. Please exit the current session and reload the DLL.", __FILE__, __LINE__ );
+        AQ_THROW( "Program interruption signals encountered. Please exit the current session and reload the DLL." );
     }
 
     /* @brief		Custom handler for Structured Exception.
@@ -212,7 +213,7 @@ namespace etrading
         // Translate structured exception to standard C++ exception. __FILE__/__LINE__ here
         // are this handler's own location, not the crash site - the crash site (when
         // resolvable) is already folded into the message text above.
-        throw AQLCoreError( msg.str().c_str(), __FILE__, __LINE__ );
+        AQ_THROW( msg.str().c_str() );
     }
 
 

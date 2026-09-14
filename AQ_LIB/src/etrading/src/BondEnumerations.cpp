@@ -4,7 +4,6 @@
 #include "BondEnumerations.h"
 #include "ETradingException.h"
 #include "ContainerUtilities.h"
-#include <boost/format.hpp>
 #include <boost/assign.hpp>
 #include <boost/algorithm/string.hpp>
 
@@ -76,7 +75,7 @@ namespace etrading
 				return "TYPE730_SPAIN_T_BILL";
 				break; 
 			default:
-				throw ETradingException( "#Error: Invalid Bond Calculation Type. Must be 'TYPE1_STREET_CONVENTION', 'TYPE2_US_TREASURIES', 'TYPE5_ZERO_COUPON_BONDS', 'TYPE6_DISCOUNTED_COMMERCIAL_PAPER', 'TYPE13_STREET_CONVENTION_FIXED', 'TYPE51_JAPANESE_GOVERNMENT_BONDS', 'TYPE235_JAPANESE_GOVERNMENT_BONDS', 'TYPE60_GERMAN_FIXED_RATE_BONDS', 'TYPE89_FRENCH_COMPOUND_METHOD', 'TYPE102_STREET_CONVENTION', 'TYPE129_ISMA_CONVENTION', 'TYPE21_FLOATING_RATE_NOTE', 'TYPE523_ITALY_TRSY_BONDS', 'TYPE527_ITALY_TRSY_BILL', 'TYPE529_ITALY_2Y_TRSY_BILL','TYPE23_AUSTRALIAN_GOVERNMENT_BONDS','TYPE26_UK_GILT', 'TYPE1029_SPAIN_GOVERNMENT_BONDS','TYPE730_SPAIN_T_BILL'."  );
+				AQ_THROW( "Invalid Bond Calculation Type. Must be 'TYPE1_STREET_CONVENTION', 'TYPE2_US_TREASURIES', 'TYPE5_ZERO_COUPON_BONDS', 'TYPE6_DISCOUNTED_COMMERCIAL_PAPER', 'TYPE13_STREET_CONVENTION_FIXED', 'TYPE51_JAPANESE_GOVERNMENT_BONDS', 'TYPE235_JAPANESE_GOVERNMENT_BONDS', 'TYPE60_GERMAN_FIXED_RATE_BONDS', 'TYPE89_FRENCH_COMPOUND_METHOD', 'TYPE102_STREET_CONVENTION', 'TYPE129_ISMA_CONVENTION', 'TYPE21_FLOATING_RATE_NOTE', 'TYPE523_ITALY_TRSY_BONDS', 'TYPE527_ITALY_TRSY_BILL', 'TYPE529_ITALY_2Y_TRSY_BILL','TYPE23_AUSTRALIAN_GOVERNMENT_BONDS','TYPE26_UK_GILT', 'TYPE1029_SPAIN_GOVERNMENT_BONDS','TYPE730_SPAIN_T_BILL'." );
                 break;
         };
 	};
@@ -166,7 +165,7 @@ namespace etrading
 			return TYPE730_SPAIN_T_BILL;
 		}
 		
-		throw ETradingException( "#Error: Invalid Bond Calculation Type. Must be 'TYPE1_STREET_CONVENTION', 'TYPE2_US_TREASURIES', 'TYPE5_ZERO_COUPON_BONDS', 'TYPE6_DISCOUNTED_COMMERCIAL_PAPER', 'TYPE13_STREET_CONVENTION_FIXED', 'TYPE51_JAPANESE_GOVERNMENT_BONDS', 'TYPE235_JAPANESE_GOVERNMENT_BONDS', 'TYPE60_GERMAN_FIXED_RATE_BONDS', 'TYPE89_FRENCH_COMPOUND_METHOD', 'TYPE102_STREET_CONVENTION', 'TYPE129_ISMA_CONVENTION', 'TYPE523_ITALY_TRSY_BONDS', 'TYPE527_ITALY_TRSY_BILL', 'TYPE529_ITALY_2Y_TRSY_BILL','TYPE23_AUSTRALIAN_GOVERNMENT_BONDS','TYPE26_UK_GILT', 'TYPE1029_SPAIN_GOVERNMENT_BONDS'.'TYPE730_SPAIN_T_BILL'."  );
+		AQ_THROW( "Invalid Bond Calculation Type. Must be 'TYPE1_STREET_CONVENTION', 'TYPE2_US_TREASURIES', 'TYPE5_ZERO_COUPON_BONDS', 'TYPE6_DISCOUNTED_COMMERCIAL_PAPER', 'TYPE13_STREET_CONVENTION_FIXED', 'TYPE51_JAPANESE_GOVERNMENT_BONDS', 'TYPE235_JAPANESE_GOVERNMENT_BONDS', 'TYPE60_GERMAN_FIXED_RATE_BONDS', 'TYPE89_FRENCH_COMPOUND_METHOD', 'TYPE102_STREET_CONVENTION', 'TYPE129_ISMA_CONVENTION', 'TYPE523_ITALY_TRSY_BONDS', 'TYPE527_ITALY_TRSY_BILL', 'TYPE529_ITALY_2Y_TRSY_BILL','TYPE23_AUSTRALIAN_GOVERNMENT_BONDS','TYPE26_UK_GILT', 'TYPE1029_SPAIN_GOVERNMENT_BONDS'.'TYPE730_SPAIN_T_BILL'." );
 	};
 
      std::string toString( const BondTypeEnum enumValue )
@@ -195,7 +194,7 @@ namespace etrading
                 return "STRUCTURED";
                 break;
             default:
-				throw ETradingException( "#Error: Invalid BondType, must be'FIXED', 'FLOATER', 'PERPETUAL', 'CALLABLE', 'CALLABLE', 'INFLATION-LINKED', 'CONVERTIBLE' or 'STRUCTURED'." );
+				AQ_THROW( "Invalid BondType, must be'FIXED', 'FLOATER', 'PERPETUAL', 'CALLABLE', 'CALLABLE', 'INFLATION-LINKED', 'CONVERTIBLE' or 'STRUCTURED'." );
                 break;
         }
     };
@@ -231,7 +230,7 @@ namespace etrading
         {
             return STRUCTURED_BOND;
         }
-		throw ETradingException( "#Error: Invalid BondType, must be'FIXED', 'FLOATER', 'PERPETUAL', 'CALLABLE', 'CALLABLE', 'INFLATION-LINKED', 'CONVERTIBLE' or 'STRUCTURED'." );
+		AQ_THROW( "Invalid BondType, must be'FIXED', 'FLOATER', 'PERPETUAL', 'CALLABLE', 'CALLABLE', 'INFLATION-LINKED', 'CONVERTIBLE' or 'STRUCTURED'." );
     };
 
 
@@ -252,7 +251,7 @@ namespace etrading
                 return "SIMPLE";
                 break;
             default:
-				throw ETradingException( "#Error: Invalid BondYieldCalculationType, must be'ISMA', 'TRUE', 'SIMPLE'." );
+				AQ_THROW( "Invalid BondYieldCalculationType, must be'ISMA', 'TRUE', 'SIMPLE'." );
                 break;
         }
     };
@@ -277,7 +276,7 @@ namespace etrading
         {
             return SIMPLE_YIELD;
         }
-		throw ETradingException( "#Error: Invalid BondYieldCalculationType, must be'ISMA', 'TRUE', 'SIMPLE'." );
+		AQ_THROW( "Invalid BondYieldCalculationType, must be'ISMA', 'TRUE', 'SIMPLE'." );
     };
 
      std::string toString( const YieldTypeEnum enumValue )
@@ -294,7 +293,7 @@ namespace etrading
                 return "YIELD-TO-CALL";
                 break;
             default:
-				throw ETradingException( "#Error: Invalid YieldType, must be 'YIELD-TO-MATURITY', 'YIELD-TO-WORST' or 'YIELD-TO-CALL'." );
+				AQ_THROW( "Invalid YieldType, must be 'YIELD-TO-MATURITY', 'YIELD-TO-WORST' or 'YIELD-TO-CALL'." );
                 break;
         }
     };
@@ -327,7 +326,7 @@ namespace etrading
             return YIELD_TO_CALL;
         }
 
-		throw ETradingException( "#Error: Invalid YieldType, must be 'YIELD-TO-MATURITY', 'YIELD-TO-WORST' or 'YIELD-TO-CALL'." );
+		AQ_THROW( "Invalid YieldType, must be 'YIELD-TO-MATURITY', 'YIELD-TO-WORST' or 'YIELD-TO-CALL'." );
     };
 
      std::string toString( const BondQuoteConventionEnum enumValue )
@@ -359,7 +358,7 @@ namespace etrading
 				return "QUOTE_TO_5_DECIMAL_PLACES";
 				break;
             default:
-				throw ETradingException( "#Error: Invalid BondQuiteConvention, must be 'NONE', 'QUOTE_IN_32NDS', 'QUOTE_IN_64THS', 'QUOTE_TO_1_DECIMAL_PLACE', 'QUOTE_TO_2_DECIMAL_PLACES', 'QUOTE_TO_3_DECIMAL_PLACES', 'QUOTE_TO_4_DECIMAL_PLACES', or 'QUOTE_TO_5_DECIMAL_PLACES' " );
+				AQ_THROW( "Invalid BondQuiteConvention, must be 'NONE', 'QUOTE_IN_32NDS', 'QUOTE_IN_64THS', 'QUOTE_TO_1_DECIMAL_PLACE', 'QUOTE_TO_2_DECIMAL_PLACES', 'QUOTE_TO_3_DECIMAL_PLACES', 'QUOTE_TO_4_DECIMAL_PLACES', or 'QUOTE_TO_5_DECIMAL_PLACES' " );
                 break;
         }
     };
@@ -408,7 +407,7 @@ namespace etrading
 			return QUOTE_TO_5_DECIMAL_PLACES;
 		}
 
-		throw ETradingException( "#Error: Invalid BondQuiteConvention, must be 'NONE', 'QUOTE_IN_32NDS', 'QUOTE_IN_64THS', 'QUOTE_TO_1_DECIMAL_PLACE', 'QUOTE_TO_2_DECIMAL_PLACES', 'QUOTE_TO_3_DECIMAL_PLACES', 'QUOTE_TO_4_DECIMAL_PLACES', or 'QUOTE_TO_5_DECIMAL_PLACES' " );
+		AQ_THROW( "Invalid BondQuiteConvention, must be 'NONE', 'QUOTE_IN_32NDS', 'QUOTE_IN_64THS', 'QUOTE_TO_1_DECIMAL_PLACE', 'QUOTE_TO_2_DECIMAL_PLACES', 'QUOTE_TO_3_DECIMAL_PLACES', 'QUOTE_TO_4_DECIMAL_PLACES', or 'QUOTE_TO_5_DECIMAL_PLACES' " );
     };
 
 }

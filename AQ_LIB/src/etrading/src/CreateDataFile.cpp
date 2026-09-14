@@ -46,7 +46,7 @@ namespace etrading
                 {
                     if ( !create_directory( out ) )
                     {
-                        throw CreateDataFile::Exception( "error creating folder " + AQLString( out.string().c_str() ) );
+                        AQ_THROW( "error creating folder " + AQLString( out.string().c_str() ) );
                     }
                 }
                 p = out / p;
@@ -509,7 +509,7 @@ namespace etrading
         {
             if ( boost::filesystem::exists( p.getCString() ) == false )
             {
-                throw Exception(  AQLString( "#Error: Output folder " ) + p + AQLString( " does not exist" ) );
+                AQ_THROW( AQLString( "Output folder " ) + p + AQLString( " does not exist" ) );
             }
 
             return outputFolder_ = p;
@@ -535,7 +535,7 @@ namespace etrading
     {
         if ( i < 0 )
         {
-            throw Exception( "#Error: Max index cannot be negative" );
+            AQ_THROW( "Max index cannot be negative" );
         }
 
         return maxIndex_ = i;
@@ -566,7 +566,7 @@ namespace etrading
     {
         if ( index < 0 )
         {
-            throw Exception( "#Error Cannot start test count with a negative index" );
+            AQ_THROW( "Cannot start test count with a negative index" );
         }
 
         // Clear used indices to reset index counter

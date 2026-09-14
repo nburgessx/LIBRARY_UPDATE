@@ -440,8 +440,8 @@ namespace etrading
 					break;
 
 				default:
-					throw AQLCoreInvalidData( ( boost::format( "#Error: Invalid FRA Data: Only 3M and 6M FRAs are supported. Current FRA frequency: %s." )  
-							% frequency ).str().c_str(), __FILE__, __LINE__ );
+					{ std::ostringstream aqCoreMsg9;
+aqCoreMsg9 << "Invalid FRA Data: Only 3M and 6M FRAs are supported. Current FRA frequency: " << frequency << "."; AQ_THROW( aqCoreMsg9.str() ); }
 			}
 		}
 

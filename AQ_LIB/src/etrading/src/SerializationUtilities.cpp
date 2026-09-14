@@ -1,6 +1,7 @@
 // SerializationUtilities.cpp
 
 // Includes: This Library
+#include "ExceptionMacros.h"
 #include "SerializationUtilities.h"
 #include "FileUtilities.h"
 #include "AQLCoreAppError.h"
@@ -45,7 +46,7 @@ namespace etrading
         if( !etrading::fileExists( filepathWithExtension ) )
 	    {
             AQLString errorMessage = "#Error: File does not exist: " + AQLString( filepathWithExtension.c_str() );
-            throw AQLCoreInvalidData( errorMessage.getCString(), __FILE__, __LINE__ );
+            AQ_THROW( errorMessage.getCString() );
 	    }
     }
 

@@ -120,10 +120,7 @@ namespace etrading
 
             counter++;
 
-            if (counter >= maxCount)
-			{
-                throw AQLCoreInvalidData("#Error: Unable to find the stub date for the stub type provided.", __FILE__, __LINE__);
-			}
+            AQ_THROW_IF( counter >= maxCount, "Unable to find the stub date for the stub type provided." );
         }
 
         return result;
@@ -175,7 +172,7 @@ namespace etrading
             counter++;
 
             if (counter >= maxCount)
-                throw AQLCoreInvalidData("#Error: Unable to find the stub date for the stub type provided.", __FILE__, __LINE__);
+                AQ_THROW( "Unable to find the stub date for the stub type provided." );
         }
 
         return result;
@@ -270,7 +267,7 @@ namespace etrading
 			term = "1D";
         else if ((data_frequency == "NONE" || data_frequency == "LUNAR") && stubType == NULL);
         else
-            throw AQLCoreInvalidData("#Error: Frequency, must be Annual, Semi-Annual, Quarterly, Monthly, Weekly or Daily.", __FILE__, __LINE__);
+            AQ_THROW( "Frequency, must be Annual, Semi-Annual, Quarterly, Monthly, Weekly or Daily." );
 
 		// Initialize StubDateAndType Struct
 		StubDateAndType stubInfo;
@@ -585,7 +582,7 @@ namespace etrading
     AQLDate
         AQLDateScheduleHelpers::getIMMDate2(const int& year, const int& number, AQLString& calendar, AQLString& slidingRule)
     {
-        if (number < 0 || number > 5) throw AQLCoreInvalidData("IMM Dates in a year are 4 days.", __FILE__, __LINE__);
+        if (number < 0 || number > 5) AQ_THROW( "IMM Dates in a year are 4 days." );
 
         upper(slidingRule);
         upper(calendar);
@@ -671,7 +668,7 @@ namespace etrading
             !is_sorted_End)
         {
             AQLString msg = "Illegal StartDates and/or EndDates.";
-            throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+            AQ_THROW( msg.getCString() );
         }
 
         // merge StartDates and EndDates as a single date vector
@@ -683,7 +680,7 @@ namespace etrading
         if (startenddates.size() != startdates.size() + 1) // case when Start[i+1] does not coincide with End[i]
         {
             AQLString msg = "Illegal StartDates and/or EndDates.";
-            throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+            AQ_THROW( msg.getCString() );
         }
 
         std::vector<AQLDate> regular_startdates;
@@ -749,7 +746,7 @@ namespace etrading
         else if (mstr == "Oct") m = 10;
         else if (mstr == "Nov") m = 11;
         else if (mstr == "Dec") m = 12;
-        else throw AQLCoreAppError("invalid month", __FILE__, __LINE__);
+        else AQ_THROW( "invalid month" );
 
         return m;
     }
@@ -773,7 +770,7 @@ namespace etrading
         else if (frequency_ == ANNUAL)
             return "12M";
         else
-            throw AQLCoreInvalidData("Unknown frequency in conversion to Term", __FILE__, __LINE__);
+            AQ_THROW( "Unknown frequency in conversion to Term" );
     }
 
     AQLPriceDataDayCount ModelDaycount()
@@ -799,7 +796,7 @@ namespace etrading
         else
         {
             if (slushCheck == 4) date.remove(4, 1);
-            else throw AQLCoreInvalidData("Input error", __FILE__, __LINE__);
+            else AQ_THROW( "Input error" );
 
             slushCheck = date.findString("/");
             if (slushCheck == 6) { date.remove(6, 1); }
@@ -808,13 +805,13 @@ namespace etrading
                 date.remove(5, 1);
                 date.insert(4, "0");
             }
-            else throw AQLCoreInvalidData("Input error", __FILE__, __LINE__);
+            else AQ_THROW( "Input error" );
 
             if (date.size() == 7)
             {
                 date.insert(6, "0");
             }
-            else if (date.size() != 8) throw AQLCoreInvalidData("Input error", __FILE__, __LINE__);
+            else if (date.size() != 8) AQ_THROW( "Input error" );
             AQLDate ret_(date.getCString()); ret = ret_;
         }
 
@@ -844,7 +841,7 @@ namespace etrading
         else if (unit == "M")
             return length / 12.0;
         else
-            throw AQLCoreInvalidData("Invalid term in conversion to year length", __FILE__, __LINE__);
+            AQ_THROW( "Invalid term in conversion to year length" );
     }
 
     int TermToMonthLength(AQLString term)
@@ -857,7 +854,7 @@ namespace etrading
         else if (unit == "Y")
             return 12 * length;
         else
-            throw AQLCoreInvalidData("Invalid term in conversion to month length", __FILE__, __LINE__);
+            AQ_THROW( "Invalid term in conversion to month length" );
     }
 
 

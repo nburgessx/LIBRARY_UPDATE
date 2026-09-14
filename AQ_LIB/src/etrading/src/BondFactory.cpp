@@ -49,27 +49,27 @@ namespace etrading
                 break;
 
             case PERPETUAL_BOND:
-                throw AQLCoreInvalidData("#Error: 'PERPETUAL' Bonds are currently not supported.",__FILE__,__LINE__);
+                AQ_THROW( "'PERPETUAL' Bonds are currently not supported." );
                 break;
 
             case CALLABLE_BOND:
-                throw AQLCoreInvalidData("#Error: 'CALLABLE' Bonds are currently not supported.",__FILE__,__LINE__);
+                AQ_THROW( "'CALLABLE' Bonds are currently not supported." );
                 break;
 
             case INFLATION_LINKED_BOND:
-                throw AQLCoreInvalidData("#Error: 'INFLATION-LINKED' Bonds are currently not supported.",__FILE__,__LINE__);
+                AQ_THROW( "'INFLATION-LINKED' Bonds are currently not supported." );
                 break;
 
             case CONVERTIBLE_BOND:
-                throw AQLCoreInvalidData("#Error: 'CONVERTIBLE' Bonds are currently not supported.",__FILE__,__LINE__);
+                AQ_THROW( "'CONVERTIBLE' Bonds are currently not supported." );
                 break;
 
             case STRUCTURED_BOND:
-                throw AQLCoreInvalidData("#Error: 'STRUCTURED' Bonds are currently not supported.",__FILE__,__LINE__);
+                AQ_THROW( "'STRUCTURED' Bonds are currently not supported." );
                 break;
 
 			default:
-		        throw AQLCoreInvalidData("#Error: Invalid Bond Type.",__FILE__,__LINE__);
+		        AQ_THROW( "Invalid Bond Type." );
                 break;
         }
 
@@ -99,27 +99,27 @@ namespace etrading
             ret = BondPtr( new FloatingBond( bondObjectName, bondLVB ) );
 			break;
 		case PERPETUAL_BOND:
-			throw AQLCoreInvalidData("#Error: 'PERPETUAL' Bonds are currently not supported.", __FILE__, __LINE__);
+			AQ_THROW( "'PERPETUAL' Bonds are currently not supported." );
 			break;
 
 		case CALLABLE_BOND:
-			throw AQLCoreInvalidData("#Error: 'CALLABLE' Bonds are currently not supported.", __FILE__, __LINE__);
+			AQ_THROW( "'CALLABLE' Bonds are currently not supported." );
 			break;
 
 		case INFLATION_LINKED_BOND:
-			throw AQLCoreInvalidData("#Error: 'INFLATION-LINKED' Bonds are currently not supported.", __FILE__, __LINE__);
+			AQ_THROW( "'INFLATION-LINKED' Bonds are currently not supported." );
 			break;
 
 		case CONVERTIBLE_BOND:
-			throw AQLCoreInvalidData("#Error: 'CONVERTIBLE' Bonds are currently not supported.", __FILE__, __LINE__);
+			AQ_THROW( "'CONVERTIBLE' Bonds are currently not supported." );
 			break;
 
 		case STRUCTURED_BOND:
-			throw AQLCoreInvalidData("#Error: 'STRUCTURED' Bonds are currently not supported.", __FILE__, __LINE__);
+			AQ_THROW( "'STRUCTURED' Bonds are currently not supported." );
 			break;
 
 		default:
-			throw AQLCoreInvalidData("#Error: Invalid Bond Type.", __FILE__, __LINE__);
+			AQ_THROW( "Invalid Bond Type." );
 			break;
 		}
 

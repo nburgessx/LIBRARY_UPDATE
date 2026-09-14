@@ -30,7 +30,7 @@ namespace google_test
 
 			if ( environmentVariablePath == nullptr )
 			{
-				throw AQLCoreInvalidData("#Error: The 'AQ' environment variable has not been set.", __FILE__, __LINE__);
+				AQ_THROW( "The 'AQ' environment variable has not been set." );
 			}
 
 			boost::filesystem::path resultPath = boost::filesystem::path(environmentVariablePath) / "resources" / "config";

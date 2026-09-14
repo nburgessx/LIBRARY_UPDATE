@@ -58,15 +58,9 @@ namespace validation
         // Recording of inputs for playback
         AQ_RECORD_DECORATED_INPUTS( curveCollection, "", startDates, endDates, curveCollection, forecastCurveIndex, frequency, spread, stubType, rollDayInput, calendar, businessDayAdj, dayCount, interpolation, compoundType, firstStubDate, lastStubDate );
 
-        if( startDates.size() == 0 || endDates.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: a size of vector is zero.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( startDates.size() == 0 || endDates.size() == 0, "a size of vector is zero." );
 
-        if( startDates.size() != endDates.size() )
-        {
-            throw AQLCoreInvalidData( "#Error: The input startDates and endDates must be of the same size.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( startDates.size() != endDates.size(), "The input startDates and endDates must be of the same size." );
 
         AQLDate* firstOddDt  = NULL;
         AQLDate tmpfirstOddDt;

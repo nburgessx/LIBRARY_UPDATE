@@ -1,4 +1,5 @@
 #include <boost/date_time.hpp>
+#include <sstream>
 
 #include "tryAqCurveObjectCreateFXForwards.h"
 
@@ -77,10 +78,7 @@ namespace validation
             file.write( "fxFwdConv", fxFwdConv );
         }
 
-        if( fxFwdConv.empty() )
-        {
-            throw AQLCoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fxFwdConv.empty(), "Input Matrix is empty" );
 
         if( fxFwdConv[0].size() < 2 )
         {
@@ -175,7 +173,9 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Unable to create AQObjCurve named %s" ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream msg;
+            msg << "Unable to create AQObjCurve named " << aqObjCurveName;
+            AQ_THROW( msg.str() );
         }
 
         VALID_EXCEPTION_END

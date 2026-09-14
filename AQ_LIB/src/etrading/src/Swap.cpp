@@ -11,15 +11,9 @@ namespace etrading
 
     void Swap::validateLegs(const LegPtr& leg1, const LegPtr& leg2) const
     {
-		if(leg1 == nullptr || leg2 == nullptr)
-		{
-			throw AQLCoreInvalidData( "#Error: One of the legs is NOT set on the Swap", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( leg1 == nullptr || leg2 == nullptr, "One of the legs is NOT set on the Swap" );
 
-        if(same(leg1->getLegName(), leg2->getLegName()))
-		{
-			throw AQLCoreInvalidData( "#Error: Swap's two legs cannot have the same leg name", __FILE__, __LINE__ );
-		}
+        AQ_THROW_IF( same(leg1->getLegName(), leg2->getLegName()), "Swap's two legs cannot have the same leg name" );
 
 
 
@@ -135,16 +129,10 @@ namespace etrading
     void Swap::validateCollectionSize(const LabelValueBlock& valuationSettingsLVB, const AQLString& legName) const
     {
 
-        if (valuationSettingsLVB.size() == 0)
-        {
-    		throw AQLCoreInvalidData( "#Error: A curveCollection must be provided", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( valuationSettingsLVB.size() == 0, "A curveCollection must be provided" );
 
         //LegName is specified
-        if (legName.size() != 0 && !legs_.exists(legName))
-        {
-            throw AQLCoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( legName.size() != 0 && !legs_.exists(legName), "Leg name does not exist in the swap" );
 
     }
    
@@ -223,15 +211,9 @@ namespace etrading
 	{
 	    double result = 0;
 
-        if (legName.size() == 0)
-        {
-           throw AQLCoreInvalidData( "#Error: Leg name must be provided", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( legName.size() == 0, "Leg name must be provided" );
 
-        if (!legs_.exists(legName)) 
-        {
-            throw AQLCoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !legs_.exists(legName), "Leg name does not exist in the swap" );
 
         for (size_t i = 0; i < legs_.size(); ++i)
         {
@@ -263,15 +245,9 @@ namespace etrading
 	{
 	    double ret = 0;
 
-        if (legName.size() == 0)
-        {
-           throw AQLCoreInvalidData( "#Error: Leg name must be provided", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( legName.size() == 0, "Leg name must be provided" );
 
-        if (!legs_.exists(legName)) 
-        {
-            throw AQLCoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !legs_.exists(legName), "Leg name does not exist in the swap" );
 
         for (size_t i = 0; i < legs_.size(); ++i)
         {
@@ -325,10 +301,7 @@ namespace etrading
             }
         }
 
-        if (matchingLegs.size() == 0)
-        {
-            throw AQLCoreInvalidData( "#Error: Cannot find matching leg name from the Swap", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( matchingLegs.size() == 0, "Cannot find matching leg name from the Swap" );
 
         //Display the matching legs
         std::vector<AnyTypeMatrix> swapView;
@@ -358,10 +331,7 @@ namespace etrading
 
 	std::vector<std::pair<AnyTypeMatrix, AnyTypeMatrix>> Swap::viewInputParameters() const
 	{
-		if(legs_.size() < 2)
-		{
-			throw AQLCoreInvalidData( "#Error: Swap should have at least two legs", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( legs_.size() < 2, "Swap should have at least two legs" );
 		
 		// Find the user-input key set from all legs
 		std::set<std::string> legKeys;
@@ -471,10 +441,7 @@ namespace etrading
 
 	const SchemaObject Swap::toSchemaObject() const
 	{
-		if(legs_.size() < 2)
-		{
-			throw AQLCoreInvalidData( "#Error: One of the legs is NOT set on the Swap", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( legs_.size() < 2, "One of the legs is NOT set on the Swap" );
 
 		SchemaObject schemaObject( SWAP_OBJECT, getRefToName());
 

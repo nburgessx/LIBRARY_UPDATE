@@ -14,7 +14,6 @@
 #include <string>
 #include <set>
 #include <algorithm>
-#include <boost/format.hpp>
 #include "ExceptionMacros.h"
 
 using etrading::CreateDataFile;
@@ -45,15 +44,15 @@ namespace validation
 		// Perform initial basic sanity checks
 		if ( aqObjCurveGeneratorName.size() == 0 )
 		{
-				throw AQLCoreInvalidData(	( "#Error: Missing aqObjCurveGenerator name" ), __FILE__, __LINE__ );
+				AQ_THROW( ( "Missing aqObjCurveGenerator name" ) );
 		}
 		if ( aqObjCurveMarketDataName.size() == 0 )
 		{
-				throw AQLCoreInvalidData(	( "#Error: Missing aqObjCurveMarketData name" ), __FILE__, __LINE__ );
+				AQ_THROW( ( "Missing aqObjCurveMarketData name" ) );
 		}
 		if ( domesticCurveCollection.size() == 0 )
 		{
-			throw AQLCoreInvalidData(	( "#Error: Missing domesticCurveCollection name" ), __FILE__, __LINE__ );
+			AQ_THROW( ( "Missing domesticCurveCollection name" ) );
 		}
 
 		// Create the Curve object and store in the cache

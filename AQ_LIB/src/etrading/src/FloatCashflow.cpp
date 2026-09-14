@@ -31,10 +31,7 @@ namespace etrading
 		const double oneBasisPoint = 0.0001;
 
 		const double floatRate = cashflowData.floatRateData.resetRate;
-        if (boost::math::isnan(floatRate))
-        {
-        	throw AQLCoreInvalidData( "#Error: floatRate is not set for the cashflow", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( boost::math::isnan(floatRate), "floatRate is not set for the cashflow" );
 
 		// If there is an overrided floatSpread, use it, otherwise use the floatSpread in the trade
 		double spreadToUse = !boost::math::isnan(cashflowData.floatSpreadOverride) ? cashflowData.floatSpreadOverride : spread_;
@@ -190,7 +187,7 @@ namespace etrading
 			case NONE_COMPOUNDING_METHOD:
 				break;
 			default:
-                throw AQLCoreInvalidData("#Error: CompoundingMethod must be 'GEOMETRIC', 'ARITHMETIC', 'FLAT', 'SIMPLE', or 'NONE'." ,__FILE__,__LINE__);
+                AQ_THROW( "CompoundingMethod must be 'GEOMETRIC', 'ARITHMETIC', 'FLAT', 'SIMPLE', or 'NONE'." );
 				break;
 		}
 

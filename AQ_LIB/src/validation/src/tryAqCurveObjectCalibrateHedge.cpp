@@ -38,15 +38,9 @@ namespace validation
 
 		AQ_RECORD_INPUTS( oisCurveObjectName, swapCurveObjectName, pricingCurveCollection, hedgeCurveCollection, oisCurveGeneratorName, oisCurveMarketDataName, swapCurveGeneratorName, swapCurveMarketDataName, swapGeneratorName );
 
-		if (oisCurveObjectName.empty() )
-		{
-			throw AQLCoreInvalidData("#Error: No OIS curve object name has been provided.",__FILE__,__LINE__);
-		}
+		AQ_THROW_IF( oisCurveObjectName.empty(), "No OIS curve object name has been provided." );
 
-		if (swapCurveObjectName.empty() )
-		{
-			throw AQLCoreInvalidData("#Error: No Swap curve object name has been provided.",__FILE__,__LINE__);
-		}
+		AQ_THROW_IF( swapCurveObjectName.empty(), "No Swap curve object name has been provided." );
 
 		// Initialise the hedge curve engine with curve generators and curve market data
 		etrading::HedgeCurveEngine hedgeCurveEngine( oisCurveGeneratorName, oisCurveMarketDataName, swapCurveGeneratorName, swapCurveMarketDataName );

@@ -1,7 +1,6 @@
 //
 // @Description: Implementation of SchemaObject
 
-#include <boost/format.hpp>
 #include <rapidjson/document.h>
 
 #include "ObjectUtilities.h"
@@ -74,7 +73,7 @@ namespace etrading
             {
                 for( unsigned int varCounter = 0u; varCounter < variableNames.size(); varCounter++ )
                 {
-                    std::string toAddHere = ( boost::format( ", \"%s\" : " ) % variableNames[varCounter].c_str() ).str();
+                    std::string toAddHere = ", \"" + variableNames[varCounter] + "\" : ";
                     const Variant& cv = variableValues[ varCounter ];
                     toAddHere += cv.toString( true );
                     startingString += toAddHere;
@@ -97,8 +96,8 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( ( boost::format( "serializeContainedData not implemented for serialization method: %s" )
-                                       % StaticStructureStore::getInstance().toString( method ).c_str() ).str() );
+            { std::ostringstream aqMsg222;
+aqMsg222 << "serializeContainedData not implemented for serialization method: " << StaticStructureStore::getInstance().toString( method ).c_str(); AQ_THROW( aqMsg222.str() ); }
         }
     };
 
@@ -120,8 +119,8 @@ namespace etrading
 
             if( columnsToSet.size() != columnsToReadFrom.size() )
             {
-                throw ETradingException( ( boost::format( "Size of DataSchema %s in absorbing object (%i) is different from same schema in absorbed object (%i)" )
-                                           % schemaNameToAbsorbFrom.c_str() % columnsToSet.size() % columnsToReadFrom.size() ).str() );
+                { std::ostringstream aqMsg223;
+aqMsg223 << "Size of DataSchema " << schemaNameToAbsorbFrom.c_str() << " in absorbing object (" << columnsToSet.size() << ") is different from same schema in absorbed object (" << columnsToReadFrom.size() << ")"; AQ_THROW( aqMsg223.str() ); }
             }
 
             for( unsigned int colCounter = 0; colCounter < columnsToSet.size(); colCounter++ )
@@ -149,8 +148,8 @@ namespace etrading
 
                     if( columnsToSet.size() != columnsToReadFrom.size() )
                     {
-                        throw ETradingException( ( boost::format( "Size of DataSchema %s in absorbing object (%i) is different from same schema in absorbed object (%i)" )
-                                                   % schemaNameToAbsorbFrom.c_str() % columnsToSet.size() % columnsToReadFrom.size() ).str() );
+                        { std::ostringstream aqMsg224;
+aqMsg224 << "Size of DataSchema " << schemaNameToAbsorbFrom.c_str() << " in absorbing object (" << columnsToSet.size() << ") is different from same schema in absorbed object (" << columnsToReadFrom.size() << ")"; AQ_THROW( aqMsg224.str() ); }
                     }
 
                     for( unsigned int colCounter = 0; colCounter < columnsToSet.size(); colCounter++ )
@@ -162,7 +161,8 @@ namespace etrading
                 }
                 else
                 {
-                    throw ETradingException( ( boost::format( "SchemaObject::absorbDataSchema was requested to absorb a data schema that was not available in the current object (%s)" ) % schemaNameToAbsorbFrom.c_str() ).str() );
+                    { std::ostringstream aqMsg225;
+aqMsg225 << "SchemaObject::absorbDataSchema was requested to absorb a data schema that was not available in the current object (" << schemaNameToAbsorbFrom.c_str() << ")"; AQ_THROW( aqMsg225.str() ); }
                 }
             }
         }

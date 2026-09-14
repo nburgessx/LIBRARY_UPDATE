@@ -84,10 +84,7 @@ namespace etrading
 
 			const std::string crvFreqTenor = validateCurveAndGetCurveFrequency(curveCollection_.c_str(), forecastCurve.c_str()).getCString();
 
-			if (!isOISOrARR && getFrequencyOrTenorMonth(crvFreqTenor.c_str()) != getFrequencyOrTenorMonth(toString(schParams->accrualFrequency()).c_str()))
-			{
-				throw AQLCoreInvalidData("#Error: Accrual Frequency is not the same as Curve Frequency.", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( !isOISOrARR && getFrequencyOrTenorMonth(crvFreqTenor.c_str()) != getFrequencyOrTenorMonth(toString(schParams->accrualFrequency()).c_str()), "Accrual Frequency is not the same as Curve Frequency." );
 
 			// *** Special treatment for OIS leg without compoundMethod: use leg's accrual freq instead of curve's freq to calculate Forward Rates
 			CurveTenorEnum curveFreqTenorOverride = NONE_CURVE_TENOR;
@@ -198,10 +195,7 @@ namespace etrading
 				else if (frontStub && irregularStub && i == 0 && curveIndicesSize > 1)
 				{
 					// If a front stub exists, has fixed already, is the current fixing and has not yet been paid out then the firstFixingRate must be provided
-					if (fixingDate < asOfDt && paymentDate >= asOfDt && !hasFirstFixing)
-					{
-						throw AQLCoreInvalidData("#Error: The float leg 'firstFixing' is required for the front stub rate.", __FILE__, __LINE__);
-					}
+					AQ_THROW_IF( fixingDate < asOfDt && paymentDate >= asOfDt && !hasFirstFixing, "The float leg 'firstFixing' is required for the front stub rate." );
 
 					floatRate = calculateStubRate(firstStubCurveIndex, curveIndices, curveTenors, crvFreqTenor, interpolation, schParams, schOutput);
 				}
@@ -218,10 +212,7 @@ namespace etrading
 					// Therefore throw and error to request the fix be input by the end user. T
 
 					// If a back stub exists, has fixed already, is the current fixing and has not yet been paid out then the lastFixingRate must be provided
-					if (fixingDate <= asOfDt && paymentDate >= asOfDt && !hasLastFixing && !hasFirstFixing)
-					{
-						throw AQLCoreInvalidData("#Error: The float leg 'lastFixing' is required for the back stub rate.", __FILE__, __LINE__);
-					}
+					AQ_THROW_IF( fixingDate <= asOfDt && paymentDate >= asOfDt && !hasLastFixing && !hasFirstFixing, "The float leg 'lastFixing' is required for the back stub rate." );
 
 					floatRate = calculateStubRate(lastStubCurveIndex, curveIndices, curveTenors, crvFreqTenor, interpolation, schParams, schOutput);
 				}
@@ -249,10 +240,7 @@ namespace etrading
 
 		// Get the equivalent rate of each accrual period. 
 		// The equivalent rate is obtained either through daily compounding over this period or finding the arithmetic average.
-		if (schParams->accrualbusinessDayAdj() == NONE_BUSINESS_DAY_ADJ || schParams->accrualCalendar().size() == 0)
-		{
-			throw AQLCoreInvalidData("#Error: OIS average rate cannot be calculated without AccrualbusinessDayAdj or AccrualCalendar, please update the float leg schedule", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( schParams->accrualbusinessDayAdj() == NONE_BUSINESS_DAY_ADJ || schParams->accrualCalendar().size() == 0, "OIS average rate cannot be calculated without AccrualbusinessDayAdj or AccrualCalendar, please update the float leg schedule" );
 
 		const size_t expectedSize = fixingEndDates.size();
 

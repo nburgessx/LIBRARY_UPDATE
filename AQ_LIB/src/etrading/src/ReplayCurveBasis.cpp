@@ -29,30 +29,15 @@ namespace etrading
 
         // 2. Check Test Parameters
         // ------------------------
-        if( ( fwdFXs.empty() && basisRates.empty() ) || basisConv.empty() || generalProps.empty() )
-        {
-            throw AQLCoreInvalidData( "BasisRates, BasisConv and / or GeneralProps Matrices are empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ( fwdFXs.empty() && basisRates.empty() ) || basisConv.empty() || generalProps.empty(), "BasisRates, BasisConv and / or GeneralProps Matrices are empty" );
 
-        if( ( fwdFXs.empty() && 2 > basisRates[0].size() ) || 2 > basisConv[0].size() || 2 > generalProps[0].size() )
-        {
-            throw AQLCoreInvalidData( "BasisRates, BasisConv and / or GeneralProps Matrices column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ( fwdFXs.empty() && 2 > basisRates[0].size() ) || 2 > basisConv[0].size() || 2 > generalProps[0].size(), "BasisRates, BasisConv and / or GeneralProps Matrices column size must be 2" );
 
-        if ( !fwdFXs.empty() && fwdFXs[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "FwdFX Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !fwdFXs.empty() && fwdFXs[0].size() < 2, "FwdFX Matrix column size must be 2" );
 
-        if ( !fwdConv.empty() && fwdConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "FwdConv Matrix column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !fwdConv.empty() && fwdConv[0].size() < 2, "FwdConv Matrix column size must be 2" );
 
-        if ( !spotFXs.empty() && spotFXs[0].size() < 3 )
-        {
-            throw AQLCoreInvalidData( "SpotFX Matrix column size must be 3", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !spotFXs.empty() && spotFXs[0].size() < 3, "SpotFX Matrix column size must be 3" );
 
         // 3. Build the Basis Curve
         // ----------------------

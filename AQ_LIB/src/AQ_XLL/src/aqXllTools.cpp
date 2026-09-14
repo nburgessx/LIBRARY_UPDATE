@@ -4,6 +4,8 @@
 
 #include <aqXllTools.h>
 
+#include "ExceptionMacros.h"
+
 #include <xloil/ExcelArray.h>
 #include <xloil/ArrayBuilder.h>
 #include <xloil/ExcelCall.h>
@@ -110,8 +112,8 @@ namespace aq_xll
         {
             if ( cell->isType( xloil::ExcelType::Err ) )
             {
-                const std::string message = "#Error: Invalid Vector Input: " + nameOfVariable + " date input required";
-                throw AQLCoreInvalidData( message.c_str(), __FILE__, __LINE__ );
+                const std::string message = "Invalid Vector Input: " + nameOfVariable + " date input required";
+                AQ_THROW( message );
             }
         }
 
@@ -186,8 +188,8 @@ namespace aq_xll
         {
             if ( cell->isType( xloil::ExcelType::Err ) )
             {
-                const std::string message = "#Error: Invalid Vector Input: " + nameOfVariable + " numeric input required";
-                throw AQLCoreInvalidData( message.c_str(), __FILE__, __LINE__ );
+                const std::string message = "Invalid Vector Input: " + nameOfVariable + " numeric input required";
+                AQ_THROW( message );
             }
         }
 
@@ -241,8 +243,8 @@ namespace aq_xll
 
             if ( !parsed )
             {
-                const std::string message = "#Error: Invalid Vector Input: " + nameOfVariable + " numeric input required";
-                throw AQLCoreInvalidData( message.c_str(), __FILE__, __LINE__ );
+                const std::string message = "Invalid Vector Input: " + nameOfVariable + " numeric input required";
+                AQ_THROW( message );
             }
         }
 
@@ -598,7 +600,7 @@ namespace aq_xll
 
                 if ( cell.isType( xloil::ExcelType::Err ) )
                 {
-                    throw AQLCoreInvalidData( "#Error: cell contains an error value", __FILE__, __LINE__ );
+                    AQ_THROW( "cell contains an error value" );
                 }
 
                 const std::string text = cell.isNonEmpty() ? toNarrowString( cell ) : std::string();
@@ -691,7 +693,7 @@ namespace aq_xll
                 const xloil::ExcelObj& cell = at( r, c );
                 if ( cell.isType( xloil::ExcelType::Err ) )
                 {
-                    throw AQLCoreInvalidData( "#Error: generator block contains an error value", __FILE__, __LINE__ );
+                    AQ_THROW( "generator block contains an error value" );
                 }
                 const std::string text = cell.isNonEmpty() ? toNarrowString( cell ) : std::string();
                 column.push_back( etrading::Variant( text.c_str() ) );

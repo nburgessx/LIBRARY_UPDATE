@@ -244,30 +244,12 @@ namespace validation
         // Record Inputs for logs, tests and playback
 		AQ_RECORD_INPUTS( curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency, fwdInterps);
 
-		if ( curveCollection.size() == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: No curve collection have been provided.",__FILE__,__LINE__);
-		}
-		if (curveIndices.empty() )
-		{
-			throw AQLCoreInvalidData("#Error: No curve indices have been provided.",__FILE__,__LINE__);
-		}
-		if ( maturity.size() == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: No maturity tenor has been provided.",__FILE__,__LINE__);
-		}
-		if ( businessDayAdjust.size() == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: No business day adjustment has been provided.",__FILE__,__LINE__);
-		}
-		if ( rollConvention.size() == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: No roll convention has been provided.",__FILE__,__LINE__);
-		}
-		if ( frequency.size() == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: No frequency has been provided.",__FILE__,__LINE__);
-		}
+		AQ_THROW_IF( curveCollection.size() == 0, "No curve collection have been provided." );
+		AQ_THROW_IF( curveIndices.empty(), "No curve indices have been provided." );
+		AQ_THROW_IF( maturity.size() == 0, "No maturity tenor has been provided." );
+		AQ_THROW_IF( businessDayAdjust.size() == 0, "No business day adjustment has been provided." );
+		AQ_THROW_IF( rollConvention.size() == 0, "No roll convention has been provided." );
+		AQ_THROW_IF( frequency.size() == 0, "No frequency has been provided." );
 
 		// Calculate the forward rates
         etrading::getForwardRatesForCurveIndices( fixingDates, forwardRates, curveCollection, curveIndices, startDate, maturity, etrading::toBusinessDayAdjustmentEnum(businessDayAdjust.getCString()), calendar, rollConvention, frequency, fwdInterps);

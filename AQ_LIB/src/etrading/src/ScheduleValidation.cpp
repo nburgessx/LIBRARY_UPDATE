@@ -155,10 +155,7 @@ namespace etrading
         AQLString maturityDateString      = swapLVB.getCompulsoryValueAsAQLString( IRS_KEY::MATURITY_DATE, inputLVB );
         AQLDate maturityDate	             = validateMaturityDate( effectiveDate, maturityDateString);
 
-        if ( maturityDate < effectiveDate )
-        {
-            throw AQLCoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( maturityDate < effectiveDate, "The swap maturity date cannot be before the swap start date" );
 
 
         AQLString fixedPayLag( fixedLegPayLag );
@@ -176,10 +173,7 @@ namespace etrading
         if( fixedLegFirstStubDate.size() != 0 && fixedLegFirstStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( fixedLegStubType.size() != 0 && AQLString( fixedLegStubType ).toUpper() != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( fixedLegStubType.size() != 0 && AQLString( fixedLegStubType ).toUpper() != "NONE", "Fixed Leg cannot have both the StubType and First- or LastStubDate specified." );
 
             fixedAccrualTempFirst = stringToDate( fixedLegFirstStubDate, "#Error: Invalid fixed leg 'FirstStubDate'." );
             fixedAccrualFirstOddDate = &fixedAccrualTempFirst;
@@ -188,10 +182,7 @@ namespace etrading
         if( fixedLegLastStubDate.size() != 0 && fixedLegLastStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( fixedLegStubType.size() != 0 && ( AQLString( fixedLegStubType ).toUpper() ) != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( fixedLegStubType.size() != 0 && ( AQLString( fixedLegStubType ).toUpper() ) != "NONE", "Fixed Leg cannot have both the StubType and First- or LastStubDate specified." );
 
             fixedAccrualTempLast = stringToDate( fixedLegLastStubDate, "#Error: Invalid fixed leg 'LastStubDate'." );
             fixedAccrualLastOddDate = & fixedAccrualTempLast;
@@ -244,10 +235,7 @@ namespace etrading
         if( floatLegFirstStubDate.size() != 0 && floatLegFirstStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE", "Float Leg cannot have both the StubType and First- or LastStubDate specified." );
 
             floatAccrualTempFirst = stringToDate( floatLegFirstStubDate, "#Error: Invalid floating leg 'FirstStubDate'." );
             floatAccrualFirstOddDate    = & floatAccrualTempFirst;
@@ -256,10 +244,7 @@ namespace etrading
         if( floatLegLastStubDate.size() != 0 && floatLegLastStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE", "Float Leg cannot have both the StubType and First- or LastStubDate specified." );
 
             floatAccrualTempLast = stringToDate( floatLegLastStubDate, "#Error: Invalid floating leg 'LastStubDate'." );
             floatAccrualLastOddDate     = & floatAccrualTempLast;
@@ -571,10 +556,7 @@ namespace etrading
         if( fixedLegFirstStubDate.size() != 0 && fixedLegFirstStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( fixedLegStubType.size() != 0 && AQLString( fixedLegStubType ).toUpper() != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( fixedLegStubType.size() != 0 && AQLString( fixedLegStubType ).toUpper() != "NONE", "Fixed Leg cannot have both the StubType and First- or LastStubDate specified." );
 
             fixedAccrualTempFirst = stringToDate( fixedLegFirstStubDate, "#Error: Invalid fixed leg 'FirstStubDate'." );
             fixedAccrualFirstOddDate = &fixedAccrualTempFirst;
@@ -583,10 +565,7 @@ namespace etrading
         if( fixedLegLastStubDate.size() != 0 && fixedLegLastStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( fixedLegStubType.size() != 0 && ( AQLString( fixedLegStubType ).toUpper() ) != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( fixedLegStubType.size() != 0 && ( AQLString( fixedLegStubType ).toUpper() ) != "NONE", "Fixed Leg cannot have both the StubType and First- or LastStubDate specified." );
 
             fixedAccrualTempLast = stringToDate( fixedLegLastStubDate, "#Error: Invalid fixed leg 'LastStubDate'." );
             fixedAccrualLastOddDate = & fixedAccrualTempLast;
@@ -606,10 +585,7 @@ namespace etrading
         AQLDate effectiveDate    = stringToDate( effectiveDateString, "#Error: Invalid 'EffectiveDate'" );
         AQLDate maturityDate	    = validateMaturityDate( effectiveDate, maturityDateString);
 
-        if ( maturityDate < effectiveDate )
-        {
-            throw AQLCoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( maturityDate < effectiveDate, "The swap maturity date cannot be before the swap start date" );
 
         // For Asset Swaps if the issue Date is not provided use the effectiveDate
         if ( isAssetSwap && issueDate == AQLDate() )
@@ -671,19 +647,13 @@ namespace etrading
         int nFixedAccrualDates = fixedAccrualDates.size() - 1;
         for( int i = 1; i < nFixedAccrualDates; i++ )
         {
-            if( fixedAccrualDates[i - 1] >= fixedAccrualDates[i] )
-            {
-                throw AQLCoreInvalidData( "#Error: Invalid Dates Generated. Fixed Leg Accrual Dates must be in ascending order.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( fixedAccrualDates[i - 1] >= fixedAccrualDates[i], "Invalid Dates Generated. Fixed Leg Accrual Dates must be in ascending order." );
         }
 
         int nFixedPaymentDates = fixedPaymentDates.size() - 1;
         for( int i = 1; i < nFixedPaymentDates; i++ )
         {
-            if( fixedPaymentDates[i - 1] > fixedPaymentDates[i] )
-            {
-                throw AQLCoreInvalidData( "#Error: Invalid Dates Generated. Fixed Leg Payment Dates must be in ascending order.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( fixedPaymentDates[i - 1] > fixedPaymentDates[i], "Invalid Dates Generated. Fixed Leg Payment Dates must be in ascending order." );
         }
     }
 
@@ -767,10 +737,7 @@ namespace etrading
         if( floatLegFirstStubDate.size() != 0 && floatLegFirstStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE", "Float Leg cannot have both the StubType and First- or LastStubDate specified." );
 
             floatAccrualTempFirst = stringToDate( floatLegFirstStubDate, "#Error: Invalid floating leg 'FirstStubDate'." );
             floatAccrualFirstOddDate    = & floatAccrualTempFirst;
@@ -779,10 +746,7 @@ namespace etrading
         if( floatLegLastStubDate.size() != 0 && floatLegLastStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE", "Float Leg cannot have both the StubType and First- or LastStubDate specified." );
 
             floatAccrualTempLast = stringToDate( floatLegLastStubDate, "#Error: Invalid floating leg 'LastStubDate'." );
             floatAccrualLastOddDate     = & floatAccrualTempLast;
@@ -802,10 +766,7 @@ namespace etrading
         AQLDate effectiveDate    = stringToDate( effectiveDateString, "#Error: Invalid 'EffectiveDate'" );
         AQLDate maturityDate	    = validateMaturityDate( effectiveDate, maturityDateString);
 
-        if ( maturityDate < effectiveDate )
-        {
-            throw AQLCoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( maturityDate < effectiveDate, "The swap maturity date cannot be before the swap start date" );
 
         //
         // Generate the roll day conventions and ensure output roll parameters are initialized
@@ -867,28 +828,19 @@ namespace etrading
         int nFloatAccrualDates = floatAccrualDates.size() - 1;
         for( int i = 1; i < nFloatAccrualDates; i++ )
         {
-            if( floatAccrualDates[i - 1] >= floatAccrualDates[i] )
-            {
-                throw AQLCoreInvalidData( "#Error: Invalid Dates Generated. Floating Leg Accrual Dates must be in ascending order", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( floatAccrualDates[i - 1] >= floatAccrualDates[i], "Invalid Dates Generated. Floating Leg Accrual Dates must be in ascending order" );
         }
 
         int nFloatFixingDates = floatFixingDates.size() - 1;
         for( int i = 1; i < nFloatFixingDates; i++ )
         {
-            if( floatFixingDates[i - 1] > floatFixingDates[i] )
-            {
-                throw AQLCoreInvalidData( "#Error: Invalid Dates Generated. Floating Leg Fixing Dates must be in ascending order", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( floatFixingDates[i - 1] > floatFixingDates[i], "Invalid Dates Generated. Floating Leg Fixing Dates must be in ascending order" );
         }
 
         int nFloatPaymentDates = floatPaymentDates.size() - 1;
         for( int i = 1; i < nFloatPaymentDates; i++ )
         {
-            if( floatPaymentDates[i - 1] > floatPaymentDates[i] )
-            {
-                throw AQLCoreInvalidData( "#Error: Invalid Dates Generated. Floating Leg Payment Dates must be in ascending order", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( floatPaymentDates[i - 1] > floatPaymentDates[i], "Invalid Dates Generated. Floating Leg Payment Dates must be in ascending order" );
         }
     }
 
@@ -903,10 +855,7 @@ namespace etrading
     {
         etrading::AQLCurveForwardRateHelpers::validateAndGenerateAccrualStartAndEndDates(accrualStartDates, accrualEndDates, combinedAccrualDates);
 
-		if (accrualStartDates.size() != accrualEndDates.size())
-		{
-			throw AQLCoreInvalidData("#Error: Invalid Input, the accrualStartDates and accrualEndDates must have the same size.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( accrualStartDates.size() != accrualEndDates.size(), "Invalid Input, the accrualStartDates and accrualEndDates must have the same size." );
 
     }
 
@@ -935,10 +884,7 @@ namespace etrading
 
             AQLString term = etrading::fromFrequencyToTerm( frequency );
 
-            if( firstStubDtPtr != nullptr || lastStubDtPtr != nullptr )
-            {
-                throw AQLCoreInvalidData( "#Error: Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( firstStubDtPtr != nullptr || lastStubDtPtr != nullptr, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." );
 
             if ( stubType == SHORT_START_STUBTYPE )
             {
@@ -968,7 +914,7 @@ namespace etrading
             }
             else
             {
-                throw AQLCoreInvalidData( "#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__ );
+                AQ_THROW( "Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE)." );
             }
         }
 
@@ -990,7 +936,7 @@ namespace etrading
 			if (dates[i - 1] > dates[i] || (!allowEqual && dates[i - 1] == dates[i] ))
             {
 				ss << "#Error: Invalid " << dateName << " Generated. Dates must be in ascending order.";
-				throw AQLCoreInvalidData( ss.str().c_str(), __FILE__, __LINE__ );
+				AQ_THROW( ss.str().c_str() );
 			}
         }
 	}
@@ -1042,10 +988,7 @@ namespace etrading
         validateStringEmptiness(    paymentCalendar,	            "#Error: 'Payment Calendar' must be specified." );
 
 
-        if ( maturityDate < effectiveDate )
-        {
-            throw AQLCoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( maturityDate < effectiveDate, "The swap maturity date cannot be before the swap start date" );
 
         AQLString payLag(paymentLag);
         if ( payLag.size() == 0 )
@@ -1062,10 +1005,7 @@ namespace etrading
         if( firstStubDate.size() != 0 )
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( stubType.size() != 0 && AQLString( stubType ).toUpper() != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( stubType.size() != 0 && AQLString( stubType ).toUpper() != "NONE", "Cannot have both the StubType and First- or LastStubDate specified." );
 
             accrualTempFirst = stringToDate( firstStubDate, "#Error: Invalid 'FirstStubDate'." );
             accrualFirstOddDate = &accrualTempFirst;
@@ -1074,10 +1014,7 @@ namespace etrading
         if( lastStubDate.size() != 0 )
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( stubType.size() != 0 && ( AQLString( stubType ).toUpper() ) != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( stubType.size() != 0 && ( AQLString( stubType ).toUpper() ) != "NONE", "Cannot have both the StubType and First- or LastStubDate specified." );
 
             accrualTempLast = stringToDate( lastStubDate, "#Error: Invalid 'LastStubDate'." );
             accrualLastOddDate = & accrualTempLast;
@@ -1252,10 +1189,7 @@ namespace etrading
 	*/
 	std::vector<AQLDate> combineAccrualStartAndEndDates(const std::vector<AQLDate>& accrualStartDates, const std::vector<AQLDate>& accrualEndDates)
 	{
-		if (accrualStartDates.size() == 0 || accrualEndDates.size() == 0)
-		{
-		   throw AQLCoreInvalidData( "#Error: Accrual Start Dates and End Dates cannot be empty", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( accrualStartDates.size() == 0 || accrualEndDates.size() == 0, "Accrual Start Dates and End Dates cannot be empty" );
 		std::vector<AQLDate> accrualDates(accrualStartDates);
 		accrualDates.push_back(accrualEndDates.back());
 		return accrualDates;
@@ -1311,10 +1245,7 @@ namespace etrading
 	DoubleMatrix transpose( const DoubleMatrix& input )
 	{
 		size_t rowSize = input.size();
-        if ( rowSize == 0)
-		{
-	        throw AQLCoreInvalidData( "#Error: Data Validation - input matrix is empty.", __FILE__, __LINE__ );
-		}
+        AQ_THROW_IF( rowSize == 0, "Data Validation - input matrix is empty." );
 
         // Only allow Rectangular Matrices, we do not support jagged matrices here
         size_t columnSize = input[0].size();
@@ -1471,10 +1402,7 @@ namespace etrading
 	std::vector< std::vector<T> > transpose( const std::vector< std::vector<T> >& input )
 	{
 		size_t rowSize = input.size();
-        if ( rowSize == 0 )
-		{
-	        throw AQLCoreInvalidData( "#Error: Data Validation - input matrix is empty.", __FILE__, __LINE__ );
-		}
+        AQ_THROW_IF( rowSize == 0, "Data Validation - input matrix is empty." );
         
         // Only allow Rectangular Matrices, we do not support jagged matrices here
         size_t columnSize = input[0].size();
@@ -1504,10 +1432,7 @@ namespace etrading
 	std::vector< std::vector<T> > transpose(const std::vector< std::vector<T> >& input, const bool padIfInputIsRagged )
 	{
 		size_t rowSize = input.size();
-		if (rowSize == 0)
-		{
-			throw AQLCoreInvalidData("#Error: Data Validation - input matrix is empty.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( rowSize == 0, "Data Validation - input matrix is empty." );
 
 		// Determine the number of columns in each row
 		size_t maxColumnSize = input[0].size();
@@ -1525,7 +1450,7 @@ namespace etrading
 				}
 				else
 				{
-					throw AQLCoreInvalidData("#Error: Data Validation - only rectangular matrices supported. Data rows and columns must be of the same size.", __FILE__, __LINE__);
+					AQ_THROW( "Data Validation - only rectangular matrices supported. Data rows and columns must be of the same size." );
 				}
 			}
 		}
@@ -2050,7 +1975,7 @@ namespace etrading
 		}
 		else
 		{
-			throw AQLCoreInvalidData("#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__);
+			AQ_THROW( "Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE)." );
 		}
 	}
 
@@ -2062,10 +1987,7 @@ namespace etrading
 		DateVector fixingEndDates;
 		fixingEndDates.reserve(accrualEndDates.size());
 
-		if (!etrading::AQLCurveForwardRateHelpers::isFixingInAdvance(fixingAdvanceOrArrears.c_str()))
-		{
-			throw AQLCoreInvalidData("#Error: For OIS Swap, fixing in arrears is not supported.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !etrading::AQLCurveForwardRateHelpers::isFixingInAdvance(fixingAdvanceOrArrears.c_str()), "For OIS Swap, fixing in arrears is not supported." );
 
 		fixingEndDates = validateAndGenerateFixingSchedule(accrualDates,
 			toString(fixingbusinessDayAdj).c_str(),

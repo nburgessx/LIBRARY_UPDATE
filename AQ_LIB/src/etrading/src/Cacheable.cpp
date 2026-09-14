@@ -3,7 +3,6 @@
 #include <utility>
 #include <algorithm>
 #include <boost/foreach.hpp>
-#include <boost/format.hpp>
 #include <boost/range/algorithm_ext/push_back.hpp>
 
 #include "Cacheable.h"

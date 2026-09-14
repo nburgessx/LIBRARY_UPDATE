@@ -61,15 +61,9 @@ namespace etrading
         fixedPaymentBusinessDayAdjustment_      = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FIXED_PAYMENTBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment_ );
         fixedPaymentCalendar_	                = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FIXED_PAYMENTCALENDAR,                 fixedCalendar_              );
 
-        if ( fixedAccrualBusinessDayAdjustment_.size() == 0 || fixedPaymentBusinessDayAdjustment_.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'FixedBusinessDayAdjustment' must be specified.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fixedAccrualBusinessDayAdjustment_.size() == 0 || fixedPaymentBusinessDayAdjustment_.size() == 0, "'FixedBusinessDayAdjustment' must be specified." );
 
-        if ( fixedAccrualCalendar_.size() == 0 || fixedPaymentCalendar_.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'FixedCelendar' must be specified.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fixedAccrualCalendar_.size() == 0 || fixedPaymentCalendar_.size() == 0, "'FixedCelendar' must be specified." );
 
         //-------------------------------------
         // Float leg parameters
@@ -104,15 +98,9 @@ namespace etrading
         floatPaymentBusinessDayAdjustment_      = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FLOAT_PAYMENTBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment_ );
         floatPaymentCalendar_	                = swapLVB.getOptionalValueAsAQLString(       IRS_KEY::FLOAT_PAYMENTCALENDAR,                 floatCalendar_              );
 
-        if ( floatFixingBusinessDayAdjustment_.size() == 0 || floatAccrualBusinessDayAdjustment_.size() == 0 || floatPaymentBusinessDayAdjustment_.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'FloatBusinessDayAdjustment' must be specified.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( floatFixingBusinessDayAdjustment_.size() == 0 || floatAccrualBusinessDayAdjustment_.size() == 0 || floatPaymentBusinessDayAdjustment_.size() == 0, "'FloatBusinessDayAdjustment' must be specified." );
 
-        if ( floatFixingCalendar_.size() == 0 || floatAccrualCalendar_.size() == 0 || floatPaymentCalendar_.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'FloatCalendar' must be specified.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( floatFixingCalendar_.size() == 0 || floatAccrualCalendar_.size() == 0 || floatPaymentCalendar_.size() == 0, "'FloatCalendar' must be specified." );
 
         // Generate the Swap Schedule
         // --------------------------
@@ -165,15 +153,9 @@ namespace etrading
         forecastCurve_	= marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::FORECAST_CURVE, "CurveCollections", false );
         discountCurve_	= marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::DISCOUNT_CURVE, "CurveCollections", false );
 
-        if ( forecastCurve_.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Forecast curve has not been specified for PV", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( forecastCurve_.size() == 0, "Forecast curve has not been specified for PV" );
 
-        if ( discountCurve_.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Discount curve has not been specified for PV", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( discountCurve_.size() == 0, "Discount curve has not been specified for PV" );
     }
 
     /* @brief		Set interpolation for pricing

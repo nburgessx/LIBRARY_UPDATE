@@ -12,15 +12,9 @@ namespace etrading
 	{
 		validateLegs(leg1, leg2);
 
-        if ( leg1->getStaticData()->getCurrency() == leg2->getStaticData()->getCurrency() )
-        {
-  		    throw AQLCoreInvalidData( "#Error: Invalid Xccy Swap: Leg Notionals are in the same currency", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( leg1->getStaticData()->getCurrency() == leg2->getStaticData()->getCurrency(), "Invalid Xccy Swap: Leg Notionals are in the same currency" );
 
-        if (boost::math::isnan(leg1->getSchedule()->getNotional()) || boost::math::isnan(leg2->getSchedule()->getNotional()))
-        {
-    		throw AQLCoreInvalidData( "#Error: Invalid Xccy Swap Notional(s)", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( boost::math::isnan(leg1->getSchedule()->getNotional()) || boost::math::isnan(leg2->getSchedule()->getNotional()), "Invalid Xccy Swap Notional(s)" );
 
         //Handle XccySwap properties
         populateAndValidateXccySwapStaticDataObject(leg1, leg2, swapPropertiesLVB);
@@ -86,11 +80,8 @@ namespace etrading
 
         AQ_REQUIRE( valuationCurrency_ != NO_CCY, "Missing Valuation Currency - For Xccy Swap valuation currency is required" )
 
-        if ( (valuationCurrency_ != leg1->getStaticData()->getCurrency()) 
-                    && (valuationCurrency_ != leg2->getStaticData()->getCurrency()))
-        {
-  		    throw AQLCoreInvalidData( "#Error: Invalid Valuation Currency, For Xccy Swaps valuationCurrency must be one of the swap legs' currencies", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( (valuationCurrency_ != leg1->getStaticData()->getCurrency()) 
+                    && (valuationCurrency_ != leg2->getStaticData()->getCurrency()), "Invalid Valuation Currency, For Xccy Swaps valuationCurrency must be one of the swap legs' currencies" );
 
 		// 1) Clear the Notional Reset Leg Name if specified on a non-MtM Xccy Swap (only required for MtM Xccy Swaps)
 		if( !isMTM_ )
@@ -101,10 +92,7 @@ namespace etrading
         if (notionalResetLegName_.size() != 0)
         {
             // 2) notionalResetLeg provided and MTM true, check if the legName is valid 
-            if (!same(leg1->getLegName(), notionalResetLegName_) && !same(leg2->getLegName(), notionalResetLegName_))  
-            {
-           		throw AQLCoreInvalidData( "#Error: Invalid Xccy Swap Notional Reset Leg: The NotionalFxResetLeg must match one of the swap legs", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( !same(leg1->getLegName(), notionalResetLegName_) && !same(leg2->getLegName(), notionalResetLegName_), "Invalid Xccy Swap Notional Reset Leg: The NotionalFxResetLeg must match one of the swap legs" );
         }
         else
         {
@@ -123,10 +111,7 @@ namespace etrading
 
                 notionalResetLegName_ = defaultNotionalResetLeg;
 
-                if (notionalResetLegName_.size() == 0)
-                {
-               	    throw AQLCoreInvalidData( "#Error: Invalid Xccy Swap Notional Reset Leg: For MTM XCCY Swaps we must specify a NotionalResetLeg", __FILE__, __LINE__ );
-                }
+                AQ_THROW_IF( notionalResetLegName_.size() == 0, "Invalid Xccy Swap Notional Reset Leg: For MTM XCCY Swaps we must specify a NotionalResetLeg" );
             }
             else
             {
@@ -144,10 +129,7 @@ namespace etrading
 
 		for (size_t i = 0; i < legs_.size(); ++i)
 		{
-			if (getAQObjCurveCollectionFromValuationSettings(valuationSettingsLVB, legs_.get(i)->getLegName()).size() == 0)
-			{
-				throw AQLCoreInvalidData("#Error: Invalid Valuation Settings: For Xccy Swaps the number of Valuation Settings blocks must match the number of trade legs", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( getAQObjCurveCollectionFromValuationSettings(valuationSettingsLVB, legs_.get(i)->getLegName()).size() == 0, "Invalid Valuation Settings: For Xccy Swaps the number of Valuation Settings blocks must match the number of trade legs" );
 
 		}
 

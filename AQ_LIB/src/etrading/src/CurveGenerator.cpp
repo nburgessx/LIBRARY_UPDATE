@@ -5,7 +5,6 @@
 
 #include <vector>
 #include <string>
-#include <boost/format.hpp>
 #include <boost/foreach.hpp>
 
 
@@ -164,7 +163,8 @@ namespace etrading
             // Check Format
             if (tokens.size() != 2)
 			{
-				throw AQLCoreInvalidData( ( boost::format( "#Error: Invalid format of property key: Expecting 'PROPERTYNAME:KEYNAME', but found '%s'. " ) % key ).str().c_str() , __FILE__, __LINE__ );
+				{ std::ostringstream aqCoreMsg3;
+aqCoreMsg3 << "Invalid format of property key: Expecting 'PROPERTYNAME:KEYNAME', but found '" << key << "'. "; AQ_THROW( aqCoreMsg3.str() ); }
 			}
 			
             const std::string requiredPropertyName = tokens[0].getCString();
@@ -191,9 +191,8 @@ namespace etrading
 			}
 			else
 			{
-				throw AQLCoreInvalidData( ( boost::format( "#Error: Base CurveGenerator '%s' does not contain property name '%s'. " ) 
-					% baseCurveGenerator.getRefToName()
-					% requiredPropertyName ).str().c_str() , __FILE__, __LINE__ );
+				{ std::ostringstream aqCoreMsg4;
+aqCoreMsg4 << "Base CurveGenerator '" << baseCurveGenerator.getRefToName() << "' does not contain property name '" << requiredPropertyName << "'. "; AQ_THROW( aqCoreMsg4.str() ); }
 			}
 		}
 	}

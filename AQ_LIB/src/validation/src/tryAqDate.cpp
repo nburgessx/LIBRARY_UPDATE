@@ -272,10 +272,7 @@ namespace validation
                                                                                holidayCentre,       // Calendar
                                                                                nullptr );           // RollConvention
         
-        if ( adjustedDate.size() < 1 )
-        {
-            throw AQLCoreInvalidData( "#Error: Unable to verify if the date is a holiday. Please check if holiday centre is correct.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( adjustedDate.size() < 1, "Unable to verify if the date is a holiday. Please check if holiday centre is correct." );
 
         // If the adjusted date is not equal to our initial start date then we have identified a holiday
         bool isWorkingDay = true;
@@ -323,10 +320,7 @@ namespace validation
                                                                                    holidayCentre,       // Calendar
                                                                                    nullptr );           // RollConvention
         
-            if ( adjustedDate.size() < 1 )
-            {
-                throw AQLCoreInvalidData( "#Error: Unable to verify if the date is a holiday. Please check if holiday centre is correct.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( adjustedDate.size() < 1, "Unable to verify if the date is a holiday. Please check if holiday centre is correct." );
 
             // If the adjusted date is not equal to our initial start date then we have identified a holiday, provided the original date is not a weekend
             if ( date != adjustedDate[0] && !isOriginalDateWeekend )

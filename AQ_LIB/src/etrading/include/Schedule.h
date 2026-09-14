@@ -206,7 +206,7 @@ namespace etrading
 				break;
 			}
 			default:
-				throw AQLCoreInvalidData("#Error: bespokeScheduleType can only be either 'BESPOKE_SCHEDULE_WITH_PROPERTIES' or 'BESPOKE_SCHEDULE'", __FILE__, __LINE__);
+				AQ_THROW( "bespokeScheduleType can only be either 'BESPOKE_SCHEDULE_WITH_PROPERTIES' or 'BESPOKE_SCHEDULE'" );
 				break;
 			}
 		};

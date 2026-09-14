@@ -65,10 +65,7 @@ namespace
 
         AQLDate maturityDate	                    = etrading::validateMaturityDate( effectiveDate, maturityDateString);
 
-        if ( maturityDate < effectiveDate )
-        {
-            throw AQLCoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( maturityDate < effectiveDate, "The swap maturity date cannot be before the swap start date" );
         //----------------------------------------
         
         AQLString stubTypeTmp( stubType );
@@ -84,18 +81,12 @@ namespace
         AQLDate tempFirst;
         AQLDate tempLast;
 
-        if( firstStubDate.size() != 0 && lastStubDate.size() != 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Don't support setting FirstStub and LastStub at the same time. Function won't know which stubType period to calculate stubType rate for.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( firstStubDate.size() != 0 && lastStubDate.size() != 0, "Don't support setting FirstStub and LastStub at the same time. Function won't know which stubType period to calculate stubType rate for." );
 
         if( firstStubDate.size() != 0 )
         {
             // Client should not specify both the stubType type and the first- and lastStubDates
-            if( stubType.size() != 0 && ( AQLString( stubType ).toUpper() ) != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( stubType.size() != 0 && ( AQLString( stubType ).toUpper() ) != "NONE", "Float Leg cannot have both the StubType and First- or LastStubDate specified." );
 
             tempFirst       = etrading::stringToDate( firstStubDate, "#Error: Invalid 'FirstStubDate'." );
             firstOddDate    = & tempFirst;
@@ -104,10 +95,7 @@ namespace
         else if( lastStubDate.size() != 0 )
         {
             // Client should not specify both the stubType type and the first- and lastStubDates
-            if( stubType.size() != 0 && ( AQLString( stubType ).toUpper() ) != "NONE" )
-            {
-                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( stubType.size() != 0 && ( AQLString( stubType ).toUpper() ) != "NONE", "Float Leg cannot have both the StubType and First- or LastStubDate specified." );
 
             tempLast        = etrading::stringToDate( lastStubDate, "#Error: Invalid 'LastStubDate'." );
             lastOddDate     = & tempLast;

@@ -75,7 +75,7 @@ namespace validation
 			break;
 		}
 		default:
-			throw AQLCoreInvalidData("#Error: BondType - only Fixed or Floater is supported.", __FILE__, __LINE__);
+			AQ_THROW( "BondType - only Fixed or Floater is supported." );
 			break;
 		};
 
@@ -129,7 +129,7 @@ namespace validation
 			break;
 		}
 		default:
-			throw AQLCoreInvalidData("#Error: BondType - only Fixed or Floater is supported.", __FILE__, __LINE__);
+			AQ_THROW( "BondType - only Fixed or Floater is supported." );
 			break;
 		};
 

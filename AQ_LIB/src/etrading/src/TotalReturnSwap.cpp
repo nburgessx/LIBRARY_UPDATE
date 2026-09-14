@@ -139,10 +139,7 @@ namespace etrading
 
 		validateCreditModel( *creditModel );
 
-        if(legs_.size() < 2)
-		{
-			throw AQLCoreInvalidData( "#Error: Expecting two legs to be present on the Total Return Swap", __FILE__, __LINE__ );
-		}
+        AQ_THROW_IF( legs_.size() < 2, "Expecting two legs to be present on the Total Return Swap" );
 
 		LegPtr leg1 = legs_.get(0);
 		LegPtr leg2 = legs_.get(1);
@@ -269,14 +266,9 @@ namespace etrading
 	double TotalReturnSwap::annuity( const std::string& creditModelName, const std::string& legName ) const
 	{
 
-		if ( legName.size() == 0 ) {
-           throw AQLCoreInvalidData( "#Error: Leg name must be provided", __FILE__, __LINE__ );
-        }
+		AQ_THROW_IF( legName.size() == 0, "Leg name must be provided" );
 
-        if ( !legs_.exists( legName.c_str() )) 
-        {
-            throw AQLCoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !legs_.exists( legName.c_str() ), "Leg name does not exist in the swap" );
 
 		CreditModelPtr creditModel = getCreditModel( creditModelName );
 		validateCreditModel( *creditModel );

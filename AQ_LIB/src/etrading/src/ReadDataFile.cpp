@@ -99,7 +99,7 @@ namespace etrading
             {
                 if ( n == 2 )
                 {
-                    throw ReadDataFile::Exception( "parse error: blank vector name" );
+                    AQ_THROW( "parse error: blank vector name" );
                 }
                 name = name.subString( 0, n - 3 );
                 assert( name.size() == n - 2 );
@@ -175,8 +175,7 @@ namespace etrading
             {
                 if ( kvp.size() != 0 && kvp[0].size() != 2 )
                 {
-                    throw Exception(
-                        "cannot construct associative array from a "
+                    AQ_THROW( "cannot construct associative array from a "
                         "matrix with column number different from two" );
                 }
                 for ( std::size_t i = 0; i != kvp.size(); ++i )
@@ -256,7 +255,7 @@ namespace etrading
             {
                 if ( duplicates_ )
                 {
-                    throw Exception( "duplicate value in associative array index: " );
+                    AQ_THROW( "duplicate value in associative array index: " );
                 }
                 return rowind_.at( AQLString(key).toUpper() );
             }
@@ -271,7 +270,7 @@ namespace etrading
                 {
                     return 1;
                 }
-                throw Exception( AQLString( "unexpected column in associative array: " ) + col );
+                AQ_THROW( AQLString( "unexpected column in associative array: " ) + col );
             }
 
             std::map<AQLString, std::size_t> rowind_;
@@ -290,7 +289,7 @@ namespace etrading
             {
                 if ( rows.size() != 0 && cols.size() != rows.at( 0 ).size() )
                 {
-                    throw Exception( "XTable: mismatch between number of column headers and number of columns" );
+                    AQ_THROW( "XTable: mismatch between number of column headers and number of columns" );
                 }
                 for ( std::size_t j = 0; j != cols.size(); ++j )
                 {
@@ -386,7 +385,7 @@ namespace etrading
             {
                 if ( duplicates_ )
                 {
-                    throw Exception( "duplicate value in table index" );
+                    AQ_THROW( "duplicate value in table index" );
                 }
                 return rowind_.at( AQLString(key).toUpper() );
             }
@@ -410,13 +409,13 @@ namespace etrading
             case Scalar:
                 return 1;
             case Vector:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             case AssociativeArray:
                 return rows();
             case Table:
                 return rows();
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -427,13 +426,13 @@ namespace etrading
             case Scalar:
                 return 1;
             case Vector:
-                throw Exception( "rows not defined for vector" );
+                AQ_THROW( "rows not defined for vector" );
             case AssociativeArray:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             case Table:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -444,13 +443,13 @@ namespace etrading
             case Scalar:
                 return 1;
             case Vector:
-                throw Exception( "cols not defined for vector" );
+                AQ_THROW( "cols not defined for vector" );
             case AssociativeArray:
                 return 2;
             case Table:
                 Exception( "internal error: missing override", __FILE__, __LINE__ );
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -459,15 +458,15 @@ namespace etrading
         switch( type() )
         {
             case Scalar:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             case Vector:
-                throw Exception( "scalar interface used on vector" );
+                AQ_THROW( "scalar interface used on vector" );
             case AssociativeArray:
-                throw Exception( "scalar interface used on associative array" );
+                AQ_THROW( "scalar interface used on associative array" );
             case Table:
-                throw Exception( "scalar interface used on table" );
+                AQ_THROW( "scalar interface used on table" );
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -476,15 +475,15 @@ namespace etrading
         switch( type() )
         {
             case Scalar:
-                throw Exception( "vector interface used on scalar" );
+                AQ_THROW( "vector interface used on scalar" );
             case Vector:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             case AssociativeArray:
-                throw Exception( "vector interface used on associative array" );
+                AQ_THROW( "vector interface used on associative array" );
             case Table:
-                throw Exception( "vector interface used on table" );
+                AQ_THROW( "vector interface used on table" );
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -493,15 +492,15 @@ namespace etrading
         switch( type() )
         {
             case Scalar:
-                throw Exception( "associative array interface used on scalar" );
+                AQ_THROW( "associative array interface used on scalar" );
             case Vector:
-                throw Exception( "associative array interface used on vector", __FILE__, __LINE__ );
+                AQ_THROW( "associative array interface used on vector" );
             case AssociativeArray:
-                throw Exception( "internal error", __FILE__, __LINE__ );
+                AQ_THROW( "internal error" );
             case Table:
-                throw Exception( "associative array interface used on table" );
+                AQ_THROW( "associative array interface used on table" );
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -510,15 +509,15 @@ namespace etrading
         switch( type() )
         {
             case Scalar:
-                throw Exception( "table interface used on scalar" );
+                AQ_THROW( "table interface used on scalar" );
             case Vector:
-                throw Exception( "table interface used on vector" );
+                AQ_THROW( "table interface used on vector" );
             case AssociativeArray:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             case Table:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -527,15 +526,15 @@ namespace etrading
         switch( type() )
         {
             case Scalar:
-                throw Exception( "mixed table interface used on scalar" );
+                AQ_THROW( "mixed table interface used on scalar" );
             case Vector:
-                throw Exception( "mixed table interface used on vector" );
+                AQ_THROW( "mixed table interface used on vector" );
             case AssociativeArray:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             case Table:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -544,15 +543,15 @@ namespace etrading
         switch( type() )
         {
             case Scalar:
-                throw Exception( "mixed interface used on scalar" );
+                AQ_THROW( "mixed interface used on scalar" );
             case Vector:
-                throw Exception( "mixed interface used on vector" );
+                AQ_THROW( "mixed interface used on vector" );
             case AssociativeArray:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             case Table:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -561,15 +560,15 @@ namespace etrading
         switch( type() )
         {
             case Scalar:
-                throw Exception( "matrix interface used on scalar" );
+                AQ_THROW( "matrix interface used on scalar" );
             case Vector:
-                throw Exception( "matrix interface used on vector" );
+                AQ_THROW( "matrix interface used on vector" );
             case AssociativeArray:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             case Table:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -578,15 +577,15 @@ namespace etrading
         switch( type() )
         {
             case Scalar:
-                throw Exception( "can't convert scalar to AQLStringMatrix" );
+                AQ_THROW( "can't convert scalar to AQLStringMatrix" );
             case Vector:
-                throw Exception( "can't convert vector to AQLStringMatrix" );
+                AQ_THROW( "can't convert vector to AQLStringMatrix" );
             case AssociativeArray:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             case Table:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -595,15 +594,15 @@ namespace etrading
         switch( type() )
         {
             case Scalar:
-                throw Exception( "can't convert scalar to AQLStringMatrix" );
+                AQ_THROW( "can't convert scalar to AQLStringMatrix" );
             case Vector:
-                throw Exception( "can't convert vector to AQLStringMatrix" );
+                AQ_THROW( "can't convert vector to AQLStringMatrix" );
             case AssociativeArray:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             case Table:
-                throw Exception( "internal error: missing override", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: missing override" );
             default:
-                throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                AQ_THROW( "internal error: must not get here" );
         }
     }
 
@@ -675,7 +674,7 @@ namespace etrading
         }
         catch ( const std::out_of_range& )
         {
-            throw Exception( "range error in ReadTestData array: " + toAQLString( i ) );
+            AQ_THROW( "range error in ReadTestData array: " + toAQLString( i ) );
         }
     }
 
@@ -687,7 +686,7 @@ namespace etrading
         }
         catch ( const std::out_of_range& )
         {
-            throw Exception( "invalid key in ReadTestData associative array: " + key );
+            AQ_THROW( "invalid key in ReadTestData associative array: " + key );
         }
     }
 
@@ -699,7 +698,7 @@ namespace etrading
         }
         catch ( const std::out_of_range& )
         {
-            throw Exception( "invalid access to ReadTestData table, key: " + key + ", col: " + col );
+            AQ_THROW( "invalid access to ReadTestData table, key: " + key + ", col: " + col );
         }
     }
 
@@ -711,7 +710,7 @@ namespace etrading
         }
         catch ( const std::out_of_range& )
         {
-            throw Exception( "invalid access to ReadTestData table, i: "
+            AQ_THROW( "invalid access to ReadTestData table, i: "
                              + toAQLString( i ) + ", col: " + col );
         }
     }
@@ -724,7 +723,7 @@ namespace etrading
         }
         catch ( const std::out_of_range& )
         {
-            throw Exception( "invalid access to ReadTestData table, key: " + key
+            AQ_THROW( "invalid access to ReadTestData table, key: " + key
                              + ", j: " + toAQLString( j ) );
         }
     }
@@ -737,7 +736,7 @@ namespace etrading
         }
         catch ( const std::out_of_range& )
         {
-            throw Exception( "invalid access to ReadTestData table, i: " + toAQLString( i )
+            AQ_THROW( "invalid access to ReadTestData table, i: " + toAQLString( i )
                              + ", j: " + toAQLString( j ) );
         }
     }
@@ -755,7 +754,7 @@ namespace etrading
         }
         if ( lhs.type() != ReadTestData::Scalar )
         {
-            throw ReadTestData::Exception( "comparison of non-scalar ReadTestData items not implemented" );
+            AQ_THROW( "comparison of non-scalar ReadTestData items not implemented" );
         }
         return lhs() == rhs();
     }
@@ -826,7 +825,7 @@ namespace etrading
         }
         catch ( const std::out_of_range& )
         {
-            throw Exception( "ReadDataFile::Load: unknown key: " + s );
+            AQ_THROW( "ReadDataFile::Load: unknown key: " + s );
         }
     }
 
@@ -888,7 +887,7 @@ namespace etrading
             else if ( header.size() > 2 )
             {
                 // vector not flagged as vector
-                throw Exception( "parse error: more than two fields in section header" );
+                AQ_THROW( "parse error: more than two fields in section header" );
             }
             else
             {
@@ -935,7 +934,7 @@ namespace etrading
                     }
                     break;
                     default:
-                        throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+                        AQ_THROW( "internal error: must not get here" );
                 }
             }
         }
@@ -963,13 +962,13 @@ namespace etrading
                 // scalar with blank value
                 return Scalar;
             case 1:
-                throw Exception( "table schema with only one field" );
+                AQ_THROW( "table schema with only one field" );
             case 2:
                 return AssociativeArray;
             default:
                 return Table;
         }
-        throw Exception( "internal error: must not get here", __FILE__, __LINE__ );
+        AQ_THROW( "internal error: must not get here" );
     }
 
     // http://mybyteofcode.blogspot.co.uk/2010/02/parse-csv-file-with-boost-tokenizer-in.html
@@ -1019,7 +1018,7 @@ namespace etrading
                 // it's safe to right-pad with blank fields
                 if ( fields.size() < n )
                 {
-                    throw Exception( "not enough fields in line" );
+                    AQ_THROW( "not enough fields in line" );
                 }
 #endif
                 // check for end of section
@@ -1032,7 +1031,7 @@ namespace etrading
                 {
                     if ( fields[i] != "" )
                     {
-                        throw Exception( "stray field(s) in line" );
+                        AQ_THROW( "stray field(s) in line" );
                     }
                 }
                 // return the requested number of fields,
@@ -1074,7 +1073,7 @@ inline bool parse( const AQLString& flag )
     {
         return true;
     }
-    throw etrading::ReadDataFile::Exception( "unexpected boolean string literal: " + s );
+    AQ_THROW( "unexpected boolean string literal: " + s );
 }
 
 template<>

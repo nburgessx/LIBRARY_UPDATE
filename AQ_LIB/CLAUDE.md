@@ -184,10 +184,13 @@ validates the path before writing.
 
 Action carried in the plan: add `NOTICE` / `THIRD_PARTY_LICENSES.md` at this root.
 
-**AlgoQuantLib's own licence:** proprietary, no redistribution. A frozen per-file
-header names the `LICENSE` file but quotes no terms; an interim `LICENSE`
-placeholder goes in early; the final EULA replaces `LICENSE` later with **zero
-header churn**. See `..\..\CLAUDE.md` §7 for the exact header text.
+**AlgoQuantLib's own licence:** proprietary, no redistribution. Copyright and
+licence text live only in the root `LICENSE` file — never in source-file or
+console banners; an interim `LICENSE` placeholder goes in early, the final EULA
+replaces `LICENSE` later with **zero source churn**. See `..\..\CLAUDE.md` §7
+for the licence decision and §7.1 for the banner-content rule (no copyright, no
+company/person names, no tool/migration references — technical help only,
+research citations allowed).
 
 ### 3.4 Lint & formatting
 

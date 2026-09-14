@@ -36,10 +36,7 @@ namespace etrading
 		}
 		else
 		{
-			if (boost::math::isnan(fixedRate_))
-			{
-				throw AQLCoreInvalidData("#Error: fixedRate is not set for the cashflow", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( boost::math::isnan(fixedRate_), "fixedRate is not set for the cashflow" );
 			compoundRate =  fixedRate_;
 		}
 

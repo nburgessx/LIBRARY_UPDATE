@@ -1,4 +1,301 @@
-# Rebrand status — 2026-09-13
+# Rebrand status — 2026-09-14
+
+## AQ_XLL add-in loaded empty in every configuration — fixed, one flagged (2026-09-14)
+
+Nicholas reported `AlgoQuantLib.xll` loading with zero `aq*` functions in
+every configuration (Debug and all Release/edition variants), with a
+`xlOil Load Failure` popup reading `#Error: #Error: Unable to read JSON data -
+File not found ...\resources\config\CURVE_GENERATOR\JPY_OIS_LOB_2Y.JSON`.
+
+**Two separate things, only one fixed here:**
+
+1. **Missing resource file — fixed (2026-09-14, follow-up).** Nicholas chose
+   to drop the missing entries rather than author the missing JSON. Audited
+   all three startup object lists (`resources\config\{Curve,Bond,Swap}Generator.conf`,
+   each cross-referenced against the JSON files actually present in the
+   matching `resources\config\{CURVE,BOND,SWAP}_GENERATOR\` folder) rather
+   than just the one reported file, since the same failure mode could exist
+   elsewhere in either list:
+   - `CurveGenerator.conf`: removed `JPY_OIS_LOB_2Y.JSON` and
+     `JPY_OIS_LOB_3Y.JSON` — genuinely absent; the bare `JPY_OIS_LOB_*` family
+     only ever had `1Y`/`NONE`, unlike the JSCC/LCH/TIBOR variants which have
+     the full `1Y`/`2Y`/`3Y`/`NONE` set.
+   - `SwapGenerator.conf`: **not a missing file** — line 24 read
+     `EUR_ARR_BASIS_LIBOROIS.JSONEUR_BASIS_1X3.JSON`, two real, existing
+     generator filenames concatenated onto one line with no line break
+     (a pre-existing data-entry corruption, unrelated to the rebrand). Split
+     back into two lines rather than removed, since both
+     `EUR_ARR_BASIS_LIBOROIS.JSON` and `EUR_BASIS_1X3.JSON` exist and would
+     otherwise have been dropped for no reason.
+   - `BondGenerator.conf`: clean, no missing entries.
+   All three lists now cross-check clean (0 missing) against their folders.
+
+2. **Regression from the AQ_THROW/boost::format cleanup (fixed, this
+   entry) — this is what actually took the whole add-in down**, not just one
+   curve generator: `etrading\src\FolderConfig.cpp:455` had
+   `catch (ETradingException e)` around `deSerializeFromJSON(...)`,
+   specifically so `FolderConfig::deserializeObjectsForOptionalStartup` can
+   quietly skip a bad/missing optional-config entry when `reportErrors` is
+   off (see the comment on `AlgoQuantLib()`'s constructor in `aqMain.cpp`:
+   "a config-load failure does not abort the add-in load"). The prior
+   session's error-messaging pass converted `SerializeContainedData.cpp`'s
+   `throw ETradingException(...)` (the thing this catch depends on) to
+   `AQ_THROW` — which always throws `AQLCoreInvalidData`, a different
+   hierarchy. The catch stopped matching, so the missing-file exception now
+   propagated uncaught through `InitializeETrading`'s constructor into
+   `xlAutoOpen`, aborting the whole add-in before any function registered.
+   That prior session's catch-site audit checked every `catch(ETradingException&)`
+   in the tree but wrongly assumed **both** of `FolderConfig.cpp`'s two
+   `ETradingException` catches depended only on `math`'s untouched
+   `toCachedObjectEnum`/`toScheduleTypeEnum` — missed that the second one
+   (this one) depended on `etrading`'s own (converted) JSON deserializer.
+   **Fix:** retyped the catch to `AQLCoreInvalidData&`. While in there, also
+   fixed the doubled `#Error: #Error:` prefix visible in the popup — several
+   `AQ_THROW` call sites carried a hardcoded `"#Error: "` in the message
+   literal left over from before the conversion (the macro always prepends
+   `#Error: ` itself); stripped the redundant one from every such site found
+   tree-wide (`SerializeContainedData.cpp`, `SwapUtilities.cpp`,
+   `FXCurveUtilities.cpp`, `CreateDataFile.cpp`, and three `validation`
+   files) — cosmetic, not the cause, but worth cleaning up while diagnosing
+   the same symptom.
+
+**Verified:** full solution rebuilt clean in both Debug|x64 and Release|x64
+after the fix (one follow-up needed: the retyped catch's now-unused `e`
+tripped `TreatWarningAsError` on an unreferenced-variable warning — dropped
+the name, matching the unnamed-catch style already used elsewhere in this
+file). **Not yet verified:** an actual Excel load with the rebuilt `.xll` —
+that still depends on Nicholas rebuilding and reopening Excel, and on item 1
+above (the missing JSON) being resolved one way or another, since until it
+is, the add-in will still hit the same `deserializeObjectsForOptionalStartup`
+path — the difference is it will now be **silently skipped** (`reportErrors`
+is off) rather than aborting the whole add-in load.
+
+---
+
+## Error messaging unified on AQ_THROW/AQ_REQUIRE; boost::format removed (2026-09-14)
+
+Nicholas asked for all error throwing across the library to route through the
+`AQ_REQUIRE` / `AQ_THROW` / `AQ_THROW_IF` macros in `ExceptionMacros.h` instead
+of raw `throw`, and for `boost::format` to be replaced with `std::ostringstream`
+(or plain string concatenation for simple one-substitution cases) everywhere.
+Done across `validation`, `etrading`, `AQ_XLL`, `AQ_API` and `GTEST` — **~200
+files changed**, full solution builds green (Debug|x64) after each batch.
+`math`/`models`/`calibration` were explicitly left alone (legacy, headed for
+deprecation/extraction per §8 — not worth the effort on code that may be
+deleted).
+
+**Batched and built between each, per the working agreement:**
+`validation` (44 files) → `etrading` (~140 files) → `AQ_XLL`/`AQ_API`/`GTEST`
+(10 files). Every raw `throw AQLCoreInvalidData` / `AQLCoreError` /
+`AQLCoreSystemError` / `AQLCoreNumericalError` / `AQLCoreAppError` /
+`ETradingException` / `Exception(...)` converted; `AQLCoreNumericalError` and
+`AQLCoreSystemError` throws collapsed into `AQ_THROW`/`AQ_REQUIRE` (which only
+ever throw `AQLCoreInvalidData`) — a decided simplification, confirmed safe
+because nothing outside `math`/`models` catches those two subtypes by name.
+
+**Real correctness issue found and fixed, not just cosmetic:** `ETradingException`
+(derives `std::runtime_error`) is specifically caught by type in several places
+(`CurveUtilities.cpp` x2, plus two GTEST fixtures exercising `FixingTable`/
+`TableDateDouble`). Collapsing those throw sites into `AQ_THROW` changes the
+dynamic type to `AQLCoreInvalidData` (different hierarchy — `AQLCoreError :
+virtual std::exception`), which would have silently broken those `catch`
+blocks. Retyped every affected `catch` to `AQLCoreInvalidData&` and updated the
+two GTEST assertions that checked the exact thrown type and message text
+(`TestFixingTable.cpp`, `TryAqTestCurveTenorBasisJPY3M6MConvergence.cpp`) —
+confirmed via a full search of every `catch(ETradingException&)`/
+`catch(AQLCore*&)` in the tree before and after, so nothing else depends on a
+type that changed.
+
+**A bug in the automation itself, caught by the compiler and fixed:** an
+early regex pass collapsing `if(cond){throw X;}` into `AQ_THROW_IF(cond,"msg")`
+silently ate the enclosing `if` whenever a trailing `else`/`else if` followed,
+producing "illegal else without matching if" (`AQLUpdateCurveObject.cpp`,
+`AQLUpdateObjectPoolForCurves.cpp`, `AQLCurveCalibrationHelpers.cpp`,
+`CurveCalibrationData.cpp`, `BasisCurveCalibration.cpp`, and others — ~15
+locations). A follow-up broadened fix regex then produced two genuine
+false-positive corruptions of unrelated code (a `legNames.resize(nSwaps, "")`
+call in `tryAqSwapObjectPricing.cpp` and four `AQ_REQUIRE(false, "...")` calls
+in `PiecewisePolynomialInterpolation.cpp` got mis-parsed as throw messages).
+All resolved by comparing every flagged site against `git diff`/`git show
+HEAD:<path>` (the pre-batch baseline still sitting in the stash repo) before
+trusting any mechanical fix, and by writing a final paren-aware, comment-aware
+verification pass (not plain regex) that confirms zero message-less or
+comma-swallowed `AQ_THROW_IF` calls remain anywhere in scope.
+
+**Verified:** full solution build (`AlgoQuantLib-VS22.sln`, Debug|x64) green
+after every batch, including the final one. Swept `validation`, `etrading`,
+`AQ_XLL`, `AQ_API`, `GTEST` for any remaining live `throw AQLCore*` /
+`ETradingException` / `Exception(...)` or live `boost::format` — none found;
+the only remaining textual hits are confirmed dead code inside `/* */` or `//`
+comments, left untouched per "never delete code or comments." SWIG-generated
+`.cxx` files were out of scope and not touched. GoogleTest re-run not yet done
+in this session — **deferred**: confirm numerically identical output against
+the pre-batch baseline before this is considered fully closed out.
+
+---
+
+## Batch script hardened against a file-lock race; renamed per Nicholas (2026-09-13)
+
+A real VS rebuild of `Release_XL_Manifest` (the first one exercising the new
+`.bat`, see the entry below) still worked — build succeeded, correct 4/467
+result — but printed three `The process cannot access the file because it is
+being used by another process.` lines. Investigated rather than dismissed as
+noise, since it was reproducible (also saw 1-2 occurrences of the same thing
+directly testing the `.bat` via `cmd.exe` outside VS, not just inside a VS
+build).
+
+**Root cause: file-handle churn, not a logic bug.** The original `.bat`
+opened the output header and the temp known/requested-name files via a
+separate `>>` append **per function** — up to 467 opens-and-closes of the
+same file in a tight loop. That is a well-known collision point with
+antivirus real-time scanning or an IDE file-change watcher transiently
+locking a file the instant it changes; `cmd.exe`'s `>>` doesn't retry on
+failure, so an unlucky collision silently drops that one line. It happened
+not to corrupt anything in the runs so far (467/467 and 4/467 both came out
+correct), but that was luck, not a guarantee.
+
+**A red herring chased down first, worth recording so it doesn't get
+re-investigated:** the build reported `edition 'Active'` instead of the
+expected `edition 'DemoSmall'`, which looked like a parsing bug in the
+`edition:<name>` line handling. It wasn't — `active.txt`'s line 24 literally
+reads `edition:Active` now (the label was changed at some point after the
+JSON->text conversion, function list unchanged), confirmed by reading the
+file directly before touching any parsing code. The `edition:` extraction
+logic itself is correct.
+
+**Fix:** rewrote the three multi-append loops (the `XLO_FUNC_START` source
+scan, the manifest-line classification, and the header-writing loop) to each
+use one grouped `( ... ) > "file"` redirection instead of many small `>>`
+appends — the file is opened once for the whole operation instead of
+hundreds of times. Needed one escaping fix as a result:
+`(edition: %EDITION%)` written from *inside* a `(...)` block needs its
+closing paren escaped (`%EDITION%^)`) so it isn't parsed as the block's own
+terminator. Re-ran all the same test cases (wildcard, the real restricted
+`active.txt`, an unknown-function-name manifest, a missing manifest, a bad
+root) directly via `cmd.exe` — same correct results as before, but zero
+"process cannot access" messages across any of the runs this time.
+
+**Renamed per Nicholas, in the same pass:**
+`generate_xll_manifest_header.bat` -> `generateManifestList.bat`;
+`aqManifestFunctions.h` -> `aqManifestList.h`. Updated every reference:
+the `.vcxproj`'s `PreBuildEvent` Command and `/FI` force-include, the
+`<None>`/`<ClInclude>` items and their `.vcxproj.filters` entries, the
+script's own self-referencing comments, and `active.txt`'s comment header
+(which names the script by filename for anyone reading it in Solution
+Explorer). Confirmed no stale references to either old name remain anywhere
+in the project files.
+
+**Verified:** ran the exact `PreBuildEvent` command line (via `call
+"...generateManifestList.bat" "$(SolutionDir)" ...`) against the real
+project paths — writes `src\AQ_XLL\include\generated\aqManifestList.h`
+correctly, no lock errors. Nicholas then rebuilt through Visual Studio itself
+and confirmed it too is clean — no "process cannot access" messages, no
+errors. **Fully verified, nothing deferred, for this fix.**
+
+---
+
+## Manifest generator rewritten as pure batch; manifest format JSON -> plain text (2026-09-13)
+
+Nicholas moved `generate_xll_manifest_header.py` into
+`src\AQ_XLL\resources\manifest\` himself (for better Solution Explorer
+management) and hit a crash: the script inferred the `AQ_LIB` root from its
+own file location via three `dirname()` hops, which only worked at the
+specific folder depth it was originally written for
+(`resources\scripts\...`). One level deeper, those three hops landed on
+`src\AQ_XLL` instead of the `AQ_LIB` root, producing a doubled path
+(`...\AQ_LIB\src\AQ_XLL\src\AQ_XLL\src`) and a `FileNotFoundError`.
+
+**Two decisions, both from Nicholas:**
+
+**1. Stop inferring the root from `__file__` at all — pass it in explicitly.**
+Even with the immediate bug fixed, path-inferred-from-script-location is
+inherently fragile against exactly this kind of reorganisation. The generator
+(then still Python, now the `.bat` below) takes `AQ_LIB_root` as its first
+argument; the `.vcxproj` passes `$(SolutionDir)`, which always knows the
+right answer regardless of where the script itself lives.
+
+**2. Eliminate the Python dependency entirely — rewrite as a pure `cmd.exe`
+batch file**, after being offered three options (keep Python + a friendly
+missing-Python build error; PowerShell, which parses JSON natively; pure
+batch) and picking pure batch despite the trade-off flagged: `cmd.exe` has no
+JSON parser, so this necessarily means dropping JSON as the manifest format
+too.
+
+**What changed:**
+- `generate_xll_manifest_header.py` (deleted) -> `generate_xll_manifest_header.bat`,
+  same folder. No interpreter dependency beyond `cmd.exe` itself — nothing to
+  install on any Windows dev machine. Scans the same `XLO_FUNC_START` sites
+  via `findstr`/`for /f` (using a temp known-names file, not a single big
+  environment variable, to stay well clear of `cmd.exe`'s ~8191-char
+  per-variable limit — 467 function names would blow past that). Same
+  contract: `AQ_LIB_root manifest.txt output_header.h`, same validation
+  (fails loudly, exit 1, if a manifest name doesn't exist or `AQ_LIB_root`
+  looks wrong), same `#define AQ_XLL_ENABLE_<name> 0/1` output.
+- `active.json`/`demo.json` -> `active.txt`/`demo.txt`. New format: `#`-prefixed
+  comment lines (ignored), optional `edition:<name>` line, either a lone `*`
+  (every function — resolved fresh at generation time, same as before, still
+  nothing hand-maintained) or one function name per line. `active.txt` carries
+  a full explanatory comment block at the top (Nicholas asked for this
+  explicitly, since JSON couldn't carry inline documentation the way a plain
+  text file can) — `demo.txt` stays a copy-from example, unchanged in
+  content (still the same 4-function `DemoSmall` list), just reformatted.
+  **`active.txt`'s live content was preserved as `DemoSmall` (not reset to
+  `Full`)** when converting from `active.json`, since that was the manifest
+  actually in use at the time of the move.
+- `AQ_XLL.vcxproj`'s `PreBuildEvent` now calls the `.bat` directly (`call
+  "...\generate_xll_manifest_header.bat" "$(SolutionDir)" ...`) — no `where
+  python` check needed any more, since there's nothing left to be missing.
+  `AQ_XLL_MANIFEST_FILE`'s default updated to `active.txt`. The stray `<None>`
+  item Visual Studio had added for the script also had a stale path (missing
+  the `\manifest\` segment — pointed at a location the file was never
+  actually at); corrected while touching this.
+
+**Verified:** ran the `.bat` directly via `cmd.exe` (not just eyeballed) —
+wildcard (`467/467`), the real restricted `active.txt` (`4/467`, exact same
+4 names as the Python version produced), an unknown-function-name manifest
+(fails, exit 1, same error format), a missing manifest file, and a bad
+`AQ_LIB_root` (all fail cleanly, exit 1). Then ran the **exact**
+`PreBuildEvent` command line against the real project paths and confirmed it
+writes the real `aqManifestFunctions.h` correctly. `AQ_XLL.vcxproj`/
+`.vcxproj.filters` re-verified as well-formed XML (including the specific
+`--`-in-comment mistake from two entries ago — checked again, none present).
+**Not yet re-verified through an actual VS build** — recommend a full rebuild
+of `Release_XL_Manifest` to confirm MSBuild's own invocation (through
+`Microsoft.CppCommon.targets`, not a direct `cmd.exe` call) behaves
+identically to the direct test above.
+
+---
+
+## `Release_XL_Manifest` confirmed working end-to-end (2026-09-13)
+
+Nicholas built and tested the full `Release_XL_Manifest` feature (all entries
+below, most recent first) and confirmed **everything works**: build green,
+`aqManifestFunctions.h` regenerates correctly from `active.json` at its fixed
+path, shows up under `AQ_XLL`'s `include` filter in Solution Explorer, the
+generator script runs fine from its new `resources\scripts\` home, and —
+the one item every prior entry flagged as unverified — **Excel's function
+wizard under `AlgoQuantLib` genuinely shows only the functions listed in
+`active.json`, not the full 467.** This closes out every "not yet
+verified"/"not yet re-verified" caveat left by the entries below.
+
+One incidental fix along the way, worth calling out since it's unrelated to
+any of this feature's code: `demo_small.json` was renamed to `demo.json` from
+within Visual Studio's Solution Explorer, which correctly updated the
+`<None>` item paths in both `AQ_XLL.vcxproj` and `.vcxproj.filters`
+automatically — no manual follow-up needed.
+
+Also confirmed elsewhere in this session but worth restating here since it
+caused two of the debugging detours above: `AQ_XLL` must be the solution's
+**Startup Project** (Solution Explorer → right-click → Set as Startup
+Project) for Run/F5 to launch Excel at all — if a different project (e.g.
+`models`, a static library) is startup, VS tries to `CreateProcess` a `.lib`
+directly and fails with the same "not a valid Win32 application" message,
+which looks identical to the real debug-settings bug but has nothing to do
+with `AQ_XLL.vcxproj.user`.
+
+**Fully verified, nothing deferred, for this feature.**
+
+---
 
 ## Manifest generator script moved out of `rebrand\tools\` (2026-09-13)
 

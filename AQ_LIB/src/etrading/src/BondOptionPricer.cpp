@@ -157,7 +157,7 @@ namespace etrading
 			break;
 		}
 		default:
-			throw AQLCoreInvalidData("#Error: Only Analytical or Numerical Greek is supported", __FILE__, __LINE__);
+			AQ_THROW( "Only Analytical or Numerical Greek is supported" );
 			break;
 		}
 
@@ -209,10 +209,10 @@ namespace etrading
 		case ANALYTICAL_GREEK_TYPE:
 		{
 			//TODO Yongyan
-			throw AQLCoreInvalidData("#Error: Only Numerical Greek is supported", __FILE__, __LINE__);
+			AQ_THROW( "Only Numerical Greek is supported" );
 
 			//// Note: Delta, Gamma, and Theta cannot be used the BlackScholes formula directly as the carry (r-q) is changing when bondSpotPrice change
-			////throw AQLCoreInvalidData("#Error: Bond Option Analytical Greek is not supported", __FILE__, __LINE__);
+			////AQ_THROW( "Bond Option Analytical Greek is not supported" );
 
 			//greeks = BlackScholes::calculatePriceAndGreeks(callPut,
 			//												bondSpotPrice,
@@ -259,7 +259,7 @@ namespace etrading
 			break;
 		}
 		default:
-			throw AQLCoreInvalidData("#Error: Only Analytical or Numerical Greek is supported", __FILE__, __LINE__);
+			AQ_THROW( "Only Analytical or Numerical Greek is supported" );
 			break;
 		}
 

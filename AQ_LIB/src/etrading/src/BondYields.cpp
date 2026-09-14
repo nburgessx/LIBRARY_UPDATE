@@ -38,10 +38,7 @@ namespace etrading
         auto totalCouponDays      = getBondFullCouponPeriodDays(activeCouponDates.priorFirstActiveCouponDate_, activeCouponDates.firstActiveCouponDate_, bondDaycount,  bondCouponFrequency);   // Calculate the number of days from the priorfirstActivePaymentDate to the firstActivePaymentDate
 
         // Divide by Zero Guard
-        if ( totalCouponDays == 0 )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Bond Coupon Dates. Cannot evaluate a Bond Coupon accruing for zero days.",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( totalCouponDays == 0, "Invalid Bond Coupon Dates. Cannot evaluate a Bond Coupon accruing for zero days." );
 
         const double accrualRatio = futureDays / ( 1.0 * totalCouponDays ); // Cast to double
         return accrualRatio;
@@ -255,10 +252,7 @@ namespace etrading
             double sumYearFractionsFromSecondActivePaymentToCurrentCashflow = 0;
             if (yieldCalcType== TRUE_YIELD)
             {
-                if (trueYieldYearFractions.size() == 0)
-                {
-                    throw AQLCoreInvalidData("#Error: For True Yield, trueYieldYearFractions cannot be empty.",__FILE__,__LINE__);
-                }
+                AQ_THROW_IF( trueYieldYearFractions.size() == 0, "For True Yield, trueYieldYearFractions cannot be empty." );
 
                 for( size_t k = secondActivePaymentIndex; k <= i; ++k )
                 {
@@ -340,10 +334,7 @@ namespace etrading
             double sumYearFractionsFromSecondActivePaymentToCurrentCashflow = 0;
             if (yieldCalcType== TRUE_YIELD)
             {
-                if (trueYieldYearFractions.size() == 0)
-                {
-                    throw AQLCoreInvalidData("#Error: For True Yield, trueYieldYearFractions cannot be empty.",__FILE__,__LINE__);
-                }
+                AQ_THROW_IF( trueYieldYearFractions.size() == 0, "For True Yield, trueYieldYearFractions cannot be empty." );
 
                 for( size_t k = secondActivePaymentIndex; k <= i; ++k )
                 {

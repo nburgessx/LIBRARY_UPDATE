@@ -1,4 +1,3 @@
-#include <boost/format.hpp>
 
 #include "FixingTableSet.h"
 #include "ETradingException.h"
@@ -29,8 +28,8 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( ( boost::format( "Cannot find the FixingTable for currency %s and tenor %s in the set named %s" )
-                                       % toString( ccy ) % toString( curveTenor ) % getRefToName() ).str() );
+            { std::ostringstream aqMsg139;
+aqMsg139 << "Cannot find the FixingTable for currency " << toString( ccy ) << " and tenor " << toString( curveTenor ) << " in the set named " << getRefToName(); AQ_THROW( aqMsg139.str() ); }
         }
     };
 
@@ -43,8 +42,8 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( ( boost::format( "Cannot find the FixingTable with name %s in the set named %s" )
-                                       % tableName.c_str() % getRefToName() ).str() );
+            { std::ostringstream aqMsg140;
+aqMsg140 << "Cannot find the FixingTable with name " << tableName.c_str() << " in the set named " << getRefToName(); AQ_THROW( aqMsg140.str() ); }
         }
     };
 

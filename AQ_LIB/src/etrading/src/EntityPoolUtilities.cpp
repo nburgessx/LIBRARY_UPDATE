@@ -42,7 +42,7 @@ namespace etrading
 		if (!ehycpro.isDefined())
 		{
 			AQLString msg = AQLString("#Error - Curve '") + curveIndex + AQLString("' does not exist in collection '") + curveCollection + AQLString("'");
-            throw AQLCoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
+            AQ_THROW( msg.getCString() );
 		}
 		CurveCalibrationData *curveCalibrationData = &dynamic_cast<CurveCalibrationData &>(ehycpro.get());
 		AQLString curveName = curveIndex;

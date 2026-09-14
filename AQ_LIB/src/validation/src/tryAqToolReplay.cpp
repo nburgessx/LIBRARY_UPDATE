@@ -2,6 +2,7 @@
 #include "Replay.h"
 #include "StructuredExceptionHandler.h"
 #include "AQLCoreAppError.h"
+#include "ExceptionMacros.h"
 
 namespace validation
 {
@@ -19,10 +20,7 @@ namespace validation
 
 
         // Validation
-        if ( filepath.size() == 0 || filepath.isDefined() == false )
-        {
-            throw AQLCoreInvalidData( "#Error: Filepath must be Provided.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( filepath.size() == 0 || filepath.isDefined() == false, "Filepath must be Provided." );
 
 
         // Call underlying function and return result

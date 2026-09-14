@@ -120,10 +120,7 @@ void OISComponentCurve::initialise()
 	unsigned int size_s = data_swap.size();//swap count
 	unsigned int size_on = data_on_.size();//on count
 	unsigned int size_tn = data_tn_.size();//tn count
-	if (size_s == 0)
-	{
-        throw AQLCoreInvalidData("#Error: Invalid market data. At least one outright OIS swap must be specified", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( size_s == 0, "Invalid market data. At least one outright OIS swap must be specified" );
 
 	// Short term swaps overrule central bank swaps?
 	bool shortTermSwapOverrules = false;	
@@ -153,10 +150,7 @@ void OISComponentCurve::initialise()
 		{
 			spotDate_ = spotdateTemp;
 		}
-		else if (spotdateTemp != spotDate_)
-		{
-            throw AQLCoreInvalidData("#Error: All market data must have same spotdate", __FILE__, __LINE__);			
-		}
+		else AQ_THROW_IF( spotdateTemp != spotDate_, "All market data must have same spotdate" );
 	}
 	
 
@@ -545,10 +539,7 @@ void OISComponentCurve::initialise()
 					DoubleArray tempYields;
 					DoubleArray tempGrid;
 
-					if (stateVariable_rates_.size() != stateVariable_grid_.size())
-					{
-						throw AQLCoreInvalidData("#Error Invalid Curve Data: Inconsistent number of zero rates and date terms in OIS curve", __FILE__, __LINE__);
-					}
+					AQ_THROW_IF( stateVariable_rates_.size() != stateVariable_grid_.size(), "#Error Invalid Curve Data: Inconsistent number of zero rates and date terms in OIS curve" );
 
 					// Remove all the zero rates after the first Central Bank Swaps start date
 					double yield = 0.0;
@@ -646,10 +637,7 @@ void OISComponentCurve::initialise()
 			}
 		}
 
-		if (data_swap_inSolving.size() == 0)
-		{
-			throw AQLCoreInvalidData("#Error: No swaps are given to define the long end of the OIS curve.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( data_swap_inSolving.size() == 0, "No swaps are given to define the long end of the OIS curve." );
 	}
 
 	/*********************************************************************************************/
@@ -781,10 +769,7 @@ void OISComponentCurve::initialise()
 		etrading::updateAccrualPeriodsAndPaymentDates(spotDate_, date_unadjusted, freq, *cal, *sld, *dc, dates, terms_grid, terms_interval, eom);
 
 		unsigned int size_cashlet = dates.size();
-		if (!size_cashlet)
-		{
-            throw AQLCoreInvalidData("#Error: Invalid calibration instruments specified with no cashflows", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( !size_cashlet, "Invalid calibration instruments specified with no cashflows" );
 					
 
 		//---------------------------------------------------------
@@ -879,10 +864,7 @@ void OISComponentCurve::initialise()
 			dates_s.clear();
 			etrading::updateAccrualPeriodsAndPaymentDates(spotDate_, date_s_unadjusted, freq_s, cal_s, sld_s, dc_s, dates_s, terms_grid_s, terms_interval_s, eom);
 			size_cashlet_s = dates_s.size();
-			if (!size_cashlet_s)
-			{
-                throw AQLCoreInvalidData("#Error: Invalid swap calibration instrument specified with no cashflows.", __FILE__, __LINE__);
-			}
+			AQ_THROW_IF( !size_cashlet_s, "Invalid swap calibration instrument specified with no cashflows." );
 
 			size_calc_s = size_cashlet_s - calced_size_s;
 			
@@ -917,7 +899,7 @@ void OISComponentCurve::initialise()
 			}
 			else
 			{
-				throw AQLCoreInvalidData("We support only 6M or 3M in swap floating leg!", __FILE__, __LINE__);
+				AQ_THROW( "We support only 6M or 3M in swap floating leg!" );
 			}
 
 			// fixing end dates are always a fixed term after the corresponding fixing start dates
@@ -1311,10 +1293,7 @@ double OISComponentCurve::priceSingleOISSwapPV(double marketRate,
 	if ( longTermConvEnum == etrading::LIBOROIS_OIS_LONGTERM_INSTRUMENTS )
 	{
 		// Check the avaiability of libor rate interpolator when required
-		if (libor_inter == nullptr && !isIRSParRateKnown)
-		{
-			throw AQLCoreInvalidData("Error: Unable to calibrate Libor-OIS swap due to lack of Libor IRS par rate market data.", __FILE__,__LINE__);
-		}
+		AQ_THROW_IF( libor_inter == nullptr && !isIRSParRateKnown, "Error: Unable to calibrate Libor-OIS swap due to lack of Libor IRS par rate market data." );
 
 		// Calculate annuity 
 		for (unsigned int j = 0; j < size_calc_s; ++j)

@@ -1,4 +1,5 @@
 #include "CurveUtilities.h"
+#include "AQLCoreAppError.h"
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/predicate.hpp>     // Include for boost::iequals case insensitive comparison
@@ -459,7 +460,7 @@ namespace etrading
                 if (paymentDate >= asOfDate)
                 {
                     AQLString erroMsg = "#Error: FixingTable required for fixingDate: " + fixingDate.stringWithFormat("DD-MM-YYYY");
-        		    throw AQLCoreInvalidData( erroMsg.getCString(), __FILE__, __LINE__ );
+        		    AQ_THROW( erroMsg.getCString() );
                 }
                 else
                 {
@@ -472,7 +473,7 @@ namespace etrading
                 {
                     forwardRate.resetRate = fixingTable->getFixingValue(toGregorianDateFromAQLDate(fixingDate));
                 }
-                catch( ETradingException &e )
+                catch( AQLCoreInvalidData &e )
                 {
                     // Fixng Rates: Only throw an error if the fixing date is needed for valuation
                     if ( paymentDate < asOfDate )
@@ -498,7 +499,7 @@ namespace etrading
             {
                 forwardRate.resetRate = fixingTable->getFixingValue(toGregorianDateFromAQLDate(fixingDate));
             }
-            catch( ETradingException& )
+            catch( AQLCoreInvalidData& )
             {
                 forwardRate = curveFowardRate;
             }
@@ -621,10 +622,7 @@ namespace etrading
 
 		const size_t fromDateSize = fromDates.size();
 
-		if (fromDateSize == 0 )
-		{
-			throw AQLCoreInvalidData("#Error: fromDates and toDates must have the same size and not empty", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( fromDateSize == 0, "fromDates and toDates must have the same size and not empty" );
 
 		AQLString curIndex( curveIndex );
         AQLString interp;
@@ -747,15 +745,15 @@ namespace etrading
 		FixingTypeEnum fixingType = IN_ADVANCE_FIXING;
 
 		// Fixing earlier than accrualStart (outside tolerance)
-		if (fixingDate < accrualStartLowerBound)
-		{
-			throw AQLCoreInvalidData("#Error: Invalid Fixing Date: The Fixing Date is before the Accrual Start Date and outside tolerance", __FILE__, __LINE__);
-		}
+		if ( fixingDate < accrualStartLowerBound )
+{
+    AQ_THROW( "Invalid Fixing Date: The Fixing Date is before the Accrual Start Date and outside tolerance" );
+}
 		// Fixing later than accrualEnd (outside tolerance)
-		else if (fixingDate > accrualEndUpperBound)
-		{
-			throw AQLCoreInvalidData("#Error: Invalid Fixing Date: The fixing date is after the accrual end date and outside tolerance", __FILE__, __LINE__);
-		}
+		else if ( fixingDate > accrualEndUpperBound )
+{
+    AQ_THROW( "Invalid Fixing Date: The fixing date is after the accrual end date and outside tolerance" );
+}
 		// Fixing at accrualStart (within tolerance)
 		else if (fixingDate >= accrualStartLowerBound && fixingDate <= accrualStartUpperBound)
 		{
@@ -1066,10 +1064,7 @@ namespace etrading
 		// Calculate the forward rates for each curveIndex
 		forwardRates.clear();
 
-		if (fwdInters.size() != 0 && fwdInters.size() != curveIndices.size() )
-		{
-			throw AQLCoreInvalidData("#Error: isFwdInter flags must have the same size as curve indices.",__FILE__,__LINE__);
-		}
+		AQ_THROW_IF( fwdInters.size() != 0 && fwdInters.size() != curveIndices.size(), "isFwdInter flags must have the same size as curve indices." );
 
 		bool fwdIterpEmpty = (fwdInters.size() == 0 );
 
@@ -1250,10 +1245,7 @@ namespace etrading
             }
         }
 
-        if (matchedIndex.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: User specified stubCurveIndex does not match any curve index in the curve collection", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( matchedIndex.size() == 0, "User specified stubCurveIndex does not match any curve index in the curve collection" );
 
         return matchedIndex;
     }
@@ -1435,7 +1427,7 @@ namespace etrading
             AQLString msg;
             msg += "Unknown compound type:";
             msg += compound_type_;
-            throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+            AQ_THROW( msg.getCString() );
         }
 
 	
@@ -1524,10 +1516,7 @@ namespace etrading
             size_t pastFixingDuration = pastFixingDates.size() - 1;
             pastRates.reserve(pastFixingDuration);
     
-            if (pastFixingDuration > 0 && fixingTable == nullptr)
-            {
-    	        throw AQLCoreInvalidData("#Error: FixingTable required", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( pastFixingDuration > 0 && fixingTable == nullptr, "FixingTable required" );
     
             for(size_t i = 0; i < pastFixingDuration; i++)
             {
@@ -1667,15 +1656,9 @@ namespace etrading
 										 bool annualized)
     {
 
-        if( startDates.size() == 0 || endDates.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: a size of vector is zero.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( startDates.size() == 0 || endDates.size() == 0, "a size of vector is zero." );
 
-        if( startDates.size() != endDates.size() )
-        {
-            throw AQLCoreInvalidData( "#Error: The input startDates and endDates must be of the same size.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( startDates.size() != endDates.size(), "The input startDates and endDates must be of the same size." );
 
         AQLDate* firstOddDt  = NULL;
         AQLDate tmpfirstOddDt;
@@ -1760,7 +1743,7 @@ namespace etrading
                 if (fixingDate < asOfDate && paymentDate >= asOfDate)
                 {
                     AQLString erroMsg = "#Error: FixingTable required for fixingDate: " + fixingDate.stringWithFormat("DD-MM-YYYY");
-        		    throw AQLCoreInvalidData( erroMsg.getCString(), __FILE__, __LINE__ );
+        		    AQ_THROW( erroMsg.getCString() );
                 }
             }
 		}
@@ -2292,10 +2275,7 @@ namespace etrading
     {
 
         // Validate parameters
-        if( yearFractions.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "a size of vector is zero.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( yearFractions.size() == 0, "a size of vector is zero." );
 
         AQLString curIndex( curveIndex );
         AQLString interp;
@@ -2461,34 +2441,19 @@ namespace etrading
 	double getCurveEuroDollarConvexityAdjustment(const AQLDate& curveAsOfDate, const AQLDate& futuresStartDate, const AQLDate& futuresEndDate, const double& meanReversion, const double& volatility)
 	{
 
-		if (meanReversion < 0)
-		{
-			throw AQLCoreInvalidData("#Error: Hull-White 1F Mean-Reversion parameter cannot be negative.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( meanReversion < 0, "Hull-White 1F Mean-Reversion parameter cannot be negative." );
 
-		if (volatility < 0)
-		{
-			throw AQLCoreInvalidData("#Error: Hull-White 1F Volatility parameter cannot be negative.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( volatility < 0, "Hull-White 1F Volatility parameter cannot be negative." );
 
-		if (futuresEndDate <  futuresStartDate)
-		{
-			throw AQLCoreInvalidData("#Error: The futures end date cannot be before it's start date.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( futuresEndDate <  futuresStartDate, "The futures end date cannot be before it's start date." );
 
-		if (futuresEndDate <  curveAsOfDate)
-		{
-			throw AQLCoreInvalidData("#Error: The future has expired. The futures end date cannot be before the curveAsOfDate or valuation date.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( futuresEndDate <  curveAsOfDate, "The future has expired. The futures end date cannot be before the curveAsOfDate or valuation date." );
 
 		AQLString dayCount( "ACT/365" );
 		double T1 = AQLDateScheduleHelpers::getTerm(curveAsOfDate, futuresStartDate, dayCount, true); // includeLast = true
 		double T2 = AQLDateScheduleHelpers::getTerm(curveAsOfDate, futuresEndDate, dayCount, true); // includeLast = true
 
-		if (T1 > T2)
-		{
-			throw AQLCoreInvalidData("#Error: The future's start date cannot be greater than it's end date.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( T1 > T2, "The future's start date cannot be greater than it's end date." );
 
 		double convexityAdjustment = 0.0;
 
@@ -2496,10 +2461,7 @@ namespace etrading
 		{
 
 		    // The Hull-White mean reversion parameter must be a value between 0 and 1. Throw an error if this is not the case.
-			if ( meanReversion > 1.0 )
-			{
-	            throw AQLCoreInvalidData("#Error: CurveCalibration::calcDiscountFactor failed. Invalid futures market data, the convexity mean reversion parameter must be a value between 0 and 1", __FILE__, __LINE__);
-		 	}
+			AQ_THROW_IF( meanReversion > 1.0, "CurveCalibration::calcDiscountFactor failed. Invalid futures market data, the convexity mean reversion parameter must be a value between 0 and 1" );
 
 			// Hull-White 1 Factor Convexity Adjustment
 			double B_T1_T2 = (1.0 - AQLMath::exp(-meanReversion * (T2 - T1))) / meanReversion;
@@ -2632,7 +2594,7 @@ namespace etrading
 		if (curveFromEngine)
 		{
 			AQLString error = curveName + " was created in a yield curve engine. Please use the engine Jacobian display method.";
-			throw AQLCoreInvalidData(error.getCString(), __FILE__, __LINE__);
+			AQ_THROW( error.getCString() );
 		}
 
 		CurveCalibrationData* curveCalibrationData = etrading::InitializeETrading::instance().ycStaticDataObject(curveCollection);

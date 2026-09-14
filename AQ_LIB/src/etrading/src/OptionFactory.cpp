@@ -188,7 +188,7 @@ namespace etrading
                 break;
             }
             default:
-			    throw ETradingException("#Error: Invalid Trade Type, must be 'CAPFLOOR', 'EUROPEAN_SWAPTION' or 'BONDOPTION' ");
+			    AQ_THROW( "Invalid Trade Type, must be 'CAPFLOOR', 'EUROPEAN_SWAPTION' or 'BONDOPTION' " );
 			    break;
 		}
     }

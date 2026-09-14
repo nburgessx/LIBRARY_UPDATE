@@ -1,4 +1,5 @@
 #include <memory>
+#include <sstream>
 #include <boost/date_time.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/range/irange.hpp>
@@ -172,10 +173,7 @@ namespace validation
             AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
-        if ( !futureRates.empty() && futureRates[0].size() < 3 )
-        {
-            throw AQLCoreInvalidData( "Matrix column size must be greater or equal to 3", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !futureRates.empty() && futureRates[0].size() < 3, "Matrix column size must be greater or equal to 3" );
 
         if ( !convexityAdjConv.empty() && convexityAdjConv[0].size() < 2 )
         {
@@ -368,7 +366,9 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Unable to create AQObjCurve named %s" ) % curveNameForAQObjCurve.c_str() ).str().c_str() );
+            std::ostringstream msg;
+            msg << "Unable to create AQObjCurve named " << curveNameForAQObjCurve;
+            AQ_THROW( msg.str() );
         }
 
         VALID_EXCEPTION_END

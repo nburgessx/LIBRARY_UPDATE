@@ -9,7 +9,6 @@
 #include <sstream>
 #include <utility>
 
-#include <boost/format.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time.hpp>
@@ -139,7 +138,7 @@ namespace etrading
     std::string createJSONStringFromSchemaObject(	const SchemaObject& co, bool addClosure, bool allowRecursive )
     {
         const std::string enumTypeAsString = toString( co.getEnumType() );
-        std::string startingString = ( boost::format( "{\"CACHED_OBJECT_TYPE\" : \"%s\" , \"STRUCTURED_KEYS\" : " ) % enumTypeAsString ).str();
+        std::string startingString = "{\"CACHED_OBJECT_TYPE\" : \"" + enumTypeAsString + "\" , \"STRUCTURED_KEYS\" : ";
         startingString += allowRecursive ? co.serialize( serialize::JSON, serialize::STRING ) : createJSONStringFromDataSchemas( co );
         if( addClosure )
         {
@@ -153,16 +152,16 @@ namespace etrading
         // the smallest valid JSON object is "{}"
         if(inputData.length()<=2)
         {
-            throw ETradingException( std::string( "#Error: Unable to interpret file as JSON : " ) + inputData );
+            AQ_THROW( std::string( "Unable to interpret file as JSON : " ) + inputData );
         }
         rapidjson::Document document;
         if( document.Parse<0>( inputData.c_str() ).HasParseError() )
         {
-            throw ETradingException( std::string( "#Error: Unable to interpret file as JSON : " ) + inputData );
+            AQ_THROW( std::string( "Unable to interpret file as JSON : " ) + inputData );
         }
         if( !document.IsObject() ) // the document instance here is the dataInstance of the DOM model
         {
-            throw ETradingException( std::string( "#Error: Incomplete or Invalid JSON format in string: " ) + inputData );
+            AQ_THROW( std::string( "Incomplete or Invalid JSON format in string: " ) + inputData );
         }
         return document;
     }
@@ -171,7 +170,7 @@ namespace etrading
     {
         if( !fileExists( fileName ) )
         {
-            throw ETradingException( std::string( "#Error: Unable to read JSON data - File not found " ) + fileName );
+            AQ_THROW( std::string( "Unable to read JSON data - File not found " ) + fileName );
         }
         std::ifstream inputFileStream( fileName.c_str() );
         std::stringstream stringBuffer;
@@ -222,7 +221,7 @@ namespace etrading
         // check relevant index match with type and index
         if( sk.getNumberOfColumns() != relevantIdxs.size() )
         {
-            throw ETradingException( "#Error: Number of columns does not match serialization DataSchema" );
+            AQ_THROW( "Number of columns does not match serialization DataSchema" );
         }
 
         Document skDoc;
@@ -278,7 +277,7 @@ namespace etrading
     {
         if( !inputValue.IsArray() )
         {
-            throw ETradingException( "#Error: Unable to serialize a scalar value into a vector" );
+            AQ_THROW( "Unable to serialize a scalar value into a vector" );
         }
 
         std::vector<Variant> outVector( 0 );
@@ -341,14 +340,15 @@ namespace etrading
 
             if( numberOfColumns <= 0 )
             {
-                throw ETradingException( ( boost::format( "#Error: No data provided to create DataSchema '%s'" ) % keyName ).str() );
+                { std::ostringstream aqMsg236;
+aqMsg236 << "No data provided to create DataSchema '" << keyName << "'"; AQ_THROW( aqMsg236.str() ); }
             }
             else
             {
                 Value::ConstMemberIterator itr = inputValue.FindMember( SK_COLUMN_TYPES );
                 if ( itr == inputValue.MemberEnd() )
                 {
-                    throw ETradingException( std::string( "#Error: Unable to determine the column type(s) for DataSchema" ) + keyName );
+                    AQ_THROW( std::string( "Unable to determine the column type(s) for DataSchema" ) + keyName );
                 }
 
                 const Value& columnTypesInJSON = inputValue[SK_COLUMN_TYPES];
@@ -391,9 +391,9 @@ namespace etrading
         }
         catch ( ... )
         {
-            throw ETradingException( "#Error: Invalid Data Schema within rapidjson file" );
+            AQ_THROW( "Invalid Data Schema within rapidjson file" );
         }
-        throw ETradingException( "#Error: Invalid Data Schema within rapidjson file" );
+        AQ_THROW( "Invalid Data Schema within rapidjson file" );
 
     };
 

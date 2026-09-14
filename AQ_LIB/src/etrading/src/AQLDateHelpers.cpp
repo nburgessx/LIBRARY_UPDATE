@@ -110,7 +110,7 @@ namespace
 			AQLString msg;
 			msg += "#Error: Unknown roll convention; ";
 			msg += enumString;
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 	}
 }
@@ -156,7 +156,7 @@ namespace etrading
 			    AQLString msg = "#Error: RollConventionEnum number '";
 			    msg += enumValue;
 			    msg += "' is not convertable to a string.";
-			    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);;
+			    AQ_THROW( msg.getCString() );;
 			    break;
 		    }
         }
@@ -638,21 +638,21 @@ namespace etrading
 		if ( pl_d != -1 && pl_c != -1 )
 		{
 			AQLString msg = "Invalid Tenor String: Cannot have calendar (C) and business-day (D) tenors at the same time";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 
 		if (pl_y == -1 && pl_m == -1 && pl_d == -1 && pl_w == -1 && pl_c == -1 )
 		{
 			//error
 			AQLString msg = "Invalid Tenor String: Term must be Y, M, W, D, C or TN, ON.";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 		// week 
 		if ((pl_y != -1 || pl_m != -1 || pl_d != -1 || pl_c != -1) && pl_w != -1)
 		{
 			//error
 			AQLString msg = "#Error: Invalid Tenor String: Weekly Terms W cannot be used in in combination with other term strings.";
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( msg.getCString() );
 		}
 
 		// String can only contain the following characters and numbers
@@ -663,7 +663,7 @@ namespace etrading
 		if (std::string::npos != tempString.find_first_not_of("YMDWC-0123456789"))
 		{
 			std::string msg = "Invalid Tenor String '" + tempString + "' : Term must be Y, M, W, D, C or TN, ON and contain no spaces";
-			throw AQLCoreInvalidData(msg.c_str(), __FILE__, __LINE__);
+			AQ_THROW( msg.c_str() );
 		}
 
 		// --------------------------------------------------------------------------------
@@ -819,7 +819,7 @@ namespace etrading
 		    if (!pCal)
 		    {
                 AQLString msg = "#Error: Missing Calendar";
-			    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+			    AQ_THROW( msg.getCString() );			
 		    }
 		    date = pCal->getBusinessDay(date, d);
 	    }
@@ -879,7 +879,7 @@ namespace etrading
     AQLDateHelpers::getIMMDate(const int& y, const int& m, bool isOddMonth)
     {
 	    if ((m%3 && !isOddMonth) || m <= 0 || m>=13) 
-            throw AQLCoreInvalidData("#Error: Invalid IMM Month: IMM Month must be 3, 6, 9  or 12", __FILE__, __LINE__);
+            AQ_THROW( "Invalid IMM Month: IMM Month must be 3, 6, 9  or 12" );
 	
 	    AQLDate date;
 	    date.setYear(y); date.setMonth(m); date.setDay(1);
@@ -916,7 +916,7 @@ namespace etrading
         {
             AQLString    msg = "#Error: Invalid Date: Invalid Weekday [";
             msg += weekly + "]";
-            throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+            AQ_THROW( msg.getCString() );
         }
 	
 	    date.addWeeks(2);
@@ -995,10 +995,7 @@ namespace etrading
     AQLDate
     AQLDateHelpers::getFuturesContractStartDate(const unsigned int& month, const unsigned int& year )
     {
-	    if ( month > 12 ) 
-        {
-            throw AQLCoreInvalidData("#Error: Invalid futures contract month.", __FILE__, __LINE__);
-        }
+	    AQ_THROW_IF( month > 12, "Invalid futures contract month." );
 	
 	    AQLDate date;
 	    date.setYear( year );
@@ -1036,7 +1033,7 @@ namespace etrading
         }
         else 
         {
-            throw AQLCoreInvalidData("#Error: Invalid day of the week.", __FILE__, __LINE__);
+            AQ_THROW( "Invalid day of the week." );
         }
 	
 	    date.addWeeks( 2 );
@@ -1054,10 +1051,10 @@ namespace etrading
     AQLDateHelpers::getIMMDateFromTerm(const AQLDate& baseDate, const AQLString& futureTerm)
     {
 	    if (futureTerm.size() != 4) 
-            throw AQLCoreInvalidData("#Error: Invalid Futures Contract Tenor - Futures contracts must have 4 characters", __FILE__, __LINE__);
+            AQ_THROW( "Invalid Futures Contract Tenor - Futures contracts must have 4 characters" );
 
 	    if (!isdigit(*futureTerm.subString(3, 3).getCString()))
-		    throw AQLCoreInvalidData("#Error: Invalid Futures Contract Tenor - Futures contracts must end with a digit", __FILE__, __LINE__);
+		    AQ_THROW( "Invalid Futures Contract Tenor - Futures contracts must end with a digit" );
 	    
         unsigned int month = changeFutureMonthFormat(futureTerm.subString(2, 2));
 	    int year = baseDate.yearOfEra();
@@ -1079,7 +1076,7 @@ namespace etrading
     AQLDateHelpers::getFFDatesFromTerm(const AQLDate& baseDate, const AQLString& fedfundTerm)
     {
 	    if (fedfundTerm.size() != 4) 
-            throw AQLCoreInvalidData("#Error: Invalid FED Fund Contract Tenor - Contract tenor must be 4 characters", __FILE__, __LINE__);
+            AQ_THROW( "Invalid FED Fund Contract Tenor - Contract tenor must be 4 characters" );
 	    
         unsigned int month = changeFutureMonthFormat(fedfundTerm.subString(2, 2));
 	    AQLString yearStr_basedate = AQLString(baseDate.yearOfEra());
@@ -1176,10 +1173,10 @@ namespace etrading
 
 	    if (!exists) {
 		    if (strictlyAfter) {
-                throw AQLCoreAppError("#Error: No central bank data available after specified reference date", __FILE__, __LINE__);
+                AQ_THROW( "No central bank data available after specified reference date" );
 		    }
 		    else {
-			    throw AQLCoreAppError("#Error: No central bank data available on or after specified reference date", __FILE__, __LINE__);
+			    AQ_THROW( "No central bank data available on or after specified reference date" );
 		    }
 	    }
 
@@ -1277,7 +1274,7 @@ namespace etrading
 	    }
 	    else
 	    {
-            throw AQLCoreInvalidData("#Error: Invalid Futures Contract: Futures month is invalid", __FILE__, __LINE__);
+            AQ_THROW( "Invalid Futures Contract: Futures month is invalid" );
 	    }	
     }
 
@@ -1306,10 +1303,7 @@ namespace etrading
 		    dates.push_back(date);
 	    }
 
-	    if (dates.size() != terms.size())
-	    {
-            throw AQLCoreInvalidData("#Error: Inconsistent Data: Number of dates and terms must match", __FILE__, __LINE__);
-	    }
+	    AQ_THROW_IF( dates.size() != terms.size(), "Inconsistent Data: Number of dates and terms must match" );
     }
 
     // Return the frequency in months for comparing two frequencies, not for accurate calculations
@@ -1350,7 +1344,7 @@ namespace etrading
 	    int	span_pay = getPeriodFrequencyInMonths(freq_pay); 
 
 	    if (span_pay < span_rst) //error
-            throw AQLCoreInvalidData("#Error: Invalid compound frequency - Pay frequency cannot be more regular than the accrual / reset frequency", __FILE__, __LINE__);
+            { AQ_THROW( "Invalid compound frequency - Pay frequency cannot be more regular than the accrual / reset frequency" ); }
 	    else return span_pay / span_rst;
     }
 

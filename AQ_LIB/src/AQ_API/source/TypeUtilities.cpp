@@ -1,4 +1,5 @@
 #include "TypeUtilities.h"
+#include "ExceptionMacros.h"
 #include "AnyTypeUtilities.h"       // Boost AnyType Matrix Helpers
 #include "ScheduleValidation.h"     // transpose()
 #include "ParameterValidation.h"
@@ -415,7 +416,7 @@ namespace swig
 
 		if( totalRowSize == 0 || maxColumnSize == 0 )
 		{
-			throw AQLCoreInvalidData( "#Error: There are no rows or columns to display.", __FILE__, __LINE__ );
+			AQ_THROW( "There are no rows or columns to display." );
 		}
 
 		// String Matrices Require Special Treatment for R API
@@ -549,7 +550,7 @@ namespace swig
 		buildStringMatrix(temp, input);
 		if (temp.size() == 0)
 		{
-			throw AQLCoreInvalidData("#Error: an empty Label Value Block object is given", __FILE__, __LINE__ );
+			AQ_THROW( "an empty Label Value Block object is given" );
 		}
 
 		LabelValueBlock a(temp);

@@ -14,7 +14,6 @@
 #include <limits>
 #include <memory>
 #include <boost/assign.hpp>
-#include <boost/format.hpp>
 #include <boost/date_time.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/thread.hpp>
@@ -128,8 +127,7 @@ namespace google_test
         ptrToCurveOutput->setCurveBuildStaticDataObject( newConventionUsed );
         double my_df2 = ptrToCurveOutput->calculateDiscountFactor( "3M" );
 
-        const std::string readWriteFileName = ( boost::format( "%s/resource/test/inputs/ETrading/AQObjects/AQObjCurve/%s.json" )
-                                                % etrading::getEnvironmentVariable( "AQ" ).c_str() % ptrToCurveOutput->getName().c_str() ).str();
+        const std::string readWriteFileName = etrading::getEnvironmentVariable( "AQ" ) + "/resource/test/inputs/ETrading/AQObjects/AQObjCurve/" + ptrToCurveOutput->getName() + ".json";
 
         // I want to serialize an object to a file (local or pointing to an object in the cache)
         ptrToCurveOutput->serialize( etrading::serialize::JSON, etrading::serialize::FILE, readWriteFileName );

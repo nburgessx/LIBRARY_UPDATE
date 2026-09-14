@@ -49,10 +49,7 @@ namespace validation
             file.write( "collateralCurves", collateralCurves );
         }
 
-        if( collateralCurves.size() == 0 )
-        {
-			throw AQLCoreInvalidData( "#Error: No collateral curves are given. ", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( collateralCurves.size() == 0, "No collateral curves are given. " );
 				
         AQLUpdateStaticDataManager::setUpCheapestToDeliverCurve(etrading::getDataInstance(),
 														   curveCollection, 

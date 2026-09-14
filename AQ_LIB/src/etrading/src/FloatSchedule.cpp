@@ -106,10 +106,7 @@ namespace etrading
 		futureValueNotional_ = scheduleLVB.getOptionalValueAsDouble(IRS_KEY::FV_NOTIONAL, std::numeric_limits<double>::quiet_NaN());
 
 		//FutureNotional is for Zero Coupon Swap
-        if (!boost::math::isnan(futureValueNotional_))
-        {
-        	throw AQLCoreInvalidData( "#Error: Float leg does not support FVNotional", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !boost::math::isnan(futureValueNotional_), "Float leg does not support FVNotional" );
 	
 	}
 
@@ -284,18 +281,12 @@ namespace etrading
 			
 			AQLDate accrualStart	= cashflowLVB.getCompulsoryValueAsDate( CASHFLOW_KEY::ACCRUAL_START, inputLVB );
 			AQLDate accrualEnd = cashflowLVB.getCompulsoryValueAsDate( CASHFLOW_KEY::ACCRUAL_END,  inputLVB );
-			if (accrualStart > accrualEnd) 
-			{
-				throw AQLCoreInvalidData( "#Error: Accrual Start Date cannot be later than Accrual End Date", __FILE__, __LINE__ );
-			}
+			AQ_THROW_IF( accrualStart > accrualEnd, "Accrual Start Date cannot be later than Accrual End Date" );
 
 			AQLDate fixingDate	= cashflowLVB.getOptionalValueAsDate( CASHFLOW_KEY::FIXING_DATE, accrualStart);
 			AQLDate paymentDate = cashflowLVB.getCompulsoryValueAsDate(CASHFLOW_KEY::PAYMENT_DATE, inputLVB);
 
-            if (fixingDate > paymentDate) 
-			{
-				throw AQLCoreInvalidData( "#Error: Fixing Date cannot be later than Payment Date", __FILE__, __LINE__ );
-			}
+            AQ_THROW_IF( fixingDate > paymentDate, "Fixing Date cannot be later than Payment Date" );
 
 			double notional			= cashflowLVB.getCompulsoryValueAsDouble( IRS_KEY::NOTIONAL,  inputLVB );
 			double leverage			= cashflowLVB.getCompulsoryValueAsDouble( IRS_KEY::LEVERAGE,  inputLVB );

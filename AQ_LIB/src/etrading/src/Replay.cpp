@@ -1,5 +1,6 @@
 // Replay.cpp
 
+#include "ExceptionMacros.h"
 #include "Replay.h"
 #include "ReadDataFile.h"
 #include "AQLCoreAppError.h"
@@ -20,10 +21,7 @@ namespace etrading
     */
     const AQLString replay( const AQLString& filepath )
     {
-        if ( filepath.size() == 0 || filepath.isDefined() == false )
-        {
-            throw AQLCoreInvalidData( "#Error: Filepath must be Provided.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( filepath.size() == 0 || filepath.isDefined() == false, "Filepath must be Provided." );
 
         try
         {
@@ -58,7 +56,7 @@ namespace etrading
             if ( functionList.find( generatorFunction ) == functionList.end() )
             {
                 AQLString msg = "#Error: Unable to find the generator function " + generatorFunction;
-                throw AQLCoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
+                AQ_THROW( msg.getCString() );
             }
 
             // Point functionPointer to functionName
@@ -73,17 +71,17 @@ namespace etrading
         }
         catch( const ReadDataFile::LoadError& )
         {
-            throw AQLCoreInvalidData( "#Error: Unable to open the file specified", __FILE__, __LINE__ );
+            AQ_THROW( "Unable to open the file specified" );
         }
         catch( std::exception& e )
         {
             std::stringstream s;
             s << "#Error: " << e.what();
-            throw AQLCoreInvalidData( s.str().c_str() , __FILE__, __LINE__ );
+            AQ_THROW( s.str().c_str() );
         }
         catch( ... )
         {
-            throw AQLCoreInvalidData( "#Error: Unable to read the file specified", __FILE__, __LINE__ );
+            AQ_THROW( "Unable to read the file specified" );
         }
     }
 }

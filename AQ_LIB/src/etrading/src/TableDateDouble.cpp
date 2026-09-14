@@ -45,7 +45,8 @@ namespace etrading
                 os.imbue(dateFormatDDMMYYYY);
                 os << dates[i];
 
-                throw ETradingException( ( boost::format( "#Error: Duplicate dates are not allowed, date %s is a duplicate date" ) % os.str() ).str().c_str() );
+                { std::ostringstream aqMsg247;
+aqMsg247 << "Duplicate dates are not allowed, date " << os.str() << " is a duplicate date"; AQ_THROW( aqMsg247.str() ); }
             }
             uniqueDatesSet.insert( dates[i] );
         }
@@ -64,7 +65,8 @@ namespace etrading
 
         if( dates.size() != values.size() )
         {
-            throw ETradingException( ( boost::format( "Cannot add a data point to a TableDateDouble when dates and values are of unequal size %i (dates) and %i (values)" ) % dates.size() % values.size() ).str().c_str() );
+            { std::ostringstream aqMsg248;
+aqMsg248 << "Cannot add a data point to a TableDateDouble when dates and values are of unequal size " << dates.size() << " (dates) and " << values.size() << " (values)"; AQ_THROW( aqMsg248.str() ); }
         }
 
         auto cit = std::find_if( dates.begin(), dates.end(), [&date]( const boost::gregorian::date & el )
@@ -102,7 +104,8 @@ namespace etrading
                 os.imbue(dateFormatDDMMYYYY);
                 os << dates[i];
 
-                throw ETradingException( ( boost::format( "#Error: Duplicate dates are not allowed, date %s is a duplicate date" ) % os.str() ).str().c_str() );
+                { std::ostringstream aqMsg249;
+aqMsg249 << "Duplicate dates are not allowed, date " << os.str() << " is a duplicate date"; AQ_THROW( aqMsg249.str() ); }
             }
             uniqueDatesSet.insert( dates[i] );
         }
@@ -159,12 +162,14 @@ namespace etrading
         const std::vector<Variant>& datesData = viewDates();
         if( idx >= datesData.size() )
         {
-            throw ETradingException( ( boost::format( "Illegal Date index requested: %i when there are %i dates available" ) % idx %  datesData.size() ).str().c_str()  );
+            { std::ostringstream aqMsg250;
+aqMsg250 << "Illegal Date index requested: " << idx << " when there are " << datesData.size() << " dates available"; AQ_THROW( aqMsg250.str() ); }
         }
         const std::vector<Variant>& valuesData = viewValues();
         if( idx >= valuesData.size() )
         {
-            throw ETradingException( ( boost::format( "Illegal Value index requested: %i when there are %i values available" ) % idx %  valuesData.size() ).str().c_str()  );
+            { std::ostringstream aqMsg251;
+aqMsg251 << "Illegal Value index requested: " << idx << " when there are " << valuesData.size() << " values available"; AQ_THROW( aqMsg251.str() ); }
         }
         return std::make_pair( datesData[ idx ].getValue<boost::gregorian::date>(), valuesData[ idx ].getValue<double>() );
     }

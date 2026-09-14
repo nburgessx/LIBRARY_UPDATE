@@ -26,10 +26,13 @@
     <None Include="..\src\AQ_XLL\resources\SetUp.md">
       <Filter>resources</Filter>
     </None>
-    <None Include="..\src\AQ_XLL\resources\manifest\active.json">
+    <None Include="..\src\AQ_XLL\resources\manifest\active.txt">
       <Filter>resources\manifest</Filter>
     </None>
-    <None Include="..\src\AQ_XLL\resources\manifest\demo.json">
+    <None Include="..\src\AQ_XLL\resources\manifest\demo.txt">
+      <Filter>resources\manifest</Filter>
+    </None>
+    <None Include="..\src\AQ_XLL\resources\manifest\generateManifestList.bat">
       <Filter>resources\manifest</Filter>
     </None>
   </ItemGroup>
@@ -102,7 +105,7 @@
     <ClInclude Include="..\src\AQ_XLL\include\aqMain.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_XLL\include\generated\aqManifestFunctions.h">
+    <ClInclude Include="..\src\AQ_XLL\include\generated\aqManifestList.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

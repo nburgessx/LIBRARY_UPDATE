@@ -101,7 +101,7 @@ namespace etrading
 
     double Cashflow::getCompoundRate( const CashflowData& cashflowData ) const
 	{
-    	throw AQLCoreInvalidData( "#Error: getCompoundRate not supported", __FILE__, __LINE__ );
+    	AQ_THROW( "getCompoundRate not supported" );
 	}
 
     double Cashflow::calculateCompounding(double cp, const CashflowData& cashflowData ) const 

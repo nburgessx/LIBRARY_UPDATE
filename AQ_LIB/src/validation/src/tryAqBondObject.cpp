@@ -167,10 +167,7 @@ namespace validation
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
 		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
 
-        if ( settlementDates.size() != yields.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( settlementDates.size() != yields.size(), "Invalid Yield Input and/or Inconsistent number of dates and yields." );
 
         auto bond                           = etrading::getBond( bondObjectName );
 
@@ -300,15 +297,9 @@ namespace validation
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
 		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
 
-        if ( yields.size() == 0 )
-        {
-            throw AQLCoreInvalidData("#Error: No Yield data provided.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( yields.size() == 0, "No Yield data provided." );
 
-        if ( settlementDates.size() != yields.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( settlementDates.size() != yields.size(), "Invalid Yield Input and/or Inconsistent number of dates and yields." );
 
         auto bond                           = etrading::getBond( bondObjectName );
         auto yieldCalcType = bond->getYieldCalulationType(yieldCalculationType);
@@ -345,10 +336,7 @@ namespace validation
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
 		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
 
-        if ( settlementDates.size() != yields.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( settlementDates.size() != yields.size(), "Invalid Yield Input and/or Inconsistent number of dates and yields." );
 
         auto bond                           = etrading::getBond( bondObjectName );
         auto yieldCalcType = bond->getYieldCalulationType(yieldCalculationType);
@@ -384,10 +372,7 @@ namespace validation
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
 		AQ_RECORD_DECORATED_INPUTS( bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType );
 
-        if ( settlementDates.size() != yields.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( settlementDates.size() != yields.size(), "Invalid Yield Input and/or Inconsistent number of dates and yields." );
 
         auto bond                           = etrading::getBond( bondObjectName );
         auto yieldCalcType                  = bond->getYieldCalulationType(yieldCalculationType);
@@ -485,10 +470,7 @@ namespace validation
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
 		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, prices, yieldCalculationType , optimizePerformance );
 
-        if( settlementDates.size() != prices.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Inconsistent number of dates and prices.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( settlementDates.size() != prices.size(), "Inconsistent number of dates and prices." );
 
         auto bondObject = etrading::getBond( bondObjectName );
         std::vector< double > yields;
@@ -604,10 +586,7 @@ namespace validation
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
 		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, prices, yieldCalculationType  );
 
-        if ( settlementDates.size() != prices.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( settlementDates.size() != prices.size(), "Invalid Yield Input and/or Inconsistent number of dates and yields." );
 
         auto bond                           = etrading::getBond( bondObjectName );
 
@@ -652,10 +631,7 @@ namespace validation
 		double bumpAmount = ( bumpSize == 0.0 ) ? 0.01 : bumpSize;
 		AQLString bumpType = ( bumpMode == "" )  ? "UP" : bumpMode;
 
-        if ( settlementDates.size() != yields.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( settlementDates.size() != yields.size(), "Invalid Yield Input and/or Inconsistent number of dates and yields." );
 
         auto bond                           = etrading::getBond( bondObjectName );
         auto yieldCalcType = bond->getYieldCalulationType(yieldCalculationType);        
@@ -693,10 +669,7 @@ namespace validation
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
 		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType  );
 
-        if ( settlementDates.size() != yields.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( settlementDates.size() != yields.size(), "Invalid Yield Input and/or Inconsistent number of dates and yields." );
 
         auto bond                           = etrading::getBond( bondObjectName );
         auto yieldCalcType = bond->getYieldCalulationType(yieldCalculationType);        
@@ -734,10 +707,7 @@ namespace validation
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
 		AQ_RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType  );
 
-        if ( settlementDates.size() != yields.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( settlementDates.size() != yields.size(), "Invalid Yield Input and/or Inconsistent number of dates and yields." );
 
         auto bond                           = etrading::getBond( bondObjectName );
         auto yieldCalcType = bond->getYieldCalulationType(yieldCalculationType);        
@@ -771,10 +741,7 @@ namespace validation
 
 		size_t settleDatesSize = settlementDates.size();
 
-	    if ( settleDatesSize != yields.size() )
-        {
-            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
-        }
+	    AQ_THROW_IF( settleDatesSize != yields.size(), "Invalid Yield Input and/or Inconsistent number of dates and yields." );
 
         std::vector< double > spreads(settleDatesSize);
 
@@ -834,10 +801,7 @@ namespace validation
             //*** Expected input Columns at least two columns: Tenor, Rate
             auto curRow = oisParRateMatrix[i];
 
-            if (curRow.size() < 2)
-            {
-              throw AQLCoreInvalidData( "#Error: OIS par rate matrix must have at least 2 columns: Tenor, Rate" , __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( curRow.size() < 2, "OIS par rate matrix must have at least 2 columns: Tenor, Rate" );
 
 			//Tenor
 			AQLString tenor = curRow[0];
@@ -852,10 +816,7 @@ namespace validation
                 || tenor.findString("CB") != -1        // *** GENERIC *** Central Bank Swaps
                 || tenor.findString("MPC") != -1 )     // *** GENERIC *** Monetary Policy Committee Swaps
 			{
-				if (curRow.size() < 4)
-				{
-					throw AQLCoreInvalidData("#Error: OIS par rate matrix short term needs StartDate and EndDate",__FILE__,__LINE__);
-				}
+				AQ_THROW_IF( curRow.size() < 4, "OIS par rate matrix short term needs StartDate and EndDate" );
 
 				const AQLDate& startDate = etrading::stringToDate( curRow[2], "#Error: Invalid 'startDate'." ); 
 				const AQLDate& endDate = etrading::stringToDate( curRow[3], "#Error: Invalid 'endDate'." ); 
@@ -885,10 +846,7 @@ namespace validation
             oisRates[maturityDateInteger] = rate;
         }
 
-		if (oisRates.size() == 0)
-		{
-	        throw AQLCoreInvalidData( "#Error: OIS par rate matrix has no par rate." , __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( oisRates.size() == 0, "OIS par rate matrix has no par rate." );
 
 		// Retrieve all keys
 		std::vector<int> maturityDates;
@@ -1058,16 +1016,13 @@ namespace validation
 		VALID_EXCEPTION_START
 		
 		// Perform initial basic sanity checks
-        if ( infoBlocks.size() == 0 )
-        {
-			throw AQLCoreInvalidData( "#Error: No Property grid data provided to tryAqBondGeneratorCreate", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( infoBlocks.size() == 0, "No Property grid data provided to tryAqBondGeneratorCreate" );
 
         if ( propertyNames.size() != infoBlocks.size() )
         {
-			throw AQLCoreInvalidData( ( boost::format( "#Error: Number of Property Names (%i) does not match number of grid data ranges (%i)." )
-                                   % propertyNames.size()
-                                   % infoBlocks.size() ).str().c_str(), __FILE__, __LINE__ );
+			std::ostringstream msg;
+			msg << "Number of Property Names (" << propertyNames.size() << ") does not match number of grid data ranges (" << infoBlocks.size() << ").";
+			AQ_THROW( msg.str() );
         }
 
 		// Recording of inputs for playback
@@ -1096,8 +1051,9 @@ namespace validation
 
         if ( hasAnEmptyName )
         {
-			throw AQLCoreInvalidData( ( boost::format( "#Error: One of the individual Property Names is empty or invalid (%s)" )
-                                   % etrading::containerAsString( propertyNames ).c_str() ).str().c_str(), __FILE__, __LINE__ );
+			std::ostringstream msg;
+			msg << "One of the individual Property Names is empty or invalid (" << etrading::containerAsString( propertyNames ) << ")";
+			AQ_THROW( msg.str() );
         }
 
 
@@ -1223,10 +1179,7 @@ namespace validation
 
 		size_t settleDatesSize = settlementDates.size();
 
-		if (settleDatesSize != bondPrices.size() || settleDatesSize != curveCollections.size() || settleDatesSize != forecastCurves.size())
-		{
-			throw AQLCoreInvalidData("#Error: Inconsistent number of settlement dates, bondPrices, curveCollections, and forecastCurves.", __FILE__, __LINE__);
-		}
+		AQ_THROW_IF( settleDatesSize != bondPrices.size() || settleDatesSize != curveCollections.size() || settleDatesSize != forecastCurves.size(), "Inconsistent number of settlement dates, bondPrices, curveCollections, and forecastCurves." );
 
 		std::vector< double > zSpreads(settleDatesSize);
 

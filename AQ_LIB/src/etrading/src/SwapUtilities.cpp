@@ -44,7 +44,7 @@ namespace etrading
 
         if (provideBoth || (mandatoryField && provideNone))
         {
-            AQ_THROW( "#Error: Please provide either: key '" + key + "' for both legs, or '" + key + "1'/'" + key + "2' for leg1/leg2");
+            AQ_THROW( "Please provide either: key '" + key + "' for both legs, or '" + key + "1'/'" + key + "2' for leg1/leg2");
         } 
         
         else if (value.size() != 0)
@@ -82,10 +82,7 @@ namespace etrading
             invalidFormat = true; 
         }
 
-        if (invalidFormat)
-        {
-            throw AQLCoreInvalidData("#Error: LegType needs to be in the format of 'LegId:Type', e.g. 'Leg1:Fixed', 'Leg2:Float', 'Leg3:Fee'",__FILE__,__LINE__);
-        }
+        AQ_THROW_IF( invalidFormat, "LegType needs to be in the format of 'LegId:Type', e.g. 'Leg1:Fixed', 'Leg2:Float', 'Leg3:Fee'" );
 		return result;
 	}
 
@@ -101,10 +98,7 @@ namespace etrading
 
 		ScheduleTypeEnum legScheduleType = getScheduleTypeFromLegName(legName);
 
-		if (schedule != nullptr && legScheduleType != schedule->getScheduleType())
-        {
-            throw AQLCoreInvalidData("#Error: The scheduleType from Leg and Schedule should be the same",__FILE__,__LINE__);
-        }
+		AQ_THROW_IF( schedule != nullptr && legScheduleType != schedule->getScheduleType(), "The scheduleType from Leg and Schedule should be the same" );
 	
 		LegPtr ret; 
 		switch(legScheduleType)
@@ -140,7 +134,7 @@ namespace etrading
 				ret = LegPtr(new FloatBondLeg(legLVB, legObjectName, schedule));
 				break;
 			default:
-		        throw AQLCoreInvalidData("#Error: Leg type can only be either 'FIXED', 'FLOAT', 'FEE', 'FRA', 'PREMIUM', 'PROTECTION', 'CMS', FIXEDBOND, or 'FLOATBOND'",__FILE__,__LINE__);
+		        AQ_THROW( "Leg type can only be either 'FIXED', 'FLOAT', 'FEE', 'FRA', 'PREMIUM', 'PROTECTION', 'CMS', FIXEDBOND, or 'FLOATBOND'" );
                 break;
         }
 
@@ -267,7 +261,7 @@ namespace etrading
 				mySwap = std::shared_ptr<Swap>(new ZeroCouponInflationSwap( swapName, firstLeg, secondLeg, swapPropertiesLVB ));
 				break;
 			default:
-			    throw AQLCoreInvalidData("#Error: Swap type must be 'VanillaSwap', 'CrossCurrencySwap', 'ZeroCouponSwap', 'XccyZeroCouponSwap', 'CreditDefaultSwap', 'ConstantMaturitySwap', 'TotalReturnSwap' or 'ZeroCouponInflationSwap'.",__FILE__,__LINE__);
+			    AQ_THROW( "Swap type must be 'VanillaSwap', 'CrossCurrencySwap', 'ZeroCouponSwap', 'XccyZeroCouponSwap', 'CreditDefaultSwap', 'ConstantMaturitySwap', 'TotalReturnSwap' or 'ZeroCouponInflationSwap'." );
 				break;
 		}
 
@@ -282,10 +276,7 @@ namespace etrading
     */
 	std::shared_ptr<Swap> createSwapFromLegs(const std::string& swapName, const std::vector<LegPtr>& legs, const LabelValueBlock& swapPropertiesLVB)
     {
-   		if (legs.size() < 2) 
-		{
-			throw AQLCoreInvalidData( "#Error: Swap must have at least two legs", __FILE__, __LINE__ );
-		}
+   		AQ_THROW_IF( legs.size() < 2, "Swap must have at least two legs" );
 
         auto mySwap = createSwapFromLegs(swapName, legs[0], legs[1], swapPropertiesLVB);
         for (size_t i = 2; i < legs.size(); ++i)
@@ -353,19 +344,13 @@ namespace etrading
 	std::shared_ptr<Swap> createSwap(const std::string& swapName, const std::vector<LabelValueBlock>& legsLVB, const LabelValueBlock& swapPropertiesLVB, const std::vector<SchedulePtr>& schedules)
 	{
 
-		if (legsLVB.size() < 2) 
-		{
-			throw AQLCoreInvalidData( "#Error: Swap must have at least two legs", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( legsLVB.size() < 2, "Swap must have at least two legs" );
 
 		SchedulePtr schedule1;
 		SchedulePtr schedule2;
 		if (schedules.size() != 0) 
 		{
-			if (legsLVB.size() != schedules.size())
-			{
-				throw AQLCoreInvalidData( "#Error: The size of legLVBs and schedules are not matched", __FILE__, __LINE__ );
-			}
+			AQ_THROW_IF( legsLVB.size() != schedules.size(), "The size of legLVBs and schedules are not matched" );
 			schedule1 = schedules[0];
 			schedule2 = schedules[1];
 		}
@@ -489,7 +474,7 @@ namespace etrading
 				// Nothing additional to add.
 				break;
 			default:
-		        throw AQLCoreInvalidData("#Error: Leg type can only be either 'FIXED', 'FLOAT', 'PREMIUM', 'PROTECTION', 'CMS', 'INFLATION', 'FLOATBOND', or 'FIXEDBOND''",__FILE__,__LINE__);
+		        AQ_THROW( "Leg type can only be either 'FIXED', 'FLOAT', 'PREMIUM', 'PROTECTION', 'CMS', 'INFLATION', 'FLOATBOND', or 'FIXEDBOND''" );
                 break;
         }
 
@@ -544,7 +529,7 @@ namespace etrading
 				// Nothing additional to add.
 				break;
 			default:
-		        throw AQLCoreInvalidData("#Error: Leg type can only be either 'FIXED', 'FLOAT', 'PREMIUM', 'PROTECTION', 'CMS', 'INFLATION', 'FLOATBOND', or ''FIXEDBOND",__FILE__,__LINE__);
+		        AQ_THROW( "Leg type can only be either 'FIXED', 'FLOAT', 'PREMIUM', 'PROTECTION', 'CMS', 'INFLATION', 'FLOATBOND', or ''FIXEDBOND" );
                 break;
         }
 
@@ -555,10 +540,10 @@ namespace etrading
 
         bool provideBoth = payReceive != NONE_PAYRECEIVE_ENUM && (payReceive1 != NONE_PAYRECEIVE_ENUM || payReceive2 != NONE_PAYRECEIVE_ENUM);
         bool provideNone = payReceive == NONE_PAYRECEIVE_ENUM && payReceive1 == NONE_PAYRECEIVE_ENUM && payReceive2 == NONE_PAYRECEIVE_ENUM;
-        if (provideBoth || provideNone)
-        {
-            throw AQLCoreInvalidData( "#Error: Please provide either 'PayReceive' or 'PayReceive1/PayReceive2'", __FILE__, __LINE__ );
-        } 
+        if ( provideBoth || provideNone )
+{
+    AQ_THROW( "Please provide either 'PayReceive' or 'PayReceive1/PayReceive2'" );
+} 
         else if (payReceive != NONE_PAYRECEIVE_ENUM)
         {
             payReceive1 = payReceive;
@@ -713,7 +698,7 @@ namespace etrading
 					mySchedule = std::shared_ptr<Schedule>(new FloatBondLegSchedule(swapScheduleLVB, scheduleName));
 					break;
 				default:
-			        throw AQLCoreInvalidData("#Error: Schedule type can only be either 'FIXED', 'FLOAT' or 'FIXEDBOND'",__FILE__,__LINE__);
+			        AQ_THROW( "Schedule type can only be either 'FIXED', 'FLOAT' or 'FIXEDBOND'" );
 					break;
 			}
 		} 
@@ -741,10 +726,7 @@ namespace etrading
 		const std::string inputLVB = "bespokeScheduleProperties";
 
 		AQLString scheduleTypeString = bespokeScheduleProperties.getCompulsoryValueAsAQLString( IRS_KEY::SCHEDULE_TYPE, inputLVB);
-		if (scheduleTypeString.size() == 0)
-        {
-            throw AQLCoreInvalidData("#Error: Schedule type can only be either 'FIXED', 'FLOAT' for BespokeSchedule",__FILE__,__LINE__);
-        }
+		AQ_THROW_IF( scheduleTypeString.size() == 0, "Schedule type can only be either 'FIXED', 'FLOAT' for BespokeSchedule" );
 
 		std::shared_ptr<Schedule> mySchedule;
         ScheduleTypeEnum schType = toScheduleTypeEnum(scheduleTypeString.getCString());
@@ -757,7 +739,7 @@ namespace etrading
 				mySchedule = SchedulePtr(new FloatSchedule(scheduleName, bespokeScheduleProperties, cashflowLVBs, bespokeScheduleType));
 				break;
 			default:
-			    throw AQLCoreInvalidData("#Error: Schedule type can only be either 'FIXED', 'FLOAT' for BespokeSchedule",__FILE__,__LINE__);
+			    AQ_THROW( "Schedule type can only be either 'FIXED', 'FLOAT' for BespokeSchedule" );
 				break;
 		}
 
@@ -793,7 +775,7 @@ namespace etrading
 			case FRA_SCHEDULE_TYPE:
         		return (withScheduleKeys ? Fra::lvbKeys() : Fra::descriptionLVBKeys());  
 			default:
-			    throw AQLCoreInvalidData("#Error: Schedule type can only be either 'FIXED', 'FLOAT', 'FEE', 'PREMIUM', 'PROTECTION', 'CMS', 'FRA', 'FIXEDBOND', or 'FLOATBOND''",__FILE__,__LINE__);
+			    AQ_THROW( "Schedule type can only be either 'FIXED', 'FLOAT', 'FEE', 'PREMIUM', 'PROTECTION', 'CMS', 'FRA', 'FIXEDBOND', or 'FLOATBOND''" );
 				break;
 		}
 	}
@@ -822,7 +804,7 @@ namespace etrading
 			case FRA_SCHEDULE_TYPE:
         		return FraSchedule::lvbKeys();  
 			default:
-			    throw AQLCoreInvalidData("#Error: Schedule type can only be either 'FIXED', 'FIXEDBOND', 'FLOAT', 'FEE', or 'FRA'",__FILE__,__LINE__);
+			    AQ_THROW( "Schedule type can only be either 'FIXED', 'FIXEDBOND', 'FLOAT', 'FEE', or 'FRA'" );
 				break;
 		}
 	}
@@ -863,7 +845,7 @@ namespace etrading
 		}
 		else 
 		{
-	        throw AQLCoreInvalidData("#Error: Leg type can only be either 'FIXED', 'FIXEDBOND', 'FLOAT', 'PREMIUM', 'PROTECTION', 'CMS', 'INFLATION' or 'FEE' leg",__FILE__,__LINE__);
+	        AQ_THROW( "Leg type can only be either 'FIXED', 'FIXEDBOND', 'FLOAT', 'PREMIUM', 'PROTECTION', 'CMS', 'INFLATION' or 'FEE' leg" );
 		}
 
 		validateKeysForLVB(expectedKeys, keys, validateKeys);
@@ -1051,10 +1033,7 @@ namespace etrading
 		size_t schedulePropertySize = bespokeSchedulePropertiesMap.size();
 
 		// If bespokeScheduleProperties are there, need to match the number
-		if (schedulePropertySize > 0 && schedulePropertySize != cashflowMatrixMap.size())
-        {
-	        throw AQLCoreInvalidData("#Error: bespokeScheduleProperties and cashflowMatrix need to have the same size",__FILE__,__LINE__);
-        }
+		AQ_THROW_IF( schedulePropertySize > 0 && schedulePropertySize != cashflowMatrixMap.size(), "bespokeScheduleProperties and cashflowMatrix need to have the same size" );
         
         std::map<std::string, SchedulePtr> schedules;
 
@@ -1078,7 +1057,7 @@ namespace etrading
 				schedule = createScheduleBespoke(objectName, scheduleProperties, cashflowLVBs, BESPOKE_SCHEDULE);
 				break;
 			default:
-				throw AQLCoreInvalidData("#Error: bespokeScheduleType can only be either 'BESPOKE_SCHEDULE_WITH_PROPERTIES' or 'BESPOKE_SCHEDULE'", __FILE__, __LINE__);
+				AQ_THROW( "bespokeScheduleType can only be either 'BESPOKE_SCHEDULE_WITH_PROPERTIES' or 'BESPOKE_SCHEDULE'" );
 				break;
 			}
 		
@@ -1245,7 +1224,8 @@ namespace etrading
 			std::shared_ptr<PremiumSchedule> premiumSchedule = std::dynamic_pointer_cast<PremiumSchedule>(schedule);
 			if ( premiumSchedule == nullptr )
 			{
-				throw ETradingException( ( boost::format( "#Error: Incorrect Schedule type for CDS Premium leg '%s'." ) % leg1->getLegName() ).str()  );
+				{ std::ostringstream aqMsg245;
+aqMsg245 << "Incorrect Schedule type for CDS Premium leg '" << leg1->getLegName() << "'."; AQ_THROW( aqMsg245.str() ); }
 			}
             if ( premiumSchedule->getCDSSpread() != leg1LVB.getOptionalValueAsDouble( etrading::CDS_KEY::CDS_SPREAD ) )
             {
@@ -1304,7 +1284,8 @@ namespace etrading
 			std::shared_ptr<PremiumSchedule> premiumSchedule = std::dynamic_pointer_cast<PremiumSchedule>(schedule);
 			if ( premiumSchedule == nullptr )
 			{
-				throw ETradingException( ( boost::format( "#Error: Incorrect Schedule type for CDS Premium leg '%s'." ) % leg2->getLegName() ).str()  );
+				{ std::ostringstream aqMsg246;
+aqMsg246 << "Incorrect Schedule type for CDS Premium leg '" << leg2->getLegName() << "'."; AQ_THROW( aqMsg246.str() ); }
 			}
             if ( premiumSchedule->getCDSSpread() != leg2LVB.getOptionalValueAsDouble( etrading::CDS_KEY::CDS_SPREAD ) )
             {
@@ -1417,7 +1398,7 @@ namespace etrading
                 break;
 
             default:
-		        throw AQLCoreInvalidData("#Error: Invalid accrual frequency. Only 'ANNUAL', 'SEMI-ANNUAL', 'QUARTERLY', 'MONTHLY', 'WEEKLY' or 'DAILY' supported.",__FILE__,__LINE__);
+		        AQ_THROW( "Invalid accrual frequency. Only 'ANNUAL', 'SEMI-ANNUAL', 'QUARTERLY', 'MONTHLY', 'WEEKLY' or 'DAILY' supported." );
                 break;
         }
 	

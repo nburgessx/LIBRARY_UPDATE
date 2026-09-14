@@ -223,7 +223,7 @@ namespace etrading
 		}
 		else
         {
-            throw ETradingException( "De-serialize unsupported object from JSON - deSerializeFromJSON" );
+            AQ_THROW( "De-serialize unsupported object from JSON - deSerializeFromJSON" );
         }
         /*
         // TODO: attempt this implementation later (cfr. ObjectUtilities.h)
@@ -248,7 +248,8 @@ namespace etrading
         } 
         else 
         {
-            throw etrading::ETradingException( ( boost::format("Objects of type '%s' are not handled in the cache") %  toString(objectType) ).str() ) ;
+            { std::ostringstream aqMsg127;
+aqMsg127 << "Objects of type '" << toString(objectType) << "' are not handled in the cache"; AQ_THROW( aqMsg127.str() ); }
         }
     }
 
@@ -261,7 +262,8 @@ namespace etrading
         } 
         else 
         {
-            throw etrading::ETradingException( ( boost::format("Objects of type '%s' are not handled in the cache") %  toString(objectType) ).str() ) ;
+            { std::ostringstream aqMsg128;
+aqMsg128 << "Objects of type '" << toString(objectType) << "' are not handled in the cache"; AQ_THROW( aqMsg128.str() ); }
         }
     }
 
@@ -274,7 +276,8 @@ namespace etrading
         } 
         else 
         {
-            throw etrading::ETradingException( ( boost::format("Objects of type '%s' are not handled in the cache") %  toString(objectType) ).str() ) ;
+            { std::ostringstream aqMsg129;
+aqMsg129 << "Objects of type '" << toString(objectType) << "' are not handled in the cache"; AQ_THROW( aqMsg129.str() ); }
         }
     }
 
@@ -287,7 +290,8 @@ namespace etrading
         } 
         else 
         {
-            throw etrading::ETradingException( ( boost::format("Objects of type '%s' are not handled in the cache") %  toString(objectType) ).str() ) ;
+            { std::ostringstream aqMsg130;
+aqMsg130 << "Objects of type '" << toString(objectType) << "' are not handled in the cache"; AQ_THROW( aqMsg130.str() ); }
         }
     }
 
@@ -300,7 +304,8 @@ namespace etrading
         } 
         else 
         {
-            throw etrading::ETradingException( ( boost::format("Objects of type '%s' are not handled in the cache") %  toString(objectType) ).str() ) ;
+            { std::ostringstream aqMsg131;
+aqMsg131 << "Objects of type '" << toString(objectType) << "' are not handled in the cache"; AQ_THROW( aqMsg131.str() ); }
         }
 	}
 		

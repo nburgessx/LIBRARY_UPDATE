@@ -26,10 +26,7 @@ namespace validation
         const AQLString outputFolder = etrading::CreateDataFile::setOutputFolder( AQLString( folder ) );
 
         // Ensure that test cases are not indexed with negative values
-        if ( startIndex < 0 || maxIndex < 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Start- and EndIndex cannot be negative", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( startIndex < 0 || maxIndex < 0, "Start- and EndIndex cannot be negative" );
 
         std::string msg;
         if ( !record )

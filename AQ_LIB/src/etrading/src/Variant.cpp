@@ -13,7 +13,6 @@
 
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/format.hpp>
 #include <boost/assign.hpp>
 #include <boost/regex.hpp>
 
@@ -579,7 +578,7 @@ namespace etrading
     {
         if( type_ == DATE_VALUE )
         {
-            return addQuotesIfString ? ( boost::format( "\"%s\"" ) % Variant::getDateString( *this ) ).str() : Variant::getDateString( *this );
+            return addQuotesIfString ? ( "\"" + Variant::getDateString( *this ) + "\"" ) : Variant::getDateString( *this );
         }
         else if( type_ == INTEGER_VALUE )
         {
@@ -595,21 +594,21 @@ namespace etrading
         }
         else if( type_ == STRING_VALUE )
         {
-            return addQuotesIfString ? ( boost::format( "\"%s\"" ) % getValue<std::string>() ).str() : getValue<std::string>();
+            return addQuotesIfString ? ( "\"" + getValue<std::string>() + "\"" ) : getValue<std::string>();
         }
         else if( type_ == VARIANT_VALUE )
         {
             if( value_.empty() )
             {
-                return  addQuotesIfString ? (boost::format("\"%s\"") % std::string("") ).str() : "";
+                return  addQuotesIfString ? std::string( "\"\"" ) : "";
             }
             else
             {
                 auto coreString = boost::lexical_cast<std::string>( value_ );
-                return addQuotesIfString ? ( boost::format( "\"%s\"" ) % coreString ).str()  : coreString;
+                return addQuotesIfString ? ( "\"" + coreString + "\"" )  : coreString;
             }
         }
-        throw ETradingException( "#Error: The toString method has not been implemented on Variant for this data type" );
+        AQ_THROW( "The toString method has not been implemented on Variant for this data type" );
     }
 
     Variant::operator double() const

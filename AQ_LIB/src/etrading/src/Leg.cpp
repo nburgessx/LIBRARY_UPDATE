@@ -26,10 +26,7 @@ namespace etrading
 
     Leg::Leg(const std::string& instanceName, const LegStaticDataPtr& legStaticData, const SchedulePtr& schedule) : IsAQObject(instanceName, LEG), legStaticData_(legStaticData), schedule_(schedule)
     {
-  		if (legStaticData_ == nullptr || schedule_ == nullptr)
-		{
-			throw AQLCoreInvalidData( "#Error: LegStaticData or Schedule has not been built", __FILE__, __LINE__ );
-		}
+  		AQ_THROW_IF( legStaticData_ == nullptr || schedule_ == nullptr, "LegStaticData or Schedule has not been built" );
 
         inputParameters_ = LabelValueBlock( legStaticData_->getInputParameters(), schedule_->getInputParameters() );
     }
@@ -127,16 +124,13 @@ namespace etrading
 
 	double Leg::pv( DataProvider& dataProvider, bool nativeCurrencyPV, bool updateCurveData)
     {
-		throw AQLCoreInvalidData( ( boost::format( "#Error: pv() method is not implemented for swap leg with name (%s) ." )
-                                   % getLegName() ).str().c_str(), __FILE__, __LINE__ );
+		{ std::ostringstream aqCoreMsg17;
+aqCoreMsg17 << "pv() method is not implemented for swap leg with name (" << getLegName() << ") ."; AQ_THROW( aqCoreMsg17.str() ); }
 	}
 
 	AQLString Leg::getLegName() const
 	{
-   		if (legStaticData_ == nullptr)
-		{
-			throw AQLCoreInvalidData( "#Error: LegStaticData has not been built", __FILE__, __LINE__ );
-		}
+   		AQ_THROW_IF( legStaticData_ == nullptr, "LegStaticData has not been built" );
 
 		return legStaticData_->getLegName();
 	}
@@ -154,10 +148,7 @@ namespace etrading
   	double Leg::calculateAnnuityWithNotional( const DataProvider& dataProvider ) const 
 	{
         double annuity = 0.0;
-		if (schedule_ == nullptr)
-		{
-			throw AQLCoreInvalidData( "#Error: Schedule has not been built", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( schedule_ == nullptr, "Schedule has not been built" );
 
 		for( size_t i = 0; i < schedule_->getCashflowSize(); i++ )
 		{
@@ -176,10 +167,7 @@ namespace etrading
 
     void Leg::flipPayerReceiver()
     {
-		if (schedule_ == nullptr)
-		{
-			throw AQLCoreInvalidData( "#Error: Schedule has not been built", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( schedule_ == nullptr, "Schedule has not been built" );
 
         schedule_->flipPayerReceiver();
 
@@ -356,10 +344,7 @@ namespace etrading
 		//add data to schema
         schemaObject.setDataForSchemaWithMap(legSchemaName, getDataMap());
 
-        if (schedule_ == nullptr)
-        {
-            throw AQLCoreInvalidData( "#Error: Missing leg schedule.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( schedule_ == nullptr, "Missing leg schedule." );
 
 		//only add the schema of Bespoke schedule, and Fee Schedule
 		if (schedule_->isBespoke() || schedule_->getScheduleType() == FEE_SCHEDULE_TYPE)

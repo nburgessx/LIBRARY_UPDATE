@@ -100,14 +100,14 @@ namespace etrading
     {
         if( dates.size() != yearFractionsAsActAct.size() )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::AQObjCurve: Dates and Year Fractions are not of the same size (%i and %i respectively)" )
-                                       % dates.size() % yearFractionsAsActAct.size() ).str() );
+            { std::ostringstream aqMsg29;
+aqMsg29 << "AQObjCurve::AQObjCurve: Dates and Year Fractions are not of the same size (" << dates.size() << " and " << yearFractionsAsActAct.size() << " respectively)"; AQ_THROW( aqMsg29.str() ); }
         }
         dates_.reserve( discountFactors.size() );
         if( !setDates( dates ) )
         {
-            throw ETradingException( ( boost::format( "Dates in the CTOR of AQObjCurve are not in ascending order - verify: %s" )
-                                       % containerAsString( getDisplayableContainer( dates ) ) ).str() );
+            { std::ostringstream aqMsg30;
+aqMsg30 << "Dates in the CTOR of AQObjCurve are not in ascending order - verify: " << containerAsString( getDisplayableContainer( dates ) ); AQ_THROW( aqMsg30.str() ); }
         }
         datesAsYearFractions_.reserve( yearFractionsAsActAct.size() );
         discountFactors_.reserve( discountFactors.size() );
@@ -127,19 +127,19 @@ namespace etrading
     {
         if( dates.size() != yearFractionsAsActAct.size() )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::AQObjCurve: Dates and Year Fractions are not of the same size (%i and %i respectively)" )
-                                       % dates.size() % yearFractionsAsActAct.size() ).str() );
+            { std::ostringstream aqMsg31;
+aqMsg31 << "AQObjCurve::AQObjCurve: Dates and Year Fractions are not of the same size (" << dates.size() << " and " << yearFractionsAsActAct.size() << " respectively)"; AQ_THROW( aqMsg31.str() ); }
         }
         if( forwardRates.size() != yearFractionsAsActAct.size() )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::AQObjCurve: Forward Rates and Year Fractions are not of the same size (%i and %i respectively)" )
-                                       % forwardRates.size() % yearFractionsAsActAct.size() ).str() );
+            { std::ostringstream aqMsg32;
+aqMsg32 << "AQObjCurve::AQObjCurve: Forward Rates and Year Fractions are not of the same size (" << forwardRates.size() << " and " << yearFractionsAsActAct.size() << " respectively)"; AQ_THROW( aqMsg32.str() ); }
         }
         dates_.reserve( discountFactors.size() );
         if( !setDates( dates ) )
         {
-            throw ETradingException( ( boost::format( "Dates in the CTOR of AQObjCurve are not in ascending order - verify: %s" )
-                                       % containerAsString( getDisplayableContainer( dates ) ) ).str() );
+            { std::ostringstream aqMsg33;
+aqMsg33 << "Dates in the CTOR of AQObjCurve are not in ascending order - verify: " << containerAsString( getDisplayableContainer( dates ) ); AQ_THROW( aqMsg33.str() ); }
         }
         datesAsYearFractions_.reserve( yearFractionsAsActAct.size() );
         discountFactors_.reserve( discountFactors.size() );
@@ -172,16 +172,16 @@ namespace etrading
     {
         if( discountFactors.size() != dates.size() )
         {
-            throw ETradingException( ( boost::format( "The Dates and DiscountFactors in the CTOR of the AQObjCurve are not of the same length %i (Dates) and %i (DiscountFactors)" )
-                                       % dates.size() % discountFactors.size() ).str() );
+            { std::ostringstream aqMsg34;
+aqMsg34 << "The Dates and DiscountFactors in the CTOR of the AQObjCurve are not of the same length " << dates.size() << " (Dates) and " << discountFactors.size() << " (DiscountFactors)"; AQ_THROW( aqMsg34.str() ); }
         };
 
         if( forwardRates.size() > 0 )
         {
             if( forwardRates.size() != dates.size() )
             {
-                throw ETradingException( ( boost::format( "The number of forward rates needs to equal the number of dates in the CTOR of the AQObjCurve if the forward rates are set, current sizes: %i (Dates) and %i (forwardRates)" )
-                                           % dates.size() % forwardRates.size() ).str() );
+                { std::ostringstream aqMsg35;
+aqMsg35 << "The number of forward rates needs to equal the number of dates in the CTOR of the AQObjCurve if the forward rates are set, current sizes: " << dates.size() << " (Dates) and " << forwardRates.size() << " (forwardRates)"; AQ_THROW( aqMsg35.str() ); }
             }
         };
 
@@ -219,8 +219,8 @@ namespace etrading
         inspectDataFormat( dates, discountFactors, forwardRates );
         if( !setDates( dates ) )
         {
-            throw ETradingException( ( boost::format( "Dates in the CTOR of AQObjCurve are not in ascending order - verify: %s" )
-                                       % containerAsString( getDisplayableContainer( dates ) ) ).str() );
+            { std::ostringstream aqMsg36;
+aqMsg36 << "Dates in the CTOR of AQObjCurve are not in ascending order - verify: " << containerAsString( getDisplayableContainer( dates ) ); AQ_THROW( aqMsg36.str() ); }
         }
         
         setDiscountFactors( discountFactors );
@@ -244,8 +244,8 @@ namespace etrading
     {
         if( !AQObjCurve::posNumerChecker_.verify( yearFractionsAsActAct ) || !AQObjCurve::increasingYearFractions_.verify( yearFractionsAsActAct ) )
         {
-            throw ETradingException(
-                ( boost::format( "#Error Invalid curve dates. Curve nodes are in the past or decreasing with time" ) ).str() );
+            { std::ostringstream aqMsg37;
+aqMsg37 << "Invalid curve dates. Curve nodes are in the past or decreasing with time"; AQ_THROW( aqMsg37.str() ); }
         }
         datesAsYearFractions_ = 	yearFractionsAsActAct;
         
@@ -441,7 +441,7 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( "AQObjCurve::toSchemaObject() - Cannot convert to SchemaObject object when CurveBuildProperties have not been set" );
+            AQ_THROW( "AQObjCurve::toSchemaObject() - Cannot convert to SchemaObject object when CurveBuildProperties have not been set" );
         }
         return schemaObject;
     };
@@ -450,7 +450,7 @@ namespace etrading
     {
         if( !curveBuildProps_ )
         {
-            throw ETradingException( "No CurveBuildProperties Supplied" );
+            AQ_THROW( "No CurveBuildProperties Supplied" );
         }
         return date < curveBuildProps_.get()->asOfDate_;
     };
@@ -474,7 +474,7 @@ namespace etrading
             }
             else
             {
-                throw ETradingException( "Unable to get YearFractions because no CurveBuildProperties or input data has been set" );
+                AQ_THROW( "Unable to get YearFractions because no CurveBuildProperties or input data has been set" );
             }
         }
     };
@@ -491,9 +491,8 @@ namespace etrading
 
         if( toDate < asOfDate )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::calculateDiscountFactor(date) => Date supplied (%s) lies before asOfDate(%s)" )
-                                       % toYYYYMMDDFromGregorianDate( toDate )
-                                       % toYYYYMMDDFromGregorianDate( asOfDate ) ).str() );
+            { std::ostringstream aqMsg41;
+aqMsg41 << "AQObjCurve::calculateDiscountFactor(date) => Date supplied (" << toYYYYMMDDFromGregorianDate( toDate ) << ") lies before asOfDate(" << toYYYYMMDDFromGregorianDate( asOfDate ) << ")"; AQ_THROW( aqMsg41.str() ); }
         }
 
 
@@ -514,7 +513,8 @@ namespace etrading
     {
         if ( yearFraction < 0.0 )
         {
-            throw ETradingException( ( boost::format( "Term starting from AsOfDate must be positive but received yearFraction of : %f" ) % yearFraction ).str() );
+            { std::ostringstream aqMsg42;
+aqMsg42 << "Term starting from AsOfDate must be positive but received yearFraction of : " << yearFraction; AQ_THROW( aqMsg42.str() ); }
         }
         // anything less than a day is not worth interpolatng
         if ( yearFraction < 1.0 / 366.0 )
@@ -524,7 +524,8 @@ namespace etrading
 
         if( curveBuildProps_ == nullptr )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::calculateDiscountFactor(yearFraction): Cannot calculate Discount Factor because not CurveBuildProperties were set; yearFraction (%f)" ) % yearFraction ).str() );
+            { std::ostringstream aqMsg43;
+aqMsg43 << "AQObjCurve::calculateDiscountFactor(yearFraction): Cannot calculate Discount Factor because not CurveBuildProperties were set; yearFraction (" << yearFraction << ")"; AQ_THROW( aqMsg43.str() ); }
         }
 
         if( !curveBuildProps_->isOnlyAllowLookup() )
@@ -571,8 +572,8 @@ namespace etrading
                 auto idxToRetrieve = getIndexWithPrecision( datesAsYearFractions_, yearFraction );
                 if( idxToRetrieve < 0 )
                 {
-                    throw ETradingException( ( boost::format( "AQObjCurve::calculateDiscountFactor(yearFraction) LOOKUPONLY : Cannot find discount factor matching date (%s)" )
-                                               % toYYYYMMDDFromGregorianDate( dateToEvaluate ).c_str() ).str() );
+                    { std::ostringstream aqMsg44;
+aqMsg44 << "AQObjCurve::calculateDiscountFactor(yearFraction) LOOKUPONLY : Cannot find discount factor matching date (" << toYYYYMMDDFromGregorianDate( dateToEvaluate ).c_str() << ")"; AQ_THROW( aqMsg44.str() ); }
                 }
                 else
                 {
@@ -603,7 +604,8 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( ( boost::format( "Unable to retrieve an AlgoQuantLib calendar specified as %s" ) % calendar.c_str() ).str() );
+            { std::ostringstream aqMsg45;
+aqMsg45 << "Unable to retrieve an AlgoQuantLib calendar specified as " << calendar.c_str(); AQ_THROW( aqMsg45.str() ); }
         }
     };
 
@@ -639,7 +641,8 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( ( boost::format( "Unable to retrieve an AlgoQuantLib calendar specified as %s" ) % calendar.c_str() ).str() );
+            { std::ostringstream aqMsg46;
+aqMsg46 << "Unable to retrieve an AlgoQuantLib calendar specified as " << calendar.c_str(); AQ_THROW( aqMsg46.str() ); }
         }
     };
 
@@ -664,7 +667,8 @@ namespace etrading
             }
             else
             {
-                throw ETradingException( ( boost::format( "Unable to retrieve an AlgoQuantLib calendar specified as %s" ) % calendar.c_str() ).str() );
+                { std::ostringstream aqMsg47;
+aqMsg47 << "Unable to retrieve an AlgoQuantLib calendar specified as " << calendar.c_str(); AQ_THROW( aqMsg47.str() ); }
             }
         }
         else
@@ -679,8 +683,8 @@ namespace etrading
     {
         if( valuationDates.size() != paymentDates.size() )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::calculateDiscountFactor(valuationDates, paymentDates) ; the number of valuationDates (%i) does not equal the number of paymentDates (%i)" )
-                                       % valuationDates.size() % paymentDates.size() ).str() );
+            { std::ostringstream aqMsg48;
+aqMsg48 << "AQObjCurve::calculateDiscountFactor(valuationDates, paymentDates) ; the number of valuationDates (" << valuationDates.size() << ") does not equal the number of paymentDates (" << paymentDates.size() << ")"; AQ_THROW( aqMsg48.str() ); }
         }
         std::vector<double> retVec(valuationDates.size()); // reserve the size
         for( unsigned int dateCounter = 0u; dateCounter < valuationDates.size(); dateCounter++ )
@@ -700,8 +704,8 @@ namespace etrading
     {
         if( valuationDates.size() != paymentDates.size() )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::calculateDiscountFactor(valuationDates, paymentDates) ; the number of valuationDates (%i) does not equal the number of paymentDates (%i)" )
-                                       % valuationDates.size() % paymentDates.size() ).str() );
+            { std::ostringstream aqMsg49;
+aqMsg49 << "AQObjCurve::calculateDiscountFactor(valuationDates, paymentDates) ; the number of valuationDates (" << valuationDates.size() << ") does not equal the number of paymentDates (" << paymentDates.size() << ")"; AQ_THROW( aqMsg49.str() ); }
         }
         std::vector<double> retVec;
         for( unsigned int dateCounter = 0u; dateCounter < valuationDates.size(); dateCounter++ )
@@ -739,8 +743,8 @@ namespace etrading
     {
         if( yearFractions.size() != futurePaymentDates.size() )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::calculateDiscountFactor(futurePaymentDates, yearFractions,dayAdjustment,calendar) ; the number of futurePaymentDates (%i) does not equal the number of yearFractions (%i)" )
-                                       % futurePaymentDates.size() % yearFractions.size() ).str() );
+            { std::ostringstream aqMsg50;
+aqMsg50 << "AQObjCurve::calculateDiscountFactor(futurePaymentDates, yearFractions,dayAdjustment,calendar) ; the number of futurePaymentDates (" << futurePaymentDates.size() << ") does not equal the number of yearFractions (" << yearFractions.size() << ")"; AQ_THROW( aqMsg50.str() ); }
         }
         std::vector<double> retVec;
         for( unsigned int fractionCounter = 0u; fractionCounter < yearFractions.size(); fractionCounter++ )
@@ -782,7 +786,8 @@ namespace etrading
     {
         if( futurePaymentDates.size() != termsAsString.size() )
         {
-            throw ETradingException( ( boost::format( "Number of dates (%i) does not equal the number of terms (%i)" ) % futurePaymentDates.size() % termsAsString.size() ).str() );
+            { std::ostringstream aqMsg51;
+aqMsg51 << "Number of dates (" << futurePaymentDates.size() << ") does not equal the number of terms (" << termsAsString.size() << ")"; AQ_THROW( aqMsg51.str() ); }
         }
         std::vector<double> retVec;
         for( unsigned int dateCounter = 0u; dateCounter < termsAsString.size(); dateCounter++ )
@@ -801,9 +806,8 @@ namespace etrading
     {
         if( accrualFromDate >= accrualToDate )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::calculateForwardRateUsingDiscountFactors  Accrual Start Date (%s) is on or after Accrual End Date (%s)" )
-                                       % toYYYYMMDDFromGregorianDate( accrualFromDate ).c_str()
-                                       % toYYYYMMDDFromGregorianDate( accrualToDate ).c_str() ).str() );
+            { std::ostringstream aqMsg52;
+aqMsg52 << "AQObjCurve::calculateForwardRateUsingDiscountFactors  Accrual Start Date (" << toYYYYMMDDFromGregorianDate( accrualFromDate ).c_str() << ") is on or after Accrual End Date (" << toYYYYMMDDFromGregorianDate( accrualToDate ).c_str() << ")"; AQ_THROW( aqMsg52.str() ); }
         }
         double fromDF = calculateDiscountFactor( accrualFromDate );
         double toDF = calculateDiscountFactor( accrualToDate );
@@ -817,15 +821,14 @@ namespace etrading
     {
         if( curveBuildProps_ == nullptr )
         {
-            throw ETradingException( "AQObjCurve::calculateForwardRate(fixingDate) : Cannot calculate because CurveBuildProperties were not set" );
+            AQ_THROW( "AQObjCurve::calculateForwardRate(fixingDate) : Cannot calculate because CurveBuildProperties were not set" );
         }
 
         const boost::gregorian::date asOfDate = curveBuildProps_.get()->asOfDate_;
         if( unadjustedFixingDate < asOfDate )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::calculateForwardRate(date) => unadjustedFixingDate supplied (%s) lies before asOfDate (%s)" )
-                                       % toYYYYMMDDFromGregorianDate( unadjustedFixingDate )
-                                       % toYYYYMMDDFromGregorianDate( asOfDate ) ).str() );
+            { std::ostringstream aqMsg54;
+aqMsg54 << "AQObjCurve::calculateForwardRate(date) => unadjustedFixingDate supplied (" << toYYYYMMDDFromGregorianDate( unadjustedFixingDate ) << ") lies before asOfDate (" << toYYYYMMDDFromGregorianDate( asOfDate ) << ")"; AQ_THROW( aqMsg54.str() ); }
         }
 
         // Forward Rates are saved and indexed by an ACT/365 yearFraction
@@ -840,15 +843,17 @@ namespace etrading
     {
         if ( yearFraction < 0.0 )
         {
-            throw ETradingException( ( boost::format( "#Error: Cannot forecast a Forward Rate for a fixing date in the past with yearFraction %f" ) % yearFraction ).str() );
+            { std::ostringstream aqMsg55;
+aqMsg55 << "Cannot forecast a Forward Rate for a fixing date in the past with yearFraction " << yearFraction; AQ_THROW( aqMsg55.str() ); }
         }
         if( curveBuildProps_ == nullptr )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::calculateForwardRate(yearFraction): Cannot calculate forward rate because not CurveBuildProperties were set; yearFraction (%f)" ) % yearFraction ).str() );
+            { std::ostringstream aqMsg56;
+aqMsg56 << "AQObjCurve::calculateForwardRate(yearFraction): Cannot calculate forward rate because not CurveBuildProperties were set; yearFraction (" << yearFraction << ")"; AQ_THROW( aqMsg56.str() ); }
         }
         if( forwardRates_.size() == 0 )
         {
-            throw ETradingException( "AQObjCurve::calculateForwardRate(yearFraction): Cannot calculate forward rate because no input rates have been set" );
+            AQ_THROW( "AQObjCurve::calculateForwardRate(yearFraction): Cannot calculate forward rate because no input rates have been set" );
         }
 
         if( !curveBuildProps_ ->isOnlyAllowLookup() )
@@ -866,8 +871,8 @@ namespace etrading
             auto idxToRetrieve = getIndexWithPrecision( datesAsYearFractions_, yearFraction );
             if( idxToRetrieve < 0 )
             {
-                throw ETradingException( ( boost::format( "AQObjCurve::calculateDiscountFactor(yearFraction) LOOKUPONLY : Cannot find discount factor matching yearFraction (%f)" )
-                                           % yearFraction ).str() );
+                { std::ostringstream aqMsg58;
+aqMsg58 << "AQObjCurve::calculateDiscountFactor(yearFraction) LOOKUPONLY : Cannot find discount factor matching yearFraction (" << yearFraction << ")"; AQ_THROW( aqMsg58.str() ); }
             }
             else
             {
@@ -880,9 +885,8 @@ namespace etrading
     {
         if( forwardRates_.size() != dates_.size() || forwardRates_.size() == 0 )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::calculateForwardRate(tenorString) => cannot interpolate forward rates given %i input rates and %i dates " )
-                                       % forwardRates_.size()
-                                       % dates_.size()					 ).str() );
+            { std::ostringstream aqMsg59;
+aqMsg59 << "AQObjCurve::calculateForwardRate(tenorString) => cannot interpolate forward rates given " << forwardRates_.size() << " input rates and " << dates_.size() << " dates "; AQ_THROW( aqMsg59.str() ); }
         }
         boost::gregorian::date toDate = adjustFromAsOfDateUsingTenorString( tenorString, AQObjCurve::FIXING_BUSINESSDAYADJUSTMENT ); // curve build props checked in here
         return calculateForwardRate( toDate ); // attempting the same business day adjustment should generate the same day
@@ -896,8 +900,8 @@ namespace etrading
     {
         if( accrualStartDates.size() != accrualEndDates.size() )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::calculateForwardRate(startDates, endDates) ; the number of startDates (%i) does not equal the number of endDates (%i)" )
-                                       % accrualStartDates.size() % accrualEndDates.size() ).str() );
+            { std::ostringstream aqMsg60;
+aqMsg60 << "AQObjCurve::calculateForwardRate(startDates, endDates) ; the number of startDates (" << accrualStartDates.size() << ") does not equal the number of endDates (" << accrualEndDates.size() << ")"; AQ_THROW( aqMsg60.str() ); }
         }
         std::vector<double> retVec;
         for( unsigned int dateCounter = 0u; dateCounter < accrualStartDates.size(); dateCounter++ )
@@ -934,7 +938,7 @@ namespace etrading
     {
         if( curveBuildProps_ == nullptr )
         {
-            throw ETradingException( "AQObjCurve::getBusinessDayAdjust(adjType) - Cannot business day adjusment when CurveBuildProperties have not been set" );
+            AQ_THROW( "AQObjCurve::getBusinessDayAdjust(adjType) - Cannot business day adjusment when CurveBuildProperties have not been set" );
         }
 
         if( adjType == AQObjCurve::ACCRUAL_BUSINESSDAYADJUSTMENT )
@@ -950,14 +954,15 @@ namespace etrading
             return std::make_pair( curveBuildProps_->fixingDayAdjustment_, curveBuildProps_->getAqFixingCalendar() ) ;
         }
 
-        throw ETradingException( ( boost::format( "AQObjCurve::getBusinessDayAdjust(adjType) - Unable to retrieve BusinessDayAdjustmentType (%i)" ) % adjType ).str() );
+        { std::ostringstream aqMsg62;
+aqMsg62 << "AQObjCurve::getBusinessDayAdjust(adjType) - Unable to retrieve BusinessDayAdjustmentType (" << adjType << ")"; AQ_THROW( aqMsg62.str() ); }
     };
 
     boost::gregorian::date AQObjCurve::adjustFromAsOfDateUsingTenorString( const std::string& tenorString, const BusinessDayAdjustmentType adjType ) const
     {
         if( curveBuildProps_ == nullptr )
         {
-            throw ETradingException( "AQObjCurve::calculateDiscountFactor(tenorString) - Cannot convert to calculate discount factor when CurveBuildProperties have not been set" );
+            AQ_THROW( "AQObjCurve::calculateDiscountFactor(tenorString) - Cannot convert to calculate discount factor when CurveBuildProperties have not been set" );
         };
 
         boost::gregorian::date date = curveBuildProps_.get()->asOfDate_;
@@ -968,7 +973,8 @@ namespace etrading
         const auto ptrHolidayCalendar = adjInfo.second;
         if( ptrHolidayCalendar == nullptr )
         {
-            throw ETradingException( ( boost::format( "AQObjCurve::calculateDiscountFactor(tenorString) - Missing AlgoQuantLib Calendar for calendar (%s)" ) % curveBuildProps_->getPaymentDayCalendar().c_str() ).str() );
+            { std::ostringstream aqMsg64;
+aqMsg64 << "AQObjCurve::calculateDiscountFactor(tenorString) - Missing AlgoQuantLib Calendar for calendar (" << curveBuildProps_->getPaymentDayCalendar().c_str() << ")"; AQ_THROW( aqMsg64.str() ); }
         };
         date = dayAdjust( date, busDayAdjustment, *ptrHolidayCalendar );
         return date;

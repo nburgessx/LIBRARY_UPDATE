@@ -109,24 +109,15 @@ namespace etrading
 		//When FV Notional is provided, Notional will be calculated from the FutureNotional 
 		if (!boost::math::isnan(futureValueNotional_))
 		{
-			if (paymentFreqEnum_ != AT_MATURITY_FREQUENCY) 
-			{
-        		throw AQLCoreInvalidData( "#Error: When FVNotional is specified, the payment frequency must be 'AT MATURITY'", __FILE__, __LINE__ );
-			}
+			AQ_THROW_IF( paymentFreqEnum_ != AT_MATURITY_FREQUENCY, "When FVNotional is specified, the payment frequency must be 'AT MATURITY'" );
 
-			if (!boost::math::isnan(notional_) )
-			{
-	    		throw AQLCoreInvalidData( "#Error: Please provide either FVNotional or Notional for FixedSchedule, but not both", __FILE__, __LINE__ );
-			}
+			AQ_THROW_IF( !boost::math::isnan(notional_), "Please provide either FVNotional or Notional for FixedSchedule, but not both" );
 
 			notional_ = futureValueNotional_;
 
 		}
 		// When FV Notional is not provided, notinoal is a mandatory field
-		else if (boost::math::isnan(notional_))
-        {
-        	throw AQLCoreInvalidData( "#Error: Notional is a mandatory field for FixedSchedule", __FILE__, __LINE__ );
-        }
+		else AQ_THROW_IF( boost::math::isnan(notional_), "Notional is a mandatory field for FixedSchedule" );
 
     }
 
@@ -196,10 +187,7 @@ namespace etrading
 
 	    const std::string inputLVB = "cashflowLVB";
 
-        if (cashflowLVBs.size() ==0 )
-        {
-    		throw AQLCoreInvalidData( "#Error: The cashflows of bespokeSchedule need to be provided", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( cashflowLVBs.size() ==0, "The cashflows of bespokeSchedule need to be provided" );
 
         //1) Create a upfront cashflow for the notionalExchange is START or START_AND_END
 
@@ -227,10 +215,7 @@ namespace etrading
 
             AQLDate accrualStart	= cashflowLVB.getCompulsoryValueAsDate( CASHFLOW_KEY::ACCRUAL_START, inputLVB );
 			AQLDate accrualEnd = cashflowLVB.getCompulsoryValueAsDate( CASHFLOW_KEY::ACCRUAL_END,  inputLVB );
-			if (accrualStart > accrualEnd) 
-			{
-				throw AQLCoreInvalidData( "#Error: Accrual Start Date cannot be later than Accrual End Date", __FILE__, __LINE__ );
-			}
+			AQ_THROW_IF( accrualStart > accrualEnd, "Accrual Start Date cannot be later than Accrual End Date" );
 
             AQLDate paymentDate = cashflowLVB.getCompulsoryValueAsDate( CASHFLOW_KEY::PAYMENT_DATE,  inputLVB );
 

@@ -11,7 +11,6 @@
 
 #include <vector>
 #include <string>
-#include <boost/format.hpp>
 
 
 namespace etrading
@@ -79,7 +78,8 @@ namespace etrading
 
 		if ( variantMatrix.size() != 2)
 		{
-			throw AQLCoreInvalidData( ( boost::format( "#Error: Invalid number of columns in deserialised data. Expecting 2 columns, found '%d'. " ) % variantMatrix.size() ).str().c_str() , __FILE__, __LINE__ );
+			{ std::ostringstream aqCoreMsg26;
+aqCoreMsg26 << "Invalid number of columns in deserialised data. Expecting 2 columns, found '" << variantMatrix.size() << "'. "; AQ_THROW( aqCoreMsg26.str() ); }
 		}
 
 		const VariantVector& attributeNames  = variantMatrix[0];
@@ -110,8 +110,8 @@ namespace etrading
 			}
 			else
 			{
-				throw AQLCoreInvalidData( ( boost::format( "#Error: Unsupported Data Name: %s ." )  
-						% attributeNames[i] ).str().c_str(), __FILE__, __LINE__ );
+				{ std::ostringstream aqCoreMsg27;
+aqCoreMsg27 << "Unsupported Data Name: " << attributeNames[i] << " ."; AQ_THROW( aqCoreMsg27.str() ); }
 			}
 		}
 	}
@@ -192,7 +192,8 @@ namespace etrading
                 break;
 			}
 			default:
-				throw AQLCoreInvalidData( ( boost::format( "#Error: Unsupported CurveType: %s ." ) % configCurveType ).str().c_str(), __FILE__, __LINE__ );
+				{ std::ostringstream aqCoreMsg28;
+aqCoreMsg28 << "Unsupported CurveType: " << configCurveType << " ."; AQ_THROW( aqCoreMsg28.str() ); }
 		}
 
 		// Throw exception if the curve has not been built.
@@ -248,8 +249,8 @@ namespace etrading
 
 		if ( tmpObjectName != objectName )
 		{
-			throw AQLCoreInvalidData( ( boost::format( "#Error: Inconsistent data when deserializing curve: Object handle name is '%s' while CurveData contains '%s' ." )  
-						% objectName % tmpObjectName ).str().c_str(), __FILE__, __LINE__ );	
+			{ std::ostringstream aqCoreMsg29;
+aqCoreMsg29 << "Inconsistent data when deserializing curve: Object handle name is '" << objectName << "' while CurveData contains '" << tmpObjectName << "' ."; AQ_THROW( aqCoreMsg29.str() ); }	
 		}
 		
 		aqObjCurveGenerator_  = getCurveGenerator(  aqObjCurveGeneratorName_ );
@@ -369,20 +370,20 @@ namespace etrading
 
 		if ( configCurrency != marketDataCurrency )
 		{
-			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator currency \"%s\" does not match MarketData Currency \"%s\"" )
-                                   % configCurrency % marketDataCurrency ).str().c_str(), __FILE__, __LINE__ );
+			{ std::ostringstream aqCoreMsg30;
+aqCoreMsg30 << "CurveGenerator currency \"" << configCurrency << "\" does not match MarketData Currency \"" << marketDataCurrency << "\""; AQ_THROW( aqCoreMsg30.str() ); }
 		}
 
 		if ( configCurveType != marketDataCurveType )
 		{
-			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator CurveType \"%s\" does not match MarketData CurveType \"%s\"" )
-                                   % configCurveType % marketDataCurveType ).str().c_str(), __FILE__, __LINE__ );
+			{ std::ostringstream aqCoreMsg31;
+aqCoreMsg31 << "CurveGenerator CurveType \"" << configCurveType << "\" does not match MarketData CurveType \"" << marketDataCurveType << "\""; AQ_THROW( aqCoreMsg31.str() ); }
 		}
 
 		if ( configFrequency != marketDataFrequency )
 		{
-			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator Frequency \"%s\" does not match MarketData Frequency \"%s\"" )
-                                   % configFrequency % marketDataFrequency ).str().c_str(), __FILE__, __LINE__ );
+			{ std::ostringstream aqCoreMsg32;
+aqCoreMsg32 << "CurveGenerator Frequency \"" << configFrequency << "\" does not match MarketData Frequency \"" << marketDataFrequency << "\""; AQ_THROW( aqCoreMsg32.str() ); }
 		}
 
 		curveName = curvePropertiesLVB.getCompulsoryValue( "StaticDataTable" );

@@ -91,10 +91,7 @@ AQLCurveMarketDataHelpers::resetMarketDataUsingLibor(CurveCalibrationData &curve
 		spotDate = cal.getBusinessDay(asOfDate, staticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_RESETLAG + suffix).getIntValue());
 	}
 
-	if (asOfDate > spotDate)
-	{
-		throw AQLCoreInvalidData("AsofDate > spotDate, cannnot calc. ", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( asOfDate > spotDate, "AsofDate > spotDate, cannnot calc. " );
 
 	double termSpot = dc.getTerm(asOfDate, spotDate);
 
@@ -251,10 +248,7 @@ void AQLCurveMarketDataHelpers::sortMarketData(CurveCalibrationData &ypro)
 	sort(data_fra3m.begin(), data_fra3m.end(), InstrumentComp());
 	sort(data_fra6m.begin(), data_fra6m.end(), InstrumentComp());
 
-	if (data_on.empty() || data_tn.empty())
-	{
-		throw AQLCoreInvalidData("ON or TN is not set.", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( data_on.empty() || data_tn.empty(), "ON or TN is not set." );
 	AQLString refStr = dynamic_cast<const AQLDataString &>(data_on[0]->getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 	refStr += ":" + dynamic_cast<const AQLDataString &>(data_tn[0]->getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 	// libor
@@ -347,10 +341,7 @@ void AQLCurveMarketDataHelpers::restoreSwapRateFromLibor(CurveCalibrationData &c
 		spotDate = cal.getBusinessDay(asOfDate, staticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_RESETLAG + suffix).getIntValue());
 	}
 
-	if (asOfDate > spotDate)
-	{
-		throw AQLCoreInvalidData("AsofDate > spotDate, cannnot calc. ", __FILE__, __LINE__);
-	}
+	AQ_THROW_IF( asOfDate > spotDate, "AsofDate > spotDate, cannnot calc. " );
 
 	// restore swap rate
 	AQLDataMultiReference &refMarkets = dynamic_cast<AQLDataMultiReference &>(curve.getData(CALIBRATION_DATA_MARKETDATA + data_suffix, ISNOTNULL).get()); 

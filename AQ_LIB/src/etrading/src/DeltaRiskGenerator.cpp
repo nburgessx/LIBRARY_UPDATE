@@ -556,7 +556,7 @@ namespace etrading
 			}
 			else
 			{
-				throw AQLCoreInvalidData("#Error: BumpMode must be either 'UP, or 'DOWN', or 'CENTRAL'", __FILE__, __LINE__);
+				AQ_THROW( "BumpMode must be either 'UP, or 'DOWN', or 'CENTRAL'" );
 			}
 
 			// Restore the bumped curves to their original states
@@ -605,7 +605,7 @@ namespace etrading
 			if (errorCollection.size() > 0)
 			{
 				AQLString errorString = "#Error: " + errorCollection;
-				throw AQLCoreInvalidData(errorString.getCString(), __FILE__, __LINE__);
+				AQ_THROW( errorString.getCString() );
 			}
 
 			// Cache old rates
@@ -637,7 +637,7 @@ namespace etrading
 			}
 			else
 			{
-				throw AQLCoreInvalidData("#Error: BumpMode must be either 'UP, or 'DOWN', or 'CENTRAL'", __FILE__, __LINE__);
+				AQ_THROW( "BumpMode must be either 'UP, or 'DOWN', or 'CENTRAL'" );
 			}
 
 			// Restore the bumped curves to their original states
@@ -681,7 +681,7 @@ namespace etrading
         }
         else
         {
-            throw AQLCoreInvalidData( "#Error: Curve can only be bumped either UP or DOWN", __FILE__, __LINE__ );
+            AQ_THROW( "Curve can only be bumped either UP or DOWN" );
         }
 
 		// Run the main loop inside a try / catch block so that we have a chance to restore the curves
@@ -750,7 +750,7 @@ namespace etrading
 									else
 									{
 										AQLString err = AQLString( "#Error: No Libor-OIS basis are found in the part of OIS curve built through basis spreads in curve" ) + curveName;
-										throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+										AQ_THROW( err.getCString() );
 									}
 								}
 
@@ -768,7 +768,7 @@ namespace etrading
 									if (!isUsingGlobalCurveEngine_)
 									{
 										AQLString err = AQLString("#Error: No reference swap rates are found in the part of OIS curve built through basis spreads in curve") + curveName;
-										throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+										AQ_THROW( err.getCString() );
 									}
 								}
 							}
@@ -785,7 +785,7 @@ namespace etrading
 					else
 					{
 						AQLString err = AQLString( "#Error: No market data can be found in curve '" ) + curveName + AQLString( "'. Has curve been built?" );
-						throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+						AQ_THROW( err.getCString() );
 					}
 				}
 			}
@@ -828,7 +828,7 @@ namespace etrading
         }
         else
         {
-            throw AQLCoreInvalidData( "#Error: Curve can only be bumped either UP or DOWN", __FILE__, __LINE__ );
+            AQ_THROW( "Curve can only be bumped either UP or DOWN" );
         }
 
 		// Determine cut-off tenor in years if provided, beyond which no more bumping is to be performed.
@@ -907,7 +907,7 @@ namespace etrading
 								else
 								{
 									AQLString err = AQLString( "#Error: No Libor-OIS basis are found in the part of OIS curve built through basis spreads in curve '" ) + curveName + "'";
-									throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+									AQ_THROW( err.getCString() );
 								}
 							}
 
@@ -942,7 +942,7 @@ namespace etrading
                                 else
                                 {
                                     AQLString err = AQLString( "#Error: Can not obtain reference swap term from curve '" ) + curveName + "'";
-                                    throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+                                    AQ_THROW( err.getCString() );
                                 }
 
                                 // Get the FREQUENCY of the reference Libor swap in the OIS curve
@@ -956,7 +956,7 @@ namespace etrading
                                 else
                                 {
                                     AQLString err = AQLString( "#Error: Can not obtain reference swap frequency from curve '" ) + curveName + "'";
-                                    throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+                                    AQ_THROW( err.getCString() );
                                 }
 
 								// Depending on whether we are using the global curve engine, attempt to get the SWAP curve name
@@ -1039,7 +1039,7 @@ namespace etrading
                             else
                             {
 								AQLString err = AQLString("#Error: No reference swap rates are found in the part of OIS curve built through basis spreads in curve") + curveName;
-								throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+								AQ_THROW( err.getCString() );
                             }
                         }
                         else
@@ -1056,7 +1056,7 @@ namespace etrading
                 else
                 {
                     AQLString err = AQLString( "#Error: No market data can be found in curve '" ) + curveName + AQLString( "'. Has curve been built?" );
-                    throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+                    AQ_THROW( err.getCString() );
                 }
 
 				// Even though the bump is removed from the curve market data, we need to recalibrate curves in order to fully restore.
@@ -1196,7 +1196,7 @@ namespace etrading
 					{
 						AQLString errMsg("#Error: Incorrect MarketData size in constant fx forward curve. Expecting a data block of size: 1. Actual size: ");
 						errMsg += refMarketData.getSize();
-						throw AQLCoreInvalidData( errMsg.getCString(), __FILE__, __LINE__ );
+						AQ_THROW( errMsg.getCString() );
 					}
 
 					AQLObjectHolder& objHolder = refMarketData.get( 0 );
@@ -1211,7 +1211,8 @@ namespace etrading
 				}
 				else
 				{
-					throw AQLCoreInvalidData( ( boost::format( "#Error: FXFWDCONST curve '%s:%s' has not been built correctly." ) % curveCollectionID.getCString() % curveName.getCString() ).str().c_str() , __FILE__, __LINE__ );
+					{ std::ostringstream aqCoreMsg12;
+aqCoreMsg12 << "FXFWDCONST curve '" << curveCollectionID.getCString() << ":" << curveName.getCString() << "' has not been built correctly."; AQ_THROW( aqCoreMsg12.str() ); }
 				}
 			}
 			else
@@ -1492,7 +1493,7 @@ namespace etrading
                     else
                     {
                         //error
-                        throw AQLCoreInvalidData( "#Error: Input freq type is not supported", __FILE__, __LINE__ );
+                        AQ_THROW( "Input freq type is not supported" );
                     }
                 }
 
@@ -1631,7 +1632,7 @@ namespace etrading
 							else if (!isUsingGlobalCurveEngine_)
 							{
 								AQLString err = AQLString("#Error: Swap par rates must exist in an OIS curve along with Libor-OIS basis rates when NOT using multi-curve building technology.");
-								throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+								AQ_THROW( err.getCString() );
 							}
                         }
                         else
@@ -1645,7 +1646,7 @@ namespace etrading
                 else
                 {
                     AQLString err = AQLString( "#Error: No market data can be found in curve '" ) + curveName + AQLString( "'. Has curve been built?" );
-                    throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+                    AQ_THROW( err.getCString() );
                 }
             }
         }
@@ -1703,7 +1704,7 @@ namespace etrading
                     if ( oldMarketData.find( name ) == oldMarketData.end() )
                     {
                         AQLString err = AQLString( "#Error: Can not restore back to original market rate for constituent instrument '" ) + name + AQLString( "' in curve '" ) + curveName + AQLString( "'" );
-                        throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+                        AQ_THROW( err.getCString() );
                     }
                     double oldRate = oldMarketData[name];
                     AQLDataDouble& attrLOBasisRate = dynamic_cast<AQLDataDouble&>( objHolder.getData( IR_CALIBRATION_DATA_RATE_LOBASIS, ISNOTNULL ).get() );
@@ -1716,7 +1717,7 @@ namespace etrading
 						if (!isUsingGlobalCurveEngine_)
 						{
 							AQLString err = AQLString("#Error: Can not restore back to original market rate for constituent instrument '") + name + AQLString("' in curve '") + curveName + AQLString("'");
-							throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
+							AQ_THROW( err.getCString() );
 						}
                     }
 					else
@@ -1731,7 +1732,7 @@ namespace etrading
                     if ( oldMarketData.find( name ) == oldMarketData.end() )
                     {
                         AQLString err = AQLString( "#Error: Can not restore back to original market rate for constituent instrument '" ) + name + AQLString( "' in curve '" ) + curveName + AQLString( "'" );
-                        throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+                        AQ_THROW( err.getCString() );
                     }
 
                     double oldRate = oldMarketData[name];
@@ -2065,10 +2066,7 @@ namespace etrading
     */
     void DeltaGenerator::DeltaLadderData::buildCentralDeltas( const DeltaLadderData& deltaLadderData_up, const DeltaLadderData& deltaLadderData_down )
     {
-        if ( deltaLadderData_up.size() != deltaLadderData_down.size() )
-        {
-            throw AQLCoreInvalidData( "#Error: Invalid Risk Results: Inconsistent number of pillar risks have been generated between up bumping and down bumping", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( deltaLadderData_up.size() != deltaLadderData_down.size(), "Invalid Risk Results: Inconsistent number of pillar risks have been generated between up bumping and down bumping" );
 
         isRiskAggregated_ = deltaLadderData_up.isRiskAggregated_;
 
@@ -2084,10 +2082,7 @@ namespace etrading
             DoubleVector deltas_up = deltaLadderData_up.deltaLadderInMap_.find( name_up )->second;
 
             auto iter_down = deltaLadderData_down.deltaLadderInMap_.find( name_up );
-            if ( iter_down == deltaLadderData_down.deltaLadderInMap_.end() )
-            {
-                throw AQLCoreInvalidData( "#Error: Invalid Risk Results: Inconsistent number of pillar risks have been generated between up bumping and down bumping", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( iter_down == deltaLadderData_down.deltaLadderInMap_.end(), "Invalid Risk Results: Inconsistent number of pillar risks have been generated between up bumping and down bumping" );
 
             DoubleVector deltas_down = deltaLadderData_down.deltaLadderInMap_.find( name_up )->second;
 
@@ -2109,10 +2104,7 @@ namespace etrading
             DoubleVector deltas_up = deltaLadderData_up.deltaLadderInMap_.find( name_up )->second;
 
             auto iter_down = deltaLadderData_down.deltaLadderInMap_.find( name_up );
-            if ( iter_down == deltaLadderData_down.deltaLadderInMap_.end() )
-            {
-                throw AQLCoreInvalidData( "#Error: Invalid Risk Results: Inconsistent number of pillar risks have been generated between up bumping and down bumping", __FILE__, __LINE__ );
-            }
+            AQ_THROW_IF( iter_down == deltaLadderData_down.deltaLadderInMap_.end(), "Invalid Risk Results: Inconsistent number of pillar risks have been generated between up bumping and down bumping" );
 
             DoubleVector deltas_down = deltaLadderData_down.deltaLadderInMap_.find( name_up )->second;
 
@@ -2224,7 +2216,7 @@ namespace etrading
 				}
 				else
 				{
-					throw AQLCoreInvalidData( "#Error: Unable to find the discount curve on the target side of the xccy swap", __FILE__, __LINE__ );
+					AQ_THROW( "Unable to find the discount curve on the target side of the xccy swap" );
 				}
 			}
 		}
@@ -2283,16 +2275,15 @@ namespace etrading
 				if ( againstCCY != targetCCY )
 				{
 					// This looks like a XCCY basis curve, not a regular basis curve
-					throw AQLCoreInvalidData( ( boost::format( "#Error: Curve '%s:%s' has not been built correctly. Against curve currency '%s' does not match target curve currency '%s' " ) % curveCollectionID.getCString()
-																																								   						 % curveName.getCString()
-																																								   						 % againstCCY
-																																								   						 % targetCCY ).str().c_str() , __FILE__, __LINE__ );
+					{ std::ostringstream aqCoreMsg13;
+aqCoreMsg13 << "Curve '" << curveCollectionID.getCString() << ":" << curveName.getCString() << "' has not been built correctly. Against curve currency '" << againstCCY << "' does not match target curve currency '" << targetCCY << "' "; AQ_THROW( aqCoreMsg13.str() ); }
 				}
 			}
 			else
 			{
 				// Could not get basis curve information
-				throw AQLCoreInvalidData( ( boost::format( "#Error: Could not get base curve information for curve '%s:%s'." ) % curveCollectionID.getCString() % curveName.getCString() ).str().c_str() , __FILE__, __LINE__ );
+				{ std::ostringstream aqCoreMsg14;
+aqCoreMsg14 << "Could not get base curve information for curve '" << curveCollectionID.getCString() << ":" << curveName.getCString() << "'."; AQ_THROW( aqCoreMsg14.str() ); }
 			}
 
 			// Add forecast curve from the opposite side to the bump curve collection
@@ -2376,10 +2367,7 @@ namespace etrading
             AQLString discountCurveOnOppositeSideIndex;
             AQLString againstCurveCollectionID;
 
-			if (! getBasisCurveDetails( curveCalibrationData, curveCollectionID, curveName, againstCurveCollectionID, discountCurveOnOppositeSideIndex ) )
-			{
-				throw AQLCoreInvalidData( "#Error: Unable to find the discount curve on the side of the xccy swap that is not the target side", __FILE__, __LINE__ );
-			}
+			AQ_THROW_IF( ! getBasisCurveDetails( curveCalibrationData, curveCollectionID, curveName, againstCurveCollectionID, discountCurveOnOppositeSideIndex ), "Unable to find the discount curve on the side of the xccy swap that is not the target side" );
 
 			AQLString discountCurveOnOppositeSide = getCurveStaticDataTableName( againstCurveCollectionID, discountCurveOnOppositeSideIndex, false );
 
@@ -2421,7 +2409,7 @@ namespace etrading
             }
             else
             {
-                throw AQLCoreInvalidData( "#Error: Unable to find the forecast curve on the side of the xccy swap that is not the target side", __FILE__, __LINE__ );
+                AQ_THROW( "Unable to find the forecast curve on the side of the xccy swap that is not the target side" );
             }
 
 			AQLString forecastCurveOnOppositeSide = getCurveStaticDataTableName(againstCurveCollectionID, forecastCurveOnOppositeSideIndex, false);
@@ -2478,7 +2466,7 @@ namespace etrading
             }
             else
             {
-                throw AQLCoreInvalidData( "#Error: Unable to find the forecast curve on the target side of the xccy swap", __FILE__, __LINE__ );
+                AQ_THROW( "Unable to find the forecast curve on the target side of the xccy swap" );
             }
 
 			// Add the dependency forecastCurve -> XCCY curve, provided the forecast curve is not set to FIXED_RATE
@@ -2521,7 +2509,7 @@ namespace etrading
 				}
 				else
 				{
-					throw AQLCoreInvalidData( "#Error: Unable to find the discount curve on the target side of the xccy swap", __FILE__, __LINE__ );
+					AQ_THROW( "Unable to find the discount curve on the target side of the xccy swap" );
 				}
 			}
 
@@ -2540,7 +2528,7 @@ namespace etrading
 				{
 					AQLString errMsg("#Error: Incorrect MarketData size in constant fx forward curve. Expecting a data block of size: 1. Actual size: ");
 					errMsg += refMarketData.getSize();
-					throw AQLCoreInvalidData( errMsg.getCString(), __FILE__, __LINE__ );
+					AQ_THROW( errMsg.getCString() );
 				}
 
 				AQLObjectHolder& objHolder = refMarketData.get( 0 );
@@ -2643,12 +2631,13 @@ namespace etrading
 				}
 				else
 				{
-					throw AQLCoreInvalidData( "#Error: Unable to find the discount curve on the target side of the constant fx forward curve", __FILE__, __LINE__ );
+					AQ_THROW( "Unable to find the discount curve on the target side of the constant fx forward curve" );
 				}
 			}
 			else
 			{
-				throw AQLCoreInvalidData( ( boost::format( "#Error: FXFWDCONST curve '%s:%s' has not been built correctly." ) % curveCollectionID.getCString() % curveName.getCString() ).str().c_str() , __FILE__, __LINE__ );
+				{ std::ostringstream aqCoreMsg15;
+aqCoreMsg15 << "FXFWDCONST curve '" << curveCollectionID.getCString() << ":" << curveName.getCString() << "' has not been built correctly."; AQ_THROW( aqCoreMsg15.str() ); }
 			}
 		}
 		else if ( curveTypeStr == MARKET_KEY::CURVE_TYPE_OIS )
@@ -2680,7 +2669,7 @@ namespace etrading
 			errMsg += curveName.c_str();
 			errMsg += ", Risk Calculation does not support CurveType: ";
 			errMsg += curveTypeStr.c_str();
-			throw AQLCoreInvalidData( errMsg.getCString(), __FILE__, __LINE__ );
+			AQ_THROW( errMsg.getCString() );
 		}
     }
 	

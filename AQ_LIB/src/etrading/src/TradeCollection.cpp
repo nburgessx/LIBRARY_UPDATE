@@ -37,15 +37,9 @@ namespace etrading
         forecastCurve_	= marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::FORECAST_CURVE, "CurveCollections" );
         discountCurve_	= marketDataLVB.getCompulsoryValueAsAQLString( MARKET_KEY::DISCOUNT_CURVE, "CurveCollections" );
 
-        if ( forecastCurve_.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Forecast curve has not been specified for PV", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( forecastCurve_.size() == 0, "Forecast curve has not been specified for PV" );
 
-        if ( discountCurve_.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Discount curve has not been specified for PV", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( discountCurve_.size() == 0, "Discount curve has not been specified for PV" );
     }
 
     /* @brief		Set interpolation for pricing

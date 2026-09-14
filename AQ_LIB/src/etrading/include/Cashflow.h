@@ -91,18 +91,18 @@ namespace etrading
 		void setCashflowTypeToLast();
 
         //dummy methods, just to avoid downcasting
-		virtual double getFixedRate() const { throw AQLCoreInvalidData("#Error: getFixedRate not supported", __FILE__, __LINE__); };
-   		virtual double getSpread() const { throw AQLCoreInvalidData("#Error: getSpread not supported", __FILE__, __LINE__); };
-   		virtual void setSpread(double spread) { throw AQLCoreInvalidData("#Error: setSpread not supported", __FILE__, __LINE__); };
-   		virtual double getAmount() const { throw AQLCoreInvalidData("#Error: getAmount not supported", __FILE__, __LINE__); };
+		virtual double getFixedRate() const { AQ_THROW( "getFixedRate not supported" ); };
+   		virtual double getSpread() const { AQ_THROW( "getSpread not supported" ); };
+   		virtual void setSpread(double spread) { AQ_THROW( "setSpread not supported" ); };
+   		virtual double getAmount() const { AQ_THROW( "getAmount not supported" ); };
 
-		virtual double getSurvivalProbability() const { throw AQLCoreInvalidData("#Error: getSurvivalProbability not supported", __FILE__, __LINE__); };
-		virtual double getMarginalDefaultProbability() const { throw AQLCoreInvalidData("#Error: getMarginalDefaultProbability not supported", __FILE__, __LINE__); };
-		virtual double getCdsSpread() const { throw AQLCoreInvalidData("#Error: getCdsSpread not supported", __FILE__, __LINE__); };
-		virtual double getPremiumCoupon() const { throw AQLCoreInvalidData("#Error: getPremiumCoupon not supported", __FILE__, __LINE__); };
-		virtual double getAccrualOnDefaultCoupon() const { throw AQLCoreInvalidData("#Error: getAccrualOnDefaultCoupon not supported", __FILE__, __LINE__); };
-		virtual const AQLDate& getBondExDividendDate() const { throw AQLCoreInvalidData("#Error: getBondExDividendDate not supported", __FILE__, __LINE__); };
-		virtual double getBondTrueYieldYearFraction() const { throw AQLCoreInvalidData("#Error: getBondTrueYieldYearFraction not supported", __FILE__, __LINE__); };
+		virtual double getSurvivalProbability() const { AQ_THROW( "getSurvivalProbability not supported" ); };
+		virtual double getMarginalDefaultProbability() const { AQ_THROW( "getMarginalDefaultProbability not supported" ); };
+		virtual double getCdsSpread() const { AQ_THROW( "getCdsSpread not supported" ); };
+		virtual double getPremiumCoupon() const { AQ_THROW( "getPremiumCoupon not supported" ); };
+		virtual double getAccrualOnDefaultCoupon() const { AQ_THROW( "getAccrualOnDefaultCoupon not supported" ); };
+		virtual const AQLDate& getBondExDividendDate() const { AQ_THROW( "getBondExDividendDate not supported" ); };
+		virtual double getBondTrueYieldYearFraction() const { AQ_THROW( "getBondTrueYieldYearFraction not supported" ); };
 
 
 		static std::vector<std::string> bespokeCashflowLVBKeys()

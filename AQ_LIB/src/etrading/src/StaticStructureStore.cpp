@@ -1,10 +1,10 @@
 //
 // @Description: Implementation of Singleton StaticStructureStore
 
+#include "ExceptionMacros.h"
 #include <vector>
 #include <boost/assign.hpp>
 #include <boost/bimap.hpp>
-#include <boost/format.hpp>
 
 #include "StaticStructureStore.h"
 #include "CoreEnumerations.h"
@@ -33,7 +33,8 @@ namespace etrading
         }
         catch( ... )
         {
-            throw ETradingException(  ( boost::format( "Unable to find matching String description for SerializationMethodEnum (%i)" ) % srEnum ).str()  );
+            { std::ostringstream aqMsg242;
+aqMsg242 << "Unable to find matching String description for SerializationMethodEnum (" << srEnum << ")"; AQ_THROW( aqMsg242.str() ); }
         }
     }
 

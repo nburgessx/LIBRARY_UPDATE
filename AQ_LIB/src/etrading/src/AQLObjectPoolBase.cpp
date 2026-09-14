@@ -9,6 +9,7 @@
 #endif
 
 
+#include "ExceptionMacros.h"
 #include "AQLObjectPoolBase.h"
 #include "AQLString.h"
 #include "AQLDataInstance.h"
@@ -174,7 +175,7 @@ AQLObjectPoolBase::loadVolatilityDataAndCalibrate(const AQLString &key, AQLDataI
 		}
 		else
 		{
-			throw AQLCoreInvalidData("Volatility input type. only function or data is support", __FILE__, __LINE__); 
+			AQ_THROW( "Volatility input type. only function or data is support" ); 
 		}
 	}
 

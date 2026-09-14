@@ -1,6 +1,5 @@
 
 #include <cmath>
-#include <boost/format.hpp>
 
 #include "ConstrainedSplineInterpolation.h"
 #include "ETradingException.h"
@@ -16,7 +15,8 @@ namespace etrading
         // AQLSplineInterpolation.cpp:   void AQLSplineInterpolation::set(const DoubleArray& index, const DoubleArray& value)  - line 166
         if ( inXs.size() != inYs.size() || inYs.size() <= 1 || inXs.size() == 0 )
         {
-            throw ETradingException( ( boost::format( "SplineInterpolation: Illegal sizes => x-vector size (%i) and y-vector size (%i)" ) % inXs.size() % inYs.size() ).str() );
+            { std::ostringstream aqMsg81;
+aqMsg81 << "SplineInterpolation: Illegal sizes => x-vector size (" << inXs.size() << ") and y-vector size (" << inYs.size() << ")"; AQ_THROW( aqMsg81.str() ); }
         }
 
         std::vector<double> xs = inXs;

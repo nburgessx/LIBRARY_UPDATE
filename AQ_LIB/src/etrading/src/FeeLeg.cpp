@@ -65,10 +65,7 @@ namespace etrading
 		initializeDataProvider( dataProvider, updateCurveData );
    	    
 	    double pv = 0.0;
-		if (schedule_ == nullptr)
-		{
-			throw AQLCoreInvalidData( "#Error: Schedule has not been built", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( schedule_ == nullptr, "Schedule has not been built" );
 
 		CashflowPtr cf;
 		for( unsigned int i = 0; i < schedule_->getCashflowSize(); i++ )
@@ -86,10 +83,7 @@ namespace etrading
 
     void FeeLeg::flipPayerReceiver()
     {
-		if (schedule_ == nullptr)
-		{
-			throw AQLCoreInvalidData( "#Error: LegStaticData or Schedule has not been built", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( schedule_ == nullptr, "LegStaticData or Schedule has not been built" );
 
         size_t expectedSize = schedule_->getCashflowSize();
  		for( size_t i = 0; i < expectedSize; i++ )

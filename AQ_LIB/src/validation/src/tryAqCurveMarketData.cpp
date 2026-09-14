@@ -13,7 +13,6 @@
 #include <string>
 #include <set>
 #include <algorithm>
-#include <boost/format.hpp>
 
 using etrading::CreateDataFile;
 using etrading::decorateFilename;

@@ -106,7 +106,7 @@ namespace etrading
             }
             else
             {
-                throw AQLCoreInvalidData( "#Error: TradeType key is either not specified or carries invalid value", __FILE__, __LINE__ );
+                AQ_THROW( "TradeType key is either not specified or carries invalid value" );
             }
 
             portfolio_.push_back( trade );
@@ -532,8 +532,8 @@ namespace etrading
 			}
 			if ( reportingCCY == NO_CCY)
 			{
-				throw AQLCoreInvalidData( ( boost::format( "#Error: Could not determine the currency for swap leg: %s" )
-										% legID.getCString() ).str().c_str() , __FILE__, __LINE__ );
+				{ std::ostringstream aqCoreMsg18;
+aqCoreMsg18 << "Could not determine the currency for swap leg: " << legID.getCString(); AQ_THROW( aqCoreMsg18.str() ); }
 			}
 			allLegCCYs.push_back( toString( reportingCCY ).c_str() );
 
@@ -657,7 +657,7 @@ namespace etrading
 				if ( pos == allYieldCurves_.end() )
 				{
 					AQLString err = "#Error: Forecast curve for instrument '" + tradeID + "' is not found in the given group of yield curves";
-					throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+					AQ_THROW( err.getCString() );
 				}
 
 				AQLString discountCurveLower = discountCurve;
@@ -666,16 +666,13 @@ namespace etrading
 				if ( pos == allYieldCurves_.end() )
 				{
 					AQLString err = "#Error: Discount curve for instrument '" + tradeID + "' is not found in the given group of yield curves";
-					throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+					AQ_THROW( err.getCString() );
 				}
 
 				// Validate the forecast and discounting curves
 				etrading::validateStringEmptiness( forecastCurve, "#Error: The Swap 'forecast Curve' must be specified." );
 
-				if( discountCurve == AQLString( "" ) )
-				{
-					throw AQLCoreInvalidData( "#Error: The Swap 'discount Curve' must be specified.", __FILE__, __LINE__ );
-				}
+				AQ_THROW_IF( discountCurve == AQLString( "" ), "The Swap 'discount Curve' must be specified." );
 
 				// Put this trade in a map that is indexed by the pairing of its forecast curve and discount curve
 				CurveDependencies key( curveCollectionID_, forecastCurve, discountCurve );
@@ -860,10 +857,7 @@ namespace etrading
 		positionIDs.clear();
         deltas.clear();
 
-		if (! usingAQObj_ )
-		{
-			throw AQLCoreInvalidData( "#Error: flatShiftDelta is only supported for Light Weight Object Swaps.", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( ! usingAQObj_, "flatShiftDelta is only supported for Light Weight Object Swaps." );
 
         // Exit if no trades are provided
         if ( getPortfolioSize() == 0 )
@@ -989,8 +983,8 @@ namespace etrading
 				}
 				else if (deltaByTradeID.find(swapName) == deltaByTradeID.end())
 				{
-					throw AQLCoreInvalidData((boost::format("#Error: Missing risk for swap: %s")
-						% swapName.getCString()).str().c_str(), __FILE__, __LINE__);
+					{ std::ostringstream aqCoreMsg19;
+aqCoreMsg19 << "Missing risk for swap: " << swapName.getCString(); AQ_THROW( aqCoreMsg19.str() ); }
 				}
 				else
 				{
@@ -1027,7 +1021,7 @@ namespace etrading
 			AQLString errMsg( "#Error: Invalid value for groupRiskBy parameter: " );
 			errMsg += groupRiskBy;
 			errMsg += ". Valid values: LEG, SWAP, TOTAL";
-			throw AQLCoreInvalidData( errMsg.getCString(), __FILE__, __LINE__ );
+			AQ_THROW( errMsg.getCString() );
 		}
 	}
 

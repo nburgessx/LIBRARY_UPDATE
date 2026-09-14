@@ -1,7 +1,6 @@
 
 #include <utility>
 #include <algorithm>
-#include <boost/format.hpp>
 
 #include "StepInterpolation.h"
 #include "ETradingException.h"
@@ -41,7 +40,7 @@ namespace etrading
             const bool matchesIdx = doubleEquals( *it, x );
             if ( idxOfFirstLargerOrEqual  < 0 )
             {
-                throw ETradingException( "stepInterpolate - Should never reach this line - A" );
+                AQ_THROW( "stepInterpolate - Should never reach this line - A" );
             }
             else
             {
@@ -55,7 +54,7 @@ namespace etrading
                 }
             }
         }
-        throw ETradingException( "stepInterpolate - Should never reach this line -B" );
+        AQ_THROW( "stepInterpolate - Should never reach this line -B" );
     }
 
 }

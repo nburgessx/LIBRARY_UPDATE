@@ -54,7 +54,7 @@ namespace
             if ( i == floatAccrualDates.size()-1  )
             {
                 if ( floatAccrualDates[i] < asOf ) 
-                    throw AQLCoreInvalidData("#Error: Par rate error; The underlying swap has expired.", __FILE__, __LINE__ );
+                    AQ_THROW( "Par rate error; The underlying swap has expired." );
 
                 nextCashflowIndex++;
                 break; 
@@ -74,7 +74,7 @@ namespace
 			if (i == fixingStartDates.size() - 1)
 			{
 				if (fixingStartDates[i] < asOf)
-					throw AQLCoreInvalidData("#Error: The fixing date is earlier than asOfDate.", __FILE__, __LINE__);
+					AQ_THROW( "The fixing date is earlier than asOfDate." );
 
 				nextCashflowIndex++;
 				break;
@@ -102,10 +102,7 @@ namespace
 							const AQLString& interpolation,
 							const AQLString& oisCompoundingType)
 	{
-		if (floatAccrualDates[0] < asOf)
-		{
-			throw AQLCoreInvalidData("#Error: Only Spot or Forward Starting OIS Swaps supported", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( floatAccrualDates[0] < asOf, "Only Spot or Forward Starting OIS Swaps supported" );
 
 		// Get equivalent rates over accrual periods
 		for( size_t i = 1; i < floatAccrualDates.size(); ++i )
@@ -180,14 +177,14 @@ double CurveInstrumentPricing::getParRate( DateVector& fixedAccrualDates,
 	for( int i = 1; i < nFixedAccrualDates; i++ )
 	{
 		if( fixedAccrualDates[i-1] >= fixedAccrualDates[i] )
-            throw AQLCoreInvalidData("#Error: Invalid Fixed Leg Accrual Date(s).",__FILE__,__LINE__);
+            AQ_THROW( "Invalid Fixed Leg Accrual Date(s)." );
 	}
 
     int nFixedPaymentDates = fixedPaymentDates.size()-1;
 	for( int i = 1; i < nFixedPaymentDates; i++ )
 	{
 		if( fixedPaymentDates[i-1] >= fixedPaymentDates[i] )
-            throw AQLCoreInvalidData("#Error: Invalid Fixed Leg Payment Date(s).",__FILE__,__LINE__);
+            AQ_THROW( "Invalid Fixed Leg Payment Date(s)." );
 	}
 
     //
@@ -197,21 +194,21 @@ double CurveInstrumentPricing::getParRate( DateVector& fixedAccrualDates,
 	for( int i = 1; i < nFloatAccrualDates; i++ )
 	{
 		if( floatAccrualDates[i-1] >= floatAccrualDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Accrual Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Accrual Date(s)." );
 	}
 
     int nFloatFixingDates = floatFixingDates.size()-1;
 	for( int i = 1; i < nFloatFixingDates; i++ )
 	{
 		if( floatFixingDates[i-1] >= floatFixingDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Fixing Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Fixing Date(s)." );
 	}
 
     int nFloatPaymentDates = floatPaymentDates.size()-1;
 	for( int i = 1; i < nFloatPaymentDates; i++ )
 	{
 		if( floatPaymentDates[i-1] >= floatPaymentDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Payment Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Payment Date(s)." );
 	}
 
 	etrading::AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
@@ -228,16 +225,13 @@ double CurveInstrumentPricing::getParRate( DateVector& fixedAccrualDates,
     etrading::AQLCurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
 	yc.getSlidingRule().convertFromString( NO_CH );
 
-	if (isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS)
-	{
-        throw AQLCoreInvalidData("#Error: Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing",__FILE__,__LINE__);
-	}
+	AQ_THROW_IF( isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS, "Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing" );
 		
 	const AQLObject& YieldData       = yc.getYieldData().get().get();
 	const AQLDate& asOf              = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
     
     if ( floatPaymentDates[floatPaymentDates.size()-1] < asOf && fixedPaymentDates[fixedPaymentDates.size()-1] < asOf) 
-        throw AQLCoreInvalidData("#Error: Par rate error; The underlying swap has expired.", __FILE__, __LINE__ );
+        AQ_THROW( "Par rate error; The underlying swap has expired." );
     
     const AQLPriceDataCalendar& cal       = yc.getCalendar();
 	const AQLPriceDataSlidingRule& sr     = yc.getSlidingRule();
@@ -349,10 +343,7 @@ double CurveInstrumentPricing::getParRate( DateVector& fixedAccrualDates,
 			DoubleArray fixingDateYearFractions( floatFixingDates.size() -1 );  
 			DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
-			if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-			{
-				throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
-			}
+			AQ_THROW_IF( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size(), "Floating schedule error. Inconsistent number of fixing, acrrual and payment dates." );
 			  
 			yc.setCurveNameAndInterpolation(foreCurveName, foreInter);
 
@@ -498,14 +489,14 @@ double CurveInstrumentPricing::getSwapPV( bool&             isFixedRatePayerSwap
 	for( int i = 1; i < nFixedAccrualDates; i++ )
 	{
 		if( fixedAccrualDates[i-1] >= fixedAccrualDates[i] )
-            throw AQLCoreInvalidData("#Error: Invalid Fixed Leg Accrual Date(s).",__FILE__,__LINE__);
+            AQ_THROW( "Invalid Fixed Leg Accrual Date(s)." );
 	}
 
     int nFixedPaymentDates = fixedPaymentDates.size()-1;
 	for( int i = 1; i < nFixedPaymentDates; i++ )
 	{
 		if( fixedPaymentDates[i-1] >= fixedPaymentDates[i] )
-            throw AQLCoreInvalidData("#Error: Invalid Fixed Leg Payment Date(s).",__FILE__,__LINE__);
+            AQ_THROW( "Invalid Fixed Leg Payment Date(s)." );
 	}
 
     //
@@ -515,21 +506,21 @@ double CurveInstrumentPricing::getSwapPV( bool&             isFixedRatePayerSwap
 	for( int i = 1; i < nFloatAccrualDates; i++ )
 	{
 		if( floatAccrualDates[i-1] >= floatAccrualDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Accrual Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Accrual Date(s)." );
 	}
 
     int nFloatFixingDates = floatFixingDates.size()-1;
 	for( int i = 1; i < nFloatFixingDates; i++ )
 	{
 		if( floatFixingDates[i-1] >= floatFixingDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Fixing Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Fixing Date(s)." );
 	}
 
     int nFloatPaymentDates = floatPaymentDates.size()-1;
 	for( int i = 1; i < nFloatPaymentDates; i++ )
 	{
 		if( floatPaymentDates[i-1] > floatPaymentDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Payment Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Payment Date(s)." );
 	}
 
 	etrading::AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
@@ -546,10 +537,7 @@ double CurveInstrumentPricing::getSwapPV( bool&             isFixedRatePayerSwap
     etrading::AQLCurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
 	yc.getSlidingRule().convertFromString( NO_CH );
 
-	if (isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS)
-	{
-        throw AQLCoreInvalidData("#Error: Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing",__FILE__,__LINE__);
-	}
+	AQ_THROW_IF( isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS, "Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing" );
 	
 	const AQLObject& YieldData       = yc.getYieldData().get().get();
 	const AQLDate& asOf              = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
@@ -608,7 +596,7 @@ double CurveInstrumentPricing::getSwapPV( bool&             isFixedRatePayerSwap
     DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
     if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-        throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
+        AQ_THROW( "Floating schedule error. Inconsistent number of fixing, acrrual and payment dates." );
          
     // Calculate the floating coupon accrual periods
     for( size_t i = 1; i < floatAccrualDates.size(); i++ )
@@ -800,14 +788,14 @@ double CurveInstrumentPricing::getSwapDV01( bool             isFixedRatePayerSwa
 	for( int i = 1; i < nFixedAccrualDates; i++ )
 	{
 		if( fixedAccrualDates[i-1] >= fixedAccrualDates[i] )
-            throw AQLCoreInvalidData("#Error: Invalid Fixed Leg Accrual Date(s).",__FILE__,__LINE__);
+            AQ_THROW( "Invalid Fixed Leg Accrual Date(s)." );
 	}
 
     int nFixedPaymentDates = fixedPaymentDates.size()-1;
 	for( int i = 1; i < nFixedPaymentDates; i++ )
 	{
 		if( fixedPaymentDates[i-1] >= fixedPaymentDates[i] )
-            throw AQLCoreInvalidData("#Error: Invalid Fixed Leg Payment Date(s).",__FILE__,__LINE__);
+            AQ_THROW( "Invalid Fixed Leg Payment Date(s)." );
 	}
 
     //
@@ -817,21 +805,21 @@ double CurveInstrumentPricing::getSwapDV01( bool             isFixedRatePayerSwa
 	for( int i = 1; i < nFloatAccrualDates; i++ )
 	{
 		if( floatAccrualDates[i-1] >= floatAccrualDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Accrual Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Accrual Date(s)." );
 	}
 
     int nFloatFixingDates = floatFixingDates.size()-1;
 	for( int i = 1; i < nFloatFixingDates; i++ )
 	{
 		if( floatFixingDates[i-1] >= floatFixingDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Fixing Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Fixing Date(s)." );
 	}
 
     int nFloatPaymentDates = floatPaymentDates.size()-1;
 	for( int i = 1; i < nFloatPaymentDates; i++ )
 	{
 		if( floatPaymentDates[i-1] >= floatPaymentDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Payment Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Payment Date(s)." );
 	}
 
     etrading::AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
@@ -848,10 +836,7 @@ double CurveInstrumentPricing::getSwapDV01( bool             isFixedRatePayerSwa
     etrading::AQLCurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
 	yc.getSlidingRule().convertFromString( NO_CH );
 
-	if (isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS)
-	{
-		throw AQLCoreInvalidData("#Error: Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing",__FILE__,__LINE__);
-	}
+	AQ_THROW_IF( isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc) && !isOIS, "Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing" );
 	
 	// Constant(s)
     const double oneBasisPoint              = 0.0001;
@@ -904,7 +889,7 @@ double CurveInstrumentPricing::getSwapDV01( bool             isFixedRatePayerSwa
     DoubleArray fixedLegDiscFactors( fixedPaymentDates.size() -1 );
         
     if ( fixedAccrualDates.size() != fixedPaymentDates.size() )
-        throw AQLCoreInvalidData("#Error: Fixed schedule error. Inconsistent number of acrrual and payment dates.", __FILE__, __LINE__ );
+        AQ_THROW( "Fixed schedule error. Inconsistent number of acrrual and payment dates." );
 
     for( size_t i = 1; i < fixedAccrualDates.size(); i++ )
     {
@@ -944,7 +929,7 @@ double CurveInstrumentPricing::getSwapDV01( bool             isFixedRatePayerSwa
     DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
     if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-        throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
+        AQ_THROW( "Floating schedule error. Inconsistent number of fixing, acrrual and payment dates." );
              
     // Calculate the floating coupon accrual periods
     for( size_t i = 1; i < floatAccrualDates.size(); i++ )
@@ -1223,14 +1208,14 @@ double CurveInstrumentPricing::getAssetSwapSpread( const double&    bondPrice,
 	for( int i = 1; i < nFixedAccrualDates; i++ )
 	{
 		if( fixedAccrualDates[i-1] >= fixedAccrualDates[i] )
-            throw AQLCoreInvalidData("#Error: Invalid Fixed Leg Accrual Date(s).",__FILE__,__LINE__);
+            AQ_THROW( "Invalid Fixed Leg Accrual Date(s)." );
 	}
 
     int nFixedPaymentDates = fixedPaymentDates.size()-1;
 	for( int i = 1; i < nFixedPaymentDates; i++ )
 	{
 		if( fixedPaymentDates[i-1] >= fixedPaymentDates[i] )
-            throw AQLCoreInvalidData("#Error: Invalid Fixed Leg Payment Date(s).",__FILE__,__LINE__);
+            AQ_THROW( "Invalid Fixed Leg Payment Date(s)." );
 	}
 
     //
@@ -1240,21 +1225,21 @@ double CurveInstrumentPricing::getAssetSwapSpread( const double&    bondPrice,
 	for( int i = 1; i < nFloatAccrualDates; i++ )
 	{
 		if( floatAccrualDates[i-1] >= floatAccrualDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Accrual Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Accrual Date(s)." );
 	}
 
     int nFloatFixingDates = floatFixingDates.size()-1;
 	for( int i = 1; i < nFloatFixingDates; i++ )
 	{
 		if( floatFixingDates[i-1] >= floatFixingDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Fixing Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Fixing Date(s)." );
 	}
 
     int nFloatPaymentDates = floatPaymentDates.size()-1;
 	for( int i = 1; i < nFloatPaymentDates; i++ )
 	{
 		if( floatPaymentDates[i-1] >= floatPaymentDates[i] )
-			throw AQLCoreInvalidData("#Error: Invalid Float Leg Payment Date(s).",__FILE__,__LINE__);
+			AQ_THROW( "Invalid Float Leg Payment Date(s)." );
 	}
 
     etrading::AQLCurvePricingObject& yc = etrading::AQLCurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance,curveid);
@@ -1271,16 +1256,13 @@ double CurveInstrumentPricing::getAssetSwapSpread( const double&    bondPrice,
     etrading::AQLCurveForwardRateHelpers::setCalendarForCurveID( yc, "" );
 	yc.getSlidingRule().convertFromString( NO_CH );
 
-	if (isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc))
-	{
-		throw AQLCoreInvalidData("#Error: Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing",__FILE__,__LINE__);
-	}
+	AQ_THROW_IF( isFWDInter && !etrading::AQLCurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, foreCurveName, yc), "Invalid Forward Rates - Unable to generate forward rates for Curve Instrument Calibration & Pricing" );
 	
 	const AQLObject& YieldData       = yc.getYieldData().get().get();
 	const AQLDate& asOf              = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
     
     if ( floatPaymentDates[floatPaymentDates.size()-1] < asOf && fixedPaymentDates[fixedPaymentDates.size()-1] < asOf) 
-        throw AQLCoreInvalidData("#Error: Asset swap spread error; the underlying swap has expired.", __FILE__, __LINE__ );
+        AQ_THROW( "Asset swap spread error; the underlying swap has expired." );
     
     const AQLPriceDataCalendar& cal       = yc.getCalendar();
 	const AQLPriceDataSlidingRule& sr     = yc.getSlidingRule();
@@ -1333,7 +1315,7 @@ double CurveInstrumentPricing::getAssetSwapSpread( const double&    bondPrice,
     DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
     if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-        throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
+        AQ_THROW( "Floating schedule error. Inconsistent number of fixing, acrrual and payment dates." );
 
     // Calculate the floating coupon accrual periods
     for( size_t i = 1; i < floatAccrualDates.size(); i++ )
@@ -1349,7 +1331,7 @@ double CurveInstrumentPricing::getAssetSwapSpread( const double&    bondPrice,
         if ( i == floatAccrualDates.size()-1  )
         {
             if ( floatAccrualDates[i] < asOf ) 
-                throw AQLCoreInvalidData("#Error: Asset swap spread error; the underlying swap has expired.", __FILE__, __LINE__ );
+                AQ_THROW( "Asset swap spread error; the underlying swap has expired." );
 			
 			nextCashflowIndex++;                
             break; 
@@ -1459,7 +1441,7 @@ double CurveInstrumentPricing::getAssetSwapSpread( const double&    bondPrice,
     // Asset Swap Spread
     //
     if ( floatAnnuity == 0 )
-        throw AQLCoreInvalidData("#Error: Floating schedule error. The float leg annuity value cannot be zero.", __FILE__, __LINE__ );
+        AQ_THROW( "Floating schedule error. The float leg annuity value cannot be zero." );
 
     // Note: Accrued Interest is deducted from the fixedLegPV ( via the Fixed Annuity ) when working with the dirty bond price
     swapSpread    = ( fixedLegPV - floatLegPV + parParAdjustmentInPercent ) / floatAnnuity;

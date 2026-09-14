@@ -43,7 +43,7 @@ namespace etrading
     {
         if( str == AQLString( "" ) && err.size() != 0 )
         {
-            throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+            AQ_THROW( err.getCString() );
         }
     }
 
@@ -208,7 +208,7 @@ namespace etrading
             {
                 if ( err.size() != 0 )
                 {
-                    throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+                    AQ_THROW( err.getCString() );
                 }
                 else
                 {
@@ -288,7 +288,7 @@ namespace etrading
             else
             {
                 // Allow null calendar
-                //throw AQLCoreInvalidData( "#Error: 'Calendar' must be specified.", __FILE__, __LINE__ );
+                //AQ_THROW( "'Calendar' must be specified." );
             }
         }
         return cal;

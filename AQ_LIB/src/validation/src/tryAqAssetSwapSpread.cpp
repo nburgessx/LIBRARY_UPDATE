@@ -71,7 +71,7 @@ namespace validation
         }
         else
         {
-            throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+            AQ_THROW( err.getCString() );
         }
     }
 
@@ -118,10 +118,7 @@ namespace validation
 
         etrading::validateAndGenerateSwapCashflows( assetSwapLVB, inputLVB, fixedAccrualDates, fixedPaymentDates, floatFixingDates, floatAccrualDates, floatPaymentDates, fixingInAdvance, isAssetSwap );
 
-        if ( fixedAccrualDates.size() < 1 || floatAccrualDates.size() < 1 )
-        {
-            throw AQLCoreInvalidData( "#Error: Swap schedule error. There must be at least 1 fixed and float coupon.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fixedAccrualDates.size() < 1 || floatAccrualDates.size() < 1, "Swap schedule error. There must be at least 1 fixed and float coupon." );
 
         AQLString fixedFreq = assetSwapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FIXED_FREQUENCY );
         AQLString floatFreq = assetSwapLVB.getCompulsoryValueAsAQLString( etrading::IRS_KEY::FLOAT_FREQUENCY );

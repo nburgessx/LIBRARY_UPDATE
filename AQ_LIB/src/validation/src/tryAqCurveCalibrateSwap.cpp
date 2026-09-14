@@ -80,70 +80,31 @@ namespace validation
             file.write( "convexityAdjRates", tenorBasisRates );     // Note convexity adj was the INCORRECT previous name for this tenor basis parameter
         }
 
-        if ( !curveConv.empty() && curveConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Curve Conventions column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !curveConv.empty() && curveConv[0].size() < 2, "Curve Conventions column size must be 2" );
 
-        if ( !moneyMarketConv.empty() && moneyMarketConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Money Market Conventions column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !moneyMarketConv.empty() && moneyMarketConv[0].size() < 2, "Money Market Conventions column size must be 2" );
 
-        if ( !liborConv.empty() && liborConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Libor Conventions column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !liborConv.empty() && liborConv[0].size() < 2, "Libor Conventions column size must be 2" );
 
-        if ( !liborRates.empty() && liborRates[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Libor Rates column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !liborRates.empty() && liborRates[0].size() < 2, "Libor Rates column size must be 2" );
 
-        if ( !swapConv.empty() && swapConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Swap Conventions column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !swapConv.empty() && swapConv[0].size() < 2, "Swap Conventions column size must be 2" );
 
-        if ( !swapRates.empty() && swapRates[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Swap Rates column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !swapRates.empty() && swapRates[0].size() < 2, "Swap Rates column size must be 2" );
 
-        if ( !fraConv.empty() && fraConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: FRA Conventions column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !fraConv.empty() && fraConv[0].size() < 2, "FRA Conventions column size must be 2" );
 
-        if ( !fra3mRates.empty() && fra3mRates[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: FRA 3M Rates column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !fra3mRates.empty() && fra3mRates[0].size() < 2, "FRA 3M Rates column size must be 2" );
 
-        if ( !fra6mRates.empty() && fra6mRates[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: FRA 6M Rates column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !fra6mRates.empty() && fra6mRates[0].size() < 2, "FRA 6M Rates column size must be 2" );
 
-        if ( !futureConv.empty() && futureConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Futures Conventions column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !futureConv.empty() && futureConv[0].size() < 2, "Futures Conventions column size must be 2" );
 
-        if ( !futureRates.empty() && futureRates[0].size() < 3 )
-        {
-            throw AQLCoreInvalidData( "#Error: Futures Rates column size must be greater or equal to 3", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !futureRates.empty() && futureRates[0].size() < 3, "Futures Rates column size must be greater or equal to 3" );
 
-        if ( !tenorBasisConv.empty() && tenorBasisConv[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Tenor Basis Adjustment Conventions column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !tenorBasisConv.empty() && tenorBasisConv[0].size() < 2, "Tenor Basis Adjustment Conventions column size must be 2" );
 
-        if ( !tenorBasisRates.empty() && tenorBasisRates[0].size() < 2 )
-        {
-            throw AQLCoreInvalidData( "#Error: Tenor Basis Adjustment Rates column size must be 2", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( !tenorBasisRates.empty() && tenorBasisRates[0].size() < 2, "Tenor Basis Adjustment Rates column size must be 2" );
 
         etrading::AQLUpdateStaticDataManager::setUpSwapCurve( etrading::getDataInstance(),
                                                                   curveCollection,

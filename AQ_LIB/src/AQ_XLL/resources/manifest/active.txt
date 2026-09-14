@@ -1,0 +1,28 @@
+# AlgoQuantLib XLL manifest - consumed by Release_XL_Manifest's PreBuildEvent
+# (generateManifestList.bat, in this same folder) to decide which
+# worksheet functions get compiled into AlgoQuantLib.xll.
+#
+# Format:
+#   - Lines starting with "#" are comments and are ignored, as is this block.
+#   - Blank lines are ignored.
+#   - "edition:<name>" sets a display label for this manifest. Optional -
+#     defaults to the file name if omitted.
+#   - A line containing only "*" means "every function known today" - the
+#     full/default edition. Nothing to maintain: the full function list is
+#     scanned fresh from the AQ_XLL source on every build, never hand-typed
+#     here.
+#   - Otherwise, one function name per line, exactly as it is registered in
+#     Excel (e.g. aqSwapObjectPV, aqBondObjectDirtyPrice). A name that does
+#     not exist in AQ_XLL fails the build with a clear error rather than
+#     silently being ignored.
+#
+# This is the file that is ACTUALLY used by a Release_XL_Manifest build -
+# edit the lines below (not this comment block) to change which functions a
+# local build exposes, then rebuild. No property pages, no VS restart.
+# demo.txt in this folder is a smaller example manifest to copy from.
+
+edition:Active
+aqDateYearFraction
+aqSwapPV
+aqSwapParRate
+aqBondObjectDirtyPrice

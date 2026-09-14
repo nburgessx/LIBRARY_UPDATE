@@ -332,10 +332,7 @@ namespace validation
 		auto swap = etrading::getSwap(swapName);
 		auto leg = etrading::getLeg(feeName);
 
-		if (leg->getType() != etrading::FEE_SCHEDULE_TYPE)
-		{
-			throw AQLCoreInvalidData( "#Error: The Leg is not a Fee", __FILE__, __LINE__ );
-		}
+		AQ_THROW_IF( leg->getType() != etrading::FEE_SCHEDULE_TYPE, "The Leg is not a Fee" );
         swap->addToLegCollection(leg);
 
    		etrading::registerToCache<etrading::Swap>(swap);
@@ -365,10 +362,7 @@ namespace validation
 
 		std::vector<LabelValueBlock> legsLVB = etrading::buildMultiLabelValueBlock(swapGeneratorLVB);
 
-        if (legsLVB.size() != 2) 
-        {
-			throw AQLCoreInvalidData( "#Error: SwapGeneratorLVB must have a key column and two value columns", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( legsLVB.size() != 2, "SwapGeneratorLVB must have a key column and two value columns" );
 
         auto legGen1 = legsLVB.at(0);
         auto legGen2 = legsLVB.at(1);

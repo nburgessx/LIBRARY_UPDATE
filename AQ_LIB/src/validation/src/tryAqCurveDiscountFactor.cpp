@@ -1,5 +1,6 @@
 #include <string>
 #include <limits>
+#include <sstream>
 #include <boost/date_time.hpp>
 
 #include "Environment.h"
@@ -118,10 +119,7 @@ namespace validation
         }
 
         // Input validations
-        if( yearFractions.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Size of input 'yearFractions' is zero.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( yearFractions.size() == 0, "Size of input 'yearFractions' is zero." );
 
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
@@ -138,7 +136,9 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream curveMsg;
+            curveMsg << "Curve " << aqObjCurveName << " does not exist.";
+            AQ_THROW( curveMsg.str() );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -183,10 +183,7 @@ namespace validation
         }
 
         // Input validations
-        if( tenors.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Size of input 'tenors' is zero.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( tenors.size() == 0, "Size of input 'tenors' is zero." );
 
         AQLString curIndex( curveIndex );
         AQLString interp;
@@ -195,10 +192,7 @@ namespace validation
         populateDiscountFactorConventions( curveCollection, curIndex, interp, bdAdj, cal );
 
         DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiDF( tenors, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -238,10 +232,7 @@ namespace validation
         }
 
         // Input validations
-        if( tenors.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: Size of input 'tenors' is zero.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( tenors.size() == 0, "Size of input 'tenors' is zero." );
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( businessDayAdj );
 
@@ -254,13 +245,12 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream curveMsg;
+            curveMsg << "Curve " << aqObjCurveName << " does not exist.";
+            AQ_THROW( curveMsg.str() );
         }
 
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -303,15 +293,9 @@ namespace validation
 
         size_t M = fromDates.size();
         size_t N = toDates.size();
-        if( M != N && M != 1 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( M != N && M != 1, "'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'" );
 
-        if( N == 0 || M == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'toDates' must not be empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( N == 0 || M == 0, "'fromDates' and 'toDates' must not be empty" );
 
         // Create pairs of fromDate and toDate even when there is only one fromDate
         DateVector fromDateVec;
@@ -339,10 +323,7 @@ namespace validation
 
         DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiDF( fromDateVec, toDates, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
 
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -377,14 +358,8 @@ namespace validation
 
         size_t M = fromDates.size();
         size_t N = toDates.size();
-        if( M != N && M != 1 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'", __FILE__, __LINE__ );
-        }
-        if( N == 0 || M == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'toDates' must not be empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( M != N && M != 1, "'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'" );
+        AQ_THROW_IF( N == 0 || M == 0, "'fromDates' and 'toDates' must not be empty" );
 
         // Create pairs of fromDate and toDate even when there is only one fromDate
         std::vector<boost::gregorian::date> fromDateVec;
@@ -416,13 +391,12 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream curveMsg;
+            curveMsg << "Curve " << aqObjCurveName << " does not exist.";
+            AQ_THROW( curveMsg.str() );
         }
 
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -505,15 +479,9 @@ namespace validation
 
         size_t M = fromDates.size();
         size_t N = yearFractions.size();
-        if( M != N )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must be of equal size'", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( M != N, "'fromDates' and 'yearFractions' must be of equal size'" );
 
-        if( N == 0 || M == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must not be empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( N == 0 || M == 0, "'fromDates' and 'yearFractions' must not be empty" );
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( "NO_CHANGE" );
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
@@ -533,13 +501,12 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream curveMsg;
+            curveMsg << "Curve " << aqObjCurveName << " does not exist.";
+            AQ_THROW( curveMsg.str() );
         }
 
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -584,10 +551,7 @@ namespace validation
             file.write( "calendar",			calendar );
         }
 
-        if( fromDates.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' must not be empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fromDates.size() == 0, "'fromDates' must not be empty" );
 
         AQLString curIndex( curveIndex );
         AQLString interp;
@@ -596,10 +560,7 @@ namespace validation
         populateDiscountFactorConventions( curveCollection, curIndex, interp, bdAdj, cal );
 
         DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiDF( fromDates, tenor, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -641,15 +602,13 @@ namespace validation
             file.write( "curveIndex",		aqObjCurveName );
         }
 
-        if( fromDates.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'fromDates' must not be empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( fromDates.size() == 0, "'fromDates' must not be empty" );
 
         if( fromDates.size() != tenors.size() )
         {
-            std::string errString = ( boost::format( "Number of fromDates (%i) is not equal to the number of tenors (%i)" ) % fromDates.size() % tenors.size() ).str();
-            throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
+            std::ostringstream errStream;
+            errStream << "Number of fromDates (" << fromDates.size() << ") is not equal to the number of tenors (" << tenors.size() << ")";
+            AQ_THROW( errStream.str() );
         }
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( businessDayAdj );
@@ -663,13 +622,12 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
+            std::ostringstream curveMsg;
+            curveMsg << "Curve " << aqObjCurveName << " does not exist.";
+            AQ_THROW( curveMsg.str() );
         }
 
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -709,10 +667,7 @@ namespace validation
         }
 
         size_t N = toDates.size();
-        if( N == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: 'toDates' must not be empty", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( N == 0, "'toDates' must not be empty" );
 
         AQLString curIndex( curveIndex );
         AQLString interp;
@@ -722,10 +677,7 @@ namespace validation
 
         DoubleVector ret = etrading::AQLCurveForwardRateHelpers::getMultiSpotDiscountFactors( toDates, etrading::getDataInstance(), curveCollectionFromHandle, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
 
-        if ( ret.size() == 0 )
-        {
-            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
-        }
+        AQ_THROW_IF( ret.size() == 0, "No DFs have been returned." );
 
         if ( CreateDataFile::recordEnabled() )
         {

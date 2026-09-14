@@ -11,6 +11,7 @@
 #include "tryAqCurveDiscountFactor.h"
 #include "tryAqCurveForwardRate.h"
 #include "ETradingException.h"
+#include "AQLCoreAppError.h"
 
 #include <gTest/gTest.h>
 #include <string>
@@ -93,7 +94,7 @@ namespace google_test
             std::string result = inputFile["output"];
             EXPECT_EQ( result, "JPYYC 3M6MBasis Curve has been set" );
         }
-        catch ( ETradingException& ex )
+        catch ( AQLCoreInvalidData& ex )
         {
             std::cout << ex.what() << std::endl;
         }

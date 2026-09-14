@@ -67,7 +67,7 @@ namespace etrading
 		auto it = std::upper_bound(xValues_.begin(), xValues_.end(), x);
 
 		if (it == xValues_.begin() || it == xValues_.end())
-			AQ_REQUIRE(false, "Value x out of range");
+			AQ_REQUIRE(false, "Value x out of range" );
 
 		int i = std::distance(it, xValues_.begin()) - 1;
 		double y;
@@ -91,14 +91,14 @@ namespace etrading
 		auto it = std::upper_bound(xValues_.begin(), xValues_.end(), lowerBound);
 
 		if (it == xValues_.begin() || it == xValues_.end())
-			AQ_REQUIRE(false, "Value lowerBound out of range");
+			AQ_REQUIRE(false, "Value lowerBound out of range" );
 
 		int m = std::distance(it, xValues_.begin()) - 1;
 
 		it = std::upper_bound(xValues_.begin(), xValues_.end(), upperBound);
 
 		if (it == xValues_.begin() || it == xValues_.end())
-			AQ_REQUIRE(false, "Value upperBound out of range");
+			AQ_REQUIRE(false, "Value upperBound out of range" );
 
 		int n = std::distance(it, xValues_.begin()) - 1;
 
@@ -137,7 +137,7 @@ namespace etrading
 		auto it = std::upper_bound(xValues_.begin(), xValues_.end(), x);
 
 		if (it == xValues_.begin() || it == xValues_.end())
-			AQ_REQUIRE(false, "Value x out of range");
+			AQ_REQUIRE(false, "Value x out of range" );
 
 		int i = std::distance(it, xValues_.begin()) - 1;
 		double dydx;
