@@ -218,6 +218,9 @@
     <ClInclude Include="..\src\AQ_API\source\aqObject.h">
       <Filter>include\etrading\AQObjects</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqGenerator.h">
+      <Filter>include\etrading\AQObjects</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqBondObjectCreate.h">
       <Filter>include\etrading\Bonds</Filter>
     </ClInclude>
@@ -350,6 +353,9 @@
       <Filter>src\etrading\Utility</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqObject.cpp">
+      <Filter>src\etrading\AQObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqGenerator.cpp">
       <Filter>src\etrading\AQObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqBondObjectCreate.cpp">

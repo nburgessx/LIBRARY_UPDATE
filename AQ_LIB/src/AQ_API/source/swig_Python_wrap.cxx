@@ -5518,6 +5518,7 @@ SWIGINTERN void std_vector_Sl_std_vector_Sl_std_string_Sg__Sg__insert__SWIG_1(st
 #include "aqCurveInterpolationJoinDate.h"
 #include "aqCurveDualBootstrap.h"
 #include "aqObject.h"
+#include "aqGenerator.h"
 #include "aqBondObjectCreate.h"
 #include "aqBondObjectPrice.h"
 #include "aqToolLVB.h"
@@ -29197,6 +29198,151 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_aqGeneratorList(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::vector< std::string,std::allocator< std::string > > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqGeneratorList" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGeneratorList" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqGeneratorList((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqGeneratorDisplay(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqGeneratorDisplay", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqGeneratorDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGeneratorDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqGeneratorDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGeneratorDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqGeneratorDisplay((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqGeneratorValidate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  std::string result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqGeneratorValidate", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqGeneratorValidate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGeneratorValidate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqGeneratorValidate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGeneratorValidate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqGeneratorValidate((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_aqBondObjectCreate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
@@ -33557,7 +33703,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapPV(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqCDSObjectPV(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -33568,15 +33714,15 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapPV(PyObject *SWIGUNUSEDPARM(
   PyObject *swig_obj[3] ;
   double result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqCreditObjectDefaultSwapPV", 3, 3, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "aqCDSObjectPV", 3, 3, swig_obj)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCDSObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -33584,10 +33730,10 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapPV(PyObject *SWIGUNUSEDPARM(
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCDSObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -33595,17 +33741,17 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapPV(PyObject *SWIGUNUSEDPARM(
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCDSObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCDSObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -33625,7 +33771,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapRiskyAnnuity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqCDSObjectRiskyAnnuity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -33636,15 +33782,15 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapRiskyAnnuity(PyObject *SWIGU
   PyObject *swig_obj[3] ;
   double result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqCreditObjectDefaultSwapRiskyAnnuity", 3, 3, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "aqCDSObjectRiskyAnnuity", 3, 3, swig_obj)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -33652,10 +33798,10 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapRiskyAnnuity(PyObject *SWIGU
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -33663,17 +33809,17 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapRiskyAnnuity(PyObject *SWIGU
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapRiskyAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCDSObjectRiskyAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -33693,7 +33839,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapCS01(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqCDSObjectCS01(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -33704,15 +33850,15 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapCS01(PyObject *SWIGUNUSEDPAR
   PyObject *swig_obj[3] ;
   double result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqCreditObjectDefaultSwapCS01", 3, 3, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "aqCDSObjectCS01", 3, 3, swig_obj)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCDSObjectCS01" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectCS01" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -33720,10 +33866,10 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapCS01(PyObject *SWIGUNUSEDPAR
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCDSObjectCS01" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectCS01" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -33731,17 +33877,17 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapCS01(PyObject *SWIGUNUSEDPAR
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCDSObjectCS01" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectCS01" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapCS01((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCDSObjectCS01((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -33761,7 +33907,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapParSpread(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqCDSObjectParSpread(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -33774,15 +33920,15 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapParSpread(PyObject *SWIGUNUS
   PyObject *swig_obj[4] ;
   double result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqCreditObjectDefaultSwapParSpread", 4, 4, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "aqCDSObjectParSpread", 4, 4, swig_obj)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCDSObjectParSpread" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectParSpread" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -33790,10 +33936,10 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapParSpread(PyObject *SWIGUNUS
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCDSObjectParSpread" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectParSpread" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -33801,10 +33947,10 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapParSpread(PyObject *SWIGUNUS
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCDSObjectParSpread" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectParSpread" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
@@ -33812,17 +33958,17 @@ SWIGINTERN PyObject *_wrap_aqCreditObjectDefaultSwapParSpread(PyObject *SWIGUNUS
     std::string *ptr = (std::string *)0;
     res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCDSObjectParSpread" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectParSpread" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     arg4 = ptr;
   }
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = (double)aqCDSObjectParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -35289,7 +35435,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqToolObjectGridDisplay__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_aqGridObjectDisplay__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   bool *arg2 = 0 ;
@@ -35304,23 +35450,23 @@ SWIGINTERN PyObject *_wrap_aqToolObjectGridDisplay__SWIG_0(PyObject *SWIGUNUSEDP
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolObjectGridDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqGridObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolObjectGridDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGridObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
   ecode2 = SWIG_AsVal_bool(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqToolObjectGridDisplay" "', argument " "2"" of type '" "bool""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqGridObjectDisplay" "', argument " "2"" of type '" "bool""'");
   } 
   temp2 = static_cast< bool >(val2);
   arg2 = &temp2;
   {
     try
     {
-      result = aqToolObjectGridDisplay((std::string const &)*arg1,(bool const &)*arg2);
+      result = aqGridObjectDisplay((std::string const &)*arg1,(bool const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -35336,7 +35482,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqToolObjectGridDisplay__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_aqGridObjectDisplay__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   int res1 = SWIG_OLDOBJ ;
@@ -35347,17 +35493,17 @@ SWIGINTERN PyObject *_wrap_aqToolObjectGridDisplay__SWIG_1(PyObject *SWIGUNUSEDP
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolObjectGridDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqGridObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolObjectGridDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGridObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
   {
     try
     {
-      result = aqToolObjectGridDisplay((std::string const &)*arg1);
+      result = aqGridObjectDisplay((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -35373,20 +35519,20 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqToolObjectGridDisplay(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqGridObjectDisplay(PyObject *self, PyObject *args) {
   Py_ssize_t argc;
   PyObject *argv[3] = {
     0
   };
   
-  if (!(argc = SWIG_Python_UnpackTuple(args, "aqToolObjectGridDisplay", 0, 2, argv))) SWIG_fail;
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqGridObjectDisplay", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 1) {
     int _v;
     int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_aqToolObjectGridDisplay__SWIG_1(self, argc, argv);
+      return _wrap_aqGridObjectDisplay__SWIG_1(self, argc, argv);
     }
   }
   if (argc == 2) {
@@ -35399,16 +35545,16 @@ SWIGINTERN PyObject *_wrap_aqToolObjectGridDisplay(PyObject *self, PyObject *arg
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_aqToolObjectGridDisplay__SWIG_0(self, argc, argv);
+        return _wrap_aqGridObjectDisplay__SWIG_0(self, argc, argv);
       }
     }
   }
   
 fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqToolObjectGridDisplay'.\n"
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqGridObjectDisplay'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    aqToolObjectGridDisplay(std::string const &,bool const &)\n"
-    "    aqToolObjectGridDisplay(std::string const &)\n");
+    "    aqGridObjectDisplay(std::string const &,bool const &)\n"
+    "    aqGridObjectDisplay(std::string const &)\n");
   return 0;
 }
 
@@ -35751,6 +35897,9 @@ static PyMethodDef SwigMethods[] = {
 	 { "aqCurveDualBootstrap", _wrap_aqCurveDualBootstrap, METH_VARARGS, NULL},
 	 { "aqObjectSave", _wrap_aqObjectSave, METH_VARARGS, NULL},
 	 { "aqObjectLoad", _wrap_aqObjectLoad, METH_O, NULL},
+	 { "aqGeneratorList", _wrap_aqGeneratorList, METH_O, NULL},
+	 { "aqGeneratorDisplay", _wrap_aqGeneratorDisplay, METH_VARARGS, NULL},
+	 { "aqGeneratorValidate", _wrap_aqGeneratorValidate, METH_VARARGS, NULL},
 	 { "aqBondObjectCreate", _wrap_aqBondObjectCreate, METH_VARARGS, NULL},
 	 { "aqBondObjectCreateFromGenerator", _wrap_aqBondObjectCreateFromGenerator, METH_VARARGS, NULL},
 	 { "aqBondObjectPrice", _wrap_aqBondObjectPrice, METH_VARARGS, NULL},
@@ -35820,10 +35969,10 @@ static PyMethodDef SwigMethods[] = {
 	 { "aqCreditModelHazardRate", _wrap_aqCreditModelHazardRate, METH_VARARGS, NULL},
 	 { "aqObjCreditModelRiskyDiscountFactor", _wrap_aqObjCreditModelRiskyDiscountFactor, METH_VARARGS, NULL},
 	 { "aqCreditModelRiskyDiscountFactors", _wrap_aqCreditModelRiskyDiscountFactors, METH_VARARGS, NULL},
-	 { "aqCreditObjectDefaultSwapPV", _wrap_aqCreditObjectDefaultSwapPV, METH_VARARGS, NULL},
-	 { "aqCreditObjectDefaultSwapRiskyAnnuity", _wrap_aqCreditObjectDefaultSwapRiskyAnnuity, METH_VARARGS, NULL},
-	 { "aqCreditObjectDefaultSwapCS01", _wrap_aqCreditObjectDefaultSwapCS01, METH_VARARGS, NULL},
-	 { "aqCreditObjectDefaultSwapParSpread", _wrap_aqCreditObjectDefaultSwapParSpread, METH_VARARGS, NULL},
+	 { "aqCDSObjectPV", _wrap_aqCDSObjectPV, METH_VARARGS, NULL},
+	 { "aqCDSObjectRiskyAnnuity", _wrap_aqCDSObjectRiskyAnnuity, METH_VARARGS, NULL},
+	 { "aqCDSObjectCS01", _wrap_aqCDSObjectCS01, METH_VARARGS, NULL},
+	 { "aqCDSObjectParSpread", _wrap_aqCDSObjectParSpread, METH_VARARGS, NULL},
 	 { "aqTRSObjectPV", _wrap_aqTRSObjectPV, METH_VARARGS, NULL},
 	 { "aqTRSObjectParRate", _wrap_aqTRSObjectParRate, METH_VARARGS, NULL},
 	 { "aqTRSObjectParSpread", _wrap_aqTRSObjectParSpread, METH_VARARGS, NULL},
@@ -35840,7 +35989,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "aqIRFixingTableValue", _wrap_aqIRFixingTableValue, METH_VARARGS, NULL},
 	 { "aqIRFixingTableValues", _wrap_aqIRFixingTableValues, METH_VARARGS, NULL},
 	 { "aqCurveObjectDiscountFactorsWithSpread", _wrap_aqCurveObjectDiscountFactorsWithSpread, METH_VARARGS, NULL},
-	 { "aqToolObjectGridDisplay", _wrap_aqToolObjectGridDisplay, METH_VARARGS, NULL},
+	 { "aqGridObjectDisplay", _wrap_aqGridObjectDisplay, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 

@@ -78,6 +78,7 @@
     <ClInclude Include="..\src\validation\include\tryAqCurveObjectDualBootstrap.h" />
     <ClInclude Include="..\src\validation\include\tryAqCurveObjectForwardRate.h" />
     <ClInclude Include="..\src\validation\include\tryAqCurveGenerator.h" />
+    <ClInclude Include="..\src\validation\include\tryAqGenerator.h" />
     <ClInclude Include="..\src\validation\include\tryAqCurveMarketData.h" />
     <ClInclude Include="..\src\validation\include\tryAqCurveObjectUtilities.h" />
     <ClInclude Include="..\src\validation\include\tryAqObject.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="..\src\validation\src\tryAqCurveObjectDualBootstrap.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveObjectForwardRate.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveGenerator.cpp" />
+    <ClCompile Include="..\src\validation\src\tryAqGenerator.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveMarketData.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqCurveObjectUtilities.cpp" />
     <ClCompile Include="..\src\validation\src\tryAqObject.cpp" />

@@ -186,14 +186,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <!-- Manifest text file consumed by Release_XL_Manifest's PreBuildEvent
-         (CLAUDE.md Sec 4.4/9.5; format documented in active.txt itself).
-         Always active.txt by default; to switch which functions a local
-         build exposes, edit active.txt's CONTENT directly in Solution
+         (CLAUDE.md Sec 4.4/9.5; format documented in activeList.txt itself).
+         Always activeList.txt by default; to switch which functions a local
+         build exposes, edit activeList.txt's CONTENT directly in Solution
          Explorer (resources\manifest filter) and rebuild - no property
          pages, no VS restart. For scripted/CI generation of many customer
          editions, override the file instead:
          msbuild /p:AQ_XLL_MANIFEST_FILE=path\to\edition.txt -->
-    <AQ_XLL_MANIFEST_FILE Condition="'$(AQ_XLL_MANIFEST_FILE)'==''">$(SolutionDir)src\$(ProjectName)\resources\manifest\active.txt</AQ_XLL_MANIFEST_FILE>
+    <AQ_XLL_MANIFEST_FILE Condition="'$(AQ_XLL_MANIFEST_FILE)'==''">$(SolutionDir)src\$(ProjectName)\resources\manifest\activeList.txt</AQ_XLL_MANIFEST_FILE>
   </PropertyGroup>
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
@@ -792,8 +792,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_XLL\resources\manifest\active.txt" />
-    <None Include="..\src\AQ_XLL\resources\manifest\demo.txt" />
+    <None Include="..\src\AQ_XLL\resources\manifest\activeList.txt" />
+    <None Include="..\src\AQ_XLL\resources\manifest\demoList.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp" />
@@ -827,6 +827,7 @@
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqCurve.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqDate.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\aqGenerator.cpp" />
     <ClCompile Include="..\src\AQ_XLL\src\aqFuture.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>

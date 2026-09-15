@@ -26,13 +26,13 @@
     <None Include="..\src\AQ_XLL\resources\SetUp.md">
       <Filter>resources</Filter>
     </None>
-    <None Include="..\src\AQ_XLL\resources\manifest\active.txt">
-      <Filter>resources\manifest</Filter>
-    </None>
-    <None Include="..\src\AQ_XLL\resources\manifest\demo.txt">
-      <Filter>resources\manifest</Filter>
-    </None>
     <None Include="..\src\AQ_XLL\resources\manifest\generateManifestList.bat">
+      <Filter>resources\manifest</Filter>
+    </None>
+    <None Include="..\src\AQ_XLL\resources\manifest\activeList.txt">
+      <Filter>resources\manifest</Filter>
+    </None>
+    <None Include="..\src\AQ_XLL\resources\manifest\demoList.txt">
       <Filter>resources\manifest</Filter>
     </None>
   </ItemGroup>
@@ -95,6 +95,9 @@
       <Filter>src\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqIR.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_XLL\src\aqGenerator.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
   </ItemGroup>

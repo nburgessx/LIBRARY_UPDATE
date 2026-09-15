@@ -639,6 +639,7 @@
     <ClInclude Include="..\src\AQ_API\source\aqDateIMM.h" />
     <ClInclude Include="..\src\AQ_API\source\aqCurveDualBootstrap.h" />
     <ClInclude Include="..\src\AQ_API\source\aqObject.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqGenerator.h" />
     <ClInclude Include="..\src\AQ_API\source\aqBondObjectCreate.h" />
     <ClInclude Include="..\src\AQ_API\source\aqBondObjectPrice.h" />
     <ClInclude Include="..\src\AQ_API\source\aqCurveObject.h" />
@@ -682,6 +683,7 @@
     <ClCompile Include="..\src\AQ_API\source\aqDateIMM.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqCurveDualBootstrap.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqObject.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqGenerator.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqBondObjectCreate.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqBondObjectPrice.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqCreditObject.cpp" />

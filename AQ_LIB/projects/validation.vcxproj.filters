@@ -196,6 +196,9 @@
     <ClCompile Include="..\src\validation\src\tryAqCurveGenerator.cpp">
       <Filter>src\etrading\Objects\Curve</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\validation\src\tryAqGenerator.cpp">
+      <Filter>src\etrading\Objects\Generator</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqCurveObjectJacobianDisplay.cpp">
       <Filter>src\etrading\Objects\Curve</Filter>
     </ClCompile>
@@ -495,6 +498,9 @@
     <ClInclude Include="..\src\validation\include\tryAqCurveGenerator.h">
       <Filter>include\etrading\Objects\Curve</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\validation\include\tryAqGenerator.h">
+      <Filter>include\etrading\Objects\Generator</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqCurveObjectJacobianDisplay.h">
       <Filter>include\etrading\Objects\Curve</Filter>
     </ClInclude>
@@ -698,6 +704,9 @@
     <Filter Include="src\etrading\Objects\Options">
       <UniqueIdentifier>{096e4748-34ec-4a96-99cb-85883f0b1bfa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\etrading\Objects\Generator">
+      <UniqueIdentifier>{78347bf9-dcdb-45f4-9f15-2dc582d35171}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\etrading\Products">
       <UniqueIdentifier>{712991ed-275e-4e5b-99a6-a65fe3cf1d7c}</UniqueIdentifier>
     </Filter>
@@ -739,6 +748,9 @@
     </Filter>
     <Filter Include="include\etrading\Objects\Options">
       <UniqueIdentifier>{623f3a9c-12b8-4423-8297-cda5f932ca7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\etrading\Objects\Generator">
+      <UniqueIdentifier>{f572d026-6445-4db8-9697-83cc6f51a28e}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\etrading\Products">
       <UniqueIdentifier>{a83dd74e-0d68-4ad9-9033-69353c52a678}</UniqueIdentifier>

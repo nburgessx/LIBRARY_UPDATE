@@ -488,15 +488,17 @@ baseline-identical.
 
 ## Phase 4 — xlOil XLL port  ☑ (essentially complete, 2026-09-11)
 
-**Status (2026-09-11): 466 `AQ_XLL` functions ported, covering 458 of 467
-`validation` wrappers (98%).** The 9 unmatched wrappers are deliberate
-exclusions (1 false-positive name collision, 1 in-place mutator that doesn't
-fit a worksheet-function shape, 7 legacy SABR functions Nicholas decided to
-leave out as superseded) — not gaps. Detail and the re-runnable audit script:
-`rebrand\STATUS.md` and `STATUS.md` §2. The only category-level work left is
-`Model`/`Generator`, which have **zero validation wrappers today** — that is
-4.7's category-by-category port order reaching two categories with nothing
-yet to port, not a port failure; see 4.7 below.
+**Status (2026-09-15): 470 `AQ_XLL` functions ported, covering 460 of 470
+`validation` wrappers.** The 9 unmatched wrappers are deliberate exclusions
+(1 false-positive name collision, 1 in-place mutator that doesn't fit a
+worksheet-function shape, 7 legacy SABR functions Nicholas decided to leave
+out as superseded) — not gaps; a 10th apparent miss is a script artifact
+(trailing-space regex quirk), not a real one. Detail and the re-runnable
+audit script: `rebrand\STATUS.md` and `STATUS.md` §1a/§2. `Generator` was
+built from scratch this session (§4.7 below). `Model` is the only category
+with **zero validation wrappers today**, and stays that way until a design
+brief exists — unlike `Generator`, there is no legacy source and nothing on
+disk to introspect.
 
 Wait for Nicholas's xlOil worked examples before starting — they define the
 canonical marshalling / handle-I/O / array-return / error-convention pattern.
@@ -527,12 +529,17 @@ canonical marshalling / handle-I/O / array-return / error-convention pattern.
   existing `validation` surface** — `Date, Curve, FX, Inflation, Volatility,
   IR, Future, Swap, AssetSwap, CMS, TRS, CapFloor, Swaption,
   BondOption, BondFutureOption, Bond, Credit, Math, Tool, Object(-lifecycle)`
-  all ported, build green, tests pass. `Model`/`Generator` remain: both have
-  **0 `validation` wrappers today**, so there is nothing yet to port — see
-  Phase 4.1 (`Model`/`Generator`) note added to §4 above; needs
-  `tryAqGeneratorList`/`Describe`/`Validate` (etc.) designed and written from
-  scratch before any `AQ_XLL` surface is possible.
-- ☐ **4.8 Generator + config wiring** — see **Phase 4b**.
+  all ported, build green, tests pass. **`Generator` done (2026-09-15)** —
+  `tryAqGeneratorList`/`Display`/`Validate` designed and written from
+  scratch (no `validation` surface existed to port from) across all four
+  surfaces; see `STATUS.md` §1a and `rebrand\STATUS.md`'s top entry.
+  `Model` remains: **0 `validation` wrappers**, no legacy source, no design
+  brief — blocked on Nicholas's input (which model types, what parameters),
+  not on engineering time.
+- ☑ **4.8 Generator + config wiring** — introspection (`List`/`Display`/
+  `Validate`) done 2026-09-15; see `STATUS.md` §1a. Any remaining
+  `config`-packaging work for the XLL/API deploy paths stays open under
+  **Phase 4b**.
 - ☑ **4.11 `AQ_XLL` file naming** (Nicholas): every category file is
   `aq<Category>.{cpp,h}` — `aqBond.cpp`, `aqDate.cpp`, `aqMath.cpp`,
   `aqTool.cpp`, `aqObject.cpp`, `aqMain.{cpp,h}` — with **one exception**,
@@ -642,8 +649,9 @@ excludes nothing) and **`Release_XL_Bond`**, **`Release_XL_Swap`**,
 **`Release_XL_Credit`**, **`Release_XL_Curve`** — each compiles `Core` plus
 only the `Optional` file(s) that edition needs (excluded from build for
 every other configuration). A further `Release_XL_Manifest` configuration
-layers a function-level cut on top via `resources\manifest\active.txt`
-(see `rebrand\STATUS.md` for that tooling) — a finer cut than the edition
+layers a function-level cut on top via `resources\manifest\activeList.txt`
+(renamed 2026-09-15 from `active.txt`, alongside `demo.txt`→`demoList.txt`;
+see `rebrand\STATUS.md` for that tooling) — a finer cut than the edition
 mechanism, not a sixth edition. Detail: `CLAUDE.md` (both) §4.4/§4.5,
 `AQ_LIB\CLAUDE.md` §6.3.
 
@@ -689,10 +697,20 @@ the library's no-recompile customisation surface:
   `resources\config\{SWAP,BOND,CURVE}_GENERATOR`.
 
 - ☐ **4b.1** Document the generator JSON schema; add a schema-validation
-  `GTEST` over the shipped set.
-- ☐ **4b.2** `Generators` category (2.5): `aqGeneratorsList` / `…Describe` /
-  `…Validate`, plus per-asset `aqSwapFromGenerator` / `aqBondFromGenerator` /
-  etc.
+  `GTEST` over the shipped set (the `tryAqGeneratorValidate` function built in
+  4b.2 below re-uses the object framework's own deserialization + key
+  validation rather than re-implementing a schema check — a hand-written
+  schema doc plus a dedicated schema-conformance `GTEST` sweep across the
+  full shipped set, beyond the three seed files exercised in `TestAqGenerator
+  *.cpp`, is still open).
+- ☑ **4b.2** `Generator` category (2.5, singular per §5.1 — corrects this
+  line's earlier `Generators` typo): `aqGeneratorList` / `…Display` /
+  `…Validate` **done 2026-09-15** (`Display`, renamed same-session from an
+  initial `Describe` to match the pre-existing per-asset `*GeneratorDisplay`
+  naming) across `validation`/`GTEST`/`AQ_API`/
+  `AQ_XLL` — see `STATUS.md` §1a. The per-asset `aqSwapFromGenerator` /
+  `aqBondFromGenerator` construction functions already existed pre-session
+  and are unaffected.
 - ☐ **4b.3** Confirm `config` is packaged by **both** deploy paths. Python
   already does (`deployPython_2022.bat` copies `resources\config`); add the same
   for `AQ_XLL` and the other languages.
@@ -888,13 +906,16 @@ principle start any time after Phase 3, but scheduling it after 7 keeps the
 rebrand's own timeline and regression baseline undisturbed by a
 much-larger-scale, higher-risk type change.
 
-**Status (2026-09-15): Phases 0-3 done. Phase 4 essentially complete** (466
-`AQ_XLL` functions, 458/467 `validation` wrappers covered — see Phase 4's
-status note above); `Model`/`Generator` need new `validation` wrappers before
-they can be ported (0 exist today). **Phase 4a done** — `AQ_XLL` ships
+**Status (2026-09-15): Phases 0-3 done. Phase 4 done** (470 `AQ_XLL`
+functions, 460/470 `validation` wrappers covered — see Phase 4's status note
+above, including the new `Generator` category built this session); `Model`
+still needs a design brief before any `validation` wrapper can be written (0
+exist today, no legacy source, nothing on disk to introspect unlike
+`Generator`). **Phase 4a done** — `AQ_XLL` ships
 `Release`/`Release_XL_Bond`/`Release_XL_Swap`/`Release_XL_Credit`/
 `Release_XL_Curve`; the `AQ_API` runtime edition manifest is dropped, not
-built. Phases 4b, 5, 6, 7 not started. Phase 7.1 (Linux) can slot in any time
+built. Phases 4b (bar the `Generator` introspection slice, done), 5, 6, 7 not
+started. Phase 7.1 (Linux) can slot in any time
 after Phase 3 but is lowest priority.
 
 ---

@@ -324,7 +324,9 @@ edition — excludes nothing, every `src\Optional` file builds into it) and
 "Excluded From Build" for that configuration in the `.vcxproj`, same
 mechanism as any normal per-configuration file exclusion. A separate
 **`Release_XL_Manifest`** configuration layers a further, function-level cut
-on top of any of these via `resources\manifest\active.txt` (see
+on top of any of these via `resources\manifest\activeList.txt` (renamed
+2026-09-15 from `active.txt`; `demo.txt` renamed to `demoList.txt`
+alongside it; see
 `rebrand\STATUS.md` for the manifest-generator tooling) — that is a finer
 cut than the edition mechanism, not a sixth edition. This is specific to
 `AQ_XLL` (a native binary per edition is cheap to produce for one add-in);

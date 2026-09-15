@@ -104,6 +104,9 @@
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapDeltaDualBootstrap.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapGenerator.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAqCurveObjectCalibrate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestAqGeneratorList.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestAqGeneratorDisplay.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestAqGeneratorValidate.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAqMathEuropeanIRSwaption.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestLeakChecker.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAQObjFra.cpp" />

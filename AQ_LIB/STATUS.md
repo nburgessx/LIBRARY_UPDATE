@@ -1,14 +1,30 @@
 # AlgoQuantLib — project status
 
-**As at 2026-09-12.** Committed HEAD is `f0dd6217` — includes `aqCurve.cpp`/
+**As at 2026-09-15.** Committed HEAD is `f0dd6217` — includes `aqCurve.cpp`/
 `aqInterestRate.cpp` (now `aqIR.cpp`) promoted from `src\Optional` to
-`src\Core` (the dependency fix from the previous entry below). Everything
-below this point since is **uncommitted working-tree delta** — Nicholas
-commits at his own pace. Build is green in all configurations and GoogleTest
-passes (Nicholas-confirmed multiple times, most recently after the
-2026-09-15 `aqCreditBasketModel*`/`aqCDSObject*`/`aqGridObject*` naming-
-convention fix described below, including a `Release_XL_Manifest` build to
-confirm `aqManifestList.h` regenerates correctly with the new names).
+`src\Core`. Everything below this point since is **uncommitted working-tree
+delta** — Nicholas commits at his own pace. Build is green in all
+configurations: Nicholas-confirmed multiple times, most recently after the
+2026-09-15 `aqCreditBasketModel*`/`aqCDSObject*`/`aqGridObject*`
+naming-convention fix; and separately this session, the new `Generator`
+category (below) was built and individually verified across `validation`
+(Debug|x64), `GTEST` (Debug|x64, all 6 new cases), `AQ_API`
+(`Debug_API_Python`, smoke-tested end-to-end), and `AQ_XLL` (`Debug`,
+`Release`, all four `Release_XL_*` editions, and `Release_XL_Manifest`).
+
+**A full-suite `GTEST` regression run this session was paused partway
+through (Nicholas's call, session ending for the day), not completed.** What
+ran so far passed; Nicholas separately reports roughly 10 failures overall,
+almost all calendar-related, from his own run. Likely cause (not yet
+confirmed against the actual failure list): `resources\config\Calendar.conf`
+carries a **known stopgap** — its comment says the `LastCalendarUpdate` date
+was bumped to silence `Calendars.UNIT_Expiry_Test` without actually
+regenerating `Calendar.csv`, which is still dated 2022-07-22. Any test whose
+result depends on holiday coverage for "today" (2026-09-15) or beyond would
+be running against stale/incomplete holiday data. This is pre-existing,
+flagged in `CLAUDE.md` as Phase 6.4 work (refresh from MarketWire/SwapsWire),
+and unrelated to this session's `Generator`-category or rename work — **not
+investigated further this session, picking back up next time.**
 
 - The **phase-by-phase plan** is `MIGRATION_PLAN.md`.
 - The **detailed running record** of the rebrand (per-batch, per-decision) is
@@ -18,13 +34,11 @@ confirm `aqManifestList.h` regenerates correctly with the new names).
 
 ## 1. Headline
 
-**Phase 4 (the xlOil XLL port) is essentially complete.** Every category with
-an existing `validation` surface has been ported: **466 `AQ_XLL` worksheet
-functions**, covering **458 of 467 `validation` wrappers** (98%). The 9
-unported wrappers are all **deliberate, decided exclusions**, not gaps — see
-§2. The only real category-level work left is `Model` and `Generator`, which
-have **zero validation wrappers today** — that is new design-and-build work,
-not a port.
+**Phase 4 (the xlOil XLL port) is complete.** Every category with an
+existing `validation` surface has been ported, and the one category-level
+gap flagged previously — `Generator` — was built from scratch this session
+(§1a). `Model` remains genuinely unscoped: no legacy port source exists and
+no design brief has been written for it, so it stays deliberately untouched.
 
 | Phase | Scope | State |
 |---|---|---|
@@ -33,7 +47,7 @@ not a port.
 | 2 | Category taxonomy (21 categories, locked) | **done** |
 | 3 | Identifier rebrand + calendar delimiter | **done** |
 | 3c | Retire `mir*` | **done** (deleted wholesale) |
-| 4 | xlOil XLL port | **~98% of existing wrappers ported.** `Model`/`Generator` need net-new `validation` wrappers first (0 exist today) |
+| 4 | xlOil XLL port | **done.** All ported wrappers covered (§2) plus the new `Generator` category (§1a) built across all four surfaces. `Model` is out of scope until a design brief exists — see §1a. |
 | 4a | Editions & manifest gating | **done (2026-09-15), `AQ_XLL`-only.** `Release`/`Release_XL_Bond`/`Release_XL_Swap`/`Release_XL_Credit`/`Release_XL_Curve` build configurations shipped and building green. The `AQ_API` runtime-manifest gate is **dropped, not deferred** — `AQ_API` has no edition concept. |
 | 4b | Config folder & generators audit | not started |
 | 5 | Bindings (C#/Java/R) & test coverage | not started |
@@ -42,15 +56,69 @@ not a port.
 
 ---
 
-## 2. Have we migrated all functions? Short answer: yes, bar 9 deliberate exclusions and 2 empty categories.
+## 1a. `Generator` category — built this session (2026-09-15)
+
+Introspection-only per `CLAUDE.md` §5.1: `aqGeneratorList`/`Display`/
+`Validate` (`Display` — renamed same-session from an initial `Describe`, to
+match the pre-existing `aqSwapGeneratorDisplay`/`aqBondGeneratorDisplay`/
+`aqCurveGeneratorDisplay` naming each asset category already used), scanning
+`resources\config\{SWAP,BOND,CURVE}_GENERATOR` — not
+construction, which stays in each asset category (`aqSwapGenerator*`,
+`aqBondGenerator*`, `aqCurveGenerator*`, all pre-existing). Built end-to-end
+across all four surfaces (`validation` → `GTEST` → `AQ_API` → `AQ_XLL`,
+per §5.1a's order) and verified: `validation` builds Debug|x64; `GTEST`'s 6
+new cases pass; `AQ_API` built and smoke-tested through the Python binding;
+`AQ_XLL` builds in `Debug`, `Release`, all four `Release_XL_*` editions, and
+`Release_XL_Manifest` (Generator is not edition-excluded — every edition
+needs it for its own generator type). Full detail, including a
+`ThreadGuard`-nesting bug GoogleTest caught before it shipped:
+`rebrand\STATUS.md`'s latest entry.
+
+**Also fixed same session:** `aqGeneratorDisplay`'s Excel output wasn't
+transposed — the underlying block is column-major (one column per key/value
+pair) and every sibling `*GeneratorDisplay` (`aqBondGeneratorDisplay` etc.)
+already transposes before returning, via `toExcelMatrix(
+etrading::toAQLStringMatrixFromVariantMatrix( result, true ) )` rather than
+the plain `toExcelMatrix(VariantMatrix)` overload, which has no transpose
+argument. `aqGeneratorDisplay` now matches that exact pattern. `AQ_XLL`
+Debug rebuilt green after the fix.
+
+## 1b. Manifest files renamed (2026-09-15, same session)
+
+`resources\manifest\active.txt` → `activeList.txt`, `demo.txt` →
+`demoList.txt` (Nicholas's call — `List` signals these are the plain-text
+function-list manifests `generateManifestList.bat` reads). Renamed via
+`git mv`. The batch script needed no logic change (takes the manifest path
+as a parameter); only its comment and every other hard-coded reference
+(`AQ_XLL.vcxproj`'s `AQ_XLL_MANIFEST_FILE` default + comment + `<None>`
+entries, the matching `.vcxproj.filters` entries, each manifest's own
+cross-reference comment, `CLAUDE.md`, `MIGRATION_PLAN.md`) were updated.
+Verified by rebuilding `Release_XL_Manifest|x64` green. Detail:
+`rebrand\STATUS.md`.
+
+`Model` was deliberately left untouched — it has no legacy port source
+(`.APPLES` has nothing named `meModel*`) and no design brief (which model
+types, what parameters), unlike `Generator` which only needed to expose
+files that already exist on disk.
+
+---
+
+## 2. Have we migrated all functions? Short answer: yes, bar 9 deliberate exclusions and 1 empty category (`Model`).
 
 A script-driven audit (every `tryAq*` name declared in `src\validation\include\*.h`
 vs. every `XLO_FUNC_START` name registered in `src\AQ_XLL\src\*.cpp`, matched
 by golden name) is the source of truth here — not a manual category checklist.
-Current result:
+Current result (including the 3 new `Generator` wrappers added this session):
 
-- **467 validation wrappers**, **466 `AQ_XLL` functions**, **458 wrappers with
+- **470 validation wrappers**, **470 `AQ_XLL` functions**, **460 wrappers with
   a matching `AQ_XLL` function**.
+- The audit now reports 10 unmatched rather than 9 — the 9 below, unchanged,
+  plus `tryAqCurveObjectDataCreate` showing up as a **script artifact, not a
+  real gap**: the regex extracts it with a trailing space (a pre-existing
+  comment/formatting quirk in its header, unrelated to this session's
+  changes), so the derived `aqCurveObjectDataCreate ` lookup never matches
+  the real `aqCurveObjectDataCreate` in `AQ_XLL`. Noticed incidentally while
+  re-running this audit after adding `Generator`; not investigated further.
 - **9 wrappers with no `AQ_XLL` function — all intentional:**
   - `tryAqBondObjectZSpreads` — **false positive.** This plural-named wrapper's
     own doc comment says it's the public function behind the *singular*-named
@@ -64,11 +132,13 @@ Current result:
     SetupConvention,SetupParameter,SetupSwaptionVol}`) — **decided with
     Nicholas, 2026-09-11: leave out**, superseded by the already-ported
     object-based `tryAqVolatilityObjectSabr*` API.
-- **`Model` and `Generator`** — confirmed **0 validation wrappers exist** for
-  either. Not a gap in the port; there is nothing to port yet. `Generator`
-  needs `tryAqGeneratorList`/`Describe`/`Validate` (etc.) written from
-  scratch against a directory scan of `resources\config\{SWAP,BOND,CURVE}
-  _GENERATOR\`; `Model` may stay sparse per `CLAUDE.md` §5.1.
+- **`Generator`** — **done (2026-09-15, this session)**: `tryAqGeneratorList`/
+  `Display`/`Validate` written from scratch against a directory scan of
+  `resources\config\{SWAP,BOND,CURVE}_GENERATOR\`. See §1a.
+- **`Model`** — confirmed **0 validation wrappers exist**. Not a gap in the
+  port; there is nothing to port yet, and unlike `Generator` there is no
+  legacy source or on-disk schema to introspect — it needs a design brief
+  first. May stay sparse per `CLAUDE.md` §5.1.
 
 Re-run the audit yourself any time:
 
@@ -94,7 +164,11 @@ print(len(declared), 'wrappers,', len(missing), 'unmatched:'); [print(' -', m) f
 
 See `rebrand\STATUS.md` for full narrative detail on each of these; summary:
 
-0. **(2026-09-15, latest) Naming-convention fix — three `AQ_XLL` function
+-1. **(2026-09-15, latest) `Generator` category built from scratch** — see
+   §1a for the summary and `rebrand\STATUS.md`'s top entry for full detail,
+   including the `ThreadGuard`-nesting bug GoogleTest caught and the decision
+   to leave `Model` untouched pending a design brief.
+0. **(2026-09-15) Naming-convention fix — three `AQ_XLL` function
    families corrected to fit `CLAUDE.md` §5.1:**
    `aqCreditObjectBasketModel*` → `aqCreditBasketModel*`,
    `aqCreditObjectDefaultSwap<X>` (11 functions) → `aqCDSObject<X>`,
@@ -150,13 +224,13 @@ See `rebrand\STATUS.md` for full narrative detail on each of these; summary:
 
 ## 4. Outstanding work, in priority order
 
-### 4.1 `Model` and `Generator` — the only remaining category-level work
+### 4.1 `Model` — the only remaining category-level work
 
-Both need `validation` wrappers **designed and written from scratch**
-(`CLAUDE.md` §5.1a's four-surface order still applies: `validation` → `GTEST`
-→ `AQ_API` → `AQ_XLL`). `Generator` is introspection-only per §5.1
-(`aqGeneratorList`/`Describe`/`Validate`); construction stays in the asset
-categories. Not scoped or started.
+`Generator` is **done (2026-09-15)** — see §1a. `Model` still needs a design
+brief (which term-structure/stochastic model types, what parameters) before
+any `validation` wrapper can be written — unlike `Generator`, there is no
+legacy port source and nothing on disk to introspect. Not scoped or started;
+blocked on Nicholas's input, not on engineering time.
 
 ### 4.2 Phase 4a — editions & manifest gating — **done (2026-09-15)**
 

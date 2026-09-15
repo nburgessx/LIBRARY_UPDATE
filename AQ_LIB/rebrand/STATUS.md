@@ -1,5 +1,120 @@
 # Rebrand status — 2026-09-15
 
+## Manifest files renamed: `active.txt`→`activeList.txt`, `demo.txt`→`demoList.txt` (2026-09-15)
+
+Nicholas's call — `List` in the name signals these are the plain-text
+function-list manifests `generateManifestList.bat` reads (as distinct from
+any future non-list manifest content). Renamed via `git mv` to preserve
+history. `generateManifestList.bat`'s own logic needed **no change** — it
+takes the manifest path as a parameter (`%~2`), never hard-codes a filename;
+only its comment pointing readers at the file for format detail was updated.
+Updated everywhere the old names were hard-coded:
+
+- `projects\AQ_XLL.vcxproj` — the `AQ_XLL_MANIFEST_FILE` property's default
+  path, its explanatory comment block, and the two `<None Include>` project
+  entries.
+- `projects\AQ_XLL.vcxproj.filters` — the matching `<None Include>` entries
+  (Solution Explorer grouping only).
+- `src\AQ_XLL\resources\manifest\generateManifestList.bat` — one comment.
+- `src\AQ_XLL\resources\manifest\activeList.txt` / `demoList.txt` — each
+  file's own comment header, which cross-references the other by name.
+- `CLAUDE.md` (root) and `MIGRATION_PLAN.md` — prose mentioning the old
+  filenames.
+
+**Verified:** rebuilt `AQ_XLL`'s `Release_XL_Manifest|x64` configuration —
+`generateManifestList.bat` runs via the (unchanged) `AQ_XLL_MANIFEST_FILE`
+property, now resolving to `activeList.txt`, regenerates
+`aqManifestList.h` correctly, and the configuration links green.
+
+---
+
+## Generator category built from scratch — the last open Phase 4 gap (2026-09-15)
+
+`Model` and `Generator` were the only two categories with zero `validation`
+wrappers (STATUS.md §2/§4.1). `Model` has no legacy port source (`.APPLES`
+has no `meModel*` anything) and no concrete design brief, so it stays
+untouched this session — deliberately, not an oversight. `Generator` is
+introspection-only per `CLAUDE.md` §5.1 (`aqGeneratorList`/`Display`/
+`Validate`), scoped and built end-to-end across all four surfaces in the
+mandated order (§5.1a). **`Describe` renamed to `Display` (2026-09-15,
+same session)** — Nicholas caught that it should match the pre-existing
+`aqSwapGeneratorDisplay`/`aqBondGeneratorDisplay`/`aqCurveGeneratorDisplay`
+naming already used by each asset category's own generator handle API,
+rather than introducing a new verb. Renamed across all four surfaces plus
+the `GTEST` file/suite name before this entry's numbers below were quoted,
+so they read as originally verified — only the name changed, not the
+behaviour.
+
+- **`validation`** — new `tryAqGenerator.h`/`.cpp`. `tryAqGeneratorList`
+  scans `$(AQ)/resources/config/<TYPE>_GENERATOR` on disk directly (real
+  directory listing, not the object cache — a generator need not already be
+  loaded to be listed, matching the "written from scratch against a
+  directory scan" brief in `CLAUDE.md` §4.1). `tryAqGeneratorDisplay` loads
+  the named generator through the same path `tryAqObjectLoad` uses, then
+  hands off to whichever category already owns that generator type's own
+  `Display` function (`tryAqSwapGeneratorDisplay`/`tryAqBondGeneratorDisplay`/
+  `tryAqCurveGeneratorDisplay` — all three already existed, one per asset
+  category) rather than re-implementing property rendering. `tryAqGeneratorValidate`
+  reuses the same load path and reports "OK" or the failure reason instead of
+  throwing, since an invalid generator is an expected result to report, not a
+  validation-function failure. Restricted to `SWAP_GENERATOR`/
+  `BOND_GENERATOR`/`CURVE_GENERATOR` — Generator is a cross-cutting
+  introspection category over those three, not a general object-type lookup.
+  **Bug caught by GoogleTest, fixed before it shipped:** `tryAqGeneratorDisplay`/
+  `Validate` originally used `VALID_EXCEPTION_START` (with `ThreadGuard`) while
+  also calling other `tryAq*` functions that carry their own `ThreadGuard` —
+  nesting two guards on one call stack trips the re-entrancy check
+  (`"Thread Guard: Calling AlgoQuantLib from multiple threads..."`) even
+  though it's a single thread. Fixed by switching to
+  `VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD`, the same pattern
+  `tryAqObjectLoad` itself already uses when it composes
+  `tryAqObjectLoadAndReturnTupleResults`.
+- **`GTEST`** — `TestAqGeneratorList.cpp`/`TestAqGeneratorDisplay.cpp`/
+  `TestAqGeneratorValidate.cpp`, hand-written against real seed files already
+  in `resources\config\{SWAP,BOND,CURVE}_GENERATOR` (`USD_3ML`,
+  `US_TREASURY_TYPE1`, `USD_OIS`) rather than recorded fixtures. All 6 cases
+  pass.
+- **`AQ_API`** — new `aqGenerator.h`/`.cpp`, wired into all four
+  `swig_{Python,CSharp,JAVA,R}.i` files. Built and smoke-tested end-to-end
+  through the Python binding (`Debug_API_Python|x64`): `aqGeneratorList`
+  returns 132 SWAP_GENERATOR names including `USD_3ML`; `aqGeneratorDisplay`
+  returns real BOND_GENERATOR rows; `aqGeneratorValidate` returns `"OK"` for
+  a real CURVE_GENERATOR and the specific `#Error: File does not exist...`
+  message for a bad name.
+- **`AQ_XLL`** — new `aqGenerator.cpp`. Originally filed under `src\Optional`
+  per §9.5 (a standalone introspection utility, not infrastructure every
+  priced product depends on the way `Curve`/`IR` are); since moved to
+  `src\Core` in the `.vcxproj.filters` outside this session (Nicholas's own
+  edit, taken as-is). **Not edition-excluded** either way: every edition
+  (`Release_XL_Bond`/`Swap`/`Credit`/`Curve`) needs generator introspection
+  for its own product's generator type, so no `ExcludedFromBuild` condition
+  was ever added — it compiles into all five configurations regardless of
+  which Solution-Explorer filter it sits under. `.arg()` counts checked
+  against parameter counts by hand (the known "too many args" xlOil
+  runtime-registration landmine, `CLAUDE.md` §3.2) — 1/2/2 respectively, all
+  matching.
+
+All four `.vcxproj`/`.vcxproj.filters` pairs (`validation`, `GTEST`,
+`AQ_API`, `AQ_XLL`) updated in the same session the files were added — the
+"validation `.cpp` files can go silently unwired" hazard (STATUS.md §5)
+applies to every project, not just `validation`.
+
+**Verified this session:** `validation` (Debug|x64), `GTEST` (Debug|x64, all
+6 new + full suite), `AQ_API` (`Debug_API_Python|x64`, smoke-tested), `AQ_XLL`
+(`Debug|x64`, `Release|x64`, and all four `Release_XL_*|x64` editions) all
+build green. `validation`/`AQ_XLL` also rebuilt in `Release|x64` (was only
+`Debug` before this session touched it) to confirm the edition configs link.
+
+**Not done, deliberately:** `docs\api_map.csv` not hand-edited — it's
+generated by `rebrand\tools\api_pair_check.py --write` off `git ls-files`,
+and these new files aren't `git add`ed yet (committing stays Nicholas's own
+call per §6.5); hand-editing it would drift from the next `--write` anyway.
+Run `api_pair_check.py --write` after staging the new files to pick up
+Generator's rows. `Model` remains fully unscoped — needs a design brief
+(which model types, what params) before any code, not just a name list.
+
+---
+
 ## Naming-convention fix: three `AQ_XLL` function families corrected to `<library><category>` form (2026-09-15)
 
 Nicholas caught three `AQ_XLL` families that didn't fit the

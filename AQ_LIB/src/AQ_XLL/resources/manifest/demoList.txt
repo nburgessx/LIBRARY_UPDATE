@@ -1,0 +1,9 @@
+# Example manifest - copy these lines into activeList.txt (the file the build
+# actually reads) to try a small, restricted edition. See activeList.txt for
+# the full format explanation.
+
+edition:DemoSmall
+aqDateYearFraction
+aqSwapPV
+aqSwapParRate
+aqBondObjectDirtyPrice

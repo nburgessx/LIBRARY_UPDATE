@@ -145,6 +145,15 @@
     <ClCompile Include="..\src\GTEST\src\TestExampleObject.cpp">
       <Filter>src\etrading\Infrastructure</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\GTEST\src\TestAqGeneratorList.cpp">
+      <Filter>src\etrading\Generator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GTEST\src\TestAqGeneratorDisplay.cpp">
+      <Filter>src\etrading\Generator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GTEST\src\TestAqGeneratorValidate.cpp">
+      <Filter>src\etrading\Generator</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjInfrastructure.cpp">
       <Filter>src\etrading\Infrastructure</Filter>
     </ClCompile>
@@ -721,6 +730,9 @@
     </Filter>
     <Filter Include="src\etrading\Tools">
       <UniqueIdentifier>{6df311da-3952-47c4-bb21-cc9f10590319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Generator">
+      <UniqueIdentifier>{98803b3e-65f8-4c31-9819-944fa90383b1}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\etrading\Swaps">
       <UniqueIdentifier>{fd93b7b9-46ba-43da-85ca-4cef993c8f77}</UniqueIdentifier>

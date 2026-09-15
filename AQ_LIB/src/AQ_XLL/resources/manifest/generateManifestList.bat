@@ -15,7 +15,8 @@ rem  Windows itself. Ground truth for "known function names" is the AQ_XLL
 rem  source itself (every XLO_FUNC_START site), scanned fresh every run.
 rem
 rem  The manifest file is plain text, not JSON (cmd.exe has no JSON parser):
-rem  see active.txt in this same folder for the format and inline comments.
+rem  see activeList.txt in this same folder for the format and inline
+rem  comments.
 rem
 rem  Every file this script writes (the two temp lists and the output header)
 rem  is written via ONE grouped ( ... ) > "file" redirection rather than many
