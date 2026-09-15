@@ -18,7 +18,7 @@
  * `tryAqCreditObjectFeeScheduleCreate` in tryAqSwapObjectSchedule.h for the
  * same reason.
  *
- * Deferred (see rebrand/STATUS.md): one `tryAqCreditObjectDefaultSwapHazard
+ * Deferred (see rebrand/STATUS.md): one `tryAqCDSObjectHazard
  * RateFromParSpread` overload. Unlike its three siblings (PV/RiskyAnnuity/
  * ParSpread each have a hazard-rate-driven "...FromHazardRate" form and a
  * distinctly-named credit-model-driven form), this function's two overloads
@@ -28,7 +28,7 @@
  * looks like a naming gap in the golden source relative to its siblings;
  * flagged for Nicholas rather than inventing a second name unilaterally. The
  * valuationSettingsLVB-driven overload is ported here as
- * `aqCreditObjectDefaultSwapHazardRateFromParSpread`; the creditModelName-
+ * `aqCDSObjectHazardRateFromParSpread`; the creditModelName-
  * driven overload is NOT YET exposed.
  *
  * Each function pairs with the identically named validation wrapper (plus the
@@ -77,8 +77,8 @@ namespace
  *  Default swap (CDS) pricing driven directly by a hazard rate
  * ---------------------------------------------------------------------- */
 
-#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapPVFromHazardRate)
-XLO_FUNC_START( aqCreditObjectDefaultSwapPVFromHazardRate(
+#if AQ_XLL_ENABLED(aqCDSObjectPVFromHazardRate)
+XLO_FUNC_START( aqCDSObjectPVFromHazardRate(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
     const ExcelObj& hazardRate,
@@ -89,12 +89,12 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapPVFromHazardRate(
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqCreditObjectDefaultSwapPVFromHazardRate(
+    return returnValue( validation::tryAqCDSObjectPVFromHazardRate(
         getNameWithoutCounter( swapName ), toLabelValueBlock( valuationSettingsLVB ),
         hazardRate.get<double>(), recoveryRate.get<double>(),
         toAQLString( legName ), toBool( includeAccruedInterest, true ) ) );
 }
-XLO_FUNC_END( aqCreditObjectDefaultSwapPVFromHazardRate )
+XLO_FUNC_END( aqCDSObjectPVFromHazardRate )
     .help( L"PV of a cached credit default swap, given a hazard rate directly (no credit model needed)." )
     .arg( L"SwapName",              L"A cached CDS handle" )
     .arg( L"ValuationSettingsLVB",  L"ModelName, CurveCollection, ValuationDate etc, as a label/value block" )
@@ -105,8 +105,8 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapPVFromHazardRate )
 #endif
 
 
-#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapPV)
-XLO_FUNC_START( aqCreditObjectDefaultSwapPV(
+#if AQ_XLL_ENABLED(aqCDSObjectPV)
+XLO_FUNC_START( aqCDSObjectPV(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
     const ExcelObj& legName ) )
@@ -114,10 +114,10 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapPV(
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqCreditObjectDefaultSwapPV(
+    return returnValue( validation::tryAqCDSObjectPV(
         getNameWithoutCounter( swapName ), getNameWithoutCounter( creditModelName ), toAQLString( legName ) ) );
 }
-XLO_FUNC_END( aqCreditObjectDefaultSwapPV )
+XLO_FUNC_END( aqCDSObjectPV )
     .help( L"PV of a cached credit default swap, priced off a cached credit model." )
     .arg( L"SwapName",         L"A cached CDS handle" )
     .arg( L"CreditModelName",  L"A cached credit-model handle" )
@@ -125,8 +125,8 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapPV )
 #endif
 
 
-#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapPVByIntegration)
-XLO_FUNC_START( aqCreditObjectDefaultSwapPVByIntegration(
+#if AQ_XLL_ENABLED(aqCDSObjectPVByIntegration)
+XLO_FUNC_START( aqCDSObjectPVByIntegration(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
     const ExcelObj& legName,
@@ -137,12 +137,12 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapPVByIntegration(
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqCreditObjectDefaultSwapPVByIntegration(
+    return returnValue( validation::tryAqCDSObjectPVByIntegration(
         getNameWithoutCounter( swapName ), getNameWithoutCounter( creditModelName ), toAQLString( legName ),
         static_cast<size_t>( numberOfIntegrationPoints.get<double>() ),
         toBool( evaluateInParallel, true ), toBool( payDefaultCashflowsOnNextCouponDate, true ) ) );
 }
-XLO_FUNC_END( aqCreditObjectDefaultSwapPVByIntegration )
+XLO_FUNC_END( aqCDSObjectPVByIntegration )
     .help( L"PV of a cached credit default swap, by integrating the payoff over survival probability." )
     .arg( L"SwapName",                          L"A cached CDS handle" )
     .arg( L"CreditModelName",                   L"A cached credit-model handle" )
@@ -153,8 +153,8 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapPVByIntegration )
 #endif
 
 
-#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapPVByMonteCarlo)
-XLO_FUNC_START( aqCreditObjectDefaultSwapPVByMonteCarlo(
+#if AQ_XLL_ENABLED(aqCDSObjectPVByMonteCarlo)
+XLO_FUNC_START( aqCDSObjectPVByMonteCarlo(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
     const ExcelObj& legName,
@@ -165,7 +165,7 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapPVByMonteCarlo(
     AQ_INITIALIZE
 
     double standardError = 0.0;
-    const double pv = validation::tryAqCreditObjectDefaultSwapPVByMonteCarlo(
+    const double pv = validation::tryAqCDSObjectPVByMonteCarlo(
         getNameWithoutCounter( swapName ), getNameWithoutCounter( creditModelName ), toAQLString( legName ),
         toLabelValueBlockOr( mcParametersLVB ), toBool( payDefaultCashflowsOnNextCouponDate, true ), standardError );
 
@@ -174,7 +174,7 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapPVByMonteCarlo(
     result.push_back( standardError );
     return returnValue( toExcelDoubleColumn( result ) );
 }
-XLO_FUNC_END( aqCreditObjectDefaultSwapPVByMonteCarlo )
+XLO_FUNC_END( aqCDSObjectPVByMonteCarlo )
     .help( L"PV of a cached credit default swap, by Monte-Carlo simulation over survival probability. "
            L"Returns a 2-row column: [PV, Monte-Carlo standard error]." )
     .arg( L"SwapName",                          L"A cached CDS handle" )
@@ -185,8 +185,8 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapPVByMonteCarlo )
 #endif
 
 
-#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapRiskyAnnuityFromHazardRate)
-XLO_FUNC_START( aqCreditObjectDefaultSwapRiskyAnnuityFromHazardRate(
+#if AQ_XLL_ENABLED(aqCDSObjectRiskyAnnuityFromHazardRate)
+XLO_FUNC_START( aqCDSObjectRiskyAnnuityFromHazardRate(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
     const ExcelObj& hazardRate,
@@ -197,12 +197,12 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapRiskyAnnuityFromHazardRate(
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqCreditObjectDefaultSwapRiskyAnnuityFromHazardRate(
+    return returnValue( validation::tryAqCDSObjectRiskyAnnuityFromHazardRate(
         getNameWithoutCounter( swapName ), toLabelValueBlock( valuationSettingsLVB ),
         hazardRate.get<double>(), recoveryRate.get<double>(),
         toAQLString( legName ), toBool( includeAccruedInterest, true ) ) );
 }
-XLO_FUNC_END( aqCreditObjectDefaultSwapRiskyAnnuityFromHazardRate )
+XLO_FUNC_END( aqCDSObjectRiskyAnnuityFromHazardRate )
     .help( L"Risky annuity of a cached CDS premium leg, given a hazard rate directly." )
     .arg( L"SwapName",              L"A cached CDS handle" )
     .arg( L"ValuationSettingsLVB",  L"ModelName, CurveCollection, ValuationDate etc, as a label/value block" )
@@ -213,8 +213,8 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapRiskyAnnuityFromHazardRate )
 #endif
 
 
-#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapRiskyAnnuity)
-XLO_FUNC_START( aqCreditObjectDefaultSwapRiskyAnnuity(
+#if AQ_XLL_ENABLED(aqCDSObjectRiskyAnnuity)
+XLO_FUNC_START( aqCDSObjectRiskyAnnuity(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
     const ExcelObj& legName ) )
@@ -222,10 +222,10 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapRiskyAnnuity(
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqCreditObjectDefaultSwapRiskyAnnuity(
+    return returnValue( validation::tryAqCDSObjectRiskyAnnuity(
         getNameWithoutCounter( swapName ), getNameWithoutCounter( creditModelName ), toAQLString( legName ) ) );
 }
-XLO_FUNC_END( aqCreditObjectDefaultSwapRiskyAnnuity )
+XLO_FUNC_END( aqCDSObjectRiskyAnnuity )
     .help( L"Risky annuity of a cached CDS premium leg, priced off a cached credit model." )
     .arg( L"SwapName",         L"A cached CDS handle" )
     .arg( L"CreditModelName",  L"A cached credit-model handle" )
@@ -233,8 +233,8 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapRiskyAnnuity )
 #endif
 
 
-#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapAccruedYearFraction)
-XLO_FUNC_START( aqCreditObjectDefaultSwapAccruedYearFraction(
+#if AQ_XLL_ENABLED(aqCDSObjectAccruedYearFraction)
+XLO_FUNC_START( aqCDSObjectAccruedYearFraction(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
     const ExcelObj& toDate,
@@ -243,10 +243,10 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapAccruedYearFraction(
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqCreditObjectDefaultSwapAccruedYearFraction(
+    return returnValue( validation::tryAqCDSObjectAccruedYearFraction(
         getNameWithoutCounter( swapName ), getNameWithoutCounter( creditModelName ), toAQLDate( toDate ), toAQLString( legName ) ) );
 }
-XLO_FUNC_END( aqCreditObjectDefaultSwapAccruedYearFraction )
+XLO_FUNC_END( aqCDSObjectAccruedYearFraction )
     .help( L"The accrued year fraction from the previous coupon date to a given date, for a cached CDS leg." )
     .arg( L"SwapName",         L"A cached CDS handle" )
     .arg( L"CreditModelName",  L"A cached credit-model handle" )
@@ -255,8 +255,8 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapAccruedYearFraction )
 #endif
 
 
-#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapCS01)
-XLO_FUNC_START( aqCreditObjectDefaultSwapCS01(
+#if AQ_XLL_ENABLED(aqCDSObjectCS01)
+XLO_FUNC_START( aqCDSObjectCS01(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
     const ExcelObj& legName ) )
@@ -264,10 +264,10 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapCS01(
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqCreditObjectDefaultSwapCS01(
+    return returnValue( validation::tryAqCDSObjectCS01(
         getNameWithoutCounter( swapName ), getNameWithoutCounter( creditModelName ), toAQLString( legName ) ) );
 }
-XLO_FUNC_END( aqCreditObjectDefaultSwapCS01 )
+XLO_FUNC_END( aqCDSObjectCS01 )
     .help( L"CS01 (credit spread sensitivity) of a cached CDS premium leg." )
     .arg( L"SwapName",         L"A cached CDS handle" )
     .arg( L"CreditModelName",  L"A cached credit-model handle" )
@@ -275,8 +275,8 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapCS01 )
 #endif
 
 
-#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapParSpreadFromHazardRate)
-XLO_FUNC_START( aqCreditObjectDefaultSwapParSpreadFromHazardRate(
+#if AQ_XLL_ENABLED(aqCDSObjectParSpreadFromHazardRate)
+XLO_FUNC_START( aqCDSObjectParSpreadFromHazardRate(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
     const ExcelObj& hazardRate,
@@ -288,12 +288,12 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapParSpreadFromHazardRate(
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqCreditObjectDefaultSwapParSpreadFromHazardRate(
+    return returnValue( validation::tryAqCDSObjectParSpreadFromHazardRate(
         getNameWithoutCounter( swapName ), toLabelValueBlock( valuationSettingsLVB ),
         hazardRate.get<double>(), recoveryRate.get<double>(),
         toAQLString( premiumLegName ), toAQLString( protectionLegName ), toBool( includeAccruedInterest, true ) ) );
 }
-XLO_FUNC_END( aqCreditObjectDefaultSwapParSpreadFromHazardRate )
+XLO_FUNC_END( aqCDSObjectParSpreadFromHazardRate )
     .help( L"Par spread of a cached CDS, given a hazard rate directly." )
     .arg( L"SwapName",               L"A cached CDS handle" )
     .arg( L"ValuationSettingsLVB",   L"A single collection name, or a curveCollection per leg, as a label/value block" )
@@ -305,8 +305,8 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapParSpreadFromHazardRate )
 #endif
 
 
-#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapParSpread)
-XLO_FUNC_START( aqCreditObjectDefaultSwapParSpread(
+#if AQ_XLL_ENABLED(aqCDSObjectParSpread)
+XLO_FUNC_START( aqCDSObjectParSpread(
     const ExcelObj& swapName,
     const ExcelObj& creditModelName,
     const ExcelObj& premiumLegName,
@@ -315,11 +315,11 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapParSpread(
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqCreditObjectDefaultSwapParSpread(
+    return returnValue( validation::tryAqCDSObjectParSpread(
         getNameWithoutCounter( swapName ), getNameWithoutCounter( creditModelName ),
         toAQLString( premiumLegName ), toAQLString( protectionLegName ) ) );
 }
-XLO_FUNC_END( aqCreditObjectDefaultSwapParSpread )
+XLO_FUNC_END( aqCDSObjectParSpread )
     .help( L"Par spread of a cached CDS, priced off a cached credit model." )
     .arg( L"SwapName",          L"A cached CDS handle" )
     .arg( L"CreditModelName",   L"A cached credit-model handle" )
@@ -328,8 +328,8 @@ XLO_FUNC_END( aqCreditObjectDefaultSwapParSpread )
 #endif
 
 
-#if AQ_XLL_ENABLED(aqCreditObjectDefaultSwapHazardRateFromParSpread)
-XLO_FUNC_START( aqCreditObjectDefaultSwapHazardRateFromParSpread(
+#if AQ_XLL_ENABLED(aqCDSObjectHazardRateFromParSpread)
+XLO_FUNC_START( aqCDSObjectHazardRateFromParSpread(
     const ExcelObj& swapName,
     const ExcelObj& valuationSettingsLVB,
     const ExcelObj& parSpread,
@@ -341,12 +341,12 @@ XLO_FUNC_START( aqCreditObjectDefaultSwapHazardRateFromParSpread(
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqCreditObjectDefaultSwapHazardRateFromParSpread(
+    return returnValue( validation::tryAqCDSObjectHazardRateFromParSpread(
         getNameWithoutCounter( swapName ), toLabelValueBlock( valuationSettingsLVB ),
         parSpread.get<double>(), recoveryRate.get<double>(),
         toAQLString( premiumLegName ), toAQLString( protectionLegName ), toBool( includeAccruedInterest, true ) ) );
 }
-XLO_FUNC_END( aqCreditObjectDefaultSwapHazardRateFromParSpread )
+XLO_FUNC_END( aqCDSObjectHazardRateFromParSpread )
     .help( L"Hazard rate implied by a target CDS par spread. NOTE: the validation layer also has a "
            L"credit-model-driven overload of this exact name, not yet exposed here - see the file header." )
     .arg( L"SwapName",               L"A cached CDS handle" )
@@ -788,8 +788,8 @@ XLO_FUNC_END( aqCreditObjectIndexOptionTheta )
  *  Credit basket model
  * ---------------------------------------------------------------------- */
 
-#if AQ_XLL_ENABLED(aqCreditObjectBasketModelCreate)
-XLO_FUNC_START( aqCreditObjectBasketModelCreate(
+#if AQ_XLL_ENABLED(aqCreditBasketModelCreate)
+XLO_FUNC_START( aqCreditBasketModelCreate(
     const ExcelObj& objectName,
     const ExcelObj& key1,
     const ExcelObj& value1,
@@ -813,11 +813,11 @@ XLO_FUNC_START( aqCreditObjectBasketModelCreate(
         infoBlocks.push_back( toTableInfo( value2 ) );
     }
 
-    const std::string storedName = validation::tryAqCreditObjectBasketModelCreate( name, dataBlockNames, infoBlocks );
+    const std::string storedName = validation::tryAqCreditBasketModelCreate( name, dataBlockNames, infoBlocks );
 
     return returnValue( appendInstanceCounter( storedName ) );
 }
-XLO_FUNC_END( aqCreditObjectBasketModelCreate )
+XLO_FUNC_END( aqCreditBasketModelCreate )
     .help( L"Create and store a credit basket model from underlying credit models; returns its handle." )
     .arg( L"ObjectName", L"Name for the credit-basket-model object" )
     .arg( L"Key1",       L"Name of the first data block, e.g. MODEL_PROPERTIES" )
@@ -827,8 +827,8 @@ XLO_FUNC_END( aqCreditObjectBasketModelCreate )
 #endif
 
 
-#if AQ_XLL_ENABLED(aqCreditObjectBasketModelSurvivalProbability)
-XLO_FUNC_START( aqCreditObjectBasketModelSurvivalProbability(
+#if AQ_XLL_ENABLED(aqCreditBasketModelSurvivalProbability)
+XLO_FUNC_START( aqCreditBasketModelSurvivalProbability(
     const ExcelObj& creditBasketModelName,
     const ExcelObj& toDate,
     const ExcelObj& fromDate ) )
@@ -836,10 +836,10 @@ XLO_FUNC_START( aqCreditObjectBasketModelSurvivalProbability(
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqCreditObjectBasketModelSurvivalProbability(
+    return returnValue( validation::tryAqCreditBasketModelSurvivalProbability(
         getNameWithoutCounter( creditBasketModelName ), toAQLDate( toDate ), toAQLDate( fromDate ) ) );
 }
-XLO_FUNC_END( aqCreditObjectBasketModelSurvivalProbability )
+XLO_FUNC_END( aqCreditBasketModelSurvivalProbability )
     .help( L"Survival probability between two dates, computed by a cached credit basket model." )
     .arg( L"CreditBasketModelName", L"A cached credit-basket-model handle" )
     .arg( L"ToDate",                L"The date survival is measured to" )

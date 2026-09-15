@@ -43,7 +43,7 @@ double aqObjCreditModelRiskyDiscountFactor( const std::string& creditModelName, 
 std::vector<double> aqCreditModelRiskyDiscountFactors( const std::string& creditModelName, const std::vector<std::string>& paymentDates );
 
 
-/* @brief validation interface for the aqCreditObjectDefaultSwapPV method.
+/* @brief validation interface for the aqCDSObjectPV method.
 *   Calculates the PV of the specified Credit Default Swap.
 *
 * @param[in]	swapName			Swap object name
@@ -51,7 +51,7 @@ std::vector<double> aqCreditModelRiskyDiscountFactors( const std::string& credit
 * @param[in]	legName			    If specified, calculate the PV of the single swap leg
 * @returns	The calculated PV value
 */
-double aqCreditObjectDefaultSwapPV( const std::string& swapName, const std::string& creditModelName, const std::string& legName );
+double aqCDSObjectPV( const std::string& swapName, const std::string& creditModelName, const std::string& legName );
 
 /* @brief Calculates the risky annuity of the specified Credit Default Swap Premium leg.
 *
@@ -60,7 +60,7 @@ double aqCreditObjectDefaultSwapPV( const std::string& swapName, const std::stri
 * @param[in]	legName				The Premium leg to use when calculating the risky annuity. A mandatory parameter
 * @returns	The risky annuity
 */
-double aqCreditObjectDefaultSwapRiskyAnnuity( const std::string& swapName, const std::string& creditModelName, const std::string& legName );
+double aqCDSObjectRiskyAnnuity( const std::string& swapName, const std::string& creditModelName, const std::string& legName );
 
 /* @brief Calculates the CS01 of the specified Credit Default Swap Premium leg.
 *
@@ -69,7 +69,7 @@ double aqCreditObjectDefaultSwapRiskyAnnuity( const std::string& swapName, const
 * @param[in]	legName				The Premium leg to use when calculating the risky annuity. A mandatory parameter
 * @returns	The risky annuity
 */
-double aqCreditObjectDefaultSwapCS01( const std::string& swapName, const std::string& creditModelName, const std::string& legName );
+double aqCDSObjectCS01( const std::string& swapName, const std::string& creditModelName, const std::string& legName );
 
 
 /* @brief Calculates the par spread of the specified Credit Default Swap.
@@ -80,7 +80,7 @@ double aqCreditObjectDefaultSwapCS01( const std::string& swapName, const std::st
 * @param[in]	protectionLegName		The Protection leg name of the CDS
 * @returns	The CDS par spread
 */
-double aqCreditObjectDefaultSwapParSpread( const std::string& swapName, const std::string& creditModelName, const std::string& premiumLegName, const std::string& protectionLegName );
+double aqCDSObjectParSpread( const std::string& swapName, const std::string& creditModelName, const std::string& premiumLegName, const std::string& protectionLegName );
 
 /* @brief validation interface for the aqTRSObjectPV method.
 *   Calculates the PV of the specified Total Return Swap.

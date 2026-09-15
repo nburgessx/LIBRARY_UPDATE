@@ -18,7 +18,7 @@ using etrading::CreateDataFile;
 
 namespace validation
 {
-    std::string tryAqToolObjectGridCreate(
+    std::string tryAqGridObjectCreate(
         const std::string& objectName,
         const TableInfo& tableInfo,
         const bool allowJaggedData )
@@ -28,7 +28,7 @@ namespace validation
         const FlexibleData& rangeData = std::get<2>( tableInfo );
         const int numberOfColumns = colTypes.size();
 
-        AQ_THROW_IF( rangeData.size() <= 0, "Empty data table was supplied to tryAqToolObjectGridCreate" );
+        AQ_THROW_IF( rangeData.size() <= 0, "Empty data table was supplied to tryAqGridObjectCreate" );
 
         if( columnNames.size() != rangeData.size() )
         {
@@ -55,7 +55,7 @@ namespace validation
         //return msg.str();
     }
 
-    std::pair<const FlexibleData, std::vector<std::string>>  tryAqToolObjectGridDisplay(
+    std::pair<const FlexibleData, std::vector<std::string>>  tryAqGridObjectDisplay(
                 const std::string& objectName )
     {
         auto& freeObjectStore = etrading::getObjectStore<etrading::FreeObject>( etrading::Environment::DEFAULT_ENV_NAME );
@@ -83,7 +83,7 @@ namespace validation
         }
     };
 
-    std::pair<const bool, std::string> tryAqToolObjectGridLoad(	const std::string& fileName )
+    std::pair<const bool, std::string> tryAqGridObjectLoad(	const std::string& fileName )
     {
         // Append the file extension if missing
         std::string filenameWithExtension = etrading::appendFileExtension( fileName, etrading::JSON );
@@ -100,7 +100,7 @@ namespace validation
         return std::make_pair( true, objectName );
     };
 
-    std::string tryAqToolObjectGridSave( const std::string& objectName,
+    std::string tryAqGridObjectSave( const std::string& objectName,
                                  const std::string& fileNameToWriteTo )
     {
         auto& freeObjectStore = etrading::getObjectStore<etrading::FreeObject>( etrading::Environment::DEFAULT_ENV_NAME );
@@ -142,14 +142,14 @@ namespace validation
     };
 
     std::vector<std::string>
-    tryAqToolObjectGridObjectNames()
+    tryAqGridObjectNames()
     {
         auto& freeObjectStore = etrading::getObjectStore<etrading::FreeObject>( etrading::Environment::DEFAULT_ENV_NAME );
         return freeObjectStore.keys();
     };
 
 
-    const bool tryAqToolObjectGridClearOne( const std::string& objectName )
+    const bool tryAqGridObjectClearOne( const std::string& objectName )
     {
         auto& freeObjectStore = etrading::getObjectStore<etrading::FreeObject>( etrading::Environment::DEFAULT_ENV_NAME );
 
@@ -168,7 +168,7 @@ namespace validation
     };
 
 
-    const bool tryAqToolObjectGridClearAll()
+    const bool tryAqGridObjectClearAll()
     {
         auto& freeObjectStore = etrading::getObjectStore<etrading::FreeObject>( etrading::Environment::DEFAULT_ENV_NAME );
         freeObjectStore.clear();

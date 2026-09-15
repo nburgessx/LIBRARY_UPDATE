@@ -52,7 +52,7 @@ namespace
 	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USD_OIS_tryAqCurveObjectCalibrate_inputs.csv";
 
 	// Build Credit Basket Model
-	const char CREDIT_BASKET_MODEL[]			= TEST_DIR "CREDITBASKETMODEL1@14_tryAqCreditObjectBasketModelCreate_inputs.csv";
+	const char CREDIT_BASKET_MODEL[]			= TEST_DIR "CREDITBASKETMODEL1@14_tryAqCreditBasketModelCreate_inputs.csv";
 
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
@@ -201,7 +201,7 @@ namespace
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 		infoBlocks.push_back( getTableInfoFromStringMatrix( creditModels ));
 
-		std::string objectName = validation::tryAqCreditObjectBasketModelCreate( creditBasketModelName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryAqCreditBasketModelCreate( creditBasketModelName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -297,7 +297,7 @@ namespace google_test
 
 			const double singleSurvivalProbability = validation::tryAqCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
 
-			const double basketSurvivalProbability = validation::tryAqCreditObjectBasketModelSurvivalProbability( creditBasketModelName, toDate, fromDate );
+			const double basketSurvivalProbability = validation::tryAqCreditBasketModelSurvivalProbability( creditBasketModelName, toDate, fromDate );
 			
 			ASSERT_NEAR( singleSurvivalProbability, basketSurvivalProbability, tolerance );
 		}

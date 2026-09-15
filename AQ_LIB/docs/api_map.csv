@@ -21,10 +21,10 @@ aqCreditModelDefaultProbability,Credit,stateless,tryAqCreditModelDefaultProbabil
 aqCreditModelHazardRate,Credit,stateless,tryAqCreditModelHazardRate,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
 aqCreditModelRiskyDiscountFactors,Credit,stateless,tryAqCreditModelRiskyDiscountFactors,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
 aqCreditModelSurvivalProbability,Credit,stateless,tryAqCreditModelSurvivalProbability,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
-aqCreditObjectDefaultSwapCS01,Credit,object,tryAqCreditObjectDefaultSwapCS01,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
-aqCreditObjectDefaultSwapPV,Credit,object,tryAqCreditObjectDefaultSwapPV,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
-aqCreditObjectDefaultSwapParSpread,Credit,object,tryAqCreditObjectDefaultSwapParSpread,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
-aqCreditObjectDefaultSwapRiskyAnnuity,Credit,object,tryAqCreditObjectDefaultSwapRiskyAnnuity,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
+aqCDSObjectCS01,Credit,object,tryAqCDSObjectCS01,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
+aqCDSObjectPV,Credit,object,tryAqCDSObjectPV,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
+aqCDSObjectParSpread,Credit,object,tryAqCDSObjectParSpread,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
+aqCDSObjectRiskyAnnuity,Credit,object,tryAqCDSObjectRiskyAnnuity,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
 aqCurveCalibrateBasis,Curve,stateless,tryAqCurveCalibrateBasis,src/AQ_API/source/aqCurveCalibrateBasis.h,src/validation/include/tryAqCurveCalibrateBasis.h
 aqCurveCalibrateFXForwards,Curve,stateless,tryAqCurveCalibrateFXForwards,src/AQ_API/source/aqCurveCalibrateFXForwards.h,src/validation/include/tryAqCurveCalibrateFXForwards.h
 aqCurveCalibrateOIS,Curve,stateless,tryAqCurveCalibrateOIS,src/AQ_API/source/aqCurveCalibrateOIS.h,src/validation/include/tryAqCurveCalibrateOIS.h
@@ -111,7 +111,7 @@ aqToolLVBAdd,Tool,stateless,tryAqToolLVBAdd,src/AQ_API/source/aqToolLVB.h,src/va
 aqToolLVBCreate,Tool,stateless,tryAqToolLVBCreate,src/AQ_API/source/aqToolLVB.h,src/validation/include/tryAqToolLVB.h
 aqToolLoadCalendarFile,Tool,stateless,tryAqToolLoadCalendarFile,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolLoadStaticData,Tool,stateless,tryAqToolLoadStaticData,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
-aqToolObjectGridDisplay,Tool,object,tryAqToolObjectGridDisplay,src/AQ_API/source/aqToolGrids.h,src/validation/include/tryAqToolGrid.h
+aqGridObjectDisplay,Tool,object,tryAqGridObjectDisplay,src/AQ_API/source/aqToolGrids.h,src/validation/include/tryAqToolGrid.h
 aqToolParallelModeEnable,Tool,stateless,tryAqToolParallelModeEnable,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolParallelModeStatus,Tool,stateless,tryAqToolParallelModeStatus,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolRecord,Tool,stateless,tryAqToolRecord,src/AQ_API/source/aqToolRecord.h,src/validation/include/tryAqToolRecord.h

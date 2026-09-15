@@ -1,4 +1,82 @@
-# Rebrand status — 2026-09-14
+# Rebrand status — 2026-09-15
+
+## Naming-convention fix: three `AQ_XLL` function families corrected to `<library><category>` form (2026-09-15)
+
+Nicholas caught three `AQ_XLL` families that didn't fit the
+`aq<Category><Function>` / `aq<Category>Object<Function>` naming convention
+(`CLAUDE.md` §5.1). Renamed across all four surfaces per §5.1a's order
+(`validation` → `GTEST` → `AQ_API` → `AQ_XLL`), plus the recorded fixture
+CSVs (`git mv`'d to match) and `docs\api_map.csv`:
+
+| Old | New |
+|---|---|
+| `aqCreditObjectBasketModelCreate` | `aqCreditBasketModelCreate` |
+| `aqCreditObjectBasketModelSurvivalProbability` | `aqCreditBasketModelSurvivalProbability` |
+| `aqCreditObjectDefaultSwap<X>` (11 functions: PV, PVByIntegration, PVByMonteCarlo, PVFromHazardRate, RiskyAnnuity, RiskyAnnuityFromHazardRate, AccruedYearFraction, CS01, ParSpread, ParSpreadFromHazardRate, HazardRateFromParSpread) | `aqCDSObject<X>` |
+| `aqToolObjectGrid<X>` (Create, Save, Load, Display, ClearOne, ClearAll) | `aqGridObject<X>` |
+| `aqToolObjectGridObjectNames` | `aqGridObjectNames` (collapsed — the literal `aqGridObject`+`ObjectNames` transform would have doubled "Object") |
+
+Each with its `try`-prefixed `validation` counterpart renamed identically
+(`tryAqCreditObjectBasketModelCreate` → `tryAqCreditBasketModelCreate`, etc.).
+The Basket functions have no `AQ_API` binding today, so only `validation`/
+`GTEST`/`AQ_XLL` were touched for that family. Of the Grid functions, only
+`Display` is bound in `AQ_API` (`aqToolGrids.h`/`.cpp`).
+
+**Deliberately left untouched (Nicholas's call):** the generated
+`src\AQ_XLL\include\generated\aqManifestList.h` and the four generated
+`swig_{Python,R,JAVA,CSharp}_wrap.{cxx,cpp}` files — both regenerate on their
+own (`aqManifestList.h` via `Release_XL_Manifest`'s `PreBuildEvent` calling
+`generateManifestList.bat`; the SWIG wrap files via a full SWIG regen in
+Phase 5) and don't need hand-editing. Confirmed: building
+`Release_XL_Manifest|x64` regenerates `aqManifestList.h` with the new names
+with no further action needed. Historical entries elsewhere in this file
+that predate this rename (e.g. the original Credit/Grid port write-ups) are
+left as-authored — they describe what was true at the time, not current
+state.
+
+**Verified (Nicholas):** `validation`, `GTEST`, `AQ_XLL` (Debug|x64 and
+`Release_XL_Manifest|x64`) and `AQ_API` (Python) all build green; GoogleTest
+passes.
+
+---
+
+## Phase 4a (editions) closed: AQ_XLL-only, AQ_API runtime gate dropped (2026-09-15)
+
+Nicholas confirmed `AQ_XLL` now has four per-edition build configurations —
+`Release_XL_Bond`, `Release_XL_Swap`, `Release_XL_Credit`, `Release_XL_Curve`
+— alongside the existing `Release` (Full), each built from the
+`src\Core`/`src\Optional` filter split (done 2026-09-12). **Decision: this
+is the entire Phase 4a deliverable — editions are an `AQ_XLL`-only, compile-
+time concept. The `AQ_API` runtime edition-gate half of the original Phase
+4a plan (`config\editions.json`, `config\licence.json`, a module-import
+registration gate, `aqToolEdition()`) is dropped, not deferred.** `AQ_API`
+(Python/C#/Java/R) ships one full binary per language with every category
+always registered — no edition concept on that surface, now or later.
+
+**Docs updated to match** (this entry is the changelog; the docs themselves
+carry the current-state description, not a repeat of it here): `CLAUDE.md`
+§2.1/§4.5/§5.2 (root) and `AQ_LIB\CLAUDE.md` §2.1/§4.4/§5.2/§6.3 rewritten
+in place (`Editions` sections marked done, dual-mechanism language replaced
+with `AQ_XLL`-only); `MIGRATION_PLAN.md` Phase 4a marked ☑ done with the
+`AQ_API` half struck through as dropped (not deferred), the 2.4 edition→
+category straw-man table marked ☑ and given a `Curve` row (missing from the
+original four-edition straw man), the Phase 5.2 task that assumed an
+`AQ_API` edition gate to wire into struck out, and decision `D20` added.
+`STATUS.md` (this library's own top-level summary, not this file) and
+`readme.md`'s end-user-facing Editions section rewritten to match — the
+`readme.md` text previously described a **runtime**, entitlement-file-gated
+edition switch, which was never built and now never will be.
+
+**Not done, flagged for later, not blocking this decision:** `AQ_XLL`'s
+edition→category mapping (which `Optional` files land in which
+`Release_XL_*` config) has not been independently audited function-by-
+function against the `MIGRATION_PLAN.md` §2.4 table in this session — only
+that the four configurations exist and build green (per Nicholas). Worth a
+pass before shipping: confirm e.g. `Release_XL_Curve` doesn't accidentally
+carry Swap-only files, and that each edition's registered function set
+matches what a customer buying that edition should get.
+
+---
 
 ## AQ_XLL add-in loaded empty in every configuration — fixed, one flagged (2026-09-14)
 

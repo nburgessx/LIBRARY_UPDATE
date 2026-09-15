@@ -64,32 +64,32 @@ namespace
 	const char GEN_CREDIT_DEFAULT_SWAP_5Y[]		        = TEST_DIR "USD_CDS_IMM_tryAqSwapObjectCreateFromGenerator_5Y_inputs.csv" ;
 
 	// API methods
-	const char CDS_CALCULATE_PV[]				        = TEST_DIR "tryAqCreditObjectDefaultSwapPV_inputs.csv";
-	const char CDS_CALCULATE_PV_BY_INTEGRATION[]        = TEST_DIR "tryAqCreditObjectDefaultSwapPVByIntegration_inputs.csv";
-	const char CDS_CALCULATE_PV_BY_MONTE_CARLO_MT[]     = TEST_DIR "tryAqCreditObjectDefaultSwapPVByMonteCarlo_inputs_MT.csv";
-    const char CDS_CALCULATE_PV_BY_MONTE_CARLO_SOBOL[]  = TEST_DIR "tryAqCreditObjectDefaultSwapPVByMonteCarlo_inputs_SOBOL.csv";
-	const char CDS_CALCULATE_RISKY_ANNUITY[]	        = TEST_DIR "tryAqCreditObjectDefaultSwapRiskyAnnuity_inputs.csv";
-	const char CDS_CALCULATE_CS01[]				        = TEST_DIR "tryAqCreditObjectDefaultSwapCS01_inputs.csv";
+	const char CDS_CALCULATE_PV[]				        = TEST_DIR "tryAqCDSObjectPV_inputs.csv";
+	const char CDS_CALCULATE_PV_BY_INTEGRATION[]        = TEST_DIR "tryAqCDSObjectPVByIntegration_inputs.csv";
+	const char CDS_CALCULATE_PV_BY_MONTE_CARLO_MT[]     = TEST_DIR "tryAqCDSObjectPVByMonteCarlo_inputs_MT.csv";
+    const char CDS_CALCULATE_PV_BY_MONTE_CARLO_SOBOL[]  = TEST_DIR "tryAqCDSObjectPVByMonteCarlo_inputs_SOBOL.csv";
+	const char CDS_CALCULATE_RISKY_ANNUITY[]	        = TEST_DIR "tryAqCDSObjectRiskyAnnuity_inputs.csv";
+	const char CDS_CALCULATE_CS01[]				        = TEST_DIR "tryAqCDSObjectCS01_inputs.csv";
 	const char CDS_CALCULATE_HAZARD_RATE[]		        = TEST_DIR "tryAqCreditModelHazardRate_inputs.csv";
 	const char CDS_CALCULATE_SURVIVAL_PROB[]	        = TEST_DIR "tryAqCreditModelSurvivalProbability_inputs.csv";
 	const char CDS_CALCULATE_DEFAULT_PROB[]		        = TEST_DIR "tryAqCreditModelDefaultProbability_inputs.csv";
 
 	const char CDS_REPRICE_PREFIX[]				        = TEST_DIR "USD_CDS_IMM_tryAqSwapObjectCreateFromGenerator_Reprice_inputs_";
 
-	//const char CDS_CALCULATE_HAZARD_RATE[]		    = TEST_DIR "tryAqCreditObjectDefaultSwapHazardRateFromParSpread_inputs.csv";
+	//const char CDS_CALCULATE_HAZARD_RATE[]		    = TEST_DIR "tryAqCDSObjectHazardRateFromParSpread_inputs.csv";
 
 	// Snapshot results
 	const char CREDITMODEL_EXPECTED_CALIBRATION[]       = TEST_DIR "tryAqCreditModelCalibrationParameters_outputs.csv";
 
-	const char CDS_EXPECTED_PV[]				                = TEST_DIR "tryAqCreditObjectDefaultSwapPV_outputs.csv";
+	const char CDS_EXPECTED_PV[]				                = TEST_DIR "tryAqCDSObjectPV_outputs.csv";
 	const char CDS_EXPECTED_PV_BY_INTEGRATION[]	                = TEST_DIR "tryAqObjCreditDefaultSwapPVIntegration_outputs.csv";
 	const char CDS_EXPECTED_PV_BY_MONTECARLO_MERSENNE_TWISTER[]	= TEST_DIR "tryAqObjCreditDefaultSwapPVMonteCarlo_outputs.csv";
 	const char CDS_EXPECTED_PV_BY_MONTECARLO_SOBOL[]			= TEST_DIR "tryAqObjCreditDefaultSwapPVMonteCarloSobol_outputs.csv";
-	const char CDS_EXPECTED_RISKY_ANNUITY[]		                = TEST_DIR "tryAqCreditObjectDefaultSwapRiskyAnnuity_outputs.csv";
-	const char CDS_EXPECTED_CS01[]				                = TEST_DIR "tryAqCreditObjectDefaultSwapCS01_outputs.csv";
+	const char CDS_EXPECTED_RISKY_ANNUITY[]		                = TEST_DIR "tryAqCDSObjectRiskyAnnuity_outputs.csv";
+	const char CDS_EXPECTED_CS01[]				                = TEST_DIR "tryAqCDSObjectCS01_outputs.csv";
 
 
-	// const char CDS_EXPECTED_HAZARD_RATE[]		= TEST_DIR "tryAqCreditObjectDefaultSwapHazardRateFromParSpread_outputs.csv";
+	// const char CDS_EXPECTED_HAZARD_RATE[]		= TEST_DIR "tryAqCDSObjectHazardRateFromParSpread_outputs.csv";
 
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
@@ -434,7 +434,7 @@ namespace
 		const std::string swapName			= PVFileObj[ "swapName" ];
 		std::string creditModelName			= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
-		const double calculatedPV = validation::tryAqCreditObjectDefaultSwapPV( swapName, creditModelName, legName.c_str() );
+		const double calculatedPV = validation::tryAqCDSObjectPV( swapName, creditModelName, legName.c_str() );
 		
 		const double pvTolerance = 0.01;
         google_test::CheckTestResultsAndRebaseOnRequest( calculatedPV, TEST_DIR, CDS_EXPECTED_PV, pvTolerance );
@@ -447,13 +447,13 @@ namespace
 		const std::string swapName			= PVFileObj[ "swapName" ];
 		std::string creditModelName			= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
-		const double analyticPV = validation::tryAqCreditObjectDefaultSwapPV( swapName, creditModelName, legName.c_str() );
+		const double analyticPV = validation::tryAqCDSObjectPV( swapName, creditModelName, legName.c_str() );
 		
 		// Calculate the PV by integration over survival probability / stopping time
 		const size_t nIntegrationPoints		= PVFileObj[ "numberOfIntegrationPoints"];
 		const bool evaluateInParallel		= PVFileObj[ "evaluateInParallel"];
 		const bool payDefaultCashflowsOnNextCouponDate = PVFileObj[ "payDefaultCashflowsOnNextCouponDate"];
-		const double pvByIntegration = validation::tryAqCreditObjectDefaultSwapPVByIntegration( swapName, creditModelName, legName.c_str(), nIntegrationPoints, evaluateInParallel, payDefaultCashflowsOnNextCouponDate );
+		const double pvByIntegration = validation::tryAqCDSObjectPVByIntegration( swapName, creditModelName, legName.c_str(), nIntegrationPoints, evaluateInParallel, payDefaultCashflowsOnNextCouponDate );
 
 		const double pvTolerance = 0.01;
 		google_test::CheckTestResultsAndRebaseOnRequest( pvByIntegration, TEST_DIR, CDS_EXPECTED_PV_BY_INTEGRATION, pvTolerance );
@@ -471,7 +471,7 @@ namespace
         const std::string swapName			= PVFileObj[ "swapName" ];
 		std::string creditModelName			= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
-		const double analyticPV = validation::tryAqCreditObjectDefaultSwapPV( swapName, creditModelName, legName.c_str() );
+		const double analyticPV = validation::tryAqCDSObjectPV( swapName, creditModelName, legName.c_str() );
 		
 		// Calculate the PV by monte-carlo simulation over survival probability / stopping time
 		// The default test setup uses Mersenne-Twister derived paths
@@ -479,7 +479,7 @@ namespace
 		AQLStringMatrix mcParameters		= PVFileObj[ "mcParametersLVB"];
 		const bool payDefaultCashflowsOnNextCouponDate= PVFileObj[ "payDefaultCashflowsOnNextCouponDate" ];
 		
-		const double pvByMersenneTwisterMC = validation::tryAqCreditObjectDefaultSwapPVByMonteCarlo( swapName, creditModelName, legName.c_str(), mcParameters, payDefaultCashflowsOnNextCouponDate, standardError );
+		const double pvByMersenneTwisterMC = validation::tryAqCDSObjectPVByMonteCarlo( swapName, creditModelName, legName.c_str(), mcParameters, payDefaultCashflowsOnNextCouponDate, standardError );
 		
 		// Check PV against recorded Mersenne Twister baseline
 		const double pvTolerance = 0.01;
@@ -492,7 +492,7 @@ namespace
 		// Now re-run the test using Sobol sequence
         etrading::ReadDataFile::Load PVFileObjSOBOL = etrading::ReadDataFile::Load( CDS_CALCULATE_PV_BY_MONTE_CARLO_SOBOL );
         AQLStringMatrix mcParametersSobol		= PVFileObjSOBOL[ "mcParametersLVB"];
-		const double pvBySobolMC = validation::tryAqCreditObjectDefaultSwapPVByMonteCarlo( swapName, creditModelName, legName.c_str(), mcParametersSobol, payDefaultCashflowsOnNextCouponDate, standardError );
+		const double pvBySobolMC = validation::tryAqCDSObjectPVByMonteCarlo( swapName, creditModelName, legName.c_str(), mcParametersSobol, payDefaultCashflowsOnNextCouponDate, standardError );
 
 		// Check PV against recorded Sobol baseline
 		google_test::CheckTestResultsAndRebaseOnRequest( pvBySobolMC, TEST_DIR, CDS_EXPECTED_PV_BY_MONTECARLO_SOBOL, pvTolerance );
@@ -508,7 +508,7 @@ namespace
 		const std::string swapName			= PVFileObj[ "swapName" ];
 		std::string creditModelName			= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
-		const double calculatedRiskyAnnuity = validation::tryAqCreditObjectDefaultSwapRiskyAnnuity( swapName, creditModelName, legName.c_str() );
+		const double calculatedRiskyAnnuity = validation::tryAqCDSObjectRiskyAnnuity( swapName, creditModelName, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		// Since the CDS has a CDS spread matching the 5Y point in the calibration market data, the PV had better be close to zero
@@ -522,7 +522,7 @@ namespace
 		const std::string swapName			= PVFileObj[ "swapName" ];
 		std::string creditModelName			= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
-		const double calculatedCS01 = validation::tryAqCreditObjectDefaultSwapCS01( swapName, creditModelName, legName.c_str() );
+		const double calculatedCS01 = validation::tryAqCDSObjectCS01( swapName, creditModelName, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		// Since the CDS has a CDS spread matching the 5Y point in the calibration market data, the PV had better be close to zero
@@ -618,7 +618,7 @@ namespace google_test
 
 			AQLString premiumLegName;
 			AQLString protectionLegName;
-			const double calculatedCDSSpread = validation::tryAqCreditObjectDefaultSwapParSpread( cdsName, creditModelName, premiumLegName, protectionLegName );
+			const double calculatedCDSSpread = validation::tryAqCDSObjectParSpread( cdsName, creditModelName, premiumLegName, protectionLegName );
 
             char * pFirstNonNumber;
 			const double expectedCDSSpread = strtod( cdsMarketData[row][1].getCString(), &pFirstNonNumber );

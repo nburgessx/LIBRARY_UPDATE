@@ -24,12 +24,12 @@ namespace validation
     *  @param [in]		allowJaggedData		A  boolean indicating whether all columns have the same amount of data
     *							(coming from excel they will (because ranges are rectangular) but from C++ this is not necessarily the case)
     */
-    std::string tryAqToolObjectGridCreate(
+    std::string tryAqGridObjectCreate(
         const std::string& objectName,
         const TableInfo& tableInfo,
         const bool allowJaggedData = false );
 
-    std::string tryAqToolObjectGridSave(
+    std::string tryAqGridObjectSave(
         const std::string& objectName,
         const std::string& fileNameToWriteTo
     );
@@ -38,15 +38,15 @@ namespace validation
     *  @param [in]		objectName			object name that will be stored as a FreeObject
     *  @param [in]		showColNames		A boolean indicating whether the column names need to be displayed
     */
-    std::pair<const FlexibleData, std::vector<std::string>>  tryAqToolObjectGridDisplay(
+    std::pair<const FlexibleData, std::vector<std::string>>  tryAqGridObjectDisplay(
                 const std::string& objectName );
 
-    std::pair<const bool, std::string> tryAqToolObjectGridLoad(
+    std::pair<const bool, std::string> tryAqGridObjectLoad(
         const std::string& fileName );
 
-    std::vector<std::string> tryAqToolObjectGridObjectNames();
-    const bool tryAqToolObjectGridClearOne( const std::string& objectName );
-    const bool tryAqToolObjectGridClearAll();
+    std::vector<std::string> tryAqGridObjectNames();
+    const bool tryAqGridObjectClearOne( const std::string& objectName );
+    const bool tryAqGridObjectClearAll();
 
 };
 

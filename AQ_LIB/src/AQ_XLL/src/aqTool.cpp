@@ -21,7 +21,7 @@
 #include <tryAqToolDataFilter.h>   // validation::tryAqToolDataFilter
 #include <tryAqToolValuationSettings.h>  // validation::tryAqToolValuationSettingsDisplay
 #include <tryAqToolDate.h>         // validation::tryAqToolTermsToDates / tryAqToolDatesToTerms
-#include <tryAqToolGrid.h>         // validation::tryAqToolObjectGrid*
+#include <tryAqToolGrid.h>         // validation::tryAqGridObject*
 #include <tryAqToolMultiGrid.h>   // validation::tryAqToolObjectMultiGrid*
 #include <tryAqToolEchoDouble.h>  // validation::tryAqToolEchoDouble
 #include <tryAqBondObject.h>      // validation::tryAqToolBondAverageYield / tryAqToolBondYieldFromFuturePrice (filed under Bond, golden-named Tool)
@@ -822,8 +822,8 @@ XLO_FUNC_END( aqToolLVBCreate )
  * ---------------------------------------------------------------------- */
 
 // Create and store an object grid from a range.
-#if AQ_XLL_ENABLED(aqToolObjectGridCreate)
-XLO_FUNC_START( aqToolObjectGridCreate(
+#if AQ_XLL_ENABLED(aqGridObjectCreate)
+XLO_FUNC_START( aqGridObjectCreate(
     const ExcelObj& objectName,
     const ExcelObj& data,
     const ExcelObj& allowJaggedData ) )
@@ -834,11 +834,11 @@ XLO_FUNC_START( aqToolObjectGridCreate(
     const std::string name = decorateWithExcelLocation( toNarrowString( objectName ) );
 
     const std::string storedName =
-        validation::tryAqToolObjectGridCreate( name, toTableInfo( data ), toBool( allowJaggedData, false ) );
+        validation::tryAqGridObjectCreate( name, toTableInfo( data ), toBool( allowJaggedData, false ) );
 
     return returnValue( appendInstanceCounter( storedName ) );
 }
-XLO_FUNC_END( aqToolObjectGridCreate )
+XLO_FUNC_END( aqGridObjectCreate )
     .help( L"Create and store an object grid (a cached rectangular data block); returns its handle." )
     .arg( L"ObjectName",      L"Name for the grid object" )
     .arg( L"Data",            L"The range to store" )
@@ -847,18 +847,18 @@ XLO_FUNC_END( aqToolObjectGridCreate )
 
 
 // Save an object grid to a file.
-#if AQ_XLL_ENABLED(aqToolObjectGridSave)
-XLO_FUNC_START( aqToolObjectGridSave(
+#if AQ_XLL_ENABLED(aqGridObjectSave)
+XLO_FUNC_START( aqGridObjectSave(
     const ExcelObj& objectName,
     const ExcelObj& fileNameToWriteTo ) )
 {
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqToolObjectGridSave(
+    return returnValue( validation::tryAqGridObjectSave(
         getNameWithoutCounter( objectName ), toNarrowString( fileNameToWriteTo ) ) );
 }
-XLO_FUNC_END( aqToolObjectGridSave )
+XLO_FUNC_END( aqGridObjectSave )
     .help( L"Save an object grid to a file. Returns a status string." )
     .arg( L"ObjectName",        L"A grid handle" )
     .arg( L"FileNameToWriteTo", L"Full path to write the grid to" );
@@ -866,78 +866,78 @@ XLO_FUNC_END( aqToolObjectGridSave )
 
 
 // Load an object grid from a file.
-#if AQ_XLL_ENABLED(aqToolObjectGridLoad)
-XLO_FUNC_START( aqToolObjectGridLoad(
+#if AQ_XLL_ENABLED(aqGridObjectLoad)
+XLO_FUNC_START( aqGridObjectLoad(
     const ExcelObj& fileName ) )
 {
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqToolObjectGridLoad( toNarrowString( fileName ) ).second );
+    return returnValue( validation::tryAqGridObjectLoad( toNarrowString( fileName ) ).second );
 }
-XLO_FUNC_END( aqToolObjectGridLoad )
+XLO_FUNC_END( aqGridObjectLoad )
     .help( L"Load an object grid from a file. Returns a status string." )
     .arg( L"FileName", L"Full path to the grid file" );
 #endif
 
 
 // Display an object grid as a matrix, column names as the header row.
-#if AQ_XLL_ENABLED(aqToolObjectGridDisplay)
-XLO_FUNC_START( aqToolObjectGridDisplay(
+#if AQ_XLL_ENABLED(aqGridObjectDisplay)
+XLO_FUNC_START( aqGridObjectDisplay(
     const ExcelObj& objectName ) )
 {
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
     return returnValue( flexibleDataToExcel(
-        validation::tryAqToolObjectGridDisplay( getNameWithoutCounter( objectName ) ) ) );
+        validation::tryAqGridObjectDisplay( getNameWithoutCounter( objectName ) ) ) );
 }
-XLO_FUNC_END( aqToolObjectGridDisplay )
+XLO_FUNC_END( aqGridObjectDisplay )
     .help( L"Display an object grid as a matrix with the column names as a header row." )
     .arg( L"ObjectName", L"A grid handle" );
 #endif
 
 
 // The names of every cached object grid.
-#if AQ_XLL_ENABLED(aqToolObjectGridObjectNames)
-XLO_FUNC_START( aqToolObjectGridObjectNames() )
+#if AQ_XLL_ENABLED(aqGridObjectNames)
+XLO_FUNC_START( aqGridObjectNames() )
 {
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( toExcelColumn( validation::tryAqToolObjectGridObjectNames() ) );
+    return returnValue( toExcelColumn( validation::tryAqGridObjectNames() ) );
 }
-XLO_FUNC_END( aqToolObjectGridObjectNames )
+XLO_FUNC_END( aqGridObjectNames )
     .help( L"The names of every cached object grid, as a column." );
 #endif
 
 
 // Remove one object grid from the cache.
-#if AQ_XLL_ENABLED(aqToolObjectGridClearOne)
-XLO_FUNC_START( aqToolObjectGridClearOne(
+#if AQ_XLL_ENABLED(aqGridObjectClearOne)
+XLO_FUNC_START( aqGridObjectClearOne(
     const ExcelObj& objectName ) )
 {
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqToolObjectGridClearOne( getNameWithoutCounter( objectName ) ) );
+    return returnValue( validation::tryAqGridObjectClearOne( getNameWithoutCounter( objectName ) ) );
 }
-XLO_FUNC_END( aqToolObjectGridClearOne )
+XLO_FUNC_END( aqGridObjectClearOne )
     .help( L"Remove one object grid from the cache. Returns TRUE on success." )
     .arg( L"ObjectName", L"A grid handle" );
 #endif
 
 
 // Remove every object grid from the cache.
-#if AQ_XLL_ENABLED(aqToolObjectGridClearAll)
-XLO_FUNC_START( aqToolObjectGridClearAll() )
+#if AQ_XLL_ENABLED(aqGridObjectClearAll)
+XLO_FUNC_START( aqGridObjectClearAll() )
 {
     AQ_XLL_GUARD
     AQ_INITIALIZE
 
-    return returnValue( validation::tryAqToolObjectGridClearAll() );
+    return returnValue( validation::tryAqGridObjectClearAll() );
 }
-XLO_FUNC_END( aqToolObjectGridClearAll )
+XLO_FUNC_END( aqGridObjectClearAll )
     .help( L"Remove every object grid from the cache. Returns TRUE on success." );
 #endif
 

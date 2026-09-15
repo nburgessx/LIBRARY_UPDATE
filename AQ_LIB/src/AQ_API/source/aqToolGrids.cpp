@@ -5,10 +5,10 @@
 #include "Variant.h"                // Variant and Variant Matrix Types
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
-SWIG_STRINGMATRIX aqToolObjectGridDisplay( const std::string& objectName, const bool& displayColumnNames  )
+SWIG_STRINGMATRIX aqGridObjectDisplay( const std::string& objectName, const bool& displayColumnNames  )
 {
 	AQ_API_START
-	auto result = validation::tryAqToolObjectGridDisplay( objectName );
+	auto result = validation::tryAqGridObjectDisplay( objectName );
 
     auto& columnNames = std::get<1>( result );
     auto& flexibleData = std::get<0>( result );

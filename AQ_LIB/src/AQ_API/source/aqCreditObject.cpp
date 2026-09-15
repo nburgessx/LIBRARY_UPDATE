@@ -145,7 +145,7 @@ std::vector<double> aqCreditModelRiskyDiscountFactors( const std::string& credit
     AQ_API_END
 }
 
-/* @brief validation interface for the aqCreditObjectDefaultSwapPV method.
+/* @brief validation interface for the aqCDSObjectPV method.
 *   Calculates the PV of the specified Credit Default Swap.
 *
 * @param[in]	swapName			Swap object name
@@ -153,14 +153,14 @@ std::vector<double> aqCreditModelRiskyDiscountFactors( const std::string& credit
 * @param[in]	legName			    If specified, calculate the PV of the single swap leg
 * @returns	The calculated PV value
 */
-double aqCreditObjectDefaultSwapPV( const std::string& swapName, const std::string& creditModelName,  const std::string& legName )
+double aqCDSObjectPV( const std::string& swapName, const std::string& creditModelName,  const std::string& legName )
 {
     AQ_API_START
 
     // Marshall Input(s)
                 
     // Call the Function
-    double result = validation::tryAqCreditObjectDefaultSwapPV( swapName, creditModelName, legName.c_str() );
+    double result = validation::tryAqCDSObjectPV( swapName, creditModelName, legName.c_str() );
         
     // Marshall Output(s)
     return result;
@@ -176,14 +176,14 @@ double aqCreditObjectDefaultSwapPV( const std::string& swapName, const std::stri
 * @param[in]	legName				The Premium leg to use when calculating the risky annuity. A mandatory parameter
 * @returns	The risky annuity
 */
-double aqCreditObjectDefaultSwapRiskyAnnuity( const std::string& swapName, const std::string& creditModelName, const std::string& legName )
+double aqCDSObjectRiskyAnnuity( const std::string& swapName, const std::string& creditModelName, const std::string& legName )
 {
     AQ_API_START
 
     // Marshall Input(s)
         
     // Call the Function
-    double result = validation::tryAqCreditObjectDefaultSwapRiskyAnnuity( swapName, creditModelName, legName.c_str() );
+    double result = validation::tryAqCDSObjectRiskyAnnuity( swapName, creditModelName, legName.c_str() );
         
     // Marshall Output(s)
     return result;
@@ -199,14 +199,14 @@ double aqCreditObjectDefaultSwapRiskyAnnuity( const std::string& swapName, const
 * @param[in]	legName				The Premium leg to use when calculating the risky annuity. A mandatory parameter
 * @returns	The risky annuity
 */
-double aqCreditObjectDefaultSwapCS01( const std::string& swapName, const std::string& creditModelName, const std::string& legName )
+double aqCDSObjectCS01( const std::string& swapName, const std::string& creditModelName, const std::string& legName )
 {
     AQ_API_START
 
     // Marshall Input(s)
         
     // Call the Function
-    double result = validation::tryAqCreditObjectDefaultSwapCS01( swapName, creditModelName, legName.c_str() );
+    double result = validation::tryAqCDSObjectCS01( swapName, creditModelName, legName.c_str() );
         
     // Marshall Output(s)
     return result;
@@ -224,14 +224,14 @@ double aqCreditObjectDefaultSwapCS01( const std::string& swapName, const std::st
 * @param[in]	protectionLegName		The Protection leg name of the CDS
 * @returns	The CDS par spread
 */
-double aqCreditObjectDefaultSwapParSpread( const std::string& swapName, const std::string& creditModelName, const std::string& premiumLegName, const std::string& protectionLegName )
+double aqCDSObjectParSpread( const std::string& swapName, const std::string& creditModelName, const std::string& premiumLegName, const std::string& protectionLegName )
 {
     AQ_API_START
 
     // Marshall Input(s)
         
     // Call the Function
-    double result = validation::tryAqCreditObjectDefaultSwapParSpread( swapName, creditModelName, premiumLegName.c_str(), protectionLegName.c_str() );
+    double result = validation::tryAqCDSObjectParSpread( swapName, creditModelName, premiumLegName.c_str(), protectionLegName.c_str() );
         
     // Marshall Output(s)
     return result;

@@ -94,7 +94,7 @@ namespace validation
 	*/
 	double tryAqSwapObjectAccruedInterest(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const AQLString& legName, const LabelValueBlock& fixingTableName);
 
-	/* @brief validation interface for the aqCreditObjectDefaultSwapPVFromHazardRate method.
+	/* @brief validation interface for the aqCDSObjectPVFromHazardRate method.
 	*   Calculates the PV of the specified Credit Default Swap.
 	*
 	* @param[in]	swapName			Swap object name
@@ -105,9 +105,9 @@ namespace validation
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the PV
 	* @returns	The calculated PV value
 	*/
-    double tryAqCreditObjectDefaultSwapPVFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& legName, const bool includeAccruedInterest );
+    double tryAqCDSObjectPVFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& legName, const bool includeAccruedInterest );
 
-	/* @brief validation interface for the aqCreditObjectDefaultSwapPV method.
+	/* @brief validation interface for the aqCDSObjectPV method.
 	*   Calculates the PV of the specified Credit Default Swap.
 	*
 	* @param[in]	swapName			Swap object name
@@ -115,9 +115,9 @@ namespace validation
 	* @param[in]	legName			    If specified, calculate the PV of the single swap leg
 	* @returns	The calculated PV value
 	*/
-	double tryAqCreditObjectDefaultSwapPV( const std::string& swapName, const std::string& creditModelName,  const AQLString& legName );
+	double tryAqCDSObjectPV( const std::string& swapName, const std::string& creditModelName,  const AQLString& legName );
 
-	/* @brief	validation interface for the aqCreditObjectDefaultSwapPVByIntegration method.
+	/* @brief	validation interface for the aqCDSObjectPVByIntegration method.
 	*			Calculates the total PV of all the Credit Default Swap Legs, by integrating the payoff over survivial probability.
 	*			The integration over survival probability is equivalent to an integration over survival time, with an appropriate change of variable.
 	*
@@ -130,9 +130,9 @@ namespace validation
 	*													TRUE means wait to the next coupon date. This flag is used to match the PV by integration to the analytic PV formula.
 	* @returns	The calculated PV value
 	*/
-	double tryAqCreditObjectDefaultSwapPVByIntegration( const std::string& swapName, const std::string& creditModelName, const AQLString& legName, const size_t numberOfIntegrationPoints, const bool evaluateInParallel, const bool payDefaultCashflowsOnNextCouponDate );
+	double tryAqCDSObjectPVByIntegration( const std::string& swapName, const std::string& creditModelName, const AQLString& legName, const size_t numberOfIntegrationPoints, const bool evaluateInParallel, const bool payDefaultCashflowsOnNextCouponDate );
 
-	/* @brief	validation interface for the aqCreditObjectDefaultSwapPVByMonteCarlo method.
+	/* @brief	validation interface for the aqCDSObjectPVByMonteCarlo method.
 	*			Calculates the total PV of all the Credit Default Swap Legs, by a monte-carlo simulation over survivial probability.
 	*			The monte-carlo over survival probability is equivalent to a monte-carlo over survival time, with an appropriate change of variable.
 	*
@@ -146,7 +146,7 @@ namespace validation
 	*
 	* @returns	The calculated PV value
 	*/
-	double tryAqCreditObjectDefaultSwapPVByMonteCarlo( const std::string& swapName, const std::string& creditModelName, const AQLString& legName, const LabelValueBlock& mcParametersLVB, const bool payDefaultCashflowsOnNextCouponDate, double& standardError );
+	double tryAqCDSObjectPVByMonteCarlo( const std::string& swapName, const std::string& creditModelName, const AQLString& legName, const LabelValueBlock& mcParametersLVB, const bool payDefaultCashflowsOnNextCouponDate, double& standardError );
 
 	/* @brief Calculates the risky annuity of the specified Credit Default Swap Premium leg.
 	*
@@ -158,7 +158,7 @@ namespace validation
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 	* @returns	The risky annuity
 	*/
-	double tryAqCreditObjectDefaultSwapRiskyAnnuityFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& legName, const bool includeAccruedInterest );
+	double tryAqCDSObjectRiskyAnnuityFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& legName, const bool includeAccruedInterest );
 
 	/* @brief Calculates the risky annuity of the specified Credit Default Swap Premium leg.
 	*
@@ -167,7 +167,7 @@ namespace validation
 	* @param[in]	legName				The Premium leg to use when calculating the risky annuity. A mandatory parameter
 	* @returns	The risky annuity
 	*/
-	double tryAqCreditObjectDefaultSwapRiskyAnnuity( const std::string& swapName, const std::string& creditModelName, const AQLString& legName );
+	double tryAqCDSObjectRiskyAnnuity( const std::string& swapName, const std::string& creditModelName, const AQLString& legName );
 
 	/* @brief[in]	Computes the accrued year fraction from the previous coupon date to the specified date
 	*				Used in accrued interest calculations.
@@ -178,7 +178,7 @@ namespace validation
 	* @param[in]	legName				The Premium leg name
 	* @returns: The year fraction
 	*/
-	double tryAqCreditObjectDefaultSwapAccruedYearFraction( const std::string& swapName, const std::string& creditModelName, const AQLDate& toDate, const AQLString& legName );
+	double tryAqCDSObjectAccruedYearFraction( const std::string& swapName, const std::string& creditModelName, const AQLDate& toDate, const AQLString& legName );
 
     /* @brief Calculates the CS01 of the specified Credit Default Swap Premium leg.
 	*
@@ -187,7 +187,7 @@ namespace validation
 	* @param[in]	legName				The Premium leg to use when calculating the risky annuity. A mandatory parameter
 	* @returns	The risky annuity
 	*/
-	double tryAqCreditObjectDefaultSwapCS01( const std::string& swapName, const std::string& creditModelName, const AQLString& legName );
+	double tryAqCDSObjectCS01( const std::string& swapName, const std::string& creditModelName, const AQLString& legName );
 
 	/* @brief Calculates the par spread of the specified Credit Default Swap.
 	*
@@ -200,7 +200,7 @@ namespace validation
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 	* @returns	The CDS par spread
 	*/
-	double tryAqCreditObjectDefaultSwapParSpreadFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest );
+	double tryAqCDSObjectParSpreadFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest );
 
 	/* @brief Calculates the par spread of the specified Credit Default Swap.
 	*
@@ -210,7 +210,7 @@ namespace validation
 	* @param[in]	protectionLegName		The Protection leg name of the CDS
 	* @returns	The CDS par spread
 	*/
-	double tryAqCreditObjectDefaultSwapParSpread( const std::string& swapName, const std::string& creditModelName, const AQLString& premiumLegName, const AQLString& protectionLegName );
+	double tryAqCDSObjectParSpread( const std::string& swapName, const std::string& creditModelName, const AQLString& premiumLegName, const AQLString& protectionLegName );
 
 	/* @brief Solves for the hazard rate, given the specified CDS par spread
 	*
@@ -223,7 +223,7 @@ namespace validation
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 	* @returns	The CDS hazard rate
 	*/
-	double tryAqCreditObjectDefaultSwapHazardRateFromParSpread( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double parSpread, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest );
+	double tryAqCDSObjectHazardRateFromParSpread( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double parSpread, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest );
 
 	/* @brief Solves for the hazard rate, given the specified CDS par spread
 	*
@@ -233,7 +233,7 @@ namespace validation
 	* @param[in]	protectionLegName		The Protection leg name of the CDS
 	* @returns	The CDS hazard rate
 	*/
-	double tryAqCreditObjectDefaultSwapHazardRateFromParSpread( const std::string& swapName, const std::string& creditModelName, const double parSpread, const AQLString& premiumLegName, const AQLString& protectionLegName );
+	double tryAqCDSObjectHazardRateFromParSpread( const std::string& swapName, const std::string& creditModelName, const double parSpread, const AQLString& premiumLegName, const AQLString& protectionLegName );
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 
@@ -429,13 +429,13 @@ namespace validation
 	 *                               The CREDIT_MODELS block consists of CreditModelName and correlationBeta.
 	 * @param [out]                  The objectName
 	 */
-	std::string tryAqCreditObjectBasketModelCreate( const std::string& objectName,
+	std::string tryAqCreditBasketModelCreate( const std::string& objectName,
 												 const std::vector<std::string>& dataBlockNames,
 												 const etrading::JSONInfoBlockTuples& infoBlocks ); // TODO: Move the JSON Info Block below the validation - does not belong here
 
 
 	// Compute the Survival Probability using the Credit Basket Model
-	double tryAqCreditObjectBasketModelSurvivalProbability( const std::string& creditBasketModelName, const AQLDate& toDate, const AQLDate& fromDate );
+	double tryAqCreditBasketModelSurvivalProbability( const std::string& creditBasketModelName, const AQLDate& toDate, const AQLDate& fromDate );
 
 	/* @brief validation interface for the aqObjConstantMaturitySwapPVFromConvexity() method.
 	*   Calculates the PV of a Constant Maturity Swap.

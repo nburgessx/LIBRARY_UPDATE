@@ -93,11 +93,16 @@ paragraph, if the two ever drift again.**
   have **zero `validation` wrappers today** — new design-and-build work, not
   a port. Full detail and the re-runnable gap-audit script: `STATUS.md` §2
   and `rebrand\STATUS.md`.
-- **Not yet started:** Phase 4a's `AQ_API` runtime edition manifest and the
-  `AQ_XLL` per-edition build *configurations* (the underlying `src\Core`/
-  `src\Optional` file split is done, §4.4); Phase 5 (bindings verification,
-  SWIG regen); Phase 6 (legacy extraction, licence headers, resources audit);
-  Phase 7 (Linux/CMake, clang-format, clean repo).
+- **Phase 4a (editions): done (2026-09-15).** `AQ_XLL` ships five build
+  configurations — `Release` (Full) plus `Release_XL_Bond`/
+  `Release_XL_Swap`/`Release_XL_Credit`/`Release_XL_Curve` — each built from
+  the `src\Core`/`src\Optional` file split (§4.4). The `AQ_API` runtime
+  edition manifest once planned for this phase is **dropped, not
+  deferred** — `AQ_API` ships one full binary per language, no edition
+  concept there.
+- **Not yet started:** Phase 5 (bindings verification, SWIG regen); Phase 6
+  (legacy extraction, licence headers, resources audit); Phase 7
+  (Linux/CMake, clang-format, clean repo).
 
 ### 2.2 Visualizer.natvis
 
@@ -280,20 +285,19 @@ customisation surface:
 Generator JSON and calendar config get rebranded like code (legacy names,
 client-specific conventions stripped). Both deploy paths must package `config`.
 
-### 4.4 Editions
+### 4.4 Editions — DONE (2026-09-15), AQ_XLL-only
 
-`AlgoQuantLib` ships as **Swaps / Bonds / Credit / Full** — one artefact per
-language, **gated at runtime**, not per-edition builds. Working design (Phase 4a):
-one binary; `config\editions.json` maps edition → categories; `config\licence.json`
-(or a key) names the entitlement, read behind one function so enforcement can
-harden later without touching registration; at `xlAutoOpen` / import, register
-only the entitled categories; `aqToolEdition()` reports the active edition.
-Editions cut **across** categories, so the gate is category-level.
+`AlgoQuantLib` ships as **Bonds / Swaps / Credit / Curves / Full** editions.
+**Decided (Nicholas, 2026-09-15): editions are an `AQ_XLL`-only concept,
+gated at compile time — there is no runtime edition gate, and the
+`AQ_API` runtime-manifest design once planned for this phase is dropped,
+not deferred.** `AQ_API` (Python/C#/Java/R) ships one full binary per
+language with every category always registered; editions are not a concept
+that surface has.
 
-**`AQ_XLL` also has a compile-time edition mechanism, on top of the runtime
-one above (decided, Nicholas 2026-09-11):** `projects\AQ_XLL.vcxproj.filters`
-organises every `src\AQ_XLL\src\*.cpp` file under two Solution Explorer
-filters:
+**`AQ_XLL` mechanism (decided, Nicholas 2026-09-11; build configurations
+shipped 2026-09-15):** `projects\AQ_XLL.vcxproj.filters` organises every
+`src\AQ_XLL\src\*.cpp` file under two Solution Explorer filters:
 
 - **`src\Core`** — files that must build into **every** edition
   (`aqXllTools.cpp`, `aqMain.cpp`, `aqDate.cpp`, `aqObject.cpp`, `aqMath.cpp`,
@@ -311,25 +315,24 @@ filters:
   `src\Core`** — unless it turns out to be cross-cutting infrastructure like
   `Curve`/`IR`, in which case flag it for `Core` rather than assuming.
 
-The filters are a visual map, prepared ahead of the actual mechanism: when
-per-edition build configurations are added (e.g. `ReleaseBonds`,
-`ReleaseSwaps`, `ReleaseCurves`, alongside the existing
-`Debug`/`DebugEditAndContinue`/`ReleaseProfiler`/`Release`), each new
-configuration compiles every `src\Core` file plus only the `src\Optional`
-file(s) its edition needs — excluded files are marked "Excluded From Build"
-for that configuration in the `.vcxproj`, same mechanism as any normal
-per-configuration file exclusion, just organised so the `Core`/`Optional`
-filter grouping makes at a glance which files a new edition config must
-include. **The existing `Release` configuration is the `Full` edition and
-excludes nothing** — every `src\Optional` file builds into it. This is
-specific to `AQ_XLL` (a native binary per edition is cheap to produce for one
-add-in); it does not change the Phase 4a runtime-manifest plan for `AQ_API`
-bindings (Python/C#/Java/R) — those still gate a single binary at
-`xlAutoOpen`/import time, since building N native-per-language artefacts
-there is the combinatorial blow-up CLAUDE.md §5.2 rules out. The two
-mechanisms can coexist: `AQ_XLL` edition SKUs are separate small `.xll`
-binaries built from a filtered file set; `AQ_API` edition SKUs are one binary
-per language with runtime-gated registration.
+**Five build configurations now exist** alongside
+`Debug`/`DebugEditAndContinue`/`ReleaseProfiler`: **`Release`** (the `Full`
+edition — excludes nothing, every `src\Optional` file builds into it) and
+**`Release_XL_Bond`**, **`Release_XL_Swap`**, **`Release_XL_Credit`**,
+**`Release_XL_Curve`** — each compiles every `src\Core` file plus only the
+`src\Optional` file(s) its edition needs; excluded files are marked
+"Excluded From Build" for that configuration in the `.vcxproj`, same
+mechanism as any normal per-configuration file exclusion. A separate
+**`Release_XL_Manifest`** configuration layers a further, function-level cut
+on top of any of these via `resources\manifest\active.txt` (see
+`rebrand\STATUS.md` for the manifest-generator tooling) — that is a finer
+cut than the edition mechanism, not a sixth edition. This is specific to
+`AQ_XLL` (a native binary per edition is cheap to produce for one add-in);
+`AQ_API` bindings (Python/C#/Java/R) build once per language and register
+every category unconditionally — no per-language edition SKUs, since
+building N native artefacts per language was the combinatorial blow-up
+CLAUDE.md §5.2 always ruled out, and the runtime-gate alternative to avoid
+that blow-up is the piece that got dropped.
 
 ---
 
@@ -441,13 +444,14 @@ this; don't do it merely because two category names share a prefix.
 ### 5.2 Two orthogonal groupings — do not conflate
 
 - **Discoverability** = category prefix (`aqCurve…`, `aqSwap…`).
-- **Gating** = shipped edition (Swaps / Bonds / Credit / Full). Editions cut
-  *across* categories and are enforced by a **runtime edition manifest with gated
-  registration** (§4.4), not separate builds, for `AQ_API`. `AQ_XLL` instead
-  gates at compile time via the `src\Core`/`src\Optional` filter split and
-  per-edition build configurations (§4.4) — a native `.xll` per edition is
-  cheap, unlike per-language bindings. Protection is light by design either
-  way — the library is not useful without the shipped examples and templates.
+- **Gating** = shipped edition (Bonds / Swaps / Credit / Curves / Full),
+  **`AQ_XLL`-only** (§4.4). Editions cut *across* categories, enforced at
+  compile time via the `src\Core`/`src\Optional` filter split and the
+  `Release_XL_*` build configurations — a native `.xll` per edition is cheap
+  to produce for one add-in. `AQ_API` has no edition concept: one binary per
+  language, every category always registered. Protection on `AQ_XLL` is
+  light by design — the library is not useful without the shipped examples
+  and templates.
 
 ### 5.3 C++ style (do not "improve" this)
 
@@ -576,12 +580,12 @@ one of two filters — see §4.4 for the full edition-gating design:
   here, not `Core`** — unless it's cross-cutting infrastructure every product
   depends on, like `Curve`/`IR` turned out to be.
 
-This is a visual map today; it becomes load-bearing once per-edition build
-configurations (`ReleaseBonds`, `ReleaseSwaps`, `ReleaseCurves`, …) are added
-alongside the existing `Debug`/`DebugEditAndContinue`/`ReleaseProfiler`/
-`Release` — each new configuration builds `Core` plus only the `Optional`
-file(s) its edition needs, everything else marked excluded from that
-configuration. `Release` (full) excludes nothing.
+**Done (2026-09-15).** The per-edition build configurations
+`Release_XL_Bond`/`Release_XL_Swap`/`Release_XL_Credit`/`Release_XL_Curve`
+exist alongside `Debug`/`DebugEditAndContinue`/`ReleaseProfiler`/`Release` —
+each builds `Core` plus only the `Optional` file(s) its edition needs,
+everything else marked excluded from that configuration. `Release` (full)
+excludes nothing.
 
 ---
 

@@ -136,10 +136,15 @@ automatically as pre- and post-build steps for the language configurations.
 
 ### Editions
 
-`AlgoQuantLib` ships as **Swaps**, **Bonds**, **Credit** and **Full** editions.
-There is one binary per language; the edition is selected at load time from an
-edition manifest and an entitlement file in the `config` folder — no separate
-per-edition build. `aqToolsEdition()` reports which edition is active.
+The Excel add-in (`AQ_XLL`) ships as **Bond**, **Swap**, **Credit**, **Curve**
+and **Full** editions — separate `.xll` builds (`Release_XL_Bond`,
+`Release_XL_Swap`, `Release_XL_Credit`, `Release_XL_Curve`, `Release`), each
+containing only the worksheet functions its edition needs. There is no
+runtime edition switch and no entitlement file — the edition is fixed at
+build time by which `.xll` you load.
+
+The language bindings (`AQ_API` — Python/C#/Java/R) do **not** have editions:
+one binary per language, every category always available.
 
 ---
 

@@ -6,9 +6,9 @@
 below this point since is **uncommitted working-tree delta** — Nicholas
 commits at his own pace. Build is green in all configurations and GoogleTest
 passes (Nicholas-confirmed multiple times, most recently after the
-`InterestRate`→`IR` rename and the `aqObjectDeleteAll`/`aqObjectClearCache`
-changes described below — though those two specific changes are not yet
-build-confirmed themselves, see `rebrand\STATUS.md`'s latest entry).
+2026-09-15 `aqCreditBasketModel*`/`aqCDSObject*`/`aqGridObject*` naming-
+convention fix described below, including a `Release_XL_Manifest` build to
+confirm `aqManifestList.h` regenerates correctly with the new names).
 
 - The **phase-by-phase plan** is `MIGRATION_PLAN.md`.
 - The **detailed running record** of the rebrand (per-batch, per-decision) is
@@ -34,7 +34,7 @@ not a port.
 | 3 | Identifier rebrand + calendar delimiter | **done** |
 | 3c | Retire `mir*` | **done** (deleted wholesale) |
 | 4 | xlOil XLL port | **~98% of existing wrappers ported.** `Model`/`Generator` need net-new `validation` wrappers first (0 exist today) |
-| 4a | Editions & manifest gating | **Started for `AQ_XLL`**: `src\Core`/`src\Optional` file-filter split done (committed, `d5dc37d7`); per-edition build *configurations* (`ReleaseBonds`, `ReleaseSwaps`, …) not yet added. `AQ_API` runtime-manifest gate not started. |
+| 4a | Editions & manifest gating | **done (2026-09-15), `AQ_XLL`-only.** `Release`/`Release_XL_Bond`/`Release_XL_Swap`/`Release_XL_Credit`/`Release_XL_Curve` build configurations shipped and building green. The `AQ_API` runtime-manifest gate is **dropped, not deferred** — `AQ_API` has no edition concept. |
 | 4b | Config folder & generators audit | not started |
 | 5 | Bindings (C#/Java/R) & test coverage | not started |
 | 6 | Legacy extraction, resources, docs, licence | not started |
@@ -94,7 +94,18 @@ print(len(declared), 'wrappers,', len(missing), 'unmatched:'); [print(' -', m) f
 
 See `rebrand\STATUS.md` for full narrative detail on each of these; summary:
 
-0. **(2026-09-12, latest) `InterestRate`→`IR` category rename** (full-stack:
+0. **(2026-09-15, latest) Naming-convention fix — three `AQ_XLL` function
+   families corrected to fit `CLAUDE.md` §5.1:**
+   `aqCreditObjectBasketModel*` → `aqCreditBasketModel*`,
+   `aqCreditObjectDefaultSwap<X>` (11 functions) → `aqCDSObject<X>`,
+   `aqToolObjectGrid<X>` → `aqGridObject<X>` (with `ObjectNames` collapsed to
+   `aqGridObjectNames`). Renamed full-stack (`validation`/`GTEST`/`AQ_API`/
+   `AQ_XLL`) plus recorded fixture CSVs and `docs\api_map.csv`; the generated
+   `aqManifestList.h` and the SWIG `*_wrap.*` files were deliberately left
+   alone (both regenerate on their own — confirmed for `aqManifestList.h` via
+   a `Release_XL_Manifest` build). Build green, GoogleTest passing
+   (Nicholas-confirmed). Full detail: `rebrand\STATUS.md`'s latest entry.
+1. **(2026-09-12) `InterestRate`→`IR` category rename** (full-stack:
    `validation`/`AQ_XLL`/`AQ_API`/`GTEST`, 3 fixture files); **`aqObjectDeleteAll`**
    made category-optional (blank = every object of every category, via new
    `tryAqObjectList()`/`tryAqObjectDeleteAll()` no-arg validation overloads);
@@ -102,7 +113,7 @@ See `rebrand\STATUS.md` for full narrative detail on each of these; summary:
    objects (traced to `etrading::deleteAllObjects` looping every
    `CachedObjectEnum`) and fixed to also reset `AQ_XLL`'s own handle-name
    counter map, which it wasn't. Not yet build-confirmed.
-1. **Gap-closing batch (23 functions, 5 existing files, no new files):**
+2. **Gap-closing batch (23 functions, 5 existing files, no new files):**
    `aqObject.cpp` (+2, generic Object lifecycle), `aqCurve.cpp` (+1,
    `aqCurveUSDSpotDate`), `aqTool.cpp` (+4, incl. re-fixing the
    `aqToolEchoDouble` linker gap), `aqMath.cpp` (+10, vector overloads +
@@ -110,25 +121,25 @@ See `rebrand\STATUS.md` for full narrative detail on each of these; summary:
    multi-trade risk-ladder family — needed a new `vector<LabelValueBlock>`
    marshalling pattern, `toLabelValueBlockVector`, built from scratch this
    session).
-2. **Two build-fix rounds**, both resolved:
+3. **Two build-fix rounds**, both resolved:
    - 4 compile errors in `aqCurve.cpp` batch 2 (type-marshalling mismatches
      between `AQL*` types and the `aq_xll::toExcel*` overload set).
    - 1 linker error (`tryAqCurveGetInterpolationJoinDate.cpp` existed on disk,
      correct, but was never added to `projects\validation.vcxproj`).
-3. **Credit category, new `aqCredit.cpp` (34 functions).** Discovered these
+4. **Credit category, new `aqCredit.cpp` (34 functions).** Discovered these
    wrappers live inside `tryAqSwapObjectPricing.h` (shared with the
    already-ported CMS/TRS pricing) plus two more filed under Swap's leg/
    schedule headers — golden name decided the category, not the file.
-4. **Swap category, new `aqSwap.cpp` (62 functions, later 66).** Required
+5. **Swap category, new `aqSwap.cpp` (62 functions, later 66).** Required
    first renaming the pre-existing `tryAqOisPV`/`tryAqOisParRate` wrappers
    (predated the category scheme) to `tryAqSwapOisPV`/`tryAqSwapOisParRate`
    across validation/AQ_API/GTEST/100 untracked fixture files.
-5. **Curve category batch 2 (59 functions, batch 1 was 34, now 94).** The
+6. **Curve category batch 2 (59 functions, batch 1 was 34, now 94).** The
    legacy `curveCollection`+`curveIndex` stateless family alongside the
    AQObj-handle family (Nicholas: port both), Results/Jacobian risk, dual
    bootstrap, engine calibrate, curve groups, and the four heavy one-shot
    `Calibrate*`/`ObjectCreate*` functions.
-6. Earlier in this session (see `rebrand\STATUS.md` for detail): the
+7. Earlier in this session (see `rebrand\STATUS.md` for detail): the
    `src\Core`/`src\Optional` edition-filter split (Nicholas's own commit,
    `d5dc37d7`), the `StructuredExceptionHandler` plain-English error-message
    rework, the CMS/TRS/`InterestRate` category renames, `aqBond.cpp`
@@ -147,15 +158,18 @@ Both need `validation` wrappers **designed and written from scratch**
 (`aqGeneratorList`/`Describe`/`Validate`); construction stays in the asset
 categories. Not scoped or started.
 
-### 4.2 Phase 4a — editions & manifest gating
+### 4.2 Phase 4a — editions & manifest gating — **done (2026-09-15)**
 
 - [x] `AQ_XLL` file organisation: `src\Core` (always-built) vs `src\Optional`
       (one file per category) — done, committed.
-- [ ] `AQ_XLL` per-edition **build configurations** (`ReleaseBonds`,
-      `ReleaseSwaps`, `ReleaseCurves`, …) that actually exclude the
-      `src\Optional` files an edition doesn't need — not yet added.
-- [ ] `AQ_API` runtime edition manifest (`config\editions.json` +
-      `config\licence.json`, gated registration at import) — not started.
+- [x] `AQ_XLL` per-edition **build configurations** — `Release_XL_Bond`,
+      `Release_XL_Swap`, `Release_XL_Credit`, `Release_XL_Curve` (plus the
+      existing `Release` as Full) — each excludes the `src\Optional` files
+      its edition doesn't need. Confirmed building green.
+- [x] `AQ_API` runtime edition manifest — **decided dropped, not built**
+      (Nicholas, 2026-09-15). `AQ_API` ships one full binary per language
+      with every category always registered; there is no edition concept on
+      that surface. `config\editions.json`/`licence.json` will not be built.
 
 ### 4.3 Phase 5 — bindings & tests
 

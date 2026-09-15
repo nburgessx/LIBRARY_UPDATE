@@ -47,6 +47,7 @@ Status legend: ☐ not started · ◐ in progress · ☑ done
 | D16 | **Navigation:** category names are a public-API concern and are **not** propagated into `etrading`/`math` file or class names (those stay domain-oriented). The bridge is the `validation` layer: every wrapper is the identical public name plus a `try` prefix, foldered by category (Phase 3.5), plus a live `docs\api_map.csv` (Phase 3.6). Judged acceptable — see §"Navigation" note below §2.5. |
 | D18 | **Category scheme (step 11):** categories are **singular** (`aqDate`, not `aqDates`); the handle marker is the word **`Object`** after the category (`aqBondObjectDirtyPrice`), a named sub-object skips it (`aqBondCurveYield`), generic lifecycle is `aqObject<Lifecycle>`. `Vols → Volatility`. `AQ_XLL` category files are `aq<Category>.{cpp,h}` (`aqBond.cpp`, `aqDate.cpp`, `aqObject.cpp`, `aqTool.cpp`; `aqXllTools` is the XLL-layer utility, not a category) — **default, not absolute: `BondOption`/`BondFutureOption` are code-organized together in `aqBond.cpp`** (2026-09-11, `CLAUDE.md` §5.1a) because `aqBondOptionObjectCreate` is the only creator for both; consolidate a category's file into a sibling's only when they share the same underlying cached object, not merely a name prefix. `validation`, `AQ_API`, `GTEST` **test names** and `resources\test` fixtures follow — task 2.6. |
 | D19 | **The `validation` wrapper name is the GOLDEN SOURCE** for every public function name. Wrapper = `try` + `<GoldenName>`; the XLL function, every binding method (Python / C# / Java / R) and the `GTEST` case name are `<GoldenName>` verbatim. Rename the wrapper first; the other surfaces follow. Enforced by `docs\api_map.csv` + `api_pair_check.py`. |
+| D20 | **Editions are `AQ_XLL`-only (Nicholas, 2026-09-15).** Phase 4a closed via `Release`/`Release_XL_Bond`/`Release_XL_Swap`/`Release_XL_Credit`/`Release_XL_Curve` build configurations, gated at compile time. The `AQ_API` runtime edition-gate (`config\editions.json`/`licence.json`, a module-import registration gate, `aqToolEdition()`) is **dropped, not deferred** — `AQ_API` ships one full binary per language with every category always registered. |
 
 Open questions: none blocking. Phase 4 waits on the xlOil worked examples;
 Phase 6.0 (Credit untangle) needs Nicholas's domain call on `CreditResults`.
@@ -279,14 +280,21 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
 - ☐ **2.3** Record the locked list in `CLAUDE.md` §5.1 (done). Map every row of
   the 0.7 inventory (`rebrand\xll_function_inventory.csv`) to one of the 20
   categories or to drop/merge.
-- ☐ **2.4 Edition → category map.** Straw man (needs sign-off):
+- ☑ **2.4 Edition → category map.** Realised as `AQ_XLL` build configurations
+  (Phase 4a, done 2026-09-15) — `Release_XL_Swap`/`Release_XL_Bond`/
+  `Release_XL_Credit`/`Release_XL_Curve`/`Release` (Full), each `Core` plus
+  the `Optional` files below:
 
   | Edition | Registers |
   |---|---|
-  | Swaps | Date, Curve, Volatility, IR, Swap, Math, Generator, Object, Tool |
-  | Bonds | Date, Curve, IR, Bond, Math, Generator, Object, Tool |
+  | Swap | Date, Curve, Volatility, IR, Swap, Math, Generator, Object, Tool |
+  | Bond | Date, Curve, IR, Bond, Math, Generator, Object, Tool |
   | Credit | Date, Curve, Credit, Bond, Math, Generator, Object, Tool |
+  | Curve | Date, Curve, IR, Math, Generator, Object, Tool |
   | Full | all 21, incl. options and Model |
+
+  No `AQ_API` equivalent — that half of the original straw man was dropped
+  (Phase 4a).
 
 - ☑ **2.5 Generator categories** (Nicholas). `Generator` category is
   **introspection only** — `aqGeneratorList` / `…Describe` / `…Validate`. The
@@ -504,9 +512,9 @@ canonical marshalling / handle-I/O / array-return / error-convention pattern.
   wrapper + `GTEST` case per function.
 - ☐ **4.4** Remove the dead `XllPlus\7.0\...` include/lib paths from
   `AQ_XLL.vcxproj`.
-- ☐ **4.5 Editions & manifest gating** — see **Phase 4a** below; the mechanism is
-  shared between XLL and bindings, so build it once here and wire `AQ_API` to it
-  in Phase 5.
+- ☑ **4.5 Editions & manifest gating** — see **Phase 4a** below, done
+  2026-09-15. `AQ_XLL`-only, not shared with `AQ_API` — that half was
+  dropped, not built (see Phase 4a).
 - ☐ **4.6** **Clean break confirmed at registration** (D9): register `aq*` names
   only; no `me*` aliases, hidden or otherwise. Finalise the `RELEASE_NOTES`
   renamed/removed-function list started in 3.3 so users can find replacements.
@@ -613,56 +621,36 @@ generators load from the shipped `config` folder.
 
 ---
 
-## Phase 4a — Editions & manifest gating  ☐
+## Phase 4a — Editions & manifest gating  ☑ (done, 2026-09-15)
 
-Nicholas wants `AlgoQuantLib` to ship as **Swaps / Bonds / Credit / Full**
-editions. Two mechanisms now, one per surface (the `AQ_XLL` half decided
-2026-09-11, superseding the original "no per-edition builds" stance for that
-project specifically — see below):
+`AlgoQuantLib` ships as **Bonds / Swaps / Credit / Curves / Full** editions.
+**Decided (Nicholas, 2026-09-15): `AQ_XLL`-only, gated at compile time. The
+`AQ_API` runtime-gate half of this phase (below) is dropped, not
+deferred** — `AQ_API` ships one full binary per language with every
+category always registered; there is no edition concept on that surface.
 
-**`AQ_API` (Python/C#/Java/R) — single binary per language, gated at
-runtime.** No per-edition builds here (the build × config × language matrix
-is already large; CLAUDE.md §5.2 rules this out). Physical code is all
-present — protection is intentionally light.
-- **Edition manifest** — `config\editions.json`: named editions → the categories
-  (and optionally specific functions) each registers. This is the 2.4 table,
-  shipped as data so editions can be re-cut without a rebuild.
-- **Entitlement** — which edition(s) this install may use. v1: a plain
-  `config\licence.json` (or a short key string) naming the edition. Keep the
-  read behind one function so enforcement can harden later (signed key, expiry,
-  machine binding) **without touching registration code**.
-- **Registration** — at module import: load manifest → resolve entitled
-  edition → register only those categories. Unentitled functions are **not
-  registered** (clean `AttributeError`). Add `aqToolEdition()` returning the
-  active edition and category list.
+**`AQ_XLL` (decided, Nicholas 2026-09-11; shipped 2026-09-15) — per-edition
+build configurations, gated at compile time.** A native `.xll` per edition
+is cheap for one add-in: `projects\AQ_XLL.vcxproj.filters` splits every
+`src\AQ_XLL\src\*.cpp` file into **`src\Core`** (always-built:
+`aqXllTools.cpp`, `aqMain.cpp`, `aqDate.cpp`, `aqObject.cpp`, `aqMath.cpp`,
+`aqTool.cpp`, plus `aqCurve.cpp` and `aqIR.cpp` — promoted 2026-09-12, see
+4a.5) and **`src\Optional`** (one file per product category — every new
+category file goes here). Five build configurations exist alongside
+`Debug`/`DebugEditAndContinue`/`ReleaseProfiler`: **`Release`** (Full,
+excludes nothing) and **`Release_XL_Bond`**, **`Release_XL_Swap`**,
+**`Release_XL_Credit`**, **`Release_XL_Curve`** — each compiles `Core` plus
+only the `Optional` file(s) that edition needs (excluded from build for
+every other configuration). A further `Release_XL_Manifest` configuration
+layers a function-level cut on top via `resources\manifest\active.txt`
+(see `rebrand\STATUS.md` for that tooling) — a finer cut than the edition
+mechanism, not a sixth edition. Detail: `CLAUDE.md` (both) §4.4/§4.5,
+`AQ_LIB\CLAUDE.md` §6.3.
 
-**`AQ_XLL` (decided, Nicholas 2026-09-11) — per-edition build configurations,
-gated at compile time.** A native `.xll` per edition is cheap for one add-in,
-so this project does the opposite of the `AQ_API` design above:
-`projects\AQ_XLL.vcxproj.filters` already splits every `src\AQ_XLL\src\*.cpp`
-file into **`src\Core`** (always-built: `aqXllTools.cpp`, `aqMain.cpp`,
-`aqDate.cpp`, `aqObject.cpp`, `aqMath.cpp`, `aqTool.cpp`, plus `aqCurve.cpp`
-and `aqIR.cpp` — promoted 2026-09-12, see 4a.5) and **`src\Optional`** (one
-file per product category — every new category file goes here). New build
-configurations (`ReleaseBonds`, `ReleaseSwaps`,
-`ReleaseCurves`, …), alongside the existing
-`Debug`/`DebugEditAndContinue`/`ReleaseProfiler`/`Release`, will each compile
-`Core` plus only the `Optional` file(s) that edition needs (marked excluded
-from build for every other configuration); `Release` (Full) excludes nothing.
-`aqToolEdition()` still applies here too, reporting which build this `.xll`
-is. Detail: `CLAUDE.md` (both) §4.4/§4.5, `AQ_LIB\CLAUDE.md` §6.3.
-
-- ☐ **4a.1** Agree `AQ_API` manifest + entitlement file shape and the
-  enforcement seam.
-- ☐ **4a.2** Implement the `AQ_API` runtime gate in its registration layer.
-- ☐ **4a.3** `config\editions.json` from the 2.4 table; a `Full` `licence.json`
-  for dev.
-- ☐ **4a.4** `GTEST` / smoke: each `AQ_API` edition registers exactly its
-  categories and nothing else; `aqToolEdition()` agrees.
-- ☐ **4a.5** Add the `AQ_XLL` per-edition build configurations
-  (`ReleaseBonds`/`ReleaseSwaps`/`ReleaseCurves`/…), each excluding the
-  `src\Optional` files its edition doesn't need; confirm each configuration
-  builds green and its `.xll` registers only the intended categories.
+- ☑ **4a.5** `AQ_XLL` per-edition build configurations
+  (`Release_XL_Bond`/`Release_XL_Swap`/`Release_XL_Credit`/`Release_XL_Curve`),
+  each excluding the `src\Optional` files its edition doesn't need — **done,
+  confirmed building green**.
   **Dependency check flagged 2026-09-12, resolved same day:** `aqCurve.cpp`
   sat in `src\Optional`, but every priced product category depends on it
   (bonds/swaps/caps all discount off a curve) — a `ReleaseBonds` config that
@@ -670,8 +658,14 @@ is. Detail: `CLAUDE.md` (both) §4.4/§4.5, `AQ_LIB\CLAUDE.md` §6.3.
   curve it needs to price against. **Fixed: Nicholas promoted `aqCurve.cpp`
   and `aqIR.cpp` (was `aqInterestRate.cpp` — fixing tables/FRA conversions
   cross-cut the same way) into `src\Core`**, committed. A "Curves-only" SKU
-  now falls out naturally as a `Core`-only build with no `Optional` files
-  added. Still to do: the actual per-edition build configurations themselves.
+  falls out naturally as a `Core`-only build with no `Optional` files added.
+
+**Dropped, not carried forward (was 4a.1–4a.4):** the `AQ_API` runtime
+edition manifest — `config\editions.json` mapping edition → categories,
+`config\licence.json` entitlement, a module-import registration gate, and
+an `aqToolEdition()` reporting the active edition/category list at runtime.
+None of this is being built; `AQ_API`'s bindings register every category
+unconditionally, in every language, always.
 
 ---
 
@@ -714,9 +708,10 @@ the library's no-recompile customisation surface:
 - ☐ **5.1** `AQ_API`: verify Python still green end-to-end after the rename +
   identifier rebrand. Then exercise **C#, R, Java** (currently unverified) —
   generate, build, deploy, run each `resources\api\*` test app.
-- ☐ **5.2** Wire `AQ_API` module import to the Phase 4a edition gate; ship
-  `config` (editions + calendars + generators) with every language package
-  (4b.3). Smoke each edition per language.
+- ☐ **5.2** ~~Wire `AQ_API` module import to the Phase 4a edition gate~~ —
+  **dropped with the `AQ_API` edition gate itself (Phase 4a, 2026-09-15)**.
+  Ship `config` (calendars + generators, no `editions.json`/`licence.json`)
+  with every language package (4b.3).
 - ☐ **5.3** Fill priority `GTEST` gaps:
   - Yield-curve framework + Jacobian risk vs bump-and-revalue.
   - Fixed-income price/yield vs Bloomberg (both directions) — regression lock.
@@ -893,14 +888,14 @@ principle start any time after Phase 3, but scheduling it after 7 keeps the
 rebrand's own timeline and regression baseline undisturbed by a
 much-larger-scale, higher-risk type change.
 
-**Status (2026-09-11): Phases 0-3 done. Phase 4 essentially complete** (466
+**Status (2026-09-15): Phases 0-3 done. Phase 4 essentially complete** (466
 `AQ_XLL` functions, 458/467 `validation` wrappers covered — see Phase 4's
 status note above); `Model`/`Generator` need new `validation` wrappers before
-they can be ported (0 exist today). **Phase 4a started** (`AQ_XLL`'s
-`src\Core`/`src\Optional` file split is done; the per-edition build
-configurations and the `AQ_API` runtime manifest are not). Phases 4b, 5, 6, 7
-not started. Phase 7.1 (Linux) can slot in any time after Phase 3 but is
-lowest priority.
+they can be ported (0 exist today). **Phase 4a done** — `AQ_XLL` ships
+`Release`/`Release_XL_Bond`/`Release_XL_Swap`/`Release_XL_Credit`/
+`Release_XL_Curve`; the `AQ_API` runtime edition manifest is dropped, not
+built. Phases 4b, 5, 6, 7 not started. Phase 7.1 (Linux) can slot in any time
+after Phase 3 but is lowest priority.
 
 ---
 

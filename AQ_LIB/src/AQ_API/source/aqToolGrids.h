@@ -9,5 +9,5 @@
 *  @param [in]		objectType		    Object Type
 *  @param [in]		filePath		    The object file path
 */
-SWIG_STRINGMATRIX aqToolObjectGridDisplay( const std::string& objectName, const bool& displayColumnNames = false );
+SWIG_STRINGMATRIX aqGridObjectDisplay( const std::string& objectName, const bool& displayColumnNames = false );
 
