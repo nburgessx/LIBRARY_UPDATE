@@ -29,7 +29,7 @@ Status legend: ☐ not started · ◐ in progress · ☑ done
 |---|---|
 | D1 | `.ALGO_QUANT_LIB` is a backup — leave untouched. |
 | D2 | `msc*` functions (structured credit, other client) — **delete**, with all downstream references. |
-| D3 | `AQ_BINDINGS` → **`AQ_API`** (confirmed). Update project files, `.sln`, folder, SWIG `.i`, and all 8 `generate*`/`deploy*` batch files + pre/post-build commands. `RootNamespace` is currently `swigUseCase` — tidy to `AQ_API` in the same pass. |
+| D3 | `AQ_BINDINGS` → **`AQ_API`** — **done**. Project files, `.sln`, folder, SWIG `.i`, and all 8 `generate*`/`deploy*` batch files + pre/post-build commands all renamed. |
 | D4 | The LWO handle/object framework stays — port as-is, rebrand `LWO→AQObj`, keep the cell-location counter/hash behaviour. Do **not** adopt xlOil's cache. |
 | D5 | Calendar holiday-centre delimiter `:` → **`+`**. |
 | D6 | Function-signature **categories** across validation / XLL / API / tests to be reviewed and standardised — professional, clear, concise. (Phase 2 — §2.2 is the table to review.) |
@@ -48,6 +48,7 @@ Status legend: ☐ not started · ◐ in progress · ☑ done
 | D18 | **Category scheme (step 11):** categories are **singular** (`aqDate`, not `aqDates`); the handle marker is the word **`Object`** after the category (`aqBondObjectDirtyPrice`), a named sub-object skips it (`aqBondCurveYield`), generic lifecycle is `aqObject<Lifecycle>`. `Vols → Volatility`. `AQ_XLL` category files are `aq<Category>.{cpp,h}` (`aqBond.cpp`, `aqDate.cpp`, `aqObject.cpp`, `aqTool.cpp`; `aqXllTools` is the XLL-layer utility, not a category) — **default, not absolute: `BondOption`/`BondFutureOption` are code-organized together in `aqBond.cpp`** (2026-09-11, `CLAUDE.md` §5.1a) because `aqBondOptionObjectCreate` is the only creator for both; consolidate a category's file into a sibling's only when they share the same underlying cached object, not merely a name prefix. `validation`, `AQ_API`, `GTEST` **test names** and `resources\test` fixtures follow — task 2.6. |
 | D19 | **The `validation` wrapper name is the GOLDEN SOURCE** for every public function name. Wrapper = `try` + `<GoldenName>`; the XLL function, every binding method (Python / C# / Java / R) and the `GTEST` case name are `<GoldenName>` verbatim. Rename the wrapper first; the other surfaces follow. Enforced by `docs\api_map.csv` + `api_pair_check.py`. |
 | D20 | **Editions are `AQ_XLL`-only (Nicholas, 2026-09-15).** Phase 4a closed via `Release`/`Release_XL_Bond`/`Release_XL_Swap`/`Release_XL_Credit`/`Release_XL_Curve` build configurations, gated at compile time. The `AQ_API` runtime edition-gate (`config\editions.json`/`licence.json`, a module-import registration gate, `aqToolEdition()`) is **dropped, not deferred** — `AQ_API` ships one full binary per language with every category always registered. |
+| D21 | **C#/Java/R binding testing shelved permanently, not just blocked (Nicholas, 2026-09-15).** Reason: no current requirement to use these languages, and no test environment available to Nicholas (.NET/JDK/R toolchains not installed). Not a Phase 5 exit criterion any more — Phase 5 can close on Python alone. Demoted to a standing nice-to-have, revisited only if/when a client or use case actually requires one of these languages; not scheduled, not tracked against any phase gate. Python remains the one verified, supported binding. |
 
 Open questions: none blocking. Phase 4 waits on the xlOil worked examples;
 Phase 6.0 (Credit untangle) needs Nicholas's domain call on `CreditResults`.
@@ -723,9 +724,15 @@ the library's no-recompile customisation surface:
 
 ## Phase 5 — Bindings & test coverage  ☐
 
-- ☐ **5.1** `AQ_API`: verify Python still green end-to-end after the rename +
-  identifier rebrand. Then exercise **C#, R, Java** (currently unverified) —
-  generate, build, deploy, run each `resources\api\*` test app.
+- ☑ **5.1a** `AQ_BINDINGS→AQ_API` rename (D3) — done, project renamed and
+  Python verified green end-to-end.
+- ~~☐ **5.1b** Exercise C#, R, Java~~ — **shelved permanently (D21,
+  2026-09-15), not a Phase 5 exit criterion.** No current requirement to use
+  these languages and no test environment available. Revisit only if/when a
+  client or use case actually needs one of them — at that point, generate,
+  build, deploy and run the relevant `resources\api\*` test app before
+  calling that language verified. Until then this is a standing nice-to-have,
+  not tracked work.
 - ☐ **5.2** ~~Wire `AQ_API` module import to the Phase 4a edition gate~~ —
   **dropped with the `AQ_API` edition gate itself (Phase 4a, 2026-09-15)**.
   Ship `config` (calendars + generators, no `editions.json`/`licence.json`)
@@ -738,8 +745,8 @@ the library's no-recompile customisation surface:
 - ☐ **5.4** Wire the `validation`-recording → `GTEST` generation so new
   wrappers get cases automatically.
 
-**Exit:** all four languages build and pass; new coverage merged; suite green
-against baseline.
+**Exit:** Python builds and passes (D21 — C#/Java/R shelved, not a gate); new
+coverage merged; suite green against baseline.
 
 ---
 
@@ -770,10 +777,37 @@ against baseline.
   (4b.4): strip legacy names and client-specific conventions. Nothing
   legacy-branded survives; broken or client-specific examples are cut, not
   carried. **Also: regenerate `Calendar.csv` / `Calendar.conf`** — currently
-  `LastCalendarUpdate,20200723` (~6 yrs stale), which makes
-  `Calendars.UNIT_Expiry_Test` fail by design. Refresh from MarketWire /
-  SwapsWire via `CDWCalendarUpdate.bat` (in `resources\utilities\CDWCalendars`),
-  or bump the date as a stopgap.
+  a stopgap (`LastCalendarUpdate` bumped 2026-09-15 to silence
+  `Calendars.UNIT_Expiry_Test` without actually refreshing `Calendar.csv`,
+  still dated 2022-07-22; ~10 GTEST failures reported 2026-09-15, likely
+  from this staleness — see `STATUS.md` top section). The `CDWCalendarUpdate.bat`
+  tool this line used to point to was **never ported into `AQ_LIB`** — it
+  only exists in `.APPLES\APPLE\resource\utilities\BatchFiles\CDWCalendarUpdate\`,
+  and is a Python script pulling from a paid MarketWire/SwapsWire endpoint.
+- ☐ **6.4a Calendar sourcing strategy** (new, 2026-09-15 — Nicholas: SwapsWire/
+  MarketWire aren't free; look for a public/cheaper alternative before
+  committing to a refresh mechanism). Needs a decision before 6.4's
+  `Calendar.csv` regeneration can be more than a one-off stopgap:
+  - **Candidate: QuantLib's built-in `Calendar` classes** (`ql/time/calendars/*`)
+    — already a linked dependency (`AQ_EXTERNAL_LIB_PATH\...\QuantLib-1.43`),
+    permissive licence, no new cost. Algorithmic rules (Easter-based, nth-
+    weekday) self-extend forever; hardcoded exception lists only update via
+    a QuantLib version bump (community-maintained, lags reality — see
+    `STATUS.md`/conversation 2026-09-15 for the full explanation). Covers a
+    meaningful subset of `Calendar.csv`'s ~110 centre codes (major
+    currencies/markets) but not the niche settlement/clearing codes
+    (`BMA`, `CMF`, `KdQ`, `SyF`, ...) that look SwapsWire-specific.
+  - **Candidate: public sources per centre** (central bank / exchange
+    published holiday lists — ECB TARGET calendar, Federal Reserve, gov.uk,
+    exchange sites) for the codes QuantLib doesn't cover. Manual/scraped,
+    not a single feed.
+  - **Open question:** first inventory which of the ~110 `Calendar.csv`
+    centre codes actually matter (are used by any shipped generator /
+    booked product) vs. dead weight from the original client's book — no
+    point sourcing calendars nobody needs.
+  - Whatever is chosen, keep the existing wide-CSV format and the "calendars
+    without recompiling" property (`CLAUDE.md` §9.2/§4.4) — this is a data-
+    source swap, not an architecture change.
 - ☐ **6.5** Rewrite `readme.md` (D7) — draft exists; refresh once names are final.
   Add the config-folder / generators / editions sections.
 - ☐ **6.6** Finalise `THIRD_PARTY_LICENSES.md` / `NOTICE` (Boost, QuantLib,

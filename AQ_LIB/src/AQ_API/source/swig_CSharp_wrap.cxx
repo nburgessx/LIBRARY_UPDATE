@@ -1148,6 +1148,7 @@ SWIGINTERN void std_vector_Sl_std_vector_Sl_std_vector_Sl_std_string_Sg__Sg__Sg_
 #include "aqCurveInterpolationJoinDate.h"
 #include "aqCurveDualBootstrap.h"
 #include "aqObject.h"
+#include "aqGenerator.h"
 #include "aqBondObjectCreate.h"
 #include "aqBondObjectPrice.h"
 #include "aqToolLVB.h"
@@ -10540,6 +10541,104 @@ SWIGEXPORT char * SWIGSTDCALL CSharp_aqObjectLoad(char * jarg1) {
 }
 
 
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqGeneratorList(char * jarg1) {
+  void * jresult ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > result;
+  
+  if (!jarg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return 0;
+  }
+  std::string arg1_str(jarg1);
+  arg1 = &arg1_str; 
+  {
+    try
+    {
+      result = aqGeneratorList((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      {
+        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+  }
+  jresult = new std::vector< std::string >((const std::vector< std::string > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqGeneratorDisplay(char * jarg1, char * jarg2) {
+  void * jresult ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  if (!jarg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return 0;
+  }
+  std::string arg1_str(jarg1);
+  arg1 = &arg1_str; 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return 0;
+  }
+  std::string arg2_str(jarg2);
+  arg2 = &arg2_str; 
+  {
+    try
+    {
+      result = aqGeneratorDisplay((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      {
+        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+  }
+  jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_aqGeneratorValidate(char * jarg1, char * jarg2) {
+  char * jresult ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string result;
+  
+  if (!jarg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return 0;
+  }
+  std::string arg1_str(jarg1);
+  arg1 = &arg1_str; 
+  if (!jarg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    return 0;
+  }
+  std::string arg2_str(jarg2);
+  arg2 = &arg2_str; 
+  {
+    try
+    {
+      result = aqGeneratorValidate((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      {
+        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+  }
+  jresult = SWIG_csharp_string_callback((&result)->c_str()); 
+  return jresult;
+}
+
+
 SWIGEXPORT char * SWIGSTDCALL CSharp_aqBondObjectCreate(char * jarg1, void * jarg2, void * jarg3, unsigned int jarg4) {
   char * jresult ;
   std::string *arg1 = 0 ;
@@ -12712,7 +12811,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_aqCreditModelRiskyDiscountFactors(char * ja
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapPV(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCDSObjectPV(char * jarg1, char * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12740,7 +12839,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapPV(char * jarg1, c
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCDSObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -12754,7 +12853,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapPV(char * jarg1, c
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapRiskyAnnuity(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCDSObjectRiskyAnnuity(char * jarg1, char * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12782,7 +12881,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapRiskyAnnuity(char 
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapRiskyAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCDSObjectRiskyAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -12796,7 +12895,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapRiskyAnnuity(char 
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapCS01(char * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCDSObjectCS01(char * jarg1, char * jarg2, char * jarg3) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12824,7 +12923,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapCS01(char * jarg1,
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapCS01((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCDSObjectCS01((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -12838,7 +12937,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapCS01(char * jarg1,
 }
 
 
-SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapParSpread(char * jarg1, char * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT double SWIGSTDCALL CSharp_aqCDSObjectParSpread(char * jarg1, char * jarg2, char * jarg3, char * jarg4) {
   double jresult ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -12873,7 +12972,7 @@ SWIGEXPORT double SWIGSTDCALL CSharp_aqCreditObjectDefaultSwapParSpread(char * j
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = (double)aqCDSObjectParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -13681,7 +13780,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_aqCurveObjectDiscountFactorsWithSpread(void
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_aqToolObjectGridDisplay__SWIG_0(char * jarg1, unsigned int jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqGridObjectDisplay__SWIG_0(char * jarg1, unsigned int jarg2) {
   void * jresult ;
   std::string *arg1 = 0 ;
   bool *arg2 = 0 ;
@@ -13699,7 +13798,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_aqToolObjectGridDisplay__SWIG_0(char * jarg
   {
     try
     {
-      result = aqToolObjectGridDisplay((std::string const &)*arg1,(bool const &)*arg2);
+      result = aqGridObjectDisplay((std::string const &)*arg1,(bool const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -13713,7 +13812,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_aqToolObjectGridDisplay__SWIG_0(char * jarg
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_aqToolObjectGridDisplay__SWIG_1(char * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_aqGridObjectDisplay__SWIG_1(char * jarg1) {
   void * jresult ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > result;
@@ -13727,7 +13826,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_aqToolObjectGridDisplay__SWIG_1(char * jarg
   {
     try
     {
-      result = aqToolObjectGridDisplay((std::string const &)*arg1);
+      result = aqGridObjectDisplay((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {

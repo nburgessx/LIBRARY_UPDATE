@@ -1,5 +1,72 @@
 # Rebrand status — 2026-09-15
 
+## C#/Java/R binding testing shelved permanently, not just blocked (D21, 2026-09-15)
+
+Supersedes the "blocked" framing in the entry immediately below, from the
+same session. Nicholas's call: there is **no current requirement** to use
+C#, Java or R, and no test environment available to test them anyway — so
+rather than carry this as an open, blocked Phase 5 task, it is demoted to a
+**standing nice-to-have**, off any phase gate or schedule. `MIGRATION_PLAN.md`
+Phase 5.1b struck through and reworded, `MIGRATION_PLAN.md` Phase 5's exit
+criterion changed from "all four languages" to "Python builds and passes",
+decision `D21` added. `AQ_LIB\CLAUDE.md` §2 (layout) and §2.1 updated to
+match — Python is now described as *the* supported binding, not one of four
+pending verification.
+
+**Not changed:** the `AQ_API` code itself — `aqGenerator.h`/`.cpp` and every
+other binding-layer file are still wired into all four `swig_{Python,CSharp,
+JAVA,R}.i` files (per the Generator entry below); nothing was removed from
+the SWIG interface files or the `generate*`/`deploy*` batch scripts. This is
+a change in what gets *tested and by when*, not a change in what gets
+*built*. If a client ever needs C#, Java or R, the existing SWIG wiring is
+the starting point — generate, build, deploy and run the relevant
+`resources\api\*` test app to verify, per the reworded 5.1b.
+
+**Note:** `REPO\CLAUDE.md` (the root, repo-wide file) §10 still describes
+C#/R/Java as "unverified and need testing" — that file is outside
+`AQ_LIB`'s read/write boundary (root `CLAUDE.md` §0) so it wasn't updated as
+part of this change. Flagged for Nicholas to update directly, or to
+explicitly authorize touching, if he wants the two docs to agree.
+
+---
+
+## GoogleTest baseline confirmed; `AQ_BINDINGS→AQ_API` rename status corrected; C#/Java/R binding tests blocked (2026-09-15)
+
+Two items closed out, one flagged as blocked, per Nicholas:
+
+**1. GoogleTest baseline — confirmed green, closing the deferral from the
+`AQ_THROW`/`boost::format` entry below** ("GoogleTest re-run not yet done in
+this session — deferred"). Full suite now re-run: all cases pass except
+**~10 failures caused by stale holiday calendar data** — a pre-existing
+data-currency problem in the calendar/holiday files (`CLAUDE.md` §9.2,
+`AQ_LIB\CLAUDE.md` §4.3), unrelated to any rename, the `AQ_THROW` conversion,
+or any other code change this rebrand has made. Not fixed in this session —
+refreshing calendar data from MarketWire/SwapsWire is a data task, not a
+code task, and out of scope here. Tracked as a known exception: when re-
+running `GTEST` going forward, ~10 calendar-data failures are expected and
+should not be read as a regression signal.
+
+**2. `AQ_BINDINGS→AQ_API` rename — already done, docs were stale.**
+`AQ_LIB\CLAUDE.md` §2 (layout diagram) still said "RENAME PENDING" and its
+§5.4 mapping table said "(agreed)" rather than "done"; `MIGRATION_PLAN.md`
+D3 was worded as a still-open decision. The rename (project files, `.sln`,
+folder — `src\AQ_API` confirmed on disk —, SWIG `.i`, all 8 `generate*`/
+`deploy*` batch files, pre/post-build commands) was in fact completed in an
+earlier session and never recorded here. Corrected in `CLAUDE.md` (root)
+§10, `AQ_LIB\CLAUDE.md` §2/§2.1/§5.4, and `MIGRATION_PLAN.md` D3/Phase 5.1
+in this session so the docs match actual repo state.
+
+**3. Phase 5 bindings testing (C#/Java/R) — blocked on missing test
+environments, not blocked on code.** Python is verified end-to-end
+(`rebrand\STATUS.md`, Generator entry below). Nicholas does not currently
+have the .NET/JDK/R runtimes and toolchains installed to build and run the
+`resources\api\*` test apps for C#, Java or R. `MIGRATION_PLAN.md` Phase
+5.1 split into 5.1a (rename, done) / 5.1b (binding tests, blocked) to make
+this distinction explicit. **Not resolved this session** — see the "Next
+steps" note below.
+
+---
+
 ## Manifest files renamed: `active.txt`→`activeList.txt`, `demo.txt`→`demoList.txt` (2026-09-15)
 
 Nicholas's call — `List` in the name signals these are the plain-text

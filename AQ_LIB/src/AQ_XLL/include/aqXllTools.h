@@ -180,17 +180,18 @@ namespace aq_xll
 
     // An AnyTypeMatrix (what every AQObj *Display function returns) -> an Excel
     // array, keeping numbers, booleans and strings as their native Excel types.
-    // An empty matrix returns #N/A.
-    xloil::ExcelObj toExcelMatrix( const AnyTypeMatrix& matrix );
+    // An empty matrix returns #N/A. transpose=true swaps rows and columns.
+    xloil::ExcelObj toExcelMatrix( const AnyTypeMatrix& matrix, const bool transpose = false );
 
     // An AQLStringMatrix -> an Excel array. Each cell that reads cleanly as a
     // number is returned as a real (formattable) number; everything else stays
-    // text. An empty matrix returns #N/A.
-    xloil::ExcelObj toExcelMatrix( const AQLStringMatrix& matrix );
+    // text. An empty matrix returns #N/A. transpose=true swaps rows and columns.
+    xloil::ExcelObj toExcelMatrix( const AQLStringMatrix& matrix, const bool transpose = false );
 
     // A VariantMatrix -> an Excel array, keeping each cell's native type
     // (number, boolean, text, blank). An empty matrix returns #N/A.
-    xloil::ExcelObj toExcelMatrix( const etrading::VariantMatrix& matrix );
+    // transpose=true swaps rows and columns.
+    xloil::ExcelObj toExcelMatrix( const etrading::VariantMatrix& matrix, const bool transpose = false );
 
     // Reshape a range into numRows x numCols, row by row. Short cells are
     // blank-filled, surplus source cells are dropped. Backs aqToolResize.

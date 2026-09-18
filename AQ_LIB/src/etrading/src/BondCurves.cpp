@@ -321,7 +321,10 @@ namespace etrading
 
 	/* @brief	Returns the bond curve calibration as a matrix.
 	*			Column 0 contains curve pillar dates
-	*			Column 1 contains the calibrated yield points 
+	*			Column 1 contains the calibrated yield points
+	*			Column 2 contains the calibrated discount factors, when available
+	*			(calibratedDiscountFactors_ holds one entry per pillar date - see
+	*			setDiscountFactorAtCalibrationPoint); omitted otherwise
 	*/
 	AnyTypeMatrix BondCurve::displayBondCurve() const
 	{

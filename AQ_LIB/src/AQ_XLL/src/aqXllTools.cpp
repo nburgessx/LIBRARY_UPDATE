@@ -783,7 +783,7 @@ namespace aq_xll
         }
     }
 
-    xloil::ExcelObj toExcelMatrix( const AnyTypeMatrix& matrix )
+    xloil::ExcelObj toExcelMatrix( const AnyTypeMatrix& matrix, const bool transpose )
     {
         if ( matrix.empty() || matrix[0].empty() )
         {
@@ -802,20 +802,31 @@ namespace aq_xll
             }
         }
 
-        xloil::ExcelArrayBuilder builder( nRows, nCols, totalStringLength, true /* pad to 2D */ );
+        // padTo2DimArray=false: we already write every (r, c) cell ourselves,
+        // including the NA padding for ragged rows below. If left true, xlOil
+        // silently grows a 1-row or 1-column result to 2x2 (bumping nRows/nCols
+        // internally, past what this loop fills) and the caller sees a spurious
+        // extra row/column of #N/A - the bug this comment replaces.
+        const uint32_t builderRows = transpose ? nCols : nRows;
+        const uint32_t builderCols = transpose ? nRows : nCols;
+        xloil::ExcelArrayBuilder builder( builderRows, builderCols, totalStringLength, false );
         const AnyTypeToExcel toExcel;
 
         for ( uint32_t r = 0; r < nRows; ++r )
         {
             for ( uint32_t c = 0; c < nCols; ++c )
             {
-                if ( c < matrix[r].size() )
+                const xloil::ExcelObj cellValue = ( c < matrix[r].size() )
+                    ? boost::apply_visitor( toExcel, matrix[r][c] )
+                    : xloil::ExcelObj( xloil::CellError::NA );
+
+                if ( transpose )
                 {
-                    builder( r, c ) = boost::apply_visitor( toExcel, matrix[r][c] );
+                    builder( c, r ) = cellValue;
                 }
                 else
                 {
-                    builder( r, c ) = xloil::ExcelObj( xloil::CellError::NA );
+                    builder( r, c ) = cellValue;
                 }
             }
         }
@@ -823,7 +834,7 @@ namespace aq_xll
         return builder.toExcelObj();
     }
 
-    xloil::ExcelObj toExcelMatrix( const AQLStringMatrix& matrix )
+    xloil::ExcelObj toExcelMatrix( const AQLStringMatrix& matrix, const bool transpose )
     {
         if ( matrix.empty() || matrix[0].empty() )
         {
@@ -842,21 +853,33 @@ namespace aq_xll
             }
         }
 
-        xloil::ExcelArrayBuilder builder( nRows, nCols, totalStringLength, true /* pad to 2D */ );
+        const uint32_t builderRows = transpose ? nCols : nRows;
+        const uint32_t builderCols = transpose ? nRows : nCols;
+        xloil::ExcelArrayBuilder builder( builderRows, builderCols, totalStringLength, false );
+
         for ( uint32_t r = 0; r < nRows; ++r )
         {
             for ( uint32_t c = 0; c < nCols; ++c )
             {
-                builder( r, c ) = ( c < matrix[r].size() )
+                const xloil::ExcelObj cellValue = ( c < matrix[r].size() )
                     ? numericAwareStringToExcel( std::string( matrix[r][c].getCString() ) )
                     : xloil::ExcelObj( xloil::CellError::NA );
+
+                if ( transpose )
+                {
+                    builder( c, r ) = cellValue;
+                }
+                else
+                {
+                    builder( r, c ) = cellValue;
+                }
             }
         }
 
         return builder.toExcelObj();
     }
 
-    xloil::ExcelObj toExcelMatrix( const etrading::VariantMatrix& matrix )
+    xloil::ExcelObj toExcelMatrix( const etrading::VariantMatrix& matrix, const bool transpose )
     {
         if ( matrix.empty() || matrix[0].empty() )
         {
@@ -880,14 +903,26 @@ namespace aq_xll
             }
         }
 
-        xloil::ExcelArrayBuilder builder( nRows, nCols, totalStringLength, true /* pad to 2D */ );
+        const uint32_t builderRows = transpose ? nCols : nRows;
+        const uint32_t builderCols = transpose ? nRows : nCols;
+        xloil::ExcelArrayBuilder builder( builderRows, builderCols, totalStringLength, false );
+
         for ( uint32_t r = 0; r < nRows; ++r )
         {
             for ( uint32_t c = 0; c < nCols; ++c )
             {
-                builder( r, c ) = ( c < matrix[r].size() )
+                const xloil::ExcelObj cellValue = ( c < matrix[r].size() )
                     ? variantToExcel( matrix[r][c] )
                     : xloil::ExcelObj( xloil::CellError::NA );
+
+                if ( transpose )
+                {
+                    builder( c, r ) = cellValue;
+                }
+                else
+                {
+                    builder( r, c ) = cellValue;
+                }
             }
         }
 
@@ -943,7 +978,11 @@ namespace aq_xll
             }
         }
 
-        xloil::ExcelArrayBuilder builder( numRows, numCols, totalStringLength, true );
+        // padTo2DimArray=false: the loop below already blank-fills every
+        // (r, c) cell up to the requested numRows x numCols shape, so xlOil's
+        // silent 1x1 -> 2x2 growth would leave a row/column this loop never
+        // touches - the same stray #N/A bug fixed in toExcelMatrix above.
+        xloil::ExcelArrayBuilder builder( numRows, numCols, totalStringLength, false );
 
         for ( uint32_t r = 0; r < numRows; ++r )
         {

@@ -83,6 +83,13 @@ the plain `toExcelMatrix(VariantMatrix)` overload, which has no transpose
 argument. `aqGeneratorDisplay` now matches that exact pattern. `AQ_XLL`
 Debug rebuilt green after the fix.
 
+`Model` was deliberately left untouched — it has no legacy port source
+(`.APPLES` has nothing named `meModel*`) and no design brief (which model
+types, what parameters), unlike `Generator` which only needed to expose
+files that already exist on disk.
+
+---
+
 ## 1b. Manifest files renamed (2026-09-15, same session)
 
 `resources\manifest\active.txt` → `activeList.txt`, `demo.txt` →
@@ -95,11 +102,6 @@ entries, the matching `.vcxproj.filters` entries, each manifest's own
 cross-reference comment, `CLAUDE.md`, `MIGRATION_PLAN.md`) were updated.
 Verified by rebuilding `Release_XL_Manifest|x64` green. Detail:
 `rebrand\STATUS.md`.
-
-`Model` was deliberately left untouched — it has no legacy port source
-(`.APPLES` has nothing named `meModel*`) and no design brief (which model
-types, what parameters), unlike `Generator` which only needed to expose
-files that already exist on disk.
 
 ---
 

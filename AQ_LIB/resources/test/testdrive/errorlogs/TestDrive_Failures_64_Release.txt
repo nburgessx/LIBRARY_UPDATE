@@ -1,5 +1,10 @@
 261   ECB_Calendars.UNIT_ECB_Calendar_Expiry_Test
-614   TestStructuredExceptionHandler.UNIT_IntegerDivideByZero_BecomesCppException
-633   TestAQObjCurve.UNIT_AQObjCurve
-657   TestDatesCentralBank.UNIT_AreThereEnoughDates
-664   TestExampleObject.UNIT_ExampleObjects
+620   TestStructuredExceptionHandler.UNIT_IntegerDivideByZero_BecomesCppException
+639   TestAQObjCurve.UNIT_AQObjCurve
+640   TestDataFilesCreate.UNIT_ErrorHandling
+652   TestDataFilesRead.UNIT_TestBasics
+657   TestDataFilesRead.UNIT_TestTables
+663   TestDatesCentralBank.UNIT_AreThereEnoughDates
+670   TestExampleObject.UNIT_ExampleObjects
+681   TestAQObjInfrastructure.UNIT_FreeObject
+758   TestCurveData.UNIT_CurveData

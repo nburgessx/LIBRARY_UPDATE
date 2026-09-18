@@ -62,7 +62,7 @@ AQ_LIB\
 │   ├── calibration\              LEGACY — deprecate / extract (§7)
 │   ├── etrading\                 core pricing / analytics + LWO handle framework
 │   ├── validation\               single entry / contract layer (§4)  [namespace still validation_api]
-│   ├── AQ_BINDINGS\              SWIG bindings — RENAME PENDING → AQ_API (§5.4)
+│   ├── AQ_API\                   SWIG bindings (was AQ_BINDINGS, renamed — §5.4). Python verified/supported; C#/Java/R shelved (nice-to-have)
 │   ├── AQ_XLL\                   xlOil Excel add-in — POC only, port pending (§6)
 │   └── GTEST\              test suite, sees the whole library
 ├── resources\                    end-user spreadsheets, toolkits, research guides
@@ -100,9 +100,21 @@ paragraph, if the two ever drift again.**
   edition manifest once planned for this phase is **dropped, not
   deferred** — `AQ_API` ships one full binary per language, no edition
   concept there.
-- **Not yet started:** Phase 5 (bindings verification, SWIG regen); Phase 6
-  (legacy extraction, licence headers, resources audit); Phase 7
-  (Linux/CMake, clang-format, clean repo).
+- **GoogleTest baseline confirmed green (2026-09-15).** Full suite re-run
+  after the `AQ_THROW`/`boost::format` cleanup (`rebrand\STATUS.md`): all
+  cases pass except ~10 failures traced to **stale holiday calendar data**,
+  not a rebrand regression — pre-existing data staleness, unrelated to any
+  rename or code change. Closes the deferral flagged in that entry.
+- **Phase 5 (bindings) — Python is the supported binding; C#/Java/R shelved
+  (decided, Nicholas 2026-09-15).** `AQ_BINDINGS→AQ_API` rename is **done**
+  (§5.4) and Python is verified end-to-end. **Testing C#, Java and R is
+  shelved permanently, not just blocked** — no current requirement to use
+  these languages, and no test environment available. It is a standing
+  nice-to-have only: pick it back up if/when a client or use case actually
+  needs one of them, not on any schedule. Phase 5 no longer waits on it.
+  SWIG regen for Phase 5 not yet started.
+- **Not yet started:** Phase 6 (legacy extraction, licence headers, resources
+  audit); Phase 7 (Linux/CMake, clang-format, clean repo).
 
 ### 2.2 Visualizer.natvis
 
@@ -479,7 +491,7 @@ this; don't do it merely because two category names share a prefix.
 | LWO — **public function names** (`meLWO…`) | `aq<Category>Object<Function>` — the `Object` word after the singular category is what separates the handle API from the stateless twin: `aqSwapObjectPV`, `aqBondObjectDirtyPrice`. Named sub-objects don't repeat it: `aqCurveMarketDataDisplay`. Generic lifecycle ops: `aqObjectLoad`, `aqObjectSave`, `aqObjectClearCache`. |
 | `mir*` (whole stack: `AQ_API\mir*` 58 files, `validation\tryMir*` ~35, `LAXL.cpp` 156 fns) | **delete wholesale** — self-contained, no inbound `aq`/`me` deps (0.5 call-graph) |
 | `msc*`, `LoanCalculations`, `SupervisoryRules`, `CashflowClient` + securitisation cluster | **delete — client-specific**; keep only what `Credit` genuinely needs (0.6 removal map) |
-| project `AQ_BINDINGS` | **`AQ_API`** (agreed) — update `.vcxproj`/`.filters`/`.user`, `.sln`, folder, SWIG `.i`, the 8 `generate*`/`deploy*` batch files, and the pre/post-build `<Command>` lines |
+| project `AQ_BINDINGS` | **`AQ_API`** — **done**. `.vcxproj`/`.filters`/`.user`, `.sln`, folder, SWIG `.i`, the 8 `generate*`/`deploy*` batch files and pre/post-build `<Command>` lines all renamed. |
 | `validation_api` (namespace) | `validation` |
 | calendar holiday-centre delimiter `:` | **`+`** — one named constant + one helper; **accept `:` too during transition** unless a `:` parsing collision is found (plan Phase 0.8), then `+` only |
 | Excel function names | **clean break** — every `me*`, hidden aliases included, becomes `aq*`; **no forwarding aliases**; removed names go in the release notes |
@@ -618,6 +630,13 @@ input/output recordings.
 **Before renaming anything, capture a full input/output recording set on the
 current build.** Renames are behaviour-preserving by definition — after each
 stage, re-run and diff. Any numerical difference is a bug from that stage.
+
+**Current baseline (2026-09-15): green.** Full suite passes except ~10 cases
+failing on **stale holiday calendar data** — a pre-existing data-currency
+issue (§4.3's calendar files need a refresh from MarketWire/SwapsWire), not a
+regression from any rename or the `AQ_THROW` cleanup. Treat these as a known,
+tracked exception when re-running the suite; do not treat their continued
+failure as a sign something broke.
 
 Priority coverage to add:
 
