@@ -17,13 +17,7 @@
 #include "AQLMathVolFuncFXStrangleSolver.h"
 #include "AQLMathVolFuncFXVannaVolga.h"
 
-#ifdef __HAS_MIC__
 
-#endif
-
-#ifdef __HAS_MIC__
-common_lib::StaticMutex AQLLinearRatesVolatilityManager::mMutex;
-#endif
 std::map<AQLString, AQLLinearRatesVolatility*> AQLLinearRatesVolatilityManager::mVolatilityMap;
 // vanna-volga
 std::map<AQLString, AQLLinearRatesModel*> AQLLinearRatesVolatilityManager::mModelMap;
@@ -54,9 +48,6 @@ AQLLinearRatesVolatilityManager::~AQLLinearRatesVolatilityManager(void)
 AQLLinearRatesVolatilityManager *
 AQLLinearRatesVolatilityManager::getInstance()
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	if (!mpInstance)
 	{
 		mpInstance = new AQLLinearRatesVolatilityManager();
@@ -101,9 +92,6 @@ AQLLinearRatesVolatilityManager::createPlainVanillaVolatiltyGenerator(AQLDataPro
 		ispvvoluse = true;
 	}
 
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	std::map<AQLString, AQLLinearRatesVolatility*>::iterator it = mVolatilityMap.find(keyname);
 	if (it == mVolatilityMap.end())
 	{
@@ -203,9 +191,6 @@ AQLLinearRatesVolatilityManager::createPlainVanillaModelGenerator(AQLDataProvide
 {
 	AQLString keyname(modelname);
 
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	std::map<AQLString, AQLLinearRatesModel*>::iterator it = mModelMap.find(keyname);
 	if (it == mModelMap.end())
 	{
@@ -241,9 +226,6 @@ AQLLinearRatesVolatilityManager::finalize(void)
 {
 	try
 	{
-#ifdef __HAS_MIC__
-		common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 		std::map<AQLString, AQLLinearRatesVolatility*>::iterator it = mVolatilityMap.begin();
 		while (it != mVolatilityMap.end())
 		{

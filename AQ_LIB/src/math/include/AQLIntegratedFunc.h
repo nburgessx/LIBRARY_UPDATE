@@ -33,7 +33,6 @@ enum IntegratedFuncType {
 class AQLIntegrandMethod : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLIntegrandMethod(IntegratedFuncType type,
 					unsigned int pos,
@@ -45,7 +44,6 @@ public:
 	// copy constructor
 	AQLIntegrandMethod(const AQLIntegrandMethod& method);
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
@@ -90,7 +88,6 @@ public:
 	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi,unsigned int posj)const;
 
 
-//  OPERATION
 								//==========================================
 	                            // set check flag
 	virtual void				setCheckFlag(bool checkflag = true);

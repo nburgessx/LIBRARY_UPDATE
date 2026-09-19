@@ -377,7 +377,6 @@ AQLDataValuation::value(const AQLDate& basedate)
         AQLObject* inst = getObject();
         if ( inst != NULL )
         {
-// 28JUN05:ysuzuki          if (mVersion != inst->getModel() || basedate != mDate)
             // modify to perform value() if the valuation flag of the Object that thsi Data belongs to is true
             if (inst->IsValuated() && ( mVersion != inst->getModel() || basedate != mDate ) )
             {

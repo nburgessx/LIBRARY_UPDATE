@@ -245,7 +245,6 @@ AQLMath::pi(void)
 double AQLMath::e(void) 
 {
     static double e;
-// ysuzuki  return (e == 0) ? (e = double(::exp(1))) : e;
     return (e == 0) ? (e = double(::exp(1.0))) : e;
 }
 

@@ -24,13 +24,11 @@
 class AQLBase
 {
 public:
-//  LIFECYCLE
     // constructor
     AQLBase(const AQLString& name=AQLBASE);
     // destructor
     virtual ~AQLBase(void);
 
-//  QUERY
     // get name of the object
     const AQLString&         getName(void) const {return mName;}
     // get data, AQLObjectHolder doest has no ownership of AQLObject

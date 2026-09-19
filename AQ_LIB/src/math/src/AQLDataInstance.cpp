@@ -20,46 +20,22 @@ using namespace std;
     @brief default constructor
 */
 AQLDataInstance::AQLDataInstance(void)
-: mpDataMstr(NULL),  mpFunctionMstr(NULL), mpRefCount(NULL), 
-mObjectMstr(NULL), mObjectPool()
-{
-	mpDataMstr = new AQLPriceDataManager();
-	mpFunctionMstr = new AQLFunctionManager();
-	mpRefCount = new int;
-	*mpRefCount = 1;  // initial value of the reference counter is 1
-
-	mObjectPool.setDataInstance(this);
-	mObjectMstr.setDataInstance(this);
-}
-
-/*!
-    @brief copy constructor
-
-    @param[in] dataInstance original object
-*/
-AQLDataInstance::AQLDataInstance(const AQLDataInstance& dataInstance)
-: mpDataMstr(NULL),  mpFunctionMstr(NULL), mpRefCount(NULL), 
+: mpDataMstr(new AQLPriceDataManager()), mpFunctionMstr(new AQLFunctionManager()),
 mObjectMstr(NULL), mObjectPool()
 {
 	mObjectPool.setDataInstance(this);
 	mObjectMstr.setDataInstance(this);
-	try {
-		copy(dataInstance);
-	}
-	catch (AQLCoreError&)
-	{
-		delMstrs();
-		mObjectPool.clear();
-		throw;
-	}
 }
 
 /*!
     @brief destructor
+
+    Declared here (not inline in the header, even though the body is now empty) because
+    std::unique_ptr<AQLPriceDataManager>/<AQLFunctionManager>'s destructor needs those types
+    complete at the point it is instantiated, and the header only forward-declares them.
 */
 AQLDataInstance::~AQLDataInstance()
 {
-	delMstrs();
 //	mObjectPool.clear();
 }
 
@@ -225,49 +201,4 @@ AQLDataInstance::update(char* ptr)
 	
 	getReferencePool().completeDependency();
 									
-}
-
-
-/*!
-    @brief shallow copy of the AQLDataInstance object
-
-    @param[in] dataInstance original AQLDataInstance object
-
-    @return the copied AQLDataInstance object
-*/
-AQLDataInstance&
-AQLDataInstance::copy(const AQLDataInstance& dataInstance)
-{
-	if (mpRefCount != NULL)
-	{
-		delMstrs();
-	}
-	mObjectPool.clear();
-
-	mpRefCount = dataInstance.mpRefCount;
-	++(*mpRefCount);  // incrememnt of reference counter since shallow copy is done as below
-
-	mpDataMstr = dataInstance.mpDataMstr;  // shallow copy
-	mpFunctionMstr = dataInstance.mpFunctionMstr; // shallow copy
-	mObjectMstr = dataInstance.mObjectMstr;
-
-	mObjectPool = dataInstance.mObjectPool;
-	return *this;
-}
-
-/*!
-    @brief release the memory reserved for the Data Master, Function Master
-
-	nothing is done if other AQLDataInstance objects using Data Master, Function Master exist
-	(in case reference counter is larger than 1)
-*/
-void
-AQLDataInstance::delMstrs(void)
-{
-	if (--(*mpRefCount) == 0)
-	{
-		delete mpDataMstr;
-		delete mpFunctionMstr;
-		delete mpRefCount;
-	}
 }

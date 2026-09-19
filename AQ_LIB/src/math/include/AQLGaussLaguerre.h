@@ -27,13 +27,11 @@ class AQLFunctionBase;
 class AQLGaussLaguerre : public AQLGaussianQuadrature
 {
 public:
-//  LIFECYCLE
 	// constructor
 	explicit AQLGaussLaguerre(unsigned short numberOfPoints);
 	// destructor
 	virtual ~AQLGaussLaguerre();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;

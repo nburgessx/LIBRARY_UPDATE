@@ -3,7 +3,6 @@
 
     This class provides functions of adding error information or output files,
 	and errors are stored in an array in the order in which they occur.
-	This class depends only AQLCoreErrorLog.
 */
 
 
@@ -12,11 +11,11 @@
 #endif
 
 #include "AQLCoreError.h"
-#include "AQLCoreErrorLog.h"
 #include <cstring>
 #include <vector>
 #include <ctime>
 #include <cstdio>
+#include <sstream>
 
 using namespace std;
 
@@ -168,10 +167,6 @@ AQLCoreErrorInfo::msFileName = STDERR;   // default output file name
            
 	Also, if there is more than one error information, then add multi "<--" \n
 	at the beginning of the message in orde to output an error message divided into a hierarchy \n
-    (example) \n
-    [2005/05/25 09:57] Invalid Data!!![C:\\melibtest1.cpp : 20] \n
-    <---[2005/05/25 09:57] Error2[C:\\melibtest1.cpp : 19] \n
-    <---<---[2005/05/25 09:57] Error1[C:\\melibtest1.cpp : 18] \n
 
     @param[in] fp pointer to FILE structure of the output file
     @param[in] info error information to ouput
@@ -204,16 +199,20 @@ static void printLog(FILE* fp, AQLCoreErrorInfo* info)
     } 
     // write contents
     fflush(fp);
-    // output to the screen
-    AQLCoreErrorLog::setMsg(info->mMsgs[0]);
 }
 
-///////////////////// IMPLEMENTATION //////////////////////////////////////
-//  LIFECYCLE
 /*!
     @brief default constructor
+
+    Allocates an empty AQLCoreErrorInfo rather than leaving mpErrInfo NULL - operator=(),
+    operator+=() and the copy constructor all dereference mpErrInfo unconditionally (`*mpErrInfo =
+    *(e.mpErrInfo)`), so a NULL mpErrInfo is a latent crash waiting for a copy/assignment of a
+    default-constructed AQLCoreError. Observable behaviour for every existing accessor is
+    unchanged - getSize() on an empty AQLCoreErrorInfo is still 0, getMsg()/getFile() still return
+    "", exactly as the old NULL-check branches did - this only removes the unchecked-dereference
+    path, it does not change what any caller sees.
 */
-AQLCoreError::AQLCoreError() : mpErrInfo(NULL)
+AQLCoreError::AQLCoreError() : mpErrInfo(new AQLCoreErrorInfo())
 {
 }
 
@@ -288,10 +287,31 @@ AQLCoreError::~AQLCoreError(void)
     delete mpErrInfo;
 }
 
-///////////////////////////////////////////////////////////////////////////
-//  QUERY
 /*!
-    @brief get number of erro information to be stored
+    @brief std::exception::what() override - see the header field comment for whatCache_.
+
+    Debug builds append the [file:line] the constructor already captured via __FILE__/__LINE__;
+    Release builds return the bare message only, so a source path never reaches a shipped product's
+    UI (an Excel cell error, for instance).
+*/
+const char*
+AQLCoreError::what() const
+{
+#ifdef _DEBUG
+    if (mpErrInfo != NULL && mpErrInfo->mMsgs.size() > 0)
+    {
+        std::ostringstream oss;
+        oss << getMsg() << "[" << getFile() << ":" << getLine() << "]";
+        whatCache_ = oss.str();
+        return whatCache_.c_str();
+    }
+#endif
+    return getMsg();
+}
+
+///////////////////////////////////////////////////////////////////////////
+/*!
+    @brief get number of error information to be stored
     @return number of error information
 */
 unsigned int
@@ -383,12 +403,6 @@ AQLCoreError::getLogFileName(void)
            
 	Also, if there is more than one error information, then add multi "<--" \n
 	at the beginning of the message in orde to output an error message divided into a hierarchy \n
-    (example) \n
-    [2005/05/25 09:57] Invalid Data!!![C:\\melibtest1.cpp : 20] \n
-    <---[2005/05/25 09:57] Error2[C:\\melibtest1.cpp : 19] \n
-    <---<---[2005/05/25 09:57] Error1[C:\\melibtest1.cpp : 18] \n
-
-
 
     @return the object
 */
@@ -403,7 +417,7 @@ AQLCoreError::print(void)
 }
 
 /*!
-    @brief output erro information into an erro log file
+    @brief output error information into anr erro log file
 
     Output format of the error information is as follows. \n
     <b> [1 date and time of error] 2 error message [3 source file name : 4 line number of the source file] </b> \n
@@ -415,10 +429,6 @@ AQLCoreError::print(void)
            
 	Also, if there is more than one error information, then add multi "<--" \n
 	at the beginning of the message in orde to output an error message divided into a hierarchy \n
-    (example) \n
-    [2005/05/25 09:57] Invalid Data!!![C:\\melibtest1.cpp : 20] \n
-    <---[2005/05/25 09:57] Error2[C:\\melibtest1.cpp : 19] \n
-    <---<---[2005/05/25 09:57] Error1[C:\\melibtest1.cpp : 18] \n
 
     @return the object
 */
@@ -445,10 +455,6 @@ AQLCoreError::print(void) const
            
 	Also, if there is more than one error information, then add multi "<--" \n
 	at the beginning of the message in orde to output an error message divided into a hierarchy \n
-    (example) \n
-    [2005/05/25 09:57] Invalid Data!!![C:\\melibtest1.cpp : 20] \n
-    <---[2005/05/25 09:57] Error2[C:\\melibtest1.cpp : 19] \n
-    <---<---[2005/05/25 09:57] Error1[C:\\melibtest1.cpp : 18] \n
 
     @param[in] fileName log file name to output
 
@@ -484,10 +490,6 @@ AQLCoreError::print(const char_t* fileName)
            
 	Also, if there is more than one error information, then add multi "<--" \n
 	at the beginning of the message in orde to output an error message divided into a hierarchy \n
-    (example) \n
-    [2005/05/25 09:57] Invalid Data!!![C:\\melibtest1.cpp : 20] \n
-    <---[2005/05/25 09:57] Error2[C:\\melibtest1.cpp : 19] \n
-    <---<---[2005/05/25 09:57] Error1[C:\\melibtest1.cpp : 18] \n
 
     @param[in] fileName log file name to output
 
@@ -507,7 +509,6 @@ AQLCoreError::print(const char_t* fileName) const
 }
 
 ///////////////////////////////////////////////////////////////////////////
-//  OPERATION
 /*!
     @brief add an error message at the beginning of the 0-th error message
     
@@ -524,9 +525,17 @@ AQLCoreError::addMsg(const char_t*   msg)
         return;
     }
     try {
+        // The "+3" (1 for the null terminator, 2 spare) was always sized for a 2-character
+        // separator between msg and the existing message, but nothing ever wrote one - the two
+        // strings landed jammed together with no space, e.g. AQLCoreSystemError's
+        // addMsg(callerMsg) after constructing from strerror(errno) produced
+        // "File not foundNo such file or directory" instead of a readable
+        // "File not found: No such file or directory". Filling in the ": " separator the
+        // reserved bytes were already sized for - no buffer size change needed.
         char_t*   msgSet = new char_t[STRLEN(msg)+ STRLEN(mpErrInfo->mMsgs[0]) + 3 ];
 
         strcpy(msgSet, msg);
+        strcat(msgSet, ": ");
         strcat(msgSet, mpErrInfo->mMsgs[0]);
         delete[] mpErrInfo->mMsgs[0];
         mpErrInfo->mMsgs[0] = msgSet;
@@ -591,7 +600,6 @@ AQLCoreError::closeLogFile(void)
     }
 }
 ///////////////////////////////////////////////////////////////////////////
-//  OPERATOR
 /*!
     @brief assignment operator
     

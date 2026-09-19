@@ -3448,3 +3448,552 @@ Suggested approach for whichever of these gets picked up: same discipline as `AQ
 read the actual `.cpp` first, trace the specific race (don't assume from the field shape alone),
 audit real call sites for post-publication mutation before deciding whether a fix is even needed, and
 treat the eventual pass as its own scoped, reviewable batch rather than three-at-once.
+
+### `AQLMathCalendar` → `AQLCalendar` rename, `__HAS_MIC__` removal, comment cleanup (2026-09-19)
+
+Picked up the three follow-up candidates above, plus two housekeeping requests. In order:
+
+1. **Renamed `AQLMathCalendar` → `AQLCalendar`** (`Math` category dropped from the name, per Nicholas -
+   both files (`git mv`) and every reference, word-boundary exact match only. `AQLMathCalendarCollection`,
+   `AQLMathCalendarData`, `AQLMathCalendarSet` deliberately left alone - `\bAQLMathCalendar\b` doesn't
+   match them (no boundary before `Collection`/`Data`/`Set`), and Nicholas didn't ask for those. 22 files
+   touched (2 renamed, 20 content-only), including `projects/math.vcxproj`/`.filters`.
+2. **Reviewed all four objects** (`AQLCalendar`, `AQLMatrix`, `AQLDataInstance`, `AQLDateTime`) and scored
+   them - see the conversation transcript for the full pros/cons; short version: `AQLCalendar` 3/10
+   (worst of the four - non-atomic `int*` refcount *and* an independent, unguarded lazy-cache race in
+   `AQLCalendarData::createHolidayData()`, a `const` method mutating `mutable` state with zero
+   synchronization; the `__HAS_MIC__` mutex guards that would have covered this never compile in), `AQLMatrix`
+   4/10 (same COW shape, no second issue found, feeds the Jacobian-risk analytics `CLAUDE.md` §1 already
+   flags as under-tested), `AQLDataInstance` 4/10 (same COW shape, severity not fully audited - usually
+   passed by pointer rather than copied, unverified), `AQLDateTime` 7/10 (inherited this session's
+   `AQLDate` fixes for free via `AQLDate::copy()`/`cmp()`; only its own bug is `setSystemDate()` still
+   calling raw `localtime()`, a separate override the `AQLDate` fix doesn't cover).
+3. **Removed `__HAS_MIC__` entirely** - confirmed first it's never defined in any `.vcxproj`/`.props`/
+   `.bat`/`.vcxproj.user` in this tree (grepped all of them), and that none of the 26 affected files had
+   nesting or `#else` branches inside the guarded blocks (checked programmatically before touching
+   anything). `__HAS_MIC__` = Intel "Many Integrated Core" (Xeon Phi), a discontinued HPC platform; the
+   guarded code pulled in `common_lib::StaticMutex`/`Mutex`/`ScopedLock`, a proprietary threading library
+   from whatever environment this was originally built in - `common_lib` is never implemented anywhere in
+   this tree, only forward-declared inside the same dead `#ifdef`. Stripped every
+   `#ifdef __HAS_MIC__ ... #endif` block wholesale (mutex member declarations, static mutex definitions,
+   the `namespace common_lib { struct StaticMutex; }` stub, every per-method `ScopedLock` guard) across
+   26 files in `calibration`/`math`/`models`. Spot-checked several afterward - well-formed, no dangling
+   braces. **Note for whoever picks up the `AQLCalendar`/`AQLMatrix`/`AQLDataInstance` COW fixes above:**
+   the dead mutexes are gone now, so there is no vestigial locking pattern left to confuse a future
+   thread-safety fix - a clean slate, not a competing mechanism to reconcile with.
+4. **Removed section-header comments** (`// LIFECYCLE`, `// OPERATION`, `// QUERY`, `// OPERATOR` -
+   exact-line matches only) from the four reviewed objects' 8 files, per Nicholas.
+5. **Removed `// ysuzuki`-style comments**, but not uniformly - checked each site's actual content first
+   rather than pattern-matching on the name alone. Bare `// ysuzuki` marker lines (8, all in
+   `AQLDataVector.cpp`, each sitting directly above unrelated commented-out dead code that was left
+   alone) were removed as asked. Three sites that were NOT bare markers - a substantive multi-line
+   changelog note in `AQLCoreAutoPtr.h` ("06MAR06 ysuzuki: The specification change of AQLAutoPt...") and
+   two commented-out code lines with a name/date prefix in `AQLBasic.cpp`/`AQLDataValuation.cpp` - were
+   flagged separately and removed only after Nicholas confirmed he wanted those gone too.
+
+**Not yet done:** a rebuild + GTEST run to verify none of this broke anything (26+ files touched for the
+`__HAS_MIC__` removal alone, spanning three projects). That's the immediate next step, same verification
+discipline as every other change this session. **After that:** Nicholas wants the actual COW/thread-safety
+fixes applied to the four reviewed objects (this section only renamed/cleaned/reviewed them, per the
+sequence he asked for) - that's the next real batch of work, not started yet.
+
+### Three build warnings fixed (2026-09-19, same session)
+
+Nicholas's build after the above turned up 3 warnings, all fixed, none suppressed:
+
+- **`AQLDate.cpp` C6385** (`intervalYMD`, the `to->mMonth - 3` array index): a real latent fragility,
+  not a false alarm to silence - traced through why it's not *currently* reachable with an
+  out-of-range index (a day-of-month difference is never more negative than -30, and borrowing any
+  month with >=30 days always clears the deficit before this line; only February, at 28/29 days,
+  doesn't, so the only month that can reach this line unchanged is March, giving a valid index of 0)
+  but the analyzer can't prove that cross-branch invariant, and neither could a future editor at a
+  glance. Changed the index to `((int)to->mMonth - 3 + 12) % 12` - provably in range regardless, same
+  behaviour for the one case that's actually reachable.
+- **`AQLCalendar.h` VCR001** (`AQLMathCalendarCollection::operator=` "definition not found"): it was
+  the pre-C++11 non-copyable idiom - declared `private`, deliberately never defined. Modernized both
+  it and the copy constructor (same idiom, same class) to `= delete`.
+- **`AQLCalendar.cpp` VCR001** (`checkWeeklyData` "definition not found"): genuinely dead - declared
+  once, never defined, never called anywhere in the tree (verified with a full-repo grep). Removed
+  the declaration. Likely orphaned when `setWeekly()` moved to taking `AQLDayOfWeekEnum` directly
+  instead of a string that would have needed this kind of validation.
+
+### PAUSE POINT (2026-09-19) - resume here
+
+Nicholas is taking a break. **When he's back and confirms the build is clean: go straight to fixing
+the four reviewed objects** (`AQLCalendar`, `AQLMatrix`, `AQLDataInstance`, `AQLDateTime`) - rename,
+review/scoring, `__HAS_MIC__` removal, and the 3 warning fixes are all done; nothing about the actual
+COW/thread-safety problems has been fixed yet. Plan, in priority order (matches the review above):
+
+1. **`AQLCalendar`** first - worst score (3/10), most exposed (widely-shared, long-lived, read-heavy
+   holiday data), most silently broken (`__HAS_MIC__` locking that never compiled in, now also just
+   plain gone). Two separate problems, both need fixing: (a) the COW `int* mpRefCount` →
+   `AQLDate`/`AQLString`'s now-proven pattern (either a real `std::shared_ptr`-based fix like
+   `AQLString`'s step 1, or - given calendars are read far more than mutated - consider whether COW
+   is even worth keeping here vs. just always deep-copying, the way `AQLString`'s internals-swap
+   ultimately concluded COW wasn't earning its keep); (b) `AQLCalendarData::createHolidayData()`'s
+   lazy cache (`mutable deque<AQLDate> mholiday`, `mutable AQLDate mStart/mEnd`) mutated from a
+   `const` method with zero synchronization - needs the same treatment as `AQLDate::mJulius`
+   (atomic/lazy, or reconsider whether eager-on-construction is actually fine here given calendars
+   are built once then read many times, the inverse usage profile from `AQLDate`'s mutate-heavy
+   loops).
+2. **`AQLMatrix`** - same COW shape, no second issue found. Check real usage (is it copied often, or
+   mostly passed by reference in the calibration/Jacobian code?) before deciding real-shared_ptr vs.
+   drop-COW-entirely, the way `AQLCalendar` above should also be decided from evidence, not assumed.
+3. **`AQLDataInstance`** - same COW shape; audit actual copy-frequency first (suspected low, passed
+   by pointer/reference in most call sites seen so far, but not yet verified the way `AQLDate`'s
+   audit was) - that changes whether this is a real risk or a should-fix-for-cleanliness item.
+4. **`AQLDateTime`** - much smaller job: swap its own `setSystemDate()`'s raw `localtime()` for
+   `localtime_s()`, matching the fix already applied to `AQLDate::setSystemDate()` and to
+   `AQ_XLL/src/aqDate.cpp`. Everything else about it already inherited this session's `AQLDate` fixes
+   for free.
+
+Same discipline as every fix this session: read the actual `.cpp` first, verify the race is real
+(don't assume from the field shape alone), audit real call sites for post-publication mutation
+before deciding the fix shape, one object per reviewable batch, rebuild + GTEST after each.
+
+### All four objects fixed (2026-09-19, same session) - awaiting build+GTEST verification
+
+Nicholas confirmed the build was clean after the 3 warning fixes and asked to go straight to fixing
+all four. Verified usage patterns first (same discipline as above) before picking each fix shape -
+the four ended up needing four genuinely different treatments, not one pattern applied four times:
+
+- **`AQLDataInstance` - made non-copyable, COW removed entirely.** Full-repo grep across
+  etrading/validation/calibration/models: 1124 pointer/reference sites, zero real copies (the one
+  non-reference hit is `new AQLDataInstance()`). The refcount machinery was protecting a code path
+  nothing exercises. Copy constructor and `operator=` are now `= delete`; `mpDataMstr`/
+  `mpFunctionMstr` are `std::unique_ptr` (sole ownership, no manual `delMstrs()`/destructor logic
+  needed any more - removed both `copy()` and `delMstrs()` entirely). Destructor kept declared
+  out-of-line (not `= default` inline in the header) since `unique_ptr`'s destructor needs
+  `AQLPriceDataManager`/`AQLFunctionManager` complete, and the header only forward-declares them.
+- **`AQLDateTime` - `setSystemDate()`'s `localtime()` -> `localtime_s()`.** Matches the fix already
+  in `AQLDate::setSystemDate()` and `AQ_XLL/src/aqDate.cpp`; this class has its own override so the
+  earlier fix never covered it. Everything else about the class already inherited the `AQLDate`
+  fixes for free (via `AQLDate::copy()`/`cmp()`).
+- **`AQLMatrix` - COW race fixed with `std::shared_ptr<AQLMatrixData>` (kept sharing, didn't drop
+  it), plus added move constructor/assignment (had neither before).** Different call than
+  `AQLCalendar`/`AQLDataInstance` because the usage shape is different: every arithmetic operator
+  (`+`, `*`, `-`, `transpose()`, `inverseMatrix()`, `choleskyDecomposition()`, `subMatrix()`) returns
+  `AQLMatrix` by value - genuinely copy-heavy, unlike the other three, so O(1) sharing is actually
+  earning its keep here. `make_shared` collapses the old two-allocation design (`AQLMatrixData*` +
+  separate `int*` refcount) into one. The move ctor/assignment let the compiler skip even the
+  shared_ptr refcount bump in the "build a temporary, return it" pattern those operators all use.
+  `operator*=`'s old manual try/catch/restore around the old-buffer-swap lost its try/catch entirely
+  - `shared_ptr`'s own exception guarantee (assignment only takes effect if construction succeeds)
+  covers it for free, and `delete tmp` at the end is gone too (RAII cleanup on scope exit). The ~40
+  numerical kernel call sites (`ludcmp`, `svdcmp`, `tred2`, `tqli`, `determinant`, etc.) needed zero
+  changes - `(*mpData)[i][j]`, `mpData->row()` etc. all compile identically against `shared_ptr` as
+  they did against the raw pointer.
+- **`AQLCalendar` - two independent fixes, both needed.** (1) COW dropped entirely (not fixed with
+  shared_ptr) - `mpCalData` is now `std::unique_ptr<AQLMathCalendarData>`, copy constructor/
+  `operator=` do a real deep copy (cheap - a calendar's holiday deque is tiny), move constructor/
+  assignment added too. Opposite call from `AQLMatrix` because the usage shape is opposite: built
+  once via `setWeekly`/`setDays`/`setFlowDate`/`setDate`, then read many times, often via a
+  `const AQLCalendar&` handed out of `AQLMathCalendarCollection`'s map to many callers at once -
+  copying is rare, so sharing had nothing to win and only a race to lose. `makeUnShared()` and the
+  old `clear()`/`copy()` helpers are gone entirely - nothing left to detach from when there's no
+  sharing. (2) Separately, `AQLMathCalendarData::createHolidayData()`'s lazy cache
+  (`mholiday`/`mStart`/`mEnd`, mutated from the `const` `isHoliday()`/`countHoliday()` with zero
+  synchronization) got a real `std::mutex`, covering each public method's *entire* body (not just
+  `createHolidayData()` internally) - `isHoliday()`'s `binary_search` runs after
+  `createHolidayData()` returns and would otherwise read `mholiday` unlocked while another thread
+  could be concurrently expanding it. This fix is independent of (1): dropping COW only removes the
+  cross-*object* aliasing risk; the *same* `AQLCalendar` instance read concurrently by multiple
+  threads (exactly the `getCalendarData()` scenario) still needed this regardless. `getPointholiday()`
+  doesn't need its own lock - only ever called from within `countHoliday()`, which already holds it
+  (a second lock there would deadlock against the non-recursive `std::mutex`).
+
+Verified after every file: brace-balanced, no leftover `mpRefCount`/`makeUnShared`/raw-`localtime()`
+references anywhere across the four objects (grepped explicitly).
+
+**DONE, verified (2026-09-19).** Nicholas's first rebuild+retest showed 57 failures (baseline is 10,
+all pre-existing stale-calendar-data) - almost all `#Structured Exception: Access Violation`. Before
+assuming a logic bug in the fixes above, flagged the far more likely explanation given this session
+already hit the exact same class of problem once (the `AQLString::operator=` `LNK2005` earlier): all
+four changes altered the *in-memory layout* of widely-included classes (removed `mpRefCount` members,
+swapped raw pointers for `shared_ptr`/`unique_ptr`, added a `std::mutex` to `AQLMathCalendarData`) -
+`AQLDataInstance.h` alone is pulled into 150+ files. A merely-incremental build missing even one
+translation unit against the new layout produces silent binary incompatibility (mismatched
+`sizeof`/offsets linked together) - not a link error this time, memory corruption at runtime,
+exactly matching the symptom breadth. **Confirmed correct**: a full Rebuild Solution + retest came
+back clean, no logic bug. Lesson banked: a layout-changing edit to a widely-included class needs a
+full Rebuild Solution to verify, incremental Build is not sufficient and can pass locally while
+silently broken elsewhere.
+
+### `AQLMathCalendarSet` → `AQLCalendarSet` rename (2026-09-19, same session)
+
+Same treatment as the `AQLMathCalendar` → `AQLCalendar` rename earlier - `Math` dropped from the
+name, both files (`git mv`) and every reference, word-boundary exact match. 13 files touched (2
+renamed, 11 content-only), including `projects/math.vcxproj`/`.filters`. One thing the word-boundary
+regex correctly does *not* catch: the include guard macro (`#ifndef AQLMathCalendarSet_h` /
+`#define ..._h`) - underscore is a word character, so there's no `\b` boundary between `Set` and
+`_h`. Functionally harmless (the guard still pairs correctly, just under the old name) but
+inconsistent with the file's new name, so fixed by hand rather than left. Worth remembering for any
+future rename of this shape: the regex won't catch include guards, check for them explicitly.
+`AQLMathCalendarCollection` (used inside this file) correctly left alone - different name entirely,
+not a substring-boundary issue this time.
+
+### `getInquiredCityNames` → `getCityNames` rename (2026-09-19)
+
+Trivial, 4-file rename (`AQLCalendar.h`/`.cpp`, `AQLCalendarSet.h`/`.cpp`), no collision with any
+existing `getCityNames`. Verified clean.
+
+### `AQLMatrix` made "worldclass" (2026-09-19) - flattened storage + OpenMP-ready + new API
+
+Nicholas supplied a reference `FlattenedMatrix` design (row-major `std::vector<double>`, OpenMP
+pragmas, `transpose()`, dot-product/row-column helpers) and asked for `AQLMatrix` to borrow from it.
+Landed as an internals-only change - zero call-site changes needed anywhere outside `AQLMatrix.cpp`
+itself, including the ~40 numerical kernel call sites (`ludcmp`, `svdcmp`, `tred2`, `tqli`,
+`determinant`, etc.) - because `AQLMatrixData::operator[](n)` already returned a `double*`/
+`const double*` row pointer; the flattening only changes what's *behind* that pointer.
+
+- **Storage**: `AQLMatrixData`'s `double** mpData` (one allocation for the row-pointer array, one
+  more per row) → a single contiguous `std::vector<double> mData` in row-major order
+  (`mData[row*mCol+col]`), one allocation total. `operator[](n)` now returns
+  `mData.data() + n*mCol` instead of `mpData[n]` - same contract, so every existing `(*mpData)[i][j]`
+  call site needed zero changes. Real cache-locality win for row-major traversal (which is how every
+  algorithm here actually walks the matrix), not a micro-optimization.
+- **Correctness fix along the way**: elements are now zero-initialized (`std::vector`'s value-init),
+  where the old `new double[row*col]` left them uninitialized - a real footgun (a caller reading
+  before writing got garbage, not 0). Deliberate, not just carried forward - can only make behaviour
+  more correct.
+- **`resize()`** rewritten for the new layout: allocate a fresh zero-initialized buffer, copy the
+  overlapping top-left submatrix row-by-row (can't be one contiguous copy - the row stride itself is
+  changing), swap in. Much simpler and more obviously correct than the old pointer-reuse-vs-realloc
+  branching logic.
+- **`transpose()` already existed** (Nicholas asked to make sure of this - it did, unchanged
+  signature) - now OpenMP-parallelized, deliberately over the *result's* rows (not the source's) so
+  each thread's writes are contiguous even though the reads are strided either way (a transpose
+  can't make both directions contiguous at once, but write locality is the one that's free to
+  choose).
+- **New public methods**: `getRow(i)`/`getColumn(j)` (extract as `std::vector<double>` -
+  `getRow` is a single contiguous copy, `getColumn` is strided/parallelized) and `dotRow(i,v)`/
+  `dotCol(j,v)` (dot product against a weights vector, `reduction(+:sum)`) - directly useful for
+  numerical-integration-style work (e.g. a Gaussian-copula credit-basket survival-probability
+  calculation, the exact pattern in Nicholas's reference), which is squarely in this library's
+  domain per `CLAUDE.md` §1's `Credit` category. Named `getRow`/`getColumn`, not `row`/`column` -
+  `AQLMatrix` already has `row()`/`column()` returning dimension *counts*; overloading the same name
+  for element extraction would compile (different parameter lists) but reads as confusing/ambiguous
+  API design, so used a different name instead of reusing one that already means something else.
+- **OpenMP added, deliberately only to the embarrassingly-parallel operations**: `transpose()`,
+  `setValue(double)`, `clearValues()`, `operator*=(double)`, `getColumn()`, `dotRow()`, `dotCol()` -
+  every one of these has fully independent iterations (each row/element touched by exactly one
+  thread) with no loop-carried dependency. **Deliberately NOT added** to `ludcmp`/`svdcmp`/`tred2`/
+  `tqli` (LU/SVD/tridiagonalization/QL-algorithm decomposition kernels) - these are inherently
+  sequential algorithms (each iteration depends on the previous one's result), and naively slapping
+  `#pragma omp parallel for` on a loop with a real dependency would be actively wrong, not just
+  unhelpful. All pragmas use a **signed `int` loop counter**, not `unsigned int` - MSVC's classic
+  `/openmp` (OpenMP 2.0) requires a signed canonical loop variable in a `parallel for`, a real,
+  known MSVC limitation the reference design's own `std::ptrdiff_t` casting was already working
+  around; followed the same pattern. Also stuck to OpenMP 2.0-safe reduction operators (`+` only) -
+  MSVC's classic `/openmp` does not support `min`/`max` reduction clauses (that needs OpenMP 3.1+,
+  `/openmp:llvm`), which is part of why `maxValue()`/`minValue()` were left alone rather than
+  "parallelized" with a reduction shape that isn't actually available here.
+- **`OpenMPSupport` is currently `false` across all 8 build configs in `math.vcxproj`** (an explicit,
+  existing setting, not just unset) - **not flipped to `true`**, flagged to Nicholas to decide
+  separately rather than silently changed. Until/unless it is, every `#ifdef _OPENMP` block is
+  inert (compiles to the plain sequential loop) - the code is correct and behaves identically either
+  way, so there is no risk in landing this before that decision is made. Worth being honest that for
+  the small matrices typical of this library's actual curve/calibration usage (dozens to low
+  hundreds of nodes), OpenMP's per-region thread-pool spin-up cost can outweigh the parallelism win -
+  this is why it is opt-in via the existing project setting rather than force-enabled.
+
+Verified: brace-balanced, no leftover `double**`/`mpData[0]`-style raw storage references anywhere.
+
+### OpenMP: `if()`-threshold applied, `OpenMPSupport` enabled (2026-09-19, same session)
+
+Nicholas asked how to manage OpenMP for `AQLMatrix` - recommended against a hand-rolled
+`enableOpenMP` flag (extra API surface/state, and it pushes the size judgement onto the caller) in
+favour of OpenMP's own `if(condition)` clause on each `parallel for`, gated by matrix size, plus
+turning the project setting on since the guard makes that safe. Implemented once Nicholas agreed:
+
+- Added one named constant, `static const int OPENMP_SIZE_THRESHOLD = 64;` at the top of
+  `AQLMatrix.cpp`, with a comment flagging it as a starting default to retune once actually profiled
+  against a real large-matrix workload, not a carefully-measured number.
+- Every one of the 7 `#pragma omp parallel for` sites added last round now carries
+  `if(<loop trip count> > OPENMP_SIZE_THRESHOLD)` - compared against the *outer parallel loop's own*
+  trip count (`rowCount` for `setValue`/`clearValues`/`operator*=`/`getColumn`/`dotCol`, `colCount`
+  for `dotRow`, `newRowCount` for `transpose`). Deliberately kept to that simple per-dimension
+  count rather than a total-element-count formula (`rows*cols`) - less precise for very rectangular
+  matrices, but one consistent, easy-to-reason-about semantic beats a more "correct" formula that
+  needs its own explanation. Below the threshold, every one of these compiles to and runs the exact
+  same sequential loop as before with zero threading overhead; the `if()` is evaluated once per
+  call, not per element.
+- `OpenMPSupport` flipped `false` → `true` across all 8 configs in `math.vcxproj`
+  (Debug/DebugEditAndContinue/Release/ReleaseProfiler × Win32/x64). Safe to do now specifically
+  *because* every pragma has the size guard - small matrices (this library's typical case) behave
+  identically to before either way.
+
+Verified: brace-balanced, `OPENMP_SIZE_THRESHOLD` used at all 7 pragma sites plus its own
+declaration (8 total). **Not yet built/tested** - next step, same discipline as every change this
+session.
+
+### `GTEST\TestAQLMatrix.cpp` added (2026-09-19, same session)
+
+Nicholas asked for GoogleTest coverage modelled on the Catch2 tests in his `FlattenedMatrix`
+reference. New file `src\GTEST\src\TestAQLMatrix.cpp`, 18 `TEST(TestAQLMatrix, ...)` cases covering
+construction/zero-init, element access, `getRow`/`getColumn` (incl. out-of-range throw),
+`dotRow`/`dotCol` (incl. size-mismatch throw, plus a hand-verified numerical-integration pattern),
+scalar multiply, `clearValues`/`setValue`, identity, `transpose()` (incl. double-transpose
+round-trip and a 100-row case that exercises the OpenMP `if()` guard's parallel branch),
+`resize()` grow/shrink (overlap-preserving, zero-fills the rest), move ctor/assignment, and
+copy-independence. Deliberately did **not** port Nicholas's Gaussian-copula credit-basket case
+verbatim - its expected values depend on an external standard-normal PDF table not independently
+verifiable here; explained this to Nicholas rather than porting a test with unverifiable
+expectations. Wired into `projects\GTEST.vcxproj` (new `<ClCompile>`, placed after
+`TestRandomNumbers.cpp`) and `.vcxproj.filters` (`src\etrading\Math` filter, the same group
+`TestRandomNumbers.cpp` uses - no dedicated "math" filter exists in this project). **Not yet
+built/run** - next step.
+
+### `AQLString` and `AQLDate` - case-insensitive compare, trim+uppercase, Excel date conversion (2026-09-19, same session)
+
+Nicholas asked for: an `AQLString` case-insensitive compare (to another `AQLString` and to
+`std::string`), a trim-then-uppercase method with an optional `trimWhiteSpace` flag defaulting to
+`true`, and `AQLDate` `toExcelDate()`/`fromExcelDate()` (+ vector forms) to convert to/from Excel's
+integer/double date serials - then asked what other obviously useful methods would make these two
+data objects "worldclass".
+
+**`AQLString` (`src\math\include\AQLString.h` / `src\math\src\AQLString.cpp`):**
+- `compareIgnoreCase(const AQLString&|const std::string&|const char_t*)` (3 overloads, `noexcept`)
+  and `equalsIgnoreCase(...)` (same 3 overloads) added alongside the existing `cmp()` overloads.
+  Implemented as a char-by-char `tolower()` comparison with **no temporary uppercased copy and no
+  allocation** - deliberately, so these are safe to use in hot lookup paths (e.g. case-insensitive
+  calendar-centre or instrument-key matching), not just convenience one-offs. Did **not** add a new
+  `operator` for this (Nicholas floated "operator or function") - `operator==` already means exact
+  comparison; silently changing its meaning based on argument type would be a surprising, easy-to-
+  misuse API. Documented that reasoning in the header rather than silently picking a lane.
+- `toUpperTrimmed(bool trimWhiteSpace = true)` added - trims front/back (when the flag is true, the
+  default) via the existing `trimLeft()`/`trimRight()`, then calls the existing `toUpper()`.
+  Parameter named `trimWhiteSpace` per Nicholas's literal request.
+- Bonus, in the same spirit as `getInquiredCityNames`-style ergonomic gaps: `startsWith`/`endsWith`
+  (`AQLString` and `const char_t*` overloads, via `memcmp` on `getCString()`, prefix/suffix
+  byte-compared) and `contains` (`findString(...) != -1`) - the kind of string-matching primitive
+  every other string class in this ecosystem (`std::string`-adjacent, Python `str`, Java
+  `String`) ships and this one didn't; useful for calendar-centre parsing, generator-key matching,
+  and validation-layer string checks throughout `validation`/`etrading`.
+- Verified: brace-balanced (21/21 in the header, 155/155 in the .cpp) after all edits.
+
+**`AQLDate` (`src\math\include\AQLDate.h` / `src\math\src\AQLDate.cpp`):**
+- `toExcelDate()` / `static fromExcelDate(double)` + vector forms `toExcelDates`/`fromExcelDates`
+  added. Takes/returns `double` (not a separate `int` overload) - an integer Excel serial promotes
+  to `double` for free and converts back exactly (doubles are exact for every integer up to 2^53,
+  far beyond any real date), so one overload naturally covers "integer or double" per Nicholas's
+  request. Correctly handles Excel's fake 1900-leap-year bug (Excel's "1900 date system" treats
+  1900 as a leap year and inserts a fictitious serial 60 = 29 Feb 1900 that never existed) via a
+  two-branch offset (before/on-or-after 1900-03-01). Throws `AQLCoreInvalidData` for a date/serial
+  before 1900-01-01 (unrepresentable in Excel's system) and for serial exactly 60 (the fictitious
+  date) rather than silently returning a wrong or nonsensical result.
+  - **Epoch constants derivation (keep for future reference, do not re-derive):** using this
+    class's own `dateToJulius()` formula, hand-computed `mJulius(1900-01-01) = 693596`,
+    `mJulius(1900-02-28) = 693654`, `mJulius(1900-03-01) = 693655` → offsets
+    `EXCEL_EPOCH_JULIAN_BEFORE_MARCH_1900 = 693595`, `EXCEL_EPOCH_JULIAN_ON_OR_AFTER_MARCH_1900 =
+    693594`. Cross-checked two independent ways: (1) `mJulius(1970-01-01) = 719163`, and
+    `719163 - 693594 = 25569`, matching the already-shipped Unix-epoch constant `25569` in
+    `AQ_XLL\src\aqXllTools.cpp`'s `excelLocalSerial()`; (2) `mJulius(2024-01-01) = 738886`, and
+    `738886 - 693594 = 45292`, matching the well-known real Excel serial for 2024-01-01. All three
+    agree.
+- `static fromJulianDayNumber(long)` added as the missing inverse of the existing
+  `julianDayNumber()` accessor (needed as a building block for `fromExcelDate()`, and a real gap on
+  its own - the class could report a Julian day but not construct one back). Throws
+  `AQLCoreInvalidData` for `julianDay < 1`.
+- Bonus: `startOfMonth()`/`endOfMonth()` (the actual dates, not just the day-offsets
+  `intervalToStartOfMonth()`/`intervalToEndOfMonth()` already returned - every caller doing a
+  month-end roll or accrual calculation was otherwise writing
+  `AQLDate d(*this); d.addDays(intervalToEndOfMonth());` at the call site) and `daysInMonth()`
+  (wraps the existing lookup table Nicholas's own `intervalToEndOfMonth()` already indexes into,
+  just exposed directly).
+  - **Correctness fix caught during review, applied same batch:** `startOfMonth()`/`endOfMonth()`
+    were initially written (and their header declarations) marked `noexcept`, which is wrong - both
+    call `addDays()`, which is *not* `noexcept` and can throw `AQLCoreInvalidData` in the (real,
+    if pathological for this library) edge case of a date within ~31 days of the Julian epoch
+    itself. Caught before reporting back; `noexcept` removed from all four sites (2 declarations in
+    `AQLDate.h`, 2 definitions in `AQLDate.cpp`). `daysInMonth()` is genuinely non-throwing (pure
+    lookup-table indexing) and correctly keeps `noexcept`.
+- Verified: brace-balanced (13/13 in the header, 125/125 in the .cpp) after all edits, including
+  the `noexcept` fix. Grepped to confirm all four new methods and both new file's constants are
+  present and self-consistent.
+
+**Not yet built/tested** - next step for this whole batch, same discipline as every change this
+session.
+
+### Pre-existing build-breaking bug found and fixed in `AQLMatrix.h` (2026-09-19, same session)
+
+While setting up an actual MSBuild verification loop for the member-rename batch below (found
+MSBuild at `C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\
+MSBuild.exe`; direct `math.vcxproj` builds need `/p:SolutionDir=<repo>\` passed explicitly since
+`$(SolutionDir)` is only defined when building through the `.sln`), a baseline `math` rebuild
+failed with ~100+ cascading errors in `AQLMatrix.cpp` (`AQLMatrixData` not recognised as a member
+of `AQLMatrix`, `shared_ptr` missing `operator*`/`operator->`, etc.). Traced to the actual root
+cause, not a stale build: `AQLMatrix.h:204`'s doc comment (added last session, documenting the
+flattened-storage `operator[]`) contained the literal text `double*/const double*` - the `*/`
+inside that phrase **prematurely closes the enclosing `/*! ... */` block comment**, turning the
+rest of the comment block (lines 205-208) into live code, which cascades into ~100 downstream
+parse errors that look nothing like their real cause. This was a pre-existing landmine from the
+matrix-flattening work, not introduced today, and was silently broken (never built) until now.
+Fixed by rewording to `double* (or const double*)` - no `*/` substring. **After the fix, `math`
+rebuilds clean (Debug|x64)** - first real green baseline confirmed this session via an actual
+MSBuild run rather than just brace-counting/grep review. Worth remembering for future doc comments
+in this codebase: never write a bare `*/`-forming substring (e.g. `T*/const`) inside a `/*! */`
+block comment.
+
+### Private member rename `m<Name>` -> `<name>_` across the six datatypes + natvis (2026-09-19, same session)
+
+Actioned the full enumeration Nicholas approved. One batch per class, `math` rebuilt (later Build,
+not Rebuild, per batch - full Rebuild done once at the end) between each:
+
+- `AQLDateTime`: `mHour`/`mMinute`/`mSecond` -> `hour_`/`minute_`/`second_`.
+- `AQLMatrix` (+ nested `AQLMatrixData`): `mpData`->`pData_`, `mData`->`data_`, `mRow`->`row_`,
+  `mCol`->`col_`.
+- `AQLCalendarSet`: `mCalendarCol` -> `calendarCol_`.
+- `AQLCalendar` (+ `AQLMathCalendarCollection` + `.cpp`-local `AQLMathCalendarData`):
+  `mpCalData`->`pCalData_`, `mCalendarList`->`calendarList_`, `mInqCityNames`->`inqCityNames_`
+  (renamed again to `cityNames_` a few minutes later per Nicholas's follow-up - see below),
+  `mpcalInfo`->`pcalInfo_`, `mholiday`->`holiday_`, `mStart`->`start_`, `mEnd`->`end_`,
+  `mDataMutex`->`dataMutex_`.
+- `AQLDate`: `mLeap`/`mYear`/`mMonth`/`mDay`/`mJulius` -> `leap_`/`year_`/`month_`/`day_`/`julius_`,
+  **plus `Visualizer.natvis`'s `AQLDate` block** (24 lines: every `DisplayString`/`Item` condition
+  and expression) updated in the same batch, per repo `CLAUDE.md` §2.3.
+- `AQLString`: nothing to do - already used `stringData_` from an earlier session.
+
+Confirmed beforehand (see the enumeration message) that none of these six classes' private
+members are touched outside their own `.h`/`.cpp` pair - no `friend` declarations except on
+`AQLString` (whose friends only use the public API), so every rename stayed mechanically contained
+to a `\b<oldName>\b` word-boundary sed pass per file pair, no cross-file coordination needed.
+`math` rebuilds clean (Debug|x64) after all six batches.
+
+**Follow-up rename, same session:** Nicholas asked to rename `inqCityNames_` -> `cityNames_`
+shortly after (referred to it as being in `AQLString.cpp`, but it's actually in
+`AQLCalendar.h`/`.cpp` as part of `AQLMathCalendarCollection` - renamed there, confirmed the only
+two files containing the identifier). `math` rebuilds clean after.
+
+### Section-header comment cleanup (`LIFECYCLE`/`OPERATION`/`OPERATOR`/`IMPLEMENTATION`/`QUERY`) - full `src\math` sweep (2026-09-19, same session)
+
+Nicholas flagged mid-session that these M-library-style section-header comments (removed from "the
+4 reviewed objects" earlier in the session, per the very first request) were still showing up
+elsewhere. Widened the sweep to all of `src\math` (`*.h`/`*.cpp`) rather than just the objects
+touched today, since that's where this session's work has concentrated: removed every line whose
+entire (trimmed) content is one of `LIFECYCLE`/`OPERATION(S)`/`OPERATOR(S)`/`IMPLEMENTATION`/
+`QUERY(S)`, in any of its observed decorations (`// LIFECYCLE`, `//  QUERY`, `//// LIFECYCLE ////`,
+`///////// IMPLEMENTATION /////////`, tabs/trailing-whitespace variants, etc.) - **74 files**, one
+regex, exact-line matches only (never touched a decorative divider line on its own, matching the
+precedent set earlier this session). `math` rebuilds clean after. **Not yet swept**: any other
+project (`etrading`/`calibration`/`models`/`validation`/`AQ_XLL`/`AQ_API`) - flagged to Nicholas as
+a possible follow-up if he's still seeing them there; deliberately not done unasked since it's
+outside where this session's work has been.
+
+### Exception classes reviewed and improved - not migrated off, per explicit instruction (2026-09-19, same session)
+
+Nicholas asked for a review + score /10 of `AQLCoreError`/`AQLCoreAppError`/`AQLCoreInvalidData`/
+`AQLCoreNumericalError`/`AQLCoreSystemError`/`ExceptionMacros.h`, explicitly **not** a migration
+off them (see the investigation two entries up in this file for why full `std::exception` migration
+was recommended against). Two real bugs found and fixed, both behavior-preserving for all current
+call sites (verified by rebuilding `math`/`etrading`/`calibration`/`validation` clean, all Debug|
+x64):
+
+1. **Exception-slicing bug in `AQ_CATCH` (`ExceptionMacros.h`) and `VALID_EXCEPTION_END`
+   (`StructuredExceptionHandler.h`)** - both rethrew via `throw e;` instead of a bare `throw;`.
+   Since `e`'s static type is the catch clause's own type (`AQLCoreError` / `std::exception`),
+   `throw e;` constructs and throws a *new* object of that static type, silently slicing away
+   whatever derived type (`AQLCoreInvalidData`, `AQLCoreNumericalError`, `AQLCoreSystemError`, or
+   any `std::exception` subclass) the original throw site actually used. These two macros sit at
+   essentially every `tryAqXyz` validation-layer function's exception boundary (`VALID_EXCEPTION_
+   END`) and every `AQ_TRY`-style catch (`AQ_CATCH`), so the slicing happened on the way out of
+   nearly every public API call in the library - any caller further up catching a *specific*
+   derived type would silently stop matching, no compiler warning. Fixed both to bare `throw;`
+   (dropped the now-unused `e` parameter name from the catch clauses too). **Found 9 more instances
+   of the same `throw e;` anti-pattern** scattered across `calibration`/`etrading`/`math`/`models`
+   (`AQLFileAccessor.cpp`, `AQLStaticDataManager.cpp`, `AQLCurveForwardRateHelpers.cpp`,
+   `CurveUtilities.cpp`, `AQLDataFile.cpp`, `AQLFTQuasiRandGF.cpp`, `AQLLinearRatesModel.cpp`,
+   `AQLMathCurveFuncUtility.cpp`, `AQLPriceIndexTool.cpp`) - **deliberately not touched**, out of
+   scope for "review the exception classes" (these are call sites in business logic, not the
+   exception infrastructure itself); flagged to Nicholas as a follow-up sweep if wanted.
+2. **NULL-dereference landmine in `AQLCoreError`'s default constructor** - left `mpErrInfo` as
+   `NULL`, but `operator=`, `operator+=` and the copy constructor all dereference it
+   unconditionally (`*mpErrInfo = *(e.mpErrInfo)`). No current call site default-constructs an
+   `AQLCoreError` and then copies/assigns it (checked), so this was latent, not live - but a
+   one-line, behavior-preserving fix (allocate an empty `AQLCoreErrorInfo` instead of `NULL`; every
+   existing NULL-check branch in `getSize()`/`getMsg()`/etc. still returns the same 0/"" against an
+   empty-but-non-null `AQLCoreErrorInfo`) removes the landmine entirely.
+
+**Scores and remaining-improvement suggestions given to Nicholas in chat** (not applied - advisory,
+since further changes to the hand-rolled `char_t*` buffer internals would be a larger, riskier
+change than "review and improve" was asking for): `AQLCoreError` 6/10 (now 7.5/10 after today's two
+fixes - the two big remaining deductions are the hand-rolled `new[]`/`delete[]`/`strcpy` buffers in
+`AQLCoreErrorInfo` doing 2-3 heap allocations per throw where `AQLString`-style `std::string` would
+do zero for the short messages this library actually throws, and `getLine()`'s `unsigned int`
+parameter silently narrowing into a `vector<int>`); `AQLCoreAppError`/`AQLCoreInvalidData`/
+`AQLCoreNumericalError`/`AQLCoreSystemError` 8/10 each (thin, correct pass-through constructors,
+nothing to improve); `ExceptionMacros.h` 7/10 (now 8/10 after the `AQ_CATCH` fix - the ternary-
+without-parens macros like `AQ_IS_EQUAL_WITH_TOLERANCE` are a pre-existing operator-precedence
+footgun if a caller ever composes them, but no evidence any call site actually hits it).
+
+### Second exception-file pass: `AQLCoreAppError`/`AQLCoreError`/`AQLCoreErrorLog`/`AQLCoreSystemError`/`ETradingException` (2026-09-19, same session)
+
+Nicholas asked for a "prettify + efficiency + worldclass" pass with scores on these five files
+specifically (a narrower, deeper follow-up to the broader exception-classes review above). Read
+every file (`AQLCoreErrorLog.cpp` and `ETradingException.h`/`.cpp` not read before this pass).
+Three more real improvements found and applied, all verified via clean `math` rebuild + `etrading`
+build (Debug|x64):
+
+1. **`AQLCoreError::addMsg()` was silently producing garbled, unreadable error text.** The buffer
+   size (`STRLEN(msg) + STRLEN(existing) + 3`, i.e. 2 bytes more than msg+existing+null-terminator
+   strictly need) was clearly originally sized to hold a 2-character separator - but nothing ever
+   wrote one, so `msg` and the existing message landed jammed together with no space, e.g.
+   `AQLCoreSystemError`'s `addMsg(callerMsg)` after constructing from `strerror(errno)` produced
+   `"File not foundNo such file or directory"` instead of `"File not found: No such file or
+   directory"`. Filled in the `": "` separator the reserved bytes were already sized for - no
+   buffer size change needed, so this is a pure bugfix, not a behaviour change in scope.
+2. **`AQLCoreSystemError` used `strerror(errno)`, which writes through a single shared *static*
+   buffer** - a real cross-thread race if two threads hit a system-call error and construct an
+   `AQLCoreSystemError` concurrently (one thread's text can be overwritten by the other's before
+   the base `AQLCoreError` constructor copies it out). Replaced with `strerror_s` into a
+   `thread_local` buffer (a free function, since a constructor's base-class initializer list runs
+   before the constructor body, so there's nowhere to declare an ordinary stack-local buffer in
+   time - `thread_local` static-duration storage sidesteps that while still giving each thread its
+   own private copy). First attempt at this fix used `alloca()` inside the initializer list via a
+   comma-operator trick - caught on review as fragile/unportable/unreadable before it was verified,
+   thrown out and redone properly with the `thread_local` helper.
+3. **`ETradingException` (the etrading layer's own, separate exception type - a thin
+   `std::runtime_error` wrapper, structurally disconnected from the `AQLCoreError` hierarchy,
+   confirmed genuinely widely used: 163 throw sites across 41 files in `etrading`/`GTEST`) never
+   captured a throw-site file/line at all**, unlike `AQLCoreError`. Added two new, purely additive
+   constructor overloads taking `(message, file, line)` - the existing 2-argument constructors and
+   all ~163 existing call sites are untouched and unaffected. In a Debug build, `what()` on an
+   exception built via the new overloads reports `"message [file:line]"`, matching
+   `AQLCoreError::what()`'s Debug/Release split from earlier this session and for the same reason.
+   Added `AQ_ETRADING_THROW(message)` convenience macro (mirrors `AQ_THROW`) so new call sites can
+   opt in without spelling out `__FILE__`/`__LINE__` by hand.
+
+**`AQLCoreErrorLog` is fully dead code** - confirmed `DUMP_WIN` is never defined anywhere in the
+build, and no call site anywhere in the tree ever calls `setLog()` to register an edit box, so
+`mEditBox` is always `NULL` and `setMsg()` always returns immediately having done nothing, in every
+build configuration, unconditionally. It's a relic of an MFC desktop-GUI error display this library
+apparently no longer has. **Not removed** - flagged to Nicholas as a recommendation rather than
+deleted unasked, per the "never delete without being asked" working agreement; genuinely nothing to
+"prettify" here since the class does not do anything today.
+
+**Scores given in chat:** `AQLCoreError` 8/10 (up from 7.5 after the `addMsg` fix - remaining
+deduction is the hand-rolled `char_t*` buffers vs `std::string`, same note as before);
+`AQLCoreAppError` 8.5/10 (three clean pass-through constructor pairs, nothing to improve);
+`AQLCoreErrorLog` 3/10 (fully dead code - honest score, not a defect in what's there so much as
+there being nothing left worth keeping); `AQLCoreSystemError` 8.5/10 (up from implicit ~7 after the
+`strerror_s` fix); `ETradingException` 8.5/10 (up from ~5 as shipped - no file/line, no docs - after
+adding the file/line overloads, the macro, and documenting the deliberate separation from
+`AQLCoreError`).
+
+### `AQLCoreErrorLog` removed - confirmed dead, Nicholas asked for the deletion (2026-09-19, same session)
+
+Following straight on from the flag above, Nicholas asked to remove it now that it was confirmed
+fully dead (`DUMP_WIN` never defined anywhere in the build; no call site anywhere registers an
+edit box via `setLog()`, so `mEditBox` is always `NULL` and `setMsg()` always no-ops). Removed:
+
+- `src\math\include\AQLCoreErrorLog.h` and `src\math\src\AQLCoreErrorLog.cpp` - deleted outright.
+- `AQLCoreError.cpp`'s `printLog()` - dropped its one call site (`AQLCoreErrorLog::setMsg(info->
+  mMsgs[0]);`) and the now-unneeded `#include "AQLCoreErrorLog.h"`.
+- `AQLCoreError.h`/`.cpp`'s class-doc comments - dropped the "This class depends only
+  AQLCoreErrorLog" line from both (no longer true).
+- `projects\math.vcxproj` and `math.vcxproj.filters` - removed the `ClInclude`/`ClCompile` entries
+  for both files.
+
+Confirmed via a repo-wide grep (`*.h`/`*.cpp`/`*.vcxproj`/`*.filters`) that zero references to
+`AQLCoreErrorLog` remain anywhere in the tree. `math` does a full clean Rebuild with no errors;
+`etrading` (the heaviest consumer of the exception infrastructure) builds clean too.

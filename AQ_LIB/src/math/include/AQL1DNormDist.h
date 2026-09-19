@@ -27,7 +27,6 @@
 class AQL1DNormDist : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQL1DNormDist();
 	// constructor
@@ -35,7 +34,6 @@ public:
 	// destructor
 	virtual ~AQL1DNormDist();
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;
@@ -101,7 +99,6 @@ public:
 	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi, unsigned int posj)const { (void)x; (void)posi; (void)posj; return true;};
 
 
-//  OPERATION
 	                            //==========================================
 								// set distribution parameter
 	virtual void				setParam(const DoubleArray& param);

@@ -52,7 +52,4 @@ friend class AQLCoreDataService;
 	static void finalize();
 	static AQLLogger *mpLogger;   // logger instance
 	static AQLLogger *mpXVALogger;   // logger instance
-#ifdef __HAS_MIC__
-	static common_lib::StaticMutex mMutex;
-#endif
 };

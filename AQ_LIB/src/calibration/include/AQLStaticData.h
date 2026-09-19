@@ -61,8 +61,5 @@ private:
 	AQLFileAccessor *mpFile;         
 	std::map<AQLString, AQLString> mProp; 
 
-#ifdef __HAS_MIC__
-	mutable common_lib::Mutex mMutex;
-#endif
 
 };

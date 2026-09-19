@@ -34,7 +34,6 @@ enum OPENMODE// file open mode
 class AQLFile
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLFile();
 	explicit AQLFile(const char_t* fileName, OPENMODE openMode);
@@ -42,7 +41,6 @@ public:
 	// destructor
 	virtual ~AQLFile();
 
-//  QUERYS
 	// check whether it is opened
 	bool					isDefined(void) {return mpFile ? true : false;}
 	// check whether it is changed
@@ -66,7 +64,6 @@ public:
 	// get Items in the array of the rec-th record separated by "del"
 	AQLStringVector			getItems(unsigned int rec, char_t del) const;
 
-//  OPERATION
 	// open file
 	void					openFile(const char_t* fileName, 
 									 OPENMODE openMode);

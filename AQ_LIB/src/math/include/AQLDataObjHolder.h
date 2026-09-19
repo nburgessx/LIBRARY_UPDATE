@@ -19,7 +19,6 @@
 class AQLObjHolder 
 {
 public:
-//  LIFECYCLE
     // constructor
     explicit AQLObjHolder(AQLBase* e = NULL, bool deleteFlag=false);
     // copy constructor
@@ -27,7 +26,6 @@ public:
     // destructor
     ~AQLObjHolder();
 
-//  QUERY
     // check whethe define or not
     bool                isDefined() const {return mpObj != NULL;}
     // get AQLBase, behavior when it is not define is undefined
@@ -37,7 +35,6 @@ public:
     // get data, behavior when it is not define is undefined
     Records_var         get(const AQLObjectHolder& objHolder) const {return mpObj->get(objHolder);}
 
-//  OPERATION
     // set the data get class
     void                set(AQLBase* base, bool deleteFlag=false);
     // set delete flag

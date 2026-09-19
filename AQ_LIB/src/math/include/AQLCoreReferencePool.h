@@ -29,7 +29,6 @@ class AQLCoreReferencePool
 {
 friend class AQLObjectPool;
 public:
-	//  QUERY
     // return the number of registered Entities
     /*!
         @return the number of registered Entities
@@ -60,7 +59,6 @@ public:
     */
 	EntityConstIter     end(void) const {return mReferencee.end();}
 
-//  OPERATION
     // set the referenced Object from the Reference Pool
 	AQLObjectHolder&		setReference(const AQLString& name);
 

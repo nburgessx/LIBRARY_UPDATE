@@ -50,7 +50,6 @@ const double NEGATIVE_INFINITY	= -std::numeric_limits<double>::infinity(); // ne
 class AQLFunctionBase : public AQLCoreFunctionBase
 {
 public:
-//  LIFECYCLE
 	// Default constructor
 	explicit AQLFunctionBase(bool checkflag = false);
 	//	Copy constructor
@@ -58,7 +57,6 @@ public:
 	// Destructor
 	virtual ~AQLFunctionBase();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
 	virtual bool                isTypeOf(function_t id) const;
@@ -169,7 +167,6 @@ public:
 								// return string representaion
     virtual AQLString			convertToString(void) const;
 
-//  OPERATION
 								//==========================================
 								// transform from string representaion
      virtual void				convertFromString(const AQLString& str);//added by matsumura 20061204

@@ -26,13 +26,11 @@ class AQLFunctionBase;
 class AQLGaussHermite : public AQLGaussianQuadrature
 {
 public:
-//  LIFECYCLE
 	// constructor
 	explicit AQLGaussHermite(unsigned short numberOfPoints);
 	// destructor
 	virtual ~AQLGaussHermite();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;

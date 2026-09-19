@@ -27,7 +27,6 @@
 class AQLPriceDataRand : public AQLPriceDataType
 {
 public:
-//	LIFECYCLE
 	// default constructor
 	AQLPriceDataRand(void);
 
@@ -43,7 +42,6 @@ public:
 	// destructor
     virtual ~AQLPriceDataRand(void);
 
-//  QUERY
 	// deep copy of this object
     virtual AQLPriceDataType*	    clone() const; 
 	
@@ -78,7 +76,6 @@ public:
     void                        setDim(const UintArray& dimValue);
 	// function to set parameters
     void						setParam(const DoubleMatrix& param);
-//  OPERATOR	
     // set the method of function to generate rondom numbers from the selected string format
 	virtual void			    convertFromString(const AQLString& str);
 		

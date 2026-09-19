@@ -20,7 +20,6 @@ class AQLObjectHolder;
 class AQLDataReference : public AQLPriceDataType
 {
 public:
-//	LIFECYCLE
     // default constructor
 	AQLDataReference(void);
     // copy constructor
@@ -30,7 +29,6 @@ public:
     // destructor
     virtual ~AQLDataReference(void);
 
-//  QUERY
     // deep copy of the data object
     virtual AQLPriceDataType*	clone() const;
 
@@ -43,7 +41,6 @@ public:
     // get the referenced Object Holder
     AQLObjectHolder&			get();
 
-//  OPERATOR
     // set the reference from string representation
     virtual void			convertFromString(const AQLString& str);
 

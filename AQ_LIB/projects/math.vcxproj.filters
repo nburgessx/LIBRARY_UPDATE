@@ -110,10 +110,10 @@
     <ClInclude Include="..\src\math\include\AQLDateTime.h">
       <Filter>include\DataTypes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\include\AQLMathCalendar.h">
+    <ClInclude Include="..\src\math\include\AQLCalendar.h">
       <Filter>include\DataTypes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\include\AQLMathCalendarSet.h">
+    <ClInclude Include="..\src\math\include\AQLCalendarSet.h">
       <Filter>include\DataTypes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\include\AQLObject.h">
@@ -449,9 +449,6 @@
     <ClInclude Include="..\src\math\include\AQLCoreError.h">
       <Filter>include\ErrorHandling</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\include\AQLCoreErrorLog.h">
-      <Filter>include\ErrorHandling</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\math\include\AQLCoreSystemError.h">
       <Filter>include\ErrorHandling</Filter>
     </ClInclude>
@@ -490,10 +487,10 @@
     <ClCompile Include="..\src\math\src\AQLString.cpp">
       <Filter>src\DataTypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\src\AQLMathCalendar.cpp">
+    <ClCompile Include="..\src\math\src\AQLCalendar.cpp">
       <Filter>src\DataTypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\src\AQLMathCalendarSet.cpp">
+    <ClCompile Include="..\src\math\src\AQLCalendarSet.cpp">
       <Filter>src\DataTypes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\math\src\AQLMatrix.cpp">
@@ -584,9 +581,6 @@
       <Filter>src\ErrorHandling</Filter>
     </ClCompile>
     <ClCompile Include="..\src\math\src\AQLCoreError.cpp">
-      <Filter>src\ErrorHandling</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\math\src\AQLCoreErrorLog.cpp">
       <Filter>src\ErrorHandling</Filter>
     </ClCompile>
     <ClCompile Include="..\src\math\src\AQLCoreSystemError.cpp">

@@ -29,14 +29,12 @@ class AQLFunctionBase;
 class AQLOptimumBrent : public AQLOptimumBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLOptimumBrent();
 	AQLOptimumBrent(double initPoint, double lwBound, double upBound, unsigned int maxIter, double tol);
 	// destructor
 	virtual ~AQLOptimumBrent();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;

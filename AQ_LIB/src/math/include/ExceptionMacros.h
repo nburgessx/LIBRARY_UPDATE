@@ -51,16 +51,26 @@ if ( (condition) ) \
 }
 #endif
 
-// Macro to catch an error message
+// Macro to catch an error message and rethrow it unchanged.
+//
+// Rethrows with a bare `throw;`, not `throw e;`. `throw e` constructs a NEW exception object of
+// e's *static* catch-clause type (AQLCoreError / std::exception) and throws that - it slices away
+// whatever derived type (AQLCoreInvalidData, AQLCoreNumericalError, AQLCoreSystemError, or any
+// std::exception subclass) the original throw site actually used. A caller further up the stack
+// doing catch(const AQLCoreNumericalError&) to handle numerical failures differently from input
+// validation failures would silently stop matching once the exception passed through this macro -
+// no compiler warning, just a catch clause that quietly stops firing. `throw;` (bare, no operand)
+// rethrows the original exception object with its original dynamic type intact - the standard,
+// idiomatic way to "catch, do nothing extra, propagate" in C++.
 #ifndef AQ_CATCH
 #define AQ_CATCH \
-    catch(const AQLCoreError& e) \
+    catch(const AQLCoreError&) \
     { \
-        throw e; \
+        throw; \
     } \
-    catch(const std::exception& e) \
+    catch(const std::exception&) \
     { \
-        throw e; \
+        throw; \
     }
 #endif
 

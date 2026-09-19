@@ -27,7 +27,6 @@ class AQLRandBase;
 class AQLIntegralMC : public AQLIntegralBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLIntegralMC(unsigned long num, const AQLRandBase& v);
 	// destructor
@@ -35,7 +34,6 @@ public:
 	// copy constructor
 	AQLIntegralMC(const AQLIntegralMC& v);
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
@@ -50,7 +48,6 @@ public:
 								// Return integral result
 	virtual double				integrate(const AQLFunctionBase& f,
 											const std::vector<std::pair<double,double> >& x) const;
-// OPERATION
 								//======================================
                                 // Set random number generator
 	void						setRandGenerator(const AQLRandBase& v);

@@ -16,9 +16,6 @@
 #include "AQLCalibrationFunc.h"
 #include "AQLCoreAppError.h"
 #include "AQLMathVolFuncFXStrangleSolver.h"
-#ifdef __HAS_MIC__
-
-#endif
 
 using namespace std;
 
@@ -66,33 +63,18 @@ AQLCalibrationFunc::clone() const
 	try 
 	{
 		//cout << static_cast<int>(AQLCoreThread::getThreadID()) << " clone start. this = " << this << endl;
-#ifdef __HAS_MIC__
-		mMutex.lock();
-#endif
 		while (!mIsReady && !mpRealFunc)
 		{
 			//cout << static_cast<int>(AQLCoreThread::getThreadID()) << " wait.. this = " << this << endl;
-#ifdef __HAS_MIC__
-			mMutex.unlock();
-#endif
 			mEvent.wait();
-#ifdef __HAS_MIC__
-			mMutex.lock();
-#endif
 			//cout << static_cast<int>(AQLCoreThread::getThreadID()) << " wait end ! this = " << this << endl;
 		}
 		//return real method deep copy
 		//cout << static_cast<int>(AQLCoreThread::getThreadID()) << " clone end. this = " << this << endl;
-#ifdef __HAS_MIC__
-		mMutex.unlock();
-#endif
 		return mpRealFunc->clone();
 	}
 	catch (bad_alloc &e)
 	{
-#ifdef __HAS_MIC__
-		mMutex.unlock();
-#endif
 		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 }
@@ -157,9 +139,6 @@ AQLCalibrationFunc::operator()(double t) const
 void
 AQLCalibrationFunc::setRealFunction(const AQLFunctionBase &method)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::Mutex> lock(mMutex);
-#endif
 	if (mpRealFunc)
 	{
 		delete mpRealFunc;
@@ -174,9 +153,6 @@ AQLCalibrationFunc::setRealFunction(const AQLFunctionBase &method)
 void
 AQLCalibrationFunc::setOn()
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::Mutex> lock(mMutex);
-#endif
 	//cout << static_cast<int>(AQLCoreThread::getThreadID()) << " SetOn called. this = " << this << endl;
 	
 	if (!mpRealFunc)

@@ -27,21 +27,17 @@ static const int MINUTE_RANK              = 100;     // multiplier for date time
 /* Format*/
 // constants for output format
 enum _TFORMAT {HH=0, MI, SS, DEFAULT};         
-static const char_t* FORMAT[4] = 
-                {"HH", "MI", "SS", "DEFAULT"}; // string of constants for output format
-static const unsigned int   FLENGTH[4] = {2, 2, 2, 1};  // number of strings of constants for output format
-static const char_t* OUT_FORM[4] =
-                {"%02d", "%02d", "%02d", "%01d"}; // output format
+static const char_t* FORMAT[4]			= {"HH", "MI", "SS", "DEFAULT"}; // string of constants for output format
+static const unsigned int FLENGTH[4]	= {2, 2, 2, 1};	// number of strings of constants for output format
+static const char_t* OUT_FORM[4]		= {"%02d", "%02d", "%02d", "%01d"};	// output format
 
-//////////////////////////// PUBLIC  ///////////////////////////////////////
-//=========================  LIFECYCLE  ====================================
 /*!
     @brief default constructor
 
     set as the default (= 1 Julian date) 0:00:00 of January 1 of the year 1 AD
 */
 AQLDateTime::AQLDateTime(void) 
-: AQLDate(), mHour(0), mMinute(0), mSecond(0) 
+: AQLDate(), hour_(0), minute_(0), second_(0) 
 { 
 }
 
@@ -71,7 +67,6 @@ AQLDateTime::~AQLDateTime(void)
 {
 }
 
-//=========================  OPERATION  ====================================
 /*!
     @brief set the date according to format
 
@@ -91,21 +86,24 @@ AQLDateTime::setDate(
 
     with the systet time, set the object to the data of date, hour, minute and second 
 */
-void 
-AQLDateTime::setSystemDate(void) 
+void
+AQLDateTime::setSystemDate(void)
 {
-    struct tm *date;
+    struct tm date;
     time_t now;
     now = time(NULL);
 
-    date   = localtime(&now);
+    localtime_s(&date, &now);  // thread-safe: localtime() writes through a shared static buffer -
+                                // matches the same fix already applied to AQLDate::setSystemDate()
+                                // and to AQ_XLL/src/aqDate.cpp; this class has its own override so
+                                // that earlier fix never covered it.
 
-	setYear((unsigned int)(date->tm_year + 1900));
-    setMonth((unsigned int)(date->tm_mon + 1));
-    setDay((unsigned int)(date->tm_mday));
-	setHour((unsigned int)(date->tm_hour));
-	setMinute((unsigned int)(date->tm_min));
-	setSecond((unsigned int)(date->tm_sec));
+	setYear((unsigned int)(date.tm_year + 1900));
+    setMonth((unsigned int)(date.tm_mon + 1));
+    setDay((unsigned int)(date.tm_mday));
+	setHour((unsigned int)(date.tm_hour));
+	setMinute((unsigned int)(date.tm_min));
+	setSecond((unsigned int)(date.tm_sec));
 }
 
 /*!
@@ -132,7 +130,7 @@ AQLDateTime::setHour(
 		hour = 0;
 	}
 	// set
-    mHour = (unsigned short)hour;
+    hour_ = (unsigned short)hour;
 }
 
 /*!
@@ -159,7 +157,7 @@ AQLDateTime::setMinute(
 		addHours(1);
 		min = 0;
 	}
-    mMinute = (unsigned short)min;
+    minute_ = (unsigned short)min;
 }
 
 /*!
@@ -186,7 +184,7 @@ AQLDateTime::setSecond(
 		addMinutes(1);
 		sec = 0;
 	}
-	mSecond = (unsigned short)sec;
+	second_ = (unsigned short)sec;
 }
 
 /*!
@@ -197,7 +195,7 @@ AQLDateTime::setSecond(
 void 
 AQLDateTime::addHours(const int hours)
 {
-	int total = mHour + hours;
+	int total = hour_ + hours;
 	int days, hour;
 	// adjust the number of days
 	if (total < 0)
@@ -216,7 +214,7 @@ AQLDateTime::addHours(const int hours)
 	{
 		addDays(days);
 	}
-	mHour = (unsigned short)hour;
+	hour_ = (unsigned short)hour;
 }
 
 /*!
@@ -227,7 +225,7 @@ AQLDateTime::addHours(const int hours)
 void
 AQLDateTime::addMinutes(const int mins)
 {
-	int total = mMinute + mins;
+	int total = minute_ + mins;
 	int hours, min;
 	// adjust the number of hours
 	if (total < 0)
@@ -245,7 +243,7 @@ AQLDateTime::addMinutes(const int mins)
 	{  // adjust the number of hours
 		addHours(hours);
 	}
-	mMinute = (unsigned short)min;
+	minute_ = (unsigned short)min;
 }
 
 /*!
@@ -256,7 +254,7 @@ AQLDateTime::addMinutes(const int mins)
 void 
 AQLDateTime::addSeconds(const int secs)
 {
-	int total = mSecond + secs;
+	int total = second_ + secs;
 	int mins, sec;
 	// adjust the number of minutes
 	if (total < 0)
@@ -274,10 +272,9 @@ AQLDateTime::addSeconds(const int secs)
 	{  // adjust the number of minutes
 		addMinutes(mins);
 	}
-	mSecond = (unsigned short)sec;
+	second_ = (unsigned short)sec;
 }
 
-//=====================  QUERY  ============================================
 /*!
     @brief return hour
     
@@ -286,7 +283,7 @@ AQLDateTime::addSeconds(const int secs)
 int 
 AQLDateTime::getHour(void) const
 {
-    return mHour;
+    return hour_;
 }
 
 /*!
@@ -297,7 +294,7 @@ AQLDateTime::getHour(void) const
 int 
 AQLDateTime::getMinute(void) const
 {
-    return mMinute;
+    return minute_;
 }
 
 /*!
@@ -308,7 +305,7 @@ AQLDateTime::getMinute(void) const
 int 
 AQLDateTime::getSecond(void) const
 {
-     return mSecond;
+     return second_;
 }
 
 /*!
@@ -352,9 +349,9 @@ AQLDateTime::cmp(
 	int ret = AQLDate::cmp(rDate);
 	if (ret == 0)
 	{
-		ret = (((int)mHour - (int)(rDate.mHour)) * HOUR_RANK +
-            ((int)mMinute - (int)(rDate.mMinute)) * MINUTE_RANK +
-            ((int)mSecond - (int)(rDate.mSecond)));
+		ret = (((int)hour_ - (int)(rDate.hour_)) * HOUR_RANK +
+            ((int)minute_ - (int)(rDate.minute_)) * MINUTE_RANK +
+            ((int)second_ - (int)(rDate.second_)));
 	}
 	return ret;
 }
@@ -473,9 +470,9 @@ AQLDateTime::formatWithLong(
        
     rSt = format;
 
-    dateTime[HH]   = mHour;
-    dateTime[MI]   = mMinute;
-    dateTime[SS]   = mSecond;
+    dateTime[HH]   = hour_;
+    dateTime[MI]   = minute_;
+    dateTime[SS]   = second_;
 
     for (i = 0; i < rSt.size();) 
 	{
@@ -518,8 +515,8 @@ AQLDateTime::copy(
 	const AQLDateTime& d) 
 {
 	AQLDate::copy(d);
-	mHour = d.mHour;
-	mMinute = d.mMinute;
-	mSecond = d.mSecond;
+	hour_ = d.hour_;
+	minute_ = d.minute_;
+	second_ = d.second_;
 }
 

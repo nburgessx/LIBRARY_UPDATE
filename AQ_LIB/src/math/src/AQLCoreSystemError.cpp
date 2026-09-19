@@ -8,6 +8,33 @@
 #include <cerrno>
 #include <string.h>
 
+namespace
+{
+    // strerror(errno) writes through a single shared static buffer - a textbook data race if two
+    // threads each hit a system-call error and construct an AQLCoreSystemError at the same time
+    // (one thread's message text can be overwritten by the other's before the base AQLCoreError
+    // constructor copies it into its own storage). strerror_s is the thread-safe MSVC CRT
+    // replacement, but it fills a caller-owned buffer rather than returning one - and a
+    // constructor's base-class initializer list runs before the constructor body, so there is
+    // nowhere to declare an ordinary local variable to hold that buffer before the call to
+    // AQLCoreError's constructor below needs it. A `thread_local` buffer solves both problems at
+    // once: each thread gets its own private copy (no cross-thread race, unlike strerror's shared
+    // static buffer), and being a static-duration object rather than a stack local, it can be
+    // filled and returned from an ordinary function called directly inside the initializer list.
+    const char_t* threadSafeStrerror(void)
+    {
+        thread_local char_t buffer[256];
+        if (strerror_s(buffer, sizeof(buffer), errno) != 0)
+        {
+            // strerror_s itself failed (an unrecognised errno value) - fall back to a message that
+            // still tells the caller something went wrong, rather than handing AQLCoreError
+            // whatever strerror_s left in an unfilled buffer.
+            strcpy_s(buffer, sizeof(buffer), "Unknown system error");
+        }
+        return buffer;
+    }
+}
+
 /*!
     @brief constructor
 
@@ -16,10 +43,10 @@
     @param[in] msg additional error message
     @param[in] file file name that error occurs
     @param[in] line line number of the file that error occurs
-    
+
 */
 AQLCoreSystemError::AQLCoreSystemError(const char_t* msg, const char_t* file, unsigned int line)
-: AQLCoreError(strerror(errno), file, line)
+: AQLCoreError(threadSafeStrerror(), file, line)
 {
     addMsg(msg);
 }
@@ -31,10 +58,10 @@ AQLCoreSystemError::AQLCoreSystemError(const char_t* msg, const char_t* file, un
 
     @param[in] file file name that error occurs
     @param[in] line line number of the file that error occurs
-    
+
 */
 AQLCoreSystemError::AQLCoreSystemError(const char_t* file, unsigned int line)
-:AQLCoreError(strerror(errno), file, line)
+: AQLCoreError(threadSafeStrerror(), file, line)
 {
 }
 

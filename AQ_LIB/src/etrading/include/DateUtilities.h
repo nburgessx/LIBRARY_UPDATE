@@ -15,7 +15,7 @@
 #include <boost/regex.hpp>
 #include <boost/assign.hpp>
 
-#include "AQLMathCalendar.h"
+#include "AQLCalendar.h"
 #include "CoreEnumerations.h"
 #include "AQLDate.h"
 
@@ -106,17 +106,17 @@ namespace etrading
 
     const bool isWeekend( const boost::gregorian::date& date );
 
-    const bool isBusinessDay( const boost::gregorian::date& d, const AQLMathCalendar& cal ) ;
+    const bool isBusinessDay( const boost::gregorian::date& d, const AQLCalendar& cal ) ;
 
-    const int firstNonBusinessDayIdx( const std::vector<boost::gregorian::date>& dates, const AQLMathCalendar& cal );
+    const int firstNonBusinessDayIdx( const std::vector<boost::gregorian::date>& dates, const AQLCalendar& cal );
 
     boost::gregorian::date dayAdjust( const boost::gregorian::date& d,
 									  const BusinessDayAdjustmentEnum busDayAdjust,
-									  const AQLMathCalendar& cal );
+									  const AQLCalendar& cal );
 
     std::vector<boost::gregorian::date> dayAdjust( const std::vector<boost::gregorian::date>& inputDates,
                                                    const BusinessDayAdjustmentEnum bdAdj,
-                                                   const AQLMathCalendar& cal );
+                                                   const AQLCalendar& cal );
 
     const bool isLeapYear( int year );
 

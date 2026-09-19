@@ -58,9 +58,6 @@ private:
 	// vanna-volga
 	static std::map<AQLString, AQLLinearRatesModel*> mModelMap;
 	static AQLLinearRatesVolatilityManager *mpInstance; // single instance
-#ifdef __HAS_MIC__
-	static common_lib::StaticMutex mMutex;
-#endif
 };
 
 #endif

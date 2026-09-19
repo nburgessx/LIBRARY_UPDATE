@@ -27,7 +27,6 @@
 class AQLMaxMethod : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLMaxMethod();
 	// destructor
@@ -37,7 +36,6 @@ public:
 	AQLMaxMethod & operator=( const AQLMaxMethod & ) { return *this; }
 
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;
@@ -112,7 +110,6 @@ public:
 	                            // check double derivable or not.	
 	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi, unsigned int posj) const; 
 
-//  OPERATION
 
 private:
 

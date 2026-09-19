@@ -26,14 +26,12 @@ template<class T>
 class AQLPriceTargetFunction : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLPriceTargetFunction();
 	// destructor
 	virtual ~AQLPriceTargetFunction();
 
 
-//  QUERY
 								//======================================
 								// Check function for this class type
 	virtual bool                isTypeOf(function_t id) const;
@@ -48,7 +46,6 @@ public:
 	virtual double				operator()(const DoubleArray& x) const;
 
 
-//  OPERATION
 	/*!
 		@brief set pair of valuable object
 		@param[in] target pointer pair of valuable object

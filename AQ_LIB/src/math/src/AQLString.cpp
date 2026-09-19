@@ -314,6 +314,44 @@ int AQLString::findString(const char_t c) const
     return found ? static_cast<int>(i) : -1;
 }
 
+bool AQLString::startsWith(const AQLString& pString) const noexcept
+{
+    return startsWith(pString.getCString());
+}
+
+bool AQLString::startsWith(const char_t* pString) const noexcept
+{
+    if (pString == nullptr) return false;
+    const unsigned int prefixLen = STRLEN(pString);
+    if (prefixLen > size()) return false;
+    if (prefixLen == 0) return true;
+    return memcmp(getCString(), pString, prefixLen * sizeof(char_t)) == 0;
+}
+
+bool AQLString::endsWith(const AQLString& pString) const noexcept
+{
+    return endsWith(pString.getCString());
+}
+
+bool AQLString::endsWith(const char_t* pString) const noexcept
+{
+    if (pString == nullptr) return false;
+    const unsigned int suffixLen = STRLEN(pString);
+    if (suffixLen > size()) return false;
+    if (suffixLen == 0) return true;
+    return memcmp(getCString() + (size() - suffixLen), pString, suffixLen * sizeof(char_t)) == 0;
+}
+
+bool AQLString::contains(const AQLString& pString) const noexcept
+{
+    return findString(pString) != -1;
+}
+
+bool AQLString::contains(const char_t* pString) const noexcept
+{
+    return findString(pString) != -1;
+}
+
 
 AQLString&
 AQLString::toUpper(void)
@@ -334,6 +372,18 @@ AQLString::toLower(void)
     {
         ch = (char_t)tolower((int)ch);
     }
+    return *this;
+}
+
+AQLString&
+AQLString::toUpperTrimmed(bool trimWhiteSpace)
+{
+    if (trimWhiteSpace)
+    {
+        trimLeft();
+        trimRight();
+    }
+    toUpper();
     return *this;
 }
 
@@ -897,6 +947,63 @@ int AQLString::cmp(const char_t* pString) const
     else if (!isDefined()) return -1;
     else if (pString == nullptr) return 1;
     return stringData_->compare(pString);
+}
+
+// Case-insensitive three-way comparison. Deliberately not implemented by uppercasing temporary
+// copies of both sides and calling compare() - that allocates twice per comparison, wasteful for
+// something meant to be usable in hot lookup paths (matching a calendar/currency code case-
+// insensitively). Direct char-by-char comparison, same signed-char-to-int-via-unsigned-char care
+// toUpper()/toLower() already take elsewhere in this file, no allocation either way.
+int AQLString::compareIgnoreCase(const AQLString& rString) const noexcept
+{
+    if (!isDefined() && !rString.isDefined()) return 0;
+    if (!isDefined()) return -1;
+    if (!rString.isDefined()) return 1;
+    return compareIgnoreCase(rString.getCString());
+}
+
+int AQLString::compareIgnoreCase(const std::string& rString) const noexcept
+{
+    // Routed through an AQLString, not rString.c_str() directly, to match cmp(const std::string&)'s
+    // existing pattern - c_str() is always `const char*`, which only matches char_t in narrow
+    // builds; the AQLString(const std::string&) constructor is the one place that distinction is
+    // already handled.
+    AQLString myAQLString(rString);
+    return compareIgnoreCase(myAQLString);
+}
+
+int AQLString::compareIgnoreCase(const char_t* pString) const noexcept
+{
+    if (!isDefined() && pString == nullptr) return 0;
+    if (!isDefined()) return -1;
+    if (pString == nullptr) return 1;
+
+    const char_t* a = getCString();
+    const char_t* b = pString;
+    while (*a != '\0' && *b != '\0')
+    {
+        const int ca = tolower(static_cast<unsigned char>(*a));
+        const int cb = tolower(static_cast<unsigned char>(*b));
+        if (ca != cb) return ca - cb;
+        ++a;
+        ++b;
+    }
+    return static_cast<int>(static_cast<unsigned char>(*a)) - static_cast<int>(static_cast<unsigned char>(*b));
+}
+
+bool AQLString::equalsIgnoreCase(const AQLString& rString) const noexcept
+{
+    return compareIgnoreCase(rString) == 0;
+}
+
+bool AQLString::equalsIgnoreCase(const std::string& rString) const noexcept
+{
+    return compareIgnoreCase(rString) == 0;
+}
+
+bool AQLString::equalsIgnoreCase(const char_t* pString) const noexcept
+{
+    return compareIgnoreCase(pString) == 0;
 }
 
 // ------------------------- Private Methods ----------------------------------------

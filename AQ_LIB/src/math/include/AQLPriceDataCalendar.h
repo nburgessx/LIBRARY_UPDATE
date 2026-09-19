@@ -8,7 +8,7 @@
 #include "AQLCoreAppError.h"
 #include "AQLCoreSystemError.h"
 #include "AQLString.h"
-#include "AQLMathCalendar.h"
+#include "AQLCalendar.h"
 #include "AQLCoreTemplateType.h"
 #include <set>
 #include <vector>
@@ -33,7 +33,6 @@ AQLStringVector splitCalendarCentres( const AQLString& centres );
 class AQLPriceDataCalendar : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
 
 	// default constructor
     AQLPriceDataCalendar(void);
@@ -44,7 +43,6 @@ public:
 	// destructor
 	virtual ~AQLPriceDataCalendar(void);
 
-//  QUERY
     // deep copy of the data object
     virtual AQLPriceDataType*	clone() const;
 
@@ -52,9 +50,9 @@ public:
     virtual AQLString	convertToString(void) const;
 
     // get calendar that the class has
-	const std::set<const AQLMathCalendar *>&	getCalendarSet(void)const;
+	const std::set<const AQLCalendar *>&	getCalendarSet(void)const;
    // get calendar that the class has
-	const AQLMathCalendar	&getCalendar(const bool isCache = true) const;
+	const AQLCalendar	&getCalendar(const bool isCache = true) const;
 
     // get the business date added to (s) from base date(d)
 	AQLDate				getBusinessDay(const AQLDate& d, int s) const;
@@ -69,7 +67,6 @@ public:
 	// get beginning of month date
 	AQLDate				getBOMDay(const AQLDate& d) const;
 
-//  OPERATION
     // set the holiday Data calendar from the specified city code string
     virtual void		convertFromString(const AQLString& str);
 
@@ -80,16 +77,13 @@ protected:
     // compare the contents against the other objecet
     virtual int			compare(const AQLPriceDataType& a) const;
  //   // get calendar that the class has
-	//const AQLMathCalendar&	getCalendar(void)const;
+	//const AQLCalendar&	getCalendar(void)const;
 
 private:
-	std::set<const AQLMathCalendar *>	mCalendarSet;		// holiday calendar
-	mutable AQLMathCalendar  *mpCalendar;		// holiday calendar
+	std::set<const AQLCalendar *>	mCalendarSet;		// holiday calendar
+	mutable AQLCalendar  *mpCalendar;		// holiday calendar
 	StringSet			mCity;			// set of cities
-	static AQLMathCalendar	mStdCalendar;	// standard calendar (Sat. and Sun. are set to be holiday)
+	static AQLCalendar	mStdCalendar;	// standard calendar (Sat. and Sun. are set to be holiday)
 	static bool			mInitialize;	// initialize flag of standard calendar
-#ifdef __HAS_MIC__
-	static common_lib::StaticMutex  mMutex;
-#endif
 };
 

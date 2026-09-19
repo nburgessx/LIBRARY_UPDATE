@@ -22,12 +22,10 @@
 class AQLRandBase : public AQLCoreFunctionBase
 {
 public:
-//  LIFECYCLE
     AQLRandBase(bool isHalleyMod = false);
     virtual ~AQLRandBase();
     //  copy constructor
 //  AQLRandBase(const AQLRandBase& v);
-//  QUERY
                                 //======================================
                                 // check whether this class derives from base class with type id
     virtual bool                isTypeOf(function_t id) const;
@@ -48,7 +46,6 @@ public:
     const UlongArray&			getSeed(void)const;
 								// judged if Halley mode or not
     const int					getIsHalleyMod(void)const{return mIsHalleyMod? 1: 0;}
-//  OPERATION
 								// function to set seed
     virtual void                setSeed(const UlongArray& seedValue);				
 								// function to set dimension information(first element should be the number of dimension)

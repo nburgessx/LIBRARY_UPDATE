@@ -113,6 +113,7 @@
     <ClCompile Include="..\src\GTEST\src\TestAQObjHedgeCurveDelta.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestCurvePolynomialInterpolation.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestRandomNumbers.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestAQLMatrix.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestRiskUtilities.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestSABRCalibration.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestSimpsonsRuleIntegration.cpp" />

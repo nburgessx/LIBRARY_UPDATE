@@ -8,7 +8,7 @@
 #include "AQLCoreAppError.h"
 #include "AQLCoreSystemError.h"
 #include "AQLDate.h"
-#include "AQLMathCalendar.h"
+#include "AQLCalendar.h"
 #include "AQLPriceDataCalendar.h"
 
 
@@ -53,7 +53,7 @@ public:
     const SlidingRuleType&	getSlidingRule() const {return mSlidingRuleType;}
 
     // get the date adjusted the holiday
-	AQLDate				getDate(const AQLDate& d,const AQLMathCalendar& c)const;
+	AQLDate				getDate(const AQLDate& d,const AQLCalendar& c)const;
     
 	// get the date adjusted the holiday
 	AQLDate				getDate(const AQLDate& d,const AQLPriceDataCalendar& c)const;

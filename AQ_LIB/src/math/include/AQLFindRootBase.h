@@ -47,13 +47,11 @@ public:
 class AQLFindRootBase : public AQLCoreFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLFindRootBase();
 	// destructor
 	virtual ~AQLFindRootBase();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;

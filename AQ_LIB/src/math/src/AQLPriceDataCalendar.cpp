@@ -9,18 +9,12 @@
 
 #include "AQLPriceDataCalendar.h"
 #include "AQLDataVector.h"
-#include "AQLMathCalendarSet.h"
+#include "AQLCalendarSet.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLBasic.h"
-#ifdef __HAS_MIC__
-
-#endif
 using namespace std;
 
-#ifdef __HAS_MIC__
-common_lib::StaticMutex AQLPriceDataCalendar::mMutex;
-#endif
-AQLMathCalendar	AQLPriceDataCalendar::mStdCalendar;
+AQLCalendar	AQLPriceDataCalendar::mStdCalendar;
 bool		AQLPriceDataCalendar::mInitialize = false;
 
 /*!
@@ -39,9 +33,6 @@ AQLStringVector splitCalendarCentres( const AQLString& centres )
 AQLPriceDataCalendar::AQLPriceDataCalendar(void)
 : AQLPriceDataType(DATA_CALENDAR), mpCalendar(0) 
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	if (!mInitialize)
 	{
 #ifndef MEMORY_CHECK
@@ -58,7 +49,7 @@ AQLPriceDataCalendar::AQLPriceDataCalendar(void)
     @brief constructor
 
     Process over the holiday to the city name.
-	Information of city holiday city needs to be set to AQLMathCalendarSet object in advance.
+	Information of city holiday city needs to be set to AQLCalendarSet object in advance.
 	If you specify more than one city name, city information of each holiday is set in addition.
 
     @param[in] city a city holiday information to initialize(multi set is available with vector)
@@ -66,14 +57,14 @@ AQLPriceDataCalendar::AQLPriceDataCalendar(void)
 AQLPriceDataCalendar::AQLPriceDataCalendar(AQLStringVector city)
 	: AQLPriceDataType(DATA_CALENDAR), mpCalendar(0)
 {
-	AQLMathCalendarSet	calendarSet;
+	AQLCalendarSet	calendarSet;
 
 	int		i = -1;
 	try
 	{
 		if (city.size() > 1)
 		{
-			//AQLMathCalendar		cal;
+			//AQLCalendar		cal;
 			for (i = 0; i < static_cast<int>(city.size()); i++)
 			{
 				//cal = calendarSet.getCalendar(city[i]);
@@ -185,7 +176,7 @@ AQLPriceDataCalendar::convertToString(void) const
     
     @return calendar with holiday information
 */
-const AQLMathCalendar &
+const AQLCalendar &
 AQLPriceDataCalendar::getCalendar(const bool isCache) const
 {
 	if (mpCalendar)
@@ -197,14 +188,14 @@ AQLPriceDataCalendar::getCalendar(const bool isCache) const
 		else
 		{
 			delete mpCalendar;
-			mpCalendar = new AQLMathCalendar;
+			mpCalendar = new AQLCalendar;
 		}
 	}
 	else
 	{
-		mpCalendar = new AQLMathCalendar;
+		mpCalendar = new AQLCalendar;
 	}
-	set<const AQLMathCalendar *>::const_iterator it = mCalendarSet.begin();
+	set<const AQLCalendar *>::const_iterator it = mCalendarSet.begin();
 	while (it != mCalendarSet.end())
 	{
 		(*mpCalendar) += *(*it);
@@ -213,7 +204,7 @@ AQLPriceDataCalendar::getCalendar(const bool isCache) const
 	return *mpCalendar;
 }
 
-const set<const AQLMathCalendar *>&
+const set<const AQLCalendar *>&
 AQLPriceDataCalendar::getCalendarSet(void)const
 {
 	return mCalendarSet;
@@ -244,7 +235,7 @@ AQLPriceDataCalendar::getBusinessDay(const AQLDate& d, int s) const
 		while (isHoliday)
 		{
 			isHoliday = false;
-			set<const AQLMathCalendar *>::const_iterator it = mCalendarSet.begin();
+			set<const AQLCalendar *>::const_iterator it = mCalendarSet.begin();
 			while (it != mCalendarSet.end())
 			{
 				if ((*it)->isHoliday(ret))
@@ -272,7 +263,7 @@ AQLPriceDataCalendar::getBusinessDay(const AQLDate& d, int s) const
 			isHoliday = false;
 			ret.addDays(next_step);
 			count++;
-			set<const AQLMathCalendar *>::const_iterator it = mCalendarSet.begin();
+			set<const AQLCalendar *>::const_iterator it = mCalendarSet.begin();
 			while (it != mCalendarSet.end())
 			{
 				if ((*it)->isHoliday(ret))
@@ -374,7 +365,7 @@ AQLPriceDataCalendar::getEOMDay(const AQLDate& d) const
 	while (isHoliday)
 	{
 		isHoliday = false;
-		set<const AQLMathCalendar *>::const_iterator it = mCalendarSet.begin();
+		set<const AQLCalendar *>::const_iterator it = mCalendarSet.begin();
 		while (it != mCalendarSet.end())
 		{
 			if ((*it)->isHoliday(eomDate))
@@ -411,7 +402,7 @@ AQLPriceDataCalendar::getEOWDay(const AQLDate& d) const
 	while (isHoliday)
 	{
 		isHoliday = false;
-		set<const AQLMathCalendar *>::const_iterator it = mCalendarSet.begin();
+		set<const AQLCalendar *>::const_iterator it = mCalendarSet.begin();
 		while (it != mCalendarSet.end())
 		{
 			if ((*it)->isHoliday(eowDate))
@@ -442,7 +433,7 @@ AQLPriceDataCalendar::getBOMDay(const AQLDate& d) const
 	while (isHoliday)
 	{
 		isHoliday = false;
-		set<const AQLMathCalendar *>::const_iterator it = mCalendarSet.begin();
+		set<const AQLCalendar *>::const_iterator it = mCalendarSet.begin();
 		while (it != mCalendarSet.end())
 		{
 			if ((*it)->isHoliday(bomDate))
@@ -468,7 +459,7 @@ void
 AQLPriceDataCalendar::convertFromString(const AQLString& str)
 {
 	
-	AQLMathCalendarSet		calendarSet;
+	AQLCalendarSet		calendarSet;
 	mCity.clear();
 	mCalendarSet.clear();
 	setNull();
@@ -501,7 +492,7 @@ AQLPriceDataCalendar::convertFromString(const AQLString& str)
 		{
 			for (it = tokens.begin();it != tokens.end(); ++it)
 			{
-				//AQLMathCalendar	cal;
+				//AQLCalendar	cal;
 				//cal = calendarSet.getCalendar(*it);  // get the calendar from the city name
 				//mCalendar += cal;
 				mCalendarSet.insert(&calendarSet.getCalendar(*it));

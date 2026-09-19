@@ -15,13 +15,11 @@
 class AQLMersenneTwister : public AQLRandBase
 {
 public:
-//  LIFECYCLE
     AQLMersenneTwister(bool isHalleyMod = false);// Default Construcotr
     virtual ~AQLMersenneTwister();// Destructor
     // copy constructor - Use default copy constructor
     // AQLMersenneTwister(const AQLMersenneTwister& v);
 
-//  QUERY
                                 //======================================
                                 // check whether this class derives from base class with type id
     virtual bool                isTypeOf(function_t id) const;
@@ -41,7 +39,6 @@ public:
 	// assignment operator
 	AQLMersenneTwister & operator=( const AQLMersenneTwister & ) { return *this; }
 
-//  OPERATION
 
 private:
     // N = 624 defined in .cpp file.

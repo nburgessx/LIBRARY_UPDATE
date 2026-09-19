@@ -52,9 +52,6 @@ AQLStaticData::~AQLStaticData(void)
 AQLString AQLStaticData::getStaticData(const AQLString &key) const
 {
 
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::Mutex> lock(mMutex);
-#endif
 
 	CItr it = mProp.find(key);
 
@@ -72,9 +69,6 @@ AQLString AQLStaticData::getStaticData(const AQLString &key) const
 AQLString AQLStaticData::getStaticData(const AQLString &key, const AQLString &alias) const
 {
 
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::Mutex> lock(mMutex);
-#endif
 
 	// Search for Primary Key
 	CItr it = mProp.find(key);
@@ -107,9 +101,6 @@ AQLString AQLStaticData::getStaticData(const AQLString &key, const AQLString &al
 void AQLStaticData::setStaticData(const AQLString &key, const AQLString &value)
 {
 
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::Mutex> lock(mMutex);
-#endif
 
 	Itr it = mProp.find(key);
 
@@ -124,9 +115,6 @@ void AQLStaticData::setStaticData(const AQLString &key, const AQLString &value)
 void AQLStaticData::removeStaticData(const AQLString &key)
 {
 
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::Mutex> lock(mMutex);
-#endif
 
 	Itr it = mProp.find(key);
 

@@ -9,17 +9,11 @@
 #include "AQLCoreDataService.h"
 #include "AQLCoreAppError.h"
 #include <sstream>
-#ifdef __HAS_MIC__
-
-#endif
 using namespace std;
 
 map<AQLString, AQLString> AQLCalibrate::mSerializeMap;
 map<AQLString, map<AQLString, AQLString> > AQLCalibrate::mDeserializedEMap;
 map<AQLString, bool> AQLCalibrate::mIsDeserializedMap;
-#ifdef __HAS_MIC__
-common_lib::StaticMutex AQLCalibrate::mMutex;
-#endif
 // constructor
 /*!
 
@@ -48,9 +42,6 @@ AQLCalibrate::~AQLCalibrate()
 void
 AQLCalibrate::clear(const AQLString &fileNum)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear serialized map
 	map<AQLString, AQLString>::iterator it = mSerializeMap.begin();
 	while (it != mSerializeMap.end())
@@ -101,9 +92,6 @@ AQLCalibrate::clear(const AQLString &fileNum)
 void
 AQLCalibrate::clear()
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear serialized map
 	mSerializeMap.clear();
 	// clear deserialized object map
@@ -130,9 +118,6 @@ AQLCalibrate::clear()
 void
 AQLCalibrate::deserializeStream(const AQLString &key)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	//deserialize
 	istringstream *dataStream = AQLCoreDataService::getIStringStream(key);
 	if (!dataStream)
@@ -161,9 +146,6 @@ AQLCalibrate::deserializeStream(const AQLString &key)
 void 
 AQLCalibrate::setmSerializeMap(const AQLString &fileNum)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	mSerializeMap[mSerializeFile] += fileNum + "\n";
 }
 
@@ -174,8 +156,5 @@ AQLCalibrate::setmSerializeMap(const AQLString &fileNum)
 void 
 AQLCalibrate::setmIsDeserializedMap(bool isDeserializedMap)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	mIsDeserializedMap[mSerializeFile] = isDeserializedMap;
 }

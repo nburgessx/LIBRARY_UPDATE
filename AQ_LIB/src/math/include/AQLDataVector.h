@@ -42,7 +42,6 @@
 class AQLDataBools : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataBools(void);
     // copy constructor
@@ -52,7 +51,6 @@ public:
     // destructor
     virtual ~AQLDataBools(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*    clone() const;
 
@@ -71,7 +69,6 @@ public:
     */
     unsigned int            getSize(void) const {return mData.size();}
 
-//  OPERATION
     // set data data from a specific string format
     virtual void            convertFromString(const AQLString& str);
     // set data
@@ -98,7 +95,6 @@ public:
     // array subscript operator
     bool                    operator[](int i) const;
 
-//  OPERATOR
     // assignment operator
     AQLDataBools&            operator=(const BoolVector& b);
 
@@ -119,7 +115,6 @@ private:
 class AQLDataStrings : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataStrings(void);
     // copy constructor
@@ -129,7 +124,6 @@ public:
     // destructor
     virtual ~AQLDataStrings(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*    clone() const;
 
@@ -148,7 +142,6 @@ public:
     */
     unsigned int            getSize(void) const {return mData.size();}
 
-//  OPERATION
     // set data data from a specific string format
     virtual void            convertFromString(const AQLString& str);
 
@@ -174,7 +167,6 @@ public:
     void                    clear();
     // array subscript operator
     const AQLString&         operator[](int i) const;
-//  OPERATOR
     // assignment operator
     AQLDataStrings&          operator=(const AQLStringVector& b);
 
@@ -194,7 +186,6 @@ private:
 class AQLDataDateTimes : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataDateTimes(void);
     // copy constructor
@@ -204,7 +195,6 @@ public:
     // destructor
     virtual ~AQLDataDateTimes(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*    clone() const;
 
@@ -223,7 +213,6 @@ public:
     */
     unsigned int            getSize(void) const {return mData.size();}
 
-//  OPERATION
     // set data data from a specific string format
     virtual void            convertFromString(const AQLString& str);
 
@@ -252,7 +241,6 @@ public:
     // array subscript operator
     const AQLDateTime&           operator[](int i) const;
 
-//  OPERATOR
     // assignment operator
     AQLDataDateTimes&        operator=(const DateTimeVector& b);
 
@@ -272,7 +260,6 @@ private:
 class AQLDataDates : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataDates(void);
     // copy constructor
@@ -282,7 +269,6 @@ public:
     // destructor
     virtual ~AQLDataDates(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*    clone() const;
 
@@ -301,7 +287,6 @@ public:
     */
     unsigned int            getSize(void) const {return mData.size();}
 
-//  OPERATION
     // set data data from a specific string format
     virtual void            convertFromString(const AQLString& str);
 
@@ -329,7 +314,6 @@ public:
     void                    clear();
     // array subscript operator
     const AQLDate&           operator[](int i) const;
-//  OPERATOR
     // assignment operator
     AQLDataDates&            operator=(const DateVector& b);
 
@@ -350,7 +334,6 @@ private:
 class AQLDataInts : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataInts(void);
     // copy constructor
@@ -360,7 +343,6 @@ public:
 	// destructor
     virtual ~AQLDataInts(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*    clone() const;
 
@@ -379,7 +361,6 @@ public:
     */
     unsigned int              getSize(void) const {return mData.size();}
 
-//  OPERATION
     // set data data from a specific string format
     virtual void            convertFromString(const AQLString& str);
 
@@ -394,7 +375,6 @@ public:
     void                    clear();
     // array subscript operator
     int                     operator[] (int i) const;
-//  OPERATOR
     // assignment operator
     AQLDataInts&             operator=(const IntArray& b);
 
@@ -414,7 +394,6 @@ private:
 class AQLDataDoubles : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataDoubles(int pre=DOUBLE_PRECISION);
     // copy constructor
@@ -425,7 +404,6 @@ public:
     // destructor
     virtual ~AQLDataDoubles(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*    clone() const;
 
@@ -444,7 +422,6 @@ public:
     */
     unsigned int               getSize(void) const {return mData.size();}
 
-//  OPERATION
     // set data data from a specific string format
     virtual void            convertFromString(const AQLString& str);
 
@@ -462,7 +439,6 @@ public:
     void                    clear();
     // array subscript operator
     double                  operator[] (int i) const;
-//  OPERATOR
     // assignment operator
     AQLDataDoubles&          operator=(const DoubleArray& b);
 

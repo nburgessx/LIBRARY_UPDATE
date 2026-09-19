@@ -27,7 +27,6 @@
 class AQLExpMethod : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLExpMethod(double a, const AQLFunctionBase& method);
 	// destructor
@@ -35,7 +34,6 @@ public:
 	// copy constructor
 	AQLExpMethod(const AQLExpMethod& method);
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
@@ -87,7 +85,6 @@ public:
 								{return mpFunc->isDifferentiable(x, posi, posj);};
 
 
-//  OPERATION
 								//==========================================
 	                            // set check flag
 	virtual void				setCheckFlag(bool checkflag = true);

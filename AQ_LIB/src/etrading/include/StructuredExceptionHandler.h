@@ -78,16 +78,21 @@ namespace etrading
 #endif
 
 
+// Rethrows with a bare `throw;`, not `throw e;` - see ExceptionMacros.h's AQ_CATCH comment for the
+// full rationale. `throw e;` would slice every AQLCoreInvalidData/AQLCoreNumericalError/
+// AQLCoreSystemError (and any std::exception subclass) down to the catch clause's own static type
+// on the way out of *every* tryAqXyz validation-layer function - this macro is that boundary, so
+// the slicing would happen at essentially every public API call in the library.
 #define VALID_EXCEPTION_END	         \
     }						         \
-    catch(const AQLCoreError& e)	         \
+    catch(const AQLCoreError&)	         \
     {						         \
-        throw e;			         \
+        throw;			         \
     }                                \
-    catch(const std::exception& e)	 \
+    catch(const std::exception&)	 \
     {						         \
-        throw e;			         \
-    } 
+        throw;			         \
+    }
 
 
 #if defined(_WIN32) || defined(_WIN64)

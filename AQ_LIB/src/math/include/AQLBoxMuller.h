@@ -15,12 +15,10 @@
 class AQLBoxMuller : public AQLRandBase
 {
 public:
-//  LIFECYCLE
     AQLBoxMuller(); // Default Construcotr
     virtual ~AQLBoxMuller(); // Destructor
     AQLBoxMuller(const AQLBoxMuller& v); // Copy Constructor
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
@@ -38,7 +36,6 @@ public:
 	virtual void                getGaussians(DoubleArray& variates);
 
 
-//  OPERATION
                                 //==========================================
 								// set dimension (overriding)
 	virtual void				setDim(const UintArray& dimValue);

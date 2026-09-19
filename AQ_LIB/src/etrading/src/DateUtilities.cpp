@@ -41,7 +41,7 @@ namespace etrading
         return number < 0.0 ? int( ceil( number - 0.5 ) ) : int( floor( number + 0.5 ) );
     }
 
-    const int firstNonBusinessDayIdx( const std::vector<boost::gregorian::date>& dates, const AQLMathCalendar& cal )
+    const int firstNonBusinessDayIdx( const std::vector<boost::gregorian::date>& dates, const AQLCalendar& cal )
     {
         auto loc_of_non_business_day = std::find_if( dates.cbegin(), dates.cend(), [&cal] ( const boost::gregorian::date & date )
         {
@@ -62,7 +62,7 @@ namespace etrading
         return ( date.day_of_week() ==  boost::date_time::Saturday || date.day_of_week() ==  boost::date_time::Sunday );
     }
 
-    const bool isBusinessDay( const boost::gregorian::date& d, const AQLMathCalendar& cal )
+    const bool isBusinessDay( const boost::gregorian::date& d, const AQLCalendar& cal )
     {
         AQLDate aqDate( toYYYYMMDDFromGregorianDate( d ).c_str() );
         return !( cal.isHoliday( aqDate ) );
@@ -71,7 +71,7 @@ namespace etrading
     std::vector<boost::gregorian::date>
     dayAdjust(	const std::vector<boost::gregorian::date>& inputDates,
                 const BusinessDayAdjustmentEnum bdAdj,
-                const AQLMathCalendar& cal )
+                const AQLCalendar& cal )
     {
         std::vector<boost::gregorian::date> retDatesUsed;
         std::for_each( inputDates.cbegin(), inputDates.cend(), [&retDatesUsed, &cal, &bdAdj]( const boost::gregorian::date & inputDate )
@@ -83,14 +83,14 @@ namespace etrading
 
     boost::gregorian::date dayAdjust(	const boost::gregorian::date& d,
                                         const BusinessDayAdjustmentEnum busDayAdjust,
-                                        const AQLMathCalendar& cal )
+                                        const AQLCalendar& cal )
     {
 
         boost::gregorian::date ret = d;
         bool isHoliday = false;
 
-        //const set<const AQLMathCalendar *> &calSet = c.getCalendarSet();
-        //set<const AQLMathCalendar *>::const_iterator it = calSet.begin();
+        //const set<const AQLCalendar *> &calSet = c.getCalendarSet();
+        //set<const AQLCalendar *>::const_iterator it = calSet.begin();
 
         if ( !isBusinessDay( ret, cal ) )
         {

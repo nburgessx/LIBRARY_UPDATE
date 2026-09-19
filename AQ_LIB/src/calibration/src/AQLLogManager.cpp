@@ -11,16 +11,10 @@
 #include "AQLLogManager.h"
 #include "AQLDefinitions.h"
 #include "AQLStaticData.h"
-#ifdef __HAS_MIC__
-
-#endif
 using namespace std;
 
 AQLLogger *AQLLogManager::mpLogger = 0;
 AQLLogger *AQLLogManager::mpXVALogger = 0;
-#ifdef __HAS_MIC__
-common_lib::StaticMutex AQLLogManager::mMutex;
-#endif
 
 //================ AQLLogManager ===================================
 // constructor
@@ -51,9 +45,6 @@ AQLLogManager::~AQLLogManager(void)
 AQLLogger &
 AQLLogManager::getLogger(void)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	if (mpLogger)
 	{
 		// open check
@@ -89,9 +80,6 @@ AQLLogManager::getLogger(void)
 AQLLogger &
 AQLLogManager::getXVALogger(void)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	if (mpXVALogger)
 	{
 		// open check
@@ -123,9 +111,6 @@ AQLLogManager::getXVALogger(void)
 void
 AQLLogManager::finalize()
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	if (mpLogger)
 	{
 		delete mpLogger;

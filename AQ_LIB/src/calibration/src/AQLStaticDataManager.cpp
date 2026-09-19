@@ -9,9 +9,6 @@
 #include "AQLString.h"
 #include "AQLStaticData.h"
 #include "AQLMarketData.h"
-#ifdef __HAS_MIC__
-
-#endif
 
 std::map<StandardString, StandardString *> staticDataMapByCurve_;
 std::map<AQLString, AQLStaticData *> AQLStaticDataManager::mProperties;
@@ -22,9 +19,6 @@ std::map<AQLString, AQLStaticData *> AQLStaticDataManager::mXVAProperties;
 std::map<AQLString, AQLStaticData *> AQLStaticDataManager::mCreditProperties;
 std::map<AQLString, AQLStaticData *> AQLStaticDataManager::mMktCollectionProperties;
 
-#ifdef __HAS_MIC__
-common_lib::StaticMutex AQLStaticDataManager::mMutex;
-#endif
 //================ AQLStaticDataManager ===================================
 // constructor
 /*!
@@ -51,9 +45,6 @@ void
 AQLStaticDataManager::finalize(void)
 {
 
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 
 	for (pIter itr=mProperties.begin(); itr!= mProperties.end(); itr++)
     {
@@ -138,9 +129,6 @@ AQLStaticDataManager::finalize(void)
 AQLStaticData &
 AQLStaticDataManager::getStaticData(const AQLString& propertyName, pMap& propertyMap)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	AQLString id = getPropertiesID();
 	pIter itr = propertyMap.find(id);
 	if (itr == propertyMap.end())
@@ -205,9 +193,6 @@ AQLStaticData & AQLStaticDataManager::getMktCollectionStaticData()
 
 void AQLStaticDataManager::clearStaticDataObject(const AQLString &fileNum)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear properties
 	std::map<AQLString, AQLStaticData *>::iterator proIt = mProperties.find(fileNum);
 	if (proIt != mProperties.end())
@@ -219,9 +204,6 @@ void AQLStaticDataManager::clearStaticDataObject(const AQLString &fileNum)
 
 void AQLStaticDataManager::clearRiskStaticDataObject(const AQLString &fileNum)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear risk properties
 	std::map<AQLString, AQLStaticData *>::iterator proIt = mRiskProperties.find(fileNum);
 	if (proIt != mRiskProperties.end())
@@ -240,9 +222,6 @@ void AQLStaticDataManager::clearRiskStaticDataObject(const AQLString &fileNum)
 void 
 AQLStaticDataManager::clearCalibStaticDataObject(const AQLString &fileNum) 
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear calib properties 
 	std::map<AQLString, AQLStaticData *>::iterator proIt = mCalibProperties.find(fileNum); 
 	if (proIt != mCalibProperties.end()) 
@@ -261,9 +240,6 @@ AQLStaticDataManager::clearCalibStaticDataObject(const AQLString &fileNum)
 void 
 AQLStaticDataManager::clearGridStaticData(const AQLString &fileNum) 
 { 
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear calib properties 
 	std::map<AQLString, AQLStaticData *>::iterator proIt = mGridStaticData.find(fileNum); 
 	if (proIt != mGridStaticData.end()) 
@@ -282,9 +258,6 @@ AQLStaticDataManager::clearGridStaticData(const AQLString &fileNum)
 void
 AQLStaticDataManager::clearXVAStaticDataObject(const AQLString &fileNum)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear calib properties 
 	std::map<AQLString, AQLStaticData *>::iterator proIt = mXVAProperties.find(fileNum);
 	if (proIt != mXVAProperties.end())
@@ -303,9 +276,6 @@ AQLStaticDataManager::clearXVAStaticDataObject(const AQLString &fileNum)
 void
 AQLStaticDataManager::clearCreditStaticDataObject(const AQLString &fileNum)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear credit properties 
 	std::map<AQLString, AQLStaticData *>::iterator proIt = mCreditProperties.find(fileNum);
 	if (proIt != mCreditProperties.end())

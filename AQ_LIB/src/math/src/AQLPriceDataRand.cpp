@@ -17,7 +17,6 @@
 using namespace std;
 
 //======================= IMPLEMENTATION =============================
-//// LIFECYCLE ////
 /*!
     @brief default constructor
 */
@@ -90,7 +89,6 @@ AQLPriceDataRand::~AQLPriceDataRand(void)
 	
 }
 
-//// QUERY ////
 /*!
     @brief deep copy of the object
     @return pointer to the Data object newly created

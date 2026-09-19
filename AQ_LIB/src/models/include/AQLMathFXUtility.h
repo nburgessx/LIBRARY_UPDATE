@@ -10,7 +10,7 @@
 
 class AQLDate;
 class AQLString;
-class AQLMathCalendar;
+class AQLCalendar;
 class AQLRatesPathElementCurve;
 /*! 
     @brief utility class to calculate about FX. 

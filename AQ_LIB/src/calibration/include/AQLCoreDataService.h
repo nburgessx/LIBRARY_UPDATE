@@ -17,11 +17,6 @@ class AQLString;
 class AQLStaticDataManager;
 class AQLLogManager;
 
-#ifdef __HAS_MIC__
-namespace common_lib {
-	struct StaticMutex;
-}
-#endif
 
 //===================== Class Declare AQLCoreDataService==================================
 /*! 
@@ -111,9 +106,6 @@ private:
 	static AQLStaticDataManager *mpPropertyManager; //! property manager
 	static AQLLogManager  *mpLogManager;      //! log manager
 
-#ifdef __HAS_MIC__
-	static common_lib::StaticMutex mMutex;
-#endif
 
 };
 

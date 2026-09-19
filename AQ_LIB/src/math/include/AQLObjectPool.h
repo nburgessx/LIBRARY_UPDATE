@@ -31,7 +31,6 @@ enum EntityCheckType {
 class AQLObjectPool
 {
 public:
-//  QUERY
     // return the number of registered Entities
     /*!
         @return the number of registered Entities
@@ -71,7 +70,6 @@ public:
 	// return the full list of data names from object pool
 	AQLStringVector		getNames() const;
 
-//  OPERATION
 
     // set the Object to the Object Pool
 	void				set(const AQLString& name, AQLObject* e);
@@ -95,7 +93,6 @@ private:
 
 	// impossible to be generated from class excep AQLDataInstance
 friend class AQLDataInstance;
-//  LIFECYCLE
     // default constructor
 	AQLObjectPool(void);
     // destructor

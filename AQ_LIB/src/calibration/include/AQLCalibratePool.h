@@ -89,9 +89,6 @@ private:
 
 	std::vector<AQLCalibrationThread *> mThreads; // calibration thread
 	mutable AQLEvent mEvent;  // event
-#ifdef __HAS_MIC__
-	mutable common_lib::Mutex mMutex;
-#endif
 };
 
 #endif

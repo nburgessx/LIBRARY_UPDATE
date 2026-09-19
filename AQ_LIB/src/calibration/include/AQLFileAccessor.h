@@ -83,8 +83,5 @@ private:
 	static std::map<AQLString, AQLStringVector> mDataMap; // staic data map
 	static bool mIsIStringStream; // string stream flg
 	static bool mIsSFlgInitial; // string stream flg
-#ifdef __HAS_MIC__
-	static common_lib::StaticMutex mMutex;
-#endif
 };
 

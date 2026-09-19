@@ -18,7 +18,6 @@ class AQLFactorModel : public AQLRandBase
 {
 public:
 
-//  LIFECYCLE
 	// constructor
     AQLFactorModel();
 
@@ -31,7 +30,6 @@ public:
 	AQLFactorModel & operator=( const AQLFactorModel & ) { return *this; }
 
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
@@ -55,7 +53,6 @@ public:
 
 
 
-//  OPERATION
 								//======================================
 								// set a random number generator
 	virtual void				setRandGenerator(const AQLRandBase& v);

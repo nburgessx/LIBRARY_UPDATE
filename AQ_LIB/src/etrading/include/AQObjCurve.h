@@ -262,9 +262,9 @@ namespace etrading
 
         boost::gregorian::date adjustFromAsOfDateUsingTenorString( const std::string& tenorString, const BusinessDayAdjustmentType adjType = AQObjCurve::PAYMENT_BUSINESSDAYADJUSTMENT ) const;
 
-        const std::pair<const BusinessDayAdjustmentEnum, const AQLMathCalendar*> getBusinessDayAdjust( const BusinessDayAdjustmentType ) const;
+        const std::pair<const BusinessDayAdjustmentEnum, const AQLCalendar*> getBusinessDayAdjust( const BusinessDayAdjustmentType ) const;
 
-        const AQLMathCalendar* getCalendar( const std::string& calendarName ) const;
+        const AQLCalendar* getCalendar( const std::string& calendarName ) const;
 
 
 

@@ -30,13 +30,11 @@ using namespace std;
 class AQLEulerIntegral : public AQL1DIntegral
 {
 public:
-//  LIFECYCLE
 	// Default constructor
 	explicit AQLEulerIntegral(unsigned short numberOfPoints);
 	// Destructor
 	virtual ~AQLEulerIntegral();
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;
@@ -82,13 +80,11 @@ protected:
 class AQLPCIntegral : public AQL1DIntegral
 {
 public:
-//  LIFECYCLE
 	// Default constructor
 	explicit AQLPCIntegral(const vector<double>& x_);
 	// Destructor
 	virtual ~AQLPCIntegral();
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;

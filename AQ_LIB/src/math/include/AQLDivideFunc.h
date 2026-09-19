@@ -22,7 +22,6 @@
 class AQLDivideMethod : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLDivideMethod();
 	// destructor
@@ -31,7 +30,6 @@ public:
 	AQLDivideMethod & operator=( const AQLDivideMethod & ) { return *this; }
 
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;
@@ -46,7 +44,6 @@ public:
 								// return function value
 	virtual double				operator()(const DoubleArray& x) const;
 
-//  OPERATION
 
 private:
 

@@ -6,30 +6,29 @@
 
 #include "AQLDate.h"
 
-
 /*! 
     @brief Class which provides date or time functions.
-
     This class has time information in addition to the date information that AQLDate class has.
 */
 class AQLDateTime : public AQLDate
 {
 public:
-//  LIFECYCLE                    
+    
     // Set default date is 1/01/01
     // default constructor
     AQLDateTime(void);
+    
     // constructor
-	explicit AQLDateTime(const char_t*   datetime, const char_t*   format="YYYYMMDD HH:MI:SS");
+	explicit AQLDateTime(const char_t* datetime, const char_t* format="YYYYMMDD HH:MI:SS");
+    
     // copy constructor
     AQLDateTime(const AQLDateTime& date);
+    
     // destructor
     virtual ~AQLDateTime();
 
-//  OPERATION
     // set the date according to a format
-    virtual void        setDate(const char_t*   date, 
-                                const char_t*   format="YYYYMMDD HH:MI:SS");
+    virtual void        setDate(const char_t* date, const char_t* format="YYYYMMDD HH:MI:SS");
 
     // set the system date
     virtual void        setSystemDate(void);
@@ -46,7 +45,6 @@ public:
     // add seconds
     void                addSeconds(const int seconds);
    
-//  QUERY
     // return hour
     int                 getHour(void) const;
     // return minute
@@ -60,7 +58,6 @@ public:
     // make a comparison of time. Returns a positive value when their own is the new time.
     int					cmp(const AQLDateTime& rTime) const;
 
-	// OPERATOR
     // relational operator
     bool                operator==(const AQLDateTime& a) const {return cmp(a) == 0;}
     // relational operator
@@ -75,18 +72,19 @@ public:
     bool                operator<(const AQLDateTime& a)  const {return cmp(a) < 0;}
 
 protected:
+    
     // set the date according to a format
     void				formatWithString(const char_t *st,  const char_t *format);
+    
     // get the date according to a format
-    void				formatWithLong(AQLString& str,
-                                       const char_t *format) const;
+    void				formatWithLong(AQLString& str, const char_t *format) const;
 
     // shallow copy of the object
     void				copy(const AQLDateTime& rTime);
 
 private:
 
-    unsigned short     mHour;      // hour(023)
-    unsigned short     mMinute;    // minute(059)
-    unsigned short     mSecond;    // second(059)
+    unsigned short     hour_;      // hour(023)
+    unsigned short     minute_;    // minute(059)
+    unsigned short     second_;    // second(059)
 };

@@ -12,18 +12,12 @@
 #include "AQLCoreDataService.h"
 #include "AQLString.h"
 #include "AQLDefinitions.h"
-#ifdef __HAS_MIC__
-
-#endif
 
 using namespace std;
 
 bool AQLFileAccessor::mIsIStringStream = false;
 bool AQLFileAccessor::mIsSFlgInitial = false;
 std::map<AQLString, AQLStringVector> AQLFileAccessor::mDataMap;
-#ifdef __HAS_MIC__
-common_lib::StaticMutex AQLFileAccessor::mMutex;
-#endif
 // constructor
 /*!
 	file open in the constructor
@@ -101,9 +95,6 @@ void
 AQLFileAccessor::readAllData(AQLStringVector &vec)
 {
 	vec.clear();
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	try
 	{
 		//AQLStringVector &sData = mDataMap[mName];
@@ -292,9 +283,6 @@ AQLFileAccessor::initialize()
 void
 AQLFileAccessor::clearFileCache(const AQLString &fileNum)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear file cache
 	AQLStringVector keyVec;
 	map<AQLString, AQLStringVector>::iterator fIt = AQLFileAccessor::mDataMap.begin();
@@ -322,9 +310,6 @@ AQLFileAccessor::clearFileCache(const AQLString &fileNum)
 void
 AQLFileAccessor::clearAllFileCache()
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear file cache
 	map<AQLString, AQLStringVector>::iterator fIt = AQLFileAccessor::mDataMap.begin();
 	while (fIt != AQLFileAccessor::mDataMap.end())
@@ -343,9 +328,6 @@ AQLFileAccessor::clearAllFileCache()
 void
 AQLFileAccessor::clearFileMember(const AQLString &key)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear file member
 	map<AQLString, AQLStringVector>::iterator fIt = AQLFileAccessor::mDataMap.find(key);
 	if (fIt != AQLFileAccessor::mDataMap.end())

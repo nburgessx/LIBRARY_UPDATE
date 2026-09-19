@@ -20,7 +20,6 @@ typedef std::vector<function_t>		FunctionTVector; // Function ID vector
 class AQLFunctionManager 
 {
 public:
-//  LIFECYCLE
     // default constructor
 	AQLFunctionManager(void);
     // copy constructor
@@ -28,7 +27,6 @@ public:
     // destructor
 	~AQLFunctionManager(void);
 
-//  QUERY
     // get the Function Holder corresponding to the specified Function name
     const AQLCoreFunctionHolder& getFunction(const AQLString& name) const;
 
@@ -36,7 +34,6 @@ public:
     // return the array of name of the registered FunctionID
 	AQLStringVector			getNameArray(void) const;
 
-//  OPERATION
     // set Function object
 	const AQLCoreFunctionHolder&	setFunction(AQLCoreFunctionBase* eq, const AQLString& name);
 

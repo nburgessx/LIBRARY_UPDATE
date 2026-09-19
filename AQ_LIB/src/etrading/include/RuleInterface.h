@@ -28,7 +28,7 @@
 #include "TypeName.h"
 #include "ETradingException.h"
 #include "Singleton.h"
-#include "AQLMathCalendar.h"
+#include "AQLCalendar.h"
 
 using etrading::is_container;
 
@@ -202,7 +202,7 @@ aqMsg21 << "BoundaryRule applied on non-numeric type: " << TypeName::get<A>(); A
     {
         typedef typename A::value_type ElementType;
     public:
-        IsWorkingDayRule( const AQLMathCalendar* ptrCalendar = nullptr ) : ptrCalendar_( ptrCalendar )
+        IsWorkingDayRule( const AQLCalendar* ptrCalendar = nullptr ) : ptrCalendar_( ptrCalendar )
         {
             if( ptrCalendar_ == nullptr )
             {
@@ -212,7 +212,7 @@ aqMsg21 << "BoundaryRule applied on non-numeric type: " << TypeName::get<A>(); A
 
         virtual bool verify( const A& a )  const
         {
-            const AQLMathCalendar* ptrCalendar = ptrCalendar_;
+            const AQLCalendar* ptrCalendar = ptrCalendar_;
             auto non_bus_day = std::find_if( a.cbegin(), a.cend(),
                                              [ptrCalendar]( const A & dateToCheck )
             {
@@ -231,7 +231,7 @@ aqMsg21 << "BoundaryRule applied on non-numeric type: " << TypeName::get<A>(); A
         };
 
     private:
-        const AQLMathCalendar* ptrCalendar_;
+        const AQLCalendar* ptrCalendar_;
 
     };
 
@@ -240,7 +240,7 @@ aqMsg21 << "BoundaryRule applied on non-numeric type: " << TypeName::get<A>(); A
     class IsWorkingDayRule<A, N, false> : public RuleInterface<A>
     {
     public:
-        IsWorkingDayRule( const AQLMathCalendar* ptrCalendar = nullptr ) : ptrCalendar_( ptrCalendar )
+        IsWorkingDayRule( const AQLCalendar* ptrCalendar = nullptr ) : ptrCalendar_( ptrCalendar )
         {
             if( ptrCalendar_ == nullptr )
             {
@@ -262,7 +262,7 @@ aqMsg21 << "BoundaryRule applied on non-numeric type: " << TypeName::get<A>(); A
             return std::shared_ptr<RuleInterface<A>>( new IsWorkingDayRule<A, N, false>( *this )  );
         };
     private:
-        const AQLMathCalendar* ptrCalendar_;
+        const AQLCalendar* ptrCalendar_;
     };
 
 

@@ -265,13 +265,11 @@ const int *const AQ_PrimitivePolynomials[N_MAX_DEGREE];
 class AQLSobol : public AQLRandBase
 {
 public:
-//  LIFECYCLE
     explicit AQLSobol(const AQLString &DI, unsigned int factor = 1, bool isHalleyMod = true); // Default Construcotr
     virtual ~AQLSobol();// Destructor
     // copy constructor
     AQLSobol(const AQLSobol& rhs);
 
-//  QUERY
                                 //======================================
                                 // Check function for this class type
     virtual bool                isTypeOf(function_t id) const;
@@ -302,7 +300,6 @@ public:
 	// suppress warning C4512
 	AQLSobol & operator=( const AQLSobol & ) { return *this; }
 
-//  OPERATION
 
 protected:
 								//======================================

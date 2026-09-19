@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-#define AQLSTRING_DOUBLESIZE 18  // the number of digits after the decimal point
+#define AQLSTRING_DOUBLESIZE 18 // the number of digits after the decimal point
 #define DOUBLE_LEN 64           // the maximum number of digits with double type
 #define INT_LEN    16           // the maximum number of digits with int integer type
 
@@ -90,11 +90,37 @@ public:
     // return the character position of the beginning of the search for the string that you specify
     int                 findString(const char_t c) const;
 
+    // true if this string starts with pString (case-sensitive)
+    bool                startsWith(const AQLString& pString) const noexcept;
+
+    // true if this string starts with pString (case-sensitive)
+    bool                startsWith(const char_t* pString) const noexcept;
+
+    // true if this string ends with pString (case-sensitive)
+    bool                endsWith(const AQLString& pString) const noexcept;
+
+    // true if this string ends with pString (case-sensitive)
+    bool                endsWith(const char_t* pString) const noexcept;
+
+    // true if pString occurs anywhere in this string - a readable alternative to
+    // findString(pString) != -1 at the call site
+    bool                contains(const AQLString& pString) const noexcept;
+
+    // true if pString occurs anywhere in this string
+    bool                contains(const char_t* pString) const noexcept;
+
     // convert all characters to uppercase
     AQLString&           toUpper(void);
 
     // convert all characters to lowercase
     AQLString&           toLower(void);
+
+    // Trims leading/trailing whitespace (unless trimWhiteSpace is false) and uppercases what's
+    // left, in one call - the shape most callers actually want when normalizing a key for
+    // case-insensitive/whitespace-tolerant lookup (a holiday-centre code, a currency, a day-of-week
+    // string read from a config file or a cell). Equivalent to trimLeft(); trimRight(); toUpper();
+    // when trimWhiteSpace is true (the default); toUpper() alone when it is false.
+    AQLString&           toUpperTrimmed(bool trimWhiteSpace = true);
 
     // replace the characters in the string
     AQLString&           exchange(const char_t from, const char_t to);
@@ -222,6 +248,22 @@ public:
 
     // String Comparison: char_t*
     int cmp(const char_t* pString) const;
+
+    // Case-insensitive three-way comparison, same sign convention as cmp() (<0, 0, >0). There's no
+    // separate case-insensitive *operator* here deliberately - operator== is already spoken for by
+    // exact comparison, and silently overloading it to sometimes ignore case depending on argument
+    // type would be a surprising, hard-to-spot behaviour change at every existing == call site.
+    // A clearly-named method says what it does at the call site instead.
+    int compareIgnoreCase(const AQLString& rString) const noexcept;
+    int compareIgnoreCase(const std::string& rString) const noexcept;
+    int compareIgnoreCase(const char_t* pString) const noexcept;
+
+    // Case-insensitive equality - the shape most callers actually want (matching a currency code,
+    // a calendar/holiday-centre name, a day-of-week string, regardless of how it was cased on the
+    // way in) without having to know or care about cmp()'s three-way sign convention.
+    bool equalsIgnoreCase(const AQLString& rString) const noexcept;
+    bool equalsIgnoreCase(const std::string& rString) const noexcept;
+    bool equalsIgnoreCase(const char_t* pString) const noexcept;
 
 
 private:

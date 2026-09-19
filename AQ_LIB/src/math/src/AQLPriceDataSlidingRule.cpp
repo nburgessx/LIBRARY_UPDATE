@@ -107,7 +107,7 @@ AQLPriceDataSlidingRule::convertToString(void) const
 
     @return the date adjusted the holiday
 */
-AQLDate AQLPriceDataSlidingRule::getDate(const AQLDate& d, const AQLMathCalendar& c)const
+AQLDate AQLPriceDataSlidingRule::getDate(const AQLDate& d, const AQLCalendar& c)const
 {       
 	AQLDate	ret = d;
 	if (c.isHoliday(ret))
@@ -393,8 +393,8 @@ AQLPriceDataSlidingRule::compare(const AQLPriceDataType& a) const
 bool
 AQLPriceDataSlidingRule::isBusinessDay(const AQLDate &d, const AQLPriceDataCalendar& c) const
 {
-	const set<const AQLMathCalendar *> &calSet = c.getCalendarSet();
-	set<const AQLMathCalendar *>::const_iterator it = calSet.begin();
+	const set<const AQLCalendar *> &calSet = c.getCalendarSet();
+	set<const AQLCalendar *>::const_iterator it = calSet.begin();
 
 	while (it != calSet.end())
 	{

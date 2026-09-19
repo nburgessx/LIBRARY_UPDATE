@@ -27,7 +27,6 @@
 class AQLConstant : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLConstant();
 	// constructor
@@ -37,7 +36,6 @@ public:
 
 	AQLConstant & operator=( const AQLConstant & ) { return *this; }
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;
@@ -101,7 +99,6 @@ public:
 	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi,unsigned int posj)const { (void)x; (void)posi; (void)posj; return true;};
 
 
-//  OPERATION
 								//==========================================
 	                            // set value	
 	virtual void				set(double x);

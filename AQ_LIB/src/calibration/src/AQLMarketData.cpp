@@ -37,16 +37,10 @@
 #define STATIC_DATA_KEY_CALIB_IRSABR_UNDERLYING					".calib.irsabr.underlying"
 #endif
 
-#ifdef __HAS_MIC__
-
-#endif
 
 using namespace std;
 
 AQLString AQLMarketData::mCalFileName;
-#ifdef __HAS_MIC__
-common_lib::StaticMutex AQLMarketData::mMutex;
-#endif
 // constructor
 /*!
 
@@ -75,9 +69,6 @@ AQLMarketData::~AQLMarketData(void)
 void 
 AQLMarketData::registCalendar(const AQLString &fileName)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// already calendar file regist
 	if (mCalFileName == fileName)
 	{
@@ -119,10 +110,10 @@ AQLMarketData::registCalendar(const AQLString &fileName)
 	//	++it;
 	//}
 
-	//AQLMathCalendarSet calMaster;
+	//AQLCalendarSet calMaster;
 	//for (int i = 0; i < cNum; ++i)
 	//{
-	//	AQLMathCalendar cal;
+	//	AQLCalendar cal;
 	//	cal.setWeekly(SAT);
 	//	cal.setWeekly(SUN);
 	//	cal.setDate(holMatrix[i]);
@@ -149,14 +140,14 @@ AQLMarketData::registCalendar(const AQLString &fileName)
 	AQLString tmpcities = AQLCoreDataService::getContext(CONTEXT_KEY_CALENDAR_CITY);
 	const AQLStringVector cities = tmpcities.toUpper().toToken(MULTI_STATIC_DATA_DELIMITER);
 
-	AQLMathCalendarSet calMaster;
+	AQLCalendarSet calMaster;
 	for (int i = 0; i < data.size(); i++)
 	{
 		const AQLString city = data[i][0].toUpper();
 		if (city.size() != 3) throw AQLCoreInvalidData("Calendar file format is wrong !! ", __FILE__, __LINE__);
 		if (cities[0] != AQ_NO_DATA && find(cities.begin(), cities.end(), city) == cities.end()) continue;
 
-		AQLMathCalendar cal;
+		AQLCalendar cal;
 		cal.setWeekly(SAT);
 		cal.setWeekly(SUN);
 		DateVector dvec;

@@ -231,7 +231,6 @@ void
 AQLDataBools::insert(BoolVector::iterator it, bool b)
 {
     update();
-// ysuzuki
 //    int i = it - begin();
 //    mData.insert(mData.begin()+i, b);
     mData.insert(it, b);
@@ -248,7 +247,6 @@ void
 AQLDataBools::erase(BoolVector::iterator it)
 {
     update();
-// ysuzuki
 //    int i = it - begin();
 //    mData.erase(mData.begin() + i);
     mData.erase(it);
@@ -522,7 +520,6 @@ void
 AQLDataStrings::insert(AQLStringVector::iterator it, const AQLString& b)
 {
     update();
-// ysuzuki
 //    int i = it - begin();
 //    mData.insert(mData.begin()+i, b);
     mData.insert(it, b);
@@ -539,7 +536,6 @@ void
 AQLDataStrings::erase(AQLStringVector::iterator it)
 {
     update();
-// ysuzuki
 //    int i = it - begin();
 //    mData.erase(mData.begin() + i);
     mData.erase(it);
@@ -844,7 +840,6 @@ void
 AQLDataDateTimes::insert(DateTimeVector::iterator it, const AQLDateTime& b)
 {
     update();
-//  ysuzuki
 //    int i = it - begin();
 //    mData.insert(mData.begin() + i, b);
     mData.insert(it, b);
@@ -861,7 +856,6 @@ void
 AQLDataDateTimes::erase(DateTimeVector::iterator it)
 {
     update();
-// ysuzuki
 //    int i = it - begin();
 //    mData.erase(mData.begin() + i);
     mData.erase(it);
@@ -1167,7 +1161,6 @@ void
 AQLDataDates::insert(DateVector::iterator it, const AQLDate& b)
 {
     update();
-// ysuzuki
 //    int i = it - begin();
 //    mData.insert(mData.begin()+i, b);
     mData.insert(it, b);
@@ -1184,7 +1177,6 @@ void
 AQLDataDates::erase(DateVector::iterator it)
 {
     update();
-// ysuzuki
 //    int i = it - begin();
 //    mData.erase(mData.begin() + i);
     mData.erase(it);

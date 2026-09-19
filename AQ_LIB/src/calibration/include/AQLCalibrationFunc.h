@@ -56,8 +56,5 @@ protected :
 	const AQLFunctionBase *mpRealFunc;		// pointer to real function
 	bool  mIsReady;                         // ready flg
 	mutable AQLEvent mEvent;                 // event
-#ifdef __HAS_MIC__
-	mutable common_lib::Mutex mMutex;
-#endif
 };
 

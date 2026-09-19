@@ -18,7 +18,6 @@
 using namespace std;
 
 //======================= IMPLEMENTATION =============================
-//// LIFECYCLE ////
 /*!
     @brief default constructor
 */
@@ -110,7 +109,6 @@ AQLPriceDataFunctions::~AQLPriceDataFunctions(void)
 
 }
 
-//// QUERY ////
 /*!
     @brief copy(clone) this object
     @return pointer to object produced

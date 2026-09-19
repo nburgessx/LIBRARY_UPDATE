@@ -25,7 +25,6 @@
 class AQLCombinationMethod : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	explicit AQLCombinationMethod(bool checkflag = false);
 	// copy constructor
@@ -33,7 +32,6 @@ public:
 	// destructor
 	virtual ~AQLCombinationMethod();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
@@ -90,7 +88,6 @@ public:
 	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi,unsigned int posj)const;
 
 
-//  OPERATION
 								//==========================================
 	                            // set check flag
 	virtual void				setCheckFlag(bool checkflag = true);

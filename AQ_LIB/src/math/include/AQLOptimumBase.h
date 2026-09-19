@@ -70,13 +70,11 @@ public:
 class AQLOptimumBase : public AQLCoreFunctionBase
 {
 public:
-//  LIFECYCLE
 	// costructor
 	AQLOptimumBase();
 	// destructor
 	virtual ~AQLOptimumBase();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;

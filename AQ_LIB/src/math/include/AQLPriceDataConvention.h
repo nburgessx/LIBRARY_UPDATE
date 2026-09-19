@@ -29,7 +29,6 @@ enum RateConvention
 class AQLPriceDataConvention : public AQLPriceDataType
 {
 public:
-//	LIFECYCLE
 	// default constructor
 	AQLPriceDataConvention(void);
 	// copy constructor
@@ -39,7 +38,6 @@ public:
 	// destructor
     virtual ~AQLPriceDataConvention(void);
 
-//  QUERY
     // deep copy of the data object
     virtual AQLPriceDataType*    clone() const; 
 
@@ -109,7 +107,6 @@ public:
 								const AQLPriceDataConvention& conv);
 
 
-//  OPERATION
     // set the rate convention Data from the specified string
     virtual void            convertFromString(const AQLString& str);
 

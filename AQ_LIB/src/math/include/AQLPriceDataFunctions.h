@@ -26,7 +26,6 @@ typedef	std::vector<AQLCoreFunctionHolder>			FunctionHolderVector;// Array of fu
 class AQLPriceDataFunctions : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
 	// default constructor
     AQLPriceDataFunctions(void);
 
@@ -43,7 +42,6 @@ public:
 	// destructor
     virtual ~AQLPriceDataFunctions(void);
 
-//  QUERY
 	// copy(clone) this object
     virtual AQLPriceDataType*        clone() const; 
 
@@ -65,7 +63,6 @@ public:
     */
     unsigned int	            getSize(void) const {return mNames.size();}
 
-//  OPERATOR    
     // set function array object with string repsentation "str"
     virtual void                convertFromString(const AQLString& str);
         
@@ -91,7 +88,6 @@ public:
 	//  VARIATION METHODS
 
 
-//  OPERATION
 protected:
 	// initialize this class with another
     virtual AQLPriceDataType&        assignment(const AQLPriceDataType& a);

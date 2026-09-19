@@ -12,39 +12,39 @@
     <!-- dd-Mmm-yyyy, zero-padded day. natvis's ternary operator does not reliably evaluate when its
          two branches are string literals (tried and confirmed broken even with matching array sizes),
          so padding is done with a literal "0" in the DisplayString text itself, selected via a second,
-         mutually-exclusive Condition per month (mDay&lt;10 vs mDay&gt;=10) rather than computed. -->
-	<DisplayString Condition="mMonth==1  &amp;&amp; mDay&lt;10">0{mDay}-Jan-{mYear}</DisplayString>
-	<DisplayString Condition="mMonth==1  &amp;&amp; mDay&gt;=10">{mDay}-Jan-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==2  &amp;&amp; mDay&lt;10">0{mDay}-Feb-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==2  &amp;&amp; mDay&gt;=10">{mDay}-Feb-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==3  &amp;&amp; mDay&lt;10">0{mDay}-Mar-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==3  &amp;&amp; mDay&gt;=10">{mDay}-Mar-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==4  &amp;&amp; mDay&lt;10">0{mDay}-Apr-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==4  &amp;&amp; mDay&gt;=10">{mDay}-Apr-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==5  &amp;&amp; mDay&lt;10">0{mDay}-May-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==5  &amp;&amp; mDay&gt;=10">{mDay}-May-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==6  &amp;&amp; mDay&lt;10">0{mDay}-Jun-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==6  &amp;&amp; mDay&gt;=10">{mDay}-Jun-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==7  &amp;&amp; mDay&lt;10">0{mDay}-Jul-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==7  &amp;&amp; mDay&gt;=10">{mDay}-Jul-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==8  &amp;&amp; mDay&lt;10">0{mDay}-Aug-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==8  &amp;&amp; mDay&gt;=10">{mDay}-Aug-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==9  &amp;&amp; mDay&lt;10">0{mDay}-Sep-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==9  &amp;&amp; mDay&gt;=10">{mDay}-Sep-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==10 &amp;&amp; mDay&lt;10">0{mDay}-Oct-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==10 &amp;&amp; mDay&gt;=10">{mDay}-Oct-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==11 &amp;&amp; mDay&lt;10">0{mDay}-Nov-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==11 &amp;&amp; mDay&gt;=10">{mDay}-Nov-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==12 &amp;&amp; mDay&lt;10">0{mDay}-Dec-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==12 &amp;&amp; mDay&gt;=10">{mDay}-Dec-{mYear}</DisplayString>
-    <DisplayString>[aqlDate] {mDay}-{mMonth}-{mYear}</DisplayString> <!-- fallback: mMonth out of range -->
+         mutually-exclusive Condition per month (day_&lt;10 vs day_&gt;=10) rather than computed. -->
+	<DisplayString Condition="month_==1  &amp;&amp; day_&lt;10">0{day_}-Jan-{year_}</DisplayString>
+	<DisplayString Condition="month_==1  &amp;&amp; day_&gt;=10">{day_}-Jan-{year_}</DisplayString>
+    <DisplayString Condition="month_==2  &amp;&amp; day_&lt;10">0{day_}-Feb-{year_}</DisplayString>
+    <DisplayString Condition="month_==2  &amp;&amp; day_&gt;=10">{day_}-Feb-{year_}</DisplayString>
+    <DisplayString Condition="month_==3  &amp;&amp; day_&lt;10">0{day_}-Mar-{year_}</DisplayString>
+    <DisplayString Condition="month_==3  &amp;&amp; day_&gt;=10">{day_}-Mar-{year_}</DisplayString>
+    <DisplayString Condition="month_==4  &amp;&amp; day_&lt;10">0{day_}-Apr-{year_}</DisplayString>
+    <DisplayString Condition="month_==4  &amp;&amp; day_&gt;=10">{day_}-Apr-{year_}</DisplayString>
+    <DisplayString Condition="month_==5  &amp;&amp; day_&lt;10">0{day_}-May-{year_}</DisplayString>
+    <DisplayString Condition="month_==5  &amp;&amp; day_&gt;=10">{day_}-May-{year_}</DisplayString>
+    <DisplayString Condition="month_==6  &amp;&amp; day_&lt;10">0{day_}-Jun-{year_}</DisplayString>
+    <DisplayString Condition="month_==6  &amp;&amp; day_&gt;=10">{day_}-Jun-{year_}</DisplayString>
+    <DisplayString Condition="month_==7  &amp;&amp; day_&lt;10">0{day_}-Jul-{year_}</DisplayString>
+    <DisplayString Condition="month_==7  &amp;&amp; day_&gt;=10">{day_}-Jul-{year_}</DisplayString>
+    <DisplayString Condition="month_==8  &amp;&amp; day_&lt;10">0{day_}-Aug-{year_}</DisplayString>
+    <DisplayString Condition="month_==8  &amp;&amp; day_&gt;=10">{day_}-Aug-{year_}</DisplayString>
+    <DisplayString Condition="month_==9  &amp;&amp; day_&lt;10">0{day_}-Sep-{year_}</DisplayString>
+    <DisplayString Condition="month_==9  &amp;&amp; day_&gt;=10">{day_}-Sep-{year_}</DisplayString>
+    <DisplayString Condition="month_==10 &amp;&amp; day_&lt;10">0{day_}-Oct-{year_}</DisplayString>
+    <DisplayString Condition="month_==10 &amp;&amp; day_&gt;=10">{day_}-Oct-{year_}</DisplayString>
+    <DisplayString Condition="month_==11 &amp;&amp; day_&lt;10">0{day_}-Nov-{year_}</DisplayString>
+    <DisplayString Condition="month_==11 &amp;&amp; day_&gt;=10">{day_}-Nov-{year_}</DisplayString>
+    <DisplayString Condition="month_==12 &amp;&amp; day_&lt;10">0{day_}-Dec-{year_}</DisplayString>
+    <DisplayString Condition="month_==12 &amp;&amp; day_&gt;=10">{day_}-Dec-{year_}</DisplayString>
+    <DisplayString>[aqlDate] {day_}-{month_}-{year_}</DisplayString> <!-- fallback: month_ out of range -->
     <Expand>
-      <Item Name="[yyyymmdd]">mYear*10000 + mMonth*100 + mDay</Item>
-      <Item Name="[Day]">mDay</Item>
-      <Item Name="[Month]">mMonth</Item>
-      <Item Name="[Year]">mYear</Item>
-      <Item Name="[Julius]" Optional="true">mJulius</Item>
-	  <Item Name="[Excel]" Optional="true">(mJulius - 693594) &gt; 0 ? (mJulius - 693594) : 0</Item>
+      <Item Name="[yyyymmdd]">year_*10000 + month_*100 + day_</Item>
+      <Item Name="[Day]">day_</Item>
+      <Item Name="[Month]">month_</Item>
+      <Item Name="[Year]">year_</Item>
+      <Item Name="[Julius]" Optional="true">julius_</Item>
+	  <Item Name="[Excel]" Optional="true">(julius_ - 693594) &gt; 0 ? (julius_ - 693594) : 0</Item>
     </Expand>
   </Type>
 

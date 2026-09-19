@@ -37,7 +37,6 @@ const int DOUBLE_PRECISION = 18;
 class AQLDataBool : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataBool(void);
     // copy constructor
@@ -47,7 +46,6 @@ public:
     // destructor
     virtual ~AQLDataBool(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*	clone() const;
     // convert boolian type data of the data into string format
@@ -64,7 +62,6 @@ public:
     // set boolian data
 	void					set(bool b);
 
-//  OPERATOR
 	// static cast into boolian type
     /*!
         @return true or false
@@ -92,7 +89,6 @@ private:
 class AQLDataString : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataString(void);
     // copy constructor
@@ -104,7 +100,6 @@ public:
     // destructor
     virtual ~AQLDataString(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*	clone() const;
 
@@ -126,7 +121,6 @@ public:
     */
 	void					set(const AQLString& str) { convertFromString(str); }
 
-//  OPERATOR
     // static cast into AQLString
     /*!
         @return AQLString object
@@ -154,7 +148,6 @@ private:
 class AQLDataDateTime : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataDateTime(void);
     // copy constructor
@@ -168,7 +161,6 @@ public:
     // destructor
     virtual ~AQLDataDateTime(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*	clone() const;
 
@@ -181,13 +173,11 @@ public:
     */
 	const AQLDateTime&		get() const {return mData;}
 	
-//  OPERATION
     // set time data from a specific string format
     virtual void			convertFromString(const AQLString& str);
     // set the time data
 	void					set(const AQLDateTime& dt);
 
-//  OPERATOR
 	 // static cast into AQLDateTime
     /*!
         @return AQLDateTime object
@@ -216,7 +206,6 @@ private:
 class AQLDataDate : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataDate(void);
     // copy constructor
@@ -230,7 +219,6 @@ public:
     // destructor
     virtual ~AQLDataDate(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*	clone() const; 
 
@@ -243,13 +231,11 @@ public:
     */
 	const AQLDate&			get() const {return mData;}
 
-//  OPERATION
     // set date data from a specific string format
     virtual void			convertFromString(const AQLString& str);
     // set the date data
 	void					set(const AQLDate& dt);
 
-//  OPERATOR
 	 // static cast into AQLDate
     /*!
         @return AQLDate object
@@ -277,7 +263,6 @@ private:
 class AQLDataInt : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataInt(void);
     // copy constructor
@@ -287,7 +272,6 @@ public:
     // destructor
     virtual ~AQLDataInt(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*	clone() const;
 
@@ -300,14 +284,12 @@ public:
     */
 	int						get() const {return mData;}
 
-//  OPERATION
     // set integer data from a specific string format
     virtual void			convertFromString(const AQLString& str);
 
     // set integer data
 	void					set(int b);
 
-//  OPERATOR
 	// static cast into integer type
  							operator int() const { return mData;}
     // assignment operator
@@ -332,7 +314,6 @@ private:
 class AQLDataDouble : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataDouble(void);
     // copy constructor
@@ -342,7 +323,6 @@ public:
     // destructor
     virtual ~AQLDataDouble(void);
 
-//  QUERY
     // deep copy of this object
     virtual AQLPriceDataType*	clone() const;
     // convert double data of the data into string format
@@ -353,7 +333,6 @@ public:
     */
 	double					get() const {return mData;}
 
-//  OPERATION
     // set double data from a specific string format
     virtual void			convertFromString(const AQLString& str);
 

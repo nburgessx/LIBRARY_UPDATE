@@ -22,7 +22,6 @@
 class AQLPriceDataInterpolation : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
 	// default constructor
     AQLPriceDataInterpolation(void);
 
@@ -39,7 +38,6 @@ public:
 	// destructor
     virtual ~AQLPriceDataInterpolation(void);
 
-//  QUERY
 	// deep copy of the data object - calling code is resposible for memory clean-up.
 	// Calling code must delete AQLPriceDataType when finished with the object to avoid memory leaks.
     virtual AQLPriceDataType*        clone() const; 
@@ -59,7 +57,6 @@ public:
 	// return method to be set
     const AQLInterpolationBase&      getMethod(void) const;
 
-//  OPERATOR    
     // set specified interpolation method from string format
     virtual void                convertFromString(const AQLString& str);
         
@@ -73,7 +70,6 @@ public:
 	// return a value of one-dimensional curve
     double                      value(const double x1) const; 
 
-//  OPERATION
 	// set a value of one-dimensional curve
     void                        set(const DoubleArray& index, const DoubleArray& value);
 

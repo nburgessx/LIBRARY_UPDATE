@@ -28,13 +28,11 @@ class AQLFunctionBase;
 class AQLOptimumBFGS : public AQLOptimumBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLOptimumBFGS();
 	// destructor
 	virtual ~AQLOptimumBFGS();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;

@@ -27,7 +27,6 @@
 class AQL1DPolynomialMethod : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQL1DPolynomialMethod();
 	// destructor
@@ -36,7 +35,6 @@ public:
 	AQL1DPolynomialMethod & operator=( const AQL1DPolynomialMethod & ) { return *this; }
 
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;
@@ -102,7 +100,6 @@ public:
 	                            // check double derivable or not.	
 	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi, unsigned int posj) const { (void)x; (void)posi; (void)posj; return true;};
 
-//  OPERATION
 
 private:
 

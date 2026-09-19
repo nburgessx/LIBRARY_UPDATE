@@ -30,7 +30,6 @@
 class AQLDataDoubleMatrix : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataDoubleMatrix(int pre=DOUBLE_PRECISION);
     // copy constructor
@@ -40,7 +39,6 @@ public:
     // destructor
     virtual ~AQLDataDoubleMatrix(void);
 
-//  QUERY
 	// check Null
   	virtual bool			isNull(void) const;
 
@@ -72,7 +70,6 @@ public:
     // return size data of an array of i-th element
     unsigned int            getSize(const unsigned int &i) const;
 
-//  OPERATION
     // set the Data data from the specified string
     virtual void            convertFromString(const AQLString& str);
 
@@ -95,7 +92,6 @@ public:
 
 
 
-//  OPERATOR
     // assignment operator
     AQLDataDoubleMatrix&          operator=(const DoubleMatrix& b);
 
@@ -116,7 +112,6 @@ private:
 class AQLDataStringMatrix : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataStringMatrix(void);
     // copy constructor
@@ -126,7 +121,6 @@ public:
     // destructor
     virtual ~AQLDataStringMatrix(void);
 
-//  QUERY
 	virtual bool			isNull(void) const;
 
 	virtual AQLPriceDataType*    clone() const;
@@ -147,7 +141,6 @@ public:
 
     unsigned int            getSize(const unsigned int &i) const;
 
-//  OPERATION
     virtual void            convertFromString(const AQLString& str);
 
     void                    set(const unsigned int &i, const unsigned int &j, const AQLString& value);
@@ -160,7 +153,6 @@ public:
 
 
 
-//  OPERATOR
     AQLDataStringMatrix&          operator=(const AQLStringMatrix& b);
 
 protected:
@@ -181,7 +173,6 @@ private:
 class AQLDataBoolMatrix : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLDataBoolMatrix(void);
     // copy constructor
@@ -191,7 +182,6 @@ public:
     // destructor
     virtual ~AQLDataBoolMatrix(void);
 
-//  QUERY
 	virtual bool			isNull(void) const;
 
     // deep copy of this object
@@ -222,7 +212,6 @@ public:
 
     unsigned int            getSize(const unsigned int &i) const;
 
-//  OPERATION
     // set data data from a specific string format
     virtual void            convertFromString(const AQLString& str);
     // set data
@@ -234,7 +223,6 @@ public:
     // clear all data
     void                    clear();
 
-//  OPERATOR
     // assignment operator
     AQLDataBoolMatrix&            operator=(const BoolMatrix& b);
 

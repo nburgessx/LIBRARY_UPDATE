@@ -24,7 +24,6 @@ class AQLObjectHolder;
 class AQLDataMultiReference : public AQLPriceDataType
 {
 public:
-//	LIFECYCLE
     // default constructor
 	AQLDataMultiReference(void);
     // copy constructor
@@ -32,7 +31,6 @@ public:
     // destructor
     virtual ~AQLDataMultiReference(void);
 
-//  QUERY
     // deep copy of the data object
     virtual AQLPriceDataType*	clone() const; 
 
@@ -48,7 +46,6 @@ public:
     // return the referenced Object selced by index(starting at 0)
 	AQLObjectHolder&			get(int i) const;
 
-//  OPERATOR
     // set the reference from string representation(separated by a delimiter string referenced by multiple Object name)
     virtual void            convertFromString(const AQLString& str);
 

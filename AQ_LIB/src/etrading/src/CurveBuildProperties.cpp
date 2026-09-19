@@ -211,17 +211,17 @@ aqMsg87 << "Curve Build Property Error; holiday city calendars cannot begin with
             useFirstHolidayCity = calendar.substr( 0, position );
 
             paymentCalendar_ = trim_to_upper( useFirstHolidayCity.c_str() );
-            aqPaymentCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
+            aqPaymentCalendar_ = &AQLCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
         }
         else
         //-----------------------------------------------------------------------------
         {
             paymentCalendar_ = trim_to_upper( calendar.c_str() );
-            aqPaymentCalendar_ = &AQLMathCalendarSet::getCalendar( paymentCalendar_.c_str() );
+            aqPaymentCalendar_ = &AQLCalendarSet::getCalendar( paymentCalendar_.c_str() );
         }
     };
 
-    const AQLMathCalendar* CurveBuildProperties::getAqPaymentCalendar() const
+    const AQLCalendar* CurveBuildProperties::getAqPaymentCalendar() const
     {
         return aqPaymentCalendar_;
     };
@@ -249,17 +249,17 @@ aqMsg88 << "Curve Build Property Error; holiday city calendars cannot begin with
             useFirstHolidayCity = calendar.substr( 0, position );
 
             accrualCalendar_ = trim_to_upper( useFirstHolidayCity.c_str() );
-            aqAccrualCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
+            aqAccrualCalendar_ = &AQLCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
         }
         else
         //-----------------------------------------------------------------------------
         {
             accrualCalendar_ = trim_to_upper( calendar.c_str() );
-            aqAccrualCalendar_ = &AQLMathCalendarSet::getCalendar( accrualCalendar_.c_str() );
+            aqAccrualCalendar_ = &AQLCalendarSet::getCalendar( accrualCalendar_.c_str() );
         }
     }
 
-    const AQLMathCalendar* CurveBuildProperties::getAqAccrualCalendar() const
+    const AQLCalendar* CurveBuildProperties::getAqAccrualCalendar() const
     {
         return aqAccrualCalendar_;
     };
@@ -287,17 +287,17 @@ aqMsg89 << "Curve Build Property Error; holiday city calendars cannot begin with
             useFirstHolidayCity = calendar.substr( 0, position );
 
             fixingCalendar_ = trim_to_upper( useFirstHolidayCity.c_str() );
-            aqFixingCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
+            aqFixingCalendar_ = &AQLCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
         }
         else
         //-----------------------------------------------------------------------------
         {
             fixingCalendar_ = trim_to_upper( calendar.c_str() );
-            aqFixingCalendar_ = &AQLMathCalendarSet::getCalendar( fixingCalendar_.c_str() );
+            aqFixingCalendar_ = &AQLCalendarSet::getCalendar( fixingCalendar_.c_str() );
         }
     }
 
-    const AQLMathCalendar* CurveBuildProperties::getAqFixingCalendar() const
+    const AQLCalendar* CurveBuildProperties::getAqFixingCalendar() const
     {
         return aqFixingCalendar_;
     };

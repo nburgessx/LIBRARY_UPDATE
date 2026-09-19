@@ -13,8 +13,8 @@
 
 #include <algorithm>
 #include "AQLDataInstance.h"
-#include "AQLMathCalendar.h"
-#include "AQLMathCalendarSet.h"
+#include "AQLCalendar.h"
+#include "AQLCalendarSet.h"
 #include "AQLCoreTemplateType.h"
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
@@ -234,9 +234,6 @@ friend class AQLCoreDataService;
 	static std::map<AQLString, int> mCorrelationMap; // currency correlation map
 	static AQLString mCalFileName; // calendar file name
 
-#ifdef __HAS_MIC__
-	static common_lib::StaticMutex mMutex;
-#endif
 };
 
 class AQLComp_StrTerm

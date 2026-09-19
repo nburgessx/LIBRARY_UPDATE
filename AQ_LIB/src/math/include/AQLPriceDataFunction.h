@@ -26,7 +26,6 @@ class AQLIntegralBase;
 class AQLPriceDataFunction : public AQLPriceDataType
 {
 public:
-//  LIFECYCLE
 	// default constructor
     AQLPriceDataFunction(void);
 
@@ -43,7 +42,6 @@ public:
 	// destructor
     virtual ~AQLPriceDataFunction(void);
 
-//  QUERY
 	// copy this object
     virtual AQLPriceDataType*        clone() const; 
 
@@ -60,7 +58,6 @@ public:
     const AQLFunctionBase&		getFunction(void) const;
 	// return the function object which this class holds
     AQLFunctionBase&				getFunction(void);
-//  OPERATOR    
     // set function object with string repsentation "str"
     virtual void                convertFromString(const AQLString& str);
         
@@ -80,7 +77,6 @@ public:
 	const DoubleArray&		getParam()const;
 //	DoubleArray&				getParam();
 
-//  OPERATION
 	// set function paramters
     void                        setParam(const DoubleArray& param);
 

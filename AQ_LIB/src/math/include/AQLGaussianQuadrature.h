@@ -28,13 +28,11 @@
 class AQLGaussianQuadrature : public AQL1DIntegral
 {
 public:
-//  LIFECYCLE
 	// Default constructor
 	explicit AQLGaussianQuadrature(unsigned short numberOfPoints);
 	// Destructor
 	virtual ~AQLGaussianQuadrature();
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;

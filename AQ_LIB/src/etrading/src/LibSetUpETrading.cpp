@@ -37,7 +37,7 @@
 
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
-#include "AQLMathCalendarSet.h"
+#include "AQLCalendarSet.h"
 #include "AQLMathValuableEntity.h"
 #include "AQLPriceDataInterpolation.h"
 #include "AQLMathValuableEntity.h"
@@ -316,11 +316,11 @@ namespace
 
 		for(int i=0; i<N;i++)
 		{
-			AQLMathCalendar cal;
+			AQLCalendar cal;
 			cal.setWeekly(SUN);
 			cal.setWeekly(SAT);
 			cal.setDate(dvec[i]);
-			AQLMathCalendarSet calSet;
+			AQLCalendarSet calSet;
 			calSet.setCalendarData(namevec[i],cal);
 		}
 		fin.close();

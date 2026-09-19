@@ -25,14 +25,12 @@ template<class T>
 class AQLPriceLSTargetFunction : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLPriceLSTargetFunction();
 	// destructor
 	virtual ~AQLPriceLSTargetFunction();
 
 
-//  QUERY
 								//======================================
 								// Check function for this class type
 	virtual bool                isTypeOf(function_t id) const;
@@ -56,7 +54,6 @@ public:
 									return AQLFunctionBase::operator()(pos, x);
 								};
 
-//  OPERATION
 	/*!
 		@brief set two lines of valuation functions
 		@param[in] target vector of pointer pair of corresponding valuation object 

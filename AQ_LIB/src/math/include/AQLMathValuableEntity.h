@@ -30,7 +30,6 @@ class AQLDataDate;
 class AQLMathObjectValue : public AQLObject
 {
 public:
-//	LIFECYCLE
     // default constructor
 	AQLMathObjectValue(AQLDataInstance* dataInstance);
     // copy constructor
@@ -38,7 +37,6 @@ public:
     // destructor
 	virtual ~AQLMathObjectValue();
 
-// QUERY
 
     // return object id
 	virtual object_t	getType(void) const;
@@ -61,7 +59,6 @@ public:
     // return Function ID this Holder has
     function_t			getMethodType(void) const;
 
-// OPERATION
     // register the Data into the Object
     AQLDataHolder&		add(const AQLString& name);
 

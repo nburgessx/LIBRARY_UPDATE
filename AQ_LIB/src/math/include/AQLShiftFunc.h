@@ -27,7 +27,6 @@
 class AQLShiftMethod : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLShiftMethod(const DoubleArray& a, const AQLFunctionBase& method);
 	// destructor
@@ -35,7 +34,6 @@ public:
 	// copy constructor
 	AQLShiftMethod(const AQLShiftMethod& method);
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
@@ -97,7 +95,6 @@ public:
 								}
 
 
-//  OPERATION
 								//==========================================
 	                            // set check flag
 	virtual void				setCheckFlag(bool checkflag = true);

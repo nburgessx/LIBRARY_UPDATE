@@ -15,207 +15,154 @@
 #include <cstdlib>
 #include <fstream>
 #include <string.h>
+#include <algorithm>
+
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 using namespace std;
 
 // maximum number of iterations
 #define ITERATION 30
 
+// Below this many rows/elements, a parallel region's thread-pool spin-up cost is likely to exceed
+// the actual work being parallelized - this library's typical matrices (curve calibration: dozens
+// to low hundreds of nodes) are often below it, so the `if()` clause on every `#pragma omp
+// parallel for` below keeps them running the plain sequential loop with zero threading overhead,
+// and only hands larger matrices (e.g. a fine-grained numerical integration grid) to OpenMP. One
+// named constant, not a magic number scattered per call site, so it is a single place to retune
+// once this has actually been profiled against a real large-matrix workload.
+static const int OPENMP_SIZE_THRESHOLD = 64;
+
 AQLMatrix::AQLMatrixData::AQLMatrixData(unsigned int row, unsigned int col)
-        : mpData(NULL)
 {
     if (row == 0 || col == 0)
     {
-        mRow = mCol = 0;
-    } else {
-        mRow = row;
-        mCol = col;
-        try {
-            mpData = new double*[row];
-            mpData[0]=new double[row*col];
-            for (unsigned int i=1;i<row;i++) {
-                mpData[i]=mpData[i - 1]+col;
-            }
-        }
-        catch(...)
-        {
-            AQLCoreSystemError e(__FILE__, __LINE__);
-            if (mpData != NULL) 
-            {   
-                delete[] mpData;
-                mpData = NULL;
-            }
-            throw e;
-        }
+        row_ = col_ = 0;
+        return;
+    }
+    try
+    {
+        // std::vector value-initializes to 0.0 - unlike the old new double[row*col], which left
+        // every element uninitialized until explicitly written.
+        data_.resize(static_cast<std::size_t>(row) * col, 0.0);
+        row_ = row;
+        col_ = col;
+    }
+    catch (const bad_alloc& e)
+    {
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
-/*! 
+/*!
     @brief destructor
-    @param[in] row
-    @param[in] coL
 */
 AQLMatrix::AQLMatrixData::~AQLMatrixData()
 {
-    if (mpData != NULL) {
-        delete[] mpData[0];
-        delete[] mpData;
-    }
 }
+
 void
 AQLMatrix::AQLMatrixData::resize(unsigned int row, unsigned int col)
 {
     if (row == 0 || col == 0)
     {
-        if (mpData != NULL) {
-            delete[] mpData[0];
-            delete[] mpData;
-        }
-        mpData = NULL;
-        mRow = mCol = 0;
+        data_.clear();
+        row_ = col_ = 0;
         return;
     }
-    
-    unsigned int size = col * row;
-    double** newData;
-    double*  oldData = (mpData == NULL) ? NULL : mpData[0];
-    if (size > mCol*mRow)
-    { 
-        if (row > mRow)
-            newData = new double*[row];
-        else
-            newData = mpData;
-        
-        newData[0] = new double[size];
-    } 
-    else 
-    { 
-        if (row > mRow)
-            newData = new double*[row];
-        else
-            newData = mpData;
-        
-        newData[0] = mpData[0];
-    }
-    
-    unsigned int i;
-    for (i=1;i<row;++i) 
+
+    // Row stride is changing (col_ -> col), so the overlapping top-left submatrix can't be moved
+    // with a single contiguous copy the way a same-width resize could - copy it row by row into a
+    // freshly allocated, zero-initialized buffer, then swap it in.
+    std::vector<double> newData;
+    try
     {
-        newData[i]=newData[i - 1]+col;
+        newData.resize(static_cast<std::size_t>(row) * col, 0.0);
     }
-    // copy old data into new data
-    unsigned int j;
-    unsigned int row_max = row > mRow ? mRow : row;
-    unsigned int col_max = col > mCol ? mCol : col;
-    for (i=0;i<row_max;++i) 
+    catch (const bad_alloc& e)
     {
-        unsigned int colPos = i * mCol;
-        for (j = 0; j < col_max; ++j)
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
+    }
+
+    const unsigned int rowsToCopy = (row < row_) ? row : row_;
+    const unsigned int colsToCopy = (col < col_) ? col : col_;
+    for (unsigned int i = 0; i < rowsToCopy; ++i)
+    {
+        const double* oldRow = data_.data() + static_cast<std::size_t>(i) * col_;
+        double*       newRow = newData.data() + static_cast<std::size_t>(i) * col;
+        for (unsigned int j = 0; j < colsToCopy; ++j)
         {
-            newData[i][j]= oldData[colPos+j];
+            newRow[j] = oldRow[j];
         }
     }
 
-    if (mpData != NULL)
-    {
-        if (newData[0] != mpData[0]) delete mpData[0];
-        if (newData != mpData) delete mpData;
-    }
-    // 
-    mpData = newData;
-    mRow = row;
-    mCol = col;
+    data_ = std::move(newData);
+    row_ = row;
+    col_ = col;
 }
 /*!*********************************************************/
 /*! public methods                                                                                                             */
 /*!*********************************************************/
 
 AQLMatrix::AQLMatrix(unsigned int n, unsigned int m) :
-    mpData(NULL), mpRefCount(NULL)
+    pData_(NULL)
 {
-    try {
-        mpRefCount = new int(1);
-        mpData = new AQLMatrixData(n, m);
-    } 
-    catch (...)
-    {
-        AQLCoreSystemError e(__FILE__, __LINE__);
-        if (mpRefCount != NULL) 
-        {   
-            delete mpRefCount;
-            mpRefCount = NULL;
-        }
-        throw e;
-    }
+    pData_ = std::make_shared<AQLMatrixData>(n, m);
 }
 
 AQLMatrix::AQLMatrix(const DoubleMatrix& mat) :
-    mpData(NULL), mpRefCount(NULL)
+    pData_(NULL)
 {
     try
     {
-        mpRefCount = new int(1);
         size_t rows = mat.size();
         size_t cols = rows == 0 ? 0 : mat[0].size(); // Access Violation Guard for mat[0]
-        mpData = new AQLMatrixData(rows, cols);
+        pData_ = std::make_shared<AQLMatrixData>(rows, cols);
 		unsigned int i, j;
 		for (i = 0; i < row(); i++)
 		{
-			for (j = 0; j < column(); j++) 
+			for (j = 0; j < column(); j++)
 			{
-				(*mpData)[i][j] = mat[i][j]; 
+				(*pData_)[i][j] = mat[i][j];
 			}
-		}    
-	} 
+		}
+	}
     catch (...)
     {
-        if (mpRefCount != NULL) 
-        {   
-            delete mpRefCount;
-            mpRefCount = NULL;
-        }
         throw "Invalid Matrix";
     }
 }
 
 AQLMatrix::AQLMatrix(const DoubleArray& array) :
-    mpData(NULL), mpRefCount(NULL)
+    pData_(NULL)
 {
-    try {
-        mpRefCount = new int(1);
-        mpData = new AQLMatrixData(array.size(), 1);
-		unsigned int i;
-		for (i = 0; i < row(); i++)
-		{
-			(*mpData)[i][0] = array[i]; 
-		}    
-	} 
-    catch (...)
-    {
-        AQLCoreSystemError e(__FILE__, __LINE__);
-        if (mpRefCount != NULL) 
-        {   
-            delete mpRefCount;
-            mpRefCount = NULL;
-        }
-        throw e;
-    }
+    pData_ = std::make_shared<AQLMatrixData>(array.size(), 1);
+	unsigned int i;
+	for (i = 0; i < row(); i++)
+	{
+		(*pData_)[i][0] = array[i];
+	}
 }
 
-AQLMatrix::AQLMatrix(const AQLMatrix& m) 
+AQLMatrix::AQLMatrix(const AQLMatrix& m)
 {
-    mpRefCount = new int(1);
-    mpData = NULL;
     copy(m);
+}
+
+// Move constructor - steals m's shared_ptr outright: no allocation, no refcount traffic.
+AQLMatrix::AQLMatrix(AQLMatrix&& m) noexcept
+    : pData_(std::move(m.pData_))
+{
 }
 
 AQLMatrix::AQLMatrix(void)
 {
-    mpRefCount = new int(1);
-    mpData = new AQLMatrixData(0, 0);
+    pData_ = std::make_shared<AQLMatrixData>(0, 0);
 }
 
-/*! 
+/*!
     @brief destructor
 */
 AQLMatrix::~AQLMatrix(void)
@@ -228,7 +175,7 @@ AQLMatrix::getValue(unsigned int i, unsigned int j) const
 {
     if (!isWithin(i, j)) 
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
-    return (*mpData)[i][j]; 
+    return (*pData_)[i][j]; 
 }
 
 double 
@@ -236,33 +183,110 @@ AQLMatrix::maxValue(void) const
 {
     if (!isWithin(0, 0)) 
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
-    double max = (*mpData)[0][0];
+    double max = (*pData_)[0][0];
     double ret = max;
     unsigned int i, j;
-    for (i = 0; i < mpData->row(); ++i) {
-        for (j = 0; j < mpData->col(); ++j) {
-            if (max < AQLMath::abs((*mpData)[i][j])) {
-                max = AQLMath::abs((*mpData)[i][j]);
-                ret = (*mpData)[i][j];
+    for (i = 0; i < pData_->row(); ++i) {
+        for (j = 0; j < pData_->col(); ++j) {
+            if (max < AQLMath::abs((*pData_)[i][j])) {
+                max = AQLMath::abs((*pData_)[i][j]);
+                ret = (*pData_)[i][j];
             }
         }
     }
     return ret;
 }
 
-double 
+std::vector<double>
+AQLMatrix::getRow(unsigned int i) const
+{
+    if (!isWithin(i, 0))
+        throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
+
+    const unsigned int colCount = column();
+    std::vector<double> result(colCount);
+    const double* rowPtr = (*pData_)[i];
+    // A single contiguous copy - row i is contiguous in the flattened, row-major storage.
+    std::copy(rowPtr, rowPtr + colCount, result.begin());
+    return result;
+}
+
+std::vector<double>
+AQLMatrix::getColumn(unsigned int j) const
+{
+    if (!isWithin(0, j))
+        throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
+
+    const int rowCount = static_cast<int>(row());
+    std::vector<double> result(static_cast<std::size_t>(rowCount));
+    // Strided, not contiguous (a column cuts across rows) - still O(rows), independent per
+    // iteration, safe to parallelize for large matrices.
+#ifdef _OPENMP
+    #pragma omp parallel for if(rowCount > OPENMP_SIZE_THRESHOLD)
+#endif
+    for (int i = 0; i < rowCount; ++i)
+    {
+        result[static_cast<std::size_t>(i)] = (*pData_)[static_cast<unsigned int>(i)][j];
+    }
+    return result;
+}
+
+double
+AQLMatrix::dotRow(unsigned int i, const std::vector<double>& v) const
+{
+    if (!isWithin(i, 0))
+        throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
+    if (v.size() != column())
+        throw AQLCoreNumericalError("dotRow: vector size does not match column count", __FILE__, __LINE__);
+
+    const double* rowPtr = (*pData_)[i];
+    const int colCount = static_cast<int>(column());
+    double sum = 0.0;
+    // `reduction(+:sum)` is OpenMP 2.0 (the version MSVC's classic /openmp implements) - safe to
+    // rely on, unlike a min/max reduction which OpenMP 2.0 does not support.
+#ifdef _OPENMP
+    #pragma omp parallel for reduction(+:sum) if(colCount > OPENMP_SIZE_THRESHOLD)
+#endif
+    for (int j = 0; j < colCount; ++j)
+    {
+        sum += rowPtr[j] * v[static_cast<std::size_t>(j)];
+    }
+    return sum;
+}
+
+double
+AQLMatrix::dotCol(unsigned int j, const std::vector<double>& v) const
+{
+    if (!isWithin(0, j))
+        throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
+    if (v.size() != row())
+        throw AQLCoreNumericalError("dotCol: vector size does not match row count", __FILE__, __LINE__);
+
+    const int rowCount = static_cast<int>(row());
+    double sum = 0.0;
+#ifdef _OPENMP
+    #pragma omp parallel for reduction(+:sum) if(rowCount > OPENMP_SIZE_THRESHOLD)
+#endif
+    for (int i = 0; i < rowCount; ++i)
+    {
+        sum += (*pData_)[static_cast<unsigned int>(i)][j] * v[static_cast<std::size_t>(i)];
+    }
+    return sum;
+}
+
+double
 AQLMatrix::minValue(void) const
 {
     if (!isWithin(0, 0)) 
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
-    double min = (*mpData)[0][0];
+    double min = (*pData_)[0][0];
     double ret = min;
     unsigned int i, j;
-    for (i = 0; i < mpData->row(); ++i) {
-        for (j = 0; j < mpData->col(); ++j) {
-            if (min > AQLMath::abs((*mpData)[i][j])) {
-                min = AQLMath::abs((*mpData)[i][j]);
-                ret = (*mpData)[i][j];
+    for (i = 0; i < pData_->row(); ++i) {
+        for (j = 0; j < pData_->col(); ++j) {
+            if (min > AQLMath::abs((*pData_)[i][j])) {
+                min = AQLMath::abs((*pData_)[i][j]);
+                ret = (*pData_)[i][j];
             }
         }
     }
@@ -279,10 +303,12 @@ AQLMatrix::conditionNumber(void) const
     AQLMatrix v;
     
     svDecomp(u, w, v);
-    for (i = 0, max =double(0); i < w.row(); i++)  {
+    for (i = 0, max =double(0); i < w.row(); i++) 
+    {
         max = AQLMath::absMax(max, w[i][i]);
     }
-    for (i = 0, min = max; i < w.row(); i++)  {
+    for (i = 0, min = max; i < w.row(); i++) 
+    {
         min = AQLMath::absMin(min, w[i][i]);
     }
     return  max + min == max ? 
@@ -318,7 +344,7 @@ AQLMatrix::isSymmetric(void) const
     unsigned  int i, j;
     for (i = 0; i < row(); i++) {
         for (j = 0; j < i; j++) {
-            if ((*mpData)[i][j] != (*mpData)[j][i]) {
+            if ((*pData_)[i][j] != (*pData_)[j][i]) {
                 return false;
             }
         }
@@ -333,31 +359,46 @@ AQLMatrix::setValue(unsigned int i, unsigned int j, double value)
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
 
     makeUnShared();
-    (*mpData)[i][j] = value;
+    (*pData_)[i][j] = value;
 } 		
 
 void
 AQLMatrix::setValue(double value)
 {
     makeUnShared();
-    unsigned int i, j;
-    for (i = 0; i < row(); i++)
-	{
-        for (j = 0; j < column(); j++) 
-		{
-            (*mpData)[i][j] = value; 
+    const int rowCount = static_cast<int>(row());
+    const unsigned int colCount = column();
+    // Each outer (parallel) iteration touches only its own row - fully independent, safe to
+    // parallelize. Loop counter is a signed int, not unsigned, because MSVC's OpenMP (2.0) requires
+    // a signed canonical loop variable in a `parallel for`.
+#ifdef _OPENMP
+    #pragma omp parallel for if(rowCount > OPENMP_SIZE_THRESHOLD)
+#endif
+    for (int i = 0; i < rowCount; ++i)
+    {
+        double* rowPtr = (*pData_)[static_cast<unsigned int>(i)];
+        for (unsigned int j = 0; j < colCount; ++j)
+        {
+            rowPtr[j] = value;
         }
     }
 }
 
-AQLMatrix& 
+AQLMatrix&
 AQLMatrix::clearValues(void)
 {
     makeUnShared();
-    unsigned int i, j;
-    for (i = 0; i < row(); i++) {
-        for (j = 0; j < column(); j++) {
-            (*mpData)[i][j] = double(0);
+    const int rowCount = static_cast<int>(row());
+    const unsigned int colCount = column();
+#ifdef _OPENMP
+    #pragma omp parallel for if(rowCount > OPENMP_SIZE_THRESHOLD)
+#endif
+    for (int i = 0; i < rowCount; ++i)
+    {
+        double* rowPtr = (*pData_)[static_cast<unsigned int>(i)];
+        for (unsigned int j = 0; j < colCount; ++j)
+        {
+            rowPtr[j] = double(0);
         }
     }
     return *this;
@@ -367,7 +408,7 @@ void
 AQLMatrix::resize(unsigned int n, unsigned int m)
 {
     makeUnShared();
-    mpData->resize(n, m);
+    pData_->resize(n, m);
 }
 
 AQLMatrix& 
@@ -377,19 +418,31 @@ AQLMatrix::IdentityMatrix(void)
     unsigned int min = static_cast<unsigned int>(AQLMath::min(row(), column()));
     clearValues(); // Unshared
     for (i = 0; i  < min; i++) {
-        (*mpData)[i][i] = double(1);
+        (*pData_)[i][i] = double(1);
     }
     return *this;
 }
 
-AQLMatrix 
+AQLMatrix
 AQLMatrix::transpose(void) const
 {
     AQLMatrix ret(column(), row());
-    unsigned int j, i;
-    for (i = 0; i < row(); i++) {
-        for (j = 0; j < column(); j++) {
-            (*ret.mpData)[j][i] = (*mpData)[i][j];
+    const int newRowCount = static_cast<int>(ret.row());   // == column()
+    const unsigned int newColCount = ret.column();          // == row()
+    // Parallelized over the *result's* rows (not the source's) so each thread writes a contiguous
+    // row of ret - the source read is strided either way (transpose can't make both directions
+    // contiguous at once), but write locality is the one that's free to choose, so it's worth
+    // choosing. Each iteration writes a disjoint row of ret - safe to parallelize.
+#ifdef _OPENMP
+    #pragma omp parallel for if(newRowCount > OPENMP_SIZE_THRESHOLD)
+#endif
+    for (int i = 0; i < newRowCount; ++i)
+    {
+        double* dstRow = (*ret.pData_)[static_cast<unsigned int>(i)];
+        for (unsigned int j = 0; j < newColCount; ++j)
+        {
+            // ret(i, j) = (*this)(j, i)
+            dstRow[j] = (*pData_)[j][static_cast<unsigned int>(i)];
         }
     }
     return ret;
@@ -405,7 +458,7 @@ AQLMatrix::subMatrix(unsigned int rs, unsigned int re, unsigned int cs, unsigned
     unsigned int j, i;
     for (i = rs; i <= re; i++) {
         for (j = cs; j <= cs; j++) {
-            (*ret.mpData)[i-rs][j-cs] = (*mpData)[i][j];
+            (*ret.pData_)[i-rs][j-cs] = (*pData_)[i][j];
         }
     }
     return ret;
@@ -495,17 +548,17 @@ AQLMatrix::choleskyDecomposition(void) const
         for (j = 0; j < i; j++) {
             ikjk = double(0);
             for (k = 0; k < j; k++) {
-                ikjk -= (*ret.mpData)[i][k] * (*ret.mpData)[j][k] ;
+                ikjk -= (*ret.pData_)[i][k] * (*ret.pData_)[j][k] ;
             }
-            ikjk += (*mpData)[i][j];
-            (*ret.mpData)[i][j] = (double)(ikjk / (*ret.mpData)[j][j]); 
+            ikjk += (*pData_)[i][j];
+            (*ret.pData_)[i][j] = (double)(ikjk / (*ret.pData_)[j][j]); 
         }
         
         ik = 0;
         for (k = 0; k < i; k++) {
-            ik -= (*ret.mpData)[i][k] * (*ret.mpData)[i][k]; 
+            ik -= (*ret.pData_)[i][k] * (*ret.pData_)[i][k]; 
         }
-        ik += (*mpData)[i][i];
+        ik += (*pData_)[i][i];
 
         if (ik <= 0.0) { 
             double nik =(ik == 0.0 ? 0.0000000001 : -double(ik));   
@@ -515,7 +568,7 @@ AQLMatrix::choleskyDecomposition(void) const
                     ik, nik, i);
             ik = nik;
         }
-        (*ret.mpData)[i][i] = AQLMath::sqrt((double)ik);
+        (*ret.pData_)[i][i] = AQLMath::sqrt((double)ik);
     }
 
 #else // Correct Cholesky decomposition 
@@ -530,17 +583,17 @@ AQLMatrix::choleskyDecomposition(void) const
         {
             sum=0;
             for (j = 0; j < i; ++j)
-                sum += (*w.mpData)[k][j] * (*ret.mpData)[i][j];
+                sum += (*w.pData_)[k][j] * (*ret.pData_)[i][j];
 
-            (*w.mpData)[k][i] = (*mpData)[k][i] - sum;
-            (*ret.mpData)[k][i] = (*w.mpData)[k][i] / d[i];
+            (*w.pData_)[k][i] = (*pData_)[k][i] - sum;
+            (*ret.pData_)[k][i] = (*w.pData_)[k][i] / d[i];
         }
         sum = 0;
         for (j = 0; j < k; ++j)
-            sum += (*w.mpData)[k][j] * (*ret.mpData)[k][j];
+            sum += (*w.pData_)[k][j] * (*ret.pData_)[k][j];
         
-        (*ret.mpData)[k][k] = 1;
-        d[k] = (*mpData)[k][k] - sum;
+        (*ret.pData_)[k][k] = 1;
+        d[k] = (*pData_)[k][k] - sum;
     
     }
     for (i = 0; i < row(); ++i)
@@ -556,7 +609,7 @@ AQLMatrix::choleskyDecomposition(void) const
         }
         sum = AQLMath::sqrt(d[i]);
         for (j = i; j < row(); ++j)
-            (*ret.mpData)[j][i] *= sum;
+            (*ret.pData_)[j][i] *= sum;
     }
 #endif
 
@@ -688,7 +741,6 @@ AQLMatrix::eigenMatrix(AQLMatrix& vec, AQLMatrix& val) const
     return;
 }
 
-/////////////////////// OPERATORS //////////////////////////////
 /*! 
     @brief Input
 */
@@ -714,10 +766,10 @@ AQLMatrix::operator *(const AQLMatrix &other) const
     
     for (i = 0; i < row(); i++) {
         for (j = 0; j < other.column(); j++) {
-            (*ret.mpData)[i][j] = 0.0;
+            (*ret.pData_)[i][j] = 0.0;
             for (k = 0; k < column(); k++) {
-                (*ret.mpData)[i][j] += 
-                    (*mpData)[i][k] * (*other.mpData)[k][j];
+                (*ret.pData_)[i][j] += 
+                    (*pData_)[i][k] * (*other.pData_)[k][j];
             }
         }
     }
@@ -740,8 +792,8 @@ AQLMatrix::operator +(const AQLMatrix &other) const
     
     for (i = 0; i < row(); i++) {
         for (j = 0; j < column(); j++) {
-            (*ret.mpData)[i][j] = 
-                (*mpData)[i][j] + (*other.mpData)[i][j];
+            (*ret.pData_)[i][j] = 
+                (*pData_)[i][j] + (*other.pData_)[i][j];
         }
     }   
     return ret;
@@ -764,8 +816,8 @@ AQLMatrix::operator -(const AQLMatrix& other) const
     
     for (i = 0; i < row(); i++) {
         for (j = 0; j < column(); j++) {
-            (*ret.mpData)[i][j] = 
-                (*mpData)[i][j] - (*other.mpData)[i][j];
+            (*ret.pData_)[i][j] = 
+                (*pData_)[i][j] - (*other.pData_)[i][j];
         }
     }   
     return ret;
@@ -781,26 +833,24 @@ AQLMatrix::operator *=(const AQLMatrix &other)
         AQLCoreError("Can not multiply", __FILE__, __LINE__);
     }
     makeUnShared();
-    AQLMatrixData* tmp = mpData;
-    try {
-        mpData = new AQLMatrixData(row(), other.column());
-    } 
-    catch(...)
-    {
-        mpData = tmp;
-        throw AQLCoreSystemError(__FILE__, __LINE__);
-    }
+    // Keep the old buffer alive via a second shared_ptr (a cheap refcount bump) while computing
+    // into a freshly allocated one - each output element needs a full row/column of the original,
+    // so this can't be done in place. If make_shared throws, pData_ is simply never reassigned
+    // (shared_ptr's own exception guarantee) - no manual try/catch/restore needed the way the raw
+    // new/delete version required, and no manual delete needed either: tmp cleans itself up when
+    // it goes out of scope.
+    std::shared_ptr<AQLMatrixData> tmp = pData_;
+    pData_ = std::make_shared<AQLMatrixData>(row(), other.column());
     unsigned int i, j, k;
-    
+
     for (i = 0; i < row(); i++) {
         for (j = 0; j < other.column(); j++) {
-            (*mpData)[i][j] = 0.0;
+            (*pData_)[i][j] = 0.0;
             for (k = 0; k <  other.row(); k++) {
-                (*mpData)[i][j] += (*tmp)[i][k] * (*other.mpData)[k][j];
+                (*pData_)[i][j] += (*tmp)[i][k] * (*other.pData_)[k][j];
             }
         }
     }
-    delete tmp;
     return *this;
 }
 
@@ -819,7 +869,7 @@ AQLMatrix::operator +=(const AQLMatrix &other)
     
     for (i = 0; i < row(); i++) {
         for (j = 0; j < column(); j++) {
-            (*mpData)[i][j] += (*other.mpData)[i][j];
+            (*pData_)[i][j] += (*other.pData_)[i][j];
         }
     }   
     return *this;
@@ -841,7 +891,7 @@ AQLMatrix::operator-=(const AQLMatrix& other)
 
     for (i = 0; i < row(); i++) {
         for (j = 0; j < column(); j++) {
-            (*mpData)[i][j] -= (*other.mpData)[i][j];
+            (*pData_)[i][j] -= (*other.pData_)[i][j];
         }
     }   
 
@@ -865,12 +915,19 @@ AQLMatrix::operator *(const double& x) const
 AQLMatrix& AQLMatrix::operator *=(const double& x)
 {
     makeUnShared();
-    unsigned int i, j;
-    for (i = 0; i < row(); i++) {
-        for (j = 0; j < column(); j++) {
-            (*mpData)[i][j] *= x;
+    const int rowCount = static_cast<int>(row());
+    const unsigned int colCount = column();
+#ifdef _OPENMP
+    #pragma omp parallel for if(rowCount > OPENMP_SIZE_THRESHOLD)
+#endif
+    for (int i = 0; i < rowCount; ++i)
+    {
+        double* rowPtr = (*pData_)[static_cast<unsigned int>(i)];
+        for (unsigned int j = 0; j < colCount; ++j)
+        {
+            rowPtr[j] *= x;
         }
-    }   
+    }
     return *this;
 }
 
@@ -888,7 +945,7 @@ AQLMatrix::operator ==(const AQLMatrix &other) const
     
     for (i = 0; i < row(); i++) {
         for (j = 0; j < column(); j++) {
-            if ((*mpData)[i][j] != (*other.mpData)[i][j]) {
+            if ((*pData_)[i][j] != (*other.pData_)[i][j]) {
                 return false;
             }
         }
@@ -911,15 +968,15 @@ AQLMatrix::print(const char* file) const
     
     for (i = 0; i < row()  - 1; i++) {
         for (j = 0; j < column() - 1; j++) {
-            FPRINTF(fp, "%.18f,", (*mpData)[i][j]);
+            FPRINTF(fp, "%.18f,", (*pData_)[i][j]);
         }
-        FPRINTF(fp, "%.18f\n", (*mpData)[i][j]);
+        FPRINTF(fp, "%.18f\n", (*pData_)[i][j]);
     }
     for (j = 0; j < column() - 1; j++) {
-        FPRINTF(fp, "%.18f,", (*mpData)[i][j]);
+        FPRINTF(fp, "%.18f,", (*pData_)[i][j]);
     }
 
-    FPRINTF(fp, "%.18f\n", (*mpData)[i][j]);
+    FPRINTF(fp, "%.18f\n", (*pData_)[i][j]);
     fclose(fp);
 }
 ///////////// PRIVATE METHODS ////////////////////////////
@@ -927,54 +984,43 @@ AQLMatrix::print(const char* file) const
 void
 AQLMatrix::makeUnShared() const
 {
-    if (mpRefCount == NULL || (*mpRefCount) == 1) return;
-    AQLMatrixData*  wk = mpData;
-    --(*mpRefCount);
-    try {
-        mpRefCount = new int(1);
-        mpData = new AQLMatrixData(wk->row(), wk->col());
-    } 
-    catch (...)
-    {
-        AQLCoreSystemError e(__FILE__, __LINE__);
-        if (mpRefCount != NULL) delete mpRefCount;
-        mpRefCount = NULL;
-        mpData = NULL;
-        throw e;
-    }
+    if (!pData_ || pData_.use_count() == 1) return;
+    std::shared_ptr<AQLMatrixData> wk = pData_;
+    pData_ = std::make_shared<AQLMatrixData>(wk->row(), wk->col());
     unsigned int i,j;
     for (i = 0; i < row(); ++i)
     {
         for (j = 0; j < column(); ++j)
         {
-            (*mpData)[i][j] = (*wk)[i][j];
+            (*pData_)[i][j] = (*wk)[i][j];
         }
     }
 }
-// 
-void 
-AQLMatrix::clear(void) // Call from destructor 
+//
+void
+AQLMatrix::clear(void) // Call from destructor
 {
-    if (mpRefCount != NULL && --(*mpRefCount) == 0)
-    {
-        delete mpData;
-        delete mpRefCount;
-        mpData = NULL;
-        mpRefCount = NULL;
-    }
+    pData_.reset();
 }
 
 AQLMatrix&
-AQLMatrix::copy(const AQLMatrix& mat) 
+AQLMatrix::copy(const AQLMatrix& mat)
 {
     if (this != &mat)
 	{
-		clear();
-		mpData = mat.mpData;
-		mpRefCount = mat.mpRefCount;
-		if (mpRefCount != NULL) 
-			++(*mpRefCount);
+		pData_ = mat.pData_;
 	}
+    return *this;
+}
+
+// Move assignment - same rationale as the move constructor (AQLMatrix.h's declaration comment).
+AQLMatrix&
+AQLMatrix::operator=(AQLMatrix&& mat) noexcept
+{
+    if (this != &mat)
+    {
+        pData_ = std::move(mat.pData_);
+    }
     return *this;
 }
 /*! 
@@ -1492,8 +1538,8 @@ void AQLMatrix::eigsrt(AQLMatrix& d1, AQLMatrix& v1)
 {
     int k,j,i;
     double p;
-    AQLMatrixData& d = *(d1.mpData);
-    AQLMatrixData& v = *(v1.mpData);
+    AQLMatrixData& d = *(d1.pData_);
+    AQLMatrixData& v = *(v1.pData_);
 
     for (i=0;i< d.col();i++) {
         p=d[0][k=i];

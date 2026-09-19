@@ -35,7 +35,6 @@ class AQLObject;
 class AQLPriceDataType
 {
 public:
-//  LIFECYCLE
 	// constructor
 	//  Attribuute ID=DATA_BASE, set the status NULL
 	AQLPriceDataType(const staticData_t attr=DATA_BASE);
@@ -44,7 +43,6 @@ public:
 	// destructor	
 	virtual ~AQLPriceDataType();
      
-//  QUERY
 	// check Null
     /*!
         @return true if the NULL, false if it is not NULL
@@ -77,7 +75,6 @@ public:
     */
     virtual AQLString	convertToString(void) const =0;
 
-//  OPERATION
     // convert Data from the string representation
     /*! 
         inherited class needs to implement this method, and NULL is set when selected "NULL"
@@ -85,7 +82,6 @@ public:
     */
     virtual void		convertFromString(const AQLString& str) =0;
  
-// OPERATOR
 	// assignment operator
     /*!
 	    assignment achieved by the method

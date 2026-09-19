@@ -26,13 +26,11 @@
 class AQLCoreFunctionBase 
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLCoreFunctionBase(void);
     // destructor
     virtual ~AQLCoreFunctionBase();
 
-//  QUERY
     // check whether this class derives from base class with type id
     virtual bool                isTypeOf(function_t id) const; 
 
@@ -45,7 +43,6 @@ public:
     // return Function ID of this class
     virtual function_t          getType() const;
 
-// OPERATOR
     // relational operator thorough magnitude relationship of FunctionID
     bool                        operator<(const AQLCoreFunctionBase& e) const
                                 { return getType() < e.getType();}

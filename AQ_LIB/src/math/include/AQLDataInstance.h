@@ -12,11 +12,12 @@
 
 #include "AQLObjectPool.h"
 #include "AQLObjectMaster.h"
+#include <memory>
 
 class AQLPriceDataManager;
 class AQLFunctionManager;
 
-/*! 
+/*!
     @brief Class to manage and hold Object, Data and Function.
 
      Object references between objects will be built under this class.
@@ -24,15 +25,23 @@ class AQLFunctionManager;
 class AQLDataInstance
 {
 public:
-//	LIFECYCLE
     // default constructor
 	AQLDataInstance(void);
-    // copy constructor
-	AQLDataInstance(const AQLDataInstance& dataInstance);
+
+    // Not copyable. This used to be a shallow copy sharing mpDataMstr/mpFunctionMstr behind a
+    // hand-rolled, non-atomic int* refcount (clear()/copy() bare ++/--, no synchronization at all -
+    // a real race if two instances sharing the count were ever destructed/copied concurrently).
+    // Verified across etrading/validation/calibration/models (a full-repo grep for by-value use):
+    // AQLDataInstance is passed by pointer or reference at 1000+ call sites and never genuinely
+    // copied anywhere - the one non-reference/pointer hit is `new AQLDataInstance()`, not a copy.
+    // So the refcount machinery was protecting a code path nothing exercises. Deleting these two
+    // instead of fixing them removes the risk entirely rather than making it merely safe.
+    AQLDataInstance(const AQLDataInstance& dataInstance) = delete;
+    AQLDataInstance& operator=(const AQLDataInstance& r) = delete;
+
     // destructor
 	~AQLDataInstance(void);
 
-//  QUERY
     // return Data Master
     /*!
         @return Data Master
@@ -63,10 +72,6 @@ public:
     */
 	AQLCoreReferencePool&		getReferencePool() {return mObjectPool.mReferencePool;}
 	
-//  OPERATOR
-    // assignment operator
-	AQLDataInstance&					operator=(const AQLDataInstance& r) {return copy(r);}
-
 	// serialize object pool
 	void					serialize(char*& ptr, unsigned long& length) const;
 	// load object pool data
@@ -75,14 +80,12 @@ public:
 	void					update(char* ptr);
 
 private:
-    // shallow copy of the object
-	AQLDataInstance&					copy(const AQLDataInstance&);
-    // release the memory reserved for the Data Master, Function Master
-    void					delMstrs(void);
 
-	AQLPriceDataManager*		mpDataMstr;		// Data Master
-	AQLFunctionManager*			mpFunctionMstr;	// Function Master
-	int*						mpRefCount;     // Reference counter of Data Master and Function Master (memory management of a pointer variable about the discard the propriety )
+	// Sole owners now (no more shared refcount) - unique_ptr so the destructor and this header's
+	// forward declarations of AQLPriceDataManager/AQLFunctionManager still work (the actual delete
+	// happens in the .cpp's out-of-line destructor, where both types are complete).
+	std::unique_ptr<AQLPriceDataManager>	mpDataMstr;		// Data Master
+	std::unique_ptr<AQLFunctionManager>	mpFunctionMstr;	// Function Master
 
 	AQLObjectMaster				mObjectMstr;	// Object Master
 	AQLObjectPool				mObjectPool;	// Object Pool

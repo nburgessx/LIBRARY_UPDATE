@@ -27,7 +27,6 @@
 class AQLLinearMethod : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLLinearMethod();
 	// destructor
@@ -36,7 +35,6 @@ public:
 	AQLLinearMethod & operator=( const AQLLinearMethod & ) { return *this; }
 
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;
@@ -111,7 +109,6 @@ public:
 	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi, unsigned int posj) const { (void)x; (void)posi; (void)posj; // suppress warning C4100 (unused parameter); gcc
 												return true;};
 
-//  OPERATION
 
 private:
 

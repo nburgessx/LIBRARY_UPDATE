@@ -25,9 +25,6 @@
 #include "AQLCalibrate.h"
 #endif
 
-#ifdef __HAS_MIC__
-
-#endif
 
 using namespace std;
 
@@ -37,9 +34,6 @@ AQLStaticDataManager *AQLCoreDataService::mpPropertyManager = 0;
 AQLLogManager *AQLCoreDataService::mpLogManager = 0;
 bool AQLCoreDataService::mInitializeFlg = false;
 
-#ifdef __HAS_MIC__
-common_lib::StaticMutex AQLCoreDataService::mMutex;
-#endif
 
 #if defined (WIN32) || defined (WIN64)
 map<DWORD, map<AQLString, AQLString> > AQLCoreDataService::mContextMap;
@@ -82,11 +76,6 @@ AQLCoreDataService::initialize(void)
 		AQLFileAccessor::initialize();
 		mpPropertyManager = new AQLStaticDataManager();
 		mpLogManager = new AQLLogManager();
-#ifdef __HAS_MIC__
-		// prepare using instances for multi-thread
-		AQLMasterRegistManager::getInstance();
-		AQLModelConfiguration::getInstance();
-#endif
 		mInitializeFlg = true;
 	}
 }
@@ -100,9 +89,6 @@ AQLCoreDataService::initialize(void)
 void
 AQLCoreDataService::clearContext(bool isAll)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	if (isAll)
 	{
 
@@ -140,9 +126,6 @@ AQLCoreDataService::clearContext(bool isAll)
 void
 AQLCoreDataService::clearStringStream(const AQLString &fileNum)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// clear string stream
 	AQLStringVector keyVec;
 	map<AQLString, istringstream *>::iterator strIt = mIStringStreamMap.begin();
@@ -169,9 +152,6 @@ AQLCoreDataService::clearStringStream(const AQLString &fileNum)
 void
 AQLCoreDataService::clearAllStringStream()
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	map<AQLString, istringstream *>::iterator strIt = mIStringStreamMap.begin();
 	while (strIt != mIStringStreamMap.end())
 	{
@@ -216,9 +196,6 @@ AQLCoreDataService::clear(const AQLString &fileNum)
 void
 AQLCoreDataService::clearInstance(void)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	
 	if (mpPropertyManager)
 	{
@@ -332,9 +309,6 @@ AQLCoreDataService::finalize(void)
 void
 AQLCoreDataService::setContext(const AQLString &key, const AQLString &data)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	// get current thread id
 
 #if defined (WIN32) || defined (WIN64)
@@ -362,9 +336,6 @@ AQLCoreDataService::setContext(const AQLString &key, const AQLString &data)
 AQLString
 AQLCoreDataService::getContext(const AQLString &key)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
     // get current thread id
 
 #if defined (WIN32) || defined (WIN64)
@@ -397,9 +368,6 @@ AQLCoreDataService::getContext(const AQLString &key)
 void 
 AQLCoreDataService::setIStringStream(const AQLString &key, std::istringstream *pstream)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	map<AQLString, istringstream *>::iterator it = mIStringStreamMap.find(key);
 	if (it != mIStringStreamMap.end())
 	{
@@ -421,9 +389,6 @@ AQLCoreDataService::setIStringStream(const AQLString &key, std::istringstream *p
 std::istringstream *
 AQLCoreDataService::getIStringStream(const AQLString &key)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	map<AQLString, istringstream *>::iterator it = mIStringStreamMap.find(key);
 
 	if (it != mIStringStreamMap.end())
@@ -450,9 +415,6 @@ AQLCoreDataService::getIStringStream(const AQLString &key)
 void
 AQLCoreDataService::setSettingFileStream(const AQLString key, const AQLString data)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	map<AQLString, AQLString>::iterator it = mSettingFiles.find(key);
 	if (it != mSettingFiles.end())
 	{
@@ -471,9 +433,6 @@ AQLCoreDataService::setSettingFileStream(const AQLString key, const AQLString da
 AQLString
 AQLCoreDataService::getSettingFileStream(const AQLString key)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 	map<AQLString, AQLString>::iterator it = mSettingFiles.find(key);
 
 	if (it != mSettingFiles.end())
@@ -521,9 +480,6 @@ AQLCoreDataService::isFileExist(const AQLString &key)
 	bool ret;
 	if (AQLFileAccessor::isIStringStream())
 	{
-#ifdef __HAS_MIC__
-		common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
 		map<AQLString, istringstream *>::iterator it = mIStringStreamMap.find(key);
 
 		if (it != mIStringStreamMap.end())

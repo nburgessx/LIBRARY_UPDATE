@@ -28,13 +28,11 @@
 class AQL1DIntegral : public AQLIntegralBase
 {
 public:
-//  LIFECYCLE
 	// Default constructor
 	AQL1DIntegral();
 	// Destructor
 	virtual ~AQL1DIntegral();
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;

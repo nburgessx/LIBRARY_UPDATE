@@ -16,7 +16,6 @@
 class AQLCoreFunctionHolder 
 {
 public:
-//	LIFECYCLE
     // default constructor
 	explicit AQLCoreFunctionHolder(const AQLCoreFunctionBase* e = NULL, bool deleteFlag = false);
     // copy constructor
@@ -24,7 +23,6 @@ public:
     // destructor
 	virtual ~AQLCoreFunctionHolder();
 
-//  QUERY
    // return whether or not that holds the Function object
     /*!
         @retval true hold the Function object
@@ -45,7 +43,6 @@ public:
     */
 	const AQLCoreFunctionBase& get(void) const {return *mpFunction;}
 
-//  OPERATION
 	// set Function object(copy the pointer to Function object)
 	void                set(const AQLCoreFunctionBase* base, bool df=false);
 

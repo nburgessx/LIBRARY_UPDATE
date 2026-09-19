@@ -62,9 +62,6 @@ protected :
 	void setmSerializeMap(const AQLString &fileNum);
 	void setmIsDeserializedMap(bool isDeserializedMap);
 private:
-#ifdef __HAS_MIC__
-	static common_lib::StaticMutex  mMutex;
-#endif
 };
 
 

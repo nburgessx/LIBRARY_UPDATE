@@ -17,11 +17,6 @@ class AQLCoreDataService;
 class AQLString;
 class AQLStaticData;
 
-#ifdef __HAS_MIC__
-namespace common_lib {
-	struct StaticMutex;
-}
-#endif
 //===================== Class Declare AQLStaticDataManager==================================
 class AQLStaticDataManager
 {
@@ -105,9 +100,6 @@ private:
 	static pMap mCreditProperties;
 	static pMap mMktCollectionProperties;
 
-#ifdef __HAS_MIC__
-	static common_lib::StaticMutex mMutex;
-#endif
 
 };
 

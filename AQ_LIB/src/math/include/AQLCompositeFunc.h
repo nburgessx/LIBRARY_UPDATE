@@ -32,7 +32,6 @@ enum OPERATION_TYPE {
 class AQLCompositeMethod : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLCompositeMethod(const AQLStringVector& var,
 					const AQLFunctionBase& func1, const AQLStringVector& var1,
@@ -44,7 +43,6 @@ public:
 	// destructor
 	virtual ~AQLCompositeMethod();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
@@ -86,7 +84,6 @@ public:
 	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi,unsigned int posj)const;
 
 
-//  OPERATION
 								//==========================================
 	                            // set check flag
 	virtual void				setCheckFlag(bool checkflag = true);

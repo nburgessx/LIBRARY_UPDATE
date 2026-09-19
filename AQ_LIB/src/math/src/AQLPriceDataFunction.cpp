@@ -19,7 +19,6 @@
 using namespace std;
 
 //======================= IMPLEMENTATION =============================
-//// LIFECYCLE ////
 /*!
     @brief default constructor
 */
@@ -92,7 +91,6 @@ AQLPriceDataFunction::~AQLPriceDataFunction(void)
 //  delete mpDataProvider;
 }
 
-//// QUERY ////
 /*!
     @brief copy(clone) this object
     @return pointer to object produced

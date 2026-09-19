@@ -17,7 +17,6 @@ class AQLFTQuasiRandGF : public AQLRandBase
 {
 public:
 
-//  LIFECYCLE
 	//constructor
     AQLFTQuasiRandGF();
 
@@ -27,7 +26,6 @@ public:
 	//destructor
     virtual ~AQLFTQuasiRandGF();
 
-//  QUERY
                                 //======================================
                                 // check whether this class derives from base class with type id
     virtual bool                isTypeOf(function_t id) const;
@@ -62,14 +60,12 @@ public:
 
 
 
-//  OPERATION
 private:
 	/*! 
 		@brief Subclasses for performing matrix computations necessary in the development of quasi-random number.
 	*/
 	class AQLMatrixData {
 	public:
-		//LIFECYCLE
 		// constructor
 		AQLMatrixData(void);
 		// constructor (n row,m column)
@@ -79,7 +75,6 @@ private:
 		// copy constructor
 		AQLMatrixData(const AQLMatrixData& m);
 
-		//OPERATION
 								// resize data
 		void					resize(unsigned int row, unsigned int col);
 

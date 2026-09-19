@@ -27,7 +27,6 @@
 class AQLMinMethod : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLMinMethod();
 	// destructor
@@ -37,7 +36,6 @@ public:
 	AQLMinMethod & operator=( const AQLMinMethod & ) { return *this; }
 
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;
@@ -113,7 +111,6 @@ public:
 	                            // check double derivable or not.	
 	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi, unsigned int posj) const; 
 
-//  OPERATION
 
 private:
 

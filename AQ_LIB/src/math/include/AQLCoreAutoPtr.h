@@ -3,14 +3,6 @@
 */
 
 
-// ---------------------------------------------------------------------------
-// 06MAR06 ysuzuki : The specification change of AQLAutoPt(modified to implement in the specification of "Version 3" from 
-//					 what has been implemented in "Version 1".
-//                   For more information, web page of "More Effective C + +",
-//                   http://www.awprofessional.com/content/images/020163371X/autoptr/std::shared_ptr.html
-//                   In addition, see also (memory file for C + + standard header files) 
-//					 and implementation of std::shared_ptr class of gcc3.4.x VC + +7.
-
 #ifndef AQLCoreAutoPtr_h
 #define AQLCoreAutoPtr_h
 #ifdef __GNUG__
@@ -82,7 +74,6 @@ public:
         return mpPtr;
     }
 
-//  OPERATION
     // set the NULL to the pointer to the data
     /*!
         @return pointer before setting NULL
@@ -108,7 +99,6 @@ public:
         }
     }
     
-//  OPERATORS
 #ifdef _MSC_VER 
     // assignment operator
     AQLCoreAutoPtr<T>& operator=(AQLCoreAutoPtr<T>& rhs) 

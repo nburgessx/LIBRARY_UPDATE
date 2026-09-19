@@ -12,9 +12,6 @@
 #include "AQLCoreAppError.h"
 #include "AQLCalibratePool.h"
 #include "AQLCalibrationThread.h"
-#ifdef __HAS_MIC__
-
-#endif
 
 using namespace std;
 
@@ -66,9 +63,6 @@ AQLCalibratePool::getInstance()
 void
 AQLCalibratePool::setMaxRequest(unsigned int num)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::Mutex> lock(mMutex);
-#endif
 	mRequestQueue.clear();
 	mTail = 0;
 	mHead = 0;
@@ -97,9 +91,6 @@ AQLCalibratePool::setThreadNum(unsigned int num)
 void
 AQLCalibratePool::startThread()
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::Mutex> lock(mMutex);
-#endif
 	unsigned int size = static_cast<unsigned int>(mThreads.size());
 	for (unsigned int i = 0; i < size; ++i)
 	{
@@ -123,18 +114,9 @@ AQLCalibratePool::putRequest(AQLCalibrate *request)
 	{
 		throw AQLCoreInvalidData("Request pointer is NULL", __FILE__, __LINE__);
 	}
-#ifdef __HAS_MIC__
-	mMutex.lock();
-#endif
 	while (mCount >= mRequestQueue.size() || mRequestQueue[mTail])
 	{
-#ifdef __HAS_MIC__
-		mMutex.unlock();
-#endif
 		mEvent.wait();
-#ifdef __HAS_MIC__
-		mMutex.lock();
-#endif
 	}
 
 	mRequestQueue[mTail] = request;
@@ -142,9 +124,6 @@ AQLCalibratePool::putRequest(AQLCalibrate *request)
 	++mCount;
 	mEvent.notifyAll();
 	
-#ifdef __HAS_MIC__
-	mMutex.unlock();
-#endif
 }
 
 
@@ -161,9 +140,6 @@ AQLCalibratePool::releaseRequest(AQLCalibrate *request)
 	{
 		throw AQLCoreInvalidData("Request pointer is NULL", __FILE__, __LINE__);
 	}
-#ifdef __HAS_MIC__
-	mMutex.lock();
-#endif
 	vector<AQLCalibrate *>::iterator it = 
 		find(mRequestQueue.begin(), mRequestQueue.end(), request);
 
@@ -175,9 +151,6 @@ AQLCalibratePool::releaseRequest(AQLCalibrate *request)
 	(*it) = 0;
 	mEvent.notifyAll();
 
-#ifdef __HAS_MIC__
-	mMutex.unlock();
-#endif
 }
 
 // 
@@ -189,18 +162,9 @@ AQLCalibratePool::releaseRequest(AQLCalibrate *request)
 AQLCalibrate *
 AQLCalibratePool::takeRequest(void)
 {
-#ifdef __HAS_MIC__
-	mMutex.lock();
-#endif
 	while (mCount <= 0)
 	{
-#ifdef __HAS_MIC__
-		mMutex.unlock();
-#endif
 		mEvent.wait();
-#ifdef __HAS_MIC__
-		mMutex.lock();
-#endif
 	}
 
 	AQLCalibrate *request = mRequestQueue[mHead];
@@ -208,9 +172,6 @@ AQLCalibratePool::takeRequest(void)
 	--mCount;
 	mEvent.notifyAll();
 
-#ifdef __HAS_MIC__
-	mMutex.unlock();
-#endif
 	return request;
 }
 
@@ -221,9 +182,6 @@ AQLCalibratePool::takeRequest(void)
 void
 AQLCalibratePool::terminateThread()
 {
-#ifdef __HAS_MIC__
-	mMutex.lock();
-#endif
 	unsigned int threadSize = static_cast<unsigned int>(mThreads.size());
 	for (unsigned int i = 0; i < threadSize; ++i)
 	{
@@ -241,9 +199,6 @@ AQLCalibratePool::terminateThread()
 		}
 	}
 
-#ifdef __HAS_MIC__
-	mMutex.unlock();
-#endif
 #ifdef WINDOWS
 	HANDLE *tmpArray = new HANDLE[threadSize];
 	for (unsigned int i = 0; i < threadSize; ++i)
@@ -269,9 +224,6 @@ AQLCalibratePool::terminateThread()
 void
 AQLCalibratePool::resizeThreads(unsigned int num)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::Mutex> lock(mMutex);
-#endif
 	mThreads.resize(num);
 	for (unsigned int i = 0; i < num; ++i)
 	{
@@ -283,9 +235,6 @@ AQLCalibratePool::resizeThreads(unsigned int num)
 void
 AQLCalibratePool::deleteRequestQueue()
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::Mutex> lock(mMutex);
-#endif
 	unsigned int requestSize = static_cast<unsigned int>(mRequestQueue.size());
 	for (unsigned int i = 0; i < requestSize; ++i)
 	{

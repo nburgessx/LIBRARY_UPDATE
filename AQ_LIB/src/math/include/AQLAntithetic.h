@@ -33,7 +33,6 @@ public:
 
 	AQLAntithetic & operator=( const AQLAntithetic & ) { return *this; }
 
-//  QUERY
 								//======================================
                                 // function to set the random number generator to apply a negative correlation method
 	virtual void				setInnerGenerator(const AQLRandBase& v);

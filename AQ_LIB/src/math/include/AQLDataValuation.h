@@ -50,7 +50,6 @@ public:
     // destructor
     virtual ~AQLDataValuation(void);
 
-//  QUERY
     // deep copy of the data object
     virtual AQLPriceDataType*        clone() const; 
     
@@ -69,7 +68,6 @@ public:
     // get result
     double                      getValue(void) const {return mValue;}
 
-//  OPERATION
    // set the Data from string representation(with function name and the resultof the function)
     virtual void                convertFromString(const AQLString& str);
     

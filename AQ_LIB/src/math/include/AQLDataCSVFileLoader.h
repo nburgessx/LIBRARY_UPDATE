@@ -24,18 +24,15 @@
 class AQLCSVFileLoader : public AQLBase
 {
 public:
-//  LIFECYCLE
     // constructor
     AQLCSVFileLoader(const AQLString& name=AQLCSVFILELOADER);
     // destructor
     virtual ~AQLCSVFileLoader(void);
 
-//  QUERY
 
     // get the data
     virtual Records_var     get(const AQLObjectHolder& objHolder) const;
 
-//  OPERATION
     // set the AQLDataInstance object
     void                setDataInstance(AQLDataInstance* dataInstance);
 

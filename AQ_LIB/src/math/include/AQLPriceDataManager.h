@@ -46,7 +46,6 @@ public:
     // return the array of name of the registered Data ID
 	AQLStringVector		getNameArray(void) const;
  
-//  OPERATION
 	// register Data name and Data id
 	const AQLDataHolder&	setData(const AQLString& name, object_t id);
     // register the Data

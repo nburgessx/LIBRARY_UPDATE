@@ -934,7 +934,7 @@ aqMsg60 << "AQObjCurve::calculateForwardRate(startDates, endDates) ; the number 
         return retVec;
     };
 
-    const std::pair<const BusinessDayAdjustmentEnum, const AQLMathCalendar*> AQObjCurve::getBusinessDayAdjust( const BusinessDayAdjustmentType adjType ) const
+    const std::pair<const BusinessDayAdjustmentEnum, const AQLCalendar*> AQObjCurve::getBusinessDayAdjust( const BusinessDayAdjustmentType adjType ) const
     {
         if( curveBuildProps_ == nullptr )
         {
@@ -980,7 +980,7 @@ aqMsg64 << "AQObjCurve::calculateDiscountFactor(tenorString) - Missing AlgoQuant
         return date;
     };
 
-    const AQLMathCalendar* AQObjCurve::getCalendar( const std::string& calendar ) const
+    const AQLCalendar* AQObjCurve::getCalendar( const std::string& calendar ) const
     {
         const std::string calendarName = trim_to_upper( calendar.c_str() );
         if( curveBuildProps_ )
@@ -998,7 +998,7 @@ aqMsg64 << "AQObjCurve::calculateDiscountFactor(tenorString) - Missing AlgoQuant
                 return curveBuildProps_->getAqPaymentCalendar();
             }
         }
-        return &AQLMathCalendarSet::getCalendar( calendarName.c_str() );
+        return &AQLCalendarSet::getCalendar( calendarName.c_str() );
     };
 
     VariantMatrix AQObjCurve::getVariantMatrix() const

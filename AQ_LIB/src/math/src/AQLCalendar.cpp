@@ -7,44 +7,39 @@
 #pragma implementation
 #endif
 
-#include "AQLMathCalendar.h"
+#include "AQLCalendar.h"
 #include "AQLString.h"
 #include <deque>
 #include <set>
 #include <algorithm>
+#include <memory>
+#include <mutex>
 #include <string.h>
 
-#ifdef __HAS_MIC__
-
-#endif
 
 using namespace std;
 
-#ifdef __HAS_MIC__
-common_lib::StaticMutex AQLMathCalendar::mMutex;
-#endif
 // used by isHoliday() to decide how many holidays to create. created HOLIDAY_BUFFERING_SIZE * 2
 #define HOLIDAY_BUFFERING_SIZE (365)
 
 /*!
     @brief Structure for storing information (such as Happy Mondays) of the indefinite holiday date
-
      hold the information of X Mon, Y of the week and  Z day of the week
- 
 */
 struct AQLFlowDate
 {
     int                 mFMonth;  // month(112)
     int                 mFWeek;   // week(15)
-    AQLDayOfWeekEnum              mFWeekly; // day of the week(Sum=0, Mon=1, ..., Sat=6)
+    AQLDayOfWeekEnum    mFWeekly; // day of the week(Sum=0, Mon=1, ..., Sat=6)
+    
     // relational operator
     bool operator <(const AQLFlowDate& d) const
     {
         return (mFMonth < d.mFMonth ? true :
-                (mFMonth == d.mFMonth ? false : 
-                 (mFWeek < d.mFWeek ? true : 
-                 (mFWeek == d.mFWeek ? false :
-                 mFWeekly - d.mFWeekly < 0 ? true : false))));
+               (mFMonth == d.mFMonth ? false : 
+               (mFWeek < d.mFWeek ? true : 
+               (mFWeek == d.mFWeek ? false :
+               mFWeekly - d.mFWeekly < 0 ? true : false))));
     }
 };
 
@@ -53,10 +48,10 @@ struct AQLFlowDate
 */
 struct AQLMathCalendarInfo
 {
-    set<AQLDayOfWeekEnum>         mWeekly;   // holiday of day of the week (day X weekly)
-    set<AQLString>       mDays;     // holiday of month and date(X year Y days yearly)
-    set<AQLFlowDate>     mFlowDate; // indefinite holiday date(X month Y week Z day of the week)
-    set<AQLDate>         mDate;     // holiday date(X year Y month X day)
+    set<AQLDayOfWeekEnum>   mWeekly;   // holiday of day of the week (day X weekly)
+    set<AQLString>          mDays;     // holiday of month and date(X year Y days yearly)
+    set<AQLFlowDate>        mFlowDate; // indefinite holiday date(X month Y week Z day of the week)
+    set<AQLDate>            mDate;     // holiday date(X year Y month X day)
 };
 
 
@@ -67,43 +62,58 @@ struct AQLMathCalendarInfo
 class AQLMathCalendarData
 {
 public:
-//  LIFECYCLE
     // default constructor
-    AQLMathCalendarData(void){ mpcalInfo = NULL;};
+    AQLMathCalendarData(void){ pcalInfo_ = NULL;};
+    
     // copy constructor
     AQLMathCalendarData(const AQLMathCalendarData& cal);
+    
     // destructor
     ~AQLMathCalendarData(void);
 
-//  QUERY
     // count number of holidays between startDate and endDate (including both ends)
-    int                 countHoliday(const AQLDate& startDate, 
-                                     const AQLDate& endDate) const;
+    int                 countHoliday(const AQLDate& startDate, const AQLDate& endDate) const;
     // check whether holidya or not
     bool                isHoliday(const AQLDate& date) const;
 
-//  OPERATION
     // set the specified day of the weekly holiday
     void                setWeekly(const AQLDayOfWeekEnum weekly);
+    
     // set the specified day of holiday every year
     void                setDays(const AQLString& days);
+    
     // set the variable specified day of holiday every year
-    void                setFlowDate(const int month, const int week,
-                                    const AQLDayOfWeekEnum weekly);
+    void                setFlowDate(const int month, const int week, const AQLDayOfWeekEnum weekly);
+    
     // set the date specified by the holiday
     void                setDate(const AQLDate& date);
 
-//  OPERATOR
     // copy the right-hand side to the left-hand side 
     const AQLMathCalendarData&   operator=(const AQLMathCalendarData& cal);
+    
     // integrate the left and right sides
     const AQLMathCalendarData&   operator+=(const AQLMathCalendarData& cal);
 
 private:
-    AQLMathCalendarInfo*             mpcalInfo;  // holiday info
-    mutable deque<AQLDate>       mholiday;
-    mutable AQLDate              mStart;
-    mutable AQLDate              mEnd;
+
+    AQLMathCalendarInfo*         pcalInfo_;  // holiday info
+    mutable deque<AQLDate>       holiday_;
+    mutable AQLDate              start_;
+    mutable AQLDate              end_;
+
+    // Guards holiday_/start_/end_, the lazy cache createHolidayData() populates on demand. This is
+    // needed independently of AQLCalendar's own ownership model (see AQLCalendar.h): even a single
+    // AQLMathCalendarData instance that is never copied or shared can still have isHoliday()/
+    // countHoliday() called concurrently by multiple threads through one const AQLCalendar&
+    // reference (e.g. AQLMathCalendarCollection::getCalendarData() handing out the same map entry
+    // to many pricing threads at once) - both are const methods that silently mutate this cache on
+    // first use, with zero synchronization before this fix. Not `mutable` itself - std::mutex's
+    // lock()/unlock() are already usable through a const object; only the fields they protect
+    // needed `mutable`. A single mutex covering both methods' entire bodies (not just
+    // createHolidayData() internally) is deliberate: isHoliday()'s binary_search over holiday_ runs
+    // after createHolidayData() returns, and would otherwise read it unlocked while another thread
+    // could be concurrently expanding it.
+    mutable std::mutex           dataMutex_;
 
     // create hodilday data
     inline void createHolidayData(const AQLDate& startDate, 
@@ -112,23 +122,25 @@ private:
     void addWeeklyHoliday(set<AQLDate>& list,
                           const AQLDate& startDate,
                           const AQLDate& endDate) const;
+    
     // add holiday data specified by the day of the year
     void addDaysHoliday(set<AQLDate>& list,
                         const AQLDate& startDate,
                         const AQLDate& endDate) const;
+    
     // add indefinite holiday data
     void addFlowDateHoliday(set<AQLDate>& list,
                             const AQLDate& startDate,
                             const AQLDate& endDate) const;
+    
     // add holiday data specifed by year, month and date
     void addDateHoliday(set<AQLDate>& list,
                         const AQLDate& startDate,
                         const AQLDate& endDate) const;
+    
     // search holiday data
-    int getPointholiday(int& startIndex, int& endIndex, 
+    int getPointholiday(int& startIndex, int& endIndex,
                         const AQLDate& date) const;
-    // check weekly data
-    bool checkWeeklyData(const AQLString weekly);
 
     // check days
     bool checkDays(const AQLString days);
@@ -142,24 +154,26 @@ private:
 //--------------------------------------------------------------------------
 AQLMathCalendarData::AQLMathCalendarData(const AQLMathCalendarData& cal)
 {
-    mpcalInfo = NULL;
+    pcalInfo_ = NULL;
     try
     {
         // copy of calendar 
-        mpcalInfo = new AQLMathCalendarInfo(*cal.mpcalInfo);
+        pcalInfo_ = new AQLMathCalendarInfo(*cal.pcalInfo_);
+        
         // add holiday data
-        mholiday = cal.mholiday;
+        holiday_ = cal.holiday_;
+        
         // fix range of calendar
-        mStart = cal.mStart;
-        mEnd   = cal.mEnd;
+        start_ = cal.start_;
+        end_   = cal.end_;
     }
     catch(...)
     {
         // exception
-        if (mpcalInfo)
+        if (pcalInfo_)
         {
-            delete mpcalInfo;
-            mpcalInfo = NULL;
+            delete pcalInfo_;
+            pcalInfo_ = NULL;
         }
         throw AQLCoreSystemError(__FILE__, __LINE__);
     }
@@ -169,20 +183,20 @@ AQLMathCalendarData::AQLMathCalendarData(const AQLMathCalendarData& cal)
 //--------------------------------------------------------------------------
 AQLMathCalendarData::~AQLMathCalendarData()
 { 
-    if (mpcalInfo)
+    if (pcalInfo_)
     {
-        delete mpcalInfo;
+        delete pcalInfo_;
     }
 }
-// QUERY
 //--------------------------------------------------------------------------
 // count holidays
 //--------------------------------------------------------------------------
-int 
+int
 AQLMathCalendarData::countHoliday(
     const AQLDate& startDate,
     const AQLDate& endDate) const
 {
+    std::lock_guard<std::mutex> lock(dataMutex_);
     int     startIndexA, endIndexA, startIndexB, endIndexB;
     AQLDate  sDate(startDate), eDate(endDate);
     // order of the date
@@ -194,12 +208,12 @@ AQLMathCalendarData::countHoliday(
     // create holiday data
     createHolidayData(sDate, eDate);
     // excluded data
-    if (mholiday.size() == 0)
+    if (holiday_.size() == 0)
     {
         return 0;
     }
-    AQLDate s = mholiday.front(); 
-    AQLDate e = mholiday.back();
+    AQLDate s = holiday_.front(); 
+    AQLDate e = holiday_.back();
     if (s > eDate)
     {
         return 0;
@@ -217,17 +231,17 @@ AQLMathCalendarData::countHoliday(
     else 
     {
         startIndexA = 0; 
-        endIndexA = mholiday.size() - 1;
+        endIndexA = holiday_.size() - 1;
         getPointholiday(startIndexA, endIndexA, sDate);
     }
     if (eDate >= e)
     {
-        startIndexB = endIndexB =mholiday.size() - 1;
+        startIndexB = endIndexB =holiday_.size() - 1;
     }
     else
     {
         startIndexB = 0;
-        endIndexB = mholiday.size() - 1;
+        endIndexB = holiday_.size() - 1;
         getPointholiday(startIndexB, endIndexB, eDate);
     }
     // calculate number of days from Index
@@ -250,34 +264,34 @@ AQLMathCalendarData::getPointholiday(
     half = (endIndex + startIndex) / 2;
     AQLDate  wkDate;
 
-    if (mholiday[half] == date)
+    if (holiday_[half] == date)
     {
         startIndex = half;
         endIndex = half;
         return half;
     } 
-    else if (mholiday[half] < date)
+    else if (holiday_[half] < date)
     {
         startIndex = half;
         if (endIndex - startIndex == 1)
         {
-            if (mholiday[startIndex] > date){
+            if (holiday_[startIndex] > date){
                 startIndex--;
                 endIndex--;
             }
             return half;
         }
     }
-    else if (mholiday[half] > date)
+    else if (holiday_[half] > date)
     {
         endIndex = half;
 
-        if (mholiday[startIndex] == date)
+        if (holiday_[startIndex] == date)
         {
             endIndex = startIndex;
             return half;
         }
-        if (mholiday[startIndex] < date)
+        if (holiday_[startIndex] < date)
         {
             if (endIndex - startIndex == 1 )
             {
@@ -291,12 +305,13 @@ AQLMathCalendarData::getPointholiday(
 //--------------------------------------------------------------------------
 // check whether holiday or not
 //--------------------------------------------------------------------------
-bool 
+bool
 AQLMathCalendarData::isHoliday(
     const AQLDate& date) const
 {
+    std::lock_guard<std::mutex> lock(dataMutex_);
     // if necessary, prepare one more year holiday information
-    if (date < mStart || date > mEnd)
+    if (date < start_ || date > end_)
     {
         AQLDate  endDate(date);
         endDate.addDays(HOLIDAY_BUFFERING_SIZE);
@@ -304,11 +319,10 @@ AQLMathCalendarData::isHoliday(
     }
     
     // search
-    return binary_search(mholiday.begin(), mholiday.end(), date);
+    return binary_search(holiday_.begin(), holiday_.end(), date);
 
 }
 
-// OPERATION
 //--------------------------------------------------------------------------
 // set the specified day of the weekly holiday
 //--------------------------------------------------------------------------
@@ -318,19 +332,19 @@ AQLMathCalendarData::setWeekly(
 {
     try
     {
-        if (mpcalInfo == NULL)
+        if (pcalInfo_ == NULL)
         {
-            mpcalInfo = new AQLMathCalendarInfo;
+            pcalInfo_ = new AQLMathCalendarInfo;
         }
-        mpcalInfo->mWeekly.insert(weekly);
+        pcalInfo_->mWeekly.insert(weekly);
     }
     catch(...)
     {
         // exception
-        if (mpcalInfo)
+        if (pcalInfo_)
         {
-            delete mpcalInfo;
-            mpcalInfo = NULL;
+            delete pcalInfo_;
+            pcalInfo_ = NULL;
         }
         throw AQLCoreSystemError(__FILE__, __LINE__);
     }
@@ -360,19 +374,19 @@ AQLMathCalendarData::setDays(
     }
     try
     {
-        if (mpcalInfo == NULL)
+        if (pcalInfo_ == NULL)
         {
-            mpcalInfo = new AQLMathCalendarInfo;
+            pcalInfo_ = new AQLMathCalendarInfo;
         }
-        mpcalInfo->mDays.insert(days);
+        pcalInfo_->mDays.insert(days);
     }
     catch(...)
     {
         // exception
-        if (mpcalInfo)
+        if (pcalInfo_)
         {
-            delete mpcalInfo;
-            mpcalInfo = NULL;
+            delete pcalInfo_;
+            pcalInfo_ = NULL;
         }
         throw AQLCoreSystemError(__FILE__, __LINE__);
     }
@@ -407,23 +421,23 @@ AQLMathCalendarData::setFlowDate(
     }
     try
     {
-        if (mpcalInfo == NULL)
+        if (pcalInfo_ == NULL)
         {
-            mpcalInfo = new AQLMathCalendarInfo;
+            pcalInfo_ = new AQLMathCalendarInfo;
         }
         AQLFlowDate flow; 
         flow.mFMonth = month;
         flow.mFWeek = week;
         flow.mFWeekly = weekly;
-        mpcalInfo->mFlowDate.insert(flow);
+        pcalInfo_->mFlowDate.insert(flow);
     }
     catch(...)
     {
         // exception
-        if (mpcalInfo)
+        if (pcalInfo_)
         {
-            delete mpcalInfo;
-            mpcalInfo = NULL;
+            delete pcalInfo_;
+            pcalInfo_ = NULL;
         }
         throw AQLCoreSystemError(__FILE__, __LINE__);
     }
@@ -433,56 +447,53 @@ AQLMathCalendarData::setFlowDate(
 //  set the date specified by the holiday
 //--------------------------------------------------------------------------
 void 
-AQLMathCalendarData::setDate(
-    const AQLDate& date)
+AQLMathCalendarData::setDate(const AQLDate& date)
 {
     try
     {
-        if (mpcalInfo == NULL)
+        if (pcalInfo_ == NULL)
         {
-            mpcalInfo = new AQLMathCalendarInfo;
+            pcalInfo_ = new AQLMathCalendarInfo;
         }
-        mpcalInfo->mDate.insert(date);
+        pcalInfo_->mDate.insert(date);
     }
     catch(...)
     {
         // exception
-        if (mpcalInfo)
+        if (pcalInfo_)
         {
-            delete mpcalInfo;
-            mpcalInfo = NULL;
+            delete pcalInfo_;
+            pcalInfo_ = NULL;
         }
         throw AQLCoreSystemError(__FILE__, __LINE__);
     }
 }
 
-// OPERATOR
 //--------------------------------------------------------------------------
 //  object copy
 //--------------------------------------------------------------------------
 const AQLMathCalendarData& 
-AQLMathCalendarData::operator=(
-    const AQLMathCalendarData& cal)
+AQLMathCalendarData::operator=(const AQLMathCalendarData& cal)
 {
     try
     {
-        if (mpcalInfo == NULL)
+        if (pcalInfo_ == NULL)
         {
-            mpcalInfo = new AQLMathCalendarInfo;
+            pcalInfo_ = new AQLMathCalendarInfo;
         }
         // data copy
-        (*mpcalInfo) = *(cal.mpcalInfo);
-        mholiday = cal.mholiday;
-        mStart = cal.mStart;
-        mEnd = cal.mEnd;
+        (*pcalInfo_) = *(cal.pcalInfo_);
+        holiday_ = cal.holiday_;
+        start_ = cal.start_;
+        end_ = cal.end_;
     }
     catch(...)
     {
         // exception
-        if (mpcalInfo)
+        if (pcalInfo_)
         {
-            delete mpcalInfo;
-            mpcalInfo = NULL;
+            delete pcalInfo_;
+            pcalInfo_ = NULL;
         }
         throw AQLCoreSystemError(__FILE__, __LINE__);
     }
@@ -503,48 +514,48 @@ AQLMathCalendarData::operator+=(
 // unused.    deque<AQLDate>::iterator     p4;
     try
     {
-        if (mpcalInfo == NULL)
+        if (pcalInfo_ == NULL)
         {
-            mpcalInfo = new AQLMathCalendarInfo;
+            pcalInfo_ = new AQLMathCalendarInfo;
         }
         // add definition data
-        if (cal.mpcalInfo->mWeekly.size())
+        if (cal.pcalInfo_->mWeekly.size())
         {
-            pw = cal.mpcalInfo->mWeekly.begin();
-            for (;pw != cal.mpcalInfo->mWeekly.end(); ++pw)
+            pw = cal.pcalInfo_->mWeekly.begin();
+            for (;pw != cal.pcalInfo_->mWeekly.end(); ++pw)
             {
-                mpcalInfo->mWeekly.insert(*pw);
+                pcalInfo_->mWeekly.insert(*pw);
             }
         }
-        if (cal.mpcalInfo->mDays.size())
+        if (cal.pcalInfo_->mDays.size())
         {
-            p = cal.mpcalInfo->mDays.begin();
-            for (;p != cal.mpcalInfo->mDays.end();++p)
+            p = cal.pcalInfo_->mDays.begin();
+            for (;p != cal.pcalInfo_->mDays.end();++p)
             {
-                mpcalInfo->mDays.insert(*p);
+                pcalInfo_->mDays.insert(*p);
             }
         }
-        if (cal.mpcalInfo->mFlowDate.size())
+        if (cal.pcalInfo_->mFlowDate.size())
         {
-            p2 = cal.mpcalInfo->mFlowDate.begin();
-            for (;p2 != cal.mpcalInfo->mFlowDate.end();++p2)
+            p2 = cal.pcalInfo_->mFlowDate.begin();
+            for (;p2 != cal.pcalInfo_->mFlowDate.end();++p2)
             {
-                mpcalInfo->mFlowDate.insert(*p2);
+                pcalInfo_->mFlowDate.insert(*p2);
             }
         }
-        if (cal.mpcalInfo->mDate.size())
+        if (cal.pcalInfo_->mDate.size())
         {
-            p3 = cal.mpcalInfo->mDate.begin();
-            for (;p3 != cal.mpcalInfo->mDate.end();++p3)
+            p3 = cal.pcalInfo_->mDate.begin();
+            for (;p3 != cal.pcalInfo_->mDate.end();++p3)
             {
-                mpcalInfo->mDate.insert(*p3);
+                pcalInfo_->mDate.insert(*p3);
             }
         }
         // initialize
         // copy only definition data
-        mStart = AQLDate();
-        mEnd = AQLDate();
-        mholiday.clear();
+        start_ = AQLDate();
+        end_ = AQLDate();
+        holiday_.clear();
     }
     catch(AQLCoreError&)
     {
@@ -553,9 +564,9 @@ AQLMathCalendarData::operator+=(
     catch(...)
     {
         // exception
-        if (mpcalInfo)
+        if (pcalInfo_)
         {
-            delete mpcalInfo;
+            delete pcalInfo_;
         }
         throw AQLCoreSystemError(__FILE__, __LINE__);
     }
@@ -572,9 +583,9 @@ AQLMathCalendarData::createHolidayData(
 {
     // whether need to create or not
     AQLDate def;
-    if (mStart != def && mStart <= startDate && mEnd >= endDate) return;
+    if (start_ != def && start_ <= startDate && end_ >= endDate) return;
     // whether there is create info
-    if (mpcalInfo == NULL)
+    if (pcalInfo_ == NULL)
     {
         return;
     }
@@ -583,7 +594,7 @@ AQLMathCalendarData::createHolidayData(
     set<AQLDate>::iterator           it;
     set<AQLDate>::reverse_iterator   rit;
     // Create start
-    if (mStart == def) // first call
+    if (start_ == def) // first call
     {
         addDateHoliday(cashHoliday, startDate, endDate);
         addDaysHoliday(cashHoliday, startDate, endDate);
@@ -592,15 +603,15 @@ AQLMathCalendarData::createHolidayData(
         it = cashHoliday.begin();
         for (;it != cashHoliday.end();++it)
         {
-            mholiday.push_back(*it);
+            holiday_.push_back(*it);
         }
     }
     else
     {
         // in case of forward
-        if (mStart > startDate)
+        if (start_ > startDate)
         {
-            AQLDate front(mStart);
+            AQLDate front(start_);
             front.addDays(-1);      // duplication prevention
             addDateHoliday(cashHoliday, startDate, front);
             addDaysHoliday(cashHoliday, startDate, front);
@@ -609,14 +620,14 @@ AQLMathCalendarData::createHolidayData(
             rit = cashHoliday.rbegin();
             for (;rit != cashHoliday.rend();++rit)
             {
-                mholiday.push_front(*rit);
+                holiday_.push_front(*rit);
             }
         }
         cashHoliday.clear();
         // in case of back part
-        if (mEnd < endDate)
+        if (end_ < endDate)
         {
-            AQLDate back(mEnd);
+            AQLDate back(end_);
             back.addDays(1);        // duplication prevention
             addDateHoliday(cashHoliday, back, endDate);
             addDaysHoliday(cashHoliday, back, endDate);
@@ -625,12 +636,12 @@ AQLMathCalendarData::createHolidayData(
             it = cashHoliday.begin();
             for (;it != cashHoliday.end();++it)
             {
-                mholiday.push_back(*it);
+                holiday_.push_back(*it);
             }
         }
     }
-    if (mStart==def || mStart > startDate) mStart = startDate;
-    if (mEnd < endDate) mEnd = endDate;
+    if (start_==def || start_ > startDate) start_ = startDate;
+    if (end_ < endDate) end_ = endDate;
 }
 
 //--------------------------------------------------------------------------
@@ -644,15 +655,15 @@ AQLMathCalendarData::addWeeklyHoliday(
 {
     // whether to create or not
     // return if no holiday
-    if (mpcalInfo->mWeekly.size() == 0)
+    if (pcalInfo_->mWeekly.size() == 0)
     {
         return;
     }
     // start
     AQLDate          wkdate;
     set<AQLDayOfWeekEnum>::iterator       p;
-    p = mpcalInfo->mWeekly.begin();
-    for (;p != mpcalInfo->mWeekly.end();++p)
+    p = pcalInfo_->mWeekly.begin();
+    for (;p != pcalInfo_->mWeekly.end();++p)
     {
         wkdate = startDate;
         AQLDayOfWeekEnum sw = startDate.dayOfWeek();
@@ -689,7 +700,7 @@ AQLMathCalendarData::addDaysHoliday(
     const AQLDate& endDate) const
 {
     // whether to create or not
-    if (!mpcalInfo->mDays.size())
+    if (!pcalInfo_->mDays.size())
     {
         return;
     }
@@ -705,8 +716,8 @@ AQLMathCalendarData::addDaysHoliday(
 
     for(int i = 0;i <= eYear - sYear;i++)
     {
-        p = mpcalInfo->mDays.begin();
-        for(;p != mpcalInfo->mDays.end();++p)
+        p = pcalInfo_->mDays.begin();
+        for(;p != pcalInfo_->mDays.end();++p)
         {
             mmdd = *p;
             wkdate.setYear(sYear + i);
@@ -729,7 +740,7 @@ AQLMathCalendarData::addFlowDateHoliday(
     const AQLDate& endDate) const
 {
     // whether to create or not
-    if (!mpcalInfo->mFlowDate.size())
+    if (!pcalInfo_->mFlowDate.size())
     {
         return;
     }
@@ -742,8 +753,8 @@ AQLMathCalendarData::addFlowDateHoliday(
     sYear = startDate.yearOfEra();
     eYear = endDate.yearOfEra();
 
-    p = mpcalInfo->mFlowDate.begin();
-    for (;p != mpcalInfo->mFlowDate.end();++p)
+    p = pcalInfo_->mFlowDate.begin();
+    for (;p != pcalInfo_->mFlowDate.end();++p)
     {
         for (int i = 0;i <= eYear - sYear;i++)
         {
@@ -780,8 +791,8 @@ AQLMathCalendarData::addDateHoliday(
 {
     set<AQLDate>::iterator       p;
     
-    p = mpcalInfo->mDate.begin();
-    for (;p != mpcalInfo->mDate.end();++p)
+    p = pcalInfo_->mDate.begin();
+    for (;p != pcalInfo_->mDate.end();++p)
     {
         if (*p < startDate || *p > endDate) continue;
         list.insert(*p);
@@ -823,60 +834,39 @@ AQLMathCalendarData::checkDays(
 
 
 
-///////////////////////// AQLMathCalendar class//////////////////////////////////
+///////////////////////// AQLCalendar class//////////////////////////////////
 /*!
     @brief constructor
 */
-AQLMathCalendar::AQLMathCalendar()
+AQLCalendar::AQLCalendar()
+    : pCalData_(std::make_unique<AQLMathCalendarData>())
 {
-    mpCalData = NULL;
-    mpRefCount = NULL;
-
-    try
-    {
-        mpCalData = new AQLMathCalendarData;
-        mpRefCount = new int(1);
-    }
-    catch(...)
-    {
-        // exception
-        if (mpCalData)
-        {
-            delete mpCalData;
-            mpCalData = NULL;
-        }
-        if (mpRefCount)
-        {
-            delete mpRefCount;
-            mpRefCount = NULL;
-        }
-        throw AQLCoreSystemError(__FILE__, __LINE__);
-    }
 }
 
 /*!
     @brief copy constructor
     @param[in] calHolder original holiday object
 */
-AQLMathCalendar::AQLMathCalendar(const AQLMathCalendar& calHolder)
+AQLCalendar::AQLCalendar(const AQLCalendar& calHolder)
+    : pCalData_(std::make_unique<AQLMathCalendarData>(*calHolder.pCalData_))
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    mpCalData = NULL;
-    mpRefCount = NULL;
-    copy(calHolder);
+}
+
+// Move constructor - steals calHolder's data outright: no allocation, no copy of any holiday dates.
+AQLCalendar::AQLCalendar(AQLCalendar&& calHolder) noexcept
+    : pCalData_(std::move(calHolder.pCalData_))
+{
 }
 
 /*!
     @brief destructor
+
+    Declared here (not inline in the header, even though the body is now empty) because
+    std::unique_ptr<AQLMathCalendarData>'s destructor needs that type complete at the point it is
+    instantiated, and the header only forward-declares it.
 */
-AQLMathCalendar::~AQLMathCalendar()
+AQLCalendar::~AQLCalendar()
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    clear();
 }
 
 
@@ -885,13 +875,24 @@ AQLMathCalendar::~AQLMathCalendar()
 
     copy the right-hand side to the left-hand side
 */
-const AQLMathCalendar& 
-AQLMathCalendar::operator=(const AQLMathCalendar& cal)
+const AQLCalendar&
+AQLCalendar::operator=(const AQLCalendar& cal)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    copy(cal);
+    if (this != &cal)
+    {
+        pCalData_ = std::make_unique<AQLMathCalendarData>(*cal.pCalData_);
+    }
+    return *this;
+}
+
+// Move assignment - same rationale as the move constructor above.
+AQLCalendar&
+AQLCalendar::operator=(AQLCalendar&& cal) noexcept
+{
+    if (this != &cal)
+    {
+        pCalData_ = std::move(cal.pCalData_);
+    }
     return *this;
 }
 
@@ -900,34 +901,21 @@ AQLMathCalendar::operator=(const AQLMathCalendar& cal)
 
     additionally copy the right-hand side to the left-hand side
 */
-const AQLMathCalendar& 
-AQLMathCalendar::operator+=(const AQLMathCalendar& cal)
+const AQLCalendar&
+AQLCalendar::operator+=(const AQLCalendar& cal)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    makeUnShared();
+    // No more makeUnShared() - pCalData_ is always exclusively owned, nothing to detach from.
     try{
-        *mpCalData += *(cal.mpCalData);
+        *pCalData_ += *(cal.pCalData_);
     }
     catch(AQLCoreError& e)
     {
-        AQLCoreError ex("Error at AQLMathCalendar operator+= Method", __FILE__, __LINE__);
+        AQLCoreError ex("Error at AQLCalendar operator+= Method", __FILE__, __LINE__);
         ex += e;
         throw ex;
     }
     catch(...)
     {
-        if (mpRefCount)
-        {
-            delete mpRefCount;
-            mpRefCount = NULL;
-        }
-        if (mpCalData)
-        {
-            delete mpCalData;
-            mpCalData = NULL;
-        }
         throw AQLCoreSystemError(__FILE__, __LINE__);
     }
     return *this;
@@ -942,12 +930,9 @@ AQLMathCalendar::operator+=(const AQLMathCalendar& cal)
     @return the number of holiday
 */
 int 
-AQLMathCalendar::countHoliday(const AQLDate& startDate, const AQLDate& endDate) const
+AQLCalendar::countHoliday(const AQLDate& startDate, const AQLDate& endDate) const
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    int ret =   mpCalData->countHoliday(startDate, endDate);
+    int ret =   pCalData_->countHoliday(startDate, endDate);
 	return ret;
 }
 
@@ -960,12 +945,9 @@ AQLMathCalendar::countHoliday(const AQLDate& startDate, const AQLDate& endDate) 
     @retval false not holiday
 */
 bool 
-AQLMathCalendar::isHoliday(const AQLDate& date) const
+AQLCalendar::isHoliday(const AQLDate& date) const
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    bool ret =  mpCalData->isHoliday(date);
+    bool ret =  pCalData_->isHoliday(date);
 	return ret;
 }
 
@@ -975,13 +957,9 @@ AQLMathCalendar::isHoliday(const AQLDate& date) const
     @param[in] weekly day of the week to be set(SUN, MON, ...)
 */
 void 
-AQLMathCalendar::setWeekly(const AQLDayOfWeekEnum weekly)
+AQLCalendar::setWeekly(const AQLDayOfWeekEnum weekly)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    makeUnShared();
-    mpCalData->setWeekly(weekly);
+    pCalData_->setWeekly(weekly);
 }
 
 /*!
@@ -990,13 +968,9 @@ AQLMathCalendar::setWeekly(const AQLDayOfWeekEnum weekly)
     @param[in] days days to be set("MM/DD", "MM-DD", "MM.DD" etc)
 */
 void 
-AQLMathCalendar::setDays(const AQLString& days)
+AQLCalendar::setDays(const AQLString& days)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    makeUnShared();
-    mpCalData->setDays(days);
+    pCalData_->setDays(days);
 }
 
 /*!
@@ -1005,14 +979,10 @@ AQLMathCalendar::setDays(const AQLString& days)
     @param[in] daysVector multi days to be set("MM/DD", "MM-DD", "MM.DD" etc)
 */
 void 
-AQLMathCalendar::setDays(const AQLStringVector& daysVector)
+AQLCalendar::setDays(const AQLStringVector& daysVector)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    makeUnShared();
     for (unsigned int i = 0; i < daysVector.size(); i++){
-        mpCalData->setDays(daysVector[i]);
+        pCalData_->setDays(daysVector[i]);
     }
 }
 
@@ -1024,13 +994,9 @@ AQLMathCalendar::setDays(const AQLStringVector& daysVector)
     @param[in] weekly day of the week
 */
 void 
-AQLMathCalendar::setFlowDate(const int month, const int week, const AQLDayOfWeekEnum weekly)
+AQLCalendar::setFlowDate(const int month, const int week, const AQLDayOfWeekEnum weekly)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    makeUnShared(); // one time action is enough for reselt of reference counter and release data sharing
-    mpCalData->setFlowDate(month, week, weekly);
+    pCalData_->setFlowDate(month, week, weekly);
 }
 
 /*!
@@ -1039,13 +1005,9 @@ AQLMathCalendar::setFlowDate(const int month, const int week, const AQLDayOfWeek
     @param[in] date date to be set
 */
 void 
-AQLMathCalendar::setDate(const AQLDate& date)
+AQLCalendar::setDate(const AQLDate& date)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    makeUnShared();
-    mpCalData->setDate(date);
+    pCalData_->setDate(date);
 }
 
 /*!
@@ -1054,95 +1016,13 @@ AQLMathCalendar::setDate(const AQLDate& date)
     @param[in] dateVector multi dates to be set
 */
 void 
-AQLMathCalendar::setDate(const DateVector& dateVector)
+AQLCalendar::setDate(const DateVector& dateVector)
 {
-#ifdef __HAS_MIC__
-	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
-#endif
-    makeUnShared(); // one time action is enough for reselt of reference counter and release data sharing
     for (unsigned int i = 0; i < dateVector.size(); i++){
-        mpCalData->setDate(dateVector[i]);
+        pCalData_->setDate(dateVector[i]);
     }
 }
 
-/*!
-    @brief free the memory acquired
-
-    free the memory obtained from holiday information
-*/
-void 
-AQLMathCalendar::clear()
-{
-    if (mpRefCount != NULL && (*mpRefCount)-- == 1)
-    {
-        delete mpCalData;
-        delete mpRefCount;
-    }
-    mpCalData = NULL;
-    mpRefCount = NULL;
-}
-
-
-/*!
-    @brief shallow copy of the project
-*/
-void 
-AQLMathCalendar::copy(const AQLMathCalendar& cal)
-{
-    if (this == &cal)
-    {
-        return;
-    }
-    clear();
-
-    mpRefCount = cal.mpRefCount;
-    ++(*mpRefCount);
-    mpCalData = cal.mpCalData;
-}
-
-/*!
-    @brief reset the reference counter of AQLMathCalendarData object that the object holds
-
-
-	If you want to (shallow)copy AQLMathCalendar object by copy method, then
-	you must share data string between the original and referenced objects.
-	(reference counter is increment when copied)
-
-	By using this method, the shared data string is released, the reference counter is reset to 1.
-	When you use this method, string data is copied to another memory area, 
-	and AQLMathCalendar two objects hold the string data in a separate region.
-	This, AQLMathCalendar one of the objects even if you change the data by methods such as setDate(), 
-	will not affect the data string of AQLMathCalendar the other object.
-
-*/
-void AQLMathCalendar::makeUnShared(void)
-{
-    try
-    {
-        if ((*mpRefCount) == 1)
-        {
-            return;
-        }
-        --(*mpRefCount);
-        mpRefCount = NULL;
-        mpRefCount = new int(1);
-        mpCalData = new AQLMathCalendarData(*mpCalData);
-    }
-    catch(...)
-    {
-        if (mpRefCount)
-        {
-            delete mpRefCount;
-            mpRefCount = NULL;
-        }
-        if (mpCalData)
-        {
-            delete mpCalData;
-            mpCalData = NULL;
-        }
-        throw AQLCoreSystemError(__FILE__, __LINE__);
-    }
-}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -1154,16 +1034,16 @@ void AQLMathCalendar::makeUnShared(void)
     @param[in] calendar holiday information corresponding to the city name
 */
 void
-AQLMathCalendarCollection::setCalendarData(const AQLString &cityName, const AQLMathCalendar &calendar)
+AQLMathCalendarCollection::setCalendarData(const AQLString &cityName, const AQLCalendar &calendar)
 {
-    pair<map<AQLString, AQLMathCalendar>::iterator, bool> ret;
+    pair<map<AQLString, AQLCalendar>::iterator, bool> ret;
 
-    ret = mCalendarList.insert( pair<AQLString, AQLMathCalendar>(cityName, calendar) );
+    ret = calendarList_.insert( pair<AQLString, AQLCalendar>(cityName, calendar) );
 
     // if city name has been already registered
     if (! ret.second ){
-        mCalendarList.erase(ret.first); // delete
-        ret = mCalendarList.insert( pair<AQLString, AQLMathCalendar>(cityName, calendar) );
+        calendarList_.erase(ret.first); // delete
+        ret = calendarList_.insert( pair<AQLString, AQLCalendar>(cityName, calendar) );
     }
 
     if (! ret.second ){
@@ -1174,26 +1054,26 @@ AQLMathCalendarCollection::setCalendarData(const AQLString &cityName, const AQLM
 }
 
 /*!
-    @brief get AQLMathCalendar object from the specified city names
+    @brief get AQLCalendar object from the specified city names
 
     @param[in] cityName string representing city name
 
     @return calendar holiday information corresponding to the city name
 */
-const AQLMathCalendar& 
+const AQLCalendar& 
 AQLMathCalendarCollection::getCalendarData(const AQLString& cityName)
 
 {
-    map<AQLString, AQLMathCalendar>::iterator     itr;
+    map<AQLString, AQLCalendar>::iterator     itr;
     
-    itr = mCalendarList.find(cityName);
-    if (itr == mCalendarList.end())
+    itr = calendarList_.find(cityName);
+    if (itr == calendarList_.end())
     {
         AQLString    msg = "#Error: Invalid Holiday Centre specified: ";
         msg += cityName;
         throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
-	mInqCityNames.insert(cityName);
+	cityNames_.insert(cityName);
     return itr->second;
 }
 
@@ -1205,8 +1085,8 @@ AQLMathCalendarCollection::getCalendarData(const AQLString& cityName)
 void 
 AQLMathCalendarCollection::getMemberNames(std::vector<AQLString>& arr)
 {
-    map<AQLString, AQLMathCalendar>::iterator     itr;
-    for (itr = mCalendarList.begin(); itr != mCalendarList.end(); itr++)
+    map<AQLString, AQLCalendar>::iterator     itr;
+    for (itr = calendarList_.begin(); itr != calendarList_.end(); itr++)
     {
         arr.push_back(itr->first);
     }
@@ -1269,11 +1149,11 @@ AQLMathCalendarCollection::getWeeklyValue(const AQLString& weekly)
     @param[out] string representing city name
 */
 void 
-AQLMathCalendarCollection::getInquiredCityNames(std::vector<AQLString>& names) const
+AQLMathCalendarCollection::getCityNames(std::vector<AQLString>& names) const
 {
 	names.clear();
-	set<AQLString>::const_iterator it = mInqCityNames.begin();
-	while (it != mInqCityNames.end())
+	set<AQLString>::const_iterator it = cityNames_.begin();
+	while (it != cityNames_.end())
 	{
 		names.push_back(*it);
 		++it;

@@ -26,13 +26,11 @@ class AQLFunctionBase;
 class AQLFindRootBrent : public AQLFindRootBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLFindRootBrent();
 	// destructor
 	virtual ~AQLFindRootBrent();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;

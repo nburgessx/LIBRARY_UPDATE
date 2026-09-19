@@ -13,7 +13,6 @@
 using namespace std;
 
 //======================= IMPLEMENTATION =============================
-//// LIFECYCLE ////
 /*!
     @brief default constructor
 */
@@ -86,7 +85,6 @@ AQLPriceDataInterpolation::~AQLPriceDataInterpolation(void)
 //  delete mpDataProvider;
 }
 
-//// QUERY ////
 /*!
     @brief deep copy of the data object - calling code is resposible for memory clean-up.
     @Calling code must delete AQLPriceDataType when finished with the object to avoid memory leaks.

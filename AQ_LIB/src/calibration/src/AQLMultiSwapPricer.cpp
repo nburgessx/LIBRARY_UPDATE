@@ -1586,7 +1586,7 @@ AQLMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQ
 	ret->AQLObject::add(CALIBRATION_DATA_UNDERLYINGS, new AQLDataMultiReference()).convertFromString(leg1Input + AQLString(":") + leg2Input);
 	//is result out ---> the same output as webtool
 	ret->AQLObject::add(PRICING_DATA_ISRESULTOUTPUT, new AQLDataBool(true));
-	//temporary to avoid erro in past trade
+	//temporary to avoid error in past trade
 	ret->AQLObject::add(PRICING_DATA_ISSAVEPASTFIXING, new AQLDataBool(true));
 	//path object
 	ret->AQLObject::add(PRICING_DATA_PATHENTITY, new AQLDataReference()).convertFromString("marketparam1_" + curveID);

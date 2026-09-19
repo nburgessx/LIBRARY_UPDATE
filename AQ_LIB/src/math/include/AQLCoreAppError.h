@@ -12,9 +12,10 @@
 class AQLCoreAppError : public AQLCoreError
 {
 public:
-//  LIFECYCLE
+
     // constructor
     AQLCoreAppError(const char_t*   msg, const char_t*   file, unsigned int line);
+
     // copy constructor
     AQLCoreAppError(const AQLCoreAppError& e);
 };
@@ -26,9 +27,10 @@ public:
 class AQLCoreInvalidData : public AQLCoreAppError
 {
 public:
-//  LIFECYCLE
+
     // constructor
     AQLCoreInvalidData(const char_t*   msg, const char_t*   file, unsigned int line);
+    
     // copy constructor
     AQLCoreInvalidData(const AQLCoreInvalidData& e);
 };
@@ -40,10 +42,10 @@ public:
 class AQLCoreNumericalError : public AQLCoreAppError
 {
 public:
-//  LIFECYCLE
+
     // constructor
-    AQLCoreNumericalError(const char_t*   msg, const char_t*   file, 
-                                            unsigned int line);
+    AQLCoreNumericalError(const char_t*   msg, const char_t*   file,  unsigned int line);
+
     // copy constructor
     AQLCoreNumericalError(const AQLCoreNumericalError& e);
 };

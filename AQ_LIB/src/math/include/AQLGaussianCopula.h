@@ -19,7 +19,6 @@ class AQLGaussianCopula : public AQLRandBase
 {
 public:
 
-//  LIFECYCLE
 	// constructor
     AQLGaussianCopula();
 
@@ -29,7 +28,6 @@ public:
 	// destructor
     virtual ~AQLGaussianCopula();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
@@ -47,7 +45,6 @@ public:
 	virtual void                getGaussians(DoubleArray& variates);
 
 
-//  OPERATION
                                 //==========================================
 								// set dimension (overriding)
 	virtual void				setDim(const UintArray& dimValue);

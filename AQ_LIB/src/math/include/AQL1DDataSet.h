@@ -29,14 +29,12 @@ class AQLInterpolationBase;
 class AQL1DDataSet : public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	explicit AQL1DDataSet(bool checkflag = false);
 	// destructor
 	virtual ~AQL1DDataSet();
 	//	Copy constructor
 	AQL1DDataSet(const AQL1DDataSet& v);
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
@@ -114,7 +112,6 @@ public:
 								getGrids() const{return mGrids;};
 
 
-//  OPERATION
 	                            //==========================================
 	                            // set data points and their values
 	virtual void				set(const DoubleArray& x, const DoubleArray& y);

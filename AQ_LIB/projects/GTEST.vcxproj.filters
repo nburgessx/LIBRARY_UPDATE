@@ -35,16 +35,16 @@
       <Filter>src\AQL Classic\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestUtilitiesTime.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestUtilitiesUsername.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestDataFilesCreate.cpp">
-      <Filter>src\etrading\DataFilesAndTypes</Filter>
+      <Filter>src\eTrading\DataFilesAndTypes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestDataFilesRead.cpp">
-      <Filter>src\etrading\DataFilesAndTypes</Filter>
+      <Filter>src\eTrading\DataFilesAndTypes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\InitializeGoogleTest.cpp">
       <Filter>src\setup</Filter>
@@ -53,639 +53,642 @@
       <Filter>src\AQL Classic\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqCurvesAccessors.cpp">
-      <Filter>src\etrading\Curves\CurveAccessors</Filter>
+      <Filter>src\eTrading\Curves\CurveAccessors</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqCurvesFwdFxConst.cpp">
-      <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
+      <Filter>src\eTrading\Curves\CurveFwdFxConst</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqCurvesTenorBasis.cpp">
-      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+      <Filter>src\eTrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqCurvesStd.cpp">
-      <Filter>src\etrading\Curves\CurveSTD</Filter>
+      <Filter>src\eTrading\Curves\CurveSTD</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqCurvesXccyBasis.cpp">
-      <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
+      <Filter>src\eTrading\Curves\CurveXccyBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveFwdFxConstEURGBP.cpp">
-      <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
+      <Filter>src\eTrading\Curves\CurveFwdFxConst</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisEUR3M6M.cpp">
-      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+      <Filter>src\eTrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisUSD3M6M.cpp">
-      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+      <Filter>src\eTrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisGBP3M6M.cpp">
-      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+      <Filter>src\eTrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisJPY3M6M.cpp">
-      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+      <Filter>src\eTrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveOisEUR.cpp">
-      <Filter>src\etrading\Curves\CurveOIS</Filter>
+      <Filter>src\eTrading\Curves\CurveOIS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveOisUSD.cpp">
-      <Filter>src\etrading\Curves\CurveOIS</Filter>
+      <Filter>src\eTrading\Curves\CurveOIS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveOisGBP.cpp">
-      <Filter>src\etrading\Curves\CurveOIS</Filter>
+      <Filter>src\eTrading\Curves\CurveOIS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveOisJPY.cpp">
-      <Filter>src\etrading\Curves\CurveOIS</Filter>
+      <Filter>src\eTrading\Curves\CurveOIS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqCurvesOis.cpp">
-      <Filter>src\etrading\Curves\CurveOIS</Filter>
+      <Filter>src\eTrading\Curves\CurveOIS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdEUR.cpp">
-      <Filter>src\etrading\Curves\CurveSTD</Filter>
+      <Filter>src\eTrading\Curves\CurveSTD</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdUSD.cpp">
-      <Filter>src\etrading\Curves\CurveSTD</Filter>
+      <Filter>src\eTrading\Curves\CurveSTD</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdGBP.cpp">
-      <Filter>src\etrading\Curves\CurveSTD</Filter>
+      <Filter>src\eTrading\Curves\CurveSTD</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdJPY.cpp">
-      <Filter>src\etrading\Curves\CurveSTD</Filter>
+      <Filter>src\eTrading\Curves\CurveSTD</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveXccyBasisEUR.cpp">
-      <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
+      <Filter>src\eTrading\Curves\CurveXccyBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveXccyBasisJPY.cpp">
-      <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
+      <Filter>src\eTrading\Curves\CurveXccyBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveXccyBasisGBP.cpp">
-      <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
+      <Filter>src\eTrading\Curves\CurveXccyBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveFwdFxConstGBPJPY.cpp">
-      <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
+      <Filter>src\eTrading\Curves\CurveFwdFxConst</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveFwdFxConstUSDEUR.cpp">
-      <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
+      <Filter>src\eTrading\Curves\CurveFwdFxConst</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveFwdFxConstJPYEUR.cpp">
-      <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
+      <Filter>src\eTrading\Curves\CurveFwdFxConst</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestRiskTenorBasisCurve.cpp">
       <Filter>src\AQL Classic\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\ResultsProcessor.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveTenorBasisJPY3M6MConvergence.cpp">
-      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+      <Filter>src\eTrading\Curves\CurveTenorBasis</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapEURTenorBasis.cpp">
-      <Filter>src\etrading\Swaps\TenorBasisSwaps</Filter>
+      <Filter>src\eTrading\Swaps\TenorBasisSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\EnvironmentAttacker.cpp">
-      <Filter>src\etrading\Infrastructure</Filter>
+      <Filter>src\eTrading\Infrastructure</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestExampleObject.cpp">
-      <Filter>src\etrading\Infrastructure</Filter>
+      <Filter>src\eTrading\Infrastructure</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqGeneratorList.cpp">
-      <Filter>src\etrading\Generator</Filter>
+      <Filter>src\eTrading\Generator</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqGeneratorDisplay.cpp">
-      <Filter>src\etrading\Generator</Filter>
+      <Filter>src\eTrading\Generator</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqGeneratorValidate.cpp">
-      <Filter>src\etrading\Generator</Filter>
+      <Filter>src\eTrading\Generator</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjInfrastructure.cpp">
-      <Filter>src\etrading\Infrastructure</Filter>
+      <Filter>src\eTrading\Infrastructure</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestUtilities.cpp">
-      <Filter>src\etrading\Infrastructure</Filter>
+      <Filter>src\eTrading\Infrastructure</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjCurve.cpp">
-      <Filter>src\etrading\Curves\AQObjCurve</Filter>
+      <Filter>src\eTrading\Curves\AQObjCurve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestFixingTable.cpp">
-      <Filter>src\etrading\Swaps\FixingTable</Filter>
+      <Filter>src\eTrading\Swaps\FixingTable</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestMarketDataCollection.cpp">
-      <Filter>src\etrading\MarketData</Filter>
+      <Filter>src\eTrading\MarketData</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapEURVariableNotionalSwaps.cpp">
-      <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
+      <Filter>src\eTrading\Swaps\VariableNotionalSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestMirDateFunctions.cpp">
       <Filter>src\AQL Classic\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapEURUSDXccySwap.cpp">
-      <Filter>src\etrading\Swaps\XccySwaps</Filter>
+      <Filter>src\eTrading\Swaps\XccySwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqCurvesOisAUD.cpp">
-      <Filter>src\etrading\Curves\CurveOIS</Filter>
+      <Filter>src\eTrading\Curves\CurveOIS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapDelta.cpp">
-      <Filter>src\etrading\Risks</Filter>
+      <Filter>src\eTrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapZeroCouponSwapFixedFixed.cpp">
-      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+      <Filter>src\eTrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapZeroCouponSwapXccyFloatFloat.cpp">
-      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+      <Filter>src\eTrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapZeroCouponSwapFixedFloat.cpp">
-      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+      <Filter>src\eTrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapZeroCouponSwapFloatFloat.cpp">
-      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+      <Filter>src\eTrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapZeroCouponSwapXccyFixedFixed.cpp">
-      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+      <Filter>src\eTrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapZeroCouponSwapXccyFixedFloat.cpp">
-      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+      <Filter>src\eTrading\Swaps\ZeroCouponSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapGBPEURXccySwap.cpp">
-      <Filter>src\etrading\Swaps\XccySwaps</Filter>
+      <Filter>src\eTrading\Swaps\XccySwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqDateYearFraction.cpp">
-      <Filter>src\etrading\Dates</Filter>
+      <Filter>src\eTrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapEURUSDXccySwapFixedFixed.cpp">
-      <Filter>src\etrading\Swaps\XccySwaps</Filter>
+      <Filter>src\eTrading\Swaps\XccySwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestHelperUtilities.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondUtilities.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondYields.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapCompounding.cpp">
-      <Filter>src\etrading\Swaps</Filter>
+      <Filter>src\eTrading\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\CreateFixedBond.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPrices.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPricesAustraliaType23Govt.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPricesItalianGovt.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPricesJapaneseJGBs.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPricesGermanBunds.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPricesUSTreasuries.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapDeltaXCCY.cpp">
-      <Filter>src\etrading\Risks</Filter>
+      <Filter>src\eTrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPricesFrenchOATsBTANsFixed.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPricesFrenchOATsBTANsZeroCoupon.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapDeltaXCCY_CSA.cpp">
-      <Filter>src\etrading\Risks</Filter>
+      <Filter>src\eTrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapDelta_JPY.cpp">
-      <Filter>src\etrading\Risks</Filter>
+      <Filter>src\eTrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapAmortization.cpp">
-      <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
+      <Filter>src\eTrading\Swaps\VariableNotionalSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapFloatRate.cpp">
-      <Filter>src\etrading\Swaps\FixingTable</Filter>
+      <Filter>src\eTrading\Swaps\FixingTable</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqDateFuturesContract.cpp">
-      <Filter>src\etrading\Dates</Filter>
+      <Filter>src\eTrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveForwardRates.cpp">
-      <Filter>src\etrading\Curves\CurveForwardRates</Filter>
+      <Filter>src\eTrading\Curves\CurveForwardRates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestUtilitiesSetup.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapEURUSDXccySwapFixedFloat.cpp">
-      <Filter>src\etrading\Swaps\XccySwaps</Filter>
+      <Filter>src\eTrading\Swaps\XccySwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestStructuredExceptionHandler.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestExceptionMacros.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqCurvesCheapestToDeliver_USD_SEK.cpp">
-      <Filter>src\etrading\Curves\CurveCheapestToDeliver</Filter>
+      <Filter>src\eTrading\Curves\CurveCheapestToDeliver</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqCurvesCTD.cpp">
-      <Filter>src\etrading\Curves\CurveCheapestToDeliver</Filter>
+      <Filter>src\eTrading\Curves\CurveCheapestToDeliver</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqCurvesGroupingJPY.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\JPYCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\JPYCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestDebugMacros.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestUtilitiesData.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestStateVariableUtilities.cpp">
-      <Filter>src\etrading\Curves\StateVariableUtilities</Filter>
+      <Filter>src\eTrading\Curves\StateVariableUtilities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjHedgeCurveDelta.cpp">
-      <Filter>src\etrading\Risks</Filter>
+      <Filter>src\eTrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjFra.cpp">
-      <Filter>src\etrading\Swaps\Fra</Filter>
+      <Filter>src\eTrading\Swaps\Fra</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLeakChecker.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqMathEuropeanIRSwaption.cpp">
-      <Filter>src\etrading\Math</Filter>
+      <Filter>src\eTrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqMathBlackScholes.cpp">
-      <Filter>src\etrading\Math</Filter>
+      <Filter>src\eTrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqMathNormalDistribution.cpp">
-      <Filter>src\etrading\Math</Filter>
+      <Filter>src\eTrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondGenerator.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCreditDefaultSwap.cpp">
-      <Filter>src\etrading\Credit</Filter>
+      <Filter>src\eTrading\Credit</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCreditModel.cpp">
-      <Filter>src\etrading\Credit</Filter>
+      <Filter>src\eTrading\Credit</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestIsRegularSwapSchedule.cpp">
-      <Filter>src\etrading\Dates</Filter>
+      <Filter>src\eTrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestTradeEURAssetSwapSpread.cpp">
-      <Filter>src\etrading\Swaps\AssetSwaps</Filter>
+      <Filter>src\eTrading\Swaps\AssetSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestTradeEUROISParRate.cpp">
-      <Filter>src\etrading\Swaps\OIS</Filter>
+      <Filter>src\eTrading\Swaps\OIS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestTradeEURSwapParRate.cpp">
-      <Filter>src\etrading\Swaps</Filter>
+      <Filter>src\eTrading\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestTradeEURSwapStubRate.cpp">
-      <Filter>src\etrading\Swaps</Filter>
+      <Filter>src\eTrading\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapStubImpactOnParRate.cpp">
-      <Filter>src\etrading\Swaps</Filter>
+      <Filter>src\eTrading\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapEUROvernightIndexedSwaps.cpp">
-      <Filter>src\etrading\Swaps\OIS</Filter>
+      <Filter>src\eTrading\Swaps\OIS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestConstantMaturitySwap.cpp">
-      <Filter>src\etrading\Swaps</Filter>
+      <Filter>src\eTrading\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestTotalReturnSwap.cpp">
-      <Filter>src\etrading\Swaps</Filter>
+      <Filter>src\eTrading\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveDualBootstrapping.cpp">
-      <Filter>src\etrading\Curves\GlobalYieldCurveEngine</Filter>
+      <Filter>src\eTrading\Curves\GlobalYieldCurveEngine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestValidateAndConvertStringToDate.cpp">
-      <Filter>src\etrading\Dates</Filter>
+      <Filter>src\eTrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapDeltaDualBootstrap.cpp">
-      <Filter>src\etrading\Risks</Filter>
+      <Filter>src\eTrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapGenerator.cpp">
-      <Filter>src\etrading\Swaps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestAqObjCurvesCalibrate.cpp">
-      <Filter>src\etrading\Curves\AQObjCurve</Filter>
+      <Filter>src\eTrading\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLiborOisBasisSwaps.cpp">
-      <Filter>src\etrading\Swaps</Filter>
+      <Filter>src\eTrading\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPricesUKGilt.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondSpreads.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondCurves.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveDates.cpp">
-      <Filter>src\etrading\Curves\CurveStreaming</Filter>
+      <Filter>src\eTrading\Curves\CurveStreaming</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveStreaming.cpp">
-      <Filter>src\etrading\Curves\CurveStreaming</Filter>
+      <Filter>src\eTrading\Curves\CurveStreaming</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqToolLVB.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondRepo.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondFRN_Type21.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveEngineCalibrate.cpp">
-      <Filter>src\etrading\Curves\GlobalYieldCurveEngine</Filter>
+      <Filter>src\eTrading\Curves\GlobalYieldCurveEngine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\BuildSwapTradeFromGenerator.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\ExtractCurveCalibrationData.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\AUDSwapCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\AUDCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\AUDCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\GBPSwapCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\GBPCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\GBPCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\USDSwapCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\USDCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\USDCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\EURSwapCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\EURCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\EURCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\EURBasisCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\EURCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\EURCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\USDBasisCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\USDCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\USDCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\GBPBasisCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\GBPCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\GBPCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\EUROisCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\EURCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\EURCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\GBPOisCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\GBPCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\GBPCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\USDOisCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\USDCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\USDCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\AUDOisCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\AUDCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\AUDCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapDeltaWithCurveEngine.cpp">
-      <Filter>src\etrading\Risks</Filter>
+      <Filter>src\eTrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\BuildMarketDataObjectFromFile.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestEuropeanSwaptions.cpp">
-      <Filter>src\etrading\IROptions</Filter>
+      <Filter>src\eTrading\IROptions</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\RepriceCalibrationInstruments.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\JPYLCHCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\JPYCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\JPYCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestIMMDates.cpp">
-      <Filter>src\etrading\Dates</Filter>
+      <Filter>src\eTrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjInfoBlock.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\GetGoogleTestFolder.cpp">
       <Filter>src\setup</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestSABRCalibration.cpp">
-      <Filter>src\etrading\IRVol</Filter>
+      <Filter>src\eTrading\IRVol</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAnyTypeUtilities.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestBondPricesSpainGovt.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestSimpsonsRuleIntegration.cpp">
-      <Filter>src\etrading\Math</Filter>
+      <Filter>src\eTrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqMathVolatility.cpp">
-      <Filter>src\etrading\Math</Filter>
+      <Filter>src\eTrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqMathConvexity.cpp">
-      <Filter>src\etrading\Math</Filter>
+      <Filter>src\eTrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestIMMFuturesTickers.cpp">
-      <Filter>src\etrading\Dates</Filter>
+      <Filter>src\eTrading\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GTEST\src\TestAQLMatrix.cpp">
+      <Filter>src\eTrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestRandomNumbers.cpp">
-      <Filter>src\etrading\Math</Filter>
+      <Filter>src\eTrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCreditBasketModel.cpp">
-      <Filter>src\etrading\Credit</Filter>
+      <Filter>src\eTrading\Credit</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\ModelTools.cpp">
-      <Filter>src\etrading\IRVol</Filter>
+      <Filter>src\eTrading\IRVol</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapFromBespokeSchedule.cpp">
-      <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
+      <Filter>src\eTrading\Swaps\VariableNotionalSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapFromStructuredBespokeSchedule.cpp">
-      <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
+      <Filter>src\eTrading\Swaps\VariableNotionalSwaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveResults.cpp">
-      <Filter>src\etrading\Curves\CurveResults</Filter>
+      <Filter>src\eTrading\Curves\CurveResults</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAqDateECB.cpp">
-      <Filter>src\etrading\Dates</Filter>
+      <Filter>src\eTrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestVariantDataType.cpp">
-      <Filter>src\etrading\DataFilesAndTypes</Filter>
+      <Filter>src\eTrading\DataFilesAndTypes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestUtilitiesInterpolation.cpp">
-      <Filter>src\etrading\Tools</Filter>
+      <Filter>src\eTrading\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjCurveDiscountFactorsWithSpread.cpp">
-      <Filter>src\etrading\Curves\AQObjCurve</Filter>
+      <Filter>src\eTrading\Curves\AQObjCurve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestRiskUtilities.cpp">
-      <Filter>src\etrading\Risks</Filter>
+      <Filter>src\eTrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestDateConverters.cpp">
-      <Filter>src\etrading\Dates</Filter>
+      <Filter>src\eTrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveResultsJacobian.cpp">
-      <Filter>src\etrading\Curves\CurveResults</Filter>
+      <Filter>src\eTrading\Curves\CurveResults</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveMarketDataBumping.cpp">
-      <Filter>src\etrading\Curves\CurveMarketData</Filter>
+      <Filter>src\eTrading\Curves\CurveMarketData</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestValuationSettings.cpp">
-      <Filter>src\etrading\ValuationSettings</Filter>
+      <Filter>src\eTrading\ValuationSettings</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdSerialFuture.cpp">
-      <Filter>src\etrading\Curves\CurveSTD</Filter>
+      <Filter>src\eTrading\Curves\CurveSTD</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TryAqTestCurveStdSerialFRA.cpp">
-      <Filter>src\etrading\Curves\CurveSTD</Filter>
+      <Filter>src\eTrading\Curves\CurveSTD</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapDelta_ARR.cpp">
-      <Filter>src\etrading\Risks</Filter>
+      <Filter>src\eTrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestAQObjSwapDeltaXCCY_ZAR.cpp">
-      <Filter>src\etrading\Risks</Filter>
+      <Filter>src\eTrading\Risks</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\ZARSwapCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\ZARCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\ZARCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\NZDSwapCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\NZDCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\NZDCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\NZDOisCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\NZDCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\NZDCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestTradeGBPSwapStubRate.cpp">
-      <Filter>src\etrading\Swaps</Filter>
+      <Filter>src\eTrading\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCalendars.cpp">
-      <Filter>src\etrading\Dates</Filter>
+      <Filter>src\eTrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurrencyEnum.cpp">
-      <Filter>src\etrading\Enums</Filter>
+      <Filter>src\eTrading\Enums</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\EUR_SWAP_3M_CurveInterpolation.cpp">
-      <Filter>src\etrading\Curves\CurveInterpolation\EUR</Filter>
+      <Filter>src\eTrading\Curves\CurveInterpolation\EUR</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveInterpolation.cpp">
-      <Filter>src\etrading\Curves\CurveInterpolation\.Methods</Filter>
+      <Filter>src\eTrading\Curves\CurveInterpolation\.Methods</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveLinearInterpolation.cpp">
-      <Filter>src\etrading\Curves\CurveInterpolation\.Methods</Filter>
+      <Filter>src\eTrading\Curves\CurveInterpolation\.Methods</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveLinearSplineInterpolation.cpp">
-      <Filter>src\etrading\Curves\CurveInterpolation\.Methods</Filter>
+      <Filter>src\eTrading\Curves\CurveInterpolation\.Methods</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurvePolynomialInterpolation.cpp">
-      <Filter>src\etrading\Curves\CurveInterpolation\.Methods</Filter>
+      <Filter>src\eTrading\Curves\CurveInterpolation\.Methods</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveSplineInterpolation.cpp">
-      <Filter>src\etrading\Curves\CurveInterpolation\.Methods</Filter>
+      <Filter>src\eTrading\Curves\CurveInterpolation\.Methods</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\USD_SWAP_3M_CurveInterpolation.cpp">
-      <Filter>src\etrading\Curves\CurveInterpolation\USD</Filter>
+      <Filter>src\eTrading\Curves\CurveInterpolation\USD</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\BuildAllEURCurvesAsSTDSwap.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\EURCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\EURCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestInflationCurve.cpp">
-      <Filter>src\etrading\Inflation</Filter>
+      <Filter>src\eTrading\Inflation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestSolvers.cpp">
-      <Filter>src\etrading\Solvers</Filter>
+      <Filter>src\eTrading\Solvers</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestStubDates.cpp">
-      <Filter>src\etrading\Dates</Filter>
+      <Filter>src\eTrading\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\CZKCurveConsistency.cpp">
-      <Filter>src\etrading\Curves\CurveConsistency\CZKCurves</Filter>
+      <Filter>src\eTrading\Curves\CurveConsistency\CZKCurves</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveMarketDataUseParameter.cpp">
-      <Filter>src\etrading\Curves\CurveMarketData</Filter>
+      <Filter>src\eTrading\Curves\CurveMarketData</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCreditIndexOption.cpp">
-      <Filter>src\etrading\Credit</Filter>
+      <Filter>src\eTrading\Credit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GTEST\src\TestAqCurveObjectCalibrate.cpp">
+      <Filter>src\eTrading\Curves\AQObjCurve</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\GTEST\include\Dependency.h">
-      <Filter>include\setup</Filter>
+      <Filter>include\Setup</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\QuickTest.h">
-      <Filter>include\setup</Filter>
+      <Filter>include\Setup</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\CurveAccessors.h">
-      <Filter>include\etrading\AQL Classic\Curve</Filter>
+      <Filter>include\eTrading\AQL Classic\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\CurveFwdFxConst.h">
-      <Filter>include\etrading\AQL Classic\Curve</Filter>
+      <Filter>include\eTrading\AQL Classic\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\CurveOis.h">
-      <Filter>include\etrading\AQL Classic\Curve</Filter>
+      <Filter>include\eTrading\AQL Classic\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\CurveStd.h">
-      <Filter>include\etrading\AQL Classic\Curve</Filter>
+      <Filter>include\eTrading\AQL Classic\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\CurveTenorBasis.h">
-      <Filter>include\etrading\AQL Classic\Curve</Filter>
+      <Filter>include\eTrading\AQL Classic\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\CurveXccyBasis.h">
-      <Filter>include\etrading\AQL Classic\Curve</Filter>
+      <Filter>include\eTrading\AQL Classic\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\InitializeGoogleTest.h">
-      <Filter>include\setup</Filter>
+      <Filter>include\Setup</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\EnvironmentAttacker.h">
-      <Filter>include\etrading\Infrastructure</Filter>
+      <Filter>include\eTrading\Infrastructure</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\TryAqCurvesAccessors.h">
-      <Filter>include\etrading\Curves</Filter>
+      <Filter>include\eTrading\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\TryAqCurvesXccyBasis.h">
-      <Filter>include\etrading\Curves</Filter>
+      <Filter>include\eTrading\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\TryAqCurvesFwdFxConst.h">
-      <Filter>include\etrading\Curves</Filter>
+      <Filter>include\eTrading\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\TryAqCurvesOis.h">
-      <Filter>include\etrading\Curves</Filter>
+      <Filter>include\eTrading\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\TryAqCurvesStd.h">
-      <Filter>include\etrading\Curves</Filter>
+      <Filter>include\eTrading\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\TryAqCurvesTenorBasis.h">
-      <Filter>include\etrading\Curves</Filter>
+      <Filter>include\eTrading\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\ResultsProcessor.h">
-      <Filter>include\etrading\Tools</Filter>
+      <Filter>include\eTrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\BindFileToClassConstructor.h">
-      <Filter>include\setup</Filter>
+      <Filter>include\Setup</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\TestHelperUtilities.h">
-      <Filter>include\etrading\Tools</Filter>
+      <Filter>include\eTrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\CreateFixedBond.h">
-      <Filter>include\etrading\Bonds</Filter>
+      <Filter>include\eTrading\Bonds</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\TryAqCurvesCTD.h">
-      <Filter>include\etrading\Curves</Filter>
+      <Filter>include\eTrading\Curves</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\BuildSwapTradeFromGenerator.h">
-      <Filter>include\etrading\Tools</Filter>
+      <Filter>include\eTrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\ExtractCurveCalibrationData.h">
-      <Filter>include\etrading\Tools</Filter>
+      <Filter>include\eTrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\BuildMarketDataObjectFromFile.h">
-      <Filter>include\etrading\Tools</Filter>
+      <Filter>include\eTrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\RepriceCalibrationInstruments.h">
-      <Filter>include\etrading\Tools</Filter>
+      <Filter>include\eTrading\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\GetGoogleTestFolder.h">
-      <Filter>include\setup</Filter>
+      <Filter>include\Setup</Filter>
     </ClInclude>
     <ClCompile Include="..\src\GTEST\src\TestBondFRNSpreads.cpp">
-      <Filter>src\etrading\Bonds</Filter>
+      <Filter>src\eTrading\Bonds</Filter>
     </ClCompile>
     <ClInclude Include="..\src\GTEST\include\ModelTools.h">
-      <Filter>include\etrading\IRVol</Filter>
+      <Filter>include\eTrading\IRVol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -697,174 +700,6 @@
     </Filter>
     <Filter Include="buildscripts">
       <UniqueIdentifier>{771e6d28-4667-4554-b7ba-f3e4bcb9df4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\etrading">
-      <UniqueIdentifier>{2b5029d1-9ae5-4ec3-b972-2ff78fd570b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\etrading\AQL Classic">
-      <UniqueIdentifier>{0740b021-81d3-4305-8c40-fa9004bd2d6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\etrading\AQL Classic\Curve">
-      <UniqueIdentifier>{25cfc511-39f7-44e2-bec4-799257f1e7c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\etrading\AQL Classic\Trade">
-      <UniqueIdentifier>{d1572047-416f-48c6-8687-8bf2746e3288}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\etrading\IRVol">
-      <UniqueIdentifier>{a5e028e8-7e5d-44be-9978-d89a5485759b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\etrading\Infrastructure">
-      <UniqueIdentifier>{e894ce2d-952d-4ba6-b2b0-09eeb36b1f33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\etrading\Curves">
-      <UniqueIdentifier>{87813215-c7be-4082-b77f-325137685680}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\etrading\Bonds">
-      <UniqueIdentifier>{4dd96a71-f7b3-4c17-9212-ad17d313854f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\etrading\Tools">
-      <UniqueIdentifier>{5efba66f-a23c-4c67-9117-b9c1aa675113}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading">
-      <UniqueIdentifier>{01ab1a34-327d-470c-a475-9613288810a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Tools">
-      <UniqueIdentifier>{6df311da-3952-47c4-bb21-cc9f10590319}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Generator">
-      <UniqueIdentifier>{98803b3e-65f8-4c31-9819-944fa90383b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Swaps">
-      <UniqueIdentifier>{fd93b7b9-46ba-43da-85ca-4cef993c8f77}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Swaps\Fra">
-      <UniqueIdentifier>{3f99ec86-307f-4805-827d-967e11cb8560}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Swaps\AssetSwaps">
-      <UniqueIdentifier>{e6dca1df-4887-429b-9a4c-9394bfd6df2e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Swaps\OIS">
-      <UniqueIdentifier>{656ee1f1-0370-42b9-908d-178e9758d901}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Swaps\VariableNotionalSwaps">
-      <UniqueIdentifier>{d914a631-8c72-426c-856c-105375e059e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Swaps\XccySwaps">
-      <UniqueIdentifier>{e0372d9c-4a41-46ad-b34a-3189c275018a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Swaps\ZeroCouponSwaps">
-      <UniqueIdentifier>{2f7fd914-56f7-46b7-8fce-428966c6f14c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Swaps\TenorBasisSwaps">
-      <UniqueIdentifier>{bb0dee1b-6a2f-4c0d-a872-b124fe0717b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Swaps\FixingTable">
-      <UniqueIdentifier>{7a1c6ce8-54f3-499a-affe-8a394cc59f10}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Risks">
-      <UniqueIdentifier>{2726f402-10c7-4391-88f1-6361370398e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Math">
-      <UniqueIdentifier>{b7100364-53cd-4cca-bb3e-53ca97e4746f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Bonds">
-      <UniqueIdentifier>{c7c45cd2-dd41-41cf-9603-1836f01e347f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Credit">
-      <UniqueIdentifier>{79e910a3-0598-46a4-975a-e98b6d3b4c8e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves">
-      <UniqueIdentifier>{8cabbf4d-90b8-49d9-bfe7-52b869a65cd2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveAccessors">
-      <UniqueIdentifier>{a44afecf-8903-4a80-9e41-198206fbc39e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveXccyBasis">
-      <UniqueIdentifier>{7c53ca95-207d-4295-b639-ee369b85a0be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveFwdFxConst">
-      <UniqueIdentifier>{267fdf26-56c3-4206-bd35-fbd76103f304}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveOIS">
-      <UniqueIdentifier>{2d8ff0c4-eefb-4795-aae6-2fe04d36f4d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveSTD">
-      <UniqueIdentifier>{ca597eb4-41ac-4a90-b73d-65a48d7b2218}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveTenorBasis">
-      <UniqueIdentifier>{9d4200c0-f2de-4f07-915d-706e1bd6978f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveForwardRates">
-      <UniqueIdentifier>{4e3f096f-ea86-4114-a5ea-ca3e7d726fd8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveCheapestToDeliver">
-      <UniqueIdentifier>{003421f7-c369-4712-a13c-6d1dbc0f6348}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\StateVariableUtilities">
-      <UniqueIdentifier>{5c408a99-dd4b-40c8-bdae-aa79b99551d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\AQObjCurve">
-      <UniqueIdentifier>{855e7fe3-2d4c-4971-9d93-6045e105c913}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveStreaming">
-      <UniqueIdentifier>{aebc3d09-b6ee-4c13-bd41-d32b786e8900}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\GlobalYieldCurveEngine">
-      <UniqueIdentifier>{b444b2c2-455c-44e2-9c33-75c39d6de074}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveConsistency">
-      <UniqueIdentifier>{f7a0d3e8-02b5-47b8-b5ce-6754329382f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveConsistency\USDCurves">
-      <UniqueIdentifier>{58222477-b82f-4cf6-a88e-8ea090c2f3d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveConsistency\JPYCurves">
-      <UniqueIdentifier>{6cb95cc0-b839-4885-b90a-97e203348919}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveConsistency\EURCurves">
-      <UniqueIdentifier>{b4618225-3dfb-425e-8e83-e7b47f4d994e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveConsistency\GBPCurves">
-      <UniqueIdentifier>{072f8c84-c48f-4c88-aa72-2d84a313f5d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveResults">
-      <UniqueIdentifier>{18c290be-7cf9-4ed5-bb59-3045c8595f5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveMarketData">
-      <UniqueIdentifier>{9549cc61-3eb6-42f5-9ea7-d8dda291da1b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\DataFilesAndTypes">
-      <UniqueIdentifier>{0980548d-cbf9-4e10-83e9-6131382383de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Dates">
-      <UniqueIdentifier>{d1dced55-5ec6-46b5-814d-e71dc5b58efe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Infrastructure">
-      <UniqueIdentifier>{6c811301-63f4-42b9-98fa-3d04ea49d31f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\IROptions">
-      <UniqueIdentifier>{bcbae3f9-431d-4d0d-8ab1-d28ec79ecee1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\IRVol">
-      <UniqueIdentifier>{99abc14b-6984-403e-be4b-b02ad1e21ee6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\MarketData">
-      <UniqueIdentifier>{e0fd23ea-3d7d-4297-857c-ef3426e5696b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\ValuationSettings">
-      <UniqueIdentifier>{f95d726c-6a42-4932-b438-73445dbff38d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveInterpolation">
-      <UniqueIdentifier>{aebafacb-eba7-48a2-8e64-7d55425f6969}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveConsistency\ZARCurves">
-      <UniqueIdentifier>{09c4da25-a0a7-4891-9822-efcdccbb8b37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveConsistency\AUDCurves">
-      <UniqueIdentifier>{d0dc5a68-25d1-4be4-9265-9623fad34535}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveConsistency\NZDCurves">
-      <UniqueIdentifier>{12a6eca2-3dc7-4458-abe8-49cbb7e81dbe}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\AQL Classic">
       <UniqueIdentifier>{c8504260-8df5-41a3-aec6-ba6d28f7d61e}</UniqueIdentifier>
@@ -914,32 +749,200 @@
     <Filter Include="src\AQL Classic\Risks">
       <UniqueIdentifier>{59c1be9b-3e66-4d7e-8ff6-72aef51e33d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\etrading\Enums">
-      <UniqueIdentifier>{da3027ea-dc46-406f-8282-70b09e6740b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveInterpolation\EUR">
-      <UniqueIdentifier>{de4a947a-2a46-49d8-a4fb-7a63f5b3896a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveInterpolation\USD">
-      <UniqueIdentifier>{f763e63c-6521-4440-a000-7bf3dc7c6912}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveInterpolation\.Methods">
-      <UniqueIdentifier>{75fca92e-5ef5-4eb9-b0cc-3f0b02b22691}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Inflation">
-      <UniqueIdentifier>{6ea6c2f8-a59f-4b94-a9fa-bc2ddb0eb943}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Solvers">
-      <UniqueIdentifier>{6f2f48c7-64c2-4124-ab7c-9eb3c5cd6767}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\etrading\Curves\CurveConsistency\CZKCurves">
-      <UniqueIdentifier>{738c094a-202d-43c3-a3e9-b34a02d5e94d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\setup">
       <UniqueIdentifier>{969850b1-30cb-4db6-b1c9-0a007ba68358}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\setup">
+    <Filter Include="include\eTrading">
+      <UniqueIdentifier>{2b5029d1-9ae5-4ec3-b972-2ff78fd570b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\eTrading\AQL Classic">
+      <UniqueIdentifier>{0740b021-81d3-4305-8c40-fa9004bd2d6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\eTrading\AQL Classic\Curve">
+      <UniqueIdentifier>{25cfc511-39f7-44e2-bec4-799257f1e7c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\eTrading\AQL Classic\Trade">
+      <UniqueIdentifier>{d1572047-416f-48c6-8687-8bf2746e3288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\eTrading\IRVol">
+      <UniqueIdentifier>{a5e028e8-7e5d-44be-9978-d89a5485759b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\eTrading\Infrastructure">
+      <UniqueIdentifier>{e894ce2d-952d-4ba6-b2b0-09eeb36b1f33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\eTrading\Curves">
+      <UniqueIdentifier>{87813215-c7be-4082-b77f-325137685680}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\eTrading\Bonds">
+      <UniqueIdentifier>{4dd96a71-f7b3-4c17-9212-ad17d313854f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\eTrading\Tools">
+      <UniqueIdentifier>{5efba66f-a23c-4c67-9117-b9c1aa675113}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Setup">
       <UniqueIdentifier>{02824686-8f67-46d0-bd62-e65383f29f24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading">
+      <UniqueIdentifier>{01ab1a34-327d-470c-a475-9613288810a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Tools">
+      <UniqueIdentifier>{6df311da-3952-47c4-bb21-cc9f10590319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Generator">
+      <UniqueIdentifier>{98803b3e-65f8-4c31-9819-944fa90383b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Swaps">
+      <UniqueIdentifier>{fd93b7b9-46ba-43da-85ca-4cef993c8f77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Swaps\Fra">
+      <UniqueIdentifier>{3f99ec86-307f-4805-827d-967e11cb8560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Swaps\AssetSwaps">
+      <UniqueIdentifier>{e6dca1df-4887-429b-9a4c-9394bfd6df2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Swaps\OIS">
+      <UniqueIdentifier>{656ee1f1-0370-42b9-908d-178e9758d901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Swaps\VariableNotionalSwaps">
+      <UniqueIdentifier>{d914a631-8c72-426c-856c-105375e059e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Swaps\XccySwaps">
+      <UniqueIdentifier>{e0372d9c-4a41-46ad-b34a-3189c275018a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Swaps\ZeroCouponSwaps">
+      <UniqueIdentifier>{2f7fd914-56f7-46b7-8fce-428966c6f14c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Swaps\TenorBasisSwaps">
+      <UniqueIdentifier>{bb0dee1b-6a2f-4c0d-a872-b124fe0717b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Swaps\FixingTable">
+      <UniqueIdentifier>{7a1c6ce8-54f3-499a-affe-8a394cc59f10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Risks">
+      <UniqueIdentifier>{2726f402-10c7-4391-88f1-6361370398e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Math">
+      <UniqueIdentifier>{b7100364-53cd-4cca-bb3e-53ca97e4746f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Bonds">
+      <UniqueIdentifier>{c7c45cd2-dd41-41cf-9603-1836f01e347f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Credit">
+      <UniqueIdentifier>{79e910a3-0598-46a4-975a-e98b6d3b4c8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves">
+      <UniqueIdentifier>{8cabbf4d-90b8-49d9-bfe7-52b869a65cd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveAccessors">
+      <UniqueIdentifier>{a44afecf-8903-4a80-9e41-198206fbc39e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveXccyBasis">
+      <UniqueIdentifier>{7c53ca95-207d-4295-b639-ee369b85a0be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveFwdFxConst">
+      <UniqueIdentifier>{267fdf26-56c3-4206-bd35-fbd76103f304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveOIS">
+      <UniqueIdentifier>{2d8ff0c4-eefb-4795-aae6-2fe04d36f4d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveSTD">
+      <UniqueIdentifier>{ca597eb4-41ac-4a90-b73d-65a48d7b2218}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveTenorBasis">
+      <UniqueIdentifier>{9d4200c0-f2de-4f07-915d-706e1bd6978f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveForwardRates">
+      <UniqueIdentifier>{4e3f096f-ea86-4114-a5ea-ca3e7d726fd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveCheapestToDeliver">
+      <UniqueIdentifier>{003421f7-c369-4712-a13c-6d1dbc0f6348}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\StateVariableUtilities">
+      <UniqueIdentifier>{5c408a99-dd4b-40c8-bdae-aa79b99551d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\AQObjCurve">
+      <UniqueIdentifier>{855e7fe3-2d4c-4971-9d93-6045e105c913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveStreaming">
+      <UniqueIdentifier>{aebc3d09-b6ee-4c13-bd41-d32b786e8900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\GlobalYieldCurveEngine">
+      <UniqueIdentifier>{b444b2c2-455c-44e2-9c33-75c39d6de074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveConsistency">
+      <UniqueIdentifier>{f7a0d3e8-02b5-47b8-b5ce-6754329382f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveConsistency\USDCurves">
+      <UniqueIdentifier>{58222477-b82f-4cf6-a88e-8ea090c2f3d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveConsistency\JPYCurves">
+      <UniqueIdentifier>{6cb95cc0-b839-4885-b90a-97e203348919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveConsistency\EURCurves">
+      <UniqueIdentifier>{b4618225-3dfb-425e-8e83-e7b47f4d994e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveConsistency\GBPCurves">
+      <UniqueIdentifier>{072f8c84-c48f-4c88-aa72-2d84a313f5d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveConsistency\ZARCurves">
+      <UniqueIdentifier>{09c4da25-a0a7-4891-9822-efcdccbb8b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveConsistency\AUDCurves">
+      <UniqueIdentifier>{d0dc5a68-25d1-4be4-9265-9623fad34535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveConsistency\NZDCurves">
+      <UniqueIdentifier>{12a6eca2-3dc7-4458-abe8-49cbb7e81dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveConsistency\CZKCurves">
+      <UniqueIdentifier>{738c094a-202d-43c3-a3e9-b34a02d5e94d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveResults">
+      <UniqueIdentifier>{18c290be-7cf9-4ed5-bb59-3045c8595f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveMarketData">
+      <UniqueIdentifier>{9549cc61-3eb6-42f5-9ea7-d8dda291da1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveInterpolation">
+      <UniqueIdentifier>{aebafacb-eba7-48a2-8e64-7d55425f6969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveInterpolation\EUR">
+      <UniqueIdentifier>{de4a947a-2a46-49d8-a4fb-7a63f5b3896a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveInterpolation\USD">
+      <UniqueIdentifier>{f763e63c-6521-4440-a000-7bf3dc7c6912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Curves\CurveInterpolation\.Methods">
+      <UniqueIdentifier>{75fca92e-5ef5-4eb9-b0cc-3f0b02b22691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\DataFilesAndTypes">
+      <UniqueIdentifier>{0980548d-cbf9-4e10-83e9-6131382383de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Dates">
+      <UniqueIdentifier>{d1dced55-5ec6-46b5-814d-e71dc5b58efe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Infrastructure">
+      <UniqueIdentifier>{6c811301-63f4-42b9-98fa-3d04ea49d31f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\IROptions">
+      <UniqueIdentifier>{bcbae3f9-431d-4d0d-8ab1-d28ec79ecee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\IRVol">
+      <UniqueIdentifier>{99abc14b-6984-403e-be4b-b02ad1e21ee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\MarketData">
+      <UniqueIdentifier>{e0fd23ea-3d7d-4297-857c-ef3426e5696b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\ValuationSettings">
+      <UniqueIdentifier>{f95d726c-6a42-4932-b438-73445dbff38d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Enums">
+      <UniqueIdentifier>{da3027ea-dc46-406f-8282-70b09e6740b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Inflation">
+      <UniqueIdentifier>{6ea6c2f8-a59f-4b94-a9fa-bc2ddb0eb943}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eTrading\Solvers">
+      <UniqueIdentifier>{6f2f48c7-64c2-4124-ab7c-9eb3c5cd6767}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

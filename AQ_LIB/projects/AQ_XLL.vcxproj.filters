@@ -15,10 +15,10 @@
     <Filter Include="resources\manifest">
       <UniqueIdentifier>{9d2e0a2a-9d3f-4a7e-9d1a-6b6f6e0a5d3c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Core">
+    <Filter Include="src\Core XL">
       <UniqueIdentifier>{8b54388f-3e49-4371-8531-e7eef24522f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Optional">
+    <Filter Include="src\Optional XL">
       <UniqueIdentifier>{6c2f9c09-0875-4166-8082-87150c5befa8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -38,67 +38,67 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp">
-      <Filter>src\Core</Filter>
+      <Filter>src\Core XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqDate.cpp">
-      <Filter>src\Core</Filter>
+      <Filter>src\Core XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqMain.cpp">
-      <Filter>src\Core</Filter>
+      <Filter>src\Core XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqObject.cpp">
-      <Filter>src\Core</Filter>
+      <Filter>src\Core XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqMath.cpp">
-      <Filter>src\Core</Filter>
+      <Filter>src\Core XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqTool.cpp">
-      <Filter>src\Core</Filter>
+      <Filter>src\Core XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqAssetSwap.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqBond.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqCapFloor.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqCMS.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqCredit.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqFuture.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqFX.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqInflation.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqSwap.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqSwaption.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqTRS.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqVolatility.cpp">
-      <Filter>src\Optional</Filter>
+      <Filter>src\Optional XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqCurve.cpp">
-      <Filter>src\Core</Filter>
+      <Filter>src\Core XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqIR.cpp">
-      <Filter>src\Core</Filter>
+      <Filter>src\Core XL</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_XLL\src\aqGenerator.cpp">
-      <Filter>src\Core</Filter>
+      <Filter>src\Core XL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

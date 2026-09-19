@@ -41,7 +41,6 @@ public:
 
 	AQLBrownianBridge & operator=( const AQLBrownianBridge & ) { return *this; }
 
-//  QUERY
                                 //======================================
                                 // check whether this class derives from base class with type id
     virtual bool                isTypeOf(function_t id) const;

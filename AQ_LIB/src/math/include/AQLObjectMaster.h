@@ -21,7 +21,6 @@ typedef std::vector<object_t>		EntityTVector; // Object ID vector
 class AQLObjectMaster 
 {
 public:
-//  LIFECYCLE
     // default constructor
 	AQLObjectMaster(AQLDataInstance* dataInstance = NULL);
     // copy constructor
@@ -29,7 +28,6 @@ public:
     // destructor
     ~AQLObjectMaster(void);
 
-//  QUERY
     // get Object Holder corresponding to the name of the specified Object
     const AQLObjectHolder&	getObject(const AQLString& name) const;
 
@@ -42,7 +40,6 @@ public:
     // get registered Object Name Vector
 	AQLStringVector			getNameArray(void) const;
 
-//  OPERATION
     // set Object name and Object object
 	const AQLObjectHolder&	setEntity(const AQLString& name, AQLObject* e);
 

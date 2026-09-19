@@ -12,9 +12,9 @@
 class AQLCoreSystemError : public AQLCoreError
 {
 public:
-//  LIFECYCLE
     // constructor
     AQLCoreSystemError(const char_t* file, unsigned int line);
+    
     // constructor
     AQLCoreSystemError(const char_t* msg, const char_t* file, unsigned int line);
 

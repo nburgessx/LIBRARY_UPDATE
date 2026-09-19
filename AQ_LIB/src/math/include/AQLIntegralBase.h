@@ -25,13 +25,11 @@ class AQLFunctionBase;
 class AQLIntegralBase : public AQLCoreFunctionBase
 {
 public:
-//  LIFECYCLE
 	// Default constructor
 	AQLIntegralBase();
 	// Destructor
 	virtual ~AQLIntegralBase();
 
-//  QUERY
 								//======================================
 								// Check function for this class type
     virtual bool                isTypeOf(function_t id) const;

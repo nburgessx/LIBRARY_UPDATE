@@ -15,7 +15,6 @@ class AQLQuadraticMethod :
 	public AQLFunctionBase
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLQuadraticMethod();
 	// destructor

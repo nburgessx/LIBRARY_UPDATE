@@ -161,7 +161,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <OpenMPSupport>false</OpenMPSupport>
+      <OpenMPSupport>true</OpenMPSupport>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>Async</ExceptionHandling>
       <WholeProgramOptimization>false</WholeProgramOptimization>
@@ -184,7 +184,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <OpenMPSupport>false</OpenMPSupport>
+      <OpenMPSupport>true</OpenMPSupport>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>Async</ExceptionHandling>
       <WholeProgramOptimization>false</WholeProgramOptimization>
@@ -209,7 +209,7 @@
       <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>Async</ExceptionHandling>
-      <OpenMPSupport>false</OpenMPSupport>
+      <OpenMPSupport>true</OpenMPSupport>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -232,7 +232,7 @@
       <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>Async</ExceptionHandling>
-      <OpenMPSupport>false</OpenMPSupport>
+      <OpenMPSupport>true</OpenMPSupport>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -251,7 +251,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <OpenMPSupport>false</OpenMPSupport>
+      <OpenMPSupport>true</OpenMPSupport>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>Async</ExceptionHandling>
       <WholeProgramOptimization>false</WholeProgramOptimization>
@@ -272,7 +272,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <OpenMPSupport>false</OpenMPSupport>
+      <OpenMPSupport>true</OpenMPSupport>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>Async</ExceptionHandling>
       <WholeProgramOptimization>false</WholeProgramOptimization>
@@ -295,7 +295,7 @@
       <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>Async</ExceptionHandling>
-      <OpenMPSupport>false</OpenMPSupport>
+      <OpenMPSupport>true</OpenMPSupport>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -316,7 +316,7 @@
       <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ExceptionHandling>Async</ExceptionHandling>
-      <OpenMPSupport>false</OpenMPSupport>
+      <OpenMPSupport>true</OpenMPSupport>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -370,7 +370,6 @@
     <ClInclude Include="..\src\math\include\AQLDataObjHolder.h" />
     <ClInclude Include="..\src\math\include\AQLCoreAppError.h" />
     <ClInclude Include="..\src\math\include\AQLCoreError.h" />
-    <ClInclude Include="..\src\math\include\AQLCoreErrorLog.h" />
     <ClInclude Include="..\src\math\include\AQLCoreSystemError.h" />
     <ClInclude Include="..\src\math\include\AQLPriceDataCalendar.h" />
     <ClInclude Include="..\src\math\include\AQLPriceDataConvention.h" />
@@ -380,8 +379,8 @@
     <ClInclude Include="..\src\math\include\AQLPriceDataInterpolation.h" />
     <ClInclude Include="..\src\math\include\AQLPriceDataRand.h" />
     <ClInclude Include="..\src\math\include\AQLPriceDataSlidingRule.h" />
-    <ClInclude Include="..\src\math\include\AQLMathCalendar.h" />
-    <ClInclude Include="..\src\math\include\AQLMathCalendarSet.h" />
+    <ClInclude Include="..\src\math\include\AQLCalendar.h" />
+    <ClInclude Include="..\src\math\include\AQLCalendarSet.h" />
     <ClInclude Include="..\src\math\include\AQLMathDefine.h" />
     <ClInclude Include="..\src\math\include\AQLMathValuableEntity.h" />
     <ClInclude Include="..\src\math\include\AQLAlgorithm.h" />
@@ -490,7 +489,6 @@
     <ClCompile Include="..\src\math\src\AQLDataObjHolder.cpp" />
     <ClCompile Include="..\src\math\src\AQLCoreAppError.cpp" />
     <ClCompile Include="..\src\math\src\AQLCoreError.cpp" />
-    <ClCompile Include="..\src\math\src\AQLCoreErrorLog.cpp" />
     <ClCompile Include="..\src\math\src\AQLCoreSystemError.cpp" />
     <ClCompile Include="..\src\math\src\AQLPriceDataCalendar.cpp" />
     <ClCompile Include="..\src\math\src\AQLPriceDataConvention.cpp" />
@@ -500,8 +498,8 @@
     <ClCompile Include="..\src\math\src\AQLPriceDataInterpolation.cpp" />
     <ClCompile Include="..\src\math\src\AQLPriceDataRand.cpp" />
     <ClCompile Include="..\src\math\src\AQLPriceDataSlidingRule.cpp" />
-    <ClCompile Include="..\src\math\src\AQLMathCalendar.cpp" />
-    <ClCompile Include="..\src\math\src\AQLMathCalendarSet.cpp" />
+    <ClCompile Include="..\src\math\src\AQLCalendar.cpp" />
+    <ClCompile Include="..\src\math\src\AQLCalendarSet.cpp" />
     <ClCompile Include="..\src\math\src\AQLMathValuableEntity.cpp" />
     <ClCompile Include="..\src\math\src\AQL1DIntegral.cpp" />
     <ClCompile Include="..\src\math\src\AQL1DNormDist.cpp" />

@@ -22,7 +22,6 @@ class AQLFTQuasiRandGS : public AQLRandBase
 {
 public:
 
-//  LIFECYCLE
 	//constructor
     AQLFTQuasiRandGS();
 
@@ -36,7 +35,6 @@ public:
 
 	AQLFTQuasiRandGS & operator=( const AQLFTQuasiRandGS & ) { return *this; }
 
-//  QUERY
                                 //======================================
                                 // check whether this class derives from base class with type id
     virtual bool                isTypeOf(function_t id) const;
@@ -68,7 +66,6 @@ public:
 	virtual void                setSeed(const UlongArray& seed);
 
 
-//  OPERATION
 private:
 	// area to memorize Generator Matrix
 	UlongArray mGeneMatrix;

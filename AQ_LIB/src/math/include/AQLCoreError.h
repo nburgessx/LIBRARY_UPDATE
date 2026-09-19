@@ -30,6 +30,7 @@
 
 #include <cstdio>
 #include <stdexcept>
+#include <string>
 
 class AQLCoreErrorInfo;
 
@@ -38,7 +39,6 @@ class AQLCoreErrorInfo;
 
 	This class provides functions of adding error information or output files,
 	and errors are stored in an array in the order in which they occure.
-	This class depends only AQLCoreErrorLog.
 */
 
 // TODO: Allow AQLCoreError to inherit from std::exception on all platforms.
@@ -50,7 +50,6 @@ class AQLCoreError
 #endif
 {
 public:
-//  LIFECYCLE
     // default constructor
     AQLCoreError(void);
     // constructor
@@ -60,10 +59,18 @@ public:
     // destructor
     virtual ~AQLCoreError(void);
 
-	/* virtual */ const char* what() const {return getMsg();}
+    // In a Debug build, appends "[file:line]" to the message (the file/line every AQLCoreError
+    // already captures at the throw site via __FILE__/__LINE__, but which never reached what() -
+    // getMsg()/getFile()/getLine() exposed them individually, yet the actual catch boundary this
+    // library surfaces errors through everywhere (Excel cell text, GTEST failure output, any
+    // `catch(const std::exception& e) { ...e.what()... }`) only ever called what(), so file/line
+    // were captured but effectively never seen). Release strips it back to the bare message - a
+    // hardcoded source path/line number in a user-facing Excel cell error is not something a
+    // shipped product should show. See the .cpp for why this needs a cached std::string rather
+    // than just formatting inline.
+    /* virtual */ const char* what() const;
 
-//  QUERY
-    // get number of erro information to be stored
+    // get number of error information to be stored
     unsigned int        getSize(void) const;
 
     // get an error message that is stored in the (0 starts) i-th
@@ -78,13 +85,12 @@ public:
     // get a file that output error information
     static const char_t*    getLogFileName(void);
 
-    // output erro information into an erro log file
+    // output error information into an error log file
     AQLCoreError&            print(void);
     const AQLCoreError&      print(void) const;
     AQLCoreError&            print(const char_t* fileName);
     const AQLCoreError&      print(const char_t* fileName) const;
 
-//  OPERATION
     // add an error message at the beginning of the 0-th error message
     void                addMsg(const char_t* msg);
 
@@ -94,7 +100,6 @@ public:
     // close log file name to print error information
     static void         closeLogFile(void);
 
-//  OPERATOR
     // assignment operator
     const AQLCoreError&      operator=(const AQLCoreError& e);
     // addition assignment operator 
@@ -102,4 +107,12 @@ public:
 
 private:
     AQLCoreErrorInfo*        mpErrInfo;  // error information
+
+    // Lazily-built cache backing what()'s returned const char* - what() must return a pointer
+    // that stays valid after the call returns (a caller does `const char* m = e.what(); ...use m
+    // later...` routinely), so it can't return a temporary std::ostringstream's .c_str(). Built on
+    // first call to what(), not in the constructor - most AQLCoreError instances are thrown, caught
+    // once and never have what() called at all (many call sites catch, translate to their own
+    // message, and never touch it), so paying the formatting cost unconditionally would be waste.
+    mutable std::string     whatCache_;
 };

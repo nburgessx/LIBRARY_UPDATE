@@ -32,13 +32,11 @@ class AQLFunctionBase;
 class AQLRomberg : public AQL1DIntegral
 {
 public:
-//  LIFECYCLE
 	// constructor
 	AQLRomberg(unsigned short mpowertopoints, unsigned short morderofromberg=2, double romberg_eps = 1.0e-5);
 	// destructor
 	virtual ~AQLRomberg();
 
-//  QUERY
 								//======================================
 								// Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
