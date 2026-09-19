@@ -76,29 +76,29 @@ AQLDate::~AQLDate(void)
 
 void AQLDate::setDate(const char_t  *date, const char_t* format)
 {
-    formatWithString(date, format); 
+    formatWithString(date, format);
     mLeap = IS_LEAP_YEAR(mYear);
-    mJulius = 0;
-    checkDate();
+    checkDate();       // validate before computing the Julian day count, not after
+    dateToJulius();     // keep mJulius eagerly up to date - see the field comment in AQLDate.h
 }
 
-void AQLDate::setSystemDate(void) 
+void AQLDate::setSystemDate(void)
 {
     struct tm *date;
     time_t now;
-    
+
     now     = time(NULL);
     date    = localtime(&now);
     mYear   = (unsigned short)(date->tm_year + 1900);
     mMonth  = (unsigned short)(date->tm_mon + 1);
     mDay    = (unsigned short)(date->tm_mday);
     mLeap   = IS_LEAP_YEAR(mYear);
-    mJulius = 0; 
+    dateToJulius();
 }
 
 void AQLDate::setYear( unsigned int year)
 {
-    if (year == 0 ) 
+    if (year == 0 )
     {
 		AQLString msg = "Invalid year[";
 		msg += AQLString((int)year) + "]";
@@ -107,12 +107,12 @@ void AQLDate::setYear( unsigned int year)
     mYear = (unsigned short)year;
     mLeap = IS_LEAP_YEAR(mYear);
     adjustDayForMonthEnd();
-    mJulius = 0;
+    dateToJulius();
 }
 
 void AQLDate::setMonth(unsigned int month)
 {
-    if (month == 0 || month > 12) 
+    if (month == 0 || month > 12)
     {
 		AQLString msg = "Invalid month[";
 		msg += AQLString((int)month) + "]";
@@ -120,7 +120,7 @@ void AQLDate::setMonth(unsigned int month)
     }
     mMonth = (unsigned short)month;
     adjustDayForMonthEnd();
-    mJulius = 0;  // clear julian date
+    dateToJulius();
 }
 
 void AQLDate::setDay(unsigned int day)
@@ -185,15 +185,13 @@ void AQLDate::addMonths(const int months)
     mYear       = (unsigned short)(allMonths / 12);
     mMonth      = (unsigned short)(allMonths % 12) + 1;
     mLeap       = IS_LEAP_YEAR(mYear);
-    mJulius     = 0;
     adjustDayForMonthEnd();
-
-    
+    dateToJulius();
 }
 
 void AQLDate::addYears(int years)
 {
-    if ( - years > (int)mYear ) 
+    if ( - years > (int)mYear )
     {
 		AQLString msg = "Invalid years[";
 		msg += AQLString(years) + "]";
@@ -202,10 +200,10 @@ void AQLDate::addYears(int years)
     mYear = mYear + (unsigned short)years;
     mLeap = IS_LEAP_YEAR(mYear);
     adjustDayForMonthEnd();
-    mJulius = 0;
+    dateToJulius();
 }
 
-AQLDayOfWeekEnum AQLDate::dayOfWeek(void) const
+AQLDayOfWeekEnum AQLDate::dayOfWeek(void) const noexcept
 {
     if (mJulius == 0) 
 	{
@@ -214,20 +212,7 @@ AQLDayOfWeekEnum AQLDate::dayOfWeek(void) const
     return AQLDayOfWeekEnum(DAY_OF_WEEK(mJulius));
 }
 
-int AQLDate::dayOfMonth(void) const
-{
-    return mDay;
-}
-
-int AQLDate::monthOfYear(void) const
-{
-    return mMonth;
-}
-
-int AQLDate::yearOfEra(void) const
-{
-     return mYear;
-}
+// dayOfMonth() / monthOfYear() / yearOfEra() are defined inline in AQLDate.h
 
 AQLString AQLDate::stringWithFormat(const char_t* format) const
 {
@@ -263,19 +248,30 @@ AQLString AQLDate::convertDateToString( const char_t* format) const
     @brief make a comparison of date. Returns a positive value for a new date
 
     @param[in] rDate    date to compare
-    
+
     @retval     > 0     new date
     @retval     0       same date
     @retval     < 0     old date
 */
-int AQLDate::cmp(const AQLDate& rDate) const
-{ 
+int AQLDate::cmp(const AQLDate& rDate) const noexcept
+{
+    // mJulius is kept eagerly up to date by every constructor/mutator (see AQLDate.h), so this is
+    // normally always available: comparing it directly is one integer compare instead of two
+    // subtractions, two multiplications and two adds, and gives an identical ordering to the decimal
+    // ranking below for any valid calendar date. The decimal fallback stays as a defensive path only.
+    if ( mJulius != 0 && rDate.mJulius != 0 )
+    {
+        if ( mJulius < rDate.mJulius ) return -1;
+        if ( mJulius > rDate.mJulius ) return 1;
+        return 0;
+    }
+
     return (((int)mYear - (int)(rDate.mYear)) * YEAR_RANK +
             ((int)mMonth - (int)(rDate.mMonth)) * MONTH_RANK +
             ((int)mDay - (int)(rDate.mDay)));
 }
 
-int AQLDate::intervalDays(const AQLDate& toDate) const 
+int AQLDate::intervalDays(const AQLDate& toDate) const noexcept
 {
     if (mJulius == 0) 
 	{
@@ -288,7 +284,7 @@ int AQLDate::intervalDays(const AQLDate& toDate) const
     return (int)(toDate.mJulius - mJulius);
 }
 
-int AQLDate::intervalMonths(const AQLDate& toDate) const 
+int AQLDate::intervalMonths(const AQLDate& toDate) const noexcept
 {
     int days;
     int months;
@@ -298,7 +294,7 @@ int AQLDate::intervalMonths(const AQLDate& toDate) const
     return months;     
 }
 
-int AQLDate::intervalYears(const AQLDate& toDate) const 
+int AQLDate::intervalYears(const AQLDate& toDate) const noexcept
 {
     int days;
     int months;
@@ -308,7 +304,7 @@ int AQLDate::intervalYears(const AQLDate& toDate) const
     return years;
 }
 
-void AQLDate::intervalYMD(const AQLDate& toDate, int&  years, int&  months, int&  days) const 
+void AQLDate::intervalYMD(const AQLDate& toDate, int&  years, int&  months, int&  days) const noexcept
 {
     const AQLDate* to;
     const AQLDate* from;
@@ -366,55 +362,55 @@ void AQLDate::intervalYMD(const AQLDate& toDate, int&  years, int&  months, int&
     years  *= sign;
 }
 
-int AQLDate::intervalToStartOfMonth(void) const 
+int AQLDate::intervalToStartOfMonth(void) const noexcept
 {
 	return 1 -(int)mDay;
 }
 
-int AQLDate::intervalToEndOfMonth(void) const 
+int AQLDate::intervalToEndOfMonth(void) const noexcept
 {
     return (int)LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[mLeap][0][mMonth - 1] - (int)mDay;
 }
 
-int AQLDate::intervalToStartOfYear(void) const 
+int AQLDate::intervalToStartOfYear(void) const noexcept
 {
     return 1 - (int)mDay - (int)LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[mLeap][1][mMonth - 1];
 }
 
-int AQLDate::intervalToEndOfYear(void) const 
+int AQLDate::intervalToEndOfYear(void) const noexcept
 {
-    return   (int)LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[mLeap][1][11] + 31  
-           - (int)LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[mLeap][1][mMonth - 1] 
+    return   (int)LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[mLeap][1][11] + 31
+           - (int)LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[mLeap][1][mMonth - 1]
            - (int)mDay;
 }
 
-int AQLDate::intervalToNextDateOfWeek(AQLDayOfWeekEnum next) const 
+int AQLDate::intervalToNextDateOfWeek(AQLDayOfWeekEnum next) const noexcept
 {
     int ret = (int)next - (int)dayOfWeek();
     return (ret < 0 ? ret + DAYS_OF_WEEK : ret);
 }
 
-bool AQLDate::isLeapYear(void) const 
+bool AQLDate::isLeapYear(void) const noexcept
 {
 	return mLeap == 1;
 }
 
-bool AQLDate::isStartOfMonth(void) const 
+bool AQLDate::isStartOfMonth(void) const noexcept
 {
 	return mDay == 1;
 }
 
-bool AQLDate::isEndOfMonth(void) const 
+bool AQLDate::isEndOfMonth(void) const noexcept
 {
-	return mDay == LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[mLeap][0][mMonth - 1]; 
+	return mDay == LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[mLeap][0][mMonth - 1];
 }
 
-bool AQLDate::isStartOfYear(void) const 
+bool AQLDate::isStartOfYear(void) const noexcept
 {
 	return mDay == 1 && mMonth == 1;
 }
 
-bool AQLDate::isEndOfYear(void) const 
+bool AQLDate::isEndOfYear(void) const noexcept
 {
 	return mDay == 31 && mMonth == 12;
 }
@@ -607,7 +603,7 @@ void AQLDate::adjustDayForMonthEnd(void)
 	}
 }
 
-void AQLDate::dateToJulius(void) const
+void AQLDate::dateToJulius(void) const noexcept
 {
     int year    = mYear;
     int month   = mMonth;

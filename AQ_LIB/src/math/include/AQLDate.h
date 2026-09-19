@@ -41,43 +41,49 @@ public:
     void                addMonths(int months);
     void                addYears(int years);
    
-    AQLDayOfWeekEnum     dayOfWeek(void) const;
+    AQLDayOfWeekEnum     dayOfWeek(void) const noexcept;
 
-    int					dayOfMonth(void) const;
-    int					monthOfYear(void) const;
-    int					yearOfEra(void) const;
+    int					dayOfMonth(void) const noexcept {return mDay;}
+    int					monthOfYear(void) const noexcept {return mMonth;}
+    int					yearOfEra(void) const noexcept {return mYear;}
+
+    // Returns true if this AQLDate is still at its default-constructed sentinel value (never set to
+    // a real calendar date) - matches the isNull() convention already used elsewhere in this codebase
+    // (AQLPriceDataType, AQLDataMatrix, AQLDataHolder). O(1): mJulius is always kept up to date, so
+    // this never triggers a Julian-day computation.
+    bool                isNull(void) const noexcept {return mJulius <= 1;}
 
     // Converters
     virtual AQLString    stringWithFormat(const char_t* format="YYYYMMDD") const;
     virtual AQLString    convertDateToString(const char_t* format="YYYYMMDD") const;
-    int					cmp(const AQLDate& rTime) const;
+    int					cmp(const AQLDate& rTime) const noexcept;
 
     // Time Intervals
-    int					intervalDays(const AQLDate& toDate) const;
-    int					intervalMonths(const AQLDate& toDate) const;
-    int					intervalYears(const AQLDate& toDate) const;
-    void                intervalYMD(const AQLDate& toDate, int& years, int& months, int& days) const;
-    int					intervalToStartOfMonth(void) const;
-	int					intervalToEndOfMonth(void) const;
-    int					intervalToStartOfYear(void) const;
-    int					intervalToEndOfYear(void) const;
-	int					intervalToNextDateOfWeek(AQLDayOfWeekEnum next) const;
+    int					intervalDays(const AQLDate& toDate) const noexcept;
+    int					intervalMonths(const AQLDate& toDate) const noexcept;
+    int					intervalYears(const AQLDate& toDate) const noexcept;
+    void                intervalYMD(const AQLDate& toDate, int& years, int& months, int& days) const noexcept;
+    int					intervalToStartOfMonth(void) const noexcept;
+	int					intervalToEndOfMonth(void) const noexcept;
+    int					intervalToStartOfYear(void) const noexcept;
+    int					intervalToEndOfYear(void) const noexcept;
+	int					intervalToNextDateOfWeek(AQLDayOfWeekEnum next) const noexcept;
 
-    bool                isLeapYear(void) const;
-    bool                isStartOfMonth(void) const;
-    bool                isEndOfMonth(void) const;
-    bool                isStartOfYear(void) const;
-    bool                isEndOfYear(void) const;
+    bool                isLeapYear(void) const noexcept;
+    bool                isStartOfMonth(void) const noexcept;
+    bool                isEndOfMonth(void) const noexcept;
+    bool                isStartOfYear(void) const noexcept;
+    bool                isEndOfYear(void) const noexcept;
 
     // Operators
-    bool                operator==(const AQLDate& a) const {return cmp(a) == 0;}
-    bool                operator!=(const AQLDate& a) const {return cmp(a) != 0;}
-    bool                operator<=(const AQLDate& a) const {return cmp(a) <= 0;}
-    bool                operator>=(const AQLDate& a) const {return cmp(a) >= 0;}
-    bool                operator>(const AQLDate& a)  const {return cmp(a) > 0;}
-    bool                operator<(const AQLDate& a)  const {return cmp(a) < 0;}
+    bool                operator==(const AQLDate& a) const noexcept {return cmp(a) == 0;}
+    bool                operator!=(const AQLDate& a) const noexcept {return cmp(a) != 0;}
+    bool                operator<=(const AQLDate& a) const noexcept {return cmp(a) <= 0;}
+    bool                operator>=(const AQLDate& a) const noexcept {return cmp(a) >= 0;}
+    bool                operator>(const AQLDate& a)  const noexcept {return cmp(a) > 0;}
+    bool                operator<(const AQLDate& a)  const noexcept {return cmp(a) < 0;}
 
-	void                dateToJulius(void) const; // Made public so it can be called from DateUtilities
+	void                dateToJulius(void) const noexcept; // Made public so it can be called from DateUtilities
 
 protected:
     
@@ -97,6 +103,14 @@ private:
     unsigned short     mYear;
     unsigned short     mMonth;
     unsigned short     mDay;
+
+    // The Julian day count is now kept eagerly up to date by every constructor and mutator (see
+    // AQLDate.cpp), rather than computed lazily on first use - this keeps date comparison (cmp())
+    // on the fast integer-compare path unconditionally, and means no internal const method ever
+    // needs to write to this field, which is what makes concurrent const access (comparisons,
+    // interval calculations, dayOfWeek()) across threads safe. It stays `mutable` only because the
+    // public dateToJulius() method - kept for backward compatibility - is const and still assigns to
+    // it; calling it on an already-current object is idempotent (recomputes the same value).
     mutable long       mJulius;
 };
 

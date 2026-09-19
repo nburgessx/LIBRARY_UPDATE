@@ -11,7 +11,7 @@
   <Type Name="AQLDate">
     <!-- dd-Mmm-yyyy, zero-padded day, one alternative per month (natvis has no printf-style padding,
          so day zero-padding is built as two concatenated {} blocks: a conditional "0" then the digits). -->
-    <DisplayString Condition="mMonth==1">{(mDay&lt;10)?"0":""}{mDay}-Jan-{mYear}</DisplayString>
+	<DisplayString Condition="mMonth==1">{(mDay&lt;10)?"0":""}{mDay}-Jan-{mYear}</DisplayString>
     <DisplayString Condition="mMonth==2">{(mDay&lt;10)?"0":""}{mDay}-Feb-{mYear}</DisplayString>
     <DisplayString Condition="mMonth==3">{(mDay&lt;10)?"0":""}{mDay}-Mar-{mYear}</DisplayString>
     <DisplayString Condition="mMonth==4">{(mDay&lt;10)?"0":""}{mDay}-Apr-{mYear}</DisplayString>

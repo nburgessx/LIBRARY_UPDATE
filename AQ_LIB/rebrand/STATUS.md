@@ -1,4 +1,135 @@
-# Rebrand status — 2026-09-15
+# Rebrand status — 2026-09-19
+
+## BondSpreadCurve feature completed and hardened; AQLDate speed/thread-safety/debuggability pass (2026-09-19)
+
+Session paused here (token limit) — safe to resume from this point tomorrow.
+Everything described below is committed.
+
+**1. `BondCurve` extended with a `CurveType` (`Outright`/`Spread`, old
+`BondCurve`/`BondSpreadCurve` strings kept as accepted aliases).** A spread
+curve is built from a benchmark `BondCurve` plus one or more spread bonds:
+single spread bond → constant spread applied to every benchmark yield; two or
+more → the spread is linearly interpolated (Flat/PiecewiseConstant is
+rejected outright for spread curves — a step function between spread nodes is
+a genuine discontinuity, not something a fix can smooth) and applied to every
+benchmark pillar. `YieldQuoteInPercent` and the optional flat `Spread` shock
+apply consistently to both curve types. Every spread bond gets its own exact
+calibration pillar (repricing is exact, by explicit decision — approximate
+curve-fit repricing was considered and rejected).
+
+**2. Two real bugs found and fixed during hardening, both via user-reported
+symptoms reproduced and root-caused, not guessed at:**
+   - *Inconsistent baseline.* A spread node was measured against the
+     benchmark's *bootstrapped* yield (`BondCurve::getYield()`, which reads
+     through whatever interpolation the benchmark itself uses) but
+     reconstruction added the spread onto the benchmark's *raw quote*. These
+     two numbers differ subtly (bootstrap discounts a bond's earlier coupons
+     through prior curve segments, so a bond's calibrated pillar isn't quite
+     its own naive YTM). Where a spread bond happened to fall near a
+     benchmark pillar, this produced a real, localised jump ("blend"/spike)
+     baked into the spread node itself, before any spread-side interpolation
+     ever ran — no choice of `Interpolation` could fix it, because the
+     corruption was upstream of that setting. Fixed: a spread node is now
+     always measured against a smooth Linear interpolation of the
+     benchmark's own **raw quotes**, independent of the benchmark curve's own
+     `Interpolation`/`Extrapolation` configuration.
+   - *Coincidence handling.* A spread bond maturing on the same date as a
+     benchmark bond (a realistic case — e.g. a corporate bond happening to
+     share a treasury's maturity) initially threw ("ambiguous, use distinct
+     maturities"); fixed so the spread bond's own quoted yield takes
+     precedence there, since it's real market data for that exact instrument
+     — this now falls out of the same-baseline fix above algebraically,
+     rather than needing a special-cased override.
+
+**3. Root-caused (not yet actioned) — `Interpolation=Flat` on a spread curve
+against closely/quarterly-spaced benchmark bonds can still look spiky even
+with the baseline fix**, when the shift between spread-bond and benchmark
+maturities is close to the benchmark's own pillar spacing (a step-function
+"aliasing" effect, mathematically inherent to Flat/step interpolation, not a
+logic bug — `Flat` is now rejected for spread curves specifically because of
+this). Nicholas wants exact repricing of every calibration instrument kept
+(no approximate curve-fit), so the fix path is the union-of-pillars +
+bootstrap approach already implemented, using Linear only for the spread
+overlay. Broader "smooth/monotone/arbitrage-free by construction" (forward-
+rate-as-state-variable, matching this library's own IR/swap curve framework
+per `CLAUDE.md` §1) was discussed as a further step but explicitly deferred —
+"action the smooth curve items mentioned here and then review our position"
+(Nicholas's words) is the agreed sequencing; not yet revisited.
+
+**4. Regression coverage added to `TestBondCurves.cpp`** (all passing): exact
+zero-spread reproduction of the benchmark, spread-bond/benchmark-pillar
+coincidence, mixed coincident+non-coincident nodes, sparse nodes attributed
+by date (not index), Linear-vs-PiecewiseConstant interpolation, `Flat`
+rejected for spread curves, `YieldQuoteInPercent` parity between curve types.
+New fixtures under `resources/test/inputs/ETrading/Bonds/BondCurves/`:
+`USD_CORP_CURVE_{MULTINODE,ZEROSPREAD,COINCIDENT,MIXED,SPARSE_DIAG,
+FLAT_REJECTED,SHOCK_DEC,SHOCK_PCT}`, `USD_2BOND_{STEP,LINEAR,STEP_PCT}`,
+`US_CORP_BOND_{1,2,3}`.
+
+**5. `AQLDate` reviewed end to end** (pros/cons discussion, then an agreed
+"don't break anything" hardening pass — see `AQLDate.h`/`.cpp` for the
+in-code rationale on each point):
+   - `Visualizer.natvis`: `AQLDate` now displays as zero-padded `dd-Mmm-yyyy`
+     (was `d-m-yyyy`) plus a `[yyyymmdd]` expansion item. Pure debugger XML,
+     zero compiled-code risk.
+   - `cmp()` fast path: compares cached Julian day directly when available
+     (one int compare) instead of always doing the decimal-rank arithmetic;
+     mathematically identical ordering, verified no caller depends on the
+     return value's magnitude (only its sign).
+   - `dayOfMonth()`/`monthOfYear()`/`yearOfEra()` moved inline into the
+     header (were out-of-line one-liners in the `.cpp`).
+   - `noexcept` added to every method verified non-throwing (accessors,
+     `cmp()`, the six relational operators, `isLeapYear`/`isStartOfMonth`/
+     etc., the interval-arithmetic family, `dateToJulius()`). Mutators that
+     validate input (`setYear`/`setMonth`/`setDay`/`addDays`/etc.) and all
+     `virtual` methods were deliberately left alone — `AQLDateTime` overrides
+     several of them and does throw.
+   - `mJulius` is now kept eagerly up to date by every constructor and
+     mutator, instead of computed lazily on first use. This makes the
+     `cmp()` fast path unconditionally available, and — more importantly —
+     means no internal `const` method ever needs to *write* to `mJulius`
+     anymore, which is what makes concurrent `const` access (comparisons,
+     interval calculations, `dayOfWeek()`) across threads safe. Confirmed
+     safe against the one real complication: `AQLDateTime : public AQLDate`
+     (checked — it only calls the inherited public setters, never touches
+     `mJulius`, which is private anyway). `mJulius` stays `mutable` only
+     because the public `dateToJulius()` — kept for backward compatibility,
+     one external caller in `DateUtilities.cpp` — is `const` and still
+     assigns to it; calling it on an already-current object is idempotent.
+   - Added `isNull()` (matches the existing convention already used by
+     `AQLPriceDataType`/`AQLDataMatrix`/`AQLDataHolder` — confirmed via grep
+     before naming it, not invented fresh).
+   - Deliberately **not** done, and why: did not remove the virtual
+     destructor (real subclass `AQLDateTime` needs it, would be UB to
+     remove); did not touch the fixed-format C-string parser or consolidate
+     `stringToDate()`'s heuristics into the class (flagged as a *future*
+     improvement, out of scope for "don't break anything, immediate").
+   - Full solution rebuild (`math`→`etrading`→`models`→`calibration`→
+     `validation`→`GTEST`) green; `TestBondCurves` and the date-related unit
+     suites (`TestDateConverters`, `TestValidateAndConvertStringToDate`,
+     `TestDebugMacros`, `TestUtilitiesTime`, `TestCalendars`) all pass.
+
+**6. Process note — mid-session data loss and recovery.** ~15 new test
+fixture CSVs created earlier in this session (for the `BondSpreadCurve` work,
+point 4 above) were untracked and got wiped by an external process (the user
+was running a build in parallel; likely a clean step). Git showed no trace
+(untracked-file deletion is invisible to git) — diagnosed via `git status`/
+`git reflog`/`git show --stat` on the relevant commits, which confirmed the
+*source code* (`BondCurves.{h,cpp}`, `CommonConstants`, `CoreEnumerations`,
+`FixedBond`, all 239 lines of the `TestBondCurves.cpp` additions) was already
+safely committed (`c4dc6469`) — only the brand-new, never-committed fixture
+files were lost. All 15 were reconstructed from this session's own context
+and re-verified (full `TestBondCurves` suite green again) before committing.
+**Lesson for next session:** new test fixtures should be staged (`git add`)
+promptly after creation, not left untracked, precisely because untracked
+deletions leave no git trail to recover from.
+
+**Known pre-existing GTEST full-suite failure, unrelated to this session:**
+`TestCurveData.UNIT_CurveData` — `FRAQuotes` throws `AQLCoreInvalidData`
+where the test expects `etrading::ETradingException`, in FRA/market-data
+validation code untouched this session or the last several.
+
+---
 
 ## C#/Java/R binding testing shelved permanently, not just blocked (D21, 2026-09-15)
 
