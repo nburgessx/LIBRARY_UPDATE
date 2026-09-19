@@ -6,6 +6,7 @@
 
 #include "AQLBasic.h"
 #include "ExceptionMacros.h"    // incl AQ_REQUIRE, AQ_THROW, AQ_THROW_IF
+#include <algorithm>            // std::replace, used by the single-char exchange()
 #include <cstdlib>
 #include <cstdio>
 #include <cctype>
@@ -21,280 +22,56 @@
 
 using namespace std;
 
-//
-//  ---------------------------- Internal StringData Class -----------------------------------------   
-//
-
-AQLString::StringData::StringData( const unsigned int allocSize)
-    : allocationSize_(allocSize), stringSize_(0)
+namespace
 {
-    try
+    // Replaces every occurrence of `from` in `s` with `to`. Mirrors the old hand-rolled
+    // StringData::exchange(const char_t*, const char_t*)'s find-and-replace-all semantics, but via
+    // std::basic_string's own find()/replace() instead of a manual strstr() loop over a position
+    // array grown with realloc().
+    void replaceAllOccurrences(std::basic_string<char_t>& s, const char_t* from, const char_t* to)
     {
-        string_ = new char_t[allocationSize_];
-        *string_ = '\0';
-    }
-    catch (bad_alloc & e)
-    {
-        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
-    }
-}
-AQLString::StringData::StringData( const char_t* pString)
-{
-    allocationSize_ = STRLEN(pString) + 1;
-    try
-    {
-        string_ = new char_t[allocationSize_];
-        STRCPY(string_, pString);
-        stringSize_ = allocationSize_ - 1;
-    }
-    catch (bad_alloc & e)
-    {
-        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
-    }
-}
-
-void
-AQLString::StringData::toUpper(void)
-{
-    char_t* str = string_;
-    for(;(*str) != '\0'; ++str) 
-    {
-        *str = (char)toupper(*str);
-    }
-}
-
-void
-AQLString::StringData::toLower(void)
-{
-    char_t* str = string_;
-    for(;(*str) != '\0'; ++str) 
-    {
-        *str = (char)tolower(*str);
-    }
-}
-
-void
-AQLString::StringData::exchange( char_t from, char_t to)
-{
-     char_t* str = string_;
-     for(;(*str) != '\0'; ++str) 
-     {
-        if (*str == from)
+        if (from == nullptr || from[0] == '\0')
         {
-            *str = to;
+            return;
+        }
+        const std::basic_string<char_t> fromStr(from);
+        const std::basic_string<char_t> toStr(to == nullptr ? "" : to);
+        std::basic_string<char_t>::size_type pos = 0;
+        while ((pos = s.find(fromStr, pos)) != std::basic_string<char_t>::npos)
+        {
+            s.replace(pos, fromStr.size(), toStr);
+            pos += toStr.size();
         }
     }
 }
-
-void 
-AQLString::StringData::exchange(const char_t* pFromString, const char_t* pToString)
-{
-    // in case From is nullptr
-    if (pFromString[0] == '\0' ) 
-    {
-       return;
-    }
-    
-    // in case the same string
-    unsigned int *pos = nullptr;
-    unsigned int num = 0 ;
-    unsigned int fromLen = STRLEN(pFromString);
-    unsigned int toLen = STRLEN(pToString);
-    int diff  = toLen - fromLen;
-
-        
-    char_t* pPos = string_;
-	try
-	{
-        for(;(pPos = strstr(pPos, pFromString)) != nullptr;)
-        {
-            ++num;
-            pos = (unsigned int*)realloc(pos, sizeof(unsigned int) * num);
-            pos[num-1] = static_cast<unsigned int>(pPos - string_);
-            pPos += fromLen;
-        }
-        if (diff > 0) 
-        {
-            for (unsigned int i = 0; i < num; ++i)
-            {
-                pos[i] += diff * i;
-                extend(pos[i], diff);
-                replace(pos[i], pToString);
-            }
-        }
-        else
-        {
-			diff *= -1;
-			for (unsigned int i = 0; i < num; ++i)
-			{
-				pos[i] -= diff * i;
-				remove(pos[i], diff);
-				replace(pos[i], pToString);
-			}
-        }
-        free(pos);
-    }
-    catch (AQLCoreSystemError&)
-    {
-        free(pos);
-        throw;
-    }
-    catch (...)
-    {
-        free(pos);
-        throw AQLCoreSystemError("Unexpected Error at AQLString::StringData::exchange", __FILE__, __LINE__);
-    }
-
-}
-
-void 
-AQLString::StringData::replace( const unsigned int from, const char_t* pString)
-{
-    unsigned int len = STRLEN(pString);
-    unsigned int newSize = len + from;
-
-    if (newSize + 1 > allocationSize_) 
-    {
-        extend(from, newSize);
-    }
-
-    if (newSize > stringSize_) 
-    {
-        stringSize_ = newSize;
-        STRCPY(string_ + from, pString);
-    }
-    else
-    {
-        char_t* ptwk = string_ + from;
-        char_t* pfwk = const_cast<char_t*>(pString);
-        for(;*pfwk != '\0';)
-        {
-            *(ptwk++) = *(pfwk++);
-        }
-    }
-}
-
-void 
-AQLString::StringData::insert(const unsigned int from, const char_t* pString)
-{
-    extend(from, STRLEN(pString));
-
-    char_t* ptwk = string_ + from;
-    char_t* pfwk = const_cast<char_t*>(pString);
-    for(;(*pfwk) != '\0';)
-    {
-        *(ptwk++) = *(pfwk++);
-    }
-}
-
-void
-AQLString::StringData::remove(const unsigned int from, const unsigned int num)
-{
-    if (from + num > stringSize_) 
-    {
-        string_[from] = '\0';
-        stringSize_ = from;
-    }
-    else
-    {
-        char_t* toWk = string_ + from;
-        char_t* frWk = string_ + from + num;
-        for(;*frWk != '\0';)
-        {
-            *(toWk++) = *(frWk++);
-        }
-        (*toWk) = (*frWk);
-        stringSize_ -= num;
-    }
-    if (4 * stringSize_ < allocationSize_) 
-    {
-        allocationSize_ = 2 * stringSize_+1;
-        try
-        {
-            char_t* wk = new char_t[allocationSize_];
-            char_t* toWk = wk;
-            char_t* frWk = string_;
-            for(;*frWk != '\0';)
-            {
-                *(toWk++) = *(frWk++);
-            }
-            (*toWk) = (*frWk);
-             delete[] string_;
-             string_ = wk;
-        }
-        catch (bad_alloc & e){
-            throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
-        }
-    }
-}
-
-void
-AQLString::StringData::extend( const unsigned int fromSize, const unsigned int to)
-{
-    unsigned int    i;
-    char_t* ptWk = nullptr;
-    char_t* pfWk = nullptr;
-
-    if(allocationSize_ < stringSize_ + to + 1) 
-    {
-        allocationSize_ = 2 * (stringSize_ + to + 1);
-        try
-        {
-            char_t* pWk = new char_t[allocationSize_];
-            memset(pWk, 0x00, allocationSize_ * sizeof(char_t));
-            ptWk = pWk;
-            pfWk = string_;
-            for (i = 0; i < fromSize; ++i) 
-            {
-                *(ptWk++) = *(pfWk++);
-            }
-            ptWk += to;
-            for(;*pfWk != '\0';)
-            {
-                *(ptWk++) = *(pfWk++);
-            }
-            *ptWk = *pfWk;
-            delete[] string_;
-            string_ = pWk;
-        }
-        catch (bad_alloc & e){
-            throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
-        }
-    } 
-    else 
-    {
-        ptWk = string_ + stringSize_ + to;
-        pfWk = string_ + stringSize_;
-        for(i = 0; i <= stringSize_ - fromSize + 1; ++i)
-        {
-            *(ptWk--) = *(pfWk--);
-        }
-    }
-    stringSize_ = stringSize_ + to;
-}
-
 
 //
-//  ---------------------------- AQLString Class -----------------------------------------   
+//  ---------------------------- AQLString Class -----------------------------------------
 //
 
 // Constructor
-AQLString::AQLString(void) 
+AQLString::AQLString(void)
 {
     init();
 }
 
 // Copy Constructor
-AQLString::AQLString(const AQLString& rString) 
+AQLString::AQLString(const AQLString& rString)
 {
-    init(); 
+    init();
     copy(rString);
+}
+
+// Move Constructor - steals rString's buffer outright: no allocation, no copy of any characters.
+AQLString::AQLString(AQLString&& rString) noexcept
+    : stringData_(std::move(rString.stringData_))
+{
 }
 
 // Char Constructor
 AQLString::AQLString(const char_t inputChar)
 {
-    init(); 
+    init();
     char_t str[2];
     str[0] = inputChar;
     str[1] = '\0';
@@ -303,7 +80,7 @@ AQLString::AQLString(const char_t inputChar)
 
 // Standard String Constructor
 AQLString::AQLString(const std::string & standardString )
-{ 
+{
     init();
     copy(standardString.c_str());
 }
@@ -338,7 +115,7 @@ AQLString::AQLString( const int a)
 
 	// Alternative for Higher Precision
 	// --------------------------------
-	
+
 	// init();
 	// std::ostringstream streamObj;
 	// streamObj.precision(15);
@@ -358,15 +135,15 @@ AQLString::AQLString(const double a, unsigned int stringDoubleSize)
 	//
     // char_t str[DOUBLE_LEN];
     // char_t form[7];
-	// 
-    // if (stringDoubleSize > DOUBLE_LEN / 2) 
+	//
+    // if (stringDoubleSize > DOUBLE_LEN / 2)
     // {
     //     stringDoubleSize = DOUBLE_LEN / 2;
     // }
-	// 
-	// int digit = DOUBLE_LEN - stringDoubleSize - 2;    // '2' means decimal point and minus sign 
-    //             
-    // if(AQLMath::abs(a) < AQLMath::pow(10, digit)) 
+	//
+	// int digit = DOUBLE_LEN - stringDoubleSize - 2;    // '2' means decimal point and minus sign
+    //
+    // if(AQLMath::abs(a) < AQLMath::pow(10, digit))
     // {
 	// 	SPRINTF(form, "%%.%df", stringDoubleSize);
     // }
@@ -374,7 +151,7 @@ AQLString::AQLString(const double a, unsigned int stringDoubleSize)
     // {
 	// 	SPRINTF(form, "%%1.6e");
     // }
-    //             
+    //
 	// SPRINTF(str, form, a);
 	// copy(str);
 
@@ -388,7 +165,7 @@ AQLString::AQLString(const double a, unsigned int stringDoubleSize)
 
 	// Alternative for Higher Precision
 	// --------------------------------
-	
+
 	// init();
 	// std::ostringstream streamObj;
 	// streamObj.precision(15);
@@ -398,18 +175,18 @@ AQLString::AQLString(const double a, unsigned int stringDoubleSize)
 }
 
 // Destructor
-AQLString::~AQLString(void) 
+AQLString::~AQLString(void)
 {
     clear();
 }
 
 
-const char_t* AQLString::getCString(void) const
+const char_t* AQLString::getCString(void) const noexcept
 {
-    return (stringData_ == nullptr) ? "": stringData_->getCString();
+    return stringData_ ? stringData_->c_str() : "";
 }
 
-const char_t* AQLString::c_str(void) const
+const char_t* AQLString::c_str(void) const noexcept
 {
     return getCString();
 }
@@ -417,20 +194,20 @@ const char_t* AQLString::c_str(void) const
 
 double AQLString::getDoubleValue(void) const
 {
-    if (stringData_ == nullptr || stringData_->size() == 0) return 0.0;
+    if (!stringData_ || stringData_->empty()) return 0.0;
     // Behaviour: Same as legacy code, where "abc" = 0, "2D" = 2, "2" = 2
     return stringToDouble(getCString());
 }
 
 int AQLString::getIntValue(void) const
 {
-    if (stringData_ == nullptr || stringData_->size() == 0) return 0.0;
+    if (!stringData_ || stringData_->empty()) return 0.0;
     // Behaviour: Same as legacy code, where "abc" = 0, "2D" = 2, "2" = 2
     return stringToInteger(getCString());
 }
 
 
-AQLString AQLString::subString(unsigned int start, unsigned int end) const 
+AQLString AQLString::subString(unsigned int start, unsigned int end) const
 {
     AQLString ret(*this);
 
@@ -450,9 +227,9 @@ AQLString AQLString::subString(unsigned int start, unsigned int end) const
 }
 
 
-unsigned int AQLString::size(void) const
+unsigned int AQLString::size(void) const noexcept
 {
-    return (stringData_ == nullptr) ? 0 : stringData_->size();
+    return stringData_ ? static_cast<unsigned int>(stringData_->size()) : 0;
 }
 
 int AQLString::findString(
@@ -467,7 +244,7 @@ int AQLString::findString(
     unsigned int        pattern_len;
     unsigned int        i, j;
     unsigned int        skip[256];
-    
+
     // BM method
     if (pPattern == nullptr)
     {
@@ -483,14 +260,17 @@ int AQLString::findString(
     {
         skip[i] = pattern_len;
     }
+    // Indices into skip[] must go through unsigned char first: char_t is a plain (signed, under MSVC)
+    // char, so any byte with the high bit set would otherwise widen to a negative int and index
+    // skip[] out of bounds.
     for (i = 0;i < pattern_len - 1;i++)
     {
-        skip[static_cast<int>(pPattern[i])] = pattern_len - i - 1;
+        skip[static_cast<unsigned char>(pPattern[i])] = pattern_len - i - 1;
     }
     while(i < size())
     {
         j = pattern_len - 1;
-        while (stringData_->getChar(i) == pPattern[j])
+        while ((*stringData_)[i] == pPattern[j])
         {
             if (j == 0)
             {
@@ -499,9 +279,9 @@ int AQLString::findString(
             i--;
             j--;
         }
-        if (skip[static_cast<int>(stringData_->getChar(i))] > pattern_len - j)
+        if (skip[static_cast<unsigned char>((*stringData_)[i])] > pattern_len - j)
         {
-            i = i + skip[static_cast<int>(stringData_->getChar(i))];
+            i = i + skip[static_cast<unsigned char>((*stringData_)[i])];
         }
         else
         {
@@ -518,7 +298,7 @@ int AQLString::findString(const char_t c) const
     bool    found = false;
     for (i = 0; i < size();i++)
     {
-        if (stringData_->getChar(i) == c)
+        if ((*stringData_)[i] == c)
         {
             found = true;
             break;
@@ -530,105 +310,91 @@ int AQLString::findString(const char_t c) const
     {
         throw AQLCoreSystemError("String found at the point over INT_MAX.", __FILE__, __LINE__);
     }
-    
+
     return found ? static_cast<int>(i) : -1;
 }
 
 
-AQLString& 
+AQLString&
 AQLString::toUpper(void)
 {
-    if ( stringData_ == nullptr ) return *this;
-    makeUnShared();
-    stringData_->toUpper();
+    if (!stringData_) return *this;
+    for (char_t& ch : *stringData_)
+    {
+        ch = (char_t)toupper((int)ch);
+    }
     return *this;
 }
 
 AQLString&
 AQLString::toLower(void)
 {
-    if ( stringData_ == nullptr ) return *this;
-    makeUnShared();
-    stringData_->toLower();
+    if (!stringData_) return *this;
+    for (char_t& ch : *stringData_)
+    {
+        ch = (char_t)tolower((int)ch);
+    }
     return *this;
 }
 
-AQLString& 
+AQLString&
 AQLString::exchange( const char_t from, const char_t to)
 {
-    makeUnShared();
-    stringData_->exchange(from, to);
+    if (!stringData_) return *this;
+    std::replace(stringData_->begin(), stringData_->end(), from, to);
     return *this;
 }
-   
-AQLString& 
+
+AQLString&
 AQLString::exchange(const AQLString& from, const AQLString& to)
 {
-    if (! from.isDefined()) 
+    if (!stringData_ || !from.isDefined())
     {
         return *this;
     }
-    makeUnShared();
-    if (to.isDefined())
-    {
-        stringData_->exchange(from.getCString(), to.getCString());
-    } 
-    else
-    {
-        stringData_->exchange(from.getCString(), "");
-    }
+    replaceAllOccurrences(*stringData_, from.getCString(), to.isDefined() ? to.getCString() : "");
     return *this;
-} 
+}
 
 AQLString&
 AQLString::exchange(const  char_t* from, const AQLString& to)
 {
-    if (from == nullptr) 
+    if (!stringData_ || from == nullptr)
     {
         return *this;
     }
-    makeUnShared();
-    if (to.isDefined())
-    {
-        stringData_->exchange(from, to.getCString());
-    } 
-    else
-    {
-        stringData_->exchange(from, "");
-    }
+    replaceAllOccurrences(*stringData_, from, to.isDefined() ? to.getCString() : "");
     return *this;
 }
 
 AQLString&
 AQLString::exchange(const AQLString& from, const char_t* to)
 {
-    if (! from.isDefined()) 
+    if (!stringData_ || !from.isDefined())
     {
         return *this;
     }
-    makeUnShared();
-    const char_t* to2 = (to == nullptr ? "": to);
-    stringData_->exchange(from.getCString(), to2);
+    replaceAllOccurrences(*stringData_, from.getCString(), to == nullptr ? "" : to);
     return *this;
 }
 
 AQLString&
 AQLString::exchange(const char_t* from, const char_t* to)
 {
-    if (from == nullptr) 
+    if (!stringData_ || from == nullptr)
     {
         return *this;
     }
-    makeUnShared();
-    const char_t* to2 = (to == nullptr ? "": to);
-    stringData_->exchange(from, to2);
+    replaceAllOccurrences(*stringData_, from, to == nullptr ? "" : to);
     return *this;
 }
 
 AQLString&
 AQLString::replace(const unsigned int from, const char_t* pStr)
 {
-    if (from > size() - 1)
+    // size() - 1 underflows to UINT_MAX when size() == 0 (unsigned arithmetic), which silently
+    // defeats this guard on an empty/undefined string instead of catching it - check size() directly.
+    if (size() == 0 || from >= size())
     {
         return *this;
     }
@@ -636,15 +402,19 @@ AQLString::replace(const unsigned int from, const char_t* pStr)
     {
         return *this;
     }
-    makeUnShared();
-    stringData_->replace(from, pStr); 
+    // std::basic_string::replace's count is auto-clamped to size()-from when it would overrun (the
+    // standard (pos,count) convention shared with substr()/erase()) - that single call reproduces
+    // both of the old StringData::replace's branches: grow the string when pStr runs past the
+    // current end, or overwrite in place (preserving whatever tail follows) when it doesn't.
+    const std::basic_string<char_t> repl(pStr);
+    stringData_->replace(from, repl.size(), repl);
     return *this;
 }
 
 AQLString&
 AQLString::replace(const unsigned int from, const AQLString& pStr)
 {
-    if (from > size() - 1)
+    if (size() == 0 || from >= size())
     {
         return *this;
     }
@@ -652,8 +422,7 @@ AQLString::replace(const unsigned int from, const AQLString& pStr)
     {
         return *this;
     }
-    makeUnShared();
-    stringData_->replace(from, pStr.getCString());
+    stringData_->replace(from, pStr.size(), pStr.getCString());
     return *this;
 }
 
@@ -668,7 +437,7 @@ AQLString::insert(unsigned int from, const AQLString& rStr)
     {
         return *this;
     }
-    makeUnShared();
+    if (!stringData_) stringData_.emplace();
     stringData_->insert(from, rStr.getCString());
     return *this;
 }
@@ -680,7 +449,16 @@ AQLString::insert(unsigned int from, const char_t* pStr)
     {
         return *this;
     }
-    makeUnShared();
+    // The original StringData-based insert() had no such guard: an out-of-range `from` reached
+    // StringData::extend(), where an unsigned subtraction (stringSize_ - fromSize) underflowed and
+    // drove a large out-of-bounds copy loop - a real buffer-overflow bug, not just a latent crash.
+    // std::string::insert would throw std::out_of_range safely even without this guard, but the
+    // guard keeps this overload's silent-no-op contract consistent with its AQLString& sibling.
+    if (from > size())
+    {
+        return *this;
+    }
+    if (!stringData_) stringData_.emplace();
     stringData_->insert(from, pStr);
     return *this;
 }
@@ -688,40 +466,36 @@ AQLString::insert(unsigned int from, const char_t* pStr)
 AQLString&
 AQLString::remove(const unsigned int from, const unsigned int num)
 {
-    if (from > size() - 1)
+    if (size() == 0 || from >= size())
     {
         return *this;
     }
-    makeUnShared();
-    stringData_->remove(from, num);
+    // erase()'s count is auto-clamped the same way replace()'s is above, reproducing both of the
+    // original StringData::remove's branches with one call. Deliberately not reproducing the
+    // original's "shrink the buffer if usage drops below 1/4 of capacity" logic - that forced a
+    // reallocation on every qualifying erase(), a net perf loss versus std::string's normal
+    // (no auto-shrink) capacity behaviour.
+    stringData_->erase(from, num);
     return *this;
 }
 
 AQLString&
 AQLString::padLeft(const unsigned int n, char_t c)
 {
-    char_t* str = nullptr;
     if (n == 0)
     {
         return *this;
     }
     try
     {
-        str = new char_t[n+1];
-        for (unsigned int i =0; i < n; ++i)
-        {
-            str[i] = c;
-        }
-        str[n] = '\0';
-        insert(0, str);
-        delete[] str;
-        str = nullptr;
-        return *this;
+        if (!stringData_) stringData_.emplace();
+        stringData_->insert(stringData_->begin(), n, c);
     }
     catch (bad_alloc & e)
     {
         throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
+    return *this;
 }
 
 /*!
@@ -737,31 +511,23 @@ AQLString::padLeft(const unsigned int n, char_t c)
 */
 AQLString&
 AQLString::padRight(
-    const unsigned int n, 
+    const unsigned int n,
     char_t c)
 {
-    char_t* str = nullptr;
     if (n == 0)
     {
         return *this;
     }
     try
     {
-        str = new char_t[n+1];
-        for (unsigned int i =0; i < n; ++i)
-        {
-            str[i] = c;
-        }
-        str[n] = '\0';
-        insert(size(), str);
-        delete[] str;
-        str = nullptr;
-        return *this;
+        if (!stringData_) stringData_.emplace();
+        stringData_->append(n, c);
     }
     catch (bad_alloc & e)
     {
         throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
+    return *this;
 }
 
 /*!
@@ -770,19 +536,17 @@ AQLString::padRight(
 bool
 AQLString::isWhiteSpace(void)
 {
-    const char_t* str = getCString();
-    bool allSpace = true;
-    for(unsigned int i = 0; i < size(); ++i)
-                {
-                                if ( ! isspace( (int) str[i]) )
-                                {
-                                                allSpace = false;
-                                                break;
-                                }
-                }
-                return allSpace;
+    if (!stringData_) return true;
+    for (char_t ch : *stringData_)
+    {
+        if (!isspace((int)ch))
+        {
+            return false;
+        }
+    }
+    return true;
 }
-        
+
 
 /*!
     @brief delete a blank character at the beginning of the string
@@ -792,13 +556,15 @@ AQLString::isWhiteSpace(void)
 AQLString&
 AQLString::trimLeft(void)
 {
-    const char_t* str = getCString();
-    unsigned int i;
-    for(i = 0; i < size() && isspace((int)str[i]); ++i)
-        ;  // nullptr
-    if(i != 0) 
+    if (!stringData_) return *this;
+    std::basic_string<char_t>::size_type i = 0;
+    while (i < stringData_->size() && isspace((int)(*stringData_)[i]))
     {
-        remove(0, i);
+        ++i;
+    }
+    if (i != 0)
+    {
+        stringData_->erase(0, i);
     }
     return *this;
 }
@@ -811,12 +577,15 @@ AQLString::trimLeft(void)
 AQLString&
 AQLString::trimRight(void)
 {
-    const char_t* str = getCString();
-    int i  = size()-1;
-    for(; i >= 0 && isspace((int)str[i]); --i);  // nullptr
-    if ((unsigned int)i != size() - 1) 
+    if (!stringData_ || stringData_->empty()) return *this;
+    std::basic_string<char_t>::size_type i = stringData_->size();
+    while (i > 0 && isspace((int)(*stringData_)[i - 1]))
     {
-        remove(i+1, size()-i-1);
+        --i;
+    }
+    if (i != stringData_->size())
+    {
+        stringData_->erase(i);
     }
     return *this;
 }
@@ -832,17 +601,16 @@ AQLString::trimRight(void)
 
     @return changed characters
 */
-AQLString& 
+AQLString&
 AQLString::charUpdate(
-    const unsigned int index, 
+    const unsigned int index,
     const char_t c)
 {
-    if (index > size() - 1)
+    if (size() == 0 || index >= size())
     {
         return *this;
     }
-    makeUnShared();
-    stringData_->getChar(index) = c;
+    (*stringData_)[index] = c;
     return *this;
 }
 
@@ -866,7 +634,7 @@ AQLString::toToken(
             tmp+= *str;
         }
         ret.push_back(tmp);
-        if (*str == '\0') 
+        if (*str == '\0')
         {
             break;
         }
@@ -875,7 +643,7 @@ AQLString::toToken(
 }
 
 /*!
-    @brief assignment operator for immediate / debug window in Visual Studio 
+    @brief assignment operator for immediate / debug window in Visual Studio
 */
 AQLString&
 AQLString::assign( const char_t* inputString )
@@ -899,6 +667,16 @@ AQLString::operator=(const AQLString& inputString)
 }
 
 AQLString&
+AQLString::operator=(AQLString&& inputString) noexcept
+{
+    if (this != &inputString)
+    {
+        stringData_ = std::move(inputString.stringData_);
+    }
+    return *this;
+}
+
+AQLString&
 AQLString::operator=(const char_t* inputString)
 {
     copy(inputString);
@@ -916,7 +694,7 @@ AQLString::operator=(const char_t inputChar)
 }
 
 AQLString
-AQLString::operator+(const char_t* inputString) const 
+AQLString::operator+(const char_t* inputString) const
 {
     AQLString retString(*this);
     if (inputString == nullptr)
@@ -932,7 +710,7 @@ AQLString::operator+(const char_t* inputString) const
 }
 
 AQLString
-AQLString::operator+(const char_t inputChar) const 
+AQLString::operator+(const char_t inputChar) const
 {
     AQLString retString(*this);
     AQLString plusString(inputChar);
@@ -945,7 +723,7 @@ AQLString::operator+(const char_t inputChar) const
 }
 
 AQLString
-AQLString::operator+(const std::string& inputString) const 
+AQLString::operator+(const std::string& inputString) const
 {
     AQLString retString(*this);
     if (!isDefined())
@@ -957,7 +735,7 @@ AQLString::operator+(const std::string& inputString) const
 }
 
 AQLString
-AQLString::operator+(const AQLString& inputString) const 
+AQLString::operator+(const AQLString& inputString) const
 {
     AQLString retString(*this);
     if (!isDefined())
@@ -969,7 +747,7 @@ AQLString::operator+(const AQLString& inputString) const
 }
 
 AQLString&
-AQLString::operator+=(const std::string& inputString) 
+AQLString::operator+=(const std::string& inputString)
 {
     if (!isDefined())
     {
@@ -980,7 +758,7 @@ AQLString::operator+=(const std::string& inputString)
 }
 
 AQLString&
-AQLString::operator+=(const AQLString& inputString) 
+AQLString::operator+=(const AQLString& inputString)
 {
     if (!isDefined())
     {
@@ -991,7 +769,7 @@ AQLString::operator+=(const AQLString& inputString)
 }
 
 AQLString&
-AQLString::operator+=(const char_t* inputString) 
+AQLString::operator+=(const char_t* inputString)
 {
     if (!isDefined())
     {
@@ -1002,7 +780,7 @@ AQLString::operator+=(const char_t* inputString)
 }
 
 AQLString&
-AQLString::operator+=(const char_t c) 
+AQLString::operator+=(const char_t c)
 {
     char_t a[2];
     a[0] = c;
@@ -1017,11 +795,11 @@ AQLString::operator+=(const char_t c)
 
 //============= Friend Methods =====================================
 
-AQLString operator+(const char_t* charString, const AQLString& inputString) 
+AQLString operator+(const char_t* charString, const AQLString& inputString)
 {
     AQLString retString(charString);
     if (charString == nullptr)
-    {   
+    {
         return inputString;
     }
     if (!inputString.isDefined())
@@ -1033,19 +811,19 @@ AQLString operator+(const char_t* charString, const AQLString& inputString)
 }
 
 bool
-operator==(const char_t* charString, const AQLString& inputString) 
+operator==(const char_t* charString, const AQLString& inputString)
 {
     return (inputString.cmp(charString)==0);
 }
 
 bool
-operator!=(const char_t* charString, const AQLString& inputString) 
+operator!=(const char_t* charString, const AQLString& inputString)
 {
     return !(inputString == charString);
 }
 
 bool
-operator<=(const char_t* charString, const AQLString& inputString) 
+operator<=(const char_t* charString, const AQLString& inputString)
 {
     return (inputString.cmp(charString)>=0);
 }
@@ -1055,20 +833,20 @@ operator<=(const char_t* charString, const AQLString& inputString)
 */
 bool
 operator>=(
-    const char_t* charString, 
-    const AQLString& inputString) 
+    const char_t* charString,
+    const AQLString& inputString)
 {
     return (inputString.cmp(charString)<=0);
 }
 
 bool
-operator<(const char_t* charString, const AQLString& inputString) 
+operator<(const char_t* charString, const AQLString& inputString)
 {
     return (inputString.cmp(charString)>0);
 }
 
 bool
-operator>(const char_t* charString, const AQLString& inputString) 
+operator>(const char_t* charString, const AQLString& inputString)
 {
     return (inputString.cmp(charString)<0);
 }
@@ -1094,10 +872,15 @@ istream& operator>> (istream& is,AQLString& st )
 // String Comparison: AQLString
 int AQLString::cmp(const AQLString& rString) const
 {
-    if (stringData_ == rString.stringData_) return 0;
-    else if (!isDefined()) return -1;
-    else if (!rString.isDefined()) return 1;
-    return stringData_->cmp(rString.getCString());
+    // Two undefined strings compare equal - matches the old pointer-identity fast path
+    // (stringData_ == rString.stringData_, true when both were null), now expressed directly since
+    // there's no shared pointer to compare any more.
+    if (!isDefined() && !rString.isDefined()) return 0;
+    if (!isDefined()) return -1;
+    if (!rString.isDefined()) return 1;
+    // Sign-only equivalence with the old char-difference comparator verified sufficient: every
+    // caller (the ==/!=/<=/>=/</> operator overloads) only tests cmp()'s sign, never its magnitude.
+    return stringData_->compare(*rString.stringData_);
 }
 
 // String Comparison: Standard String std::string
@@ -1113,7 +896,7 @@ int AQLString::cmp(const char_t* pString) const
     if (!isDefined() && pString == nullptr) return 0;
     else if (!isDefined()) return -1;
     else if (pString == nullptr) return 1;
-    return stringData_->cmp(pString);
+    return stringData_->compare(pString);
 }
 
 // ------------------------- Private Methods ----------------------------------------
@@ -1124,7 +907,7 @@ double AQLString::stringToDouble(const std::string & str) const
     // Pointer to first non-numeric input, can be used for error handling
     // We don't hande errors here to mimic legacy code e.g. if (*pEnd != 0) throw "Error";
     char* pEnd;
-    
+
     // String to Double
     // Behaviour: Same as legacy code, where "abc" = 0, "2D" = 2, "2" = 2
     return strtod( str.c_str(), &pEnd );
@@ -1136,104 +919,59 @@ int AQLString::stringToInteger(const std::string & str) const
     // Pointer to first non-numeric input, can be used for error handling
     // We don't hande errors here to mimic legacy code e.g. if (*pEnd != 0) throw "Error";
     char* pEnd;
-    
+
     // String to Long Int
     // Behaviour: Same as legacy code, where "abc" = 0, "2D" = 2, "2" = 2
     return strtol( str.c_str(), &pEnd, 10 ); // base 10 number format
 }
 
-void 
+void
 AQLString::init(void)
 {
-    stringData_ = nullptr;
-    refCount_ = nullptr;
+    stringData_.reset();
 }
 
 void
 AQLString::clear(void)
 {
-    // Atomic Refernce Counter
-    if (isDefined() && (*refCount_)-- == 1)
-    {
-        delete stringData_;
-        delete refCount_;
-    }
-    init();
+    stringData_.reset();
 }
 
-// Shallow Copy
+// Shallow Copy (name kept from the COW era - now a plain, real copy of the optional<string>)
 void
 AQLString::copy(const AQLString& rString)
 {
     // no copy itself
-    if (this == &rString) 
+    if (this == &rString)
     {
         return;
     }
-
-    clear();
-    if (rString.isDefined()) 
-    {
-        // increment reference counter since shallow copy
-        refCount_ = rString.refCount_;
-        
-        // Atomic Refernce Counter
-        ++(*refCount_);
-        
-        stringData_ = rString.stringData_;  // shallow copy
-    }
+    stringData_ = rString.stringData_;
 }
 
 // Deep Copy
 void
 AQLString::copy(const char_t* pString)
 {
-    if (isDefined() && stringData_->getCString() == pString) 
+    // Pointer-identity check, not content equality: guards specifically against self-reassignment
+    // through our own buffer, e.g. `s = s.c_str();`, where clearing first would free the very memory
+    // pString points into before we ever read it.
+    if (isDefined() && getCString() == pString)
     {
         return;
     }
 
-    clear();
-    if (pString == nullptr) 
+    if (pString == nullptr)
     {
+        stringData_.reset();
         return;
     }
     try
-	{
-        stringData_ = new StringData(pString);
+    {
+        stringData_.emplace(pString);
     }
     catch (bad_alloc & e)
     {
-        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
-    }
-    refCount_ = new std::atomic<int>(1);
-}
-
-/*!
-    @brief reset the reference count of the string pointer that this object holds
-
-                If you want to (shallow)copy AQLString object by copy method, then you must share data string between the original and referenced objects.
-                By using this method, the shared data string is released, the reference counter is reset to 1. 
-*/
-void 
-AQLString::makeUnShared(void)
-{
-    // Atomic Refernce Counter
-   if ((*refCount_) == 1) 
-    {
-        return;
-    }
-    --(*refCount_);
-    refCount_ = new std::atomic<int>(1);
-
-    try
-    {
-        stringData_ = new StringData(stringData_->getCString());
-    }
-    catch (bad_alloc & e)
-    {
-        delete refCount_;
-        refCount_ = nullptr;
         throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }

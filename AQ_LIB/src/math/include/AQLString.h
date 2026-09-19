@@ -11,8 +11,9 @@
 
 #include "AQLCoreSystemError.h"
 #include <iostream>
+#include <optional>
+#include <string>
 #include <vector>
-#include <atomic>
 
 #define AQLSTRING_DOUBLESIZE 18  // the number of digits after the decimal point
 #define DOUBLE_LEN 64           // the maximum number of digits with double type
@@ -23,46 +24,47 @@ typedef std::ostream            OutStream;
 typedef std::iostream           IOStream;
 
 //==========================================================================
-/*! 
+/*!
     @brief Class to represent the string.
 */
-class AQLString 
+class AQLString
 {
-
-    class StringData;
 
 public:
 
     // default constructor
     AQLString(void);
-    
+
     // copy constructor
     AQLString(const AQLString& rString);
-    
+
+    // move constructor - steals the other string's buffer outright, no allocation at all
+    AQLString(AQLString&& rString) noexcept;
+
     // constructor
     explicit AQLString(const char_t  inputChar);
-    
+
     // constructor
     AQLString(const std::string & standardString );
 
     // constructor
     AQLString(const char_t* pString);
-    
+
     // constructor
     explicit AQLString(const int c);
-    
+
     // constructor
     explicit AQLString(const double c, unsigned int stringDoubleSize=AQLSTRING_DOUBLESIZE);
-    
+
     // destructor
     ~AQLString(void);
 
 
     // get a string terminated by a nullptr
-    const char_t*       getCString(void) const;
+    const char_t*       getCString(void) const noexcept;
 
     // get a string terminated by a nullptr
-    const char_t*       c_str(void) const;
+    const char_t*       c_str(void) const noexcept;
 
     // get the value that has been converted to a double number from a string
     double              getDoubleValue(void) const;
@@ -74,10 +76,10 @@ public:
     AQLString            subString(unsigned int start, unsigned int end) const;
 
     // get the number of characters
-    unsigned int        size(void) const;
+    unsigned int        size(void) const noexcept;
 
     // return whether a string has been defined
-    bool                isDefined(void) const {return refCount_ != nullptr;}
+    bool                isDefined(void) const noexcept {return stringData_.has_value();}
 
     // return the position of the beginning of the string to search for a string that you specify
     int                 findString(const AQLString& rStr) const;
@@ -96,23 +98,23 @@ public:
 
     // replace the characters in the string
     AQLString&           exchange(const char_t from, const char_t to);
-    
+
     // replace the string in a string
     AQLString&           exchange(const AQLString& from, const AQLString& to);
-    
+
     // replace the string in a string
     AQLString&           exchange(const char_t* from, const AQLString& to);
-    
+
     // replace the string in a string
     AQLString&           exchange(const AQLString& from, const char_t* to);
-    
+
     // replace the string in a string
     AQLString&           exchange(const char_t* from, const char_t* to);
-                                                                        
-    // overwrite part of a string with the specified string 
+
+    // overwrite part of a string with the specified string
     AQLString&           replace(const unsigned int from, const char_t* pStr);
 
-    // overwrite part of a string with the specified string 
+    // overwrite part of a string with the specified string
     AQLString&           replace(const unsigned int from, const AQLString& pStr);
 
     // insert a string at the specified location
@@ -142,12 +144,12 @@ public:
     // change the character with another character at the specified position
     AQLString&           charUpdate(const unsigned int index, const char_t c);
 
-    // decompose into multiple strings based on the specified delimiter character 
+    // decompose into multiple strings based on the specified delimiter character
     std::vector<AQLString>   toToken(const char_t del) const;
 
     // array subscript operator
-    const char_t&       operator[] (const unsigned int index) const {return stringData_->getChar(index);}
-    
+    const char_t&       operator[] (const unsigned int index) const {return (*stringData_)[index];}
+
     //  ------------------------------------------------------------------------------------
     // *** FOR IMMEDIATE WINDOW in VISUAL STUDIO TO AMEND STRINGS WHEN DEBUGGING ***
     //
@@ -159,19 +161,20 @@ public:
     // String Operators
     AQLString&           operator = (const std::string & inputString);
     AQLString&           operator = (const AQLString & inputString);
+    AQLString&           operator = (AQLString && inputString) noexcept;
     AQLString&           operator = (const char_t* inputString);
     AQLString&           operator = (const char_t inputChar);
-    
+
     AQLString            operator + (const std::string & inputString) const;
     AQLString            operator + (const AQLString & inputString) const;
     AQLString            operator + (const char_t* inputString) const;
     AQLString            operator + (const char_t  inputChar) const;
-    
+
     AQLString&           operator += (const std::string & inputString);
     AQLString&           operator += (const AQLString & inputString);
     AQLString&           operator += (const char_t* inputString);
     AQLString&           operator += (const char_t c);
-    
+
     bool                operator == (const std::string & inputString) const     { return  (cmp(inputString) == 0);  }
     bool                operator == (const AQLString & inputString) const        { return  (cmp(inputString) == 0);  }
     bool                operator == (const char_t* inputString) const           { return  (cmp(inputString) == 0);  }
@@ -195,7 +198,7 @@ public:
     bool                operator > (const std::string & inputString) const      { return  (cmp(inputString) > 0);   }
     bool                operator > (const AQLString & inputString) const         { return  (cmp(inputString) > 0);   }
     bool                operator > (const char_t* inputString) const            { return  (cmp(inputString) > 0);   }
-    
+
     // Friend Operators
     friend AQLString     operator + (const char_t* charString1, const AQLString & inputString);
 
@@ -219,7 +222,7 @@ public:
 
     // String Comparison: char_t*
     int cmp(const char_t* pString) const;
-    
+
 
 private:
 
@@ -232,76 +235,46 @@ private:
     // perform the initialization process, called only from constructor
     void                init(void);
 
-    //  in consideration of the reference counter, make clear the member, and init should be called 
+    //  in consideration of the reference counter, make clear the member, and init should be called
     void                clear(void);
 
     // Shallow Copy
     void                copy(const AQLString& rString);
-    
+
     // Deep Copy
     void                copy(const char_t* pString);
-
-    // reset the reference count of the string pointer that this object holds
-    void                makeUnShared(void);
 
 
     //
     // MEMBER VARIABLES
     //
     // ------------------------------------------------------------------------------------------------------------------------
-    
-    StringData*                     stringData_;
-    mutable std::atomic<int>*       refCount_;
+
+    // std::nullopt ("undefined") vs a defined-but-empty string are two different states the rest of
+    // this class's public API depends on (isDefined(), and the early-return-if-undefined guards
+    // throughout exchange()/replace()/insert()/etc) - a bare std::basic_string<char_t> can't
+    // represent that distinction on its own (there's no "no string" state, only ""), hence the
+    // optional wrapper.
+    //
+    // This used to be copy-on-write: first a raw StringData* + a separate, independently-allocated
+    // std::atomic<int>* refcount (looked thread-safe because the count was atomic, but wasn't - the
+    // count only protected the number from corruption, not the payload it counted references to;
+    // see git history for the full account), then a std::shared_ptr<StringData> (which did fix that
+    // race, via shared_ptr's correct acquire/release pairing, but still meant two heap allocations
+    // for the StringData class's own hand-rolled buffer - manual new[]/delete[], a manual extend()
+    // for buffer growth, malloc/realloc/free mixed in for exchange() - none of which does anything
+    // std::basic_string doesn't already do, with decades more hardening behind it).
+    //
+    // Now it's a plain, uniquely-owned std::basic_string<char_t>: no sharing, so no race to have;
+    // real small-string-optimization, so the short strings this library actually deals with in bulk
+    // (currency codes, calendar codes, YYYYMMDD-style date strings) cost zero heap allocations
+    // instead of the old design's two; real move semantics, inherited rather than hand-written.
+    // Copying a long, shared string is no longer O(1) the way COW made it - a deliberate trade,
+    // since this library's string usage is dominated by short strings, exactly the case where SSO
+    // wins outright over a refcount bump.
+    std::optional<std::basic_string<char_t>>     stringData_;
 
     // ------------------------------------------------------------------------------------------------------------------------
-
-
-    // Internal Class
-    // class to hold string data, for memory management and basic string operations.
-    class StringData
-    {
-    public:
-    
-        StringData(const unsigned int allocSize=1);
-        explicit StringData(const char_t* pString);
-        ~StringData() {delete [] string_;}
-
-        unsigned int size() const {return stringSize_;}
-        const char_t* getCString() const {return string_;}
-        char_t& getChar(const unsigned int pos) const {return string_[pos];}
-
-        void toUpper(void);
-        void toLower(void);
-
-        void exchange(const char_t from, const char_t to);
-        void exchange(const char_t* pFromString, const char_t* pToString);
-        void replace(const unsigned int from, const char_t* pString);
-        void insert(const unsigned int from, const char_t* pString);
-        void remove(const unsigned int from, const unsigned int num);
-
-        // Comparator
-        inline int cmp(const char_t* pString) const
-        {
-            const char_t* fromStr = string_;
-            const char_t* toStr = pString;
-
-            while(*fromStr != '\0' && *toStr != '\0' && *fromStr == *toStr)
-            {
-                ++toStr;
-                ++fromStr;
-            }
-            return *fromStr - *toStr;
-        }
-       
-    private:
-
-        // Extend memory from size "fromSize" to size "toSize". Note: stringSize_ += to
-        void extend(const unsigned int fromSize, const unsigned int toSize);
-
-        unsigned int           allocationSize_;     // allocated memory size
-        unsigned int           stringSize_;         // string size
-        char_t*                string_;             // pointer to string
-    };                  
 };
 
 

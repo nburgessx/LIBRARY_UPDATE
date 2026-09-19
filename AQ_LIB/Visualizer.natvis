@@ -9,20 +9,34 @@
   </Type>
   
   <Type Name="AQLDate">
-    <!-- dd-Mmm-yyyy, zero-padded day, one alternative per month (natvis has no printf-style padding,
-         so day zero-padding is built as two concatenated {} blocks: a conditional "0" then the digits). -->
-	<DisplayString Condition="mMonth==1">{(mDay&lt;10)?"0":""}{mDay}-Jan-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==2">{(mDay&lt;10)?"0":""}{mDay}-Feb-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==3">{(mDay&lt;10)?"0":""}{mDay}-Mar-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==4">{(mDay&lt;10)?"0":""}{mDay}-Apr-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==5">{(mDay&lt;10)?"0":""}{mDay}-May-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==6">{(mDay&lt;10)?"0":""}{mDay}-Jun-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==7">{(mDay&lt;10)?"0":""}{mDay}-Jul-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==8">{(mDay&lt;10)?"0":""}{mDay}-Aug-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==9">{(mDay&lt;10)?"0":""}{mDay}-Sep-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==10">{(mDay&lt;10)?"0":""}{mDay}-Oct-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==11">{(mDay&lt;10)?"0":""}{mDay}-Nov-{mYear}</DisplayString>
-    <DisplayString Condition="mMonth==12">{(mDay&lt;10)?"0":""}{mDay}-Dec-{mYear}</DisplayString>
+    <!-- dd-Mmm-yyyy, zero-padded day. natvis's ternary operator does not reliably evaluate when its
+         two branches are string literals (tried and confirmed broken even with matching array sizes),
+         so padding is done with a literal "0" in the DisplayString text itself, selected via a second,
+         mutually-exclusive Condition per month (mDay&lt;10 vs mDay&gt;=10) rather than computed. -->
+	<DisplayString Condition="mMonth==1  &amp;&amp; mDay&lt;10">0{mDay}-Jan-{mYear}</DisplayString>
+	<DisplayString Condition="mMonth==1  &amp;&amp; mDay&gt;=10">{mDay}-Jan-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==2  &amp;&amp; mDay&lt;10">0{mDay}-Feb-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==2  &amp;&amp; mDay&gt;=10">{mDay}-Feb-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==3  &amp;&amp; mDay&lt;10">0{mDay}-Mar-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==3  &amp;&amp; mDay&gt;=10">{mDay}-Mar-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==4  &amp;&amp; mDay&lt;10">0{mDay}-Apr-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==4  &amp;&amp; mDay&gt;=10">{mDay}-Apr-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==5  &amp;&amp; mDay&lt;10">0{mDay}-May-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==5  &amp;&amp; mDay&gt;=10">{mDay}-May-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==6  &amp;&amp; mDay&lt;10">0{mDay}-Jun-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==6  &amp;&amp; mDay&gt;=10">{mDay}-Jun-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==7  &amp;&amp; mDay&lt;10">0{mDay}-Jul-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==7  &amp;&amp; mDay&gt;=10">{mDay}-Jul-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==8  &amp;&amp; mDay&lt;10">0{mDay}-Aug-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==8  &amp;&amp; mDay&gt;=10">{mDay}-Aug-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==9  &amp;&amp; mDay&lt;10">0{mDay}-Sep-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==9  &amp;&amp; mDay&gt;=10">{mDay}-Sep-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==10 &amp;&amp; mDay&lt;10">0{mDay}-Oct-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==10 &amp;&amp; mDay&gt;=10">{mDay}-Oct-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==11 &amp;&amp; mDay&lt;10">0{mDay}-Nov-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==11 &amp;&amp; mDay&gt;=10">{mDay}-Nov-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==12 &amp;&amp; mDay&lt;10">0{mDay}-Dec-{mYear}</DisplayString>
+    <DisplayString Condition="mMonth==12 &amp;&amp; mDay&gt;=10">{mDay}-Dec-{mYear}</DisplayString>
     <DisplayString>[aqlDate] {mDay}-{mMonth}-{mYear}</DisplayString> <!-- fallback: mMonth out of range -->
     <Expand>
       <Item Name="[yyyymmdd]">mYear*10000 + mMonth*100 + mDay</Item>

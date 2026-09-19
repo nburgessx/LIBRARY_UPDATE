@@ -55,8 +55,8 @@ static const char_t* OUT_FORM[4]        = {"%04d","%02d", "%02d", "%01d"};
 inline int  DAY_OF_WEEK(long julius)  { return (julius%DAYS_OF_WEEK + WEEK_ADJUST); }
 
 
-AQLDate::AQLDate(void) : mLeap(0), mYear(1), mMonth(1), mDay(1), mJulius(1) 
-{ 
+AQLDate::AQLDate(void) : mLeap(0), mYear(1), mMonth(1), mDay(1), mJulius(1)
+{
 }
 
 AQLDate::AQLDate( const char_t* date, const char_t* format)
@@ -64,12 +64,21 @@ AQLDate::AQLDate( const char_t* date, const char_t* format)
 	setDate(date, format);
 }
 
-AQLDate::AQLDate( const AQLDate& date) 
+AQLDate::AQLDate( const AQLDate& date)
 {
     copy(date);
 }
 
-AQLDate::~AQLDate(void) 
+AQLDate& AQLDate::operator=(const AQLDate& date)
+{
+    if (this != &date)
+    {
+        copy(date);
+    }
+    return *this;
+}
+
+AQLDate::~AQLDate(void)
 {
 }
 
@@ -78,22 +87,47 @@ void AQLDate::setDate(const char_t  *date, const char_t* format)
 {
     formatWithString(date, format);
     mLeap = IS_LEAP_YEAR(mYear);
-    checkDate();       // validate before computing the Julian day count, not after
-    dateToJulius();     // keep mJulius eagerly up to date - see the field comment in AQLDate.h
+    checkDate();                                  // validate before touching mJulius, not after
+    mJulius.store(0, std::memory_order_relaxed);   // invalidate - see the mJulius field comment in AQLDate.h
 }
 
 void AQLDate::setSystemDate(void)
 {
-    struct tm *date;
+    struct tm date;
     time_t now;
 
-    now     = time(NULL);
-    date    = localtime(&now);
-    mYear   = (unsigned short)(date->tm_year + 1900);
-    mMonth  = (unsigned short)(date->tm_mon + 1);
-    mDay    = (unsigned short)(date->tm_mday);
+    now = time(NULL);
+    localtime_s(&date, &now);      // thread-safe: localtime() writes through a shared static buffer
+    mYear   = (unsigned short)(date.tm_year + 1900);
+    mMonth  = (unsigned short)(date.tm_mon + 1);
+    mDay    = (unsigned short)(date.tm_mday);
     mLeap   = IS_LEAP_YEAR(mYear);
-    dateToJulius();
+    mJulius.store(0, std::memory_order_relaxed);
+}
+
+AQLDate AQLDate::today(void)
+{
+    AQLDate result;
+    result.setSystemDate();
+    return result;
+}
+
+bool AQLDate::isValidDate(const char_t* date, const char_t* format) noexcept
+{
+    try
+    {
+        AQLDate probe(date, format);
+        (void)probe;
+        return true;
+    }
+    catch (const AQLCoreError&)
+    {
+        return false;
+    }
+    catch (...)
+    {
+        return false;
+    }
 }
 
 void AQLDate::setYear( unsigned int year)
@@ -107,7 +141,7 @@ void AQLDate::setYear( unsigned int year)
     mYear = (unsigned short)year;
     mLeap = IS_LEAP_YEAR(mYear);
     adjustDayForMonthEnd();
-    dateToJulius();
+    mJulius.store(0, std::memory_order_relaxed);
 }
 
 void AQLDate::setMonth(unsigned int month)
@@ -120,7 +154,7 @@ void AQLDate::setMonth(unsigned int month)
     }
     mMonth = (unsigned short)month;
     adjustDayForMonthEnd();
-    dateToJulius();
+    mJulius.store(0, std::memory_order_relaxed);
 }
 
 void AQLDate::setDay(unsigned int day)
@@ -131,51 +165,47 @@ void AQLDate::setDay(unsigned int day)
 		msg += AQLString((int)day) + "] for month=" + AQLString((int)mMonth);
         throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
-    if (mJulius != 0) 
+    long cached = mJulius.load(std::memory_order_relaxed);
+    if (cached != 0)
     {
-        //if julian date has been set
-        mJulius += ((long)day-(long)mDay);
-    } 
+        // if the Julian day has already been computed, keep it current with an O(1) adjustment
+        // instead of forcing a full recompute
+        mJulius.store(cached + ((long)day-(long)mDay), std::memory_order_relaxed);
+    }
     mDay = (unsigned short)day;
 }
 
 void AQLDate::addDays(int adays)
 {
-    if (mJulius == 0)
-	{
-		dateToJulius();
-	}
-    mJulius += adays;
-    if (mJulius < 0) 
+    long julius = ensureJulius() + adays;
+    if (julius < 0)
     {
 		AQLString msg = "Invalid days[";
 		msg += AQLString(adays) + "]";
         throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
+    mJulius.store(julius, std::memory_order_relaxed);
     juliusToDate(); //set all the variables
 }
 
 void AQLDate::addWeeks(int weeks)
 {
-    if (mJulius == 0)
-	{
-		dateToJulius();
-	}
-    mJulius += weeks * 7;
-    if (mJulius < 0) 
+    long julius = ensureJulius() + weeks * 7;
+    if (julius < 0)
     {
 		AQLString msg = "Invalid days[";
 		msg += AQLString(weeks) + "]";
         throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
+    mJulius.store(julius, std::memory_order_relaxed);
     juliusToDate(); //set all the variables
 }
 
 void AQLDate::addMonths(const int months)
 {
     int allMonths = 12 * mYear + mMonth + months - 1;
-    
-    if (allMonths < 12) 
+
+    if (allMonths < 12)
     {
 		AQLString msg = "Invalid months[";
 		msg += AQLString(months) + "]";
@@ -186,7 +216,7 @@ void AQLDate::addMonths(const int months)
     mMonth      = (unsigned short)(allMonths % 12) + 1;
     mLeap       = IS_LEAP_YEAR(mYear);
     adjustDayForMonthEnd();
-    dateToJulius();
+    mJulius.store(0, std::memory_order_relaxed);
 }
 
 void AQLDate::addYears(int years)
@@ -200,16 +230,17 @@ void AQLDate::addYears(int years)
     mYear = mYear + (unsigned short)years;
     mLeap = IS_LEAP_YEAR(mYear);
     adjustDayForMonthEnd();
-    dateToJulius();
+    mJulius.store(0, std::memory_order_relaxed);
 }
 
 AQLDayOfWeekEnum AQLDate::dayOfWeek(void) const noexcept
 {
-    if (mJulius == 0) 
-	{
-		dateToJulius();
-	}
-    return AQLDayOfWeekEnum(DAY_OF_WEEK(mJulius));
+    return AQLDayOfWeekEnum(DAY_OF_WEEK(ensureJulius()));
+}
+
+long AQLDate::julianDayNumber(void) const noexcept
+{
+    return ensureJulius();
 }
 
 // dayOfMonth() / monthOfYear() / yearOfEra() are defined inline in AQLDate.h
@@ -233,10 +264,11 @@ AQLString AQLDate::stringWithFormat(const char_t* format) const
 AQLString AQLDate::convertDateToString( const char_t* format) const
 {
     AQLString st;
-    
-    // Do nothing except return the null string if the julius date is less than or equal to one
-    // Note: AQLDate initializes the mJulius to 1 by default.
-    if ( mJulius > 1 )
+
+    // Do nothing except return the null string if this is still the default-constructed sentinel
+    // date. Checked via isNull() (mYear/mMonth/mDay), not mJulius - mJulius is now a lazy cache that
+    // legitimately reads 0 ("not yet computed") for a perfectly valid, non-null date.
+    if ( !isNull() )
     {
 	    st = stringWithFormat( format );
     }
@@ -255,14 +287,17 @@ AQLString AQLDate::convertDateToString( const char_t* format) const
 */
 int AQLDate::cmp(const AQLDate& rDate) const noexcept
 {
-    // mJulius is kept eagerly up to date by every constructor/mutator (see AQLDate.h), so this is
-    // normally always available: comparing it directly is one integer compare instead of two
-    // subtractions, two multiplications and two adds, and gives an identical ordering to the decimal
-    // ranking below for any valid calendar date. The decimal fallback stays as a defensive path only.
-    if ( mJulius != 0 && rDate.mJulius != 0 )
+    // mJulius is a lazy cache (see the field comment in AQLDate.h): opportunistically use it if both
+    // sides already have it (one relaxed atomic load each, cheaper than the decimal ranking below and
+    // exact for any valid calendar date), but never force a computation neither side already paid
+    // for - most callers (schedule-generation loops that mutate a date and immediately compare it)
+    // never populate the cache at all, so the decimal path is the common case, not a fallback.
+    long thisJulius = mJulius.load(std::memory_order_relaxed);
+    long thatJulius = rDate.mJulius.load(std::memory_order_relaxed);
+    if ( thisJulius != 0 && thatJulius != 0 )
     {
-        if ( mJulius < rDate.mJulius ) return -1;
-        if ( mJulius > rDate.mJulius ) return 1;
+        if ( thisJulius < thatJulius ) return -1;
+        if ( thisJulius > thatJulius ) return 1;
         return 0;
     }
 
@@ -273,15 +308,7 @@ int AQLDate::cmp(const AQLDate& rDate) const noexcept
 
 int AQLDate::intervalDays(const AQLDate& toDate) const noexcept
 {
-    if (mJulius == 0) 
-	{
-		dateToJulius();
-	}
-    if(toDate.mJulius == 0) 
-	{
-		toDate.dateToJulius();
-	}
-    return (int)(toDate.mJulius - mJulius);
+    return (int)(toDate.ensureJulius() - ensureJulius());
 }
 
 int AQLDate::intervalMonths(const AQLDate& toDate) const noexcept
@@ -518,7 +545,11 @@ void AQLDate::formatWithLong(AQLString& rSt, const char_t  *format) const
     int             dateTime[3];
     unsigned int    i;
     unsigned int    setPos;
-    char_t          strFormat[5];
+    // Sized for the worst case, not just the common one: OUT_FORM[YYYY] is "%04d", and mYear is
+    // unsigned short (max 65535, 5 digits) - SPRINTF(..., "%04d", 65535) writes "65535" + a null
+    // terminator, 6 chars, which overflowed the previous 5-char buffer by one byte for any year
+    // >= 10000. MM/DD only ever hold 1-12/1-31 so 8 chars is generous headroom for all three.
+    char_t          strFormat[8];
        
     rSt = format;
 
@@ -582,12 +613,12 @@ void AQLDate::checkDate(void) const
     }
 }
 
-void AQLDate::copy(const AQLDate& d) 
+void AQLDate::copy(const AQLDate& d)
 {
 	mDay = d.mDay;
 	mMonth = d.mMonth;
 	mYear = d.mYear;
-	mJulius = d.mJulius;
+	mJulius.store(d.mJulius.load(std::memory_order_relaxed), std::memory_order_relaxed);
 	mLeap = d.mLeap;
 }
 
@@ -603,7 +634,7 @@ void AQLDate::adjustDayForMonthEnd(void)
 	}
 }
 
-void AQLDate::dateToJulius(void) const noexcept
+long AQLDate::computeJulius(void) const noexcept
 {
     int year    = mYear;
     int month   = mMonth;
@@ -615,11 +646,33 @@ void AQLDate::dateToJulius(void) const noexcept
     int year4   = mod100 / 4;
     int year1   = mod100 % 4;
 
-    mJulius = DAYS_400 * year400 + DAYS_100 * year100 + DAYS_4 * year4
-            + DEFAULT_DAYS_OF_YEAR * year1;
+    long julius = DAYS_400 * year400 + DAYS_100 * year100 + DAYS_4 * year4
+                + DEFAULT_DAYS_OF_YEAR * year1;
 
-    mJulius +=LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[IS_LEAP_YEAR(year)][1][month - 1] + day;
+    julius += LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[IS_LEAP_YEAR(year)][1][month - 1] + day;
 
+    return julius;
+}
+
+long AQLDate::ensureJulius(void) const noexcept
+{
+    long julius = mJulius.load(std::memory_order_relaxed);
+    if (julius == 0)
+    {
+        // Idempotent: if two threads race here for the same never-yet-cached object, both compute
+        // and store the identical correct value - safe with no lock, unlike a plain `mutable long`.
+        julius = computeJulius();
+        mJulius.store(julius, std::memory_order_relaxed);
+    }
+    return julius;
+}
+
+// Public, kept for backward compatibility (some callers, e.g. DateUtilities.cpp, call this purely to
+// pre-warm the cache). Unlike ensureJulius(), this always recomputes - matching its historical
+// "recompute now" contract - which is harmless since it is idempotent for unchanged mYear/mMonth/mDay.
+void AQLDate::dateToJulius(void) const noexcept
+{
+    mJulius.store(computeJulius(), std::memory_order_relaxed);
 }
 
 void AQLDate::juliusToDate(void)
@@ -635,9 +688,11 @@ void AQLDate::juliusToDate(void)
     int year;
     int month;
     int day;
-  
-    year400 = mJulius / DAYS_400;
-    if ((mod400 = mJulius % DAYS_400) == 0) 
+
+    long julius = mJulius.load(std::memory_order_relaxed);
+
+    year400 = julius / DAYS_400;
+    if ((mod400 = julius % DAYS_400) == 0)
     {
         year400 -= 1;
         mod400 = DAYS_400;

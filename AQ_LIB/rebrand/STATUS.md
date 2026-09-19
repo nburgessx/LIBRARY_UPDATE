@@ -3246,3 +3246,205 @@ Phase 6 **before sale**, and is the kind of question a solicitor will ask.
 - `rebrand/tools/fixture_key_check.py` — fixture keys vs current parameter names.
 - `rebrand/tools/api_pair_check.py` — `aq*` must route through `validation`; emits `docs/api_map.csv`.
   Run with `--write` to refresh the map; exit 1 makes it usable as a CI gate.
+
+---
+
+## AQLDate / AQLString hardening (2026-09-19, Claude session, in progress — resume notes)
+
+Not part of the rename/rebrand work — a speed/thread-safety/correctness pass on the two
+foundational `math` value types, requested by Nicholas mid-session. Sequenced as: AQLDate first
+(done, verified), then AQLString (in progress). If this session is interrupted, pick up here.
+
+### AQLDate — DONE, verified
+- Commit `5f1e7ced` made `mJulius` eager (recompute on every mutator) for thread safety. Regressed
+  perf: schedule-generation loops (`AQLDateScheduleHelpers.cpp` IMM-date rolling, `addMonths` in a
+  loop + compare) paid for `dateToJulius()`'s divide/mod chain on every mutation even though the old,
+  purely-decimal `cmp()` never needed it.
+- Fix: `mJulius` is `mutable std::atomic<long>`, lazy again (0 = uncomputed, invalidated by a cheap
+  relaxed store on every mutator), computed on demand via a new private `ensureJulius()`. `cmp()`'s
+  existing dual-path logic (opportunistic Julian fast path, decimal fallback) was untouched — it was
+  already correct, only the mutators were the bug.
+- Also fixed: `setSystemDate()`'s `localtime()` → `localtime_s()` (matches precedent in
+  `AQ_XLL/src/aqDate.cpp:46`); `isNull()`/`convertDateToString()` decoupled from `mJulius` (which can
+  now legitimately read 0 for a valid date) to check `mYear/mMonth/mDay` directly; added explicit
+  `operator=` (required once `mJulius` is atomic), `julianDayNumber()` accessor (previously no way to
+  read the Julian day from outside the class), `isValidDate()`, `today()`. Fixed a real buffer
+  overflow in `formatWithLong()` (`strFormat[5]` too small for `%04d` on a 5-digit `mYear`, since
+  `mYear` is `unsigned short`, max 65535) — widened to `strFormat[8]`.
+- Verified: audited every etrading/calibration/models/validation/AQ_XLL/AQ_API call site that
+  mutates an `AQLDate` class member (not a local) — none mutate one after it's published into the
+  `AQObj` handle pool, so lazy invalidation cannot reintroduce a mutate-while-reading race. Full
+  Rebuild Solution + full GTEST suite run by Nicholas: all pass (same pre-existing stale-calendar
+  failures as the documented baseline, no new failures).
+- Visualizer.natvis: fixed the zero-padded-day `AQLDate` display. The `(mDay<10)?"0":"\0"` ternary
+  trick (matching string-literal array sizes) does not reliably evaluate in natvis's expression
+  evaluator even when syntactically correct - replaced with 24 mutually-exclusive
+  `mMonth==N && mDay<10` / `mMonth==N && mDay>=10` DisplayString entries (literal `"0"` text, no
+  computed expression). Confirmed working.
+- Considered and declined: wiring the new `AQLDate::isValidDate()` into
+  `ScheduleValidation.cpp::isDate()`/`validateDateOrTenor()` to drop their try/catch. Those wrap
+  `stringToDate()` (`ParameterValidation.cpp:65`), a cascading multi-format parser (slash-delimited,
+  10-char ISO via boost, AQL native, Excel serial) - `isValidDate()` only tests one fixed format, so
+  swapping it in would silently stop recognizing the other formats. No clean fit found anywhere else
+  in the tree either (checked `CurveUtilities.cpp`/`FolderConfig.cpp`'s similar-looking catches -
+  neither is a date-validity check). Left as available API for a genuinely single-format use case.
+
+### AQLString — internals swap WRITTEN, awaiting Nicholas's build+GTEST verification
+Critique (given to Nicholas): COW via a raw `StringData*` + separate `std::atomic<int>*` refcount
+looked thread-safe but wasn't - the count being atomic only protects the count, not the payload;
+`makeUnShared()` could read/clone a `StringData` that another owner's concurrent destructor was
+deleting in the same window (the exact "atomic refcount, non-atomic payload" pattern C++11 banned
+COW `std::string` for). Also: two heap allocations per string (StringData + separate refcount), no
+SSO, an unsigned-underflow bug in `remove`/`replace`×2/`charUpdate`'s `from > size()-1` guard
+(silently defeated on an empty string), and signed-`char_t`-to-`int` OOB indexing in `findString()`'s
+Boyer-Moore skip table.
+
+Step 1 (done, committed as part of the earlier `AQLDate` batch's session but is really its own
+change): swapped `StringData*` + separate `atomic<int>*` → single `std::shared_ptr<StringData>`.
+Fixed the race (shared_ptr's control block has correct acquire/release pairing), collapsed to one
+allocation via `make_shared`, fixed the two bugs above, added move ctor/assignment + `noexcept` on
+`size()`/`isDefined()`/`getCString()`/`c_str()`.
+
+Step 2 (decided, not yet implemented — this is the resume point): replace the internal
+representation again, `std::shared_ptr<StringData>` → `std::optional<std::basic_string<char_t>>`,
+and delete the hand-rolled `StringData` nested class entirely (~150 lines: manual `new[]`/`delete[]`,
+manual `extend()` buffer growth, `malloc`/`realloc`/`free` mixed in for `exchange()`). Rationale:
+none of that manual memory management does anything `std::basic_string` doesn't already do, and this
+library's dominant string usage (currency codes, calendar codes, short labels) is exactly the
+short-string case where SSO wins outright over COW's refcount-bump. `std::optional` preserves the
+"undefined vs defined-but-empty" distinction the public API (`isDefined()`) already depends on, which
+a bare `std::basic_string<char_t>` member can't represent on its own. Zero public API / call-site
+changes needed - this is scoped entirely to `AQLString.h`/`.cpp`.
+
+Design worked out (not yet written to the files):
+- `stringData_` becomes `std::optional<std::basic_string<char_t>>`; `makeUnShared()` is deleted
+  entirely (nothing left to detach from).
+- `init()`/`clear()` → `stringData_.reset()`. `copy(const AQLString&)` → plain optional copy-assign
+  (now a real deep copy, SSO-fast for short strings, no more shared ownership). `copy(const char_t*)`
+  keeps its pointer-identity self-assignment guard (`getCString() == pString`, not a content
+  comparison - guards `s = s.c_str();`) then `stringData_.emplace(pString)`, still translating
+  `bad_alloc` → `AQLCoreSystemError` to match the class's existing convention.
+- `exchange()`'s two string-pattern overloads move from a hand-rolled `strstr` + `realloc`'d position
+  array to a small file-local `replaceAllOccurrences()` helper using `std::basic_string::find`/
+  `replace` in a loop. Single-char `exchange()` → `std::replace` on the string's iterators.
+- `replace(from, pStr)` collapses to one `stringData_->replace(from, replacement.size(), replacement)`
+  call - verified by case analysis that `std::string::replace`'s standard `count` auto-clamping
+  (`count` reduced to `size()-pos` when it would overrun) reproduces both of the original
+  `StringData::replace`'s branches (grow-in-place vs in-place-overwrite-preserving-tail) exactly.
+- `remove()` → `stringData_->erase(from, num)` (same auto-clamping covers both original branches).
+  Deliberately NOT reproducing the original's manual "shrink the buffer if it's now < 1/4 full"
+  capacity logic - that forces a reallocation on every qualifying erase(), which is a net perf
+  *loss* versus `std::string`'s normal (no auto-shrink) capacity behavior; not carrying it forward.
+- `insert(from, const char_t*)` gets a `from > size()` guard it never had originally - traced that
+  the original's missing guard let an out-of-range `from` reach `StringData::extend()`, where
+  `stringSize_ - fromSize` (unsigned) underflows and drives a huge out-of-bounds copy loop: a real,
+  severe pre-existing buffer-overflow bug, not just a latent crash. `std::string::insert` would throw
+  `std::out_of_range` safely even without the guard, but the guard is added anyway to keep this
+  overload's silent-no-op contract consistent with its `AQLString&` sibling overload.
+- `trimLeft()`/`trimRight()` rewritten with plain unsigned loops instead of the original's
+  `int i = size()-1` signed/unsigned wraparound trick (which happened to work on MSVC/x64 but isn't
+  portably well-defined pre-C++20).
+- `cmp()`'s pointer-identity fast path (`stringData_ == rString.stringData_`, true for two undefined
+  strings since both are null) becomes an explicit `!isDefined() && !rString.isDefined()` check
+  first, preserving "two undefined strings compare equal" now that there's no shared pointer to
+  compare. `StringData::cmp()`'s custom strcmp-style char-diff comparator → `std::basic_string::
+  compare()` (sign-only equivalence verified sufficient - every caller only tests the sign, via the
+  `==`/`<=`/`>=`/`<`/`>` operator overloads, never the magnitude).
+- `toToken()`, `subString()`, all the `operator+`/`operator+=`/`operator=` overloads, the friend
+  operators, `operator<<`/`operator>>`: confirmed these only ever go through the public API
+  (`getCString()`/`size()`/`isDefined()`/`insert()`/`copy()`) and never touch `stringData_` directly
+  - zero changes needed to any of them.
+- Header changes needed: `#include <optional>` (add), `#include <memory>` (remove, no more
+  `shared_ptr`), delete the `class StringData { ... }` nested class and its forward declaration,
+  delete `void makeUnShared(void);`, change the `stringData_` member type + its field comment,
+  update `operator[]`'s body (`stringData_->getChar(index)` → `(*stringData_)[index]`).
+
+**DONE, verified (2026-09-19).** The design above is written to `AQLString.h`/`AQLString.cpp` in
+full - `class StringData` deleted entirely, `stringData_` is
+`std::optional<std::basic_string<char_t>>`, `makeUnShared()` deleted, every method that touched
+`stringData_` directly rewritten per the design notes above. Nicholas did a full Rebuild Solution and
+full GTEST run: all pass, no regressions. Nicholas also reports the library runs noticeably faster
+end-to-end, consistent with the SSO mechanism this swap was for (most of this library's strings -
+currency codes, calendar codes, `YYYYMMDD` dates - are short enough to now cost zero heap
+allocations instead of the old design's one-or-two per string). Not independently profiled/quantified
+- "noticeably faster" is Nicholas's real-build observation, not a benchmark number. Score raised from
+4/10 to 8/10 (see the "what's next" discussion for why not higher yet - the deferred `explicit`
+constructor item below is most of the remaining gap). Expected end state, per Nicholas's ask, was
+4/10 (COW anti-pattern, duplicates what the stdlib already does better) to 8-9/10 (small, honest,
+standards-backed wrapper that still earns its keep for `toToken`/`padLeft`/`padRight`/`findString`/
+the legacy-compatible `getIntValue`/`getDoubleValue` parsing/the `char_t` narrow-wide toggle,
+without 1990s manual memory management underneath). Explicitly deferred, not part of this pass:
+adding SSO was the *reason* for this swap, not a separate step (std::basic_string's SSO comes free
+with `std::optional<std::basic_string<char_t>>`); a full replace-with-`std::string` across the ~3,926
+`.c_str()`/`.getCString()` call sites (rejected as disproportionate risk for a mid-rebrand session -
+this internals swap gets most of the benefit for a fraction of the blast radius).
+
+### `AQLString(const char_t*)` → `explicit` - TRIED, REVERTED (2026-09-19)
+
+Tried making the single-arg `AQLString(const char_t*)` constructor `explicit`, to surface every
+silent `.c_str()`-into-`AQLString`-parameter round-trip (the `CurveEngine.cpp` pattern) as compiler
+errors. Built via `MSBuild AlgoQuantLib-VS22.sln -p:Configuration=Release -p:Platform=x64` (had to
+use `-p:` not `/p:` - Git Bash mangles `/p:` as a path; also had to build the whole `.sln`, not a
+single `.vcxproj` directly, which fails on missing includes outside the IDE/solution context).
+
+Result: **511 distinct source files** failed to compile, `etrading.vcxproj` alone hit MSVC's
+100-error-per-file cap on the very first file it touched (`RateProvider.cpp`, via
+`AQLCurveForwardRateHelpers.h`). The dominant failure mode was **not** the wasteful call-argument
+round-trip this was aimed at - it was **default function arguments**: header declarations all over
+the tree default an `AQLString`/`const AQLString&` parameter to a bare string literal (`= ""`,
+`= "NO_CHANGE"`, etc. - `AQLCurveForwardRateHelpers.h` alone has several), which needs the same
+implicit conversion the `explicit` keyword blocks. Fixing this for real means editing the default
+argument in every such header declaration across the tree, not just the handful of wasteful call
+sites originally targeted - a categorically bigger, un-scoped job, not "a batch."
+
+**Reverted** - `AQLString(const char_t*)` is back to implicit (git diff on `AQLString.h` is a no-op
+versus the post-internals-swap state). Not attempting this again without a much narrower approach
+(e.g. grep for the *specific* `.c_str()-into-a-know-AQLString&-parameter` call sites directly,
+fixing just those by hand, without touching the constructor's explicitness at all - open if wanted,
+not started).
+
+### Wasteful `.c_str()`-round-trip hunt - found nothing solid; also corrected an earlier claim
+
+Went looking for the "top 10" worst `.c_str()`/`.getCString()`-into-an-`AQLString`-parameter round
+trips (the thing the `explicit` experiment above was originally aimed at), to fix by hand without
+touching the constructor. Heuristic grep for `\w+\(\)\.(c_str|getCString)\(\)` ranked candidate files
+(`CurveEngine.cpp` top at 32 hits, then `ScheduleValidation.cpp`, `DeltaRiskGenerator.cpp`, ...), but
+checking the top two by hand falsified the pattern: in both cases the accessor being unwrapped
+(`CurveDescription::curveCollection()`, `ScheduleParameters::adjustedAccrualStartDate()`) returns
+`std::string`, not `AQLString` - so the `.c_str()` is normal, necessary `std::string`→`AQLString`
+bridging, not the COW-defeating round-trip. **This also retroactively corrects the "concrete example"
+cited earlier in this file** (`CurveEngine.cpp:137`, `curveIndexAliasList(curveCollection.c_str(), ...)`
+used above as proof of the wasteful pattern) - `curveCollection` there is `const std::string`, not
+`AQLString`; that citation was wrong, caught by checking the declared type instead of pattern-matching
+on the variable name. No genuine, repeated hotspot of the real pattern turned up. Nothing changed.
+Lesson for next time: this class of grep heuristic needs the declared type checked before trusting a
+hit, every time - "looks like an AQLString by name" is not evidence.
+
+### Follow-up candidates spotted in passing, not investigated - for a future session
+
+While looking at `AQLString`/`AQLDate`, noticed three other `math` classes with the exact hand-rolled
+COW shape `AQLString` had *before* this session's fix (a separate refcount pointer + a nested `*Data`
+payload class) - and worse: these use a **plain `int*`** for the refcount, not even the
+`std::atomic<int>*` `AQLString` had before it was fixed, so the count itself can race, not just the
+payload. None of these were opened up to confirm the race is real the way `AQLString`'s was traced
+through before touching anything - this is "where to look first," not a diagnosis:
+
+- **`src/math/include/AQLMathCalendar.h`** (`mutable int* mpRefCount;`) - a holiday-calendar class.
+  Worth the most suspicion of the three: `CLAUDE.md` §4.4 makes "calendars updatable without
+  recompiling" a deliberate product feature, meaning calendar objects are loaded at runtime and very
+  plausibly shared/read across curve and schedule code from multiple call paths - the shared-object-
+  read-concurrently shape this bug class needs.
+- **`src/math/include/AQLMatrix.h`** (`mutable AQLMatrixData* mpData; mutable int* mpRefCount;`) -
+  same COW shape as `AQLString`'s old `StringData` + refcount, nested data class included. Sits under
+  calibration and the Jacobian-risk analytics `CLAUDE.md` §1 already flags as "not exercised for a
+  while; needs testing and extension" - a latent race here would land in code already flagged
+  under-tested.
+- **`src/math/include/AQLDataInstance.h`** (`int* mpRefCount;`, not even `mutable` - worth checking
+  what that implies about actual usage before assuming the identical pattern). Its own comment calls
+  it "Reference counter of Data Master and Function Master" - sounds central; understand what it's
+  plumbed into before judging severity.
+
+Suggested approach for whichever of these gets picked up: same discipline as `AQLDate`/`AQLString` -
+read the actual `.cpp` first, trace the specific race (don't assume from the field shape alone),
+audit real call sites for post-publication mutation before deciding whether a fix is even needed, and
+treat the eventual pass as its own scoped, reviewable batch rather than three-at-once.
