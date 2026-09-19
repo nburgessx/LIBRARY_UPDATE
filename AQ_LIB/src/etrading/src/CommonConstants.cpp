@@ -621,19 +621,16 @@ namespace etrading
 		const std::string YIELD_QUOTE_IN_PERCENT		= "YIELDQUOTEINPERCENT";
 		const std::string INTERPOLATION					= "INTERPOLATION";
 		const std::string EXTRAPOLATION					= "EXTRAPOLATION";
-	}
-
-	// These are the keys which are permitted in the BONDSPREADCURVE PROPERTIES block
-	namespace BONDSPREADCURVE_PROPERTIES_KEY
-	{
-		const std::string SPREAD						= "SPREAD";
+		const std::string CURVE_TYPE					= "CURVETYPE";
 		const std::string BENCHMARK_BOND_CURVE			= "BENCHMARKBONDCURVE";
+		const std::string SPREAD						= "SPREAD";
 	}
 
 	namespace INTERPOLATION_KEYS
 	{
 		const std::string PIECEWISE_CONSTANT			= "PIECEWISECONSTANT";
 		const std::string FLAT							= "FLAT";
+		const std::string LINEAR_INTERPOLATION			= "LINEAR";
 	}
 
 	namespace OPTION_KEYS

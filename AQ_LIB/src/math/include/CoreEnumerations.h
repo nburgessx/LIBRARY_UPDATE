@@ -300,11 +300,30 @@ namespace etrading
 	{
 		BONDCURVE_NONE,
 		BONDCURVE_PROPERTIES,
-		BONDCURVE_MARKETDATA,
-		BONDSPREADCURVE_PROPERTIES
+		BONDCURVE_MARKETDATA
 	};
 	 std::string toString( const BondCurveEnum enumValue );
 	 BondCurveEnum toBondCurveEnum( const std::string& enumString );
+
+	 // Distinguishes a BondCurve built directly from bond quotes from one built as a spread over a benchmark BondCurve.
+	 // NOTE: not named BOND_CURVE - that identifier is already CachedObjectEnum::BOND_CURVE (the AQObj registration tag) above.
+	 enum BondCurveTypeEnum
+	{
+		BONDCURVE_TYPE_OUTRIGHT,
+		BONDCURVE_TYPE_SPREAD
+	};
+	 std::string toString( const BondCurveTypeEnum enumValue );
+	 BondCurveTypeEnum toBondCurveTypeEnum( const std::string& enumString );
+
+	 // Interpolation/extrapolation choices for a BondCurve's yield pillars (or, for a BOND_SPREAD_CURVE, its spread nodes)
+	 // NOTE: not named FLAT/LINEAR - ConstantDeclarations.h (models) #defines a bare LINEAR macro, which would corrupt that token.
+	 enum BondCurveInterpolationEnum
+	{
+		BONDCURVE_FLAT,
+		BONDCURVE_LINEAR
+	};
+	 std::string toString( const BondCurveInterpolationEnum enumValue );
+	 BondCurveInterpolationEnum toBondCurveInterpolationEnum( const std::string& enumString );
 
 	 enum InflationCurveEnum
 	 {

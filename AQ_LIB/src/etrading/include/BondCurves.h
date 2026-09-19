@@ -90,8 +90,8 @@ namespace etrading
 
 		// ------- Accessor methods --------
 
-		/* @brief Returns the yield interpolated from the BondCurve for the specified couponDate
-		*				Note: the method uses piecewise-constant interpolation.
+		/* @brief Returns the yield interpolated from the BondCurve for the specified couponDate,
+		*		  per this curve's interpolationMethod_/extrapolationMethod_.
 		* @param[in]	couponDate	The date for which the yield is required
 		* @returns		The interpolated yield
 		*/
@@ -99,25 +99,22 @@ namespace etrading
 
 		/* @brief Updates the yield calibration stored in the curve by adding a yield point for the specified pillarDate.
 		*        This method intended to be used by the calibration process when fitting the curve to input bond quotes.
-		* 
+		*
 		* @param [in]   bondMaturityDate	The date corresponding to this coupon yield
 		* @param [in]   yield				The estimate of the yield for this curve pillar date
 		*/
 		void setCalibrationPoint( const AQLDate& bondMaturityDate, const double& yield );
 
-		/* @brief Updates the calibration stored in the curve by adding a discountFactor point for the specified pillar date.
-		*         This method intended to be used by the calibration process when fitting the curve to input bond quotes.
-		*
-		* @param [in]   bondMaturityDate	The date corresponding to this coupon yield
-		* @param [in]   discountFactor		The discountFactor at the bond curve pillar date
-		*/
-		void setDiscountFactorAtCalibrationPoint(const AQLDate& bondMaturityDate, const double& discountFactor);
-
 		/* @brief	Returns the bond curve calibration as a matrix.
 		*			Column 0 contains curve pillar dates
-		*			Column 1 contains the calibrated yield points 
+		*			Column 1 contains the calibrated yield points
 		*/
 		AnyTypeMatrix displayBondCurve() const;
+
+		/* @brief	Returns the curve's calibrated pillar dates, in increasing order.
+		*			Used when building a BOND_SPREAD_CURVE over this curve as a benchmark.
+		*/
+		std::vector<AQLDate> getCalibratedPillarDates() const;
 
 		// Simple data getters
 		AQLDate getSettlementDate() const;
@@ -126,9 +123,9 @@ namespace etrading
 
 		bool getYieldQuoteInPercent() const;
 
-		std::string getInterpolationMethod() const;
+		BondCurveInterpolationEnum getInterpolationMethod() const;
 
-		std::string getExtrapolationMethod() const;
+		BondCurveInterpolationEnum getExtrapolationMethod() const;
 
 	private:
 
@@ -163,16 +160,21 @@ namespace etrading
 		// i.e. "2.0" is mapped to "0.02".
 		bool yieldQuoteInPercent_;
 
-		// Used when interpolating yields from the bond curve
-		std::string interpolationMethod_;
-		std::string extrapolationMethod_;
+		// Whether this is a plain BondCurve or a BondSpreadCurve built over a benchmark BondCurve
+		BondCurveTypeEnum curveTypeEnum_;
 
+		// The name of the benchmark BondCurve this curve is a spread over. Only populated when curveTypeEnum_ == BOND_SPREAD_CURVE.
+		std::string benchmarkBondCurveName_;
+
+		// Used when interpolating yields from the bond curve (or, for a BOND_SPREAD_CURVE, its spread nodes)
+		BondCurveInterpolationEnum interpolationMethod_;
+		BondCurveInterpolationEnum extrapolationMethod_;
+
+		// Optional flat additive yield shock, applied on top of calibration for either curve type. Defaults to zero.
 		double spread_;
 
 		// The output from calibration: A map of payment dates and corresponding yields
 		std::map<AQLDate, double> calibratedYields_;
-
-		std::map<AQLDate, double> calibratedDiscountFactors_;
 
 		static std::vector<std::string> bond_curve_properties_lvbKeys()
 		{
@@ -183,19 +185,9 @@ namespace etrading
 				, BONDCURVE_PROPERTIES_KEY::YIELD_QUOTE_IN_PERCENT
 				, BONDCURVE_PROPERTIES_KEY::INTERPOLATION
 				, BONDCURVE_PROPERTIES_KEY::EXTRAPOLATION
-			};
-
-			std::vector<std::string> expectedKeys( arr, arr + sizeof( arr ) / sizeof( arr[0] ) );
-
-			return expectedKeys;
-		}
-
-		static std::vector<std::string> bond_spread_curve_properties_lvbKeys()
-		{
-			const std::string arr[] =
-			{
-				BONDSPREADCURVE_PROPERTIES_KEY::SPREAD
-				, BONDSPREADCURVE_PROPERTIES_KEY::BENCHMARK_BOND_CURVE
+				, BONDCURVE_PROPERTIES_KEY::CURVE_TYPE
+				, BONDCURVE_PROPERTIES_KEY::BENCHMARK_BOND_CURVE
+				, BONDCURVE_PROPERTIES_KEY::SPREAD
 			};
 
 			std::vector<std::string> expectedKeys( arr, arr + sizeof( arr ) / sizeof( arr[0] ) );

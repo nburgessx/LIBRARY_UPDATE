@@ -46,13 +46,6 @@ namespace etrading
 		*/
 		double cleanPriceFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const;
 		
-		/* @brief Calculates the discount factor for the final cashflow of a bond using a BondCurve to discount the coupons.
-		* @param[in]	settlementDate	The bond settlement date
-		* @param[in]	bondCurve		A calibrated BondCurve
-		* @returns		The discount factor at maturity.
-		*/
-		double discountFactorAtMaturityFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const;
-
 		/* @brief	calculate the bond yield from the price quote and a bondCurve for discounting coupons
 		*			NOTE: Used when CALIBRATING the bondCurve. A node point is added to the bondCurve
 		*			corresponding to the maturity of this bond, and the yield of that point is adjusted

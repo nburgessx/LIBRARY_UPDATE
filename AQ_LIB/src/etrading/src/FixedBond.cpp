@@ -572,26 +572,6 @@ namespace etrading
         return cleanPrice;
 	}
 
-	/* @brief Calculates the discount factor for the final cashflow of a bond using a BondCurve to discount the coupons.
-	* @param[in]	settlementDate	The bond settlement date
-	* @param[in]	bondCurve		A calibrated BondCurve
-	* @returns		The discount factor at maturity.
-	*/
-	double FixedBond::discountFactorAtMaturityFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const
-	{
-		DataProvider dataProvider(settlementDate);
-		initializeDataProviderWithBondCurve( dataProvider, bondCurve );
-
-		// Get all the bond cashflows excluding the upfrontCashflow
-        auto cashflows = schedule_->getAllCashflowsExcludingUpfrontNotional();
-		size_t nCashflows = cashflows.size();
-
-		// Get the data associated with the final cashflow
-		const CashflowData& cashflowData = dataProvider.getCashflowDataExcludingUpfront( nCashflows-1 );
-		const double discountFactor = cashflowData.discountFactor;
-		return discountFactor;
-	}
-
 	/* @brief	calculate the bond yield from the price quote and a bondCurve for discounting coupons
 	*			NOTE: Used when CALIBRATING the bondCurve. A node point is added to the bondCurve
 	*			corresponding to the maturity of this bond, and the yield of that point is adjusted
@@ -636,12 +616,8 @@ namespace etrading
 		};
 
 		// Solver Results Contain: Solution, nInterations and Jacobian
-		yield = solvers::newtonRaphson( function, targetPrice, initialGuessForYield, tolerance, maxIterations, shiftSize ).solution;		
-		
-		// Set the discountFactor at this calibrated point into the bond curve.
-		const double discFactAtMaturity = discountFactorAtMaturityFromBondCurve( settlementDate, bondCurve );
-		bondCurve.setDiscountFactorAtCalibrationPoint( maturityDate, discFactAtMaturity );
-			
+		yield = solvers::newtonRaphson( function, targetPrice, initialGuessForYield, tolerance, maxIterations, shiftSize ).solution;
+
 		return yield;
 	}
 

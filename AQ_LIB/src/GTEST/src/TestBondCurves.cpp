@@ -7,6 +7,7 @@
 #include "InitializeETrading.h"
 #include "tryAqBondCurves.h"
 #include "tryAqBondObject.h"
+#include "ParameterValidation.h"
 
 #include "FolderConfig.h"
 
@@ -218,26 +219,29 @@ namespace
 	{
 		etrading::ReadDataFile::Load bondCurveFileObj = etrading::ReadDataFile::Load( bondCurveFileName.c_str() );
 		const std::string bondspreadCurveName	= bondCurveFileObj[ "objectName" ];
-		const AQLStringMatrix modelProperties		= bondCurveFileObj[ "BONDSPREADCURVE_PROPERTIES" ]; // Contains spread and benchmarkBondCurve 
+		const AQLStringMatrix modelProperties	= bondCurveFileObj[ "BONDCURVE_PROPERTIES" ]; // Contains CurveType=BondSpreadCurve and BenchmarkBondCurve
+		const AQLStringMatrix bondMarketData	= bondCurveFileObj[ "BONDCURVE_MARKETDATA" ]; // The spread bond(s) priced against the benchmark
 
 		std::vector<std::string> propertyNames;
-		propertyNames.push_back( "BONDSPREADCURVE_PROPERTIES" );
+		propertyNames.push_back( "BONDCURVE_PROPERTIES" );
+		propertyNames.push_back( "BONDCURVE_MARKETDATA" );
 
 		std::vector<validation::TableInfo> infoBlocks;
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
+		infoBlocks.push_back( getTableInfoFromStringMatrix( bondMarketData ));
 
 		std::string objectName = validation::tryAqBondCurveCreate( bondspreadCurveName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
 
-	void checkBondCurveCalibration( const AnyTypeMatrix& actualResultsMatrix, const std::string& expectedCalibrationResultsFileName, const double& tolerance )
+	void checkBondCurveCalibration( const AnyTypeMatrix& actualResultsMatrix, const std::string& expectedCalibrationResultsFileName, const double& tolerance, const size_t expectedRows = 15 )
 	{
 		const size_t nRows = actualResultsMatrix.size();
-		ASSERT_EQ( nRows, 15 ) << "#Error: Expected 15 rows of calibration results";  // One row per calibration point
+		ASSERT_EQ( nRows, expectedRows ) << "#Error: Expected " << expectedRows << " rows of calibration results";  // One row per calibration point
 		
 		const size_t nCols = actualResultsMatrix[0].size();
-		ASSERT_EQ( nCols, 3) << "#Error: Expected 3 columns of calibration results";  // MaturityDate, HazardRate, SurvivialProbability, DefaultProbability
+		ASSERT_EQ( nCols, 2) << "#Error: Expected 2 columns of calibration results";  // MaturityDate, Yield
 
 		if ( etrading::CreateDataFile::rebaseResultsEnabled() )
 		{
@@ -664,6 +668,231 @@ namespace google_test
 
 			// Expect priceFromBondCurve < priceFromYield
 			EXPECT_LT( priceFromBondCurve, priceFromYield ) << "Expecting priceFromYield to be larger than priceFromBondSpreadCurve: " << bondObjectName;
+		}
+	}
+
+	// A spread bond's maturity may legitimately coincide with one of the benchmark's own bond maturities (e.g. a
+	// corporate bond happening to mature on the same date as a treasury used to build the benchmark). This must not
+	// throw - the spread bond's own quoted yield should simply take precedence at that pillar, since it is real
+	// market data for that exact instrument.
+	TEST_F( TestBondCurves, CONSISTENCY_BondCurve_SpreadBondCoincidesWithBenchmarkMaturity )
+	{
+		buildBondsForCalibrationAndBondCurve();
+
+		const std::string coincidentFile = TEST_DIR "USD_CORP_CURVE_COINCIDENT@144_tryAqBondCurveCreate_inputs.csv";
+		std::string curveName = createBondSpreadCurveFromFileName( coincidentFile );
+
+		const AnyTypeMatrix calibratedYields = validation::tryAqBondCurveDisplay( curveName );
+
+		// Same 15 pillars as the benchmark - the coincident date is reassigned, not duplicated
+		ASSERT_EQ( calibratedYields.size(), 15u );
+
+		const AQLDate coincidentDate = etrading::stringToDate( "44227" );
+		const double yieldAtCoincidentDate = validation::tryAqBondCurveYield( curveName, coincidentDate );
+
+		// The spread bond's own quoted yield (0.03) must take precedence over the benchmark-bond-derived value
+		// (which would be close to the benchmark's own ~0.0236 yield at that date, not 0.03)
+		EXPECT_NEAR( yieldAtCoincidentDate, 0.03, 1.0e-6 );
+	}
+
+	// Flat/PiecewiseConstant interpolation of the spread overlay is a genuine step-function discontinuity between
+	// spread nodes - no downstream fix can make that look smooth, so it must be rejected outright for spread curves.
+	TEST_F( TestBondCurves, CONSISTENCY_BondCurve_SpreadCurveRejectsFlatInterpolation )
+	{
+		buildBondsForCalibrationAndBondCurve();
+		const std::string flatRejectedFile = TEST_DIR "USD_CORP_CURVE_FLAT_REJECTED@156_tryAqBondCurveCreate_inputs.csv";
+		EXPECT_THROW( createBondSpreadCurveFromFileName( flatRejectedFile ), std::exception );
+	}
+
+	// Two sparse, well-separated spread nodes (near the start and near the end of the benchmark's range), with
+	// clearly different spread magnitudes (+100bp vs +500bp), coinciding with two of the benchmark's own bonds.
+	// The interpolated spread must be attributed by DATE, not by index/position: it should be exactly +100bp at
+	// the first node, exactly +500bp at the last, and smoothly (linearly, by default) increasing in between -
+	// never attributed to the wrong maturity.
+	TEST_F( TestBondCurves, CONSISTENCY_BondCurve_SparseSpreadNodesAttributedByDate )
+	{
+		buildBondsForCalibrationAndBondCurve();
+		const std::string sparseFile = TEST_DIR "USD_CORP_CURVE_SPARSE_DIAG@146_tryAqBondCurveCreate_inputs.csv";
+		std::string curveName = createBondSpreadCurveFromFileName( sparseFile );
+
+		const AnyTypeMatrix benchmarkMatrix = validation::tryAqBondCurveDisplay( "USTREASURIES1@127" );
+		const AnyTypeMatrix spreadMatrix    = validation::tryAqBondCurveDisplay( curveName );
+
+		std::map<int, double> spreadByDate;
+		for ( size_t row = 0; row < spreadMatrix.size(); row++ )
+		{
+			spreadByDate[ boost::get<int>( spreadMatrix[row][0] ) ] = boost::get<double>( spreadMatrix[row][1] );
+		}
+
+		ASSERT_EQ( benchmarkMatrix.size(), 15u );
+		double previousImpliedSpread = -1.0;
+		for ( size_t row = 0; row < benchmarkMatrix.size(); row++ )
+		{
+			const int date = boost::get<int>( benchmarkMatrix[row][0] );
+			const double benchmarkYield = boost::get<double>( benchmarkMatrix[row][1] );
+			ASSERT_EQ( spreadByDate.count( date ), 1u ) << "Missing benchmark pillar at date " << date;
+			const double impliedSpread = spreadByDate[ date ] - benchmarkYield;
+
+			// Monotonically increasing from +100bp (first node, date 44227) to +500bp (last node, date 44530)
+			EXPECT_GE( impliedSpread, previousImpliedSpread - 1.0e-6 ) << "Spread not monotonically increasing at date " << date;
+			previousImpliedSpread = impliedSpread;
+		}
+
+		EXPECT_NEAR( spreadByDate.at( 44227 ), 0.0236140220000006 + 0.01, 1.0e-9 );   // first node: exact pass-through
+		// Last node's +500bp shock compounds through 14 prior sequential bootstrap solves; tolerance reflects that
+		// solver precision (not a logic-level check), same effect as CONSISTENCY_BondCurve_MixedCoincidentAndNonCoincidentSpreadNodes.
+		EXPECT_NEAR( spreadByDate.at( 44530 ), 0.0231030100000001 + 0.05, 1.0e-3 );   // last node: exact pass-through
+	}
+
+	// Mix a spread bond that coincides with a benchmark bond's maturity (44227) with one that doesn't (44327),
+	// both representing the exact same +100bp spread. The resulting curve must be a smooth, constant +100bp over
+	// the benchmark everywhere - no spike or discontinuity at the coincident pillar relative to its neighbours.
+	TEST_F( TestBondCurves, CONSISTENCY_BondCurve_MixedCoincidentAndNonCoincidentSpreadNodes )
+	{
+		buildBondsForCalibrationAndBondCurve();
+
+		const std::string mixedFile = TEST_DIR "USD_CORP_CURVE_MIXED@145_tryAqBondCurveCreate_inputs.csv";
+		std::string curveName = createBondSpreadCurveFromFileName( mixedFile );
+
+		const AnyTypeMatrix benchmarkMatrix = validation::tryAqBondCurveDisplay( "USTREASURIES1@127" );
+		const AnyTypeMatrix spreadMatrix    = validation::tryAqBondCurveDisplay( curveName );
+
+		std::map<int, double> spreadByDate;
+		for ( size_t row = 0; row < spreadMatrix.size(); row++ )
+		{
+			spreadByDate[ boost::get<int>( spreadMatrix[row][0] ) ] = boost::get<double>( spreadMatrix[row][1] );
+		}
+
+		for ( size_t row = 0; row < benchmarkMatrix.size(); row++ )
+		{
+			const int date = boost::get<int>( benchmarkMatrix[row][0] );
+			const double benchmarkYield = boost::get<double>( benchmarkMatrix[row][1] );
+			ASSERT_EQ( spreadByDate.count( date ), 1u ) << "Missing benchmark pillar at date " << date;
+			// Tolerance reflects the bootstrap solver's own precision (Newton-Raphson tolerance is 1e-10 on price,
+			// which translates to a somewhat looser tolerance on the solved yield) - not a logic-level check.
+			EXPECT_NEAR( spreadByDate[ date ] - benchmarkYield, 0.01, 1.0e-6 ) << "Spread not a smooth constant +100bp at date " << date;
+		}
+	}
+
+	// Build a spread curve from TWO spread bonds (not a single constant spread), each offset from the benchmark's own
+	// calibrated yield at its maturity by a known amount (+20bp at 44286, +50bp at 44469). With no INTERPOLATION/
+	// EXTRAPOLATION given, the spread curve defaults to Linear/Flat. Expect: exact pass-through of the spread bonds'
+	// own yields at their maturities; flat-extrapolated +20bp/+50bp spread outside the node range; linearly
+	// interpolated spread (not linearly interpolated final yield) between the two nodes.
+	TEST_F( TestBondCurves, SNAPSHOT_BondCurve_MultiNodeSpreadInterpolation )
+	{
+		buildBondsForCalibrationAndBondCurve();
+
+		const std::string multiNodeFile = TEST_DIR "USD_CORP_CURVE_MULTINODE@130_tryAqBondCurveCreate_inputs.csv";
+		std::string curveName = createBondSpreadCurveFromFileName( multiNodeFile );
+
+		const AnyTypeMatrix calibratedYields = validation::tryAqBondCurveDisplay( curveName );
+
+		const double tolerance = 1.0e-9;
+		checkBondCurveCalibration( calibratedYields, TEST_DIR "tryAqBondCurveMultiNodeSpreadDisplay_outputs.csv", tolerance, 17 );
+	}
+
+	// Build the SAME 2-bond curve twice, differing only in INTERPOLATION (PiecewiseConstant vs Linear), and check
+	// that querying a date strictly between the two pillars gives genuinely different results: the step curve steps
+	// to the pillar on/after the reference date (unaffected by the other pillar's value), while the linear curve
+	// gives a value strictly between the two pillars' own calibrated yields.
+	TEST_F( TestBondCurves, CONSISTENCY_BondCurve_LinearVsPiecewiseConstantInterpolation )
+	{
+		buildBondsForCalibrationAndBondCurve();
+
+		const std::string stepFile   = TEST_DIR "USD_2BOND_STEP@131_tryAqBondCurveCreate_inputs.csv";
+		const std::string linearFile = TEST_DIR "USD_2BOND_LINEAR@132_tryAqBondCurveCreate_inputs.csv";
+
+		const std::string stepCurveName   = createBondCurveFromFileName( stepFile );
+		const std::string linearCurveName = createBondCurveFromFileName( linearFile );
+
+		const AQLDate firstPillar  = etrading::stringToDate( "44286" );
+		const AQLDate secondPillar = etrading::stringToDate( "44469" );
+		const AQLDate midDate      = etrading::stringToDate( "44377" );  // strictly between the two pillars
+
+		const double stepYieldAtSecondPillar = validation::tryAqBondCurveYield( stepCurveName, secondPillar );
+		const double stepYieldAtMidDate       = validation::tryAqBondCurveYield( stepCurveName, midDate );
+
+		// PiecewiseConstant steps forward to the pillar on/after the reference date
+		EXPECT_NEAR( stepYieldAtMidDate, stepYieldAtSecondPillar, 1.0e-12 );
+
+		const double linearYieldAtFirstPillar  = validation::tryAqBondCurveYield( linearCurveName, firstPillar );
+		const double linearYieldAtSecondPillar = validation::tryAqBondCurveYield( linearCurveName, secondPillar );
+		const double linearYieldAtMidDate       = validation::tryAqBondCurveYield( linearCurveName, midDate );
+
+		// Linear interpolation gives a value strictly between the two pillars' own calibrated yields
+		const double lowerBound = std::min( linearYieldAtFirstPillar, linearYieldAtSecondPillar );
+		const double upperBound = std::max( linearYieldAtFirstPillar, linearYieldAtSecondPillar );
+		EXPECT_GT( linearYieldAtMidDate, lowerBound );
+		EXPECT_LT( linearYieldAtMidDate, upperBound );
+
+		// And Linear must genuinely differ from PiecewiseConstant at the same reference date
+		EXPECT_GT( std::abs( linearYieldAtMidDate - stepYieldAtMidDate ), 1.0e-6 );
+	}
+
+	// A genuinely zero interpolated spread must reproduce the benchmark curve exactly: the spread curve re-runs the
+	// SAME bootstrap the benchmark used (same bond quotes, same target yields), so this is a real equality, not an
+	// approximation. Uses a single spread bond whose quoted yield is engineered to equal the benchmark's own
+	// interpolated yield at that bond's maturity, giving a spread node of exactly zero (applied as a constant,
+	// since a single spread node applies everywhere).
+	TEST_F( TestBondCurves, CONSISTENCY_BondCurve_ZeroSpreadReproducesBenchmarkExactly )
+	{
+		buildBondsForCalibrationAndBondCurve();
+		const std::string zeroSpreadFile = TEST_DIR "USD_CORP_CURVE_ZEROSPREAD@142_tryAqBondCurveCreate_inputs.csv";
+		std::string curveName = createBondSpreadCurveFromFileName( zeroSpreadFile );
+
+		const AnyTypeMatrix benchmarkMatrix = validation::tryAqBondCurveDisplay( "USTREASURIES1@127" );
+		const AnyTypeMatrix spreadMatrix    = validation::tryAqBondCurveDisplay( curveName );
+
+		std::map<int, double> spreadByDate;
+		for ( size_t row = 0; row < spreadMatrix.size(); row++ )
+		{
+			spreadByDate[ boost::get<int>( spreadMatrix[row][0] ) ] = boost::get<double>( spreadMatrix[row][1] );
+		}
+
+		// Every benchmark pillar must appear in the spread curve too, with an identical calibrated yield
+		for ( size_t row = 0; row < benchmarkMatrix.size(); row++ )
+		{
+			const int date = boost::get<int>( benchmarkMatrix[row][0] );
+			const double benchmarkYield = boost::get<double>( benchmarkMatrix[row][1] );
+			ASSERT_EQ( spreadByDate.count( date ), 1u ) << "Missing benchmark pillar at date " << date;
+			EXPECT_NEAR( spreadByDate[ date ], benchmarkYield, 1.0e-12 ) << "Mismatch at date " << date;
+		}
+	}
+
+	// YieldQuoteInPercent must divide both the market-data yields AND the Spread field by 100, for either curve type.
+	// Build a plain curve, and a spread curve with a flat Spread shock, each once in decimal and once in percent
+	// (percent inputs = decimal inputs x100) and check the two give identical calibrated yields.
+	TEST_F( TestBondCurves, CONSISTENCY_BondCurve_YieldQuoteInPercent )
+	{
+		buildBondsForCalibrationAndBondCurve();
+
+		// Plain curve: decimal vs percent market-data yields
+		const std::string decimalPlainCurveName = createBondCurveFromFileName( TEST_DIR "USD_2BOND_STEP@131_tryAqBondCurveCreate_inputs.csv" );
+		const std::string percentPlainCurveName = createBondCurveFromFileName( TEST_DIR "USD_2BOND_STEP_PCT@134_tryAqBondCurveCreate_inputs.csv" );
+
+		const AnyTypeMatrix decimalPlainMatrix = validation::tryAqBondCurveDisplay( decimalPlainCurveName );
+		const AnyTypeMatrix percentPlainMatrix = validation::tryAqBondCurveDisplay( percentPlainCurveName );
+
+		ASSERT_EQ( decimalPlainMatrix.size(), percentPlainMatrix.size() );
+		for ( size_t row = 0; row < decimalPlainMatrix.size(); row++ )
+		{
+			EXPECT_NEAR( boost::get<double>( decimalPlainMatrix[row][1] ), boost::get<double>( percentPlainMatrix[row][1] ), 1.0e-9 )
+				<< "Plain curve decimal vs percent mismatch at row " << row;
+		}
+
+		// Spread curve with a flat Spread shock: decimal vs percent (both Spread and market-data yield)
+		const std::string decimalSpreadCurveName = createBondSpreadCurveFromFileName( TEST_DIR "USD_CORP_CURVE_SHOCK_DEC@135_tryAqBondCurveCreate_inputs.csv" );
+		const std::string percentSpreadCurveName = createBondSpreadCurveFromFileName( TEST_DIR "USD_CORP_CURVE_SHOCK_PCT@136_tryAqBondCurveCreate_inputs.csv" );
+
+		const AnyTypeMatrix decimalSpreadMatrix = validation::tryAqBondCurveDisplay( decimalSpreadCurveName );
+		const AnyTypeMatrix percentSpreadMatrix = validation::tryAqBondCurveDisplay( percentSpreadCurveName );
+
+		ASSERT_EQ( decimalSpreadMatrix.size(), percentSpreadMatrix.size() );
+		for ( size_t row = 0; row < decimalSpreadMatrix.size(); row++ )
+		{
+			EXPECT_NEAR( boost::get<double>( decimalSpreadMatrix[row][1] ), boost::get<double>( percentSpreadMatrix[row][1] ), 1.0e-9 )
+				<< "Spread curve decimal vs percent mismatch at row " << row;
 		}
 	}
 

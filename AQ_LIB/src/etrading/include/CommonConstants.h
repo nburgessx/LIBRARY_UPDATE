@@ -652,19 +652,21 @@ namespace etrading
 		extern const std::string YIELD_QUOTE_IN_PERCENT;
 		extern const std::string INTERPOLATION;
 		extern const std::string EXTRAPOLATION;
-	}
-	
-	// These are the keys which are permitted in the BONDSPREADCURVE PROPERTIES block
-	namespace BONDSPREADCURVE_PROPERTIES_KEY
-	{
-		extern const std::string SPREAD;
+
+		// CURVE_TYPE selects BondCurve (default) or BondSpreadCurve; BENCHMARK_BOND_CURVE is compulsory for BondSpreadCurve only
+		extern const std::string CURVE_TYPE;
 		extern const std::string BENCHMARK_BOND_CURVE;
+
+		// Optional flat additive yield shock, applied on top of calibration for either curve type. Defaults to zero.
+		extern const std::string SPREAD;
 	}
 
 	namespace INTERPOLATION_KEYS
 	{
 		extern const std::string PIECEWISE_CONSTANT;
 		extern const std::string FLAT;
+		// Not named LINEAR: ConstantDeclarations.h (models) #defines a bare LINEAR macro, which would corrupt that token.
+		extern const std::string LINEAR_INTERPOLATION;
 	}
 
 	namespace OPTION_KEYS

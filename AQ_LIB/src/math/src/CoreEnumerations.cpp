@@ -1604,12 +1604,10 @@ namespace etrading
 				return "BONDCURVE_PROPERTIES";
 			case BONDCURVE_MARKETDATA:
 				return "BONDCURVE_MARKETDATA";
-			case BONDSPREADCURVE_PROPERTIES:
-				return "BONDSPREADCURVE_PROPERTIES";
             default:
 				throw ETradingException(  ( boost::format( "#Error: BondCurveEnum key '%i' not supported" ) % enumValue  ).str()  );
                 break;
-		}		
+		}
 	}
 
 	 BondCurveEnum toBondCurveEnum( const std::string& enumString )
@@ -1627,16 +1625,68 @@ namespace etrading
         {
             return BONDCURVE_MARKETDATA;
         }
-		if ( bcString == "BONDSPREADCURVE_PROPERTIES" )
-        {
-            return BONDSPREADCURVE_PROPERTIES;
-        }
 
 		if ( bcString.empty() )
         {
 			throw ETradingException("#Error: No property key provided. Available property keys include: BONDCURVE_PROPERTIES, BONDCURVE_MARKETDATA.");
         }
-		throw ETradingException(  ( boost::format( "#Error: Property key '%s' not supported. Available property keys include: NONE, BONDCURVE_PROPERTIES, BONDCURVE_MARKETDATA." ) % bcString ).str()  );	
+		throw ETradingException(  ( boost::format( "#Error: Property key '%s' not supported. Available property keys include: NONE, BONDCURVE_PROPERTIES, BONDCURVE_MARKETDATA." ) % bcString ).str()  );
+	}
+
+	 std::string toString( const BondCurveTypeEnum enumValue )
+	{
+		switch( enumValue )
+		{
+			case BONDCURVE_TYPE_OUTRIGHT:
+				return "OUTRIGHT";
+			case BONDCURVE_TYPE_SPREAD:
+				return "SPREAD";
+			default:
+				throw ETradingException(  ( boost::format( "#Error: BondCurveTypeEnum key '%i' not supported" ) % enumValue  ).str()  );
+				break;
+		}
+	}
+
+	 BondCurveTypeEnum toBondCurveTypeEnum( const std::string& enumString )
+	{
+		std::string ctString = etrading::trim_to_upper( enumString.c_str() );
+		if ( ( ctString == "OUTRIGHT" ) || ( ctString == "BONDCURVE" ) || ( ctString == "" ) )
+		{
+			return BONDCURVE_TYPE_OUTRIGHT;
+		}
+		if ( ( ctString == "SPREAD" ) || ( ctString == "BONDSPREADCURVE" ) )
+		{
+			return BONDCURVE_TYPE_SPREAD;
+		}
+		throw ETradingException(  ( boost::format( "#Error: CurveType '%s' not supported. Available curve types include: Outright, Spread." ) % ctString ).str()  );
+	}
+
+	 std::string toString( const BondCurveInterpolationEnum enumValue )
+	{
+		switch( enumValue )
+		{
+			case BONDCURVE_FLAT:
+				return "FLAT";
+			case BONDCURVE_LINEAR:
+				return "LINEAR";
+			default:
+				throw ETradingException(  ( boost::format( "#Error: BondCurveInterpolationEnum key '%i' not supported" ) % enumValue  ).str()  );
+				break;
+		}
+	}
+
+	 BondCurveInterpolationEnum toBondCurveInterpolationEnum( const std::string& enumString )
+	{
+		std::string interpString = etrading::trim_to_upper( enumString.c_str() );
+		if ( (interpString == "PIECEWISECONSTANT") || (interpString == "FLAT") )
+		{
+			return BONDCURVE_FLAT;
+		}
+		if ( interpString == "LINEAR" )
+		{
+			return BONDCURVE_LINEAR;
+		}
+		throw ETradingException(  ( boost::format( "#Error: Interpolation/Extrapolation method '%s' not supported. Available methods include: PiecewiseConstant, Flat, Linear." ) % interpString ).str()  );
 	}
 
 	 std::string toString( const BondGeneratorEnum enumValue )
