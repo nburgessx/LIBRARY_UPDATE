@@ -4449,3 +4449,16 @@ every project** (token budget) - recommend Nicholas do a full solution rebuild i
 and `ReleaseProfiler` across all 6 fixed projects to confirm, and ideally a before/after timing
 comparison on a hot pricing path to see the real-world impact of years of builds running
 unoptimized.
+
+### ⚠ OPEN REMINDER - Matrix/table-type consolidation (Phase 6.11) - approved, not started
+
+Flagging so this doesn't quietly fall out of the plan across sessions: the matrix/table-type
+consolidation design (`AQLFlattenedMatrix<T>` shared base; `AQLMatrix`->`AQLNumericMatrix`;
+`AnyType`/`AnyTypeMatrix` retirement onto `etrading::Variant`/`AQLAnyMatrix`; see the "Matrix
+consolidation plan fleshed out" entry above, 2026-09-20) was **approved by Nicholas on 2026-09-20**
+but **no implementation has started** - no code, no renames, nothing built or tested. Full staged
+plan (7 steps, smallest/safest first) lives in `MIGRATION_PLAN.md` Phase 6.11. Next session picking
+this up should start at step 1 (`AQLFlattenedMatrix<T>` + migrating `AQLMatrix` internals onto it,
+zero external API change). Step 7 (`AQLStringMatrix`/`StandardStringMatrix`/`STDStringMatrix`,
+300/49/5 files) is deliberately excluded - still needs its own inventory before it can be scoped,
+separately reminded in the plan itself.

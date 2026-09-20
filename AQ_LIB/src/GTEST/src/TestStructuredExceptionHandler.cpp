@@ -42,12 +42,14 @@ namespace google_test
         }
 
         /* @brief   Integer divide by zero -> EXCEPTION_INT_DIVIDE_BY_ZERO */
-        int forceIntegerDivideByZero()
-        {
-            volatile int numerator   = 1;
-            volatile int zeroDivisor = 0;
-            return numerator / zeroDivisor;
-        }
+        #pragma optimize( "", off )
+		int forceIntegerDivideByZero()
+		{
+			volatile int numerator = 1;
+			volatile int zeroDivisor = 0;
+			return numerator / zeroDivisor;
+		}
+        #pragma optimize( "", on )
     }
 
 

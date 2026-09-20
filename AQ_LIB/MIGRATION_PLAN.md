@@ -841,8 +841,18 @@ coverage merged; suite green against baseline.
 - ☐ **6.11 Matrix/table-type consolidation** (new, 2026-09-19; design proposed
   2026-09-20 — Nicholas asked how to make `AnyMatrix`/`VariantMatrix`-style
   API utilities consistent with `AQLMatrix`'s flattened storage, then asked
-  for a concrete rename/consolidation/flattening plan). **Design proposed,
-  not yet approved or actioned.**
+  for a concrete rename/consolidation/flattening plan). **Design approved
+  2026-09-20 — implementation not yet started.**
+
+  **⚠ REMINDER — action this next, don't let it quietly sit:** steps 1–6 in
+  the staged order below are approved and ready to pick up (start with step 1,
+  `AQLFlattenedMatrix<T>` + migrating `AQLMatrix` onto it internally — zero
+  external API change, proves the design against the one case that's already
+  flattened and already has GTEST coverage). Step 7
+  (`AQLStringMatrix`/`StandardStringMatrix`/`STDStringMatrix`) is intentionally
+  excluded from this — it still needs its own inventory before it can be
+  scoped (see the note further down). Check `rebrand\STATUS.md` for whether
+  any of this has been actioned since this plan entry was last touched.
 
   **Full inventory, with real usage counts (2026-09-20):**
 

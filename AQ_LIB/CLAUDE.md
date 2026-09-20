@@ -115,6 +115,12 @@ paragraph, if the two ever drift again.**
   SWIG regen for Phase 5 not yet started.
 - **Not yet started:** Phase 6 (legacy extraction, licence headers, resources
   audit); Phase 7 (Linux/CMake, clang-format, clean repo).
+- **⚠ Reminder — Phase 6.11 (matrix/table-type consolidation) is
+  approved but unimplemented (2026-09-20).** `AQLFlattenedMatrix<T>` shared
+  base, `AQLMatrix`→`AQLNumericMatrix`, `AnyType`/`AnyTypeMatrix` retirement —
+  full 7-step staged plan in `MIGRATION_PLAN.md` §6.11, Nicholas signed off,
+  nothing built yet. Don't let this quietly slip — see `rebrand\STATUS.md`'s
+  "OPEN REMINDER" entry for the up-to-date state.
 
 ### 2.2 Visualizer.natvis
 
