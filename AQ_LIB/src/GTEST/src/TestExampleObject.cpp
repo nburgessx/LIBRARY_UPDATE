@@ -65,7 +65,7 @@ namespace google_test
         EXPECT_TRUE( env.hasObject<StandAlone>( "StandAlone_1" ) );
         EXPECT_TRUE( env.hasObject( "StandAlone_2", EXAMPLE_STAND_ALONE ) );
 
-        const std::string readWriteFileName = etrading::getEnvironmentVariable( "AQ" ) + "/resource/test/inputs/ETrading/AQObjects/ExampleObjects/" + sa2.getRefToName() + ".json";
+        const std::string readWriteFileName = etrading::getEnvironmentVariable( "AQ" ) + "/resources/test/inputs/ETrading/AQObjects/ExampleObjects/" + sa2.getRefToName() + ".json";
 
         sa2.serialize( etrading::serialize::JSON, etrading::serialize::FILE, readWriteFileName );
         EXPECT_TRUE( fileExists( readWriteFileName ) );

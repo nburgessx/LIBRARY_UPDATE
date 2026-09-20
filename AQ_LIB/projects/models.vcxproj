@@ -151,7 +151,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -174,7 +174,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -197,7 +197,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN64;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -220,7 +220,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN64;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -242,7 +242,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -263,7 +263,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -284,7 +284,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -305,7 +305,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -329,8 +329,7 @@
     <ClInclude Include="..\src\models\include\AQLCoreComponentManager.h" />
     <ClInclude Include="..\src\models\include\ConstantDeclarations.h" />
     <ClInclude Include="..\src\models\include\AQLCoreUtility.h" />
-    <ClInclude Include="..\src\models\include\AQLMathDateCalculations.h" />
-    <ClInclude Include="..\src\models\include\AQLMathDateUtilities.h" />
+    <ClInclude Include="..\src\models\include\AQLDateCalculations.h" />
     <ClInclude Include="..\src\models\include\AQLMathAnalyticalBlack2.h" />
     <ClInclude Include="..\src\models\include\AQLMathFXVolatilitySurfaceGenerate.h" />
     <ClInclude Include="..\src\models\include\AQLMathFXVolSurfUtility.h" />
@@ -349,7 +348,7 @@
     <ClInclude Include="..\src\models\include\AQLMathCapFloorSABR.h" />
     <ClInclude Include="..\src\models\include\AQLMathCapFloorVolUtility.h" />
     <ClInclude Include="..\src\models\include\AQLMathCashFlowSchedules.h" />
-    <ClInclude Include="..\src\models\include\AQLMathCentralBank.h" />
+    <ClInclude Include="..\src\models\include\AQLCentralBank.h" />
     <ClInclude Include="..\src\models\include\AQLMathConstraintSZ.h" />
     <ClInclude Include="..\src\models\include\AQLMathCorFuncLMM.h" />
     <ClInclude Include="..\src\models\include\AQLMathCorrelation.h" />
@@ -612,8 +611,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\models\src\AQLCoreComponentManager.cpp" />
     <ClCompile Include="..\src\models\src\AQLCoreUtility.cpp" />
-    <ClCompile Include="..\src\models\src\AQLMathDateCalculations.cpp" />
-    <ClCompile Include="..\src\models\src\AQLMathDateUtilities.cpp" />
+    <ClCompile Include="..\src\models\src\AQLDateCalculations.cpp" />
     <ClCompile Include="..\src\models\src\AQLMathFXVolatilitySurfaceGenerate.cpp" />
     <ClCompile Include="..\src\models\src\AQLMathFXVolSurfUtility.cpp" />
     <ClCompile Include="..\src\models\src\AQLMathAntonovFXOption.cpp" />
@@ -627,7 +625,7 @@
     <ClCompile Include="..\src\models\src\AQLMathCapFloorSABR.cpp" />
     <ClCompile Include="..\src\models\src\AQLMathCapFloorVolUtility.cpp" />
     <ClCompile Include="..\src\models\src\AQLMathCashFlowSchedules.cpp" />
-    <ClCompile Include="..\src\models\src\AQLMathCentralBank.cpp" />
+    <ClCompile Include="..\src\models\src\AQLCentralBank.cpp" />
     <ClCompile Include="..\src\models\src\AQLMathConstraintSZ.cpp" />
     <ClCompile Include="..\src\models\src\AQLMathCorFuncLMM.cpp" />
     <ClCompile Include="..\src\models\src\AQLMathCorrelation.cpp" />

@@ -24,7 +24,7 @@
 #include "AQLLinearRatesOptionValue.h"
 #include "AQLPricePortfolioValue.h"
 #include "AQLMathCurveFuncUtility.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 
 #include "AQLMathSwaptionVolUtility.h"
 #include "AQLCoreDataService.h"
@@ -128,12 +128,12 @@ AQLMarketData::registCalendar(const AQLString &fileName)
 		AQLDate asofdate = AQLDate(asofdateStr.getCString());
 		if (terms[0].size() != 0) 
 		{
-			boundDates[0] = AQLMathDateCalculations::getDate(asofdate, terms[0], false);
+			boundDates[0] = AQLDateCalculations::getDate(asofdate, terms[0], false);
 			isBounds[0] = true;
 		}
 		if (terms[1].size() != 0) 
 		{
-			boundDates[1] = AQLMathDateCalculations::getDate(asofdate, terms[1], true);
+			boundDates[1] = AQLDateCalculations::getDate(asofdate, terms[1], true);
 			isBounds[1] = true;
 		}
 	}
@@ -281,7 +281,7 @@ AQLMarketData::resetMarketDataUseL(AQLMathYieldCurvePro &curve, const AQLString 
 			if (find(liborYTerm.begin(), liborYTerm.end(), searchTerm) == liborYTerm.end())
 			{
 				// calc date from spotDate
-				AQLDate date = AQLMathDateCalculations::getDate(spotDate, termStr, sliding, &cal, true);
+				AQLDate date = AQLDateCalculations::getDate(spotDate, termStr, sliding, &cal, true);
 					
 				double term     = dc.getTerm(asOfDate, date);
 				double df       = inter.value(term);
@@ -2008,7 +2008,7 @@ AQLMarketData::getVolatilityVal(const AQLString &fileName, const AQLString &term
 		// create rowTerm
 		for (unsigned int i = 1; i < rowSize; ++i)
 		{
-			AQLDate date = AQLMathDateCalculations::getDate(asof, volDataMtx[i][0], true);
+			AQLDate date = AQLDateCalculations::getDate(asof, volDataMtx[i][0], true);
 			rowTerm[i] = act_365.getTerm(asof, date);
 		}
 		// sorted rowTerm
@@ -2018,7 +2018,7 @@ AQLMarketData::getVolatilityVal(const AQLString &fileName, const AQLString &term
 		// create colTerm
 		for (unsigned int i = 1; i < colSize; ++i)
 		{
-			AQLDate date = AQLMathDateCalculations::getDate(asof, volDataMtx[0][i], true);
+			AQLDate date = AQLDateCalculations::getDate(asof, volDataMtx[0][i], true);
 			colTerm[i] = act_365.getTerm(asof, date);
 		}
 		// sorted rowTerm
@@ -2037,10 +2037,10 @@ AQLMarketData::getVolatilityVal(const AQLString &fileName, const AQLString &term
 				valMtx[rowPos][colPos] = volDataMtx[i][j].getDoubleValue();
 			}
 		}
-		AQLDate t_rowDate = AQLMathDateCalculations::getDate(asof, termRow, true);
+		AQLDate t_rowDate = AQLDateCalculations::getDate(asof, termRow, true);
 		double t_rowTerm = act_365.getTerm(asof, t_rowDate);
 
-		AQLDate t_colDate = AQLMathDateCalculations::getDate(asof, termCol, true);
+		AQLDate t_colDate = AQLDateCalculations::getDate(asof, termCol, true);
 		double t_colTerm = act_365.getTerm(asof, t_colDate);
 
 		AQLAlgorithm::locate<DoubleArray, double>(s_rowTerm, t_rowTerm, s_rowTerm.size(), rowPos); 
@@ -2676,7 +2676,7 @@ AQLMarketData::getCalendarTime(const AQLDate& asOfDate, AQLString strTerm)
 		if (tmpStrTerm.size() != 2) throw AQLCoreInvalidData("Format of grid term is not supported!",__FILE__,__LINE__);
 		strTerm = AQLPriceYieldGenerator::changeFRATermFormat(tmpStrTerm[1]);
 		
-		AQLDate date = AQLMathDateCalculations::getDate(asOfDate,strTerm,sl,&cal,true);
+		AQLDate date = AQLDateCalculations::getDate(asOfDate,strTerm,sl,&cal,true);
 		ret = dayCount.getTerm(asOfDate, date);
 	}
 	else if (strTerm.findString("FUTURE") != -1)
@@ -2684,7 +2684,7 @@ AQLMarketData::getCalendarTime(const AQLDate& asOfDate, AQLString strTerm)
 		AQLStringVector tmpStrTerm = strTerm.toToken('_');
 		if (tmpStrTerm.size() != 2) throw AQLCoreInvalidData("Format of grid term is not supported!",__FILE__,__LINE__);
 		
-		AQLDate date = AQLMathDateCalculations::getIMMDateFromTerm(asOfDate, tmpStrTerm[1]);
+		AQLDate date = AQLDateCalculations::getIMMDateFromTerm(asOfDate, tmpStrTerm[1]);
 		date.addMonths(3);
 		ret = dayCount.getTerm(asOfDate, date);
 	}
@@ -2696,7 +2696,7 @@ AQLMarketData::getCalendarTime(const AQLDate& asOfDate, AQLString strTerm)
 			if (tmpStrTerm.size() != 2 && tmpStrTerm.size() != 3 && tmpStrTerm.size() != 4) throw AQLCoreInvalidData("Format of grid term is not supported!",__FILE__,__LINE__);
 			strTerm = tmpStrTerm[1];
 		}
-		AQLDate date = AQLMathDateCalculations::getDate(asOfDate,strTerm,sl,&cal,true);
+		AQLDate date = AQLDateCalculations::getDate(asOfDate,strTerm,sl,&cal,true);
 		ret = dayCount.getTerm(asOfDate, date);
 	}
 	return ret;
@@ -2762,7 +2762,7 @@ AQLMarketData::getFutureVolFromSwaption(const AQLString &ccy, const AQLDate &exp
 	for (unsigned int i = 1; i < rowSize; i++)
 	{
 		optionMat = volDataMtx[i][0]; optionMat.toUpper();
-		AQLDate toDate = AQLMathDateCalculations::getDate(asOfDate,optionMat,true);
+		AQLDate toDate = AQLDateCalculations::getDate(asOfDate,optionMat,true);
 		optionMatVec[i - 1] = act_365.getTerm(asOfDate,toDate,true);
 	}
 	

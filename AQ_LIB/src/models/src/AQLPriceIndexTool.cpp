@@ -24,7 +24,7 @@
 
 #include "AQLAlgorithm.h"
 
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataFunction.h"
@@ -344,7 +344,7 @@ AQLPriceIndexTool::setUp(const AQLDate& basedate,
 													psrule, pcal);
 
 		DateVector out;
-		AQLMathDateCalculations::generateSchedule(start, end, freq,	
+		AQLDateCalculations::generateSchedule(start, end, freq,	
 									false,
 									NULL, NULL,
 									pday,
@@ -621,7 +621,7 @@ AQLPriceIndexTool::setUp(const AQLDate& basedate,
 
 
 		const AQLDate& end
-			= AQLMathDateCalculations::getDate(fixingdate, endstr, 
+			= AQLDateCalculations::getDate(fixingdate, endstr, 
 										*psrule,
 										pcal,
 										false);
@@ -639,7 +639,7 @@ AQLPriceIndexTool::setUp(const AQLDate& basedate,
 		{
 			dh = &(indexinfo.getData(PRICING_DATA_OBSERVATIONSTARTTERM, ISNOTNULL));
 			const AQLString& startstr = dynamic_cast<const AQLDataString&>(dh->get()).get();
-			start = AQLMathDateCalculations::getDate(fixingdate, startstr, 
+			start = AQLDateCalculations::getDate(fixingdate, startstr, 
 										*psrule,
 										pcal,
 										false);					
@@ -704,7 +704,7 @@ AQLPriceIndexTool::setUp(const AQLDate& basedate,
 		}
 
 		DateVector out;
-		AQLMathDateCalculations::generateSchedule(start, end, freq,	
+		AQLDateCalculations::generateSchedule(start, end, freq,	
 									false,
 									NULL, NULL,
 									pday,
@@ -1010,7 +1010,7 @@ AQLPriceIndexToolFixed::setUp(const AQLDate& basedate,
 													pcal);		
 	
 		const AQLDate& end
-			= AQLMathDateCalculations::getDate(fixingdate, endstr, 
+			= AQLDateCalculations::getDate(fixingdate, endstr, 
 										*psrule,
 										pcal,
 										false);
@@ -1492,7 +1492,7 @@ AQLPriceIndexToolCpn::setUp(const AQLDate& basedate,
 													pcal);
 
 		const AQLDate& enddate
-			= AQLMathDateCalculations::getDate(fixingdate, endstr, 
+			= AQLDateCalculations::getDate(fixingdate, endstr, 
 										*psrule,
 										pcal,
 										false);	
@@ -1512,7 +1512,7 @@ AQLPriceIndexToolCpn::setUp(const AQLDate& basedate,
 		{
 			dh = &(indexinfo.getData(PRICING_DATA_OBSERVATIONSTARTTERM, ISNOTNULL));
 			const AQLString& startstr = dynamic_cast<const AQLDataString&>(dh->get()).get();
-			startdate = AQLMathDateCalculations::getDate(fixingdate, startstr, 
+			startdate = AQLDateCalculations::getDate(fixingdate, startstr, 
 										*psrule,
 										pcal,
 										false);		
@@ -2116,7 +2116,7 @@ void AQLPriceIndexToolCompound::setUpFixingDates(const AQLObject& indexInfo)
 
 	
     fixingDates.clear();
-	AQLMathDateCalculations::generateSchedule(start, 
+	AQLDateCalculations::generateSchedule(start, 
                                    end, 
                                    freq,	
                                    false,
@@ -2702,8 +2702,13 @@ void AQLPriceIndexToolCompound::setUpStartAndEndDates(const AQLObject& indexInfo
         } catch(AQLCoreInvalidData& e){
             stringstream sst;
             sst << "There is CFCalcStartDates but is not CFCalcEndDates." << endl;
+            // e is bound by reference to the actual thrown object, so addMsg() mutates it in
+            // place - a bare `throw;` below rethrows that same, now-enriched object. `throw e;`
+            // would additionally slice it down to AQLCoreInvalidData's own static type (a no-op
+            // today since it's already a leaf class, but a latent trap if a subclass is ever
+            // added) - see AQLFileAccessor.cpp's matching fix for the general case.
             e.addMsg(sst.str().c_str());
-            throw e;
+            throw;
         }
 
         if(fixingDates.size() != cfCalcStartDates.size() ||
@@ -2732,7 +2737,7 @@ void AQLPriceIndexToolCompound::setUpStartAndEndDates(const AQLObject& indexInfo
                                                CALIBRATION_DATA_SLIDINGRULE,
                                                CALIBRATION_DATA_CALENDAR,
                                                psrule, pcal);
-	const AQLDate finaldate = AQLMathDateCalculations::getDate(fixingDates.back(), acstr, *psrule, pcal, true);
+	const AQLDate finaldate = AQLDateCalculations::getDate(fixingDates.back(), acstr, *psrule, pcal, true);
     cfCalcEndDates.back() = finaldate;
 }
 

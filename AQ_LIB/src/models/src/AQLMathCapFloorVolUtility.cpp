@@ -11,8 +11,8 @@
 #include <AQLFunctionManager.h>
 #include <AQLCoreFunctionHolder.h>
 #include "AQLInterpolationBase.h"
-#include <AQLMathDateCalculations.h>
-#include "AQLMathDateUtilities.h"
+#include <AQLDateCalculations.h>
+#include "AQLDateSchedule.h"
 #include <AQLPriceCashFlowGenerator.h>
 #include <AQLMathDefine.h>
 #include <AQLMathYieldCurve.h>
@@ -331,7 +331,7 @@ AQLMathCapFloorVolUtility::lookUpCapFloorVol
     const AQLDate asOfDate = 
         dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(curveID,ENCHKTYPE_ISDEFINED).
                                 get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
-    double fixingTerm =  AQLMathDateUtilities::getTerm(asOfDate,fixingDate,conv.daycount,true); 
+    double fixingTerm =  etrading::AQLDateSchedule::getTerm(asOfDate,fixingDate,conv.daycount,true); 
 
     if( fixingTerm<0. ) throw AQLCoreInvalidData("fixing date is before as of date.!",__FILE__,__LINE__);
 
@@ -372,7 +372,7 @@ AQLMathCapFloorVolUtility::lookUpCapFloorVol
 //
 //    int y,m,d;
 //    int capTerm_m;
-//    AQLMathDateCalculations::termStrtoYMD(capTerm, y, m, d);
+//    AQLDateCalculations::termStrtoYMD(capTerm, y, m, d);
 //    capTerm_m = 12 * y + m;
 //
 //    if( capTerm_m % span != 0 ) throw AQLCoreInvalidData("cap term is inconsistent with frequency.",	__FILE__,__LINE__);
@@ -420,7 +420,7 @@ AQLMathCapFloorVolUtility::changeDateFromStringToMonth(const AQLStringVector& ex
     for(size_t i=0; i<expiryDate.size(); i++)
     {
         //expiryMonth.push_back(12*y + m);
-		AQLMathDateCalculations::termStrtoYMDW(expiryDate[i], y, m, d, w);
+		AQLDateCalculations::termStrtoYMDW(expiryDate[i], y, m, d, w);
         expiryMonth.push_back(12*y + m + w / 4);
     }
     return expiryMonth;

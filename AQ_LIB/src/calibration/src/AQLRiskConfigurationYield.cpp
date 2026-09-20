@@ -11,7 +11,7 @@
 #include "AQLPricePortfolioValue.h"
 #include "AQLMathYieldCurve.h"
 #include "AQLMathYieldCurvePro.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLDefinitionsRisk.h"
 #include "AQLScenarioConfiguration.h"
 #include "AQLScenarioConfigurationManager.h"
@@ -142,7 +142,7 @@ AQLRiskConfigurationYield::getMaxGridIndex(const AQLString &ccy) const
 		}
 		if (grids[i].findString("ED") != -1) 
 		{
-			AQLDate date = AQLMathDateCalculations::getIMMDateFromTerm(asOfDate, grids[i]);
+			AQLDate date = AQLDateCalculations::getIMMDateFromTerm(asOfDate, grids[i]);
 			date.addMonths(3);
 			
 			int term = asOfDate.intervalYears(date);
@@ -161,7 +161,7 @@ AQLRiskConfigurationYield::getMaxGridIndex(const AQLString &ccy) const
 			grids[i].findString("M") > 0  || 
 			grids[i].findString("Y") > 0)
 		{
-			AQLDate date = AQLMathDateCalculations::getDate(asOfDate, grids[i], true);
+			AQLDate date = AQLDateCalculations::getDate(asOfDate, grids[i], true);
 			int term = asOfDate.intervalYears(date);
 
 			if (term > dealMax)

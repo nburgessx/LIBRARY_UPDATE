@@ -163,9 +163,18 @@ catch(...) \
 #endif
 
 // Macro to test if a variable is equal to a value with precision given by tolerance
+//
+// Every _WITH_TOLERANCE macro below is wrapped in an outer set of parens around its whole
+// ternary, not just around the condition. Unparenthesized, `COND ? true : false` composed into a
+// larger expression is a footgun: `?:` binds looser than `&&`/`||`, so
+// `AQ_IS_EQUAL_WITH_TOLERANCE(a,b,c) && somethingElse` would expand to
+// `COND ? true : (false && somethingElse)` - i.e. `COND ? true : false`, silently dropping
+// `somethingElse` whenever COND is false, not evaluating it at all. The outer parens make the
+// whole macro a single, safely-composable boolean subexpression, matching how a real bool-valued
+// function call already behaves.
 #ifndef AQ_IS_EQUAL_WITH_TOLERANCE
 #define AQ_IS_EQUAL_WITH_TOLERANCE( variable, equal, tolerance ) \
-    ( variable - equal > -tolerance && variable - equal < tolerance ) ? true : false
+    ( ( variable - equal > -tolerance && variable - equal < tolerance ) ? true : false )
 #endif
 
 // Macro to test if a variable is less than a value to precision AQ_EPSILON
@@ -176,7 +185,7 @@ catch(...) \
 
 #ifndef AQ_IS_LESS_THAN_WITH_TOLERANCE
 #define AQ_IS_LESS_THAN_WITH_TOLERANCE( variable, lessThan, tolerance ) \
-    ( variable - lessThan < -tolerance ) ? true : false
+    ( ( variable - lessThan < -tolerance ) ? true : false )
 #endif
 
 // Macro to test if a variable is less than a value to precision AQ_EPSILON
@@ -187,7 +196,7 @@ catch(...) \
 
 #ifndef AQ_IS_LESS_THAN_OR_EQUAL_WITH_TOLERANCE
 #define AQ_IS_LESS_THAN_OR_EQUAL_WITH_TOLERANCE( variable, lessThan, tolerance ) \
-    ( variable - lessThan <= tolerance ) ? true : false
+    ( ( variable - lessThan <= tolerance ) ? true : false )
 #endif
 
 // Macro to test if a variable is greater than a value to precision AQ_EPSILON
@@ -198,7 +207,7 @@ catch(...) \
 
 #ifndef AQ_IS_GREATER_THAN_WITH_TOLERANCE
 #define AQ_IS_GREATER_THAN_WITH_TOLERANCE( variable, greaterThan, tolerance ) \
-    ( variable - greaterThan > tolerance ) ? true : false
+    ( ( variable - greaterThan > tolerance ) ? true : false )
 #endif
 
 // Macro to test if a variable is greater than a value to precision AQ_EPSILON
@@ -209,7 +218,7 @@ catch(...) \
 
 #ifndef AQ_IS_GREATER_THAN_OR_EQUAL_WITH_TOLERANCE
 #define AQ_IS_GREATER_THAN_OR_EQUAL_WITH_TOLERANCE( variable, greaterThan, tolerance ) \
-    ( variable - greaterThan >= -tolerance ) ? true : false
+    ( ( variable - greaterThan >= -tolerance ) ? true : false )
 #endif
 
 // Macro to test if a variable is equal to zero to precision AQ_EPSILON
@@ -220,7 +229,7 @@ catch(...) \
 
 #ifndef AQ_IS_EQUAL_ZERO_WITH_TOLERANCE
 #define AQ_IS_EQUAL_ZERO_WITH_TOLERANCE( variable, tolerance ) \
-    ( variable > -tolerance && variable < tolerance ) ? true : false
+    ( ( variable > -tolerance && variable < tolerance ) ? true : false )
 #endif
 
 // Macro to test if a variable is less than a value to precision AQ_EPSILON
@@ -231,7 +240,7 @@ catch(...) \
 
 #ifndef AQ_IS_LESS_THAN_ZERO_WITH_TOLERANCE
 #define AQ_IS_LESS_THAN_ZERO_WITH_TOLERANCE( variable, tolerance ) \
-    ( variable < -tolerance ) ? true : false
+    ( ( variable < -tolerance ) ? true : false )
 #endif
 
 // Macro to test if a variable is less than a value to precision AQ_EPSILON
@@ -242,7 +251,7 @@ catch(...) \
 
 #ifndef AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE
 #define AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE( variable, tolerance ) \
-    ( variable <= tolerance ) ? true : false
+    ( ( variable <= tolerance ) ? true : false )
 #endif
 
 // Macro to test if a variable is greater than a value to precision AQ_EPSILON
@@ -253,7 +262,7 @@ catch(...) \
 
 #ifndef AQ_IS_GREATER_THAN_ZERO_WITH_TOLERANCE
 #define AQ_IS_GREATER_THAN_ZERO_WITH_TOLERANCE( variable, tolerance ) \
-    ( variable > tolerance ) ? true : false
+    ( ( variable > tolerance ) ? true : false )
 #endif
 
 // Macro to test if a variable is greater than a value to precision AQ_EPSILON
@@ -264,7 +273,7 @@ catch(...) \
 
 #ifndef AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE
 #define AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE( variable, tolerance ) \
-    ( variable >= -tolerance ) ? true : false
+    ( ( variable >= -tolerance ) ? true : false )
 #endif
 
 // Namespace to protect against clashes with std methods

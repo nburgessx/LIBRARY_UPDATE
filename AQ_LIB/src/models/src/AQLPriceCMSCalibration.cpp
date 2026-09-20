@@ -5,7 +5,7 @@
 #endif
 
 #include "AQLPriceCMSCalibration.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLFunctionUtilities.h"
 #include "AQLMathInterpolationUtilities.h"
 #include "AQLOptimumBrent.h"
@@ -20,7 +20,7 @@ AQLString AQLPriceCMSCalibration::Calibrate(AQLDataInstance* dataInstance, AQLSt
                                      const DoubleMatrix& quotes)
 {
     // Calibration config
-    AQLDate valDate = AQLStringToDate(AQLFunctionUtilities::findElement(calibrationConfig, "AsOfDate"));
+    AQLDate valDate = etrading::AQLStringToDate(AQLFunctionUtilities::findElement(calibrationConfig, "AsOfDate"));
     AQLString ccy = AQLFunctionUtilities::findElement(calibrationConfig, "Currency");
     AQLString colCcy = ccy;
     AQLString convID = AQLFunctionUtilities::findElement(calibrationConfig, "ConventionID");
@@ -36,9 +36,9 @@ AQLString AQLPriceCMSCalibration::Calibrate(AQLDataInstance* dataInstance, AQLSt
     // Curve info
     CurveInfo discCurveInfo = AQLPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
     AQLString fundingFreq = AQLFunctionUtilities::findElement(fundLegScheduler, "Frequency");
-    CurveInfo fundLiborCurveInfo = AQLPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, FrequencyToTerm(fundingFreq));
+    CurveInfo fundLiborCurveInfo = AQLPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, etrading::FrequencyToTerm(fundingFreq));
     AQLString cmsFloatFreq = AQLFunctionUtilities::findElement(cmsScheduler, "FloatLegFrequency");
-    CurveInfo cmsCurveInfo = AQLPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, FrequencyToTerm(cmsFloatFreq));
+    CurveInfo cmsCurveInfo = AQLPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, etrading::FrequencyToTerm(cmsFloatFreq));
 
     // Model info
     ReplicationConfig repConfig = GetReplicationConfig(calibrationConfig);
@@ -78,8 +78,8 @@ AQLString AQLPriceCMSCalibration::Calibrate(AQLDataInstance* dataInstance, AQLSt
             if (j == 0)
             {
                 tGrid[i] = targets[0][i].LastFixing();
-                AQLDate expDate = CalendarAdvance(valDate, expiryTerm, modelSlidingRule, modelCalendar);
-                expGrid[i] = ModelTime(valDate, expDate);
+                AQLDate expDate = etrading::CalendarAdvance(valDate, expiryTerm, modelSlidingRule, modelCalendar);
+                expGrid[i] = etrading::ModelTime(valDate, expDate);
             }
         }
     }
@@ -169,7 +169,7 @@ AQLPriceCMSCalibrationTarget::AQLPriceCMSCalibrationTarget(AQLDate valDate, AQLS
         mDFs[i] = AQLPriceCMSObject::DiscountFactor(discCurveInfo, valDate, timing.payment);
         mFwdSwapRates[i] = mRateInfo->ForwardSwapRate(timing.indexSettlement);
         mAnnuities[i] = mRateInfo->Annuity(timing.indexSettlement);
-        mTFix[i] = ModelTime(valDate, timing.fixing);
+        mTFix[i] = etrading::ModelTime(valDate, timing.fixing);
         for (size_t j = 0; j < paramIDs.size(); j++)
             mSABR[i][j] = AQLMathSwaptionVolUtility::lookUpSwapGrid(dataInstance, paramIDs[j], timing.fixing, tenor);
     }

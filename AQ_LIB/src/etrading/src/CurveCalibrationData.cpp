@@ -33,7 +33,7 @@
 
 #include "InitializeETrading.h"
 #include "AQLDateHelpers.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "CurveInstruments.h"
 #include "AQLLinearInterpolation.h"
@@ -3832,7 +3832,7 @@ void CurveCalibrationData::calcCheapestToDeliverCurve(const AQLString& curveName
 	double smallestCommonEndTerm = *largestDates.begin();
 	AQLDate asOfDate(asof);
 	AQLString daycount(dc_act365.convertToString());
-	AQLDate smallestCommonEndDate = etrading::AQLDateScheduleHelpers::getDateFromTerm(asOfDate, smallestCommonEndTerm, daycount);
+	AQLDate smallestCommonEndDate = etrading::AQLDateSchedule::getDateFromTerm(asOfDate, smallestCommonEndTerm, daycount);
 
 	DateVector startDates, endDates;
 	AQLDate startDate = asof;

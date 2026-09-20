@@ -11,7 +11,7 @@
 // LA Includes
 #include "AQLCurveCalibrationHelpers.h"  // was #include "AQLMathCurveGenerateFuncUti1ity.h"
 #include "AQLDateHelpers.h"              // was #include "AQLMathDateCalcUti1ity.h"
-#include "AQLDateScheduleHelpers.h"      // was #include "AQLMathDateFuncUti1ity.h"
+#include "AQLDateSchedule.h"      // was #include "AQLMathDateFuncUti1ity.h"
 #include "AQLCurvePricingObject.h"      // was #include "AQLMathYie1dCurve.h"
 
 // External Includes
@@ -92,7 +92,7 @@ namespace etrading
 	    upper(sdata);
 	    upper(ylddata);
 	
-	    AQLDate		asofdate			= AQLDateScheduleHelpers::getAQLDate(chgrow(ylddata,CURVEINPUT_ASOFDATE,1));
+	    AQLDate		asofdate			= AQLDateSchedule::getAQLDate(chgrow(ylddata,CURVEINPUT_ASOFDATE,1));
 	    AQLString	Currency			= chgrow(ylddata,CURVEINPUT_CURRENCY,	1);
 	    AQLString	strfutureuse		= chgrow(ylddata,CURVEINPUT_ISFUTUREUSE,1);
 	
@@ -208,7 +208,7 @@ namespace etrading
 	    int N=0;
 	    double rate=0.0;
 	    //Money Market
-        //spotdate	= AQLDateScheduleHelpers::getAQLDate(chgrow(mdata,CURVEINPUT_SPOTDATE,1));
+        //spotdate	= AQLDateSchedule::getAQLDate(chgrow(mdata,CURVEINPUT_SPOTDATE,1));
 	    itd			= dvar.find(chgrow(mdata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
 		    AQ_THROW( "Money Market Daycount is not registered " );
@@ -232,11 +232,11 @@ namespace etrading
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(mdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+            spotdate = AQLDateSchedule::getDate(asofdate,spotLag,srule,calendar);
         }
         else if(tmprow2>=0)
         {
-            spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(mdata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateSchedule::getAQLDate(chgrow(mdata,CURVEINPUT_SPOTDATE,1));
         }
 
 	    //i=row=0 is input row (not grid);
@@ -272,7 +272,7 @@ namespace etrading
 		    ref+= name + ":";
 	    }
 	    ////LiborData
-	    //spotdate	= AQLDateScheduleHelpers::getAQLDate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
+	    //spotdate	= AQLDateSchedule::getAQLDate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
 	    itd			= dvar.find(chgrow(ldata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
 		    AQ_THROW( "Libor Daycount is not registered " );
@@ -305,11 +305,11 @@ namespace etrading
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(ldata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+            spotdate = AQLDateSchedule::getDate(asofdate,spotLag,srule,calendar);
         }
         else if(tmprow2>=0)
         {
-            spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateSchedule::getAQLDate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
         }
 
 	    //i=row=0 is input row (not grid);
@@ -350,7 +350,7 @@ namespace etrading
 		    ref+= name + ":";
 	    }
 	    ////SwapData
-	    //spotdate	= AQLDateScheduleHelpers::getAQLDate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
+	    //spotdate	= AQLDateSchedule::getAQLDate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
 	    itd			= dvar.find(chgrow(sdata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
 		    AQ_THROW( "Swap Daycount is not registered " );
@@ -384,11 +384,11 @@ namespace etrading
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(sdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+            spotdate = AQLDateSchedule::getDate(asofdate,spotLag,srule,calendar);
         }
         else if(tmprow2>=0)
         {
-            spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateSchedule::getAQLDate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
         }
 
 	    //i=row=0 is input row (not grid);
@@ -467,7 +467,7 @@ namespace etrading
 	    ////Futuredata
 	    if(isfuteruse)
 	    {
-		    //spotdate	= AQLDateScheduleHelpers::getAQLDate(chgrow(fdata,CURVEINPUT_SPOTDATE,1));
+		    //spotdate	= AQLDateSchedule::getAQLDate(chgrow(fdata,CURVEINPUT_SPOTDATE,1));
 		    itd			= dvar.find(chgrow(fdata,CURVEINPUT_DAYCOUNT,1));
 		    if(itd==dvar.end())
 			    AQ_THROW( "Future Daycount is not registered " );
@@ -490,17 +490,17 @@ namespace etrading
             else if(tmprow1>=0)
             {
                 AQLString spotLag = AQLFunctionUtilities::findElement(fdata,CURVEINPUT_SPOTLAG,0,1,true);
-                spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+                spotdate = AQLDateSchedule::getDate(asofdate,spotLag,srule,calendar);
             }
             else if(tmprow2>=0)
             {
-                spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(fdata,CURVEINPUT_SPOTDATE,1));
+                spotdate = AQLDateSchedule::getAQLDate(chgrow(fdata,CURVEINPUT_SPOTDATE,1));
             }
 		    //i=row=0 is input row (not grid);
 		    for(int i=1; i<N; i++)
 		    {
-			    AQLDate	StartDate	=	AQLDateScheduleHelpers::getAQLDate(chgcol(fgrid,CURVEINPUT_STARTDATE,	i));
-			    AQLDate EndDate		=	AQLDateScheduleHelpers::getAQLDate(chgcol(fgrid,CURVEINPUT_ENDDATE,		i));
+			    AQLDate	StartDate	=	AQLDateSchedule::getAQLDate(chgcol(fgrid,CURVEINPUT_STARTDATE,	i));
+			    AQLDate EndDate		=	AQLDateSchedule::getAQLDate(chgcol(fgrid,CURVEINPUT_ENDDATE,		i));
 			    AQLString name		=  CurveID + Currency + FUTURE + AQLDataDate(StartDate).convertToString();
 			    AQLObject* fe		=	NULL;
 			    if(!objPool.getObject(name).isDefined())
@@ -627,7 +627,7 @@ namespace etrading
 	    AQLString bref;
 	    AQLString term;
         AQLDate spotdate;
-	    //AQLDate spotdate		= AQLDateScheduleHelpers::getAQLDate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));		
+	    //AQLDate spotdate		= AQLDateSchedule::getAQLDate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));		
 	    AQLString daycount(AC_365I);
 
 	    //BasisType
@@ -676,11 +676,11 @@ namespace etrading
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(bdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,bsrule,bcalendar);
+            spotdate = AQLDateSchedule::getDate(asofdate,spotLag,bsrule,bcalendar);
         }
         else
         {
-            spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateSchedule::getAQLDate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
         }
 
 	    //Interpolation
@@ -869,11 +869,11 @@ namespace etrading
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(bdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,bsrule,bcalendar);
+            spotdate = AQLDateSchedule::getDate(asofdate,spotLag,bsrule,bcalendar);
         }
         else
         {
-            spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateSchedule::getAQLDate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
         }
 
 	    //Interpolation
@@ -1043,7 +1043,7 @@ namespace etrading
         upper(fraGrid3M);upper(fraGrid6M);upper(fraConv);
 	    upper(yldData);
 	
-	    AQLDate asofdate = AQLDateScheduleHelpers::getAQLDate(chgrow(yldData,CURVEINPUT_ASOFDATE,1));
+	    AQLDate asofdate = AQLDateSchedule::getAQLDate(chgrow(yldData,CURVEINPUT_ASOFDATE,1));
         AQLString isFRAUSE_str = chgrow(yldData,"ISFRAUSE",1);
         bool isFRAUse = false;
         if( isFRAUSE_str == "TRUE" ) 
@@ -1217,11 +1217,11 @@ namespace etrading
         else if(ltmprow1>=0)
         {
             AQLString lspotLag = AQLFunctionUtilities::findElement(swapConv,CURVEINPUT_SPOTLAG,0,1,true);
-		    lspotdate = AQLDateScheduleHelpers::getDate(asofdate,lspotLag,lrule,lcalendar);
+		    lspotdate = AQLDateSchedule::getDate(asofdate,lspotLag,lrule,lcalendar);
         }
         else if(ltmprow2>=0)
         {
-            lspotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(swapConv,CURVEINPUT_SPOTDATE,1));
+            lspotdate = AQLDateSchedule::getAQLDate(chgrow(swapConv,CURVEINPUT_SPOTDATE,1));
         }
 	    /**/
 
@@ -1325,11 +1325,11 @@ namespace etrading
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(swapConv,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+            spotdate = AQLDateSchedule::getDate(asofdate,spotLag,srule,calendar);
         }
         else if(tmprow2>=0)
         {
-            spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(swapConv,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateSchedule::getAQLDate(chgrow(swapConv,CURVEINPUT_SPOTDATE,1));
         }
 
 	    for (size_t i=0; i<term.size(); i++)
@@ -1481,11 +1481,11 @@ namespace etrading
 			    else if(tmprow1>=0)
 			    {
 				    AQLString spotLag = AQLFunctionUtilities::findElement(currConv,CURVEINPUT_SPOTLAG,0,1,true);
-				    spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+				    spotdate = AQLDateSchedule::getDate(asofdate,spotLag,srule,calendar);
 			    }
 			    else if(tmprow2>=0)
 			    {
-				    spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(currConv,CURVEINPUT_SPOTDATE,1));
+				    spotdate = AQLDateSchedule::getAQLDate(chgrow(currConv,CURVEINPUT_SPOTDATE,1));
 			    }
 
 			    if( rate.size() == 0 ) AQ_THROW( "input currency basis market data." );
@@ -1676,11 +1676,11 @@ namespace etrading
             else if(tmprow1>=0)
             {
                 AQLString spotLag = AQLFunctionUtilities::findElement(fraConv,CURVEINPUT_SPOTLAG,0,1,true);
-                spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,srule,calendar);
+                spotdate = AQLDateSchedule::getDate(asofdate,spotLag,srule,calendar);
             }
             else if(tmprow2>=0)
             {
-                spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(fraConv,CURVEINPUT_SPOTDATE,1));
+                spotdate = AQLDateSchedule::getAQLDate(chgrow(fraConv,CURVEINPUT_SPOTDATE,1));
             }
 
 		    term = searchvecbycol(fraGrid3M,CURVEINPUT_TERM,true);
@@ -1875,11 +1875,11 @@ namespace etrading
         else if(tmprow1>=0)
         {
             AQLString spotLag = AQLFunctionUtilities::findElement(bdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = AQLDateScheduleHelpers::getDate(asofdate,spotLag,bsrule,bcalendar);
+            spotdate = AQLDateSchedule::getDate(asofdate,spotLag,bsrule,bcalendar);
         }
         else
         {
-            spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateSchedule::getAQLDate(chgrow(bdata,CURVEINPUT_SPOTDATE,1));
         }
 	
 	    AQLObjectPool& objPool = dataInstance->getObjectPool(); 
@@ -2003,11 +2003,11 @@ namespace etrading
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(data,CURVEINPUT_SPOTLAG,0,1,true);
-            spotdate = AQLDateScheduleHelpers::getDate(asOfDate,spotLag,srule_str,calendar_str);
+            spotdate = AQLDateSchedule::getDate(asOfDate,spotLag,srule_str,calendar_str);
         }
         else if(tmprow2>=0)
         {
-            spotdate = AQLDateScheduleHelpers::getAQLDate(chgrow(data,CURVEINPUT_SPOTDATE,1));
+            spotdate = AQLDateSchedule::getAQLDate(chgrow(data,CURVEINPUT_SPOTDATE,1));
         }
         double spread = chgrow(data,"CREDITSPREAD",1).getDoubleValue();
         AQLPriceDataSlidingRule srule;
@@ -2347,7 +2347,7 @@ namespace etrading
             // Curve terms are always calculated using ACT/365_ISDA as defined in ConstantDeclarations.h [sic] - see #define AC_365I
             // Etrading curves have been migrated to ACT/365 because ACT/365_ISDA causes leap year irregularities in the yield curve
 		    AQLString ACT_365 = AQLString("ACT/365");
-            paymentDatesVector[i] = AQLDateScheduleHelpers::getDateFromTerm( asOfDate, termsVector[i], ACT_365);
+            paymentDatesVector[i] = AQLDateSchedule::getDateFromTerm( asOfDate, termsVector[i], ACT_365);
         }
     
 
@@ -2468,7 +2468,7 @@ namespace etrading
             // Curve terms are always calculated using ACT/365_ISDA as defined in ConstantDeclarations.h [sic] - see #define AC_365I
 		    // Etrading curves have been migrated to ACT/365 because ACT/365_ISDA causes leap year irregularities in the yield curve
 		    AQLString ACT_365 = AQLString("ACT/365");
-            fixingDatesVector[i] = AQLDateScheduleHelpers::getDateFromTerm( asOfDate, termsMatrix[0][i], ACT_365);
+            fixingDatesVector[i] = AQLDateSchedule::getDateFromTerm( asOfDate, termsMatrix[0][i], ACT_365);
         }
    
         // Return Results
@@ -2558,7 +2558,7 @@ namespace etrading
     void 
     AQLCurveCalibrationHelpers::restoreSwapRateFromLibor(AQLMathYieldCurvePro &curve, const AQLString &ccy, const std::map<AQLString, double> &sRateMap, AQLStringMatrix sdata)
     {
-	    //AQLDate spotDate	= AQLDateScheduleHelpers::getAQLDate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
+	    //AQLDate spotDate	= AQLDateSchedule::getAQLDate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
 	    std::map<AQLString, AQLString>& dvar = AQLCoreComponentManager::getDayCountMap();
 	    std::map<AQLString, AQLString>::iterator itd = dvar.find(chgrow(sdata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
@@ -2598,11 +2598,11 @@ namespace etrading
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(sdata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotDate = AQLDateScheduleHelpers::getDate(asOfDate,spotLag,slidingStr,calStr);
+            spotDate = AQLDateSchedule::getDate(asOfDate,spotLag,slidingStr,calStr);
         }
         else if(tmprow2>=0)
         {
-            spotDate = AQLDateScheduleHelpers::getAQLDate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
+            spotDate = AQLDateSchedule::getAQLDate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
         }
 	    if (asOfDate > spotDate)
 		    AQ_THROW( "AsofDate > spotDate, cannnot calc. " );
@@ -2652,7 +2652,7 @@ namespace etrading
     void 
     AQLCurveCalibrationHelpers::resetMarketDataUseL(AQLMathYieldCurvePro &curve, const AQLString &ccy, AQLStringMatrix ldata)
     {
-	    //AQLDate spotDate	= AQLDateScheduleHelpers::getAQLDate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
+	    //AQLDate spotDate	= AQLDateSchedule::getAQLDate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
 	    std::map<AQLString, AQLString>& dvar = AQLCoreComponentManager::getDayCountMap();
 	    std::map<AQLString, AQLString>::iterator itd = dvar.find(chgrow(ldata,CURVEINPUT_DAYCOUNT,1));
 	    if(itd==dvar.end())
@@ -2691,11 +2691,11 @@ namespace etrading
 	    else if(tmprow1>=0)
 	    {		
 		    AQLString spotLag = AQLFunctionUtilities::findElement(ldata,CURVEINPUT_SPOTLAG,0,1,true);
-            spotDate = AQLDateScheduleHelpers::getDate(asOfDate,spotLag,slidingStr,calStr);
+            spotDate = AQLDateSchedule::getDate(asOfDate,spotLag,slidingStr,calStr);
         }
         else if(tmprow2>=0)
         {
-            spotDate = AQLDateScheduleHelpers::getAQLDate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
+            spotDate = AQLDateSchedule::getAQLDate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
         }
 	    if (asOfDate > spotDate)
 		    AQ_THROW( "AsofDate > spotDate, cannnot calc. " );

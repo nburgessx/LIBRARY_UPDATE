@@ -67,7 +67,7 @@
 #include "AQLModelDynamicsBase.h"
 #include "AQLDataBasics.h"
 #include "AQLObject.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLMathYieldCurvePro.h"
 #include "AQLMathAntonovFXOption.h"
 
@@ -134,8 +134,8 @@ private:
 			AQLString lterm = dynamic_cast<const AQLDataString&> ((_Left->getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL)).get()).get();
 			AQLString rterm = dynamic_cast<const AQLDataString&> ((_Right->getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL)).get()).get();
 			asof.setSystemDate();
-			ldate = AQLMathDateCalculations::getDate(asof, lterm, true);
-			rdate = AQLMathDateCalculations::getDate(asof, rterm, true);
+			ldate = AQLDateCalculations::getDate(asof, lterm, true);
+			rdate = AQLDateCalculations::getDate(asof, rterm, true);
 			return ldate < rdate;
 			
 		};

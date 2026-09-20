@@ -22,7 +22,7 @@
 #include "AQLLinearSplineInterpolation.h"
 #include "AQLLinearMonotoneSplineInterpolation.h"
 #include "ConstantDeclarations.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLDateHelpers.h"
 #include "AQLCurvePricingObject.h"
 #include "ExceptionMacros.h"

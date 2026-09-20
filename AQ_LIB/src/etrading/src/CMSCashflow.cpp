@@ -1,5 +1,5 @@
 #include "CMSCashflow.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 
 namespace etrading
 {

@@ -2,7 +2,7 @@
 #pragma once
 
 #include "AQLDate.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 
 namespace etrading
 {

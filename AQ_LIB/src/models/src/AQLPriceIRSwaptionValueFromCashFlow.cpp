@@ -12,7 +12,7 @@
 #include "AQLPriceDataManager.h"
 #include "AQLDataProcedure.h"
 #include "AQLMathDefine.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLMathValuableEntity.h"
 #include "AQLPricePayOff.h"
 #include "AQLMathCurveFuncUtility.h"
@@ -287,7 +287,7 @@ AQLPriceIRSwaptionValueFromCashFlow::getFrequencyFromIndexGenerator(const AQLObj
 	const AQLDataHolder* dh = &(eindex.getData(PRICING_DATA_ACCESSORY, ISNOTNULL));
 	AQLString libormonth = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(libormonth, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(libormonth, y, m, d, w);
 	m = 12*y + m;
 	if (!isMonthString)
 	{

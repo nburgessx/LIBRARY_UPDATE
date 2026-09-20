@@ -127,9 +127,12 @@ AQLFileAccessor::readAllData(AQLStringVector &vec)
 
 		vec = sData;
 	}
-	catch(AQLCoreError &e)
+	catch(AQLCoreError &)
 	{
-		throw e;
+		// Bare rethrow, not `throw e;` - the latter slices any derived AQLCoreError (e.g.
+		// AQLCoreInvalidData/AQLCoreSystemError) down to AQLCoreError's own static type, so a
+		// caller further up catching the specific derived type would silently stop matching.
+		throw;
 	}
 	catch(...)
 	{

@@ -28,8 +28,8 @@ const double INFINITESIMAL = 1E-7;
 #include "AQLCoreUtil.h"
 #include "AQLOptimumBrent.h"
 #include "AQLPriceYieldGenerator.h"
-#include "AQLMathDateCalculations.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateCalculations.h"
+#include "AQLDateSchedule.h"
 #include "AQLLinearInterpolation.h"
 #include <functional>
 #include <algorithm>
@@ -1177,7 +1177,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 			data_addtional[i]->remove(IR_CALIBRATION_DATA_TERM);
 			data_addtional[i]->add(IR_CALIBRATION_DATA_TERM, new AQLDataString(addtionalCalibGrid[i]));
 			
-			AQLDate tmpDate = AQLMathDateCalculations::getDate(c_spotdate, addtionalCalibGrid[i], c_sld, &c_cal, true, &roll_conv_ts);
+			AQLDate tmpDate = AQLDateCalculations::getDate(c_spotdate, addtionalCalibGrid[i], c_sld, &c_cal, true, &roll_conv_ts);
 			double term_basis = c_dc.getTerm(c_spotdate, tmpDate);				
 			double rate;
 			if (isTimeInter)
@@ -1408,8 +1408,8 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	if (dh->isDefined() && !dh->isNull())	
 	{	
 		c_freq_cpd = dynamic_cast<const AQLDataString &>(dh->get()).get();
-		AQLDate period_reset(AQLMathDateCalculations::getDate(c_spotdate, FrequencyToTerm(c_freq), true));
-		AQLDate period_payment(AQLMathDateCalculations::getDate(c_spotdate, FrequencyToTerm(c_freq_cpd), true));
+		AQLDate period_reset(AQLDateCalculations::getDate(c_spotdate, etrading::FrequencyToTerm(c_freq), true));
+		AQLDate period_payment(AQLDateCalculations::getDate(c_spotdate, etrading::FrequencyToTerm(c_freq_cpd), true));
 		if (period_reset > period_payment)
 		{
 			throw AQLCoreInvalidData("Payment frequency must be wider than reset frequency.", __FILE__, __LINE__);
@@ -1419,8 +1419,8 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	if (dh->isDefined() && !dh->isNull())	
 	{	
 		a_c_freq_cpd = dynamic_cast<const AQLDataString &>(dh->get()).get();
-		AQLDate period_reset(AQLMathDateCalculations::getDate(a_c_spotdate, FrequencyToTerm(a_c_freq), true));
-		AQLDate period_payment(AQLMathDateCalculations::getDate(a_c_spotdate, FrequencyToTerm(a_c_freq_cpd), true));
+		AQLDate period_reset(AQLDateCalculations::getDate(a_c_spotdate, etrading::FrequencyToTerm(a_c_freq), true));
+		AQLDate period_payment(AQLDateCalculations::getDate(a_c_spotdate, etrading::FrequencyToTerm(a_c_freq_cpd), true));
 		if (period_reset > period_payment)
 		{
 			throw AQLCoreInvalidData("Payment frequency must be wider than reset frequency.", __FILE__, __LINE__);
@@ -1435,18 +1435,18 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	const AQLString &termMax = dynamic_cast<const AQLDataString &>((data_.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 	// calc term (apply to month)
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
 	m = 12 * y + m;
 
 	c_freq_cpd.toUpper();
 	unsigned int mUnit;
 	if (isDiscount)
 	{
-		mUnit = AQLMathDateCalculations::getPeriodFrequencyInMonths(c_freq_cpd);
+		mUnit = AQLDateCalculations::getPeriodFrequencyInMonths(c_freq_cpd);
 	}
 	else
 	{
-		mUnit = AQLMathDateCalculations::getPeriodFrequencyInMonths(c_freq);
+		mUnit = AQLDateCalculations::getPeriodFrequencyInMonths(c_freq);
 	}
 
 	// check can be divided ?
@@ -1457,7 +1457,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	}
 
 	a_c_freq_cpd.toUpper();
-	unsigned int a_mUnit = AQLMathDateCalculations::getPeriodFrequencyInMonths(a_c_freq_cpd);
+	unsigned int a_mUnit = AQLDateCalculations::getPeriodFrequencyInMonths(a_c_freq_cpd);
 
 	if ((c_freq == LUNAR && a_c_freq != LUNAR) || (c_freq != LUNAR && a_c_freq == LUNAR))
 	{
@@ -1740,7 +1740,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 		maxTerm = dynamic_cast<AQLDataString&>(dh->get()).get();
 		maxTerm += "Y";
 		maxFreq = dynamic_cast<AQLDataString&>(objHolder.getData(IR_CALIBRATION_DATA_MAXTERMFREQ).get()).get();
-		const AQLDate& maxDate = AQLMathDateCalculations::getDate(c_spotdate, maxTerm, c_sld, &c_cal, true, &roll_conv);
+		const AQLDate& maxDate = AQLDateCalculations::getDate(c_spotdate, maxTerm, c_sld, &c_cal, true, &roll_conv);
 		DateVector tmp_dates; DoubleArray tmp_taus;
 		AQLPriceYieldGenerator::getPaymentDates(c_spotdate, maxDate, maxFreq, c_cal, c_sld, dc_act, tmp_dates, extra_terms, tmp_taus, eom);
 	}
@@ -1775,7 +1775,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 		if (fwd_isonly && extra_terms.size() > 0)
 		{
 			extra_terms.clear();
-			const AQLDate& maxDate = AQLMathDateCalculations::getDate(fwd_spotdate, maxTerm, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
+			const AQLDate& maxDate = AQLDateCalculations::getDate(fwd_spotdate, maxTerm, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
 			DateVector tmp_dates; DoubleArray tmp_taus;
 			AQLPriceYieldGenerator::getPaymentDates(fwd_spotdate, maxDate, maxFreq, fwd_cal, fwd_sld, dc_act, tmp_dates, extra_terms, tmp_taus, fwd_eom);
 		}
@@ -1798,7 +1798,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 					else
 					{
 						fwd_ratio_pow *= fwd_ratio;
-						end = AQLMathDateCalculations::getDate(asof, fwd_termStr, SLIDING_RULE_FOLLOWING, &fwd_cal, true);
+						end = AQLDateCalculations::getDate(asof, fwd_termStr, SLIDING_RULE_FOLLOWING, &fwd_cal, true);
 						term = dc_act.getTerm(asof, end);
 						df = a_d_inter.value(term) / fwd_ratio_pow;
 						fwd_spotdf = df;
@@ -1819,7 +1819,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 				}
 				else
 				{
-					end = AQLMathDateCalculations::getDate(fwd_spotdate, fwd_termStr, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
+					end = AQLDateCalculations::getDate(fwd_spotdate, fwd_termStr, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
 					term = dc_act.getTerm(asof, end);
 					df =a_d_inter.value(term) / (fwd_ratio * fwd_ratio_pow);
 				}
@@ -1881,7 +1881,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 							fwd_ratio = fwd_ispriceccy ? fwd_fx_on / spotfx : spotfx / fwd_fx_on;
 						else
 							fwd_ratio = fwd_ispriceccy ? fwd_fx_on / fwd_fx_tn : fwd_fx_tn / fwd_fx_on;
-						end = AQLMathDateCalculations::getDate(asof, fwd_termStr, SLIDING_RULE_FOLLOWING, &fwd_cal, true);
+						end = AQLDateCalculations::getDate(asof, fwd_termStr, SLIDING_RULE_FOLLOWING, &fwd_cal, true);
 						term = dc_act.getTerm(asof, end);
 						df = a_d_inter.value(term) * fwd_ratio;
 						fwd_spotdf = df;
@@ -1908,7 +1908,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 						fwd_ratio = fwd_ispriceccy ? spotfx / fwd_fx : fwd_fx / spotfx;
 					else
 						fwd_ratio = fwd_ispriceccy ? fwd_fx_on / fwd_fx : fwd_fx / fwd_fx_on;
-					end = AQLMathDateCalculations::getDate(fwd_spotdate, fwd_termStr, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
+					end = AQLDateCalculations::getDate(fwd_spotdate, fwd_termStr, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
 					term = dc_act.getTerm(fwd_spotdate, end) + fwd_spotTerm;
 					df = a_d_inter.value(term) * fwd_ratio;
 				}
@@ -2122,7 +2122,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 			spreadVec[i] = spread;
 			// set isOddTerm
 			int y_Term, m_Term, d_Term, w_Term;
-			AQLMathDateCalculations::termStrtoYMDW(strTerm, y_Term, m_Term, d_Term, w_Term);
+			AQLDateCalculations::termStrtoYMDW(strTerm, y_Term, m_Term, d_Term, w_Term);
 			bool a_isOddTerm = (12 * y_Term + m_Term) % a_mUnit != 0;
 			bool isOddTerm = (12 * y_Term + m_Term) % mUnit != 0;
 
@@ -2289,8 +2289,8 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 			{
 				const AQLString &strTerm_s = dynamic_cast<const AQLDataString &>(dh->get()).get();
 				const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data_[0]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-				AQLDate date_s = AQLMathDateCalculations::getDate(asof, strTerm_s, true);
-				AQLDate date = AQLMathDateCalculations::getDate(asof, strTerm, true);
+				AQLDate date_s = AQLDateCalculations::getDate(asof, strTerm_s, true);
+				AQLDate date = AQLDateCalculations::getDate(asof, strTerm, true);
 				
 				if (date_s < date)
 				{
@@ -2659,7 +2659,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 			const AQLString &strTerm = dynamic_cast<const AQLDataString &>((data_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			// set isOddTerm
 			int y_Term, m_Term, d_Term, w_Term;
-			AQLMathDateCalculations::termStrtoYMDW(strTerm, y_Term, m_Term, d_Term, w_Term);
+			AQLDateCalculations::termStrtoYMDW(strTerm, y_Term, m_Term, d_Term, w_Term);
 			if ((12 * y_Term + m_Term) % mUnit == 0)
 			{
 				continue;
@@ -2909,12 +2909,12 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//		double term = 0.0;
 	//		if (isAgtSpread)
 	//		{
-	//			AQLDate tmpDate = AQLMathDateCalculations::getDate(a_c_spotdate, strTerm, a_c_sld, &a_c_cal, true, &a_c_roll_conv);
+	//			AQLDate tmpDate = AQLDateCalculations::getDate(a_c_spotdate, strTerm, a_c_sld, &a_c_cal, true, &a_c_roll_conv);
 	//			term = a_c_dc.getTerm(a_c_spotdate, tmpDate);
 	//		}
 	//		else
 	//		{
-	//			AQLDate tmpDate = AQLMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &c_roll_conv);
+	//			AQLDate tmpDate = AQLDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &c_roll_conv);
 	//			term = c_dc.getTerm(c_spotdate, tmpDate);
 	//		}
 
@@ -2947,7 +2947,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//			if (isAgtSpread)
 	//			{
 	//				AQLString a_dfstrTerm = AQLString(static_cast<int>(mUnit * (i - 1) + a_mUnit * a_step)) + AQLString("M");
-	//				AQLDate a_dfdate = AQLMathDateCalculations::getDate(a_c_spotdate, a_dfstrTerm, a_c_sld, &a_c_cal, true);
+	//				AQLDate a_dfdate = AQLDateCalculations::getDate(a_c_spotdate, a_dfstrTerm, a_c_sld, &a_c_cal, true);
 	//				const double s_lterm_ = c_dc.getTerm(a_c_spotdate, a_dfdate);
 	//				if (isTimeInter)
 	//				{
@@ -2959,7 +2959,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//				}				
 	//			}
 	//
-	//			AQLDate a_fdate = AQLMathDateCalculations::getDate(a_c_spotdate, strTerm, a_c_sld, &a_c_cal, true);
+	//			AQLDate a_fdate = AQLDateCalculations::getDate(a_c_spotdate, strTerm, a_c_sld, &a_c_cal, true);
 	//			AQLDate a_ldate;
 	//			double a_lterm = 0.0;
 	//			double a_d_df = 1.0;
@@ -2967,7 +2967,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//			{
 	//				// calc cash flow
 	//				AQLString a_strTerm_ = AQLString(static_cast<int>(mUnit * (i - 1) + a_mUnit * (j + 1))) + AQLString("M");
-	//				a_ldate = AQLMathDateCalculations::getDate(a_c_spotdate, a_strTerm_, a_c_sld, &a_c_cal, true);
+	//				a_ldate = AQLDateCalculations::getDate(a_c_spotdate, a_strTerm_, a_c_sld, &a_c_cal, true);
 	//				const double a_delta = a_c_dc.getTerm(a_fdate, a_ldate);
 	//				a_lterm = dc_act.getTerm(asof, a_ldate);
 
@@ -3006,11 +3006,11 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//		// newton method
 	//		if (c_spotdate < a_c_spotdate)
 	//		{
-	//			fdate = AQLMathDateCalculations::getDate(a_c_spotdate, strTerm, c_sld, &c_cal, true);
+	//			fdate = AQLDateCalculations::getDate(a_c_spotdate, strTerm, c_sld, &c_cal, true);
 	//		}
 	//		else
 	//		{
-	//			fdate = AQLMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true);
+	//			fdate = AQLDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true);
 	//		}
 	//		AQLDate ldate;		
 	//		double val0 = 0.0;
@@ -3021,11 +3021,11 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//			AQLDate dfdate;
 	//			if (c_spotdate < a_c_spotdate)
 	//			{
-	//				dfdate = AQLMathDateCalculations::getDate(a_c_spotdate, dfstrTerm, c_sld, &c_cal, true);
+	//				dfdate = AQLDateCalculations::getDate(a_c_spotdate, dfstrTerm, c_sld, &c_cal, true);
 	//			}
 	//			else
 	//			{
-	//				dfdate = AQLMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true);
+	//				dfdate = AQLDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true);
 	//			}
 	//
 	//			double dfTerm = dc_act.getTerm(c_spotdate, dfdate);
@@ -3034,7 +3034,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//			double spread = 0.0;
 	//			if (!isAgtSpread)
 	//			{
-	//				AQLDate dfdate_ = AQLMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true);
+	//				AQLDate dfdate_ = AQLDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true);
 	//				const double s_lterm_ = c_dc.getTerm(c_spotdate, dfdate_);
 	//				if (isTimeInter && s_lterm_ != 0.0)
 	//				{
@@ -3099,11 +3099,11 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//				AQLString strTerm_ = AQLString(static_cast<int>(mUnit * (i - 1) + mUnit * (j + 1))) + AQLString("M");
 	//				if (c_spotdate < a_c_spotdate)
 	//				{
-	//					ldate = AQLMathDateCalculations::getDate(a_c_spotdate, strTerm_, c_sld, &c_cal, true);
+	//					ldate = AQLDateCalculations::getDate(a_c_spotdate, strTerm_, c_sld, &c_cal, true);
 	//				}
 	//				else
 	//				{
-	//					ldate = AQLMathDateCalculations::getDate(c_spotdate, strTerm_, c_sld, &c_cal, true);
+	//					ldate = AQLDateCalculations::getDate(c_spotdate, strTerm_, c_sld, &c_cal, true);
 	//				}
 	//				//analytic for CalcDatesForDVZero
 	//				dvzeroDates.push_back(ldate);
@@ -3222,7 +3222,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//			DoubleMatrix alphaMtx;
 	//
 	//			AQLString dfstrTerm = AQLString(static_cast<int>(mUnit * (i - 1) + mUnit * (step - 1))) + AQLString("M");
-	//			AQLDate dfdate = AQLMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true);
+	//			AQLDate dfdate = AQLDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true);
 	//
 	//			DoubleVector tmp_termVec;
 	//			DoubleVector tmp_gridVec;
@@ -3239,7 +3239,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//			if (!isAgtSpread)
 	//			{
 	//				AQLString dfstrTerm_ = AQLString(static_cast<int>(mUnit * (i - 1) + mUnit * step)) + AQLString("M");
-	//				AQLDate dfdate_ = AQLMathDateCalculations::getDate(c_spotdate, dfstrTerm_, c_sld, &c_cal, true);
+	//				AQLDate dfdate_ = AQLDateCalculations::getDate(c_spotdate, dfstrTerm_, c_sld, &c_cal, true);
 	//				const double s_lterm_ = c_dc.getTerm(c_spotdate, dfdate_);
 	//				if (isTimeInter && s_lterm_ != 0.0)
 	//				{
@@ -3256,7 +3256,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//			{	
 	//				// calc cash flow
 	//				AQLString strTerm_ = AQLString(static_cast<int>(mUnit * (i - 1) + mUnit * (j + 1))) + AQLString("M");
-	//				ldate = AQLMathDateCalculations::getDate(c_spotdate, strTerm_, c_sld, &c_cal, true);
+	//				ldate = AQLDateCalculations::getDate(c_spotdate, strTerm_, c_sld, &c_cal, true);
 	//				//analytic for CalcDatesForDVZero
 	//				dvzeroDates.push_back(ldate);
 	//				DoubleArray i_gridVec;
@@ -3542,18 +3542,18 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 	//		if (c_spotdate < a_c_spotdate && !isSameGridIndex)
 	//		{
 	//			ret.push_back(a_c_spotdate);
-	//			matudate = AQLMathDateCalculations::getDate(a_c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+	//			matudate = AQLDateCalculations::getDate(a_c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
 	//		}
 	//		else
 	//		{
 	//			ret.push_back(c_spotdate);
-	//			matudate = AQLMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+	//			matudate = AQLDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
 	//		}
 	//	}
 	//	else
 	//	{
 	//		ret.push_back(c_spotdate);
-	//		matudate = AQLMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+	//		matudate = AQLDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
 	//	}
 
 	//	//find dvzeroDates
@@ -3818,7 +3818,7 @@ AQLMathYieldCurvePro::calcIndexGrid(const AQLDate &asofdate, const AQLDate &date
 	AQLString tmpFreq = freq;
 	tmpFreq.toUpper();
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(accessary, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(accessary, y, m, d, w);
 
 	unsigned int size = 0;
 	unsigned int addmonth = 0;
@@ -4517,7 +4517,7 @@ AQLMathYieldCurvePro::setBasisRates_old(void)
 	{
 		const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data_basis[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		double rate = dynamic_cast<const AQLDataDouble &>((data_basis[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-		AQLDate tmpDate = AQLMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		AQLDate tmpDate = AQLDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		double term = dcbs.getTerm(spotdate, tmpDate);
 
 		b_t_grid.push_back(term);
@@ -4531,7 +4531,7 @@ AQLMathYieldCurvePro::setBasisRates_old(void)
 
 	// calc term (apply to month)
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
 	m = 12 * y + m;
 
 	unsigned int mUnit = 0;
@@ -4572,7 +4572,7 @@ AQLMathYieldCurvePro::setBasisRates_old(void)
 		AQLString strTerm = AQLString(static_cast<int>(mUnit * i));
 		strTerm += "M";
 
-		AQLDate ldate =  AQLMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		AQLDate ldate =  AQLDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		//term is term under basis convention.
 		const double term = dcbs.getTerm(spotdate, ldate);
 		//termaa is term act/act.
@@ -4588,7 +4588,7 @@ AQLMathYieldCurvePro::setBasisRates_old(void)
 		//making sum of (L + s)*term*DF which tenor is j*i
 		AQLString strTerm_ = AQLString(static_cast<int>(mUnit * i));
 		strTerm_ += "M";
-		ldate = AQLMathDateCalculations::getDate(spotdate, strTerm_, sldbs, &calbs, true, &roll_conv_bs);
+		ldate = AQLDateCalculations::getDate(spotdate, strTerm_, sldbs, &calbs, true, &roll_conv_bs);
 		const double delta = dcbs.getTerm(fdate, ldate);
 		const double dff = getDF(asof, fdate);
 		const double dfl = getDF(asof, ldate);
@@ -4732,7 +4732,7 @@ AQLMathYieldCurvePro::setBasisRates2(const AQLString& basisCurveID)
 	{
 		const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data_basis[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		double rate = dynamic_cast<const AQLDataDouble &>((data_basis[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-		AQLDate tmpDate = AQLMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		AQLDate tmpDate = AQLDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		double term = dcbs.getTerm(spotdate, tmpDate);
 
 		b_t_grid.push_back(term);
@@ -4746,7 +4746,7 @@ AQLMathYieldCurvePro::setBasisRates2(const AQLString& basisCurveID)
 
 	// calc term (apply to month)
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
 	m = 12 * y + m;
 
 	unsigned int mUnit = 0;
@@ -4782,7 +4782,7 @@ AQLMathYieldCurvePro::setBasisRates2(const AQLString& basisCurveID)
 		AQLString strTerm = AQLString(static_cast<int>(mUnit * i));
 		strTerm += "M";
 
-		AQLDate ldate = AQLMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		AQLDate ldate = AQLDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		//term is term under basis convention.
 		const double term = dcbs.getTerm(spotdate, ldate);
 		//termaa is term act/act.
@@ -4799,7 +4799,7 @@ AQLMathYieldCurvePro::setBasisRates2(const AQLString& basisCurveID)
 			// calc ldate which is never same with fdate
 			AQLString strTerm_ = AQLString(static_cast<int>(mUnit * j));
 			strTerm_ += "M";
-			ldate = AQLMathDateCalculations::getDate(spotdate, strTerm_, sldbs, &calbs, true, &roll_conv_bs);
+			ldate = AQLDateCalculations::getDate(spotdate, strTerm_, sldbs, &calbs, true, &roll_conv_bs);
 			
 			delta = dcbs.getTerm(fdate, ldate);
 			const double dff = getDF(asof, fdate);
@@ -6239,7 +6239,7 @@ AQLMathYieldCurvePro::setFloater(const AQLString& curveName)
 		const AQLString &termMax = dynamic_cast<const AQLDataString &>((data.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		// calc term (apply to month)
 		int y, m, d, w;
-		AQLMathDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
+		AQLDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
 		m = 12 * y + m;
 
 		c_freq.toUpper();
@@ -6285,7 +6285,7 @@ AQLMathYieldCurvePro::setFloater(const AQLString& curveName)
 
 			double rate = dynamic_cast<const AQLDataDouble &>((data[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 			double term = 0.0;
-			AQLDate tmpDate = AQLMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate tmpDate = AQLDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
 			term = c_dc.getTerm(c_spotdate, tmpDate);
 
 			b_t_grid.push_back(term);
@@ -6316,8 +6316,8 @@ AQLMathYieldCurvePro::setFloater(const AQLString& curveName)
 		{
 			AQLString strTerm = AQLString(static_cast<int>(mUnit * (i - 1))) + AQLString("M");
 			AQLString dfstrTerm = AQLString(static_cast<int>(mUnit * i)) + AQLString("M");
-			AQLDate fdate = AQLMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
-			AQLDate ldate = AQLMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate fdate = AQLDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate ldate = AQLDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
 			double dfTerm = dc_act.getTerm(asof, ldate);
 			double dfTerm_last = dc_act.getTerm(asof, fdate);
 			if (dfTerm > tmax + eps_term)
@@ -6372,7 +6372,7 @@ AQLMathYieldCurvePro::setFloater(const AQLString& curveName)
 			DateVector ret;
 
 			const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			AQLDate matudate = AQLMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate matudate = AQLDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
 			ret.push_back(c_spotdate);
 
 			//find dvzeroDates
@@ -6497,7 +6497,7 @@ AQLMathYieldCurvePro::setFloater(const AQLString& curveName)
 		const AQLString &termMax = dynamic_cast<const AQLDataString &>((data.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		// calc term (apply to month)
 		int y, m, d, w;
-		AQLMathDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
+		AQLDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
 		m = 12 * y + m;
 
 		c_freq.toUpper();
@@ -6545,8 +6545,8 @@ AQLMathYieldCurvePro::setFloater(const AQLString& curveName)
 		{
 			AQLString strTerm = AQLString(static_cast<int>(mUnit * (i - 1))) + AQLString("M");
 			AQLString dfstrTerm = AQLString(static_cast<int>(mUnit * i)) + AQLString("M");
-			AQLDate fdate = AQLMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
-			AQLDate ldate = AQLMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate fdate = AQLDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate ldate = AQLDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
 			double dfTerm = dc_act.getTerm(asof, ldate);
 			double dfTerm_last = dc_act.getTerm(asof, fdate);
 			if (dfTerm > tmax + eps_term)
@@ -6967,11 +6967,11 @@ void AQLMathYieldCurvePro::deducePaymentDatesAndTerms(const AQLDate& spotdate, c
 	AQLDate end;
 	if (isBackward)
 	{
-		end = AQLMathDateCalculations::getDate(spotdate, strTerm, true);
+		end = AQLDateCalculations::getDate(spotdate, strTerm, true);
 	}
 	else
 	{
-		end = AQLMathDateCalculations::getDate(spotdate, strTerm, sld, &cal, true, &roll_conv);
+		end = AQLDateCalculations::getDate(spotdate, strTerm, sld, &cal, true, &roll_conv);
 	}
 
 	dates.clear();
@@ -6985,17 +6985,17 @@ void AQLMathYieldCurvePro::deducePaymentDatesAndTerms(const AQLDate& spotdate, c
 	}
 	else
 	{
-		AQLDate end_unadjust = AQLMathDateCalculations::getDate(spotdate, strTerm, true);
+		AQLDate end_unadjust = AQLDateCalculations::getDate(spotdate, strTerm, true);
 		DateVector reset_dates;
 		AQLString roll_conv_payment(AQLPriceYieldGenerator::deduceRollConvention(freq_payment, eom));
 		int roll_date_payment = spotdate.dayOfMonth();
 		if (freq == BUSINESS_DAYS || freq == DAILY)
 		{
-			AQLMathDateCalculations::generateSchedule(spotdate, end, freq_payment, true, NULL, NULL, &roll_date_payment, reset_dates, &sld, &cal, !isBackward, &roll_conv_payment);
+			AQLDateCalculations::generateSchedule(spotdate, end, freq_payment, true, NULL, NULL, &roll_date_payment, reset_dates, &sld, &cal, !isBackward, &roll_conv_payment);
 		}
 		else
 		{
-			AQLMathDateCalculations::generateSchedule(spotdate, end_unadjust, freq_payment, true, NULL, NULL, &roll_date_payment, reset_dates, NULL, NULL, !isBackward, &roll_conv_payment);
+			AQLDateCalculations::generateSchedule(spotdate, end_unadjust, freq_payment, true, NULL, NULL, &roll_date_payment, reset_dates, NULL, NULL, !isBackward, &roll_conv_payment);
 		}
 
 		if (reset_dates.size() < 1)

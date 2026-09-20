@@ -1,6 +1,6 @@
 #include "LabelValueBlockValidation.h"
 
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "AQLPriceDataCalendar.h"
 #include <cctype>

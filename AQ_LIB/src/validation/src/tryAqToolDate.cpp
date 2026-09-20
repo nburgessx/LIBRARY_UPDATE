@@ -4,7 +4,7 @@
 #include "CurveValidation.h"
 #include "Environment.h"
 #include "AQLCurveForwardRateHelpers.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "ParameterValidation.h"
 #include "RecordMacros.h"
 #include "StructuredExceptionHandler.h"

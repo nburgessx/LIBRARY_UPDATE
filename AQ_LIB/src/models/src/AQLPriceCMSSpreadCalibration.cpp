@@ -6,8 +6,8 @@
 
 #include "AQLPriceCMSSpreadCalibration.h"
 #include "AQLPriceCMSSpreadTools.h"
-#include "AQLMathDateUtilities.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateSchedule.h"
+#include "AQLDateCalculations.h"
 #include "AQLFunctionUtilities.h"
 #include "AQLMathParameterUtility.h"
 #include "AQLMathCashFlowSchedules.h"
@@ -30,7 +30,7 @@ AQLString AQLPriceCMSSpreadCalibration::Calibrate(AQLDataInstance* dataInstance,
                                            AQLStringMatrix inputTypes, const AQLStringVector& optionTypes, const DoubleVector& smileWeights)
 {
     // Calibration config
-    AQLDate valDate = AQLStringToDate(AQLFunctionUtilities::findElement(calibrationConfig, "AsOfDate"));
+    AQLDate valDate = etrading::AQLStringToDate(AQLFunctionUtilities::findElement(calibrationConfig, "AsOfDate"));
     AQLString ccy = AQLFunctionUtilities::findElement(calibrationConfig, "Currency");
     AQLString colCcy = ccy;
     AQLString convID = AQLFunctionUtilities::findElement(calibrationConfig, "ConventionID");
@@ -74,7 +74,7 @@ AQLString AQLPriceCMSSpreadCalibration::Calibrate(AQLDataInstance* dataInstance,
     for (size_t i = 0; i < nGrid; i++)
     {
         AQLString term = gridTerms[i];
-        AQLDate date = CalendarAdvance(valDate, term, pSlidingRule, pCalendar);
+        AQLDate date = etrading::CalendarAdvance(valDate, term, pSlidingRule, pCalendar);
         grid[i] = make_pair(date, term);
     }
     sort(grid.begin(), grid.end(), leq<AQLString>);
@@ -86,13 +86,13 @@ AQLString AQLPriceCMSSpreadCalibration::Calibrate(AQLDataInstance* dataInstance,
     {
         gridTerms[i] = grid[i].second;
         gridDates[i] = grid[i].first;
-        gridTimes[i] = ModelTime(valDate, gridDates[i]);
+        gridTimes[i] = etrading::ModelTime(valDate, gridDates[i]);
     }
 
     // Curves and schedules
     CurveInfo discCurveInfo = AQLPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
     AQLString cmsFloatFreq = AQLFunctionUtilities::findElement(cmsScheduler, "FloatLegFrequency");
-    CurveInfo cmsCurveInfo = AQLPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, FrequencyToTerm(cmsFloatFreq));
+    CurveInfo cmsCurveInfo = AQLPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, etrading::FrequencyToTerm(cmsFloatFreq));
 
     // Model info
     ReplicationConfig repConfig = GetReplicationConfig(calibrationConfig);
@@ -132,15 +132,15 @@ AQLString AQLPriceCMSSpreadCalibration::Calibrate(AQLDataInstance* dataInstance,
             DoubleVector slTimes(nSLTimes);
             DateVector slDates(nSLTimes);
             AQLString spotLag = AQLFunctionUtilities::findElement(legScheduler, "SpotLag");
-            AQLDate startDate = CalendarAdvance(valDate, spotLag, pSlidingRule, pCalendar);
+            AQLDate startDate = etrading::CalendarAdvance(valDate, spotLag, pSlidingRule, pCalendar);
             AQLPriceDataSlidingRule noChangeSlidingRule;
             noChangeSlidingRule.convertFromString("no_change");
             AQLPriceDataCalendar noChangeCalendar;
             noChangeCalendar.convertFromString("");
             for (size_t timeIdx = 0; timeIdx < nSLTimes; timeIdx++)
             {
-                slDates[timeIdx] = CalendarAdvance(valDate, slTerms[timeIdx], pSlidingRule, pCalendar);
-                slTimes[timeIdx] = ModelTime(valDate, slDates[timeIdx]);
+                slDates[timeIdx] = etrading::CalendarAdvance(valDate, slTerms[timeIdx], pSlidingRule, pCalendar);
+                slTimes[timeIdx] = etrading::ModelTime(valDate, slDates[timeIdx]);
             }
 
             // Set SL-sized containers
@@ -367,7 +367,7 @@ AQLPriceCMSSpreadATMTarget::AQLPriceCMSSpreadATMTarget(AQLDate valDate, CashFlow
                                            double quote, bool isCall, double theta1, double theta2)
 {
     mQuote = quote;
-    mExpiry = ModelTime(valDate, cf.fixing);
+    mExpiry = etrading::ModelTime(valDate, cf.fixing);
     mIsCall = isCall;
     mTheta1 = theta1;
     mTheta2 = theta2;
@@ -430,7 +430,7 @@ AQLPriceCMSSpreadSmileTarget::AQLPriceCMSSpreadSmileTarget(AQLDate valDate, Cash
         throw AQLCoreInvalidData("Invalid constraint size in CMS Spread Smile target", __FILE__, __LINE__);
 
     //// Cache ////
-    mExpiry = ModelTime(valDate, cf.fixing);
+    mExpiry = etrading::ModelTime(valDate, cf.fixing);
     mCopulaType = "PowerGaussian";
     mConfidence = 10.0;
     mDfPay = AQLPriceCMSObject::DiscountFactor(discCurveInfo, valDate, cf.payment);

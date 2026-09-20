@@ -7,7 +7,7 @@
 #include "ParameterValidation.h"
 #include "CurveBuildDefaults.h"
 #include "AQObjUtilities.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "ConvexityModel.h"
 
 namespace etrading
@@ -852,7 +852,7 @@ namespace etrading
 
 				AQLString crvFreqTenor = validateCurveAndGetCurveFrequency(curveCollection, forecastCurve.c_str());
 
-				AQLDate fixingEndDate = AQLDateScheduleHelpers::getDate(fixingDate, crvFreqTenor, toString(fixingBusinessDayAdj).c_str(), fixingCalendar.c_str());
+				AQLDate fixingEndDate = AQLDateSchedule::getDate(fixingDate, crvFreqTenor, toString(fixingBusinessDayAdj).c_str(), fixingCalendar.c_str());
 
 				// get floatRate from the curve
 				const double unadjustedFwdRate = getCurveForwardRatesFromForwardDates(boost::assign::list_of(fixingDate), boost::assign::list_of(fixingEndDate), curveCollection, forecastCurve.c_str(), legStaticData_->getFwdInter(), fixingBusinessDayAdj)[0];

@@ -125,8 +125,21 @@ namespace etrading
         // C++ provides program interruption mechanism called signals. You can handle signals with the signal() function.
         // The following code aims to catch signal interruptions and resolve them before throwing inhouse exceptions
         // See this link for more info: https://msdn.microsoft.com/en-us/library/xdkz3x12(v=vs.71).aspx
+        //
+        // SIGFPE deliberately NOT registered here (2026-09-20) - on Windows, SIGFPE is one of the
+        // few signal() codes the CRT genuinely delivers (unlike SIGSEGV/SIGILL/SIGTERM, which
+        // Microsoft's own signal() docs say are not supported on Win32 - registering a handler for
+        // them is inert). Both EXCEPTION_INT_DIVIDE_BY_ZERO and EXCEPTION_FLT_DIVIDE_BY_ZERO map to
+        // SIGFPE, so this registration was intercepting those hardware faults *before*
+        // _set_se_translator's SEHandler ever saw them - and throwing a C++ exception from inside a
+        // Windows SIGFPE handler is unsupported/unreliable (the throw silently failed to propagate),
+        // so an integer divide-by-zero anywhere in this add-in was crashing the process instead of
+        // surfacing as a catchable AQLCoreError, exactly the failure mode this class exists to
+        // prevent. Access violations were never affected (SIGSEGV's registration below is inert on
+        // Windows, so those already fell through to SEHandler correctly) - confirmed by
+        // TestStructuredExceptionHandler's two cases: UNIT_AccessViolation_BecomesCppException always
+        // passed, UNIT_IntegerDivideByZero_BecomesCppException did not, until this fix.
         signal( SIGABRT, signalHandler );
-        signal( SIGFPE, signalHandler );
         signal( SIGILL, signalHandler );
         signal( SIGINT, signalHandler );
         signal( SIGSEGV, signalHandler );

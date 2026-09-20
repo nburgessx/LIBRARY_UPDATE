@@ -38,8 +38,8 @@
 #include "AQLInterpolationBase.h"
 #include "AQLMathYieldCurvePro.h"
 #include "AQLPriceCashFlowGenerator.h"
-#include "AQLMathDateCalculations.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateCalculations.h"
+#include "AQLDateSchedule.h"
 #include "AQLCoreUtility.h"
 #include <algorithm>
 
@@ -690,9 +690,9 @@ AQLPricePayOffTool::setUp(const AQLDate& basedate, const AQLObject& trade,
 				startdates.push_back(dynamic_cast<const AQLDataDate &>(cashlets.get(i).get().getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL).get()).get());
 				enddates.push_back(dynamic_cast<const AQLDataDate &>(cashlets.get(i).get().getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL).get()).get());
 			}
-			DateMatrix regular_startenddates = AQLMathDateUtilities::calcRegularDates(frequency, calendar, slidingrule, startdates, enddates);
+			DateMatrix regular_startenddates = etrading::AQLDateSchedule::calcRegularDates(frequency, calendar, slidingrule, startdates, enddates);
 
-			mDC.setCouponsInYear(12/AQLMathDateCalculations::getPeriodFrequencyInMonths(frequency));
+			mDC.setCouponsInYear(12/AQLDateCalculations::getPeriodFrequencyInMonths(frequency));
 			mDC.setCouponStartDates(regular_startenddates[0]);
 			mDC.setCouponEndDates(regular_startenddates[1]);
 		}

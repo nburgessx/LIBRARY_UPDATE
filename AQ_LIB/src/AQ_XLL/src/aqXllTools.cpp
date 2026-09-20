@@ -24,7 +24,7 @@
 
 #include <CommonConstants.h>
 #include <DateUtilities.h>
-#include <AQLDateScheduleHelpers.h>
+#include <AQLDateSchedule.h>
 #include <Environment.h>
 #include <AQLCoreAppError.h>
 #include <Variant.h>                // etrading::canStringConvertToNumber
@@ -448,7 +448,7 @@ namespace aq_xll
 
     double toExcelDate( const AQLDate& date )
     {
-        return static_cast< double >( etrading::AQLDateScheduleHelpers::getExcelDate( date ) );
+        return static_cast< double >( etrading::AQLDateSchedule::getExcelDate( date ) );
     }
 
     xloil::ExcelObj toExcelDateColumn( const DateVector& dates )

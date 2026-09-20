@@ -22,7 +22,7 @@
 #include "AQLLinearSplineInterpolation.h"
 #include "AQLLinearMonotoneSplineInterpolation.h"
 #include "ConstantDeclarations.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLDateHelpers.h"
 #include "ExceptionMacros.h"
 
@@ -1504,7 +1504,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 			}
 
 			// Calculate fixing start dates by applying fixing lag
-			fixingStartDates_[i] = etrading::AQLDateScheduleHelpers::calcDatesWithLag( fixingStartDates_[i],
+			fixingStartDates_[i] = etrading::AQLDateSchedule::calcDatesWithLag( fixingStartDates_[i],
 																		           fixingLag,
 																		           *sld_s[i],
 																		           cal_s[i],
@@ -1512,7 +1512,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 																		           nullptr ); // This RollConv = Start, End, IMM, EOM or NULL
 
 			// fixing end dates are always a fixed term after the corresponding fixing start dates
-			fixingEndDates_[i] = etrading::AQLDateScheduleHelpers::getMultiDate( fixingStartDates_[i], refRateTerm, sld_s[i]->convertToString(), cal_s[i]->convertToString(), nullptr); // rollconvention* = nullptr
+			fixingEndDates_[i] = etrading::AQLDateSchedule::getMultiDate( fixingStartDates_[i], refRateTerm, sld_s[i]->convertToString(), cal_s[i]->convertToString(), nullptr); // rollconvention* = nullptr
 
 			for(size_t j = 0; j < fixingStartDates_[i].size(); ++j)
 			{
@@ -1588,10 +1588,10 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 			AQLPriceDataDayCount dc = *dc_s_float.front();
 			AQLPriceDataCalendar cal = *cal_s.front();
 			AQLPriceDataSlidingRule sl = *sld_s.front();
-			interpolationJoinDate_ = etrading::AQLDateScheduleHelpers::getDateFromTerm(lastFutureStartDate, fractionFromLastFutureStartToJoin, dc);
+			interpolationJoinDate_ = etrading::AQLDateSchedule::getDateFromTerm(lastFutureStartDate, fractionFromLastFutureStartToJoin, dc);
 			
 			// Make sure the join date is not a holiday
-			AQLDate adjustedJoinDate = etrading::AQLDateScheduleHelpers::getDate(interpolationJoinDate_, "0D", sl.convertToString(), cal.convertToString());
+			AQLDate adjustedJoinDate = etrading::AQLDateSchedule::getDate(interpolationJoinDate_, "0D", sl.convertToString(), cal.convertToString());
 			if (adjustedJoinDate != interpolationJoinDate_)
 			{
 				interpolationJoinDate_ = adjustedJoinDate;

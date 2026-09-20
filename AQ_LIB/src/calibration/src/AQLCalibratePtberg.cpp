@@ -34,7 +34,7 @@
 #include "AQLPriceFXDisplacedDiffusionCalibration.h"
 #include "AQLMathAntonovFXOptionBetaFixed.h"
 #include "AQLMathAntonovFXOptionVolatilityFixed.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLMathCurveFuncUtility.h"
 #include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathValuableEntity.h"
@@ -43,7 +43,7 @@
 #include "AQLMathVolFuncFX.h"
 #include "AQLMathVolFuncFXDD.h"
 #include "AQLPriceFXVolatility.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLMathFXVanillaFuncUtility.h"
 #include "AQLCoreDataService.h"
 #include <sstream>
@@ -638,7 +638,7 @@ AQLCalibratePtberg::setUp(AQLObjectPool &objPool,  const AQLScenarioParam &param
 	const bool isIncludeLast = dynamic_cast<const AQLDataBool &>(calibInfo.getData(PRICING_DATA_TERMISINCLUDELAST, ISNOTNULL).get()).get();
 	// spotdate for calc term
 	int spotlag = dynamic_cast<const AQLDataInt &>(calibInfo.getData(PRICING_DATA_TERMSPOTLAG, ISNOTNULL).get());
-	AQLDate optionSpotDate = AQLMathDateCalculations::getFXSpotDate(param.ccy, asofDate, strTermCal, spotlag, true);
+	AQLDate optionSpotDate = AQLDateCalculations::getFXSpotDate(param.ccy, asofDate, strTermCal, spotlag, true);
 	// need to calc strike and prem
 	AQLString strLow("low");
 	AQLString strHigh("high");
@@ -719,9 +719,9 @@ AQLCalibratePtberg::setUp(AQLObjectPool &objPool,  const AQLScenarioParam &param
 		else
 		{
 			// calc strike and optiontype
-//			AQLDate date = AQLMathDateCalculations::getDate(asofDate, optionMatVec[i], termSliding, &termCal, true);
-			AQLDate settledate = AQLMathDateCalculations::getDate(optionSpotDate, optionMatVec[i], termSliding, &termCal, true);
-			AQLDate date = AQLMathDateCalculations::getFXSpotDate(param.ccy, settledate, strTermCal, -spotlag, true);
+//			AQLDate date = AQLDateCalculations::getDate(asofDate, optionMatVec[i], termSliding, &termCal, true);
+			AQLDate settledate = AQLDateCalculations::getDate(optionSpotDate, optionMatVec[i], termSliding, &termCal, true);
+			AQLDate date = AQLDateCalculations::getFXSpotDate(param.ccy, settledate, strTermCal, -spotlag, true);
 			const double term = termDC.getTerm(asofDate, date, isIncludeLast);
 			const double dDF = dYield.getBasisDF(term);
 			const double fDF = fYield.getBasisDF(term);

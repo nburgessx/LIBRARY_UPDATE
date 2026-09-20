@@ -21,8 +21,8 @@
 //#include "AQLMathFXVolatilitySurfaceGenerate.h"
 //#include "AQLCoreUtility.h"
 //#include "AQLFunctionUtilities.h"
-//#include <AQLMathDateCalculations.h>
-//#include "AQLMathDateUtilities.h"
+//#include <AQLDateCalculations.h>
+//#include "AQLDateSchedule.h"
 //#include <AQLMathYieldCurve.h>
 //
 //
@@ -49,7 +49,7 @@
 //        .getData("CALENDAR",ISDEFINED).get());
 //    //Set FXOptionParam
 //    AQLPriceDataSlidingRule fol; fol.convertFromString(FOL);
-//    AQLDate deliveryDate = AQLMathDateCalculations::getDate(expiryDate,spotLag,fol,&cal,true);
+//    AQLDate deliveryDate = AQLDateCalculations::getDate(expiryDate,spotLag,fol,&cal,true);
 //    FXOptionData fxParam = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*dataInstance,dCurveID,fCurveID,expiryDate,deliveryDate,
 //        asOfFX,deltaType,"FORWARDATM",cal);
 //
@@ -97,7 +97,7 @@
 //                            get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
 //    AQLPriceDataSlidingRule fol; fol.convertFromString(FOL);
 //    AQLString daycount(AC_365I);
-//    double spotTerm = AQLMathDateUtilities::getTerm(asOfDate, AQLMathDateCalculations::getDate(asOfDate,spotLag,fol,&cal,true), daycount, true);
+//    double spotTerm = etrading::AQLDateSchedule::getTerm(asOfDate, AQLDateCalculations::getDate(asOfDate,spotLag,fol,&cal,true), daycount, true);
 //    double asOfFX = spotFX * dcurve.getBasisDF( spotTerm ) / fcurve.getBasisDF( spotTerm );
 //    
 //    AQLString isWingFlag_str = searchbyrow(volSurfaceInfo,"ISWINGFLAG",1,true);
@@ -235,8 +235,8 @@
 //        smParams[i].highBF = searchbycol(smParams_str,"25FLY",i+1,true).getDoubleValue()/100;
 //        
 //		//Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
-//        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
+//        maturityDate = etrading::AQLDateSchedule::getAQLDate(maturityDate_str[i]);
+//        deliveryDate = AQLDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
 //        fxParams[i] = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*dataInstance,dCurveID,fCurveID,maturityDate,
@@ -404,7 +404,7 @@
 //    ret.resize( (strikeSize+1)*maturitySize );
 //    for(size_t i=0;i<maturitySize;i++)
 //    {
-//        ret[i*(strikeSize+1)]=static_cast<double >(AQLMathDateUtilities::getExcelDate(AQLMathDateUtilities::getAQLDate(maturityDate_str[i])));
+//        ret[i*(strikeSize+1)]=static_cast<double >(etrading::AQLDateSchedule::getExcelDate(etrading::AQLDateSchedule::getAQLDate(maturityDate_str[i])));
 //        for(size_t j=1;j<(strikeSize+1);j++)
 //        {
 //            ret[i*(strikeSize+1)+j] = smDatas[i*strikeSize+j-1];
@@ -434,8 +434,8 @@
 //    for(size_t i=0;i<dataNum;i++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
-//        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
+//        maturityDate = etrading::AQLDateSchedule::getAQLDate(maturityDate_str[i]);
+//        deliveryDate = AQLDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
 //        fxParams[i] = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*dataInstance,dCurveID,fCurveID,maturityDate,
@@ -522,15 +522,15 @@
 //    for(i=0; i<dataNum;i ++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
-//        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
+//        maturityDate = etrading::AQLDateSchedule::getAQLDate(maturityDate_str[i]);
+//        deliveryDate = AQLDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
 //        fxParams[i] = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*dataInstance,dCurveID,fCurveID,maturityDate,
 //            deliveryDate,asOfFX,deltaType[i],atmType[i],cal);
 //    }
 //    
-//    AQLDate deliveryPoint = AQLMathDateCalculations::getDate(expiryPoint,spotLag,fol,&cal,true);
+//    AQLDate deliveryPoint = AQLDateCalculations::getDate(expiryPoint,spotLag,fol,&cal,true);
 //    FXOptionData x = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*dataInstance,dCurveID,fCurveID,expiryPoint,
 //                deliveryPoint,asOfFX,"FWDPRE","FORWARDATM",cal);
 //
@@ -741,8 +741,8 @@
 //    for(size_t i=0;i<dataNum;i++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
-//        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
+//        maturityDate = etrading::AQLDateSchedule::getAQLDate(maturityDate_str[i]);
+//        deliveryDate = AQLDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
 //        fxParams[i] = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*dataInstance,dCurveID,fCurveID,maturityDate,
@@ -751,7 +751,7 @@
 //
 //    const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(dCurveID,ENCHKTYPE_ISDEFINED).
 //                            get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
-//    double termPoint = AQLMathDateUtilities::getTerm(asOfDate,expiryPoint,daycount,true);
+//    double termPoint = etrading::AQLDateSchedule::getTerm(asOfDate,expiryPoint,daycount,true);
 //    return AQLMathFXVolatilitySurfaceGenerate::GetATMVolatility( termPoint, maturityMethod, fxParams, smDatas );
 //}
 //
@@ -830,15 +830,15 @@
 //    for(i=0; i<dataNum;i ++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
-//        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
+//        maturityDate = etrading::AQLDateSchedule::getAQLDate(maturityDate_str[i]);
+//        deliveryDate = AQLDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
 //        fxParams[i] = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*dataInstance,dCurveID,fCurveID,maturityDate,
 //            deliveryDate,asOfFX,deltaType[i],atmType[i],cal);
 //    }
 //    
-//    AQLDate deliveryPoint = AQLMathDateCalculations::getDate(expiryPoint,spotLag,fol,&cal,true);
+//    AQLDate deliveryPoint = AQLDateCalculations::getDate(expiryPoint,spotLag,fol,&cal,true);
 //    FXOptionData x = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*dataInstance,dCurveID,fCurveID,expiryPoint,
 //                deliveryPoint,asOfFX,"FWDPRE","FORWARDATM",cal);
 //
@@ -927,7 +927,7 @@
 //    const AQLDate asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(dCurveID,ENCHKTYPE_ISDEFINED).
 //                            get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
 //    AQLString daycount(AC_365I);
-//    double spotTerm = AQLMathDateUtilities::getTerm(asOfDate, AQLMathDateCalculations::getDate(asOfDate,spotLag,fol,&cal,true), daycount, true);
+//    double spotTerm = etrading::AQLDateSchedule::getTerm(asOfDate, AQLDateCalculations::getDate(asOfDate,spotLag,fol,&cal,true), daycount, true);
 //    double asOfFX = spotFX * dcurve.getBasisDF( spotTerm ) / fcurve.getBasisDF( spotTerm );
 //    //FXOptionData
 //    AQLStringVector deltaType	= searchvecbycol(fxOptionData,"DELTATYPE",true);
@@ -943,8 +943,8 @@
 //    for(i=0;i<dataNum;i++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
-//        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
+//        maturityDate = etrading::AQLDateSchedule::getAQLDate(maturityDate_str[i]);
+//        deliveryDate = AQLDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
 //        fxParams = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*dataInstance,dCurveID,fCurveID,maturityDate,
@@ -1037,8 +1037,8 @@
 //    for(size_t i=0;i<dataNum;i++)
 //    {
 //        //Set FXOptionParam
-//        maturityDate = AQLMathDateUtilities::getAQLDate(maturityDate_str[i]);
-//        deliveryDate = AQLMathDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
+//        maturityDate = etrading::AQLDateSchedule::getAQLDate(maturityDate_str[i]);
+//        deliveryDate = AQLDateCalculations::getDate(maturityDate,spotLag,fol,&cal,true);
 //        upper(deltaType[i]);
 //        upper(atmType[i]);
 //        fxParams[i] = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*dataInstance,dCurveID,fCurveID,maturityDate,

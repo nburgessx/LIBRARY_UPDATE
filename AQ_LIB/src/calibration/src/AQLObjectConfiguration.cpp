@@ -809,7 +809,7 @@ AQLObjectConfiguration::setUpExtraLibor(AQLObjectPool &objPool,  AQLMathObjectVa
 											sliding.convertFromString(SLIDING_FOLLOWING);
 											AQLPriceDataCalendar cal;  // calendar
 											cal.convertFromString(CITY_TkB);
-											const AQLDate startDate = AQLMathDateCalculations::getDate(asOfDate, "3D", sliding, &cal, true);
+											const AQLDate startDate = AQLDateCalculations::getDate(asOfDate, "3D", sliding, &cal, true);
 											// get yield object
 											const AQLString yieldName = AQLMarketData::getBaseYieldName(ccy);
 											const AQLMathYieldCurve &curve = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(yieldName, ENCHKTYPE_ISDEFINED).get());

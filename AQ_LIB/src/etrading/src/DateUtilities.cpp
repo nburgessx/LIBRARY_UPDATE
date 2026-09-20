@@ -23,12 +23,12 @@
 // Includes: This Library
 #include "DateUtilities.h"
 #include "AQLDateHelpers.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "ContainerUtilities.h"
 #include "ETradingException.h"
 #include "AQLDate.h"
 #include "TypeHelpers.h"
-#include "AQLDateScheduleHelpers.h"      // Helper methods create date from string
+#include "AQLDateSchedule.h"      // Helper methods create date from string
 
 
 namespace etrading
@@ -504,7 +504,7 @@ aqMsg120 << "Invalid Year Fraction: Only yearFraction arguments less than 1000 a
                 // ALTERNATIVE: UNTIL THE ABOVE IS FIXED
                 const bool includeLast = true;
 				AQLString dayCount("ACT/365");
-                double yearFraction = AQLDateScheduleHelpers::getTerm( toAQLDateFromGregorianDate( fromDate ), toAQLDateFromGregorianDate( toDate ), dayCount, includeLast );
+                double yearFraction = AQLDateSchedule::getTerm( toAQLDateFromGregorianDate( fromDate ), toAQLDateFromGregorianDate( toDate ), dayCount, includeLast );
 
                 return yearFraction;
 
@@ -973,7 +973,7 @@ aqCoreMsg11 << "Invalid tenor \"" << tenor << "\". Expecting format \"nnY\" ."; 
 
         for( size_t i = 0; i< inputMatrix.size(); ++i )
         {
-            dateOutput[i]   = etrading::AQLDateScheduleHelpers::getAQLDate( inputMatrix[i][0].getCString() );
+            dateOutput[i]   = etrading::AQLDateSchedule::getAQLDate( inputMatrix[i][0].getCString() );
             char * pFirstNonNumber;
             valueOutput[i]  = std::strtod( inputMatrix[i][1].getCString(), &pFirstNonNumber );
             

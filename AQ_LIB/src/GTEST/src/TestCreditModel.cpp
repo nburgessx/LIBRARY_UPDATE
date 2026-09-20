@@ -14,7 +14,7 @@
 #include <boost/range/irange.hpp>
 
 #include "CurveOis.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 
 #include "tryAqSwapObjectPricing.h"
 #include "JSONInfoBlock.h"          // JSON InfoBlock Helpers
@@ -347,7 +347,7 @@ namespace
 
 			// 2. Check consistency between calibration hazard rate and API hazard rate
 			AQLDate fromDate;
-			AQLDate toDate = etrading::AQLDateScheduleHelpers::getAQLDate( maturityDateAsInt );
+			AQLDate toDate = etrading::AQLDateSchedule::getAQLDate( maturityDateAsInt );
 			double apiHazardRate = validation::tryAqCreditModelHazardRate( creditModelName, toDate );
 			ASSERT_NEAR( hazardRate, apiHazardRate, tolerance ) << "#Error: Mismatch in hazard rate";
 
@@ -360,7 +360,7 @@ namespace
 				// 4. Check consistency between calibration default probabability and API marginal default probability
 				double marginalDefaultProbability = defaultProbability - prevDefaultProbability;
 
-				fromDate = etrading::AQLDateScheduleHelpers::getAQLDate( prevMaturityDateAsInt );
+				fromDate = etrading::AQLDateSchedule::getAQLDate( prevMaturityDateAsInt );
 				double apiMarginalDefaultProbability = validation::tryAqCreditModelDefaultProbability( creditModelName, toDate, fromDate );
 				ASSERT_NEAR( marginalDefaultProbability, apiMarginalDefaultProbability, tolerance ) << "#Error: Mismatch in marginal default probability";
 			}
@@ -396,7 +396,7 @@ namespace
 
 		// Check consistency between calibration survival probability and API survival probability at the final calibration point
 		const AQLDate asOfDate = validation::tryAqCreditModelAsOfDate( creditModelName );
-		AQLDate toDate = etrading::AQLDateScheduleHelpers::getAQLDate( maturityDateAsInt );
+		AQLDate toDate = etrading::AQLDateSchedule::getAQLDate( maturityDateAsInt );
 		const double apiSurvivalProbability = validation::tryAqCreditModelSurvivalProbability( creditModelName, toDate, asOfDate );
 		ASSERT_NEAR( survivalProbability, apiSurvivalProbability, tolerance ) << "#Error: Mismatch in survival probability";
 

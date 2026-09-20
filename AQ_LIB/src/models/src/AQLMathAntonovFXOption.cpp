@@ -23,7 +23,7 @@
 #include "AQLPriceDataFunction.h"
 #include "AQLBasic.h"
 #include "AQLAlgorithm.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLPriceCFGenUtility.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLSplineInterpolation.h"
@@ -223,9 +223,9 @@ AQLMathAntonovFXOption::setUpDataProvider(const AQLDate& basedate, AQLObject& ob
 	dh = &(object.getData(PRICING_DATA_TERMCALENDAR,ISNOTNULL));
 	const AQLPriceDataCalendar& termcal = dynamic_cast<const AQLPriceDataCalendar &>(dh->get());
 
-	AQLDate spotdate = AQLMathDateCalculations::getFXSpotDate(keyFX, asof, fixcalstr, spotlag, true);
-	AQLDate settledate = AQLMathDateCalculations::getDate(spotdate, optionmatu, sr, &termcal, true);
-	AQLDate expdate =  AQLMathDateCalculations::getFXSpotDate(keyFX, settledate, fixcalstr, -spotlag, true);
+	AQLDate spotdate = AQLDateCalculations::getFXSpotDate(keyFX, asof, fixcalstr, spotlag, true);
+	AQLDate settledate = AQLDateCalculations::getDate(spotdate, optionmatu, sr, &termcal, true);
+	AQLDate expdate =  AQLDateCalculations::getFXSpotDate(keyFX, settledate, fixcalstr, -spotlag, true);
 	AQLPriceDataDayCount dc(ACT_365_ISDA);
 	double matT = dc.getTerm(asof,expdate,false);
 	//mSpos;

@@ -8,7 +8,7 @@
 #include "AQLPriceCMSSpreadCalibration.h"
 #include "AQLMathCashFlowSchedules.h"
 #include "AQLFunctionUtilities.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLMathInterpolationUtilities.h"
 #include "AQLOptimumBrent.h"
 #include "AQLMathParameterUtility.h"
@@ -58,7 +58,7 @@ void AQLPriceCMSSpreadStrip::Strip(AQLDataInstance* dataInstance, AQLString conv
         targets[i] = AQLPriceCMSSpreadStripTarget(valDate, expiryTerms[i], rateInfo1, rateInfo2,
                                             legScheduler, cmsScheduler, discCurveInfo, i);
         stripDates[i] = targets[i].LastFixing();
-        stripTimes[i] = ModelTime(valDate, stripDates[i]);
+        stripTimes[i] = etrading::ModelTime(valDate, stripDates[i]);
     }
 
     // Set optimizer
@@ -100,7 +100,7 @@ void AQLPriceCMSSpreadStrip::Strip(AQLDataInstance* dataInstance, AQLString conv
     for (size_t i = 0; i < nSlDates; i++)
     {
         CashFlowTiming timing = AQLMathScheduleUtility::CashFlowSchedule(valDate, slTerms[i], legScheduler, cmsScheduler);
-        double expiry = ModelTime(valDate, timing.fixing);
+        double expiry = etrading::ModelTime(valDate, timing.fixing);
         double df = AQLPriceCMSObject::DiscountFactor(discCurveInfo, valDate, timing.payment);
         double S1, S2, stDev1, stDev2;
         timing.accrual = 0.0;
@@ -156,7 +156,7 @@ AQLPriceCMSSpreadStripTarget::AQLPriceCMSSpreadStripTarget(AQLDate valDate, AQLS
     for (size_t i = 0; i < mNFlows; i++)
     {
         CashFlowTiming timing = schedule[i];
-        double t = ModelTime(valDate, timing.fixing);
+        double t = etrading::ModelTime(valDate, timing.fixing);
         mTFix[i] = t;
         mAccs[i] = timing.accrual;
         mDFs[i] = AQLPriceCMSObject::DiscountFactor(discCurveInfo, valDate, timing.payment);

@@ -34,7 +34,7 @@
 #include "AQLAlgorithm.h"
 #include "AQLConstant.h"
 
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLPriceCFGenUtility.h"
 
 #include "AQLMathIndexEntity.h"
@@ -733,9 +733,9 @@ AQLPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 						const AQLPriceDataCalendar& cal 
 							= dynamic_cast<const AQLPriceDataCalendar& >(leg->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
 						// range observation start date
-						obsSDate = AQLMathDateCalculations::getDate(start_date, offset_str, srl, &cal, false);
+						obsSDate = AQLDateCalculations::getDate(start_date, offset_str, srl, &cal, false);
 						// range observation end date
-						obsEDate = AQLMathDateCalculations::getDate(end_date, offset_str, srl, &cal, false);
+						obsEDate = AQLDateCalculations::getDate(end_date, offset_str, srl, &cal, false);
 					}
 
 					eholder.setEntity(cf_gen->createRangeAccrueIndexInfo(raindexinfo_name, 
@@ -859,11 +859,11 @@ AQLPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
                 const AQLPriceDataCalendar& cal 
                     = dynamic_cast<const AQLPriceDataCalendar& >(leg->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
                 // range observation start date
-                AQLDate obsSDate = AQLMathDateCalculations::getDate(start_date, offset_str, srl, &cal, false);
+                AQLDate obsSDate = AQLDateCalculations::getDate(start_date, offset_str, srl, &cal, false);
                 dh = &ret->add(PRICING_DATA_RANGEACCRUEOBSERVATIONSTARTDATE, new AQLDataDate());
                 dynamic_cast<AQLDataDate&>(dh->get()).set(obsSDate);
                 // range observation end date
-                AQLDate obsEDate = AQLMathDateCalculations::getDate(end_date, offset_str, srl, &cal, false);
+                AQLDate obsEDate = AQLDateCalculations::getDate(end_date, offset_str, srl, &cal, false);
                 dh = &ret->add(PRICING_DATA_RANGEACCRUEOBSERVATIONENDDATE, new AQLDataDate());
                 dynamic_cast<AQLDataDate&>(dh->get()).set(obsEDate); 
             }
@@ -925,7 +925,7 @@ AQLPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 		const int offset = dynamic_cast<const AQLDataInt&>((leg->getData(PRICING_DATA_SETTLEMENTFIXINGOFFSET, NOCHECK)).get());
 		const AQLString offset_str = AQLString(offset) + AQLString("d");
 		const AQLDate paydate = dynamic_cast<const AQLDataDate&>(ret->getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL).get());
-		const AQLDate fixgdate = AQLMathDateCalculations::getDate(paydate, offset_str, *psrule, pcal, false);
+		const AQLDate fixgdate = AQLDateCalculations::getDate(paydate, offset_str, *psrule, pcal, false);
 		ret->add(PRICING_DATA_SETTLEMENTFIXINGDATE, new AQLDataDate(fixgdate));
 	}
 
@@ -1505,9 +1505,9 @@ AQLPriceCashFlowGenerator::createRangeAccrueInfo(const AQLString name, const AQL
             const AQLPriceDataCalendar& cal 
                 = dynamic_cast<const AQLPriceDataCalendar& >(rangeinfo.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
             // range observation start date
-            obsSDate = AQLMathDateCalculations::getDate(startdate, offset_str, srl, &cal, false);
+            obsSDate = AQLDateCalculations::getDate(startdate, offset_str, srl, &cal, false);
             // range observation end date
-            obsEDate = AQLMathDateCalculations::getDate(enddate, offset_str, srl, &cal, false);
+            obsEDate = AQLDateCalculations::getDate(enddate, offset_str, srl, &cal, false);
         }
 		
         eholder.setEntity(this->createRangeAccrueIndexInfo(raindexinfo_name, obsSDate, obsEDate, 
@@ -1658,7 +1658,7 @@ AQLPriceCashFlowGenerator::calcPaymentDates(AQLObject& leg,
 		
 		isforwardroll = true;
 	}
-	AQLMathDateCalculations::generateSchedule(start_date, 
+	AQLDateCalculations::generateSchedule(start_date, 
 		                           end_date, 
 								   freq, 
 								   isarrear,
@@ -2033,7 +2033,7 @@ AQLPriceCashFlowGenerator::createCouponInfo(const AQLString name,
 													pcal);		
 
 		const AQLDate& edate
-			= AQLMathDateCalculations::getDate(paymentdate_unadjust, endstr, *psrule, pcal, false);	
+			= AQLDateCalculations::getDate(paymentdate_unadjust, endstr, *psrule, pcal, false);	
 
 		pcouponinfo->add(PRICING_DATA_OBSERVATIONENDDATE, new AQLDataDate(edate));
 		pcouponinfo->remove(PRICING_DATA_OBSERVATIONENDTERM);	
@@ -2052,7 +2052,7 @@ AQLPriceCashFlowGenerator::createCouponInfo(const AQLString name,
 		{
 			dh = &(pcouponinfo->getData(PRICING_DATA_OBSERVATIONSTARTTERM, ISNOTNULL));
 			const AQLString& startstr = dynamic_cast<const AQLDataString&>(dh->get()).get();
-			sdate = AQLMathDateCalculations::getDate(paymentdate_unadjust, startstr, *psrule, pcal, false);	
+			sdate = AQLDateCalculations::getDate(paymentdate_unadjust, startstr, *psrule, pcal, false);	
 			
 			pcouponinfo->add(PRICING_DATA_OBSERVATIONSTARTDATE, new AQLDataDate(sdate));
 			pcouponinfo->remove(PRICING_DATA_OBSERVATIONSTARTTERM);	
@@ -2257,7 +2257,7 @@ AQLPriceCashFlowGenerator::createIndexInfo(const AQLString name,
 													psrule,
 													pcal);		
 		const AQLDate& edate
-			= AQLMathDateCalculations::getDate(paymentdate_unadjust, endstr, 
+			= AQLDateCalculations::getDate(paymentdate_unadjust, endstr, 
 										*psrule,
 										pcal,
 										false);	
@@ -2278,7 +2278,7 @@ AQLPriceCashFlowGenerator::createIndexInfo(const AQLString name,
 		{
 			dh = &(pindex->getData(PRICING_DATA_OBSERVATIONSTARTTERM, ISNOTNULL));
 			const AQLString& startstr = dynamic_cast<const AQLDataString&>(dh->get()).get();
-			sdate = AQLMathDateCalculations::getDate(paymentdate_unadjust, startstr, 
+			sdate = AQLDateCalculations::getDate(paymentdate_unadjust, startstr, 
 										*psrule,
 										pcal,
 										false);
@@ -2660,7 +2660,7 @@ AQLPriceCashFlowGenerator::getFixedDates(const AQLObject& leg) const
 	DateVector ret;
 	for (int i = 0; i < fixedTerms.size(); ++i)
 	{
-		const AQLDate date = AQLMathDateCalculations::getDate(sDate, fixedTerms[i], *pSrule, pCal, true, pRollConv);
+		const AQLDate date = AQLDateCalculations::getDate(sDate, fixedTerms[i], *pSrule, pCal, true, pRollConv);
 		ret.push_back(date);
 	}
 	return ret;
@@ -2793,7 +2793,7 @@ AQLPriceCashFlowGenerator::setUpLegMaturity(AQLObject& trade) const
 		dh = &(legs.get(i).getData(PRICING_DATA_STARTDATE, ISNOTNULL));
 		const AQLDate& startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 		//end date
-		const AQLDate& enddate = AQLMathDateCalculations::getDate(startdate, termstr, true);
+		const AQLDate& enddate = AQLDateCalculations::getDate(startdate, termstr, true);
 		dh = &(legs.get(i).getData(PRICING_DATA_ENDDATE, NOCHECK));
 		if (!dh->isDefined())
 			dh = &(legs.get(i).add(PRICING_DATA_ENDDATE, new AQLDataDate()));
@@ -2987,7 +2987,7 @@ AQLPriceCashFlowGenerator::setUpCallSchedule(AQLObject& trade) const
 			//startDate of trade
 			dh = &(leg.getData(PRICING_DATA_STARTDATE, ISNOTNULL));
 			const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
-			startdate = AQLMathDateCalculations::getDate(startdate_trade, term, true);
+			startdate = AQLDateCalculations::getDate(startdate_trade, term, true);
 		}
 
 		//endDate
@@ -3009,7 +3009,7 @@ AQLPriceCashFlowGenerator::setUpCallSchedule(AQLObject& trade) const
 			//endDate of trade
 			dh = &(leg.getData(PRICING_DATA_ENDDATE, ISNOTNULL));
 			const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
-			enddate = AQLMathDateCalculations::getDate(startdate_trade, term, false);
+			enddate = AQLDateCalculations::getDate(startdate_trade, term, false);
 		}
 	
 
@@ -3279,7 +3279,7 @@ AQLPriceCashFlowGenerator::setUpTriggerSchedule(AQLObject& trade) const
 			//startDate of trade
 			dh = &(pleg->getData(PRICING_DATA_STARTDATE, ISNOTNULL));
 			const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
-			startdate = AQLMathDateCalculations::getDate(startdate_trade, term, true);
+			startdate = AQLDateCalculations::getDate(startdate_trade, term, true);
 		}
 		
 		//endDate of trigger
@@ -3301,7 +3301,7 @@ AQLPriceCashFlowGenerator::setUpTriggerSchedule(AQLObject& trade) const
 			//endDate of trade
 			dh = &(pleg->getData(PRICING_DATA_ENDDATE, ISNOTNULL));
 			const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
-			enddate = AQLMathDateCalculations::getDate(startdate_trade, term, false);
+			enddate = AQLDateCalculations::getDate(startdate_trade, term, false);
 		}
 		
 		//BY IKEDA 20061226
@@ -3420,7 +3420,7 @@ AQLPriceCashFlowGenerator::setUpTriggerSchedule(AQLObject& trade) const
 				//startDate of trade
 				dh = &(pleg->getData(PRICING_DATA_STARTDATE, ISNOTNULL));		//PRICING_DATA_ACTIONSTARTDATE, ISNOTNULL));
 				const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
-				startdate = AQLMathDateCalculations::getDate(startdate_trade, term, true);
+				startdate = AQLDateCalculations::getDate(startdate_trade, term, true);
 			}
 	
 			//endDate of trigger action
@@ -3435,7 +3435,7 @@ AQLPriceCashFlowGenerator::setUpTriggerSchedule(AQLObject& trade) const
 				//endDate of trade
 				dh = &(pleg->getData(PRICING_DATA_ENDDATE, ISNOTNULL));			//PRICING_DATA_ACTIONENDDATE, ISNOTNULL));
 				const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
-				enddate = AQLMathDateCalculations::getDate(startdate_trade, term, false);
+				enddate = AQLDateCalculations::getDate(startdate_trade, term, false);
 			}
 			
 			//BY IKEDA 20061226
@@ -4245,8 +4245,8 @@ AQLPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVe
 			AQLDate baseIdxAccDate_s = (fixingdates[i] < asof) ? asof :  basecal.getBusinessDay(fixingdates[i], SPOTLAG);
 			AQLDate mdyIdxAccDate_s = (fixingdates[i] < asof) ? asof : mdycal.getBusinessDay(fixingdates[i], SPOTLAG);
 
-			AQLDate baseIdxAccDate_e = AQLMathDateCalculations::getDate(baseIdxAccDate_s, indextypes[i][1], basesld, &basecal, true);
-			AQLDate mdyIdxAccDate_e = AQLMathDateCalculations::getDate(mdyIdxAccDate_s, indextypes[i][1], mdysld, &mdycal, true);
+			AQLDate baseIdxAccDate_e = AQLDateCalculations::getDate(baseIdxAccDate_s, indextypes[i][1], basesld, &basecal, true);
+			AQLDate mdyIdxAccDate_e = AQLDateCalculations::getDate(mdyIdxAccDate_s, indextypes[i][1], mdysld, &mdycal, true);
 
 			double indexTerm_s, indexTerm_e, indexAccrualTerm;
 			
@@ -5442,7 +5442,7 @@ AQLPriceCashFlowGenerator::detectStubCoupon(bool& is_first_stub,
 	}
 	else
 	{
-		term = AQLString(AQLMathDateCalculations::getPeriodFrequencyInMonths(freq)) + "M";
+		term = AQLString(AQLDateCalculations::getPeriodFrequencyInMonths(freq)) + "M";
 	}
 
 	//detect stub payment date 
@@ -5460,7 +5460,7 @@ AQLPriceCashFlowGenerator::detectStubCoupon(bool& is_first_stub,
 			{
 				throw AQLCoreInvalidData("Faild to find the first payment date", __FILE__, __LINE__);
 			}
-			AQLDate nonStubFirstPaymentDate = AQLMathDateCalculations::getDate(*it, term, AQLPriceDataSlidingRule(), 0, false);
+			AQLDate nonStubFirstPaymentDate = AQLDateCalculations::getDate(*it, term, AQLPriceDataSlidingRule(), 0, false);
 			is_first_stub = (nonStubFirstPaymentDate != start_date);
 		}
 	}
@@ -5479,7 +5479,7 @@ AQLPriceCashFlowGenerator::detectStubCoupon(bool& is_first_stub,
 			{
 				throw AQLCoreInvalidData("Faild to find the last payment date", __FILE__, __LINE__);
 			}
-			AQLDate nonStubLastPaymentDate = AQLMathDateCalculations::getDate(*(it - 1), term, AQLPriceDataSlidingRule(), 0, true);
+			AQLDate nonStubLastPaymentDate = AQLDateCalculations::getDate(*(it - 1), term, AQLPriceDataSlidingRule(), 0, true);
 			is_last_stub = (nonStubLastPaymentDate != end_date);
 		}
 	}
@@ -5797,7 +5797,7 @@ AQLPriceCashFlowGenerator::setUpNonDeliverable(AQLObject& trade) const
 				dh = &cashlet.getData(PRICING_DATA_SETTLEMENTFIXINGDATE, NOCHECK);
 				const AQLDate fixdate = (dh->isDefined() && !dh->isNull()) ? 
 					dynamic_cast<AQLDataDate &>(dh->get()).get() : 
-					AQLMathDateCalculations::getDate(paydate, "-5D", SLIDING_RULE_FOLLOWING, &AQLPriceDataCalendar(pFX->getCalendarNames().get()), true);
+					AQLDateCalculations::getDate(paydate, "-5D", SLIDING_RULE_FOLLOWING, &AQLPriceDataCalendar(pFX->getCalendarNames().get()), true);
 				const AQLDate spotdate = pFX->getSpotDate(original_ccy, settle_ccy, fixdate);
 				const double fwdfx_fix = pFX->getRate(original_ccy, settle_ccy, spotdate < asofdate ? asofdate : spotdate);
 

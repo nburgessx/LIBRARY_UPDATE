@@ -6,7 +6,7 @@
 
 
 #include "AQLMathCurveFuncUtility.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 
 #include "AQLFunctionUtilities.h"
 #include "AQLObject.h"
@@ -29,7 +29,7 @@
 #include "AQLMonotoneConvexInterpolation.h"
 #include "AQLPriceDataDayCount.h"
 #include "AQLPriceCFGenUtility.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLPriceYieldGenerator.h"
 #include "AQLDataReference.h"
 #include "AQLAnalyticFormula.h"
@@ -1595,7 +1595,7 @@ AQLMathCurveFuncUtility::getMultiForwardRatesUsingCurveFrequency( const DateVect
     const AQLDate& asOfDate = dynamic_cast<const AQLDataDate&> ((yc.getYieldData().get().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
     // Imply the toDate(s) using the fromDate(s) and curve frequency i.e. todate = fromDate + 3M 
-    DateVector todate = AQLMathDateUtilities::getMultiDate( fromdate, curveFrequency, slidingrule, calendar, nullptr); // rollconvention* = nullptr
+    DateVector todate = etrading::AQLDateSchedule::getMultiDate( fromdate, curveFrequency, slidingrule, calendar, nullptr); // rollconvention* = nullptr
 
 	setUpYieldCurveConvention(curveName, interpolation, daycount, slidingrule, calendar, frequency, curveid, yc);
 	yc.setCurveType(curveName);
@@ -1682,7 +1682,7 @@ AQLMathCurveFuncUtility::getGridRate(AQLDataInstance* dataInstance, const AQLStr
 		name = curveid+currency+SWAP+grid;
 	else if(FUTURE == index)
 	{
-		AQLDate tmp = AQLMathDateUtilities::getAQLDate(grid);
+		AQLDate tmp = etrading::AQLDateSchedule::getAQLDate(grid);
 		name = curveid+currency+ FUTURE + AQLDataDate(tmp).convertToString();
 	}
 	else
@@ -1711,7 +1711,7 @@ AQLMathCurveFuncUtility::getGridRate(AQLDataInstance* dataInstance, const AQLStr
 	upper(daycount);
 	upper(interpolation);
 
-	DateVector datevec = AQLMathDateUtilities::generateSchedule(start, end, data_frequency, slidingrule, calendar, firstStubDate, lastStubDate, pday);
+	DateVector datevec = etrading::AQLDateSchedule::generateSchedule(start, end, data_frequency, slidingrule, calendar, firstStubDate, lastStubDate, pday);
 
 	AQLMathYieldCurve& yc = getYieldCurveForCurveID(dataInstance,curveid);
 
@@ -2014,9 +2014,10 @@ AQLMathCurveFuncUtility::getCurBasisSwapValue
 			yc.getCalendar().convertFromString(calendar);
 		}
 	 }
-	 catch(AQLCoreError &e)
+	 catch(AQLCoreError &)
 	 {
-		throw e;		
+		// Bare rethrow, not `throw e;` - see AQLFileAccessor.cpp's matching fix for why.
+		throw;
 	 }
 	 catch(...)
 	 {
@@ -2061,7 +2062,7 @@ AQLMathCurveFuncUtility::setUpYieldCurveConvention(const AQLString &foreCurveNam
 
 static bool isLastBusinessDay(const AQLDate& d, const AQLString& cal)
 {
-    const AQLDate next_day = AQLMathDateUtilities::getDate(d, "1d", "FOLLOWING", cal);
+    const AQLDate next_day = etrading::AQLDateSchedule::getDate(d, "1d", "FOLLOWING", cal);
     return next_day.monthOfYear() != d.monthOfYear();
 }
 
@@ -2098,10 +2099,10 @@ static void updateAccrualFrequency(AQLString& accrualFreq, const AQLString& paym
 {
 	if ( accrualFreq == paymentFreq ) return;
 
-	double accrualFreqInMonths = AQLMathDateCalculations::getPeriodFrequencyInMonths(accrualFreq);
+	double accrualFreqInMonths = AQLDateCalculations::getPeriodFrequencyInMonths(accrualFreq);
 	if (paymentFreq != AQLString())
 	{
-		double paymentFreqInMonths = AQLMathDateCalculations::getPeriodFrequencyInMonths(paymentFreq);
+		double paymentFreqInMonths = AQLDateCalculations::getPeriodFrequencyInMonths(paymentFreq);
 		
 		// For instance, if paymentFrequency is Semi-Annual, and accrualFrequency is Annual, use Semi-Annual as the accrualFrequency 
 		if (accrualFreqInMonths > paymentFreqInMonths)
@@ -2578,7 +2579,7 @@ AQLMathCurveFuncUtility::generateAccrualAndPaymentSchedule(DateVector& accrualDa
 	bool fixingInAdvance = isFixingInAdvance(fixingAdvanceOrArrears);
 	updateAccrualFrequency(accrualFrequency, paymentFrequency, fixingInAdvance);
 
-	accrualDates = AQLMathDateUtilities::generateSchedule( effectiveDate, 
+	accrualDates = etrading::AQLDateSchedule::generateSchedule( effectiveDate, 
 														  maturityDate,      
 														  accrualFrequency,
 														  accrualBusinessDayAdjustment,  
@@ -2593,7 +2594,7 @@ AQLMathCurveFuncUtility::generateAccrualAndPaymentSchedule(DateVector& accrualDa
     // Payment Dates
     ///////////////////////////
 	AQLString paymentFreq = (paymentFrequency==AQLString()) ? accrualFrequency : paymentFrequency;
-	DateVector paymentDatesNoLag = AQLMathDateUtilities::generateSchedule(effectiveDate, 
+	DateVector paymentDatesNoLag = etrading::AQLDateSchedule::generateSchedule(effectiveDate, 
 													maturityDate,      
 													paymentFreq,
 													paymentBusinessDayAdjustment,  
@@ -2621,7 +2622,7 @@ AQLMathCurveFuncUtility::generateAccrualAndPaymentSchedule(DateVector& accrualDa
 		// Generate Payment Dates
 		bool doNotAddMinusSignToTerm    = true;     // AKA: isAfterFlag - This controls if the lag is a positive or negative lag
 		//Note: The paymentDates should start from the second of datesNoLag only, but the core code expects/handle the extra date, so need to leave it as it is now
-		tempPaymentDates = AQLMathDateUtilities::calcDatesWithLag(paymentDatesNoLag,
+		tempPaymentDates = etrading::AQLDateSchedule::calcDatesWithLag(paymentDatesNoLag,
 																	paymentLag,
 																	slidingRule,
 																	& cal,
@@ -2688,7 +2689,7 @@ DateVector AQLMathCurveFuncUtility::getFixingSchedule(const DateVector& accrualD
     fixingCal.convertFromString( fixingCalendar );
 
 	const bool addMinusSignToTerm = false;
-	DateVector fixingDates = AQLMathDateUtilities::calcDatesWithLag( datesToUseForFixing,
+	DateVector fixingDates = etrading::AQLDateSchedule::calcDatesWithLag( datesToUseForFixing,
                                                          fixingLag,
                                                          fixingSlidingRule,
                                                          & fixingCal,
@@ -2724,7 +2725,7 @@ void AQLMathCurveFuncUtility::generateFixingSchedule(DateVector&     fixingDates
 
     // Generate Swap accrual dates for Float Leg
     ///////////////////////////
-    DateVector accrualDates = AQLMathDateUtilities::generateSchedule( effectiveDate, 
+    DateVector accrualDates = etrading::AQLDateSchedule::generateSchedule( effectiveDate, 
 																	 maturityDate,      
 																	 frequency,
 																	 accrualRollConvention,
@@ -2818,7 +2819,7 @@ AQLMathCurveFuncUtility::compound(AQLDataInstance* dataInstance,
 		}
 	}
 
-    AQLMathDateCalculations::generateSchedule(
+    AQLDateCalculations::generateSchedule(
         start_date,
         end_date,
         frequency,

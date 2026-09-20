@@ -3997,3 +3997,375 @@ edit box via `setLog()`, so `mEditBox` is always `NULL` and `setMsg()` always no
 Confirmed via a repo-wide grep (`*.h`/`*.cpp`/`*.vcxproj`/`*.filters`) that zero references to
 `AQLCoreErrorLog` remain anywhere in the tree. `math` does a full clean Rebuild with no errors;
 `etrading` (the heaviest consumer of the exception infrastructure) builds clean too.
+
+### Matrix/table-type consolidation - investigated, documented as an open question, not actioned (2026-09-19, same session)
+
+Nicholas asked how to make `AnyMatrix`/`VariantMatrix`-style `AQ_API` utilities consistent with
+`AQLMatrix`'s flattened storage, and how to best centralize the many matrix types rather than
+having so many different ones. Investigated (no code changed): the real symbol names are
+`AnyTypeMatrix` (`std::vector<std::vector<AnyType>>`, `AQLCoreTemplateType.h`) and `VariantMatrix`
+(`std::vector<std::vector<etrading::Variant>>`, `Variant.h`) - both heterogeneous-cell table types,
+structurally unrelated to `AQLMatrix`'s homogeneous-`double` linear-algebra storage. Full finding:
+there are three separate matrix "families" in the tree (numeric-linear-algebra `AQLMatrix`;
+a `vector<vector<T>>` typedef family used for `validation`/`AQ_API`/`AQ_XLL` boundary marshaling,
+several members of which genuinely need per-cell heterogeneity; and Eigen's already-optimized
+`MatrixXd`, untouched) - converging them all onto `AQLMatrix`'s flattened-`double` storage would be
+a category error for the heterogeneous ones. The one genuine redundancy found: `AnyType`
+(`boost::variant`-based) and `etrading::Variant` (hand-rolled) are two parallel tagged-union
+implementations doing the same job, each with its own Matrix typedef - **that** collapse is where
+centralizing would actually pay off, not the matrix wrappers themselves.
+
+**Documented, not actioned**, per Nicholas's request this message: written up as **Phase 6.11** in
+`MIGRATION_PLAN.md` (new "Matrix/table-type consolidation" item, two explicit open questions - A:
+whether any of the homogeneous `vector<vector<T>>` typedefs are hot-path enough to be worth
+flattening the same way `AQLMatrix` was; B: whether to collapse `AnyType`/`etrading::Variant` -
+plus an explicit scope warning that a `Variant` collapse touches SWIG bindings, Excel marshaling
+and dozens of `TableInfo` call sites, larger than anything actioned this session). Needs Nicholas's
+decision before any code changes; nothing here has been built or is expected to need building yet.
+
+### GTEST 9-failure diagnosis and fixes (Clusters B and C); Cluster A investigated (2026-09-20, same session)
+
+Ran the full `GTEST` suite to source the actual, current failure list rather than trust the old
+"~10 stale calendar" notes (which turned out to be only half right - `Calendar.csv` itself is fine
+out to 2049+). **1025 tests, 9 failures**, cleanly attributable to three distinct root causes:
+
+- **Cluster A (2 tests, data staleness, NOT fixed - Nicholas to decide next step):**
+  `ECB_Calendars.UNIT_ECB_Calendar_Expiry_Test`, `TestDatesCentralBank.UNIT_AreThereEnoughDates`
+  (`totalDaysToLast: -1713`). Traced to `AQLMathCentralBank.cpp`'s hardcoded ECB meeting-date table
+  (last entry `20211216`), mirrored by `resources\config\CBSchedule.csv` (same last date, loaded via
+  `setupCBScheduleETrading()` - the loading path works, the *data* is just ~5 years stale). BoE/Fed
+  columns have always been empty - ECB-only data. **Recommendation given to Nicholas, not yet
+  actioned:** don't write fabricated "proxy" future ECB dates (unlike calendar holidays, these are
+  discretionary policy decisions with no formula - a fabricated one is silently wrong, not just a
+  test inconvenience); instead apply the same pattern `Calendars.UNIT_Expiry_Test` already uses for
+  `Calendar.csv` (a `.conf` file with a `LastXUpdate` date + `warningTenor`/`errorTenor`, checked
+  against real elapsed time since last refresh, not literal "today") to the ECB schedule too - a new
+  `CBSchedule.conf`. Awaiting Nicholas's go-ahead on that vs. a simpler disable/loosen for now.
+- **Cluster B (6 tests, fixed):** `TestDataFilesCreate.UNIT_ErrorHandling`,
+  `TestDataFilesRead.UNIT_TestBasics`, `TestDataFilesRead.UNIT_TestTables`,
+  `TestAQObjCurve.UNIT_AQObjCurve` (partially - see Cluster C below for its other half),
+  `TestAQObjInfrastructure.UNIT_FreeObject`, `TestCurveData.UNIT_CurveData` (in
+  `TestMarketDataCollection.cpp`). All expected a specific, purpose-built exception type
+  (`CreateDataFile::Exception`, `ReadDataFile::Exception`, `etrading::ETradingException`) but the
+  code now throws `AQLCoreInvalidData`. Root cause confirmed at source, not guessed:
+  `MarketQuote.cpp:262-266` has an **active `AQ_THROW(...)` sitting directly next to a
+  commented-out `throw ETradingException(...)`** - physical evidence of the historical
+  `AQ_THROW`/`boost::format` cleanup (`CLAUDE.md` §2.1) consolidating these throws onto the generic
+  macro (which always constructs `AQLCoreInvalidData`) without updating the tests. Nicholas's call:
+  approach (a) - update the tests to expect `AQLCoreInvalidData`, matching what production code now
+  deliberately and consistently does, rather than (b) restoring the specific types in production
+  code. All 6 tests updated (`TestDataFilesCreate.cpp`, `TestDataFilesRead.cpp` x2,
+  `TestAQObjCurve.cpp`, `TestAQObjInfrastructure.cpp` x6 assertions in one test,
+  `TestMarketDataCollection.cpp`), each with a comment explaining why, pointing at the
+  `AQ_THROW`/`boost::format` cleanup as the cause.
+- **Cluster C (2 tests, fixed):** `TestAQObjCurve.UNIT_AQObjCurve` (its other half) and
+  `TestExampleObject.UNIT_ExampleObjects`. Not a `FolderConfig.cpp` bug at all (that suffix was
+  already fixed correctly in an earlier session) - a **literal path hardcoded directly in the two
+  test files themselves**: `TestAQObjCurve.cpp:130` and `TestExampleObject.cpp:68` both built
+  `getEnvironmentVariable("AQ") + "/resource/test/inputs/..."` - singular `resource`. Fixed to
+  `/resources/test/...` in both. Confirmed the correctly-spelled target folders
+  (`resources/test/inputs/ETrading/AQObjects/{AQObjCurve,ExampleObjects}/`) already exist with the
+  expected fixture files, so no folder-creation work needed alongside the path fix.
+
+**Build note:** `GTEST.vcxproj`'s link initially failed with unresolved `AQLMathCalendar::
+countHoliday`/`isHoliday`/`getCalendar` symbols - a stale `models.lib` built before an earlier
+session's `AQLMathCalendar` -> `AQLCalendar` rename, not a real regression (same class of issue as
+the `AQLMatrix.h` comment-terminator bug found earlier this session). Fixed with a full `models`
+Rebuild; GTEST then linked clean.
+
+### Exception-macro follow-up sweep: 7 more slicing sites fixed, 2 correctly left alone; tolerance-macro precedence footgun fixed (2026-09-20, same session)
+
+Nicholas asked to fix any remaining exception-macro bugs/concerns while reviewing the GTEST
+findings above. Two items from the earlier exception-classes review (flagged then, not yet
+actioned):
+
+- **The 9 other `throw e;` sites** flagged (not fixed) in the earlier `AQ_CATCH`/
+  `VALID_EXCEPTION_END` review. Read each in full context before touching anything - **7 were
+  real slicing bugs, 2 were false positives**, worth distinguishing:
+  - Real bugs, fixed (`catch(X& e) { throw e; }` -> `catch(X&) { throw; }`, or the minimal
+    variant needed to keep `e` where it's genuinely still read before rethrow):
+    `AQLFileAccessor.cpp:132`, `AQLStaticDataManager.cpp:148`,
+    `AQLCurveForwardRateHelpers.cpp:1909`, `CurveUtilities.cpp:489` (catch parameter name dropped,
+    unused otherwise), `AQLMathCurveFuncUtility.cpp:2019`, `AQLPriceIndexTool.cpp:2706` (catch
+    binding kept - `e.addMsg(...)` genuinely mutates the live exception object in place before the
+    now-bare `throw;`, which still carries that mutation forward since a bound reference isn't a
+    copy), and `AQLLinearRatesModel.cpp:270` (a bonus fix beyond pure slicing - was catching
+    `AQLCoreNumericalError` **by value**, copying the whole exception on every pass through this
+    branch for no reason; changed to `catch(const AQLCoreNumericalError& e)` alongside the
+    `throw e;` -> `throw;` fix).
+  - **False positives, correctly left alone:** `AQLDataFile.cpp:544` and
+    `AQLFTQuasiRandGF.cpp:30` both construct a **fresh, local** `AQLCoreSystemError` inside a
+    `catch(...)` block and throw *that* - they are not rethrowing a caught exception at all
+    (deliberately translating whatever was caught into a system error with added context), so
+    there is no dynamic type to slice away. Confirmed by reading each in full before deciding,
+    rather than pattern-matching on `throw e;` text alone.
+- **Tolerance-macro operator-precedence footgun** (flagged as a note, not a live bug, in the
+  earlier review): all 10 `AQ_IS_*_WITH_TOLERANCE` macros in `ExceptionMacros.h` expanded to a bare
+  `( condition ) ? true : false` with no *outer* parens around the whole ternary - `?:` binds
+  looser than `&&`/`||`, so `AQ_IS_EQUAL_WITH_TOLERANCE(...) && somethingElse` would silently drop
+  `somethingElse` whenever the macro's own condition is false. Wrapped every one in an outer paren
+  pair (behavior-preserving for every existing single-use call site; only changes behaviour for a
+  composition pattern nothing currently uses). One explanatory comment above the first macro
+  covers all ten, rather than repeating the same note ten times.
+
+Verified: `models` full Rebuild clean; `GTEST` build in progress at time of writing (kicked off
+after these fixes, covers `math`/`etrading`/`calibration`/`models`/`validation` transitively via
+linking - will confirm clean or report back). Filtered re-run of just the 8 fixed tests (Clusters B
++ C) planned once the build completes, before claiming them fixed.
+
+**Confirmed green (2026-09-20):** `GTEST` build succeeded clean. Filtered `--gtest_filter` run of the
+7 distinct fixed tests initially showed 6/7 passing - `TestAQObjCurve.UNIT_AQObjCurve` still failed,
+but with a **third, previously-hidden Cluster B instance** at `TestAQObjCurve.cpp:178`
+(`calculateForwardRateUsingDiscountFactors`, same `AQObjCurve.cpp` `AQ_THROW` pattern, same fix).
+It was never visible in the original full-suite run because the Cluster C path bug crashed the test
+uncaught before execution ever reached that line - fixing C unmasked a second Cluster B failure
+sitting right behind it in the same test. Grepped the rest of the file for any other
+`ETradingException` expectations before calling it done - none left. Rebuilt, reran the filtered
+set: **all 7 tests pass.** Clusters B and C are fully closed. Cluster A (`ECB_Calendars`,
+`TestDatesCentralBank`) remains open pending Nicholas's decision on the `CBSchedule.conf` approach
+proposed above vs. a simpler disable/loosen.
+
+### Matrix consolidation plan fleshed out with real numbers and a concrete design (2026-09-20, same session)
+
+Nicholas asked for a full rename/consolidation/flattening plan (naming for `AQLMatrix`, folding in
+`IntMatrix`, consolidating `AnyTypeMatrix`/`VariantMatrix`, a shared flattening base class,
+threading, `std::vector` confirmation). Full design written up in `MIGRATION_PLAN.md` Phase 6.11
+(superseding the two open questions from the investigation the prior message) - not actioned, still
+needs Nicholas's approval. Headline findings not in the earlier pass: `ComplexMatrix` (2 files/8
+uses) sits in the *same* Heston hot loops as `DoubleMatrix`/`IntMatrix` - missed the first time,
+caught this round; `AQLStringMatrix` (300 files/2,290 uses) is bigger than `DoubleMatrix` and is
+explicitly flagged as out of scope for this item, not folded in; `etrading::Variant` (wraps
+`boost::spirit::hold_any`, true type erasure, already has `transpose()` and string-matrix
+conversion helpers) is confirmed the more capable of the two heterogeneous types and should
+survive over `AnyType` (a fixed `boost::variant<...>` enumeration). Also flagged, not resolved: a
+genuine naming tension between the `AQL` ("AQ Legacy", D17) prefix and Phase 8's eventual
+`AQLString`/`AQLDate` retirement plan - recommended `AQAnyMatrix` (no `L`) if the consolidated
+heterogeneous type ends up living in `etrading` (not flagged for deprecation) rather than `math`.
+**Nicholas agreed with all points (2026-09-20) - plan is approved for the design, still needs
+`AQLStringMatrix` (300 files/2,290 uses, the biggest item, deliberately left out of 6.11) revisited
+separately with its own recommendation before that piece is scoped** - flagged in Phase 6.11 as a
+follow-up reminder, not forgotten, not yet actioned.
+
+### `AQLMathCentralBank` -> `AQLCentralBank` rename ("Math" category dropped - Nicholas found it confusing) (2026-09-20, same session)
+
+Nicholas couldn't find `AQLMathCentralBank.h`/`.cpp` and asked whether they'd been left out of a
+project. Checked: they were correctly listed in both `models.vcxproj` and `.filters` all along
+(`include\Dates` / `src\Dates` filters, not mislabeled) - the likely explanation is Nicholas
+searching in the `math` project, since the class name starts with `AQLMath` even though the file
+has always lived in `models`. Exactly the confusion the rename fixes. Enumerated all 10 referencing
+files (`AQLDateHelpers.h`/`.cpp`, `LibSetUpETrading.cpp`, `TestDatesCentralBank.cpp`,
+`AQLMathCentralBank.h`/`.cpp` themselves, `AQLMathDateCalculations.h`/`.cpp`, plus the two project
+files - 26 occurrences total), renamed the two physical files, the class identifier, and every
+`#include` (`AQLMathCentralBank.h` -> `AQLCentralBank.h` came along for free via the same
+word-boundary regex, since the class name is a literal substring of the file name). `models` full
+Rebuild clean, `etrading` build clean (both consume it).
+
+### ECB GTEST failures (Cluster A) - resolved as warnings, not fixed as data (2026-09-20, same session)
+
+Nicholas's call: turn the ECB staleness failures into warnings rather than build a `CBSchedule.conf`
+freshness-check mechanism (the design proposed in the earlier entry) - simpler, and matches how
+`ECB_Calendars.UNIT_ECB_Calendar_Expiry_Test` already half-worked:
+
+- **`ECB_Calendars.UNIT_ECB_Calendar_Expiry_Test`** (`TestAqDateECB.cpp`) already had a graduated
+  design - the 4th/5th/6th ECB meeting date checks were already `GTEST_WARNING`s, only the 3rd
+  meeting date check was a hard `AQ_THROW`. Simplest possible fix: changed that one `AQ_THROW` to
+  `GTEST_WARNING` too, now consistent with its own siblings. No new mechanism needed - the test
+  already had the right shape, just one leftover hard-error branch.
+- **`TestDatesCentralBank.UNIT_AreThereEnoughDates`** had no warning path at all - a bare
+  `EXPECT_GE( totalDaysToLast, 150 )`. Replaced with `GTEST_CONDITIONAL_WARNING` (already defined
+  in `TestHelperUtilities.h`, the same macro family `Calendars.UNIT_Expiry_Test` uses for its own
+  6-month warning tier) - prints a warning with the actual days-remaining count and a pointer to
+  refresh `AQLCentralBank.cpp`/`CBSchedule.csv`, does not fail the test. Added the missing
+  `#include "TestHelperUtilities.h"`.
+
+Both changes are additive/behavioural-only in the test files - no production code touched, no data
+refreshed (the underlying ECB schedule is still ~5 years stale; these tests just stop being
+red about it). Build/rerun pending as part of the same batch as the two new renames below.
+
+**Confirmed green (2026-09-20):** `models`/`etrading`/`calibration`/`GTEST` all rebuild clean after
+the `AQLCentralBank` rename, the two `AQLDateCalculations`/`AQLDateTools` renames below, and the
+ECB warning changes together. `--gtest_filter="ECB_Calendars.*:TestDatesCentralBank.*"` - all 6
+tests pass, both previously-failing ones now print `#Warning:` (the ECB one shows
+`-1714` days-to-last in the message, confirming the diagnosis). **All 9 originally-failing tests
+from the full-suite run are now resolved** - 7 fixed as real bugs (Clusters B/C), 2 resolved as
+intentional warnings, not failures (Cluster A).
+
+### `AQLMathDateCalculations`/`AQLMathDateUtilities` renames - "Math" dropped, "Utilities" -> "Tools" (2026-09-20, same session)
+
+Same pattern as the `AQLCentralBank` rename just above, same session. `AQLMathDateCalculations` ->
+`AQLDateCalculations` (already renamed to `AQLCentralBank` by the earlier rename this file
+references - had to happen first since `AQLDateCalculations.h` includes `AQLCentralBank.h`).
+`AQLMathDateUtilities` -> `AQLDateTools` (Nicholas: "rename Utilities as Tools", matching the `aqTool`
+category convention already used elsewhere in this codebase, e.g. `AQ_XLL`'s `Tool` category).
+Enumerated first: 117 distinct files referenced one or both classes (`AQLMathDateCalculations` in
+~86 files across `calibration`/`etrading`/`models` + 2 project files; `AQLMathDateUtilities` in
+~45 files across `calibration`/`etrading`/`GTEST`/`models` + 2 project files, with overlap between
+the two lists). Renamed both physical files, both class identifiers, and every `#include` in one
+word-boundary sed pass per file (the `#include` filename updates came along for free, same trick as
+`AQLCentralBank`, since the class name is a literal substring of its own header's filename).
+`models`/`etrading`/`calibration`/`GTEST` all rebuild clean.
+
+### `AQLDateTools` -> `AQLDateSchedule` consolidation - Choice A actioned, method-diffed first (2026-09-20, same session)
+
+Nicholas confirmed: go with the method (diff every duplicated method, not just `generateSchedule`,
+before trusting either side) and Choice A (standardize on `etrading::AQLDateScheduleHelpers`, the
+one the live pricing surface already calls; delete `models::AQLDateTools`/its low-level partner
+stays separate, out of scope). Full sequence:
+
+1. **Method-by-method whitespace-insensitive diff, `AQLDateTools.cpp` vs `AQLDateScheduleHelpers.cpp`**
+   (every duplicated method, not just `generateSchedule`). Found **one genuine behavioural
+   divergence, not just mechanical `AQLDateCalculations::`->`AQLDateHelpers::` substitution**:
+   `ModelDaycount()` used `"ACT/365_ISDA"` in `models` vs `"ACT/365"` (Fixed - a different
+   day-count convention, confirmed via `AQLPriceDataDayCount.cpp`'s separate `ACT_365`/
+   `ACT_365_ISDA` enum cases) in the `etrading` fork. Checked real callers: **16 real call sites,
+   all in `models`** (CMS calibration, swaption vol, swap rate calc), all via
+   `models::ModelDaycount()`'s `"ACT/365_ISDA"`; **zero callers anywhere** of the `etrading` copy -
+   dead code, harmlessly wrong until something started calling it. Fixed the `etrading` value to
+   `"ACT/365_ISDA"` before redirecting the 16 real callers onto it, specifically to avoid turning a
+   dormant divergence into a live, silent pricing bug.
+2. **Ported the missing `StubDateAndType` struct + `getStubDateAndType()` method** from
+   `AQLDateTools` into `AQLDateScheduleHelpers` (`etrading`) - the one piece of the fork that was
+   never duplicated, leaving `generateSchedule()` reaching backward into `models::AQLDateTools`
+   for it (a real architecture violation - `etrading` depending on the legacy layer). Faithful port
+   (`AQLDateCalculations::` -> `AQLDateHelpers::` calls, otherwise unchanged, including the
+   existing `&AQLPriceDataCalendar()`/`&AQLPriceDataSlidingRule()` temporary-address pattern -
+   flagged as a follow-up cleanup candidate, not bundled into the port). Redirected all 6 internal
+   call sites inside `generateSchedule()`. `etrading` builds clean.
+3. **Redirected the 3 `etrading` callers** (`CashflowEngine.cpp`, `CurveUtilities.cpp`,
+   `SabrModel.cpp`) off `AQLDateTools::` onto the now-complete `AQLDateScheduleHelpers::` - these
+   were themselves backward-dependency violations, now fixed. (`SabrModel.cpp` has a *separate*,
+   still-live dependency on `models::AQLDateCalculations::termStrtoYMDW` - out of today's scope,
+   explicitly left alone.)
+4. **Enumerated every remaining `AQLDateTools` reference** - 40 files across `calibration`/
+   `models`/`GTEST` (every public method is used somewhere: `getStubDateAndType` most, then
+   `getAQLDate`/`getDate`/`getTerm`, down to single-use methods like `getIMMDate1/2/3`). Redirected
+   `AQLDateTools::` -> `etrading::AQLDateScheduleHelpers::` across all 40 (word-boundary sed, one
+   pass; caught two angle-bracket `#include <AQLDateTools.h>` variants my quoted-include regex
+   missed and fixed those by hand).
+5. **Hit and fixed a real build-config gap**: `models.vcxproj`/`calibration.vcxproj` had no
+   `etrading\include` in their `AdditionalIncludeDirectories` - the legacy layer had never needed
+   to reach into `etrading` before. Both already had a precedent for exactly this kind of sibling
+   include (`models` already added `math\include`; `calibration` already added `math\include` +
+   `models\include`), so added `etrading\include` the same way, across all 8 configs each. Safe for
+   static libraries - compilation doesn't need the other project's `.lib` to exist yet, only the
+   downstream `.exe`/`.dll` targets that link both do, and they already do.
+6. **Hit and fixed the free-function qualification gap**: `AQLDateTools.h`'s ~11 free functions
+   (`CalendarAdvance`, `Daycount`, `YearFraction`, `ModelTime`, `AQLStringToDate`,
+   `FrequencyToTerm`, `TermToYearLength`, `TermToMonthLength`, `StringToMonthInteger`,
+   `is_last_business_day_temp`) were global/unnamespaced in `models`, but live in `namespace
+   etrading` in the fork - unqualified calls stopped resolving once redirected. Qualified every
+   call site with `etrading::` (one accidental `etrading::etrading::` double-prefix from a stray
+   already-qualified call, caught and fixed).
+7. **Deleted `AQLDateTools.h`/`.cpp`** once a repo-wide grep confirmed zero remaining references
+   outside itself; removed both project-file entries (`models.vcxproj`/`.filters`).
+8. **Renamed `AQLDateScheduleHelpers` -> `AQLDateSchedule`** (Nicholas: drop the `Helpers` suffix),
+   both physical files and the class, across **126 files** - `etrading`/`validation`/`calibration`/
+   `models`/`GTEST`/`AQ_XLL` all reference this class, by far the widest-reaching rename this
+   session (confirms it really is the live surface's canonical schedule generator). One
+   word-boundary sed pass, zero collisions (unique identifier). Updated the two stale "duplicate
+   method" comments left over from the fork to instead document the consolidation.
+
+**Verification**: `etrading`/`calibration`/`models`/`validation`/`GTEST`/`AQ_XLL` all do a full,
+clean Rebuild (not incremental) after the rename - confirmed one at a time to avoid a race between
+a running background build and the file-rename step (hit this once: a build failed because
+`AQLDateScheduleHelpers.h` was renamed out from under it mid-build - not a real bug, re-ran clean).
+Ran the 123 tests most directly exercising what changed (`TestStubDates`, `TestDatesSwapSchedule`,
+`TestCreditBasketModel`, `TestCreditIndexOption`, `TestInflationCurve`, `TestCreditModel`,
+`TestSABRCalibration`, `TestMirDateFunctions`, `TestTradeGBPSwapStubRate`,
+`TestAQObjCurveDiscountFactorsWithSpread`, `TestAQObjSwapFromBespokeSchedule`,
+`TestAQObjSwapFromStructuredBespokeSchedule`) - **all 123 pass**. Full-suite rerun not done this
+session (the 55-minute run); the targeted set covers every code path this batch actually touched.
+
+**Not yet done**: the efficiency/OMP/enhancement review of the now-consolidated `AQLDateSchedule`
+Nicholas asked for alongside the rename - next.
+
+### `TestStructuredExceptionHandler.UNIT_IntegerDivideByZero` - real crash-safety bug found and fixed, not a bad test (2026-09-20, same session)
+
+Nicholas ran the full suite himself post-consolidation: **only one failure now** (down from the
+original 9) -
+`TestStructuredExceptionHandler.UNIT_IntegerDivideByZero_BecomesCppException`, previously
+long-dismissed in this file's history as a vague "build/optimizer issue." Confirmed first: **not
+caused by today's `AQLDateSchedule` work** - unrelated file, unrelated subsystem. Nicholas then
+asked whether integer divide-by-zero should even be a structured exception, floating removing the
+test. **Pushed back and investigated instead**: divide-by-zero is a genuine Windows hardware fault
+(`EXCEPTION_INT_DIVIDE_BY_ZERO`, a real `#DE` CPU trap), exactly the class of thing
+`StructuredExceptionHandler` exists to catch so a worksheet-function bug crashes with a readable
+error instead of taking Excel down - removing the test would hide a real, live gap, not close it.
+
+**Root cause, found by reading `StructuredExceptionHandler.cpp`'s constructor, not guessed**: it
+calls both `_set_se_translator(SEHandler)` *and* `signal(SIGFPE, signalHandler)`. On Windows, per
+Microsoft's own `signal()` documentation, `SIGSEGV`/`SIGILL`/`SIGTERM` registrations are inert (not
+genuinely delivered), but `SIGABRT`/`SIGFPE`/`SIGINT` are real. Both
+`EXCEPTION_INT_DIVIDE_BY_ZERO` and `EXCEPTION_FLT_DIVIDE_BY_ZERO` map to `SIGFPE` - so the
+`signal(SIGFPE, ...)` registration was intercepting integer divide-by-zero *before*
+`_set_se_translator`'s `SEHandler` ever saw it, and throwing a C++ exception from inside a Windows
+`SIGFPE` handler is unsupported/unreliable, so the throw silently failed to propagate - the process
+didn't crash, but nothing was thrown either, matching "Actual: it throws nothing" exactly. This
+also explains why `UNIT_AccessViolation_BecomesCppException` always passed: `SIGSEGV`'s
+registration is inert on Windows, so access violations always fell through to `SEHandler`
+correctly and were never affected.
+
+**Fix**: removed the `signal(SIGFPE, signalHandler)` line from `StructuredExceptionHandler`'s
+constructor (`StructuredExceptionHandler.cpp`), leaving `SIGABRT`/`SIGILL`/`SIGINT`/`SIGSEGV`/
+`SIGTERM` registered as before. One line. `etrading`/`GTEST` rebuild clean;
+`TestStructuredExceptionHandler.*` (all 4 cases, not just the one that was failing) now pass.
+
+**Why this matters beyond the test going green**: before this fix, an accidental integer
+divide-by-zero *anywhere* in this add-in's 466 worksheet functions - a day count, a frequency, a
+notional, a matrix dimension that turns out to be zero in some edge case - would have crashed the
+whole Excel process instead of surfacing as a catchable, readable `AQLCoreError`. This was a live,
+real crash-safety gap in a class whose entire documented purpose is preventing exactly that
+failure mode, hiding behind a test that had been mislabeled "optimizer issue" and left unfixed
+across multiple prior sessions.
+
+### `AQLDateSchedule` efficiency/OMP/enhancement review - done, findings given, actioning the safe subset now (2026-09-20, same session)
+
+Reviewed every loop in the consolidated `AQLDateSchedule.cpp` for OMP suitability: only
+`getMultiDate` and `calcDatesWithLag` are genuinely embarrassingly parallel (per-index independent,
+same shape as `AQLMatrix`'s earlier flattening work) - `generateSchedule`/`generateRegularSchedule`/
+`getStubDateAndType`/`calcRegularDates` are all inherently sequential (each date depends on the
+previous one), checked `calcRegularDates` specifically since it looked promising at a glance but
+its `while` loops chain off `regular_enddates.back()`. Noted this OMP work is only safe *because*
+of this session's earlier `AQLMathCalendarData` mutex fix (concurrent `getDate()` calls share one
+`AQLPriceDataCalendar`/`AQLMathCalendar`). Other findings: a temporary-address pattern
+(`&AQLPriceDataCalendar()`) inside `getStubDateAndType`'s hot loop building a fresh default
+calendar every iteration; missing `reserve()` on vectors that grow via `push_back` despite
+`AQLDate` not being trivially-copyable (carries `std::atomic<long> julius_`); an allocate-then-
+compare `upper()`-then-`==` pattern that could use the zero-allocation `AQLString::
+equalsIgnoreCase()` added earlier this session; `std::optional` modernization for the raw optional
+pointers (flagged, not actioned - too large a signature-ripple for the current token budget).
+Actioning the safe, contained subset (reserve/temporary-fix/equalsIgnoreCase/OMP) now; token
+budget is short this session, so this entry stands as the record if the session ends before the
+follow-up report does.
+
+**Done (2026-09-20, `AQLDateSchedule.cpp`)**:
+- Added `defaultCalendar()` (function-local `static const AQLPriceDataCalendar`) and replaced all
+  6 `&AQLPriceDataCalendar()` temporary-address sites (`getStubDateAndType`'s two stub-search
+  loops, `firstStubDateFromStubType`, `lastStubDateFromStubType`) - no more rebuilding an empty
+  calendar every loop iteration.
+- `calcDatesWithLag`: was `push_back`-grown with no `reserve`; now pre-sized
+  (`DateVector results( dates.size() )`) and indexed, matching `getMultiDate`'s already-good shape.
+- **OMP added to `getMultiDate` and `calcDatesWithLag`**, the two functions confirmed
+  embarrassingly parallel (each index independent) - **the threshold-guarded form**, matching
+  `AQLMatrix.cpp`'s pattern exactly: new `AQL_DATE_SCHEDULE_OPENMP_THRESHOLD = 64` constant,
+  `#pragma omp parallel for if( dateCount > AQL_DATE_SCHEDULE_OPENMP_THRESHOLD )` on both. Below
+  64 elements (this library's typical case), both run the identical sequential loop with zero
+  threading overhead. `OpenMPSupport` was already `true` for `etrading.vcxproj` (unlike `math`
+  earlier this session) - no project-file change needed.
+- Reconsidered the `equalsIgnoreCase` swap on `generateSchedule`'s stub-type dispatch chain on
+  closer inspection: it already uppercases once and compares the single uppercased copy against
+  multiple literals - already a single-allocation, multi-compare shape, not a clear win to change.
+  **Not actioned** - correctly identified as lower-value than first suggested, not skipped by
+  oversight.
+- **Not actioned** (flagged only, in the review message): `std::optional` modernization,
+  `is_last_business_day_temp` rename, free-function grouping, duplicate-overload
+  `const`-correctness - all larger or lower-value than the token budget justified this session.
+
+**Verification**: `etrading` builds clean (Debug|x64). **Full GTEST rerun not done this session**
+(token budget) - the changes are narrowly contained (a hoisted-out temporary with identical
+semantics, pre-sizing a vector that was already being filled index-by-index in order, and
+threshold-guarded OMP that is behaviourally identical to the old sequential loop for every
+vector below 64 elements) and `getMultiDate`/`calcDatesWithLag` are both covered by the 123-test
+targeted run from the consolidation batch above, but that run predates these specific edits.
+**Recommend a rerun of at least `TestStubDates`/`TestDatesSwapSchedule`/`TestSABRCalibration`
+next session before considering this batch fully closed.**

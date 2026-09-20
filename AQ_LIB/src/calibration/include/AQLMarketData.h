@@ -22,7 +22,7 @@
 #include "AQLDataMultiReference.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataCalendar.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLMathYieldCurvePro.h"
 #include "AQLPriceDataDayCount.h"
 #include "AQLDefinitions.h"
@@ -258,7 +258,7 @@ public:
 		
 		if (t_lterm.findString("ED") != -1 || t_lterm.findString("FF") != -1) 
 		{
-			ldate = AQLMathDateCalculations::getIMMDateFromTerm(asof, t_lterm);
+			ldate = AQLDateCalculations::getIMMDateFromTerm(asof, t_lterm);
 		}
 		else
 		{
@@ -282,13 +282,13 @@ public:
 			// fra
 			if (t_lterm.findString("X") != -1) t_lterm = AQLPriceYieldGenerator::changeFRATermFormat(t_lterm);
 
-			ldate = AQLMathDateCalculations::getDate(asof, t_lterm, true);
+			ldate = AQLDateCalculations::getDate(asof, t_lterm, true);
 		}
 		
 		// right
 		if (t_rterm.findString("ED") != -1 || t_rterm.findString("FF") != -1) 
 		{
-			rdate = AQLMathDateCalculations::getIMMDateFromTerm(asof, t_rterm);
+			rdate = AQLDateCalculations::getIMMDateFromTerm(asof, t_rterm);
 		}
 		else
 		{
@@ -311,7 +311,7 @@ public:
 			// fra
 			if (t_rterm.findString("X") != -1) t_rterm = AQLPriceYieldGenerator::changeFRATermFormat(t_rterm);
 
-			rdate = AQLMathDateCalculations::getDate(asof, t_rterm, true);
+			rdate = AQLDateCalculations::getDate(asof, t_rterm, true);
 		}
 
 		return ldate < rdate;

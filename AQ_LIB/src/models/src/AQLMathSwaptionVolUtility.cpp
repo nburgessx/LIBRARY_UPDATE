@@ -16,11 +16,11 @@
 #include "AQLNl2sol.h"
 
 #include <AQLMathYieldCurve.h>
-#include <AQLMathDateCalculations.h>
+#include <AQLDateCalculations.h>
 #include <AQLPriceCashFlowGenerator.h>
 
 #include "AQLMathSwaptionVolUtility.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLMathCurveFuncUtility.h"
 #include "AQLMathInterpolationUtilities.h"
 #include "AQLMathSABR.h"
@@ -71,15 +71,15 @@ AQLMathSwaptionVolUtility::setUpSABRGrid( AQLDataInstance* dataInstance, const A
     for(size_t i=1; i<mat.size(); i++)
     {
         expiryStr.push_back(mat[i][0]);
-        expiDateVec.push_back( AQLMathDateCalculations::getDate(asOfDate,mat[i][0],sr,&cal,true) );
-        expiryVec.push_back( AQLMathDateUtilities::getTerm(asOfDate, expiDateVec[i-1], daycount, true) );
+        expiDateVec.push_back( AQLDateCalculations::getDate(asOfDate,mat[i][0],sr,&cal,true) );
+        expiryVec.push_back( etrading::AQLDateSchedule::getTerm(asOfDate, expiDateVec[i-1], daycount, true) );
     }
 
     int y,m,d,w;
     for(size_t i=1; i<mat[0].size(); i++)
     {
         tenorStr.push_back(mat[0][i]);
-        AQLMathDateCalculations::termStrtoYMDW(mat[0][i], y, m, d, w);
+        AQLDateCalculations::termStrtoYMDW(mat[0][i], y, m, d, w);
         tenorVec.push_back( static_cast<double > (y) + static_cast<double > (m) / 12 );
     }
 
@@ -322,7 +322,7 @@ AQLMathSwaptionVolUtility::lookUpSwapGrid(AQLDataInstance* dataInstance, const A
     const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(matID, ENCHKTYPE_ISDEFINED).
         get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get()).get();
 
-    double expPoint_d = ModelTime(asOfDate, expDate);
+    double expPoint_d = etrading::ModelTime(asOfDate, expDate);
     double tenorPoint_d = getTenorPoint(tenorPoint);
 
     AQLMathSwaptionMatrix swaptionMat(mat, expiryVec, tenorVec);
@@ -379,7 +379,7 @@ AQLMathSwaptionVolUtility::setUpConvention( AQLDataInstance* dataInstance, const
 	AQLDate asOfDate;
 	if(asOfDate_str != AQLString("")) 
 	{
-		asOfDate = AQLMathDateUtilities::getAQLDate(asOfDate_str);
+		asOfDate = etrading::AQLDateSchedule::getAQLDate(asOfDate_str);
 	}
 	else if(curveID != AQLString(""))
 	{
@@ -1842,7 +1842,7 @@ AQLMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 	DoubleVector tenorVec;
 	for (size_t j = 0; j < tenor.size(); ++j)
 	{
-		AQLMathDateCalculations::termStrtoYMDW(tenor[j], y, m, d, w);
+		AQLDateCalculations::termStrtoYMDW(tenor[j], y, m, d, w);
 		tenorVec.push_back(y + m / 12.);
 	}
 		
@@ -1906,7 +1906,7 @@ AQLMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 		int paramsterm, paramsterm_calib;
 		for (size_t i = 0; i < expiry.size(); i++)
 		{
-			AQLMathDateCalculations::termStrtoYMDW(expiry[i], y, m, d, w);
+			AQLDateCalculations::termStrtoYMDW(expiry[i], y, m, d, w);
 			paramsterm = 12 * y + m;
 			paramsterm_month.push_back(AQLString(paramsterm) + "M");
 			
@@ -1930,7 +1930,7 @@ AQLMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 		{
 			for (size_t k = 0; k < premiumTerms[i].size() - 1; k++)
 			{
-				AQLMathDateCalculations::termStrtoYMDW(premiumTerms[i][k], y, m, d, w);
+				AQLDateCalculations::termStrtoYMDW(premiumTerms[i][k], y, m, d, w);
 				int premiumterm = 12 * y + m;
 				const AQLString premiumterm_month = AQLString(premiumterm) + "M";
 				if (num_diffterm >= 0)
@@ -1969,10 +1969,10 @@ AQLMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 
 			// Set up information on expiry term, fwdrate, numeraire
 			const AQLString roll_conv = "TRUE";
-			const AQLDate tmpstart = AQLMathDateCalculations::getDate(asOfDate, spotlag, sr, &cal, true, &roll_conv);
+			const AQLDate tmpstart = AQLDateCalculations::getDate(asOfDate, spotlag, sr, &cal, true, &roll_conv);
 			AQLDate endpay(tmpstart);
 			int y, m, d, w;
-			AQLMathDateCalculations::termStrtoYMDW(premiumTerms[0][i], y, m, d, w);
+			AQLDateCalculations::termStrtoYMDW(premiumTerms[0][i], y, m, d, w);
 			endpay.addYears(y);
 			endpay.addMonths(m);
 			endpay.addDays(d);
@@ -1983,7 +1983,7 @@ AQLMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 			else endpay.setDay(roll);
 			//paymentvec;
 			DateVector payVec;
-			AQLMathDateCalculations::generateSchedule(tmpstart, endpay, CapFloorletFrequency, true, NULL, NULL, &roll, payVec, &sr, &cal);
+			AQLDateCalculations::generateSchedule(tmpstart, endpay, CapFloorletFrequency, true, NULL, NULL, &roll, payVec, &sr, &cal);
 			//slidingrule 
 			AQLPriceDataSlidingRule sr2;
 			sr2.convertFromString(PRE);
@@ -1992,7 +1992,7 @@ AQLMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 			DateVector fixVec(N);
 			for (int k = 0; k < N; k++)
 			{
-				fixVec[k] = AQLMathDateCalculations::getDate(payVec[k], spotlag, sr2, &cal2, false);
+				fixVec[k] = AQLDateCalculations::getDate(payVec[k], spotlag, sr2, &cal2, false);
 			}
 
 			unsigned int pos = 0;
@@ -2025,8 +2025,8 @@ AQLMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 			AQLString daycount_expiry(AC_365I);
 			for (size_t k = 0; k < i + num_diffterm + 1; k++)
 			{
-				expiryDate = AQLMathDateCalculations::getDate(asOfDate, expiry[k], sr, &cal2, true);
-				expiryterms_capfloor.push_back(AQLMathDateUtilities::getTerm(asOfDate, expiryDate, daycount_expiry, true));
+				expiryDate = AQLDateCalculations::getDate(asOfDate, expiry[k], sr, &cal2, true);
+				expiryterms_capfloor.push_back(etrading::AQLDateSchedule::getTerm(asOfDate, expiryDate, daycount_expiry, true));
 			}
 			// create expiry terms for calibration target cap/floor
 			DoubleVector expiryterms_capfloor_calib;
@@ -2036,7 +2036,7 @@ AQLMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 			}
 			for (size_t k = num_diffterm; k < i + num_diffterm + 1; k++)
 			{
-				AQLMathDateCalculations::termStrtoYMDW(expiry[k], y, m, d, w);
+				AQLDateCalculations::termStrtoYMDW(expiry[k], y, m, d, w);
 				int term_pos = (12 * y + m) / tenor_num - 1;
 				expiryterms_capfloor_calib.push_back(expiryTerms_capfloorlet[term_pos - 1]);
 			}
@@ -2071,7 +2071,7 @@ AQLMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 				expiryterms_calib_output.push_back(expiryterms_capfloor_calib[i + num_diffterm]);
 			}
 
-			AQLMathDateCalculations::termStrtoYMDW(target_expiry[i], y, m, d, w);
+			AQLDateCalculations::termStrtoYMDW(target_expiry[i], y, m, d, w);
 			size_t num_capfloorlet = (12 * y + m) / tenor_num;
 			forward = forwardMat_capfloorlet[num_capfloorlet - 1];
 			max_alpha = fabs(forward) < 0.01 ? 0.01 / fabs(forward) * 5. : 5.;
@@ -3451,8 +3451,8 @@ getForward(AQLDataInstance* dataInstance, const AQLDate& expiry, const AQLString
         dynamic_cast<const AQLPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
 
 	AQLPriceDataSlidingRule slr_Fol; slr_Fol.convertFromString(FOL);
-    AQLDate tmpDate = AQLMathDateCalculations::getDate(expiry,spotLag,slr_Fol,&fixCal,true);
-    AQLDate endDate = AQLMathDateCalculations::getDate(tmpDate,tenor,paySlr,&payCal,true);
+    AQLDate tmpDate = AQLDateCalculations::getDate(expiry,spotLag,slr_Fol,&fixCal,true);
+    AQLDate endDate = AQLDateCalculations::getDate(tmpDate,tenor,paySlr,&payCal,true);
     DateVector dates;
 	double rate;
 	if (freq == SIMPLE)
@@ -3463,7 +3463,7 @@ getForward(AQLDataInstance* dataInstance, const AQLDate& expiry, const AQLString
 	}
 	else
 	{
-		//AQLMathDateCalculations::generateSchedule(tmpDate, endDate, freq, true, NULL, NULL, NULL, dates, &paySlr, &payCal);
+		//AQLDateCalculations::generateSchedule(tmpDate, endDate, freq, true, NULL, NULL, NULL, dates, &paySlr, &payCal);
 		rate = AQLMathCurveFuncUtility::getParRate(dataInstance, curveID, tmpDate, endDate, NULL, NULL, NULL, freq, daycount.convertToString(), 
 												paySlr.convertToString(), payCal.convertToString(), AQLString("SPLINE"), foreCurveName, dfCurveName, isFWDInter);
 	}
@@ -3501,9 +3501,9 @@ getNumeraire(AQLDataInstance* dataInstance, const AQLDate& expiry, const AQLStri
 	const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(curve.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get());
 
 	AQLPriceDataSlidingRule slr_Fol; slr_Fol.convertFromString(FOL);
-	AQLDate tmpDate = AQLMathDateCalculations::getDate(expiry,spotLag,slr_Fol,&fixCal,true);
-    AQLDate endDate = AQLMathDateCalculations::getDate(tmpDate,tenor,paySlr,&payCal,true);
-    const AQLDate spotDate = AQLMathDateCalculations::getDate(asOfDate, spotLag, slr_Fol, &fixCal, true);
+	AQLDate tmpDate = AQLDateCalculations::getDate(expiry,spotLag,slr_Fol,&fixCal,true);
+    AQLDate endDate = AQLDateCalculations::getDate(tmpDate,tenor,paySlr,&payCal,true);
+    const AQLDate spotDate = AQLDateCalculations::getDate(asOfDate, spotLag, slr_Fol, &fixCal, true);
 	double adjust_term = dc_act365.getTerm(asOfDate, spotDate);
 	double adjustDF = AQLMathCurveFuncUtility::getDF(adjust_term, dataInstance, curveID, dc_act365.convertToString(), 
 		AQLString("SPLINE"),false,curveName);
@@ -3514,7 +3514,7 @@ getNumeraire(AQLDataInstance* dataInstance, const AQLDate& expiry, const AQLStri
 	}
 	else
 	{
-		AQLMathDateCalculations::generateSchedule(tmpDate, endDate, freq, true, NULL, NULL, NULL, dates, &paySlr, &payCal);
+		AQLDateCalculations::generateSchedule(tmpDate, endDate, freq, true, NULL, NULL, NULL, dates, &paySlr, &payCal);
 	}
     dates.insert(dates.begin(),tmpDate);
 
@@ -3543,7 +3543,7 @@ getExpiryPoint(AQLString str, const AQLDate& asOfDate, const AQLPriceDataSliding
 	}
 	else
 	{
-		date = AQLMathDateCalculations::getDate(asOfDate,str,slr,&cal,true);
+		date = AQLDateCalculations::getDate(asOfDate,str,slr,&cal,true);
 		ret = dc_act365.getTerm(asOfDate, date);
 	}
 
@@ -3568,7 +3568,7 @@ getExpiryPoint2(AQLString str, const AQLDate& asOfDate, const AQLPriceDataSlidin
 	}
 	else
 	{
-		date = AQLMathDateCalculations::getDate(asOfDate,str,slr,&cal,true);
+		date = AQLDateCalculations::getDate(asOfDate,str,slr,&cal,true);
 	}
 
 	return date;
@@ -3592,7 +3592,7 @@ getTenorPoint(AQLString str)
 	}
 	else
 	{
-		AQLMathDateCalculations::termStrtoYMDW(str, y_pos, m_pos, d_pos, w_pos);
+		AQLDateCalculations::termStrtoYMDW(str, y_pos, m_pos, d_pos, w_pos);
 		ret = static_cast<double > (y_pos) + static_cast<double > (m_pos) / 12 + static_cast<double > (w_pos) / 12 / 4 + static_cast<double > (d_pos) / 365.25;
 	}
 
@@ -3602,12 +3602,12 @@ getTenorPoint(AQLString str)
 AQLDate
 AQLMathSwaptionVolUtility::getAQLDate(AQLString date)
 {
-    return AQLStringToDate(date);
+    return etrading::AQLStringToDate(date);
 	//AQLDate ret;
 	//int slushCheck = date.findString("/");
 	//if(slushCheck==-1)
 	//{
-	//	ret =  AQLMathDateUtilities::getAQLDate(date);
+	//	ret =  etrading::AQLDateSchedule::getAQLDate(date);
 	//}
 	//else
 	//{

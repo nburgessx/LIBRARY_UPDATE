@@ -32,7 +32,7 @@
 #include "AQLPriceArbFreeGenerator.h"
 #include "AQLFunctionUtilities.h"
 #include "AQLDateHelpers.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "ParameterValidation.h"
 #include "CoreEnumerations.h"

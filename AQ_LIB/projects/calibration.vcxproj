@@ -147,7 +147,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -170,7 +170,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -193,7 +193,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN64;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -216,7 +216,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN64;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -238,7 +238,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -259,7 +259,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -280,7 +280,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN64;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -301,7 +301,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN64;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>

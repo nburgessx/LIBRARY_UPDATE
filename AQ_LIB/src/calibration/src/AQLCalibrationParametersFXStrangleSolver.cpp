@@ -31,7 +31,7 @@
 #include "AQLPriceFXDisplacedDiffusionCalibration.h"
 
 
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 using namespace std;
 
 // constructor
@@ -100,7 +100,7 @@ AQLCalibrationParametersFXStrangleSolver::createCalibrationInfo(AQLObjectPool &o
 	// terms spotlag
 	AQLString spotlagStr = mpCalibStaticData->getStaticData(keyFX + FX_KEY_CALIB_STRGLSLV_TERM_SPOTLAG);
 	int spotlag = spotlagStr.getIntValue();
-	AQLDate spotdate = AQLMathDateCalculations::getFXSpotDate(keyFX,asOfDate,strCal,spotlag,true);
+	AQLDate spotdate = AQLDateCalculations::getFXSpotDate(keyFX,asOfDate,strCal,spotlag,true);
 
 
 	//isincludelast
@@ -141,11 +141,11 @@ AQLCalibrationParametersFXStrangleSolver::createCalibrationInfo(AQLObjectPool &o
 		// vanna-volga warning this must be changed in all of sources
 		//AQLString tmpdate = AQLMarketData::aqlConvertToTerm(strTerms[i]);
 //		AQLString tmpdate = strTerms[i];
-//		terms[i] = AQLMathDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);
-//		deliveryterms[i] = AQLMathDateCalculations::getDate(terms[i],spotlagday,sr,&cal,true);
+//		terms[i] = AQLDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);
+//		deliveryterms[i] = AQLDateCalculations::getDate(terms[i],spotlagday,sr,&cal,true);
 
-		deliveryterms[i] = AQLMathDateCalculations::getDate(spotdate,strTerms[i],sr,&cal,true);
-		terms[i] = AQLMathDateCalculations::getFXSpotDate(keyFX,deliveryterms[i],strCal,-spotlag,true);
+		deliveryterms[i] = AQLDateCalculations::getDate(spotdate,strTerms[i],sr,&cal,true);
+		terms[i] = AQLDateCalculations::getFXSpotDate(keyFX,deliveryterms[i],strCal,-spotlag,true);
 
 		deltatypes[i] = getCalibStaticDataValue(keyFX + FX_KEY_CALIB_STRGLSLV_DELTATYPE, lterm);
 		deltatypes[i].toUpper();

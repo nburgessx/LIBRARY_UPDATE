@@ -7,7 +7,7 @@
 #include "CommonConstants.h"
 #include "InitializeETrading.h"
 
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "AQLCurvePricingObject.h"
 #include "CurveCalibrationData.h"
@@ -62,7 +62,7 @@ namespace
 			resetLag += 'D';
 		}
 
-		AQLDate effectiveDate = etrading::AQLDateScheduleHelpers::getDate( asOfDate, resetLag, businessDayAdjust, calendar );
+		AQLDate effectiveDate = etrading::AQLDateSchedule::getDate( asOfDate, resetLag, businessDayAdjust, calendar );
 		return effectiveDate;
 	}
 }
@@ -119,7 +119,7 @@ namespace etrading
 		const LabelValueBlock marketDataPropertiesLVB = aqObjHedgeCurveMarketData->toLabelValueBlock( GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES );
 		const std::string marketDataAsOfDate          = marketDataPropertiesLVB.getCompulsoryValue( "AsOfDate" );
 
-		AQLDate asOfDate( AQLDateScheduleHelpers::getAQLDate( marketDataAsOfDate.c_str() ) );
+		AQLDate asOfDate( AQLDateSchedule::getAQLDate( marketDataAsOfDate.c_str() ) );
 		AQLDate effectiveDate = getSwapEffectiveDateFromCurve( aqObjHedgeCurveGenerator, asOfDate );
 
 		/* 
@@ -145,7 +145,7 @@ namespace etrading
             tradeDateKeys[1] = IRS_KEY::MATURITY_DATE;
 
             StandardStringVector tradeDateValues(2);
-            tradeDateValues[0] = AQ_TO_STRING_FROM_INT( AQLDateScheduleHelpers::getExcelDate(effectiveDate) );
+            tradeDateValues[0] = AQ_TO_STRING_FROM_INT( AQLDateSchedule::getExcelDate(effectiveDate) );
             tradeDateValues[1] = swapTenor.c_str();
 
             repriceSwapExpressionLVB_ = LabelValueBlock( repriceSwapExpressionLVB_, tradeDateKeys, tradeDateValues );

@@ -193,18 +193,6 @@
     <Filter Include="include\CurveAnalytics\AQLCurveHelpers">
       <UniqueIdentifier>{990b79e6-2b69-4db9-a1ea-8f7f0c67d476}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\Dates\AQLDateHelpers">
-      <UniqueIdentifier>{aa051f37-b242-4991-a5b4-5e274f63b9b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Dates\AQLDateHelpers">
-      <UniqueIdentifier>{3afbe794-d699-4bc4-aa89-1e0d4514faa9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Dates\DatesAndSchedules">
-      <UniqueIdentifier>{f01fda0d-5026-4e11-9609-62b1b3c1afdc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\Dates\DatesAndSchedules">
-      <UniqueIdentifier>{52e27a65-b0e1-4110-a7aa-7da17fd71de9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\StructuredCredit">
       <UniqueIdentifier>{afb0d1b4-6eaf-4590-8d09-d6044215255a}</UniqueIdentifier>
     </Filter>
@@ -918,18 +906,6 @@
     <ClInclude Include="..\src\etrading\include\AQLCurveMarketDataHelpers.h">
       <Filter>include\CurveAnalytics\AQLCurveHelpers</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\FuturesDates.h">
-      <Filter>include\Dates\DatesAndSchedules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\etrading\include\SwapSchedule.h">
-      <Filter>include\Dates\DatesAndSchedules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\etrading\include\AQLDateHelpers.h">
-      <Filter>include\Dates\AQLDateHelpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\etrading\include\AQLDateScheduleHelpers.h">
-      <Filter>include\Dates\AQLDateHelpers</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\etrading\include\CurveInstrumentPricing.h">
       <Filter>include\CurveAnalytics\SingleCurveCalibration</Filter>
     </ClInclude>
@@ -1094,6 +1070,18 @@
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\JacobianResults.h">
       <Filter>include\CurveAnalytics\CurveResults</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\etrading\include\AQLDateHelpers.h">
+      <Filter>include\Dates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\etrading\include\AQLDateSchedule.h">
+      <Filter>include\Dates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\etrading\include\FuturesDates.h">
+      <Filter>include\Dates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\etrading\include\SwapSchedule.h">
+      <Filter>include\Dates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1667,18 +1655,6 @@
     <ClCompile Include="..\src\etrading\src\AQLCurveMarketDataHelpers.cpp">
       <Filter>src\CurveAnalytics\AQLCurveHelpers</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\AQLDateHelpers.cpp">
-      <Filter>src\Dates\AQLDateHelpers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\etrading\src\AQLDateScheduleHelpers.cpp">
-      <Filter>src\Dates\AQLDateHelpers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\etrading\src\SwapSchedule.cpp">
-      <Filter>src\Dates\DatesAndSchedules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\etrading\src\FuturesDates.cpp">
-      <Filter>src\Dates\DatesAndSchedules</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\etrading\src\CurveInstrumentPricing.cpp">
       <Filter>src\CurveAnalytics\SingleCurveCalibration</Filter>
     </ClCompile>
@@ -1837,6 +1813,18 @@
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\JacobianResults.cpp">
       <Filter>src\CurveAnalytics\CurveResults</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\etrading\src\AQLDateHelpers.cpp">
+      <Filter>src\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\etrading\src\AQLDateSchedule.cpp">
+      <Filter>src\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\etrading\src\FuturesDates.cpp">
+      <Filter>src\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\etrading\src\SwapSchedule.cpp">
+      <Filter>src\Dates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

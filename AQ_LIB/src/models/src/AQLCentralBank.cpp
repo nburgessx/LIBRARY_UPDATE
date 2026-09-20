@@ -5,7 +5,7 @@
 #pragma warning(disable:4996)	// strncpy is safe if we make sure a null character is added, which we do here
 #endif
 
-#include "AQLMathCentralBank.h"
+#include "AQLCentralBank.h"
 #include "AQLCoreAppError.h"
 
 #include <sstream>
@@ -99,13 +99,13 @@ namespace
 	};
 }
 
-std::map<AQLString, DateVector>& AQLMathCentralBank::schedules()
+std::map<AQLString, DateVector>& AQLCentralBank::schedules()
 {
 	static std::map<AQLString, DateVector> sched;
 	return sched;
 }
 
-void AQLMathCentralBank::loadScheduleDates()
+void AQLCentralBank::loadScheduleDates()
 {
 	if (schedules().size() == 0) {
 		// configuration file not loaded - use hard-coded defaults
@@ -113,7 +113,7 @@ void AQLMathCentralBank::loadScheduleDates()
 	}
 }
 
-void AQLMathCentralBank::loadScheduleDatesFromDefaults()
+void AQLCentralBank::loadScheduleDatesFromDefaults()
 {
 #if defined(WIN32) || defined(WIN64)
 	BOOST_STATIC_ASSERT( sizeof(schedulesDefault) % (sizeof(int) * nCBDefault) == 0 );
@@ -159,7 +159,7 @@ void AQLMathCentralBank::loadScheduleDatesFromDefaults()
 	}
 }
 
-const DateVector& AQLMathCentralBank::meetingSchedule(const AQLString& cb_input)
+const DateVector& AQLCentralBank::meetingSchedule(const AQLString& cb_input)
 {
 #if defined(WIN32) || defined(WIN64)
 	boost::call_once(&loadScheduleDates, schedulesLoaded);

@@ -15,7 +15,7 @@
 #include "AQLDefinitions.h"
 #include "AQLStaticData.h"
 #include "AQLFunctionUtilities.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include <cmath>
 #include <map>
 
@@ -1726,7 +1726,7 @@ AQLMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQ
 	if (leg1startdateInput.findString('Y') != -1 || leg1startdateInput.findString('M') != -1 || 
 		leg1startdateInput.findString('W') != -1 || leg1startdateInput.findString('D') != -1)
 	{
-		AQLDate tmpstartdate = AQLMathDateUtilities::getDate(basedate,leg1startdateInput,leg1conventionInput,leg1calendarInput);
+		AQLDate tmpstartdate = etrading::AQLDateSchedule::getDate(basedate,leg1startdateInput,leg1conventionInput,leg1calendarInput);
 		pleg1->AQLObject::add(PRICING_DATA_STARTDATE, new AQLDataDate(tmpstartdate));
 	}
 	else if (leg1startdateInput.size() == 8)
@@ -1743,7 +1743,7 @@ AQLMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQ
 		leg1enddateInput.findString('W') != -1 || leg1enddateInput.findString('D') != -1)
 	{
 		AQLDate startdate = dynamic_cast<AQLDataDate &>(pleg1->getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
-		AQLDate tmpenddate = AQLMathDateUtilities::getDate(startdate,leg1enddateInput,leg1conventionInput,leg1calendarInput);
+		AQLDate tmpenddate = etrading::AQLDateSchedule::getDate(startdate,leg1enddateInput,leg1conventionInput,leg1calendarInput);
 		pleg1->AQLObject::add(PRICING_DATA_ENDDATE, new AQLDataDate(tmpenddate));
 	}
 	else if (leg1enddateInput.size() == 8)
@@ -1891,7 +1891,7 @@ AQLMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQ
 	if (leg2startdateInput.findString('Y') != -1 || leg2startdateInput.findString('M') != -1 || 
 		leg2startdateInput.findString('W') != -1 || leg2startdateInput.findString('D') != -1)
 	{
-		AQLDate tmpstartdate = AQLMathDateUtilities::getDate(basedate,leg2startdateInput,leg2conventionInput,leg2calendarInput);
+		AQLDate tmpstartdate = etrading::AQLDateSchedule::getDate(basedate,leg2startdateInput,leg2conventionInput,leg2calendarInput);
 		pleg2->AQLObject::add(PRICING_DATA_STARTDATE, new AQLDataDate(tmpstartdate));
 	}
 	else if (leg2startdateInput.size() == 8)
@@ -1908,7 +1908,7 @@ AQLMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQ
 		leg2enddateInput.findString('W') != -1 || leg2enddateInput.findString('D') != -1)
 	{
 		AQLDate startdate = dynamic_cast<AQLDataDate &>(pleg2->getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
-		AQLDate tmpenddate = AQLMathDateUtilities::getDate(startdate,leg2enddateInput,leg2conventionInput,leg2calendarInput);
+		AQLDate tmpenddate = etrading::AQLDateSchedule::getDate(startdate,leg2enddateInput,leg2conventionInput,leg2calendarInput);
 		pleg2->AQLObject::add(PRICING_DATA_ENDDATE, new AQLDataDate(tmpenddate));
 	}
 	else if (leg2enddateInput.size() == 8)
@@ -3198,7 +3198,7 @@ AQLMultiSwapPricer::storePastRates(AQLDataInstance* dataInstance, const AQLStrin
 	map<AQLDate, double> map_date_rate;
 	for (unsigned int i = 0; i < pastSize; i++)
 	{
-		pastdates[i] = AQLMathDateUtilities::getAQLDate(PastRates[i][0]);
+		pastdates[i] = etrading::AQLDateSchedule::getAQLDate(PastRates[i][0]);
 		map_date_rate[pastdates[i]] = PastRates[i][1].getDoubleValue();
 		//ratesvec[i] = PastRates[i][1].getDoubleValue();
 	}

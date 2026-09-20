@@ -29,7 +29,7 @@
 
 #include "BasisComponentCurve.h"
 #include "AQLDateHelpers.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "AQLAlgorithm.h"
 #include "AQLLinearInterpolation.h"
@@ -1717,7 +1717,7 @@ void SwapCashflows::updateSwapFloatCashflows( CurveMarketDataHolder & mktDataObj
 		//fixingLags_[nthSwap] = "0D";
 
 		//fixingStartDates_[nthSwap]
-		//	= AQLDateScheduleHelpers::calcDatesWithLag ( fixingStartDates_[nthSwap],
+		//	= AQLDateSchedule::calcDatesWithLag ( fixingStartDates_[nthSwap],
 		//												fixingLags_[nthSwap],
 		//												*swaps.busDayAdj_[nthSwap],
 		//												swaps.calendar_[nthSwap],
@@ -1726,7 +1726,7 @@ void SwapCashflows::updateSwapFloatCashflows( CurveMarketDataHolder & mktDataObj
 
 		// 3. Float Index End Date
 		// ******************************************************************
-		fixingEndDates_[nthSwap] = AQLDateScheduleHelpers::getMultiDate( fixingStartDates_[nthSwap],
+		fixingEndDates_[nthSwap] = AQLDateSchedule::getMultiDate( fixingStartDates_[nthSwap],
 																		swaps.liborIndexTenor_[nthSwap],
 																		swaps.busDayAdj_[nthSwap]->convertToString(),
 																		swaps.calendar_[nthSwap]->convertToString(),
@@ -2452,10 +2452,10 @@ void SwapCalibration::optimizeFuturesJoinDateWithSwaps( AQLCurveStaticDataHolder
 			AQLPriceDataDayCount dc = *swaps.daycountFloat_[0];
 			AQLPriceDataCalendar cal = *swaps.calendar_[0];
 			AQLPriceDataSlidingRule sl = *swaps.busDayAdj_[0];
-			resultsObj.interpolationObj_->interpolationJoinDate_ = AQLDateScheduleHelpers::getDateFromTerm(futures.lastStartDate_, fractionFromLastFutureStartToJoin, dc);
+			resultsObj.interpolationObj_->interpolationJoinDate_ = AQLDateSchedule::getDateFromTerm(futures.lastStartDate_, fractionFromLastFutureStartToJoin, dc);
 
 			// Adjust the joinDate and joinDateAsDouble for holidays
-			resultsObj.interpolationObj_->interpolationJoinDate_ = AQLDateScheduleHelpers::getDate(resultsObj.interpolationObj_->interpolationJoinDate_, "0D", sl.convertToString(), cal.convertToString());
+			resultsObj.interpolationObj_->interpolationJoinDate_ = AQLDateSchedule::getDate(resultsObj.interpolationObj_->interpolationJoinDate_, "0D", sl.convertToString(), cal.convertToString());
 			resultsObj.interpolationObj_->interpolationJoinDateAsDouble_ = futures.daycountAct365_.getTerm(liborIndex.curveSpotDate_, resultsObj.interpolationObj_->interpolationJoinDate_);
 
 
@@ -4725,8 +4725,8 @@ double CurveCalibration::calcAverageRate(DoubleVector& startTerms,
 				const double term = endterm - startterm;
 
 				//***Tau should be from trade's dayCount
-				//auto startDate = AQLDateScheduleHelpers::getDateFromTerm(spotDate, startterm, dc_act365);
-				//auto endDate = AQLDateScheduleHelpers::getDateFromTerm(spotDate, endterm, dc_act365);
+				//auto startDate = AQLDateSchedule::getDateFromTerm(spotDate, startterm, dc_act365);
+				//auto endDate = AQLDateSchedule::getDateFromTerm(spotDate, endterm, dc_act365);
 				//const double term = dc->getTerm(startDate, endDate);
 
 				if (isLogDF)
@@ -5431,7 +5431,7 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 				}
 				else
 				{
-					thisFixingEndDates = AQLDateScheduleHelpers::getMultiDate(thisFixingStartDates, indexTenor, sld->convertToString(), cal->convertToString(), nullptr); // rollconvention* = nullptr
+					thisFixingEndDates = AQLDateSchedule::getMultiDate(thisFixingStartDates, indexTenor, sld->convertToString(), cal->convertToString(), nullptr); // rollconvention* = nullptr
 				}
 
 				DoubleVector thisFixingTaus;

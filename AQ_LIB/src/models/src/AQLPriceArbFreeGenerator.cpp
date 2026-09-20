@@ -17,7 +17,7 @@
 
 #include <algorithm>
 #include "AQLMathYieldCurvePro.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLAlgorithm.h"
 #include "AQLDataMatrix.h"
 
@@ -4295,7 +4295,7 @@ AQLPriceArbFreeGenerator::getSwapValue(
 	AQLString frequencyFix = "";
 	for (unsigned int i = 0; i < swapMkt.mktTerms.size(); ++i)
 	{
-		AQLDate endDate = AQLMathDateCalculations::getDate(swapMkt.spotDate, swapMkt.mktTerms_str[i], swapMkt.sld, swapMkt.pCal, true, &swapMkt.roll_conv);
+		AQLDate endDate = AQLDateCalculations::getDate(swapMkt.spotDate, swapMkt.mktTerms_str[i], swapMkt.sld, swapMkt.pCal, true, &swapMkt.roll_conv);
 
 		for (; dates_float_payment[pos_float+1] <= endDate; ++pos_float)
 		{
@@ -4453,7 +4453,7 @@ AQLPriceArbFreeGenerator::getXccyBasisValue(
 	{
 		for (unsigned int i = 0; i < xccyBasisMkt.mktTerms.size(); i++)
 		{
-			AQLDate endDate = AQLMathDateCalculations::getDate(xccyBasisMkt.spotDate, xccyBasisMkt.mktTerms_str[i], xccyBasisMkt.sld, xccyBasisMkt.pCal, true, &xccyBasisMkt.roll_conv);
+			AQLDate endDate = AQLDateCalculations::getDate(xccyBasisMkt.spotDate, xccyBasisMkt.mktTerms_str[i], xccyBasisMkt.sld, xccyBasisMkt.pCal, true, &xccyBasisMkt.roll_conv);
 			double floaterPrice = 0.;
 
 			for (; dateGrid_3MRoll[pos+1]<=endDate; pos++)
@@ -4495,7 +4495,7 @@ AQLPriceArbFreeGenerator::getXccyBasisValue(
 	{
 		for (unsigned int i = 0; i < xccyBasisMkt.mktTerms.size(); i++)
 		{
-			AQLDate endDate = AQLMathDateCalculations::getDate(xccyBasisMkt.spotDate, xccyBasisMkt.mktTerms_str[i], xccyBasisMkt.sld, xccyBasisMkt.pCal, true, &xccyBasisMkt.roll_conv);
+			AQLDate endDate = AQLDateCalculations::getDate(xccyBasisMkt.spotDate, xccyBasisMkt.mktTerms_str[i], xccyBasisMkt.sld, xccyBasisMkt.pCal, true, &xccyBasisMkt.roll_conv);
 
 			for (; dateGrid_3MRoll[pos+1]<=endDate; pos++)
 			{
@@ -4561,7 +4561,7 @@ AQLPriceArbFreeGenerator::getLibBasisValue(
 	size_t pos_3m = 0, pos_6m = 0;
 	for (unsigned int i = 0; i < libBasisMkt.mktTerms.size(); ++i)
 	{
-		AQLDate endDate = AQLMathDateCalculations::getDate(libBasisMkt.spotDate, libBasisMkt.mktTerms_str[i], libBasisMkt.sld, libBasisMkt.pCal, true, &libBasisMkt.roll_conv);
+		AQLDate endDate = AQLDateCalculations::getDate(libBasisMkt.spotDate, libBasisMkt.mktTerms_str[i], libBasisMkt.sld, libBasisMkt.pCal, true, &libBasisMkt.roll_conv);
 		
 		for (; dateGrid_6MRoll[pos_6m+1] <= endDate; ++pos_6m)
 		{
@@ -4674,7 +4674,7 @@ AQLPriceArbFreeGenerator::setForecastCurve(	AQLDataInstance* dataInstance,
     DoubleArray basisTerms;
     for(size_t i=0; i < basisSize; i++)
     {
-        AQLDate endDate = AQLMathDateCalculations::getDate(spotDate, terms_str[i], sld, &cal, true);
+        AQLDate endDate = AQLDateCalculations::getDate(spotDate, terms_str[i], sld, &cal, true);
         basisTerms.push_back( dc_act365.getTerm(asOfDate, endDate) );
     }
     pInter_basis->set(basisTerms,basis_Market);   
@@ -4720,7 +4720,7 @@ AQLPriceArbFreeGenerator::setForecastCurve(	AQLDataInstance* dataInstance,
     }
 
     DateVector setDates,baseDates;
-    const AQLDate endDate = AQLMathDateCalculations::getDate(spotDate, terms_str[basisSize-1], true);
+    const AQLDate endDate = AQLDateCalculations::getDate(spotDate, terms_str[basisSize-1], true);
 
     generateSchedule(asOfDate, spotDate, endDate, setSpan, &cal, sld, setDates, setTerms,false);      
     for(size_t i=1; i<setTerms.size(); i++)
@@ -5689,9 +5689,9 @@ liborDateAdjust(	const AQLDate& basedate,
 	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
 	double term_spot_libor = dc_act365.getTerm(basedate, libMkt.spotDate);
-	AQLDate threeMDate_libor = AQLMathDateCalculations::getDate(libMkt.spotDate, "3M", libMkt.sld, libMkt.pCal, true, &libMkt.roll_conv);
+	AQLDate threeMDate_libor = AQLDateCalculations::getDate(libMkt.spotDate, "3M", libMkt.sld, libMkt.pCal, true, &libMkt.roll_conv);
 	double term_3M_libor = dc_act365.getTerm(basedate, threeMDate_libor);
-	AQLDate sixMDate_libor = AQLMathDateCalculations::getDate(libMkt.spotDate, "6M", libMkt.sld, libMkt.pCal, true, &libMkt.roll_conv);
+	AQLDate sixMDate_libor = AQLDateCalculations::getDate(libMkt.spotDate, "6M", libMkt.sld, libMkt.pCal, true, &libMkt.roll_conv);
 	double term_6M_libor = dc_act365.getTerm(basedate, sixMDate_libor);
 
 	unsigned int pos_del = 0, pos_insert = 0;
@@ -5894,8 +5894,8 @@ SwapMarket( vector<const AQLObject* > mktData, vector<const AQLObject* > tenorSw
 	{
 		freq_Float_Pay = freq_Float;
 	}
-	int onePeriod_Float = AQLMathDateCalculations::getPeriodFrequencyInMonths(freq_Float);
-	int onePeriod_Float_Pay = AQLMathDateCalculations::getPeriodFrequencyInMonths(freq_Float_Pay);
+	int onePeriod_Float = AQLDateCalculations::getPeriodFrequencyInMonths(freq_Float);
+	int onePeriod_Float_Pay = AQLDateCalculations::getPeriodFrequencyInMonths(freq_Float_Pay);
 	if (onePeriod_Float_Pay % onePeriod_Float != 0)
 		throw AQLCoreInvalidData("convention of compounding is not correct!", __FILE__, __LINE__);
 
@@ -5924,13 +5924,13 @@ SwapMarket( vector<const AQLObject* > mktData, vector<const AQLObject* > tenorSw
 		rates.push_back(rate);
 		terms_str.push_back(term);
 
-		AQLDate gridDate = AQLMathDateCalculations::getDate(spotDate, term, sld, pCal, true, &roll_conv);
+		AQLDate gridDate = AQLDateCalculations::getDate(spotDate, term, sld, pCal, true, &roll_conv);
         mktTerms.push_back( dc_act365.getTerm(basedate, gridDate) );
 	}
 	mktTerms_str = terms_str;
 	mktRates = rates;
 
-	startDate = AQLMathDateCalculations::getDate(spotDate, terms_str.front(), sld, pCal, true, &roll_conv);
+	startDate = AQLDateCalculations::getDate(spotDate, terms_str.front(), sld, pCal, true, &roll_conv);
     	
 	int startPos = 0;
 	if ( freq_Float == SEMI_ANNUAL )
@@ -6022,7 +6022,7 @@ SwapMarket( vector<const AQLObject* > mktData, vector<const AQLObject* > tenorSw
 		int y,m,d,w;
 		for (size_t i=startPos; i<terms_str.size(); i++)
 		{
-			AQLMathDateCalculations::termStrtoYMDW(terms_str[i],y,m,d,w);
+			AQLDateCalculations::termStrtoYMDW(terms_str[i],y,m,d,w);
 			if (d!=0 || w!=0) throw AQLCoreInvalidData("a format of swap term is not supported.", __FILE__, __LINE__);
 
 			dh = &mktData[i-startPos]->getData(IR_CALIBRATION_DATA_FREQUENCY, NOCHECK);
@@ -6059,7 +6059,7 @@ SwapMarket( vector<const AQLObject* > mktData, vector<const AQLObject* > tenorSw
 	DoubleArray terms;
 	for(size_t i=0; i < terms_str.size(); i++)
     {
-        AQLDate gridDate = AQLMathDateCalculations::getDate(spotDate, terms_str[i], sld, pCal, true, &roll_conv);
+        AQLDate gridDate = AQLDateCalculations::getDate(spotDate, terms_str[i], sld, pCal, true, &roll_conv);
         terms.push_back( dc_act365.getTerm(basedate, gridDate) );
     }
 	pInter = dynamic_cast<AQLInterpolationBase*> ((dynamic_cast<const AQLPriceDataInterpolation&> 
@@ -6067,7 +6067,7 @@ SwapMarket( vector<const AQLObject* > mktData, vector<const AQLObject* > tenorSw
 	pInter->set(terms,rates);
 
 	endTerm = terms_str.back();
-	endDate = AQLMathDateCalculations::getDate(spotDate, terms_str.back(), sld, pCal, true, &roll_conv);
+	endDate = AQLDateCalculations::getDate(spotDate, terms_str.back(), sld, pCal, true, &roll_conv);
 
 	generateSchedule(basedate, spotDate, endDate, 3, pCal, sld, dateGrid_3MRoll, termGrid_3MRoll, isEOMRoll);  
     generateSchedule(basedate, spotDate, endDate, 6, pCal, sld, dateGrid_6MRoll, termGrid_6MRoll, isEOMRoll);  
@@ -6132,14 +6132,14 @@ XCCYBasisMarket( vector<const AQLObject* > mktData, const AQLObject* fYieldData,
 		
 		for(size_t i=0; i < mktRates.size(); i++)
 		{
-			AQLDate gridDate = AQLMathDateCalculations::getDate(spotDate, mktTerms_str[i], sld, pCal, true, &roll_conv);
+			AQLDate gridDate = AQLDateCalculations::getDate(spotDate, mktTerms_str[i], sld, pCal, true, &roll_conv);
 			mktTerms.push_back( dc_act365.getTerm(basedate, gridDate) );
 		}
 		pInter = dynamic_cast<AQLInterpolationBase*> ((dynamic_cast<const AQLPriceDataInterpolation&> 
 			(mktData[0]->getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get())).getMethod().clone());
 		pInter->set(mktTerms,mktRates);
 
-		endDate = AQLMathDateCalculations::getDate(spotDate, swapMkt.endTerm, sld, pCal, true, &roll_conv);
+		endDate = AQLDateCalculations::getDate(spotDate, swapMkt.endTerm, sld, pCal, true, &roll_conv);
 
 		dh = &(mktData[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUETERM, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
@@ -6162,7 +6162,7 @@ XCCYBasisMarket( vector<const AQLObject* > mktData, const AQLObject* fYieldData,
 			DoubleArray fPrices;
 			// floaterPrices is 0
 			int y,m,d,w;
-			AQLMathDateCalculations::termStrtoYMDW(swapMkt.endTerm,y,m,d,w);
+			AQLDateCalculations::termStrtoYMDW(swapMkt.endTerm,y,m,d,w);
 			unsigned int endTerm = 12 * y + m;
 			for (size_t i=0; i<endTerm+1; i++)
 			{
@@ -6316,7 +6316,7 @@ XCCYBasisMarket( vector<const AQLObject* > mktData, const AQLObject* fYieldData,
 			DoubleArray fPrices;
 			// floaterPrices is 0
 			int y,m,d,w;
-			AQLMathDateCalculations::termStrtoYMDW(swapMkt.endTerm,y,m,d,w);
+			AQLDateCalculations::termStrtoYMDW(swapMkt.endTerm,y,m,d,w);
 			unsigned int endTerm = 12 * y + m;
 			for (size_t i=0; i<endTerm+1; i++)
 			{
@@ -6377,7 +6377,7 @@ XCCYBasisMarket( vector<const AQLObject* > mktData, const AQLObject* fYieldData,
 			mktTerms_str = dynamic_cast<const AQLDataStrings& > ((fYieldData->getData(IR_CALIBRATION_DATA_XCCYBASISTERM + suffix, ISNOTNULL)).get()).get();
 			for (size_t i=0; i<mktTerms_str.size(); i++)
 			{
-				AQLDate gridDate = AQLMathDateCalculations::getDate(spotDate, mktTerms_str[i], sld, pCal, true, &roll_conv);
+				AQLDate gridDate = AQLDateCalculations::getDate(spotDate, mktTerms_str[i], sld, pCal, true, &roll_conv);
 				mktTerms.push_back( dc_act365.getTerm(basedate, gridDate) );
 			}
 
@@ -6393,7 +6393,7 @@ XCCYBasisMarket( vector<const AQLObject* > mktData, const AQLObject* fYieldData,
 			}
 		}
 
-		endDate = AQLMathDateCalculations::getDate(spotDate, swapMkt.endTerm, sld, pCal, true, &roll_conv);
+		endDate = AQLDateCalculations::getDate(spotDate, swapMkt.endTerm, sld, pCal, true, &roll_conv);
 		dc = swapMkt.dc_Float;
 	}
 
@@ -6498,14 +6498,14 @@ LiborBasisMarket( vector<const AQLObject* > mktData, const SwapMarket& swapMkt, 
 
     for(size_t i=0; i < mktRates.size(); ++i)
     {
-		AQLDate gridDate = AQLMathDateCalculations::getDate(swapMkt.spotDate, mktTerms_str[i], swapMkt.sld, swapMkt.pCal, true, &roll_conv);
+		AQLDate gridDate = AQLDateCalculations::getDate(swapMkt.spotDate, mktTerms_str[i], swapMkt.sld, swapMkt.pCal, true, &roll_conv);
         mktTerms.push_back( dc_act365.getTerm(basedate, gridDate) );
     }
 	pInter = dynamic_cast<AQLInterpolationBase*> ((dynamic_cast<const AQLPriceDataInterpolation&> 
 		(mktData[0]->getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get())).getMethod().clone());
 	pInter->set(mktTerms,mktRates);
 
-	endDate = AQLMathDateCalculations::getDate(spotDate, swapMkt.endTerm, swapMkt.sld, swapMkt.pCal, true, &roll_conv);
+	endDate = AQLDateCalculations::getDate(spotDate, swapMkt.endTerm, swapMkt.sld, swapMkt.pCal, true, &roll_conv);
 
 	generateSchedule(basedate, spotDate, endDate, 3, pCal, sld, dateGrid_3MRoll, termGrid_3MRoll, isEOMRoll);  
 	generateSchedule(basedate, spotDate, endDate, 6, pCal, sld, dateGrid_6MRoll, termGrid_6MRoll, isEOMRoll);  
@@ -6571,7 +6571,7 @@ FutureMarket( vector<const AQLObject* > mktData, const SwapMarket& swapMkt, bool
 	if (!isFutureUse || mktData.size() == 0) return;
 
 	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
-	AQLDate firstSwapDate = AQLMathDateCalculations::getDate(swapMkt.spotDate, swapMkt.mktTerms_str[0], swapMkt.sld, swapMkt.pCal, true, &swapMkt.roll_conv);
+	AQLDate firstSwapDate = AQLDateCalculations::getDate(swapMkt.spotDate, swapMkt.mktTerms_str[0], swapMkt.sld, swapMkt.pCal, true, &swapMkt.roll_conv);
 
 	AQLDate startDate, endDate;
 	double rate;

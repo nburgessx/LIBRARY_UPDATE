@@ -125,7 +125,7 @@ AQLDataInstanceConfigurationPV::setUp(void)
 			const AQLStringVector addYearsVec = dataMtx[i][1].toToken(':');
 			for (unsigned int j = 0; j < addYearsVec.size(); ++j)
 			{
-				const AQLDate date = AQLMathDateCalculations::getDate(endDate, addYearsVec[j], true);
+				const AQLDate date = AQLDateCalculations::getDate(endDate, addYearsVec[j], true);
 				if (date > maxDate)
 				{
 					maxDate = date;
@@ -980,7 +980,7 @@ void AQLDataInstanceConfigurationPV::shiftPaymentDate(AQLObject& trade, const AQ
 		if (paydate > asof1 && paydate <= asof2)
 		{
 			AQLPriceDataCalendar cal;
-			const AQLDate shiftDate = AQLMathDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
+			const AQLDate shiftDate = AQLDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
 			data_paydate.set(shiftDate);
 		}
 	}
@@ -993,7 +993,7 @@ void AQLDataInstanceConfigurationPV::shiftPaymentDate(AQLObject& trade, const AQ
 		if (paydate > asof1 && paydate <= asof2)
 		{
 			AQLPriceDataCalendar cal;
-			const AQLDate shiftDate = AQLMathDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
+			const AQLDate shiftDate = AQLDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
 			data_paydate.set(shiftDate);
 		}
 	}
@@ -1031,7 +1031,7 @@ void AQLDataInstanceConfigurationPV::shiftPaymentDate(AQLObject& trade, const AQ
                             else if((dh = &eleg.getData(CALIBRATION_DATA_CALENDAR))->isDefined() && !dh->isNull()){
                                 cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
                             }
-                            const AQLDate shiftDate = AQLMathDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
+                            const AQLDate shiftDate = AQLDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
                             data_paydate.set(shiftDate);
                         }
                     }

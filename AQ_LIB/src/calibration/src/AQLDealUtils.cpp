@@ -35,7 +35,7 @@
 #include "AQLMathIndexEntity.h"
 #include "AQLPriceIRSwaptionValueFromCashFlow.h"
 #include "AQLMathInterpolationUtilities.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLPriceConvergenceValue.h"
 #include "AQLDefinitionsIRSABR.h"
 #include "AQLPriceIRCapFloorOptionValue.h"
@@ -528,7 +528,7 @@ AQLDealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 	cal.convertFromString(cal_str);
 	for (size_t i = 0; i < expiryVec_str.size(); ++i)
 	{
-		AQLDate toDate = AQLMathDateCalculations::getDate(asOfDate, expiryVec_str[i], sr, &cal,true);
+		AQLDate toDate = AQLDateCalculations::getDate(asOfDate, expiryVec_str[i], sr, &cal,true);
 		expiryVec[i] = act365ISDA.getTerm(asOfDate, toDate, true);
 	}
 	// tenor string and tenor vector
@@ -537,7 +537,7 @@ AQLDealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 	for (unsigned int i = 0; i < tenorVec_str.size(); i++)
 	{
 		int y,m,d,w;
-		AQLMathDateCalculations::termStrtoYMDW(tenorVec_str[i], y, m, d, w);
+		AQLDateCalculations::termStrtoYMDW(tenorVec_str[i], y, m, d, w);
 		tenorVec[i] = static_cast<double > (y) + static_cast<double > (m) / 12;
 	}
 
@@ -571,7 +571,7 @@ AQLDealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 			{
 				const AQLString tenor = tenorInfos[0].toUpper();
 				int y, m, d, w;
-				AQLMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
+				AQLDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 				const double tenor_d = static_cast<double>(y) + static_cast<double>(m) / 12;
 				addCalibTargetFlag(ret, expiryTerm, tenor_d, expiryVec, tenorVec);
 			}
@@ -590,7 +590,7 @@ AQLDealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 				//get tenor
 				const AQLString tenor = val_swaption.getNearestTenorString(entityInfo, frequency);
 				int y, m, d, w;
-				AQLMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
+				AQLDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 				const double tenor_d = static_cast<double>(y) + static_cast<double>(m) / 12;
 				addCalibTargetFlag(ret, expiryTerm, tenor_d, expiryVec, tenorVec);
 			}
@@ -713,7 +713,7 @@ AQLDealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 										//get tenor
 										tenor = dynamic_cast<const AQLDataString &>(indexs.get(i_index).getData(PRICING_DATA_ACCESSORY, ISNOTNULL).get()).get();
 										int y,m,d,w;
-										AQLMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
+										AQLDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 										double tenor_d = static_cast<double > (y) + static_cast<double > (m) / 12;
 									
 										addCalibTargetFlag(ret, expiryTerm, tenor_d, expiryVec, tenorVec);
@@ -756,7 +756,7 @@ AQLDealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 				//get tenor
 				tenor = val_swaption.getNearestTenorString(floatleg, frequency);
 				int y,m,d,w;
-				AQLMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
+				AQLDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 				double tenor_d = static_cast<double > (y) + static_cast<double > (m) / 12;
 
 				expiryTerm = AQLMath::max(expiryTerm, 0.0);

@@ -20,7 +20,7 @@
 
 #include "AQLMathFXEntity.h"
 #include "AQLMathFXUtility.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLMathDefine.h"
 #include "AQLBasic.h"
 #include "AQLDataBasics.h"
@@ -757,7 +757,7 @@ AQLMathFXEntity::getForwardDate(const AQLString& cur1, const AQLString& cur2,
 	AQLPriceDataCalendar cal(calnames);
 	AQLPriceDataSlidingRule srule(SLIDING_RULE_FOLLOWING);
 
-	return AQLMathDateCalculations::getDate(spotdate, term, srule, &cal, true);
+	return AQLDateCalculations::getDate(spotdate, term, srule, &cal, true);
 
 }
 */	

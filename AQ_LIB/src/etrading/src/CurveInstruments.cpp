@@ -13,7 +13,7 @@
 
 // LA Headers - Put these last so that legacy defines don't conflict
 #include "AQLCurveForwardRateHelpers.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLStaticData.h"
 #include "AQLFunctionUtilities.h"
 #include "AQLMarketData.h"
@@ -90,10 +90,10 @@ namespace etrading
 
 				if (isDate_str == "TRUE")
 				{
-					const AQLDate& startdate = AQLDateScheduleHelpers::getAQLDate(fraRates[i][3]);
+					const AQLDate& startdate = AQLDateSchedule::getAQLDate(fraRates[i][3]);
 					AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 					fraMarketStream += "," + startdate_str;
-					const AQLDate& enddate = AQLDateScheduleHelpers::getAQLDate(fraRates[i][4]);
+					const AQLDate& enddate = AQLDateSchedule::getAQLDate(fraRates[i][4]);
 					AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 					fraMarketStream += "," + enddate_str;
 				}
@@ -3218,13 +3218,13 @@ aqCoreMsg8 << "Date Error: Invalid term string " << termstr.getCString() << ", m
 		fwdRate_inter->set(fwdStartTerms, fwdRates);
 
 		// Populate daily entry to Discount factor table, which is required for daily compounding, so that the trade can be repriced when interpolating on fwdRateTable
-		AQLDate firstDate = AQLDateScheduleHelpers::getDateFromTerm(spotdate, grid.back(), dc_act365);
+		AQLDate firstDate = AQLDateSchedule::getDateFromTerm(spotdate, grid.back(), dc_act365);
 
 		double joinDateAsDouble = fwdRate_inter->getJoinDateAsDouble();
 
 		// Insert daily DFs till the last term, use the interpolationJoinDate when it is specified 
 		double lastTerm = (joinDateAsDouble != 0) ? joinDateAsDouble : fwdStartTerms.back();
-		AQLDate lastDate = AQLDateScheduleHelpers::getDateFromTerm(spotdate, lastTerm, dc_act365);
+		AQLDate lastDate = AQLDateSchedule::getDateFromTerm(spotdate, lastTerm, dc_act365);
 
 		auto lastFutureStartDate = futureRates.rbegin()->first;
 		const AQLDate& lastFutureEndDate = futureRates.at(lastFutureStartDate).first;
@@ -3613,8 +3613,8 @@ aqCoreMsg8 << "Date Error: Invalid term string " << termstr.getCString() << ", m
 		std::unique_ptr<AQLInterpolationBase> discountFactor_inter(dynamic_cast<AQLInterpolationBase *>(inter.clone()));
 		discountFactor_inter->set(terms, dfs);
 
-		AQLDate firstDate = etrading::AQLDateScheduleHelpers::getDateFromTerm(baseDate, terms.front(), dc_act365);
-		AQLDate lastDate = etrading::AQLDateScheduleHelpers::getDateFromTerm(baseDate, terms.back(), dc_act365);
+		AQLDate firstDate = etrading::AQLDateSchedule::getDateFromTerm(baseDate, terms.front(), dc_act365);
+		AQLDate lastDate = etrading::AQLDateSchedule::getDateFromTerm(baseDate, terms.back(), dc_act365);
 
 		size_t numberOfFixingDates = firstDate.intervalDays(lastDate);
 
@@ -3631,7 +3631,7 @@ aqCoreMsg8 << "Date Error: Invalid term string " << termstr.getCString() << ", m
 		for (size_t i = 0; i < terms.size(); ++i)
 		{
 
-			auto startDate = etrading::AQLDateScheduleHelpers::getDateFromTerm(baseDate, terms[i], dc_act365);
+			auto startDate = etrading::AQLDateSchedule::getDateFromTerm(baseDate, terms[i], dc_act365);
 
 			AQLDate endDate;
 			if (i == lastIndex)
@@ -3640,7 +3640,7 @@ aqCoreMsg8 << "Date Error: Invalid term string " << termstr.getCString() << ", m
 			}
 			else
 			{
-				endDate = etrading::AQLDateScheduleHelpers::getDateFromTerm(baseDate, terms[i + 1], dc_act365);
+				endDate = etrading::AQLDateSchedule::getDateFromTerm(baseDate, terms[i + 1], dc_act365);
 			}
 
 			AQLDate tmp_date = startDate;

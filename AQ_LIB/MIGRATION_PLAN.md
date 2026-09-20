@@ -838,6 +838,94 @@ coverage merged; suite green against baseline.
   `AQ_API.vcxproj.filters` declares the same filter with **zero files under
   it** — delete the empty `<Filter Include="...AQL Classic">` declarations
   there too. Detail: `rebrand\STATUS.md`.
+- ☐ **6.11 Matrix/table-type consolidation** (new, 2026-09-19; design proposed
+  2026-09-20 — Nicholas asked how to make `AnyMatrix`/`VariantMatrix`-style
+  API utilities consistent with `AQLMatrix`'s flattened storage, then asked
+  for a concrete rename/consolidation/flattening plan). **Design proposed,
+  not yet approved or actioned.**
+
+  **Full inventory, with real usage counts (2026-09-20):**
+
+  | Type | Files / uses | Role | Disposition |
+  |---|---|---|---|
+  | `AQLMatrix` | ~40 internal | numeric linear algebra (LU/SVD/Cholesky), already flattened | rename `AQLNumericMatrix`, migrate onto the shared base (below) |
+  | `DoubleMatrix` | 274 / 1,713 | numeric, real hot loops (Heston calibration, swaption vol, yield-curve pro) | candidate for the shared base, **gate on profiling**, see below |
+  | `IntMatrix` | 3 / 53 | numeric, always paired with `DoubleMatrix` in the same Heston calibration files | small, low-risk **pilot** candidate |
+  | `ComplexMatrix` | 2 / 8 | numeric, found in the *same* Heston hot loops as `DoubleMatrix`/`IntMatrix` (`AQLMathDisplacedHestonTDP.cpp`) — missed in the first pass, caught this round | small, low-risk **pilot** candidate alongside `IntMatrix` |
+  | `BoolMatrix` | 12 / 29 | calibration flag/config grids (`getCalibTargetIRVolGrids`, `AQLDataBoolMatrix`), not arithmetic | rename `AQLBoolMatrix`, flatten for consistency (low risk), not for speed |
+  | `DateMatrix` | 14 / 19 | small, likely marshaling-adjacent | low priority — check whether it can fold into `AQLAnyMatrix` instead of getting its own type |
+  | `AnyTypeMatrix` | 79 / 202 | heterogeneous marshaling, `boost::variant`-backed (`AnyType`) | **retire** — narrower than `VariantMatrix`, migrate its ~79 call sites onto it |
+  | `VariantMatrix` | 120 / 706 | heterogeneous marshaling, `etrading::Variant`-backed (wraps `boost::spirit::hold_any` — true type erasure, already has `transpose()` and `AQLStringMatrix`/`StandardStringMatrix` conversion helpers) | **survives** — more capable of the two; rename `AQLAnyMatrix` |
+  | `AQLStringMatrix` | 300 / 2,290 | string marshaling — **the single largest matrix-type user in the tree, bigger than `DoubleMatrix`** | **out of scope for now** — flag only, see below |
+  | `StandardStringMatrix` | 49 / 277 | string marshaling, smaller sibling of the above | **out of scope for now** — flag only |
+  | `STDStringMatrix` | 5 / 17 | string marshaling, likely a near-duplicate spelling of the above two | **out of scope for now** — flag only |
+  | Eigen `MatrixXd` | `PolynomialInterpolation`/`PiecewisePolynomialInterpolation` only | already contiguous, SIMD-optimized third-party | leave untouched |
+
+  **The redundancy worth collapsing is confirmed**: `AnyType` (`boost::variant<int,double,bool,
+  std::string,AQLString,const char*>`, a fixed 6-type enumeration) is strictly narrower than
+  `etrading::Variant` (true type erasure via `boost::spirit::hold_any`, and already has a
+  `transpose()` free function plus `AQLStringMatrix`/`StandardStringMatrix` conversion helpers).
+  `Variant`/`VariantMatrix` should survive; `AnyType`/`AnyTypeMatrix` should be retired onto it.
+
+  **Proposed design — one shared base template, not four separate flattening implementations:**
+  a template, `AQLFlattenedMatrix<T>`, generalising the existing `AQLMatrix::AQLMatrixData`
+  design (contiguous row-major `std::vector<T>`, a `RowView<T>` proxy - not a bare pointer, since
+  the typedef-family call sites genuinely rely on `.size()` on a row and nested-vector-style
+  construction, not just `[i][j]`) into something every consolidated type composes (not inherits,
+  matching `AQLMatrix`'s existing ownership shape) rather than reimplementing. One footnote:
+  `std::vector<bool>` is bit-packed and can't back a pointer/reference row-view, so
+  `AQLFlattenedMatrix<bool>` needs `uint8_t` storage underneath, presented as `bool` through the
+  view - the only element type needing this workaround.
+  - `AQLNumericMatrix` (double), `AQLIntMatrix`, `AQLComplexMatrix`, `AQLBoolMatrix`: thin
+    wrappers around `AQLFlattenedMatrix<T>`, each adding only the operations that make sense for
+    its `T` (no LU/SVD/Cholesky on `AQLIntMatrix`/`AQLBoolMatrix` - meaningless there).
+  - `AQLAnyMatrix` (ex-`VariantMatrix`): also composes `AQLFlattenedMatrix<Variant>` - `Variant`
+    is a regular value type, so no special handling needed the way `bool` needs one. Gains
+    `transpose()` (already exists as a free function on `VariantMatrix` today - becomes a member,
+    or stays free, either way trivial data movement independent of `T`) at near-zero extra design
+    cost once the base template exists.
+  - **Naming tension flagged, not resolved**: `AQL` = "AQ Legacy" (D17) - it deliberately marks
+    code in the `math` project as legacy-to-deprecate (Phase 8 already scopes retiring
+    `AQLString`/`AQLDate` eventually). `AQLAnyMatrix`/`VariantMatrix`'s natural home is `etrading`
+    (not `math`), and `etrading` is **not** flagged for deprecation - carrying the `AQL` prefix
+    there would misleadingly mark permanent code as legacy. Recommend `AQAnyMatrix` (no `L`) if it
+    ends up living in `etrading`; keep the `AQL` prefix only for the types staying in `math`
+    (`AQLNumericMatrix`/`AQLIntMatrix`/`AQLComplexMatrix`/`AQLBoolMatrix`), consistent with their
+    neighbours (`AQLDate`/`AQLString`/`AQLCalendar`) until Phase 6.1/6.2's legacy extraction moves
+    them into the new `core`/`utils` project, at which point they'd graduate to `AQ*` too.
+  - Centralize the OpenMP `if(tripCount > OPENMP_SIZE_THRESHOLD)` pattern once, inside
+    `AQLFlattenedMatrix<T>`'s embarrassingly-parallel operations (fill/clear/scalar-multiply/
+    transpose/`getRow`/`getColumn`), so every consolidated type gets it for free rather than
+    re-deriving the threshold per type. `dotRow`/`dotCol` only apply where `T` is arithmetic.
+
+  **Proposed staged order** (smallest/safest first, `DoubleMatrix`'s 274-file blast radius last
+  and gated on evidence, not assumption):
+  1. Build `AQLFlattenedMatrix<T>`; migrate `AQLMatrix`'s own `AQLMatrixData` onto it internally
+     (zero external API change - proves the design against the one case that's *already* flattened
+     and already has GTEST coverage, before touching anything new).
+  2. Rename `AQLMatrix` → `AQLNumericMatrix` (enumerate the ~40 internal call sites for approval
+     first, per the usual rename discipline).
+  3. Pilot on `AQLIntMatrix`/`AQLComplexMatrix` (3 + 2 files - both real hot-loop users, small
+     enough to validate the row-view design cheaply against a real caller).
+  4. `AQLBoolMatrix` rename + flatten (12 files, low risk, consistency not speed).
+  5. `AnyType` → `Variant` retirement + `AQLAnyMatrix`/`AQAnyMatrix` rename + flatten + transpose -
+     its own scoped project (SWIG bindings, Excel marshaling, dozens of `TableInfo` call sites).
+  6. `DoubleMatrix` → fold into `AQLNumericMatrix<double>` **only if profiling actually shows a
+     hot, large-matrix bottleneck** - many of its 1,713 uses are small (tens of tenors/strikes)
+     calibration matrices where the numerical work (Heston characteristic functions, Gauss-
+     Laguerre quadrature) likely dominates over memory layout; don't convert 274 files on faith.
+  7. **Explicitly deferred, not scoped yet**: the `AQLStringMatrix`/`StandardStringMatrix`/
+     `STDStringMatrix` family - at 300/49/5 files respectively, `AQLStringMatrix` alone is larger
+     than `DoubleMatrix`. Needs its own inventory and decision later, not folded into this item.
+
+  **Nicholas approved this design (2026-09-20)** — steps 1–6 above are ready to start whenever
+  picked up. **⚠ Reminder — do not lose this:** step 7 (`AQLStringMatrix`/`StandardStringMatrix`/
+  `STDStringMatrix`) still needs its own inventory and a proposed approach before it can be
+  scoped — bigger than everything else in this item combined, deliberately not designed yet.
+  Revisit explicitly, don't let it quietly fall out of the plan.
+
+  **Agreed, no further discussion needed**: containers stay `std::vector`-based throughout: no
+  custom allocators, no raw arrays, matching `AQLString`'s and `AQLMatrix`'s existing direction.
 
 **Exit:** legacy projects gone or reduced to a documented `core`; resources,
 examples and config fully rebranded or removed; every header carries the

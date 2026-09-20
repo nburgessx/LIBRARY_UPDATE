@@ -82,7 +82,7 @@ AQLRiskConfigurationYieldIRShiftVolIRVega::getCoordinatesMatrix(const AQLString 
 		ret[i].resize(COORDINATESNUM);
 		for (unsigned  int j = 0; j < COORDINATESNUM; ++j)
 		{
-			ret[i][j] = dayCount.getTerm(asOfDate, AQLMathDateCalculations::getDate(asOfDate, cdns[j], true));
+			ret[i][j] = dayCount.getTerm(asOfDate, AQLDateCalculations::getDate(asOfDate, cdns[j], true));
 		}
 	}
 

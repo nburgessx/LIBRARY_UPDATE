@@ -10,7 +10,7 @@
 #endif
 
 #include "AQLUpdateStaticDataManager.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "AQLCurvePricingObject.h"
 

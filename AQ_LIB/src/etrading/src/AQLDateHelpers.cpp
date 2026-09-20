@@ -10,7 +10,7 @@
 
 // This Include
 #include "AQLDateHelpers.h"              // was called #include "AQLMathDateCalcUti1ity.h"
-#include "AQLDateScheduleHelpers.h"      // was called #include "AQLMathDateFuncUti1ity.h"
+#include "AQLDateSchedule.h"      // was called #include "AQLMathDateFuncUti1ity.h"
 
 // Internal Includes
 #include "AQLObject.h"
@@ -1190,7 +1190,7 @@ namespace etrading
 	    typedef vector<AQLDate> Schedule;
 	    typedef Schedule::const_iterator cIter;
 
-	    const Schedule& cbDates = AQLMathCentralBank::meetingSchedule(cb);
+	    const Schedule& cbDates = AQLCentralBank::meetingSchedule(cb);
 
 	    cIter it = std::lower_bound(cbDates.begin(), cbDates.end(), baseDate);
 
@@ -1298,7 +1298,7 @@ namespace etrading
 	    {
 		    const double term = terms[i];
 
-		    AQLDate date = AQLDateScheduleHelpers::getDateFromTerm( asofDate, term, dc_act365 );
+		    AQLDate date = AQLDateSchedule::getDateFromTerm( asofDate, term, dc_act365 );
 
 		    dates.push_back(date);
 	    }
@@ -1307,7 +1307,7 @@ namespace etrading
     }
 
     // Return the frequency in months for comparing two frequencies, not for accurate calculations
-	// *** Duplicate method in AQLMathDateCalculations.cpp ***
+	// *** Duplicate method in AQLDateCalculations.cpp ***
     double AQLDateHelpers::getPeriodFrequencyInMonths(const AQLString& freq)
     {
 	    double frequencyInMonths;

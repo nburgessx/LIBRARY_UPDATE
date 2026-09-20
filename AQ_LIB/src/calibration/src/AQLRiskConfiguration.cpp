@@ -1459,7 +1459,7 @@ AQLRiskConfiguration::setUpValuableEntityInfo(const AQLString &ccy, AQLObjectPoo
 					}
 					else
 					{
-						tmpdatevec[i] = AQLMathDateCalculations::getDate(asOf,tmpchangeGridTerm[i],true);
+						tmpdatevec[i] = AQLDateCalculations::getDate(asOf,tmpchangeGridTerm[i],true);
 					}
 					termvec[i] = dc.getTerm(asOf,tmpdatevec[i],false);
 				}

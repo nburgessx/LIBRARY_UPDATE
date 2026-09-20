@@ -18,7 +18,7 @@
 #include "AQLLinearInterpolation.h"
 #include "ConstantDeclarations.h"
 #include "CurveCalibration.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 
 #include <memory>
 
@@ -912,7 +912,7 @@ void OISComponentCurve::initialise()
 			}
 			else
 			{
-				tempFixingEndDates = etrading::AQLDateScheduleHelpers::getMultiDate(tempFixingStartDates, refRateTerm, sld->convertToString(), cal->convertToString(), nullptr); // rollconvention* = nullptr
+				tempFixingEndDates = etrading::AQLDateSchedule::getMultiDate(tempFixingStartDates, refRateTerm, sld->convertToString(), cal->convertToString(), nullptr); // rollconvention* = nullptr
 			}
 
 			DoubleVector tempFixingTaus;

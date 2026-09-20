@@ -4,7 +4,7 @@
 #include "InitializeGoogleTest.h"
 
 // Includes
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLPriceDataSlidingRule.h"
 
 // Namespaces
@@ -25,7 +25,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160613");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -54,7 +54,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160613");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -82,7 +82,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -110,7 +110,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -138,7 +138,7 @@ namespace google_test
 		const StubTypeEnum stubType = NONE_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160613");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -166,7 +166,7 @@ namespace google_test
 		const StubTypeEnum stubType = NONE_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160609");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -194,7 +194,7 @@ namespace google_test
 		const StubTypeEnum stubType = NONE_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160608");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -222,7 +222,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160606");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -250,7 +250,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170606");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -278,7 +278,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -306,7 +306,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -334,7 +334,7 @@ namespace google_test
 		const StubTypeEnum stubType = NONE_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170606");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -362,7 +362,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160608");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -390,7 +390,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170608");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -418,7 +418,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -446,7 +446,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -474,7 +474,7 @@ namespace google_test
 		const StubTypeEnum stubType = NONE_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170608");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -502,7 +502,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160609");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -530,7 +530,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170609");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -558,7 +558,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -586,7 +586,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -614,7 +614,7 @@ namespace google_test
 		const StubTypeEnum stubType = NONE_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160609");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -642,7 +642,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160610");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -670,7 +670,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170612");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -698,7 +698,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -726,7 +726,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -754,7 +754,7 @@ namespace google_test
 		const StubTypeEnum stubType = NONE_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160610");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -781,7 +781,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160608");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -809,7 +809,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170608");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -837,7 +837,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20210602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -865,7 +865,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20200602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -893,7 +893,7 @@ namespace google_test
 		const StubTypeEnum stubType = NONE_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170608");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -920,7 +920,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160609");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -948,7 +948,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170608");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -976,7 +976,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20210602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1004,7 +1004,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20200602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1032,7 +1032,7 @@ namespace google_test
 		const StubTypeEnum stubType = NONE_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160609");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1060,7 +1060,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160610");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1088,7 +1088,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20170612");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1116,7 +1116,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20210602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1144,7 +1144,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20200602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1172,7 +1172,7 @@ namespace google_test
 		const StubTypeEnum stubType = NONE_STUBTYPE;
 		const AQLString* rollConvention = NULL;
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
 		AQLDate expectedDate("20160610");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1200,7 +1200,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160610");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1228,7 +1228,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160610");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1256,7 +1256,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1284,7 +1284,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1312,7 +1312,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160615");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1340,7 +1340,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20170612");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1368,7 +1368,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1396,7 +1396,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1424,7 +1424,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160615");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1452,7 +1452,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20170621");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1480,7 +1480,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20210616");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1508,7 +1508,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString rollConvention = "IMM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20200617");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1536,7 +1536,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "EOM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160610");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1564,7 +1564,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString rollConvention = "EOM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160610");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1592,7 +1592,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString rollConvention = "EOM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1620,7 +1620,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString rollConvention = "EOM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1648,7 +1648,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "EOM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160630");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1676,7 +1676,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString rollConvention = "EOM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20170612");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1704,7 +1704,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString rollConvention = "EOM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1732,7 +1732,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString rollConvention = "EOM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1760,7 +1760,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "EOm";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160630");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1788,7 +1788,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString rollConvention = "EOM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20170630");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1816,7 +1816,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString rollConvention = "EOM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20210630");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1844,7 +1844,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString rollConvention = "EOM";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20200630");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1872,7 +1872,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "NORMAL";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160704");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1895,7 +1895,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "NORMAL";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20170602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1918,7 +1918,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "NORMAL";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160704");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1941,7 +1941,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "NORMAL";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20170602");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1964,7 +1964,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "NORMAL";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		AQLDate expectedDate("20160704");
 		AQLDate actualDate = stubDateAndType.stubDate_;
@@ -1987,7 +1987,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "NORMAL";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		// Adjusted
 		AQLDate expectedDate("20170602");
@@ -2023,7 +2023,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
 		const AQLString rollConvention = "NORMAL";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		// Adjusted
 		AQLDate expectedDate("20160704");
@@ -2060,7 +2060,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
 		const AQLString rollConvention = "NORMAL";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		// Adjusted
 		AQLDate expectedDate("20170703");
@@ -2096,7 +2096,7 @@ namespace google_test
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
 		const AQLString rollConvention = "NORMAL";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		// Adjusted
 		AQLDate expectedDate("20210602");
@@ -2133,7 +2133,7 @@ namespace google_test
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
 		const AQLString rollConvention = "NORMAL";
 
-		StubDateAndType stubDateAndType = AQLMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
+		StubDateAndType stubDateAndType = etrading::AQLDateSchedule::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		// Adjusted
 		AQLDate expectedDate("20200602");

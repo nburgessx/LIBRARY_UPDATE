@@ -129,7 +129,8 @@ public:
        clear all map data (holiday city, calendar information)   
     */
     void				destroy() { calendarList_.clear(); }
-    // get inquired city names
+    
+	// get inquired city names
     void  getCityNames(std::vector<AQLString>& names) const;
 
 private:

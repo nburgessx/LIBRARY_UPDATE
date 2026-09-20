@@ -191,7 +191,7 @@ private:
     // state, which matters for objects read concurrently by multiple threads without synchronization.
     // That safety property is real and worth keeping, but eager recomputation on every mutation was a
     // measured net loss: the hottest AQLDate code paths in this library (schedule generation - e.g.
-    // AQLDateScheduleHelpers.cpp's IMM-date rolling, coupon/cashflow schedule construction) mutate a
+    // AQLDateSchedule.cpp's IMM-date rolling, coupon/cashflow schedule construction) mutate a
     // date many times (addMonths/addYears/setYear/setMonth in a loop) and only ever compare it, never
     // read its Julian day directly - so eager mode paid for a computation on every single mutation
     // that the old, purely decimal cmp() never even needed. `std::atomic<long>` gets both properties

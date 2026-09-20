@@ -11,7 +11,7 @@
 #include "AQLPricePortfolioValue.h"
 #include "AQLMathYieldCurve.h"
 #include "AQLMathYieldCurvePro.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLDefinitionsRisk.h"
 #include "AQLScenarioConfiguration.h"
 #include "AQLScenarioConfigurationManager.h"
@@ -229,11 +229,11 @@ AQLRiskConfigurationTheta::setUpTargetNames(const AQLString &ccy, AQLObject &e, 
 		
 		AQLPriceDataSlidingRule fol(SLIDING_RULE_FOLLOWING);
 		//fol.convertFromString(SLIDING_RULE_FOLLOWING);
-		AQLDate afasOf = AQLMathDateCalculations::getDate(bfasOf,days,fol,&cal,true);
+		AQLDate afasOf = AQLDateCalculations::getDate(bfasOf,days,fol,&cal,true);
 
 
 
-		//AQLDate afasOf = AQLMathDateCalculations::getDate(bfasOf,days,true);
+		//AQLDate afasOf = AQLDateCalculations::getDate(bfasOf,days,true);
 
 		AQLString mainTradeName = AQLCoreDataService::getContext(ARG_KEY_MAINTRADE);
 		AQLObjectHolder objHolder = objPool.getObject(mainTradeName, ENCHKTYPE_ISDEFINED);
@@ -569,13 +569,13 @@ AQLRiskConfigurationTheta::createThetaEntity(const AQLString &ccy, AQLDataInstan
 		cal.convertFromString(calStr);
 	AQLPriceDataSlidingRule fol(SLIDING_RULE_FOLLOWING);
 	AQLString days = AQLString(changeinterval) + "D";
-	asOfDate = AQLMathDateCalculations::getDate(asOfDate,days,fol,&cal,true);
+	asOfDate = AQLDateCalculations::getDate(asOfDate,days,fol,&cal,true);
 
 	AQLDate cashadjDate;
 	if (isPLChangeMode(ccy))
 	{
 		AQLString days = "1D";
-		cashadjDate = AQLMathDateCalculations::getDate(asOfDate,days,fol,&cal,true);
+		cashadjDate = AQLDateCalculations::getDate(asOfDate,days,fol,&cal,true);
 	}
 
 

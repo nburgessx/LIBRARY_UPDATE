@@ -925,7 +925,7 @@ AQLRiskConfigurationVolIRVega::getCoordinatesMatrix(const AQLString &ccy) const
 		ret[i].resize(COORDINATESNUM);
 		for (unsigned  int j = 0; j < COORDINATESNUM; ++j)
 		{
-			ret[i][j] = dayCount.getTerm(asOfDate, AQLMathDateCalculations::getDate(asOfDate, cdns[j], true));
+			ret[i][j] = dayCount.getTerm(asOfDate, AQLDateCalculations::getDate(asOfDate, cdns[j], true));
 		}
 	}
 
@@ -1157,9 +1157,9 @@ AQLRiskConfigurationVolIRVega::reduceTargetGrids(const AQLString &ccy, const AQL
 				throw AQLCoreInvalidData("Format of market grid is wrong!",	__FILE__,__LINE__);
 			if (map_calib_target[termVec[1] + "_" + termVec[2]]){
 				int y, m, d, w;
-				AQLMathDateCalculations::termStrtoYMDW(termVec[1], y, m, d, w);
+				AQLDateCalculations::termStrtoYMDW(termVec[1], y, m, d, w);
 				const int expiryMonth = y * 12 + m;
-				AQLMathDateCalculations::termStrtoYMDW(termVec[2], y, m, d, w);
+				AQLDateCalculations::termStrtoYMDW(termVec[2], y, m, d, w);
 				const int tenorMonth = y * 12 + m;
 				targetGrids[std::make_pair(-expiryMonth, tenorMonth)] = mktGrids[i];
 			}
@@ -1534,9 +1534,9 @@ AQLRiskConfigurationVolIRVega::storeIRAdditionalInfo(AQLDataInstance &dataInstan
 		//calc swap rate
 		AQLPriceDataSlidingRule slr_Fol; slr_Fol.convertFromString(FOL);
 
-		AQLDate optionMaturityDate = AQLMathDateCalculations::getDate(asOfDate, optionMaturity, swapConvention.slidingRule, &swapConvention.fixingCalendar, true);
-		AQLDate optionMaturityDateIncludingSpotLag = AQLMathDateCalculations::getDate(optionMaturityDate, swapConvention.spotLag, slr_Fol, &swapConvention.fixingCalendar, true);
-		AQLDate endDate = AQLMathDateCalculations::getDate(optionMaturityDateIncludingSpotLag, tenor, swapConvention.slidingRule, &swapConvention.paymentCalendar, true);
+		AQLDate optionMaturityDate = AQLDateCalculations::getDate(asOfDate, optionMaturity, swapConvention.slidingRule, &swapConvention.fixingCalendar, true);
+		AQLDate optionMaturityDateIncludingSpotLag = AQLDateCalculations::getDate(optionMaturityDate, swapConvention.spotLag, slr_Fol, &swapConvention.fixingCalendar, true);
+		AQLDate endDate = AQLDateCalculations::getDate(optionMaturityDateIncludingSpotLag, tenor, swapConvention.slidingRule, &swapConvention.paymentCalendar, true);
 
 		DateVector dates;
 		double rate;

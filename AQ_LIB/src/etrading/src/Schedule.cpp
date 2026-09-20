@@ -5,7 +5,7 @@
 #include "CurveUtilities.h"
 #include "AQLCurvePricingObject.h"
 #include "AQLCurveForwardRateHelpers.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "BondAccrualPeriods.h"
 #include "BondUtilities.h"
 #include "SwapUtilities.h"
@@ -466,7 +466,7 @@ namespace etrading
     
             }
 			
-			fixingEndDates_ = AQLDateScheduleHelpers::getMultiDate( fixingDates_, getFrequencyTenor( getAccrualFrequency() ), toString( getFixingBusinessDayAdj() ).c_str(), getFixingCalendar(), nullptr); // rollconvention* = nullptr
+			fixingEndDates_ = AQLDateSchedule::getMultiDate( fixingDates_, getFrequencyTenor( getAccrualFrequency() ), toString( getFixingBusinessDayAdj() ).c_str(), getFixingCalendar(), nullptr); // rollconvention* = nullptr
 
     	}
 	}

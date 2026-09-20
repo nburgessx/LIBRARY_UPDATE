@@ -12,7 +12,7 @@
 #include <AQLMathYieldCurve.h>
 #include "AQLSplineInterpolation.h"
 #include <AQLMathDefine.h>
-#include <AQLMathDateCalculations.h>
+#include <AQLDateCalculations.h>
 #include "ConstantDeclarations.h"
 #include "AQLMathCapFloorSABR.h"
 //#include "AQLMathAnalyticalBlack.h"
@@ -369,13 +369,13 @@ AQLMathCapFloorSABR::setCalibrationStack(AQLDataInstance* dataInstance)
     AQLPriceDataSlidingRule slr_Fol; slr_Fol.convertFromString(FOL);
     const AQLDate asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(curveID,ENCHKTYPE_ISDEFINED).
                                 get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
-    const AQLDate spotDate = AQLMathDateCalculations::getDate(asOfDate, conv.spotLag, slr_Fol, &conv.payCal, true);
+    const AQLDate spotDate = AQLDateCalculations::getDate(asOfDate, conv.spotLag, slr_Fol, &conv.payCal, true);
     const AQLString maxDate = AQLString( static_cast<int>(expiDate.back() + span) ) + AQLString("M");
-    const AQLDate endDate = AQLMathDateCalculations::getDate(spotDate, maxDate, conv.paySlr, &conv.payCal, true);
+    const AQLDate endDate = AQLDateCalculations::getDate(spotDate, maxDate, conv.paySlr, &conv.payCal, true);
     DateVector payVec;
-    AQLMathDateCalculations::generateSchedule(spotDate, endDate, conv.freq,true,NULL,NULL,0,payVec,&conv.paySlr,&conv.payCal);
+    AQLDateCalculations::generateSchedule(spotDate, endDate, conv.freq,true,NULL,NULL,0,payVec,&conv.paySlr,&conv.payCal);
     DateVector fixVec(payVec.size());
-    for(size_t i =0; i<payVec.size(); i++) fixVec[i]= AQLMathDateCalculations::getDate(payVec[i],conv.spotLag,slr_Pre,&conv.payCal,false); 
+    for(size_t i =0; i<payVec.size(); i++) fixVec[i]= AQLDateCalculations::getDate(payVec[i],conv.spotLag,slr_Pre,&conv.payCal,false); 
     //AQLMathYieldCurve
 	AQLMathYieldCurve& yc = AQLMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveID);
 	yc.setInterpolation(FN_SPLINEINTERPOLATION_STR);

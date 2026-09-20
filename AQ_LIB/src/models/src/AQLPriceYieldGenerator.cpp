@@ -30,7 +30,7 @@
 
 #include <algorithm>
 #include "AQLMathYieldCurvePro.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLAlgorithm.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLLinearSplineInterpolation.h"
@@ -191,7 +191,7 @@ AQLPriceYieldGenerator::getPaymentDates(const AQLDate& basedate, const AQLDate& 
 
 	AQLString roll_conv(deduceRollConvention(freq, is_eomroll));
 	int roll_day = sdate.dayOfMonth();
-	AQLMathDateCalculations::generateSchedule(sdate, edate, freq, true, NULL, NULL, &roll_day, dates, &slidingRule, &calendar, !isBackward, &roll_conv);
+	AQLDateCalculations::generateSchedule(sdate, edate, freq, true, NULL, NULL, &roll_day, dates, &slidingRule, &calendar, !isBackward, &roll_conv);
 
 	if (dates.size() == 0)
 	{
@@ -1031,7 +1031,7 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 		}
 		else if (eom) roll_conv = ROLLCONV_EOM;
 		else roll_conv = ROLLCONV_NORMAL;
-		firstSwapDate = AQLMathDateCalculations::getDate(spotdate, term_str, slidingRule, &calendar, true, &roll_conv);
+		firstSwapDate = AQLDateCalculations::getDate(spotdate, term_str, slidingRule, &calendar, true, &roll_conv);
 	}
 	// ------------------------------------------------------------
 
@@ -1128,7 +1128,7 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 			swap_compounding_frequency[i] = swap_floatLeg_frequency[i];
 		}
 		
-		swap_compoundingTimes[i] = AQLMathDateCalculations::calcCompoundingTimes(swap_floatLeg_frequency[i], swap_compounding_frequency[i]);
+		swap_compoundingTimes[i] = AQLDateCalculations::calcCompoundingTimes(swap_floatLeg_frequency[i], swap_compounding_frequency[i]);
 
 		if (i == 0)
 		{
@@ -1466,7 +1466,7 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 		if (freq == LUNAR) roll_conv = ROLLCONV_LUNAR;
 		else if (eom) roll_conv = ROLLCONV_EOM;
 		else roll_conv = ROLLCONV_NORMAL;
-		AQLDate date = AQLMathDateCalculations::getDate(spotdate_l, term_str, slidingRule, &calendar, true, &roll_conv);
+		AQLDate date = AQLDateCalculations::getDate(spotdate_l, term_str, slidingRule, &calendar, true, &roll_conv);
 		
 		RateConvention rc = AQLMathYieldCurve::setRC(freq);
 		AQLPriceDataConvention conv(dayCount.getDayCount(), rc);
@@ -1594,7 +1594,7 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 							const AQLPriceDataCalendar& calendar  = dynamic_cast<const AQLPriceDataCalendar&> (((*it)->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 							const AQLPriceDataSlidingRule& slidingRule  = dynamic_cast<const AQLPriceDataSlidingRule&> (((*it)->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
 							const AQLString& term_str = dynamic_cast<const AQLDataString&> (dh->get()).get();
-							edate = AQLMathDateCalculations::getDate(sdate, term_str, true);
+							edate = AQLDateCalculations::getDate(sdate, term_str, true);
 							edate = (!slidingRule.isNull() && !calendar.isNull()) ? slidingRule.getDate(edate, calendar) : edate;
 
 						}
@@ -1636,7 +1636,7 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 					const AQLPriceDataCalendar& calendar  = dynamic_cast<const AQLPriceDataCalendar&> ((data_future[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 					const AQLPriceDataSlidingRule& slidingRule  = dynamic_cast<const AQLPriceDataSlidingRule&> ((data_future[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
 					const AQLString& term_str = dynamic_cast<const AQLDataString&> (dh->get()).get();
-					edate = AQLMathDateCalculations::getDate(sdate, term_str, true);
+					edate = AQLDateCalculations::getDate(sdate, term_str, true);
 					edate = (!slidingRule.isNull() && !calendar.isNull()) ? slidingRule.getDate(edate, calendar) : edate;
 				}
 				else
@@ -2074,15 +2074,15 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 				else
 				{
 					const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((data_fra[i]->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
-					startDate = AQLMathDateCalculations::getDate(spotDate, sterm_str, *swap_slidingRule[i], swap_calendar[i], true, &swap_rollConvention[i]);
+					startDate = AQLDateCalculations::getDate(spotDate, sterm_str, *swap_slidingRule[i], swap_calendar[i], true, &swap_rollConvention[i]);
 					const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((data_fra[i]->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-					endDate = AQLMathDateCalculations::getDate(startDate, tenor_str, *swap_slidingRule[i], swap_calendar[i], true, &swap_rollConvention[i]);
+					endDate = AQLDateCalculations::getDate(startDate, tenor_str, *swap_slidingRule[i], swap_calendar[i], true, &swap_rollConvention[i]);
 				}
 			}
 			else
 			{
-				startDate = AQLMathDateCalculations::getDate(spotDate, terms_str, slidingRule, &calendar, true, &roll_conv);
-				endDate = AQLMathDateCalculations::getDate(startDate, refRateTerm, slidingRule, &calendar, true, &roll_conv);
+				startDate = AQLDateCalculations::getDate(spotDate, terms_str, slidingRule, &calendar, true, &roll_conv);
+				endDate = AQLDateCalculations::getDate(startDate, refRateTerm, slidingRule, &calendar, true, &roll_conv);
 			}
 
             // Don't Insert Any Forwards if EndDate >= FirstSwapDate
@@ -2247,7 +2247,7 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 		{
 			const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data_tenorswap[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			double rate = dynamic_cast<const AQLDataDouble &>((data_tenorswap[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-			AQLDate tmpDate = AQLMathDateCalculations::getDate(spotdate_s, strTerm, *pSld_tenorswap, pCal_tenorswap, true, &roll_conv_ts);
+			AQLDate tmpDate = AQLDateCalculations::getDate(spotdate_s, strTerm, *pSld_tenorswap, pCal_tenorswap, true, &roll_conv_ts);
 			double term = pDaycount_tenorswap->getTerm(spotdate_s, tmpDate);
 			b_t_grid.push_back(term);
 			if (isTimeInter_tenorswap)
@@ -2271,7 +2271,7 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 	for (unsigned int i = 0; i < size_swaps; i++)
 	{		
 		const AQLString& term_str = dynamic_cast<const AQLDataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-		AQLDate date = AQLMathDateCalculations::getDate(spotdate_s, term_str, *swap_slidingRule[i], swap_calendar[i], true, &swap_rollConvention[i]);
+		AQLDate date = AQLDateCalculations::getDate(spotdate_s, term_str, *swap_slidingRule[i], swap_calendar[i], true, &swap_rollConvention[i]);
 		dates_s[i] = date;
 		
 		if (pRatePriority != 0 && !isSwapPriority
@@ -2286,7 +2286,7 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 			if (swap_floatLeg_frequency[i] != baseFreq)
 			{
 				const AQLString& term_str_swap = dynamic_cast<const AQLDataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-				AQLDate tmpDate = AQLMathDateCalculations::getDate(spotdate_s, term_str_swap, *pSld_tenorswap, pCal_tenorswap, true, &roll_conv_ts);
+				AQLDate tmpDate = AQLDateCalculations::getDate(spotdate_s, term_str_swap, *pSld_tenorswap, pCal_tenorswap, true, &roll_conv_ts);
 				double term_basis = pDaycount_tenorswap->getTerm(spotdate_s, tmpDate);				
 				if (isTimeInter_tenorswap)
 				{
@@ -3290,7 +3290,7 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 	if (dh->isDefined() && !dh->isNull())
 	{
 		const AQLString maxTerm = dynamic_cast<const AQLDataString&>(dh->get()).get() + "Y";
-		const AQLDate& maxDate = AQLMathDateCalculations::getDate(spotdate_s, maxTerm, *swap_slidingRule[0], swap_calendar[0], true, &swap_rollConvention[0]);
+		const AQLDate& maxDate = AQLDateCalculations::getDate(spotdate_s, maxTerm, *swap_slidingRule[0], swap_calendar[0], true, &swap_rollConvention[0]);
 		if (maxDate > dates_s.back())
 		{
 			const AQLString maxFreq = dynamic_cast<const AQLDataString&>(objHolder.getData(IR_CALIBRATION_DATA_MAXTERMFREQ).get()).get();
@@ -3592,7 +3592,7 @@ AQLPriceYieldGenerator::calcOISDiscountFactor(const AQLDate& basedate,
 	{
 		const double firstRate = dynamic_cast<const AQLDataDouble&> ((data_swap[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 		const AQLString& term = dynamic_cast<const AQLDataString&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get());
-		AQLDate date = AQLMathDateCalculations::getDate(spotdate, term, slidingRule, &calendar, true, &roll_conv);
+		AQLDate date = AQLDateCalculations::getDate(spotdate, term, slidingRule, &calendar, true, &roll_conv);
 		// solveOISRate, date is startdatebase
 		AQLDate date_m1d = calendar.getBusinessDay(date, -1);
 
@@ -3760,7 +3760,7 @@ AQLPriceYieldGenerator::calcOISDiscountFactor(const AQLDate& basedate,
 		else if (eom) roll_conv = ROLLCONV_EOM;
 		else roll_conv = ROLLCONV_NORMAL;
 
-		AQLDate date = AQLMathDateCalculations::getDate(spotdate, term_str, *slidingRule, calendar, true, &roll_conv);
+		AQLDate date = AQLDateCalculations::getDate(spotdate, term_str, *slidingRule, calendar, true, &roll_conv);
 		if ((size_ois_swaps && date <= shortterm_date) || (!size_ois_swaps && i == 0) || (tmp_date >= date))
 		{
 			continue; // use boj rate
@@ -3819,7 +3819,7 @@ AQLPriceYieldGenerator::calcOISDiscountFactor(const AQLDate& basedate,
 			else if (eom) swap_rollConvention = ROLLCONV_EOM;
 			else swap_rollConvention = ROLLCONV_NORMAL;
 			// scheduling libor swap
-			const AQLDate date_s = AQLMathDateCalculations::getDate(spotdate, term_str, swap_slidingRule, &swap_calendar, true, &swap_rollConvention);
+			const AQLDate date_s = AQLDateCalculations::getDate(spotdate, term_str, swap_slidingRule, &swap_calendar, true, &swap_rollConvention);
 			terms_grid_s.clear();
 			terms_interval_s.clear();
 			dates_s.clear();
@@ -4160,7 +4160,7 @@ AQLPriceYieldGenerator::calcOISDiscountFactor(const AQLDate& basedate,
 	if (dh->isDefined() && !dh->isNull())
 	{
 		const AQLString maxTerm = dynamic_cast<const AQLDataString&>(dh->get()).get() + "Y";
-		const AQLDate& maxDate = AQLMathDateCalculations::getDate(spotdate, maxTerm, slidingRule, &calendar, true, &roll_conv);
+		const AQLDate& maxDate = AQLDateCalculations::getDate(spotdate, maxTerm, slidingRule, &calendar, true, &roll_conv);
 		if (maxDate > dates.back())
 		{
 			const AQLString maxFreq = dynamic_cast<const AQLDataString&>(objHolder.getData(IR_CALIBRATION_DATA_MAXTERMFREQ).get()).get();
@@ -5388,9 +5388,9 @@ AQLPriceYieldGenerator::determineLinearSplineInterpolationJoinDate(const AQLObje
 		else
 		{
 			const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((firstSwap->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
-			startDate = AQLMathDateCalculations::getDate(spotDate, sterm_str, *slidingRule, calendar, true, &roll_conv);
+			startDate = AQLDateCalculations::getDate(spotDate, sterm_str, *slidingRule, calendar, true, &roll_conv);
 			const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((firstSwap->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-			endDate = AQLMathDateCalculations::getDate(startDate, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+			endDate = AQLDateCalculations::getDate(startDate, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 		}
 
 		AQLPriceYieldGenerator::getPaymentDates(startDate, endDate, freq, *calendar, *slidingRule, *dayCount, datesVec, temp, temp, eom);
@@ -5398,7 +5398,7 @@ AQLPriceYieldGenerator::determineLinearSplineInterpolationJoinDate(const AQLObje
 	else
 	{
 		const AQLString& term_str = dynamic_cast<const AQLDataString&> ((firstSwap->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-		endDate = AQLMathDateCalculations::getDate(spotDate, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+		endDate = AQLDateCalculations::getDate(spotDate, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 
 		AQLPriceYieldGenerator::getPaymentDates(spotDate, endDate, freq, *calendar, *slidingRule, *dayCount, datesVec, temp, temp, eom);
 	}
@@ -5507,16 +5507,16 @@ AQLPriceYieldGenerator::calculateFraDates(AQLDate& startDate,
 		else
 		{
 			const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((data_fra->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
-			startDate = AQLMathDateCalculations::getDate(spotDate, sterm_str, slidingRule, &calendar, true, &roll_conv);
+			startDate = AQLDateCalculations::getDate(spotDate, sterm_str, slidingRule, &calendar, true, &roll_conv);
 			const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((data_fra->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-			endDate = AQLMathDateCalculations::getDate(startDate, tenor_str, slidingRule, &calendar, true, &roll_conv);
+			endDate = AQLDateCalculations::getDate(startDate, tenor_str, slidingRule, &calendar, true, &roll_conv);
 		}
 	}
 	else
 	{
 		const AQLString& terms_str_x = dynamic_cast<const AQLDataString&> ((data_fra->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		const AQLString& terms_str = AQLPriceYieldGenerator::changeFRATermFormat(terms_str_x);
-		startDate = AQLMathDateCalculations::getDate(spotDate, terms_str, slidingRule, &calendar, true, &roll_conv);
-		endDate = AQLMathDateCalculations::getDate(startDate, refRateTerm, slidingRule, &calendar, true, &roll_conv);
+		startDate = AQLDateCalculations::getDate(spotDate, terms_str, slidingRule, &calendar, true, &roll_conv);
+		endDate = AQLDateCalculations::getDate(startDate, refRateTerm, slidingRule, &calendar, true, &roll_conv);
 	}
 }

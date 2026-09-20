@@ -135,7 +135,7 @@
     <ClInclude Include="..\src\etrading\include\AQLCurveForwardRateHelpers.h" />
     <ClInclude Include="..\src\etrading\include\AQLCurvePricingObject.h" />
     <ClInclude Include="..\src\etrading\include\AQLDateHelpers.h" />
-    <ClInclude Include="..\src\etrading\include\AQLDateScheduleHelpers.h" />
+    <ClInclude Include="..\src\etrading\include\AQLDateSchedule.h" />
     <ClInclude Include="..\src\etrading\include\MonteCarloEngine.h" />
     <ClInclude Include="..\src\etrading\include\MonteCarloPath.h" />
     <ClInclude Include="..\src\etrading\include\MonteCarloStatistics.h" />
@@ -399,7 +399,7 @@
     <ClCompile Include="..\src\etrading\src\AQLCurveForwardRateHelpers.cpp" />
     <ClCompile Include="..\src\etrading\src\AQLCurvePricingObject.cpp" />
     <ClCompile Include="..\src\etrading\src\AQLDateHelpers.cpp" />
-    <ClCompile Include="..\src\etrading\src\AQLDateScheduleHelpers.cpp" />
+    <ClCompile Include="..\src\etrading\src\AQLDateSchedule.cpp" />
     <ClCompile Include="..\src\etrading\src\MonteCarloEngine.cpp" />
     <ClCompile Include="..\src\etrading\src\MonteCarloPath.cpp" />
     <ClCompile Include="..\src\etrading\src\MonteCarloStatistics.cpp" />

@@ -31,7 +31,7 @@
 #include "AQLAlgorithm.h"
 #include "AQLConstant.h"
 
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLPriceCFGenUtility.h"
 
 #include "AQLMathIndexEntity.h"
@@ -384,7 +384,7 @@ AQLPriceOptionGenerator::setUpLegMaturity(AQLObject& trade) const
 		dh = &(legs.get(i).getData(PRICING_DATA_STARTDATE, ISNOTNULL));
 		const AQLDate& startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 		//end date
-		const AQLDate& enddate = AQLMathDateCalculations::getDate(startdate, termstr, true);
+		const AQLDate& enddate = AQLDateCalculations::getDate(startdate, termstr, true);
 		dh = &(legs.get(i).getData(PRICING_DATA_ENDDATE, NOCHECK));
 		if (!dh->isDefined())
 			dh = &(legs.get(i).add(PRICING_DATA_ENDDATE, new AQLDataDate()));

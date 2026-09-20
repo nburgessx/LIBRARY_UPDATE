@@ -27,7 +27,7 @@
 
 #include "AQLAlgorithm.h"
 
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataFunction.h"
@@ -1170,7 +1170,7 @@ AQLPricePayOff::setUpIndexEntityOfIndex (const AQLDate& basedate, AQLObject& ind
 				psrule, pcal);
 
 			DateVector out;
-			AQLMathDateCalculations::generateSchedule(start, end, freq,	
+			AQLDateCalculations::generateSchedule(start, end, freq,	
 				false,
 				NULL, NULL,
 				pday,
@@ -1264,17 +1264,17 @@ AQLPricePayOff::setUpIndexEntityOfIndex (const AQLDate& basedate, AQLObject& ind
 			for (unsigned int i = 0; i <pfixingdates->size(); i++)
 			{
 				if (isstartterm)
-					start = AQLMathDateCalculations::getDate((*pfixingdates)[i], startterm, 
+					start = AQLDateCalculations::getDate((*pfixingdates)[i], startterm, 
 										*psrule, 
 										pcal, 
 										false);
-				AQLDate end = AQLMathDateCalculations::getDate((*pfixingdates)[i], endterm, 
+				AQLDate end = AQLDateCalculations::getDate((*pfixingdates)[i], endterm, 
 										*psrule, 
 										pcal, 
 										false);
 
 				DateVector out;
-				AQLMathDateCalculations::generateSchedule(start, end, freq,	
+				AQLDateCalculations::generateSchedule(start, end, freq,	
 											false,
 											NULL, NULL,
 											pday,

@@ -32,7 +32,7 @@
 #include "AQLMathVolFuncHW.h"
 #include "AQLMathJamshidianSwaption.h"
 #include "AQLMathJamshidianSwaptionByImplyVol.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLMathCurveFuncUtility.h"
 #include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathValuableEntity.h"
@@ -391,9 +391,9 @@ AQLCalibrateHW::setUp(AQLObjectPool &objPool,  const AQLScenarioParam &param, AQ
 		AQLString strWeight = weightVec[i];
 
 		// calc date
-		AQLDate expDate = AQLMathDateUtilities::getDate(asofDate, strOpMat, strSliding, strFCal);
-		//AQLDate valueDate = AQLMathDateUtilities::getDate(asofDate, strNotice, strSliding, strFCal);
-		AQLDate startDate = AQLMathDateUtilities::getDate(expDate, strNotice, strSliding, strPCal);
+		AQLDate expDate = etrading::AQLDateSchedule::getDate(asofDate, strOpMat, strSliding, strFCal);
+		//AQLDate valueDate = etrading::AQLDateSchedule::getDate(asofDate, strNotice, strSliding, strFCal);
+		AQLDate startDate = etrading::AQLDateSchedule::getDate(expDate, strNotice, strSliding, strPCal);
 
 		// calc strike rate
 		double strike = 0.0;

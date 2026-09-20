@@ -331,7 +331,7 @@ AQLScenarioConfigurationYieldCurveZero::createScenario(AQLDataInstance &dataInst
 				}
 				else
 				{
-					AQLDate date = AQLMathDateCalculations::getDate(asOfDate, strTerm, true);
+					AQLDate date = AQLDateCalculations::getDate(asOfDate, strTerm, true);
 					double term = dayCount.getTerm(asOfDate, date);
 					AQLCalibrationUtilities<double>::searchNearestPos(terms, term, gridPos[j]);
 				}	

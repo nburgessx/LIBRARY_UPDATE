@@ -11,7 +11,7 @@
 #include "AQLDataMultiReference.h"
 #include "AQLPriceDataManager.h"
 #include "AQLMathDefine.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLPricePayOff.h"
 #include "AQLMathCurveFuncUtility.h"
 #include "AQLPriceIRSwaptionValue.h"
@@ -276,7 +276,7 @@ AQLPriceIRSwaptionValue::setUpDataProvider(const AQLDate& basedate, AQLObject& o
 	{
 		//this ajust term is temporary
 		AQLString strMonth = getFrequencyFromIndexGenerator(gen,dataProvider,true);
-		AQLDate todate = AQLMathDateCalculations::getDate(dataProvider->mAsofDate,strMonth,true);
+		AQLDate todate = AQLDateCalculations::getDate(dataProvider->mAsofDate,strMonth,true);
 		double t1 = dataProvider->mpUnDayCountOfFixedLeg->getTerm(dataProvider->mAsofDate, todate);
 		double t2 = dataProvider->mpUnDayCount->getTerm(dataProvider->mAsofDate, todate);
 		if (0.0 == t1)
@@ -483,7 +483,7 @@ AQLPriceIRSwaptionValue::getFrequencyFromIndexGenerator(const AQLObject& object,
 	dh = &(object.getData(PRICING_DATA_ACCESSORY, ISNOTNULL));
 	AQLString libormonth = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(libormonth, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(libormonth, y, m, d, w);
 	m = 12*y + m;
 	if (!isMonthString)
 	{

@@ -48,7 +48,11 @@ namespace google_test
 
         // TermRateQuotes genericQuotes( terms, rates, etrading::FXRATES, etrading::USD, etrading::_12M );
 
-		EXPECT_THROW(FRAQuotes(terms, rates, etrading::_3M_FRAPERIOD, etrading::EUR), etrading::ETradingException );
+		// MarketQuote.cpp's FRA-tenor-format check validates via AQ_THROW (AQLCoreInvalidData
+		// directly) - the commented-out `throw ETradingException(...)` right next to it in
+		// MarketQuote.cpp is what this test was originally written against, before the
+		// AQ_THROW/boost::format cleanup superseded it.
+		EXPECT_THROW(FRAQuotes(terms, rates, etrading::_3M_FRAPERIOD, etrading::EUR), AQLCoreInvalidData );
 		FRAQuotes fraQuotes(fraTerms , rates, etrading::_3M_FRAPERIOD, etrading::EUR);
 
 		CurveData mdk("EUR_Collection",etrading::CURVE_TENOR_3M); // TODO: add checks on currency!

@@ -8,8 +8,7 @@
 #include "LabelValueBlock.h"
 
 #include "AQLDefinitions.h"							// AQLStringMatrix
-#include "AQLDateScheduleHelpers.h"					// validateDate()
-#include "AQLMathDateUtilities.h"					// getAQLDate( int excelDate )
+#include "AQLDateSchedule.h"					// validateDate(), getAQLDate( int excelDate )
 #include "AQLCurveForwardRateHelpers.h"				// getMultiSpotDiscountFactors
 
 #include <boost/algorithm/string/predicate.hpp>		// boost::iequals
@@ -117,7 +116,7 @@ namespace etrading
 			{
 				auto anyTypeValue = resultMatrix[ row ][ 0 ];
 				int dateAsExcelDouble = boost::get<double>( anyTypeValue );
-				AQLDate date = AQLMathDateUtilities::getAQLDate( dateAsExcelDouble );
+				AQLDate date = AQLDateSchedule::getAQLDate( dateAsExcelDouble );
 				dateVector[ row ] = date;
 			}
 			return dateVector;
@@ -319,8 +318,8 @@ namespace etrading
 	void CashflowEngine::populateYieldCurveData()
 	{
 		// # build date schedule and bind to liability flows
-		AQ_REQUIRE( AQLDateScheduleHelpers::isValidDate( effectiveDate_ ), "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
-		AQ_REQUIRE( AQLDateScheduleHelpers::isValidDate( maturityDate_ ),  "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
+		AQ_REQUIRE( AQLDateSchedule::isValidDate( effectiveDate_ ), "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
+		AQ_REQUIRE( AQLDateSchedule::isValidDate( maturityDate_ ),  "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
 
 		// # portfolio projection always monthly
 		// # back stub

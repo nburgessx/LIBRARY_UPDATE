@@ -1,5 +1,5 @@
 #include "FeeCashflow.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "Variant.h"
 #include "SwapValidation.h"
 

@@ -189,7 +189,7 @@ AQLScenarioConfigurationYieldCurve::createScenario(AQLDataInstance &dataInstance
 	AQLString aud_firstRefString;
 	// store original swap rate
 	map<AQLString, double> aud_origSwapRate;
-	AQLDate date_3y = AQLMathDateCalculations::getDate(asOfDate, "3Y", true);
+	AQLDate date_3y = AQLDateCalculations::getDate(asOfDate, "3Y", true);
 	unsigned int aud_swapIndex = 0;
 
 	for (unsigned int i = 0; i < rateSize; ++i)
@@ -233,7 +233,7 @@ AQLScenarioConfigurationYieldCurve::createScenario(AQLDataInstance &dataInstance
 			}
 			else
 			{
-				AQLDate date = AQLMathDateCalculations::getDate(asOfDate, marketTerms[i], true);
+				AQLDate date = AQLDateCalculations::getDate(asOfDate, marketTerms[i], true);
 				if (date_3y >= date)
 				{
 					aud_firstRefString += objHolder.getName() + ":";

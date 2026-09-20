@@ -537,7 +537,7 @@
     <ClInclude Include="..\src\models\include\AQLModelDynamicsSRCurve.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\AQLMathCentralBank.h">
+    <ClInclude Include="..\src\models\include\AQLCentralBank.h">
       <Filter>include\Dates</Filter>
     </ClInclude>
     <ClInclude Include="..\src\models\include\AQLMathPathEntity.h">
@@ -1020,10 +1020,7 @@
     <ClInclude Include="..\src\models\include\AQLMathJumpDiffusion.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\AQLMathDateCalculations.h">
-      <Filter>include\Dates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\models\include\AQLMathDateUtilities.h">
+    <ClInclude Include="..\src\models\include\AQLDateCalculations.h">
       <Filter>include\Dates</Filter>
     </ClInclude>
     <ClInclude Include="..\src\models\include\AQLModelUtilities.h">
@@ -1160,7 +1157,7 @@
     <ClCompile Include="..\src\models\src\AQLMathCashFlowSchedules.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\AQLMathCentralBank.cpp">
+    <ClCompile Include="..\src\models\src\AQLCentralBank.cpp">
       <Filter>src\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\models\src\AQLMathArbFreeCurve.cpp">
@@ -1844,10 +1841,7 @@
     <ClCompile Include="..\src\models\src\AQLPriceCFGenUtility.cpp">
       <Filter>src\Dates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\AQLMathDateCalculations.cpp">
-      <Filter>src\Dates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\models\src\AQLMathDateUtilities.cpp">
+    <ClCompile Include="..\src\models\src\AQLDateCalculations.cpp">
       <Filter>src\Dates</Filter>
     </ClCompile>
     <ClCompile Include="..\src\models\src\AQLEigenSystems.cpp">

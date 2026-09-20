@@ -700,7 +700,7 @@ AQLMathPlainVanillaEntity::setUpLiborRateMap(void) const
 			else if (eom) roll_conv = "EOM";
 			else roll_conv = "NORMAL";
 
-			AQLDate enddate = AQLMathDateCalculations::getDate(spotdate, termStr, sld, &cal, true, &roll_conv);
+			AQLDate enddate = AQLDateCalculations::getDate(spotdate, termStr, sld, &cal, true, &roll_conv);
 		
 			const double term = dc.getTerm(spotdate, enddate, false);
 			

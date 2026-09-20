@@ -3,7 +3,7 @@
 #include "PremiumCashflow.h"
 #include "CurveUtilities.h"
 #include "CurveValidation.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "SwapUtilities.h"
 #include "ExceptionMacros.h"
 

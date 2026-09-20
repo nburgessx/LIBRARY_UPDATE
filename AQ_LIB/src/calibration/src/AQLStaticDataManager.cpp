@@ -143,9 +143,10 @@ AQLStaticDataManager::getStaticData(const AQLString& propertyName, pMap& propert
 			propertyMap.insert(std::make_pair(id, new AQLStaticData(filePath)));
 			itr = propertyMap.find(id);
 		}
-		catch (AQLCoreError &e)
+		catch (AQLCoreError &)
 		{
-			throw e;
+			// Bare rethrow, not `throw e;` - see AQLFileAccessor.cpp's matching fix for why.
+			throw;
 		}
 		catch (...)
 		{

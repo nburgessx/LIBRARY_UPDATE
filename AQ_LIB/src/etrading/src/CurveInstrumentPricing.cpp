@@ -17,7 +17,7 @@
 #include "AQLCurvePricingObject.h"
 #include "AQLDateHelpers.h"
 #include "AQLCurveForwardRateHelpers.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 
 // Internal Includes
 #include "AQLMathDefine.h"

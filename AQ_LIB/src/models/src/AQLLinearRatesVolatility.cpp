@@ -21,7 +21,7 @@
 #include "AQLMathDefine.h"
 #include "AQLLinearRatesOptionValue.h"
 #include "AQLMathVolFuncIRSABR.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLMathSwaptionVolUtility.h"
 #include "AQLMathYieldCurve.h"
 #include "AQLDataReference.h"
@@ -348,7 +348,7 @@ AQLPriceIRSABRVolatility::setVolatility(AQLDataProvider* dp, AQLObject& object, 
 		double mtenorval = 0.;
 		if (asofdate < dataProvider->mMaturityDates[i])
 		{
-			AQLMathDateCalculations::termStrtoYMDW(dataProvider->mUnTenor[i], y, m, d, w);
+			AQLDateCalculations::termStrtoYMDW(dataProvider->mUnTenor[i], y, m, d, w);
 			mtenorval = static_cast<double > (y) + static_cast<double > (m) / 12.;
 			//select convid this is temporary now
 			if (mtenorval <= 0.5)

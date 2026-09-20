@@ -7,7 +7,7 @@
 #include "AQLFunctionUtilities.h"
 #include "AQLMathFXVanillaFuncUtility.h"
 #include "AQLMathIRVanillaFuncUtility.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLObject.h"
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
@@ -19,7 +19,7 @@
 #include "AQLAlgorithm.h"
 #include "AQLPriceDataDayCount.h"
 #include "AQLPriceCFGenUtility.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLDataReference.h"
 #include "AQLAnalyticFormula.h"
 #include "AQLBlackScholesCalc.h"
@@ -57,10 +57,10 @@ AQLMathFXVanillaFuncUtility::gkOption(AQLString& optiontype, AQLString& buysell,
 	param.Vol = vol;
 	param.rf = foreignrate;
 	param.rd = localrate;
-	param.Td = AQLMathDateUtilities::getTerm(spotdate,deliverydate,daycount,false);
+	param.Td = etrading::AQLDateSchedule::getTerm(spotdate,deliverydate,daycount,false);
 	// vanna-volga
-	//param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,daycount, true);
-	param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,blackdaycount, true);
+	//param.Te = etrading::AQLDateSchedule::getTerm(basedate,expirydate,daycount, true);
+	param.Te = etrading::AQLDateSchedule::getTerm(basedate,expirydate,blackdaycount, true);
 	param.ErrorCheck();
 	////////////////////////////////////////////
 	//main sorce
@@ -110,9 +110,9 @@ AQLMathFXVanillaFuncUtility::gkOptionIV(AQLString& buysell,
 	param.rd  = localrate;
 	param.rf  = foreignrate;
 	// vanna-volga
-	//param.Te  = AQLMathDateUtilities::getTerm(basedate,expirydate,   daycount, true);
-	param.Te  = AQLMathDateUtilities::getTerm(basedate,expirydate,   blackdaycount, true);
-	param.Td  = AQLMathDateUtilities::getTerm(spotdate,deliverydate, daycount, true);
+	//param.Te  = etrading::AQLDateSchedule::getTerm(basedate,expirydate,   daycount, true);
+	param.Te  = etrading::AQLDateSchedule::getTerm(basedate,expirydate,   blackdaycount, true);
+	param.Td  = etrading::AQLDateSchedule::getTerm(spotdate,deliverydate, daycount, true);
 	param.ErrorCheck();	
 	
 	if (callput != CALL && callput != PUT) throw AQLCoreInvalidData("Choose Call or Put!", __FILE__,__LINE__);
@@ -157,10 +157,10 @@ AQLMathFXVanillaFuncUtility::digitalOption(AQLString& optiontype, AQLString& buy
 	param.Vol = vol;
 	param.rf = foreignrate;
 	param.rd = localrate;
-	param.Td = AQLMathDateUtilities::getTerm(spotdate,deliverydate, daycount, true);
+	param.Td = etrading::AQLDateSchedule::getTerm(spotdate,deliverydate, daycount, true);
 	// vanna-volga
-	//param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate, daycount, true);
-	param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate, blackdaycount, true);
+	//param.Te = etrading::AQLDateSchedule::getTerm(basedate,expirydate, daycount, true);
+	param.Te = etrading::AQLDateSchedule::getTerm(basedate,expirydate, blackdaycount, true);
 	param.ErrorCheck();
 	////////////////////////////////////////////////
 	//main sorce
@@ -205,10 +205,10 @@ AQLMathFXVanillaFuncUtility::singleBarrierOption(AQLString& optiontype, AQLStrin
 	param.S = spot;
 	param.K	= strike;
 	param.Vol = vol;
-	param.Td = AQLMathDateUtilities::getTerm(spotdate,deliverydate,daycount, true);
+	param.Td = etrading::AQLDateSchedule::getTerm(spotdate,deliverydate,daycount, true);
 	// vanna-volga
-	//param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,daycount, true);
-	param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,blackdaycount, true);
+	//param.Te = etrading::AQLDateSchedule::getTerm(basedate,expirydate,daycount, true);
+	param.Te = etrading::AQLDateSchedule::getTerm(basedate,expirydate,blackdaycount, true);
 	param.rf = foreignrate;
 	param.rd = localrate;
 	if(CALL==callput){ param.cp=1;}
@@ -310,10 +310,10 @@ AQLMathFXVanillaFuncUtility::doubleBarrierOption(AQLString& optiontype, AQLStrin
 	param.S = spot;
 	param.K = strike;
 	param.Vol = vol;
-	param.Td = AQLMathDateUtilities::getTerm(spotdate,deliverydate,daycount, true);
+	param.Td = etrading::AQLDateSchedule::getTerm(spotdate,deliverydate,daycount, true);
 	// vanna-volga
-	//param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,daycount, true);
-	param.Te = AQLMathDateUtilities::getTerm(basedate,expirydate,blackdaycount, true);
+	//param.Te = etrading::AQLDateSchedule::getTerm(basedate,expirydate,daycount, true);
+	param.Te = etrading::AQLDateSchedule::getTerm(basedate,expirydate,blackdaycount, true);
 	param.Ll = limitlow;
 	param.Lh = limithigh;
 	param.Num = num;
@@ -404,8 +404,8 @@ AQLMathFXVanillaFuncUtility::calcstrikefromdelta(double target, AQLString& spotf
 	upper(callput);
 
 	AQLString daycount(AC_365I);	
-	double deliveryterm = AQLMathDateUtilities::getTerm(spotdate,deliverydate,daycount, true);
-	double expiryterm = AQLMathDateUtilities::getTerm(basedate,expirydate,daycount, true);
+	double deliveryterm = etrading::AQLDateSchedule::getTerm(spotdate,deliverydate,daycount, true);
+	double expiryterm = etrading::AQLDateSchedule::getTerm(basedate,expirydate,daycount, true);
 	double foreigndf;
 	FORMULAE_BEGIN
 	foreigndf = AQLMath::exp(-1.0 * foreignrate * deliveryterm);

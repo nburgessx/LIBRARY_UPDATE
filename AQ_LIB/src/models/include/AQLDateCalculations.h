@@ -8,7 +8,7 @@
 #include "AQLDate.h"
 #include "AQLCoreAppError.h"
 #include "AQLCoreTemplateType.h"
-#include "AQLMathCentralBank.h"
+#include "AQLCentralBank.h"
 
 
 class AQLString;
@@ -33,7 +33,7 @@ enum RollConventionEnum
 
 */
 
-class AQLMathDateCalculations
+class AQLDateCalculations
 {
 public:
 
@@ -166,17 +166,17 @@ private:
 // inline method implementation
 //
 
-inline bool	AQLMathDateCalculations::haveNextECBDate(const AQLDate& baseDate, bool strictlyAfter)
+inline bool	AQLDateCalculations::haveNextECBDate(const AQLDate& baseDate, bool strictlyAfter)
 {
 	return haveNextCBDate("ECB", baseDate, strictlyAfter);
 }
 
-inline AQLDate AQLMathDateCalculations::getNextECBDate(const AQLDate& baseDate, bool strictlyAfter)
+inline AQLDate AQLDateCalculations::getNextECBDate(const AQLDate& baseDate, bool strictlyAfter)
 {
 	return getNextCBDate("ECB", baseDate, strictlyAfter);
 }
 
-inline AQLDate AQLMathDateCalculations::getECBStartDate(const AQLDate& ecbDate)
+inline AQLDate AQLDateCalculations::getECBStartDate(const AQLDate& ecbDate)
 {
 	return getNextWeekdayDate(WED, ecbDate, true);
 }

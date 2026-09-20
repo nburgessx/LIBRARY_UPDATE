@@ -6,7 +6,7 @@
 
 #include "AQLMathCashFlowSchedules.h"
 #include "AQLFunctionUtilities.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 
 //================ Single Flow ===================================
 CashFlowTiming AQLMathScheduleUtility::CashFlowSchedule(AQLDate valDate, AQLString mtyTerm, AQLStringMatrix legScheduler, AQLStringMatrix indexScheduler)
@@ -42,28 +42,28 @@ CashFlowTiming AQLMathScheduleUtility::CashFlowSchedule(AQLDate valDate, AQLStri
     noChangeCalendar.convertFromString("");
 
     //// Calculation ////
-    //AQLDate startDate = CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
-    AQLDate swapStartDate = CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
-    AQLDate endDate = CalendarAdvance(swapStartDate, mtyTerm, noChangeSlidingRule, noChangeCalendar);
+    //AQLDate startDate = etrading::CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
+    AQLDate swapStartDate = etrading::CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
+    AQLDate endDate = etrading::CalendarAdvance(swapStartDate, mtyTerm, noChangeSlidingRule, noChangeCalendar);
     AQLDate payDate = endDate;
     AQLDate startDate = endDate;
-    //AQLDate payDate = CalendarAdvance(endDate, payDelay, paySlidingRule, payCalendar);
+    //AQLDate payDate = etrading::CalendarAdvance(endDate, payDelay, paySlidingRule, payCalendar);
     // Fixing Date
     AQLDate refDate = (isAdvance ? startDate : payDate);
     AQLPriceDataSlidingRule fixingSr;
     fixingSr.convertFromString("Preceding");
     AQLPriceDataCalendar fixingCdr;
     fixingCdr.convertFromString(fixingCalendar);
-    AQLDate fixingDate = CalendarAdvance(refDate, "-" + fixingLag, fixingSr, fixingCdr);
+    AQLDate fixingDate = etrading::CalendarAdvance(refDate, "-" + fixingLag, fixingSr, fixingCdr);
     // Index settlement
     AQLPriceDataSlidingRule idxSr;
     idxSr.convertFromString("Following");
     AQLPriceDataCalendar idxFixingCdr;
     idxFixingCdr.convertFromString(indexFixingCalendar);
-    AQLDate idxSettlDate = CalendarAdvance(fixingDate, indexFixingLag, idxSr, idxFixingCdr);
+    AQLDate idxSettlDate = etrading::CalendarAdvance(fixingDate, indexFixingLag, idxSr, idxFixingCdr);
     // Accrual
-    AQLPriceDataDayCount daycount = Daycount(daycountConvention);
-    double accrual = YearFraction(daycount, startDate, endDate);
+    AQLPriceDataDayCount daycount = etrading::Daycount(daycountConvention);
+    double accrual = etrading::YearFraction(daycount, startDate, endDate);
 
     return CashFlowTiming { fixingDate, startDate, endDate, payDate, idxSettlDate, accrual };
 }
@@ -100,8 +100,8 @@ vector<CashFlowTiming> AQLMathScheduleUtility::LegSchedule(AQLDate valDate, AQLS
     noChangeCalendar.convertFromString("");
 
     // Preliminary
-    AQLDate startDate = CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
-    AQLDate endDate = CalendarAdvance(startDate, mtyTerm, noChangeSlidingRule, noChangeCalendar);
+    AQLDate startDate = etrading::CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
+    AQLDate endDate = etrading::CalendarAdvance(startDate, mtyTerm, noChangeSlidingRule, noChangeCalendar);
     int day = endDate.dayOfMonth();
 
     // Calculate schedule
@@ -111,7 +111,7 @@ vector<CashFlowTiming> AQLMathScheduleUtility::LegSchedule(AQLDate valDate, AQLS
     DateVector payDates = PayDates(endDates, payDelay, paySlidingRule, payCalendar);
     DateVector fixingDates = FixingDates(startDates, payDates, isAdvance, fixingLag, fixingCalendar);
     DateVector idxSettlDates = IndexSettlementDates(fixingDates, indexFixingLag, indexFixingCalendar);
-    AQLPriceDataDayCount daycount = Daycount(daycountConvention);
+    AQLPriceDataDayCount daycount = etrading::Daycount(daycountConvention);
     vector<double> accruals = Accruals(daycount, startDates, endDates);
 
     size_t n = payDates.size();
@@ -125,7 +125,7 @@ vector<CashFlowTiming> AQLMathScheduleUtility::LegSchedule(AQLDate valDate, AQLS
 DateVector AQLMathScheduleUtility::BaseDates(AQLString frequency, AQLString calendar, AQLString slidingRule,
                      AQLDate startDate, AQLDate endDate, int* day)
 {
-    return AQLMathDateUtilities::generateSchedule(startDate, endDate, frequency, slidingRule, calendar, 0, 0, day, true, 0);
+    return etrading::AQLDateSchedule::generateSchedule(startDate, endDate, frequency, slidingRule, calendar, 0, 0, day, true, 0);
 }
 
 DateVector AQLMathScheduleUtility::StartDates(DateVector baseDates)
@@ -153,7 +153,7 @@ DateVector AQLMathScheduleUtility::PayDates(DateVector endDates, AQLString term,
     size_t n = endDates.size();
     DateVector payDates(n);
     for (size_t i = 0; i < n; i++)
-        payDates[i] = CalendarAdvance(endDates[i], term, slidingRule, calendar);
+        payDates[i] = etrading::CalendarAdvance(endDates[i], term, slidingRule, calendar);
 
     return payDates;
 }
@@ -168,7 +168,7 @@ DateVector AQLMathScheduleUtility::FixingDates(DateVector startDates, DateVector
     AQLPriceDataCalendar cdr;
     cdr.convertFromString(calendar);
     for (size_t i = 0; i < n; i++)
-        fixingDates[i] = CalendarAdvance(refDates[i], "-" + fixingLag, slidingRule, cdr);
+        fixingDates[i] = etrading::CalendarAdvance(refDates[i], "-" + fixingLag, slidingRule, cdr);
 
     return fixingDates;
 }
@@ -182,7 +182,7 @@ DateVector AQLMathScheduleUtility::IndexSettlementDates(DateVector fixingDates, 
     AQLPriceDataCalendar cdr;
     cdr.convertFromString(calendar);
     for (size_t i = 0; i < n; i++)
-        idxSettlDates[i] = CalendarAdvance(fixingDates[i], settlLag, slidingRule, cdr);
+        idxSettlDates[i] = etrading::CalendarAdvance(fixingDates[i], settlLag, slidingRule, cdr);
 
     return idxSettlDates;
 }
@@ -192,7 +192,7 @@ DoubleVector AQLMathScheduleUtility::Accruals(AQLPriceDataDayCount daycount, Dat
     size_t n = startDates.size();
     DoubleVector acc(n);
     for (size_t i = 0; i < n; i++)
-        acc[i] = YearFraction(daycount, startDates[i], endDates[i]);
+        acc[i] = etrading::YearFraction(daycount, startDates[i], endDates[i]);
 
     return acc;
 }

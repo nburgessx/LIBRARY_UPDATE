@@ -51,7 +51,7 @@
 #include "AQLMathIndexEntity.h"
 #include "AQLMathFXEntity.h"
 #include <AQLPriceArbFreeGenerator.h>
-#include "AQLMathCentralBank.h"
+#include "AQLCentralBank.h"
 #include "ExceptionMacros.h"
 
 #include "AQLBasic.h"
@@ -357,7 +357,7 @@ namespace
 
 		assert(namevec.size() == dvec.size());
 
-		AQLMathCentralBank::Schedules& scheds = AQLMathCentralBank::schedules();
+		AQLCentralBank::Schedules& scheds = AQLCentralBank::schedules();
 		scheds.clear();
 		for (size_t j = 0; j != namevec.size(); ++j)
         {

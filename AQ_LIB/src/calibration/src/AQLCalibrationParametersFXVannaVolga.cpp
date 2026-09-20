@@ -160,8 +160,8 @@ AQLCalibrationParametersFXVannaVolga::createCalibrationInfo(AQLObjectPool &objPo
 		// vanna-volga warning this must be changed in all of sources
 		//AQLString tmpdate = AQLMarketData::aqlConvertToTerm(strTerms[i]);
 		AQLString tmpdate = strTerms[i];
-		matuterms[i] = AQLMathDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);
-		deliveryterms[i] = AQLMathDateCalculations::getDate(matuterms[i],spotlagday,sr,&cal,true);
+		matuterms[i] = AQLDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);
+		deliveryterms[i] = AQLDateCalculations::getDate(matuterms[i],spotlagday,sr,&cal,true);
 
 		deltatypes[i] = getCalibStaticDataValue(keyFX + FX_KEY_CALIB_VANNAVOLGA_DELTATYPE, lterm);
 		deltatypes[i].toUpper();

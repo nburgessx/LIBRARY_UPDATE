@@ -14,7 +14,7 @@
 #include "AQLBasic.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataCalendar.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLMathPathEntity.h"
 #include "AQLMathVolatility.h"
 #include "AQLPriceDataDayCount.h"
@@ -113,7 +113,7 @@ AQLMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor
 	cal.convertFromString(CITY_LnB);
 
 	DateVector dates;
-	AQLMathDateCalculations::generateSchedule(start, end, freq, true, 0, 0, 0, dates, &sliding, &cal);
+	AQLDateCalculations::generateSchedule(start, end, freq, true, 0, 0, 0, dates, &sliding, &cal);
 	
 	DateVector exDates;
 	unsigned int exTSize = exTenor.size();
@@ -125,7 +125,7 @@ AQLMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor
 			// sliding
 			AQLPriceDataSlidingRule sld_nochange;
 			sld_nochange.convertFromString(SLIDING_NO_CHANGE);
-			exDates[i] = AQLMathDateCalculations::getDate(asOfDate, exTenor[i], sld_nochange, NULL, true);
+			exDates[i] = AQLDateCalculations::getDate(asOfDate, exTenor[i], sld_nochange, NULL, true);
 		}
 		if (exDates[0] == start)
 		{

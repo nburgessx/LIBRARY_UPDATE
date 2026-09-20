@@ -5,10 +5,9 @@
 #include "AQObjUtilities.h"
 #include "ObjectUtilities.h"
 #include "DataUtilities.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLMathSwaptionVolUtility.h"
-#include "AQLMathDateCalculations.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateCalculations.h"
 
 namespace etrading
 {
@@ -108,7 +107,7 @@ namespace etrading
 		// We standardize these trade keys because we are only interested in par rate calculations 
 		keys.push_back(IRS_KEY::PAY_RECEIVE.c_str());					values.push_back("PAY");
 		keys.push_back(IRS_KEY::NOTIONAL.c_str());					    values.push_back("1.0");
-		keys.push_back(IRS_KEY::EFFECTIVE_DATE.c_str());				values.push_back(std::to_string(static_cast<long long>(AQLDateScheduleHelpers::getExcelDate(effectiveDate))));
+		keys.push_back(IRS_KEY::EFFECTIVE_DATE.c_str());				values.push_back(std::to_string(static_cast<long long>(AQLDateSchedule::getExcelDate(effectiveDate))));
 		keys.push_back(IRS_KEY::MATURITY_DATE.c_str());				    values.push_back(maturityTenor);
 		keys.push_back(SWAP_EXPRESSION_KEY::RATE_OR_SPREAD1.c_str());	values.push_back("0.0");
 		keys.push_back(SWAP_EXPRESSION_KEY::RATE_OR_SPREAD2.c_str());	values.push_back("0.0");
@@ -142,9 +141,9 @@ namespace etrading
 		{
 			const AQLDate expiryDate = etrading::getDateFromTenor(boost::assign::list_of(asOfDate_), expiryStrVector[i], businessDayAdjustment_, calendar_, "")[0];
 
-			//TODO: the core function use AQLMathDateUtilities::getTerm() which has different result from etrading::getYearFraction().
+			//TODO: the core function use AQLDateSchedule::getTerm() which has different result from etrading::getYearFraction().
 			// We use the same code for now, as it is also used in AQLMathSwaptionVolUtility::getExpiryPoint()
-			expiryTermVector_.push_back(AQLMathDateUtilities::getTerm(asOfDate_, expiryDate, dayCountToUse, true));
+			expiryTermVector_.push_back(AQLDateSchedule::getTerm(asOfDate_, expiryDate, dayCountToUse, true));
 			//expiryTermVector_.push_back(etrading::getYearFraction(asOfDate_, expiryDate, dayCount_));
 		}
 
@@ -155,7 +154,7 @@ namespace etrading
 		for (size_t i = 0; i < tenorSize; i++)
 		{
 			//This is the calc from core function, leave it for reference
-			AQLMathDateCalculations::termStrtoYMDW(tenorStrVector[i], y, m, d, w);
+			AQLDateCalculations::termStrtoYMDW(tenorStrVector[i], y, m, d, w);
 			tenorTermVector_.push_back(static_cast<double> (y) + static_cast<double> (m) / 12.0);
 
 			//const AQLDate tenorDate = etrading::getDateFromTenor(boost::assign::list_of(asOfDate_), tenorStrVector[i], businessDayAdjustment_, calendar_, "")[0];

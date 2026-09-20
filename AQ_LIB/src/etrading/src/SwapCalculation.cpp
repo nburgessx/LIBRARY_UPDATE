@@ -1,7 +1,7 @@
 #include "SwapCalculation.h"
 #include "ParameterValidation.h"
 #include "AQLCurvePricingObject.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "Solvers.h"
 #include "SettingsValidation.h"
 #include "FXCurveUtilities.h"

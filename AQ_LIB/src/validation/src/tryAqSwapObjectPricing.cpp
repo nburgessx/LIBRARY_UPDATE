@@ -24,7 +24,7 @@
 #include "ExceptionMacros.h"
 #include "tryAqCurveDiscountFactor.h"
 #include "AQLCurveForwardRateHelpers.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "SettingsValidation.h"
 #include "ValuationSettings.h"
 

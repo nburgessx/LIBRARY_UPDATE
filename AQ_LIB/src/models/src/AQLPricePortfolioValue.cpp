@@ -28,7 +28,7 @@
 #include "AQLBasic.h"
 #include "AQLFunctionBase.h"
 #include "AQLMathFXEntity.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 
 #include "AQLMatrix.h"
 #include "AQLMathYieldCurvePro.h"
@@ -84,7 +84,7 @@ namespace
 		dates.resize(immIndices.size());
 		for (DateVector::size_type i = 0, iend = dates.size(); i < iend; ++i)
 		{
-			dates[i] = AQLMathDateUtilities::getIMMDate3(baseDate, immIndices[i], cal, sld);
+			dates[i] = etrading::AQLDateSchedule::getIMMDate3(baseDate, immIndices[i], cal, sld);
 		}
 
 		return dates;
@@ -114,9 +114,9 @@ namespace
 				const std::size_t ix = x - term.getCString();
 				AQLString start = term.subString(0, ix - 1) + "M";
 				AQLString end = term.subString(ix + 1, term.size() - 1) + "M";
-				const AQLDate startDate = AQLMathDateCalculations::getDate(
+				const AQLDate startDate = AQLDateCalculations::getDate(
 					spotDate, start, yieldCurve->getSlidingRule(), &yieldCurve->getCalendar(), true);
-				const AQLDate endDate = AQLMathDateCalculations::getDate(
+				const AQLDate endDate = AQLDateCalculations::getDate(
 					spotDate, end, yieldCurve->getSlidingRule(), &yieldCurve->getCalendar(), true);
 					startDate.dayOfWeek();
 				return std::make_pair(startDate, endDate);
@@ -135,14 +135,14 @@ namespace
 						return std::make_pair(AQLDate(), yieldCurve->getSlidingRule().getDate(d, yieldCurve->getCalendar()));
 					}
 				default:	// W, M or Y
-					return std::make_pair(AQLDate(), AQLMathDateCalculations::getDate(
+					return std::make_pair(AQLDate(), AQLDateCalculations::getDate(
 						spotDate, term, yieldCurve->getSlidingRule(), &yieldCurve->getCalendar(), true));
 				}
 			}
 		}
 		else if ((term == "ON") || (term == "TN"))
 		{
-			return std::make_pair(AQLDate(), AQLMathDateCalculations::getDate(
+			return std::make_pair(AQLDate(), AQLDateCalculations::getDate(
 				baseDate, term, yieldCurve->getSlidingRule(), &yieldCurve->getCalendar(), true));
 		}
 		else

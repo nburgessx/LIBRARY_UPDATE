@@ -169,14 +169,14 @@ namespace etrading
         MonthYear currentIMM = monthYearCurrentIMM( valuationDate );
 		AQLString calendarStr( calendar.c_str() );
 		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        AQLDate IMMDate = AQLDateScheduleHelpers::getIMMDate1( currentIMM.year_, currentIMM.month_, calendarStr , businessDayAdjustmentStr );
+        AQLDate IMMDate = AQLDateSchedule::getIMMDate1( currentIMM.year_, currentIMM.month_, calendarStr , businessDayAdjustmentStr );
         
         // Roll Backwards when the current IMM is in the future and manage the IMM that rolls on the valuation date
         if ( (IMMDate > valuationDate) || ( IMMDate == valuationDate && !includeToday) )
         {
             // Use Previous IMM, since the current IMM is in the future
             monthYearRollIMMBackwards( currentIMM, 3 );
-            IMMDate = AQLDateScheduleHelpers::getIMMDate1( currentIMM.year_, currentIMM.month_, calendarStr , businessDayAdjustmentStr );
+            IMMDate = AQLDateSchedule::getIMMDate1( currentIMM.year_, currentIMM.month_, calendarStr , businessDayAdjustmentStr );
         }
         
         return IMMDate;
@@ -223,7 +223,7 @@ namespace etrading
         // Calculate the Nth IMM Date from the Current IMM Date
 		AQLString calendarStr( calendar.c_str() );
 		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        AQLDate nthIMMDate = AQLDateScheduleHelpers::getIMMDate1( monthYearNthIMM.year_, monthYearNthIMM.month_, calendarStr , businessDayAdjustmentStr );
+        AQLDate nthIMMDate = AQLDateSchedule::getIMMDate1( monthYearNthIMM.year_, monthYearNthIMM.month_, calendarStr , businessDayAdjustmentStr );
         return nthIMMDate;
     }
 
@@ -240,7 +240,7 @@ namespace etrading
         monthYearRollIMMForwards( monthYearIMM, 3 );
 		AQLString calendarStr( calendar.c_str() );
 		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        AQLDate nextIMMDate = AQLDateScheduleHelpers::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
+        AQLDate nextIMMDate = AQLDateSchedule::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
         return nextIMMDate;
     }
 
@@ -257,7 +257,7 @@ namespace etrading
         monthYearRollIMMBackwards( monthYearIMM, 3 );
 		AQLString calendarStr( calendar.c_str() );
 		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        AQLDate previousIMMDate = AQLDateScheduleHelpers::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
+        AQLDate previousIMMDate = AQLDateSchedule::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
         return previousIMMDate;
     }
 

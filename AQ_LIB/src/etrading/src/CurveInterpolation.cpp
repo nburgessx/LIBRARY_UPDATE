@@ -8,7 +8,7 @@
 #include "ParameterValidation.h"		// stringToDate
 #include "DataUtilities.h"				// trimStandardStringMatrix, AQ_TO_STRING_FROM_INT
 #include "CurveInstruments.h"			// getInterpolatedForwardRate
-#include "AQLDateScheduleHelpers.h"		// getDate() to get the forward endDate given the startDate
+#include "AQLDateSchedule.h"		// getDate() to get the forward endDate given the startDate
 #include "AQLCurveForwardRateHelpers.h"	// Legacy method 'getMultiForwardRate()' for use when isFwdInter = true
 
 namespace etrading
@@ -1198,7 +1198,7 @@ namespace etrading
 	{
 		// Imply the toDate(s) using the fromDate(s) and curve frequency e.g. todate = fromDate + 3M 
 		const AQLDate fixingStartDate = convertCurveTermToDate( interpolator_->asOfDate_, fixingStartTerm );
-		const AQLDate fixingEndDate = AQLDateScheduleHelpers::getDate( fixingStartDate, curveFrequencyTenor.c_str(), businessDayAdjustment.c_str(), calendar.c_str() );
+		const AQLDate fixingEndDate = AQLDateSchedule::getDate( fixingStartDate, curveFrequencyTenor.c_str(), businessDayAdjustment.c_str(), calendar.c_str() );
 		const double fixingEndTerm = convertCurveDateToTerm( interpolator_->asOfDate_, fixingEndDate );
 		return fixingEndTerm;
 	}

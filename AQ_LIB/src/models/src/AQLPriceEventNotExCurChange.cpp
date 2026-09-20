@@ -24,7 +24,7 @@
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataFunction.h"
 #include "AQLMathFXEntity.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 
 using namespace std;
 
@@ -109,7 +109,7 @@ AQLPriceEventNotExCurChange::doAction(const AQLDate& actiondate,
 	if (mIsFixingDate)
 		fixingdate = mFixingDate;
 	else
-		fixingdate = AQLMathDateCalculations::getDate(actiondate, mFixingTerm, *mpSlidingRule, mpCalendar, false);
+		fixingdate = AQLDateCalculations::getDate(actiondate, mFixingTerm, *mpSlidingRule, mpCalendar, false);
 
 	DoubleArray x(1);
 

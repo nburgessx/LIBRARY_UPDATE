@@ -12,7 +12,7 @@
 #include <algorithm>
 #include <cmath>
 #include "AQLCoreUtility.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 
 using namespace std;
 
@@ -274,7 +274,7 @@ AQLCoreUtility::changeDateFromString(const AQLStringVector& strvec)
 {
 	DateVector ret(strvec.size());
 	for(unsigned int i=0;i<ret.size();i++)
-		ret[i] = AQLMathDateUtilities::getAQLDate( (int) strvec[i].getDoubleValue() );
+		ret[i] = etrading::AQLDateSchedule::getAQLDate( (int) strvec[i].getDoubleValue() );
 	return ret;
 };
 

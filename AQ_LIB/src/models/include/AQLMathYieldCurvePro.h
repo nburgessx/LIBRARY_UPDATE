@@ -13,7 +13,7 @@
 #include "AQLFunctionVector.h"
 #include "AQLMathYieldCurve.h"
 #include "AQLDataBasics.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLPriceYieldGenerator.h"
 
 #include "AQLModelDynamicsCurve.h"
@@ -1244,8 +1244,8 @@ public:
 			AQLString lterm = AQLPriceYieldGenerator::changeFRATermFormat(lterm_x);
 			AQLString rterm = AQLPriceYieldGenerator::changeFRATermFormat(rterm_x);
 			asof.setSystemDate();
-			ldate = AQLMathDateCalculations::getDate(asof, lterm, true);
-			rdate = AQLMathDateCalculations::getDate(asof, rterm, true);
+			ldate = AQLDateCalculations::getDate(asof, lterm, true);
+			rdate = AQLDateCalculations::getDate(asof, rterm, true);
 			return ldate < rdate;
 		}
 		else if(dataType != FUTURE && dataType != BOJ && dataType != FEDFUNDRATE)
@@ -1253,8 +1253,8 @@ public:
 			AQLString lterm = dynamic_cast<const AQLDataString&> ((_Left->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			AQLString rterm = dynamic_cast<const AQLDataString&> ((_Right->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			asof.setSystemDate();
-			ldate = AQLMathDateCalculations::getDate(asof, lterm, true);
-			rdate = AQLMathDateCalculations::getDate(asof, rterm, true);
+			ldate = AQLDateCalculations::getDate(asof, lterm, true);
+			rdate = AQLDateCalculations::getDate(asof, rterm, true);
 			return ldate < rdate;
 		}
 

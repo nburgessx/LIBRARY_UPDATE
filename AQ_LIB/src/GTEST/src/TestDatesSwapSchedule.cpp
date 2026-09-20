@@ -6,7 +6,7 @@
 // Includes: This Library
 #include "SwapSchedule.h"
 #include "QuickTest.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 
 // Namespaces
 using namespace etrading;
@@ -78,11 +78,11 @@ namespace google_test
         ASSERT_EQ( 5, schedule[0].size() )    << "#Error: Expected 5 Columns of Data" << endl;
 
         // Fixing Dates are in the First Column of the Schedule
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20150522" ) ), schedule[0][0] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20160522" ) ), schedule[1][0] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20170522" ) ), schedule[2][0] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20180522" ) ), schedule[3][0] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20190522" ) ), schedule[4][0] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20150522" ) ), schedule[0][0] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20160522" ) ), schedule[1][0] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20170522" ) ), schedule[2][0] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20180522" ) ), schedule[3][0] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20190522" ) ), schedule[4][0] );
     }
 
     TEST_F( TestDatesSwapSchedule, SNAPSHOT_CheckAccrualStartDates )
@@ -95,11 +95,11 @@ namespace google_test
         ASSERT_EQ( 5, schedule[0].size() )    << "#Error: Expected 5 Columns of Data" << endl;
 
         // Fixing Dates are in the Second Column of the Schedule
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20150522" ) ), schedule[0][1] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20160522" ) ), schedule[1][1] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20170522" ) ), schedule[2][1] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20180522" ) ), schedule[3][1] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20190522" ) ), schedule[4][1] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20150522" ) ), schedule[0][1] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20160522" ) ), schedule[1][1] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20170522" ) ), schedule[2][1] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20180522" ) ), schedule[3][1] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20190522" ) ), schedule[4][1] );
     }
 
     TEST_F( TestDatesSwapSchedule, SNAPSHOT_CheckAccrualEndDates )
@@ -112,11 +112,11 @@ namespace google_test
         ASSERT_EQ( 5, schedule[0].size() )    << "#Error: Expected 5 Columns of Data" << endl;
 
         // Fixing Dates are in the Third Column of the Schedule
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20160522" ) ), schedule[0][2] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20170522" ) ), schedule[1][2] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20180522" ) ), schedule[2][2] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20190522" ) ), schedule[3][2] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20200522" ) ), schedule[4][2] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20160522" ) ), schedule[0][2] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20170522" ) ), schedule[1][2] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20180522" ) ), schedule[2][2] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20190522" ) ), schedule[3][2] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20200522" ) ), schedule[4][2] );
     }
 
     TEST_F( TestDatesSwapSchedule, SNAPSHOT_CheckAccrualPeriods )
@@ -146,10 +146,10 @@ namespace google_test
         ASSERT_EQ( 5, schedule[0].size() )    << "#Error: Expected 5 Columns of Data" << endl;
 
         // Fixing Dates are in the Fifth Column of the Schedule
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20160522" ) ), schedule[0][4] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20170522" ) ), schedule[1][4] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20180522" ) ), schedule[2][4] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20190522" ) ), schedule[3][4] );
-        EXPECT_EQ( ( double )etrading::AQLDateScheduleHelpers::getExcelDate( AQLDate( "20200522" ) ), schedule[4][4] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20160522" ) ), schedule[0][4] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20170522" ) ), schedule[1][4] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20180522" ) ), schedule[2][4] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20190522" ) ), schedule[3][4] );
+        EXPECT_EQ( ( double )etrading::AQLDateSchedule::getExcelDate( AQLDate( "20200522" ) ), schedule[4][4] );
     }
 }

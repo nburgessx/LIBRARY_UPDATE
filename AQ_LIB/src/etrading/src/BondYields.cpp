@@ -11,7 +11,7 @@
 #include "BondAccrualPeriods.h"
 #include "AQObjUtilities.h"
 #include "CoreEnumerations.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 
 namespace etrading
 {
@@ -147,7 +147,7 @@ namespace etrading
 			const AQLDate maturityDate = currentPaymentDate;
 
 			// If the maturity is a holiday, use the next business date
-			const AQLDate adjustedMaturityDate = etrading::AQLDateScheduleHelpers::getDate(maturityDate, "0D", "FOLLOWING", bondYieldParameters.calendar_.c_str());
+			const AQLDate adjustedMaturityDate = etrading::AQLDateSchedule::getDate(maturityDate, "0D", "FOLLOWING", bondYieldParameters.calendar_.c_str());
 
 
 			const double remainingDays = getBondActualCouponPeriodDays(settlementDate, adjustedMaturityDate, bondDaycount);
@@ -169,7 +169,7 @@ namespace etrading
 			else
 			{
 				// If the maturity is a holiday, use the next business date
-				const AQLDate adjustedMaturityDate = etrading::AQLDateScheduleHelpers::getDate(maturityDate, "0D", "FOLLOWING", bondYieldParameters.calendar_.c_str());
+				const AQLDate adjustedMaturityDate = etrading::AQLDateSchedule::getDate(maturityDate, "0D", "FOLLOWING", bondYieldParameters.calendar_.c_str());
 				const double adjustedDays = previousPaymentDate.intervalDays(adjustedMaturityDate);
 				const double unAdjustedDays = previousPaymentDate.intervalDays(maturityDate);
 

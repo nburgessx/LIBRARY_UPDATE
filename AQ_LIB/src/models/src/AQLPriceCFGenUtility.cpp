@@ -10,7 +10,7 @@
 
 #include "AQLPriceCFGenUtility.h"
 
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLObject.h"
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
@@ -151,7 +151,7 @@ AQLPriceCFGenUtility::generateSchedule(const AQLObject& object,
 	///////////////////////////////
 	//dates before holiday adjust//
 	///////////////////////////////
-	AQLMathDateCalculations::generateSchedule(start, end, freq, isarrear,
+	AQLDateCalculations::generateSchedule(start, end, freq, isarrear,
 							firstStubDate, lastStubDate, pday, out_unadjust);
 
 	//////////////////////////////////////
@@ -237,7 +237,7 @@ AQLPriceCFGenUtility::getDate(const AQLDate& basedate, const AQLString& term,
 							bool rollForwards)
 {
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(term, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(term, y, m, d, w);
 	AQLDate date = basedate;
 	if (!rollForwards)
 	{
@@ -290,7 +290,7 @@ AQLPriceCFGenUtility::getDate(const AQLDate& basedate,
 {
 	AQLDate date = basedate;
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(specialoffset, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(specialoffset, y, m, d, w);
 	
 	date.addYears(-y);
 	date.addMonths(-m);

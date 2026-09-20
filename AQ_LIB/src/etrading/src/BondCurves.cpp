@@ -4,7 +4,7 @@
 #include "DataUtilities.h"
 #include "ExceptionMacros.h"
 
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "ScheduleValidation.h"
 
 #include <boost/algorithm/string.hpp>
@@ -460,7 +460,7 @@ namespace etrading
 			const AQLDate pillarDate = yieldPillar.first;
 			const double yield = yieldPillar.second;
 
-			const int dateAsInt = static_cast<long long> (AQLDateScheduleHelpers::getExcelDate(pillarDate));
+			const int dateAsInt = static_cast<long long> (AQLDateSchedule::getExcelDate(pillarDate));
 			row.push_back(dateAsInt);
 			row.push_back(yield);
 

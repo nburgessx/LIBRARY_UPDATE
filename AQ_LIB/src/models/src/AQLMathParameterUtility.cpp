@@ -8,7 +8,7 @@
 #include <AQLMathInterpolationUtilities.h>
 #include <AQLDataMatrix.h>
 #include <AQLMathDefine.h>
-#include <AQLMathDateUtilities.h>
+#include "AQLDateSchedule.h"
 #include <AQLPriceCashFlowGenerator.h>
 #include <AQLMathBaseFuncUtility.h>
 #include <AQLFunctionUtilities.h>
@@ -33,9 +33,9 @@ void AQLMathParameterObject::SetParameterMatrix(AQLDataInstance* dataInstance, c
     for(size_t i = 1; i < nRows; i++)
     {
         expiryTerms.push_back(mat[i][0]);
-        AQLDate expiryDate = CalendarAdvance(asOfDate, mat[i][0], sr, cal);
+        AQLDate expiryDate = etrading::CalendarAdvance(asOfDate, mat[i][0], sr, cal);
         expiryDates.push_back(expiryDate);
-        expiryVec.push_back(ModelTime(asOfDate, expiryDate));
+        expiryVec.push_back(etrading::ModelTime(asOfDate, expiryDate));
     }
 
     AQLStringVector indexVec;
@@ -192,14 +192,14 @@ AQLStringVector AQLMathParameterObject::ParameterMatrixIndexes(AQLDataInstance* 
 
 AQLDate AQLMathParameterObject::GetDate(const AQLDate& asOfDate, AQLString term, const AQLPriceDataSlidingRule& slr, const AQLPriceDataCalendar& cal)
 {
-    return CalendarAdvance(asOfDate, term, slr, cal);
+    return etrading::CalendarAdvance(asOfDate, term, slr, cal);
 }
 
 double AQLMathParameterObject::Lookup(AQLDate asOfDate, AQLDate expDate, const AQLString& idxPoint,
                                   const DoubleVector& expiryVec, const AQLStringVector& indexVec,
                                   const DoubleMatrix& dataMatrix, AQLString interpolationType)
 {
-    double expPoint_d = ModelTime(asOfDate, expDate);
+    double expPoint_d = etrading::ModelTime(asOfDate, expDate);
     AQLParameterMatrix parameterMatrix(dataMatrix, expiryVec, indexVec);
     return parameterMatrix.LookUp(expPoint_d, idxPoint, interpolationType);
 }

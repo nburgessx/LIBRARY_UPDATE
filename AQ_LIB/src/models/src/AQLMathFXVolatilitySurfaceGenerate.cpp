@@ -16,7 +16,7 @@
 #include <AQLMathInterpolationUtilities.h>
 #include <AQLMathYieldCurve.h>
 #include <AQLDataReference.h>
-#include <AQLMathDateUtilities.h>
+#include "AQLDateSchedule.h"
 #include "AQLFunctionVector.h"
 #include "AQLNl2sol.h"
 #include <AQLCoreTemplateType.h>
@@ -159,8 +159,8 @@ FXOptionData AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam( AQLDataInstan
 	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 	AQLString blackdaycount(AC_365I);
-	x.T = AQLMathDateUtilities::getTerm(asOfDate,maturityDate,blackdaycount,true);
-    double Td = AQLMathDateUtilities::getTerm(asOfDate,deliveryDate,daycount,true);
+	x.T = etrading::AQLDateSchedule::getTerm(asOfDate,maturityDate,blackdaycount,true);
+    double Td = etrading::AQLDateSchedule::getTerm(asOfDate,deliveryDate,daycount,true);
     x.Pd = dcurve.getBasisDF(Td);
     x.Pf = fcurve.getBasisDF(Td);
     x.F = spotFX * x.Pf / x.Pd;
@@ -186,7 +186,7 @@ FXOptionData AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam( AQLDataInstan
 	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     };
 
-    x.Days = AQLMathDateUtilities::getExcelDate( maturityDate ) - AQLMathDateUtilities::getExcelDate( asOfDate )
+    x.Days = etrading::AQLDateSchedule::getExcelDate( maturityDate ) - etrading::AQLDateSchedule::getExcelDate( asOfDate )
         -cal.getCalendar().countHoliday(maturityDate, asOfDate);
 
     if( ( x.deltaType == FWD_NONPRE && x.atmType == DELTANEUTRAL_PRE ) || 
@@ -243,14 +243,14 @@ FXOptionData AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam( AQLDataInstan
 //		break;		
 //	case DailyWeighted:
 //        matuDate = cal.getBusinessDay(asOfDate, static_cast<int>(termPoint));
-//        deliDate = AQLMathDateUtilities::getDate(maturityDate,spotLag,fol,cal);
-//        x.T = AQLMathDateUtilities::getTerm(asOfDate,matuDate,daycount,true);
+//        deliDate = etrading::AQLDateSchedule::getDate(maturityDate,spotLag,fol,cal);
+//        x.T = etrading::AQLDateSchedule::getTerm(asOfDate,matuDate,daycount,true);
 //        x.Days = termPoint;
 //		break;
 //	case SquareDailyWeighted:
 //        matuDate = cal.getBusinessDay(asOfDate, static_cast<int>(termPoint));
-//        deliDate = AQLMathDateUtilities::getDate(maturityDate,spotLag,fol,cal);
-//        x.T = AQLMathDateUtilities::getTerm(asOfDate,matuDate,daycount,true);
+//        deliDate = etrading::AQLDateSchedule::getDate(maturityDate,spotLag,fol,cal);
+//        x.T = etrading::AQLDateSchedule::getTerm(asOfDate,matuDate,daycount,true);
 //        x.Days = termPoint;
 //		break;
 //    case TermNoWeighted:

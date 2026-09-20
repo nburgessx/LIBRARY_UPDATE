@@ -9,7 +9,7 @@
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLMathDefine.h"
 #include "AQLMathCurveFuncUtility.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLMathJamshidianSwaption.h"
 #include "AQLMathSwaptionVolUtility.h"
 #include "AQLPriceIRVegaUnderlyingAsset.h"
@@ -42,7 +42,7 @@ std::pair<AQLString, bool>
 AQLPriceOriginalIRSABRUnderlyingAsset::getCurveName(const AQLString& underlying) const
 {
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(underlying, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(underlying, y, m, d, w);
 
 	// According to AQLMathSwaptionVolUtility::calibrateSABRATMFix,
 	// 1M, 3M, 6M vols are caplet vols
@@ -77,12 +77,12 @@ AQLPriceOriginalIRSABRUnderlyingAsset::getTerms(const AQLString& opt, const AQLS
 	const std::size_t i = isCap ? 0 : 1;
 
 	const AQLPriceDataDayCount dc_act(ACT_365_ISDA);
-	const AQLDate optDate = AQLMathDateCalculations::getDate(
+	const AQLDate optDate = AQLDateCalculations::getDate(
 		mBaseDate, opt, *mSlidingRules[i], mFixingCalendars[i], true);
 	const double optTerm = dc_act.getTerm(mBaseDate, optDate, true);
 
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(underlying, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(underlying, y, m, d, w);
 	return std::make_pair(optTerm, y + m / 12.0);
 }
 
@@ -93,7 +93,7 @@ AQLPriceOriginalIRSABRUnderlyingAsset::getForward(
 	const std::size_t i = curveName.second ? 0 : 1;
 
 	const AQLPriceDataDayCount dc_act(ACT_365_ISDA);
-	const AQLDate optDate = AQLMathDateCalculations::getDate(
+	const AQLDate optDate = AQLDateCalculations::getDate(
 		mBaseDate, opt, *mSlidingRules[i], mFixingCalendars[i], true);
 	return AQLMathSwaptionVolUtility::getForward(
 		mDataInstance, optDate, underlying, mCurveID, mConvIDs[i], curveName.first, mDFName);
@@ -184,7 +184,7 @@ AQLPriceAnotherUnderlyingAsset::getForward(
 {
 	const std::size_t i = curveName.second ? 0 : 1;
 
-	const AQLDate optDate = AQLMathDateCalculations::getDate(
+	const AQLDate optDate = AQLDateCalculations::getDate(
 		mBaseDate, opt, *mSlidingRules[i], mFixingCalendars[i], true);
 
 	// This logic is based on the implementation of
@@ -192,9 +192,9 @@ AQLPriceAnotherUnderlyingAsset::getForward(
 
 	AQLPriceDataSlidingRule fol;
 	fol.convertFromString(FOL);
-	AQLDate tmpDate = AQLMathDateCalculations::getDate(
+	AQLDate tmpDate = AQLDateCalculations::getDate(
 		optDate, mSpotLags[i], fol, mFixingCalendars[i], true);
-	AQLDate endDate = AQLMathDateCalculations::getDate(
+	AQLDate endDate = AQLDateCalculations::getDate(
 		tmpDate, underlying, *mSlidingRules[i], mPaymentCalendars[i], true);
 	if (curveName.second)
 	{

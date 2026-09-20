@@ -34,7 +34,7 @@
 #include "AQLPriceFXDisplacedDiffusionCalibration3F.h"
 #include "AQLMathAntonovFXOptionBetaFixed.h"
 #include "AQLMathAntonovFXOptionVolatilityFixed.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLMathCurveFuncUtility.h"
 #include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathValuableEntity.h"
@@ -43,7 +43,7 @@
 #include "AQLMathVolFuncFX.h"
 #include "AQLMathVolFuncFXDD.h"
 #include "AQLPriceFXVolatility.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLMathFXVanillaFuncUtility.h"
 #include "AQLCoreDataService.h"
 #include <sstream>

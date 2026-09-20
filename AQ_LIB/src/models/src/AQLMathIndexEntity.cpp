@@ -40,7 +40,7 @@
 #include "AQLMathAttrSDE.h"
 #include "AQLMathPathEntity.h"
 #include "AQLMathFXEntity.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLMathFXUtility.h"
 #include "AQLPriceDataInterpolation.h"
 
@@ -1466,7 +1466,7 @@ AQLMathIndexEntity::setUpforIR(void)
 	}
 	
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
 	if (freq != SIMPLE && d != 0)
 	{
 		throw AQLCoreInvalidData("d != 0 is not support", __FILE__, __LINE__);	
@@ -1654,7 +1654,7 @@ AQLMathIndexEntity::setUpforIR(void)
 			AQLString accessory_;
 			//getYieldCurvePro().getForwardConvention(curveType, dc_, srule_, cal_, accessory_);
 			curve.getCurveConvention(freq_, cal_, srule_, dc_, accessory_, curveType);
-			if (AQLMathDateCalculations::getDate(asof, accessory_, true) == AQLMathDateCalculations::getDate(asof, getAccessory().get(), true))
+			if (AQLDateCalculations::getDate(asof, accessory_, true) == AQLDateCalculations::getDate(asof, getAccessory().get(), true))
 			{
 				mIsSameFwds = true;
 				DoubleArray taus;
@@ -1665,7 +1665,7 @@ AQLMathIndexEntity::setUpforIR(void)
 					throw AQLCoreInvalidData("Forward rate grid is empty", __FILE__, __LINE__);
 				}
 				DateVector startDates;
-				AQLMathDateCalculations::convertToDateGrid(asof, mFwdsStartGrid, startDates);
+				AQLDateCalculations::convertToDateGrid(asof, mFwdsStartGrid, startDates);
 				
 				mFwdsGrid.resize(mFwdsStartGrid.size());
 				mFwdsTermMat.resize(mFwdsStartGrid.size());
@@ -1798,7 +1798,7 @@ AQLMathIndexEntity::setUpforIRforPlainVanilla(void)
 	}
 	
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
 	if (freq != SIMPLE && d != 0)
 	{
 		throw AQLCoreInvalidData("d != 0 is not support", __FILE__, __LINE__);	
@@ -1992,7 +1992,7 @@ AQLMathIndexEntity::setUpforIRforPlainVanilla(void)
 		mGridMat[i][0] = daycount_path.getTerm(asof, spotDate);//spot date
 		if (pPaymentLag)
 		{
-			date = AQLMathDateCalculations::getDate(spotDate, *pPaymentLag, false);
+			date = AQLDateCalculations::getDate(spotDate, *pPaymentLag, false);
 			date = srule.getDate(date, cal);
 			//check
 			AQLDate date_first_payment = date;
@@ -2053,7 +2053,7 @@ AQLMathIndexEntity::setUpforIRforPlainVanilla(void)
 			AQLString accessory;
 			//getYieldCurvePro().getForwardConvention(curveType, dc, sld, cal, accessory);
 			curve.getCurveConvention(freq_fwd, cal_fwd, sld_fwd, dc_fwd, accessory, mCurveType);
-			if (AQLMathDateCalculations::getDate(asof, accessory, true) == AQLMathDateCalculations::getDate(asof, getAccessory().get(), true))
+			if (AQLDateCalculations::getDate(asof, accessory, true) == AQLDateCalculations::getDate(asof, getAccessory().get(), true))
 			{
 				mIsSameFwds = true;
 				if (dc_fwd.getDayCount() != getDayCount().getDayCount())
@@ -2075,9 +2075,9 @@ AQLMathIndexEntity::setUpforIRforPlainVanilla(void)
 			AQLString accessory;
 			//getYieldCurvePro().getForwardConvention(curveType, dc, sld, cal, accessory);
 			curve.getCurveConvention(freq_fwd, cal_fwd, sld_fwd, dc_fwd, accessory, mCurveType);
-			int span = AQLMathDateCalculations::getPeriodFrequencyInMonths(getFrequency().get());
+			int span = AQLDateCalculations::getPeriodFrequencyInMonths(getFrequency().get());
 			AQLString termOfOnePeriod = AQLString(span) + "M";
-			if (AQLMathDateCalculations::getDate(asof, accessory, true) == AQLMathDateCalculations::getDate(asof, termOfOnePeriod, true))
+			if (AQLDateCalculations::getDate(asof, accessory, true) == AQLDateCalculations::getDate(asof, termOfOnePeriod, true))
 			{
 				mIsSameFwds = true;
 				//dynamic_cast<AQLPriceDataInterpolation &>(mpFWDInter->get()).set(mFwdsStartGrid, mFwds);
@@ -2107,7 +2107,7 @@ AQLMathIndexEntity::setUpforIRforPlainVanilla(void)
 					AQLDate spotDate = cal.getBusinessDay(mDateGrid[i], spotlag);
 					if (pPaymentLag)
 					{
-						date = AQLMathDateCalculations::getDate(spotDate, *pPaymentLag, false);
+						date = AQLDateCalculations::getDate(spotDate, *pPaymentLag, false);
 						date = srule.getDate(date, cal);
 						AQLDate date_first_payment = date;
 						date_first_payment.addMonths(addmonth);
@@ -2175,7 +2175,7 @@ AQLMathIndexEntity::setUpforIRforPlainVanilla(void)
 			else
 
 			{
-				int span = AQLMathDateCalculations::getPeriodFrequencyInMonths(freq_cf);
+				int span = AQLDateCalculations::getPeriodFrequencyInMonths(freq_cf);
 				termOfOnePeriod = AQLString(span) + "M";
 			}
 
@@ -2185,7 +2185,7 @@ AQLMathIndexEntity::setUpforIRforPlainVanilla(void)
 			endDate = dynamic_cast<const AQLDataDates &>((getData(PRICING_DATA_CFCALCENDDATES, ISNOTNULL)).get()).get();
 			if (dc_cf.getDayCount() == ACT_ACT_ICMA)
 			{
-				int span = AQLMathDateCalculations::getPeriodFrequencyInMonths(freq_cf);
+				int span = AQLDateCalculations::getPeriodFrequencyInMonths(freq_cf);
 				dc_cf.setCouponStartDates(startDate);
 				dc_cf.setCouponEndDates(endDate);
 				dc_cf.setCouponsInYear(12/span);
@@ -2240,7 +2240,7 @@ AQLMathIndexEntity::setUpforFX(void)
 			const AQLPriceDataCalendar& cal = getCalendar();
 			const AQLPriceDataSlidingRule& srule = getSlidingRule();
 			//const AQLDate& forwarddate = mpFX->getForwardDate(mFromCurrency, mToCurrency, spotdate, accessory);
-			const AQLDate& forwarddate = AQLMathDateCalculations::getDate(spotdate, accessory, srule, &cal, true);
+			const AQLDate& forwarddate = AQLDateCalculations::getDate(spotdate, accessory, srule, &cal, true);
 			mForwardTimes[i] = daycount_path.getTerm(asof, forwarddate);
 		}
 	}
@@ -2277,7 +2277,7 @@ AQLMathIndexEntity::setUpforFXforPlainVanilla(void)
 			const AQLPriceDataCalendar& cal = getCalendar();
 			const AQLPriceDataSlidingRule& srule = getSlidingRule();
 			//const AQLDate& forwarddate = mpFX->getForwardDate(mFromCurrency, mToCurrency, spotdate, accessory);
-			const AQLDate& forwarddate = AQLMathDateCalculations::getDate(spotdate, accessory, srule, &cal, true);
+			const AQLDate& forwarddate = AQLDateCalculations::getDate(spotdate, accessory, srule, &cal, true);
 			mForwardTimes[i] = daycount_path.getTerm(asof, forwarddate);
 		}
 	}
@@ -2367,7 +2367,7 @@ AQLMathIndexEntity::getLIBORConvexityAdjust(double forward, double fixingterm, d
 
 	AQLString accessory = getAccessory();
 	int y,m,d, w;
-	AQLMathDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
 	double mtenorval = static_cast<double > (y) + static_cast<double > (m) / 12.;
 
 	double alpha = method->getSABRParam(SABR_ALPHA, fixingterm, mtenorval);
@@ -2418,7 +2418,7 @@ AQLMathIndexEntity::getConvexityAdjust(double forward, double optionterm, unsign
 
 	AQLString accessory = getAccessory();
 	int y,m,d, w;
-	AQLMathDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
 	double mtenorval = static_cast<double > (y) + static_cast<double > (m) / 12.;
 
 	if (mConvexityAdjustModel == CMS_CA_BLACK)

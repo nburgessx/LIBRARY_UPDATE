@@ -27,7 +27,7 @@
 #include "AQLMathPathEntity.h"
 #include "AQLMathFXEntity.h"
 #include "AQLMathDefine.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 
 #include "AQLAlgorithm.h"
 #include "AQLBasic.h"
@@ -326,7 +326,7 @@ AQLPricePayOffToolRangeAccrue::setUp(const AQLDate& basedate, const AQLObject& t
 				}
 
 				DateVector *out = new DateVector;
-				AQLMathDateCalculations::generateSchedule(mRAObservationStart, mRAObservationEnd, BUSINESS_DAYS,	
+				AQLDateCalculations::generateSchedule(mRAObservationStart, mRAObservationEnd, BUSINESS_DAYS,	
 											false,
 											NULL, NULL,
 											NULL,
@@ -597,7 +597,7 @@ AQLPricePayOffToolRangeAccrue::AQLPricePayOffToolRangeAccrueImpl::setUp(const AQ
 		{
 			const AQLDate &obstart =  dynamic_cast<const AQLDataDate &>(ahObStart.get()).get();
 			const AQLDate &obend =  dynamic_cast<const AQLDataDate &>(indexRef.get(i).getData(PRICING_DATA_OBSERVATIONENDDATE, ISNOTNULL).get());
-			AQLMathDateCalculations::generateSchedule(obstart, obend, BUSINESS_DAYS,	
+			AQLDateCalculations::generateSchedule(obstart, obend, BUSINESS_DAYS,	
 										false,
 										NULL, NULL,
 										NULL,
@@ -609,7 +609,7 @@ AQLPricePayOffToolRangeAccrue::AQLPricePayOffToolRangeAccrueImpl::setUp(const AQ
 		}
 		else
 		{
-			AQLMathDateCalculations::generateSchedule(start, end, BUSINESS_DAYS,	
+			AQLDateCalculations::generateSchedule(start, end, BUSINESS_DAYS,	
 										false,
 										NULL, NULL,
 										NULL,
@@ -631,7 +631,7 @@ AQLPricePayOffToolRangeAccrue::AQLPricePayOffToolRangeAccrueImpl::setUp(const AQ
 				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 			AQLString sameTerm = AQLString(sameObservationDays) + "D";
-			determinationBusinessDate = AQLMathDateCalculations::getDate(end, sameTerm, *pSrule, pCal, false); 
+			determinationBusinessDate = AQLDateCalculations::getDate(end, sameTerm, *pSrule, pCal, false); 
 		}
 
 		if (pobservationDates == 0)

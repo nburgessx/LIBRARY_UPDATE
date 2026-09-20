@@ -653,9 +653,9 @@ AQLRiskConfigurationVolFXVega::storeFXAdditionalInfo(AQLObjectPool &objPool, con
 		// spotdate for calc term
 		int spotlag = dynamic_cast<const AQLDataInt &>(calibInfo.getData(PRICING_DATA_TERMSPOTLAG, ISNOTNULL).get());
 		AQLDate asofDate(AQLCoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
-		AQLDate optionSpotDate = AQLMathDateCalculations::getFXSpotDate(param.ccy, asofDate, strTermCal, spotlag, true);
-		AQLDate settleDate = AQLMathDateCalculations::getDate(optionSpotDate, gridTerm, termSliding, &termCal, true);
-		AQLDate calcDate = AQLMathDateCalculations::getFXSpotDate(param.ccy, settleDate, strTermCal, -spotlag, true);
+		AQLDate optionSpotDate = AQLDateCalculations::getFXSpotDate(param.ccy, asofDate, strTermCal, spotlag, true);
+		AQLDate settleDate = AQLDateCalculations::getDate(optionSpotDate, gridTerm, termSliding, &termCal, true);
+		AQLDate calcDate = AQLDateCalculations::getFXSpotDate(param.ccy, settleDate, strTermCal, -spotlag, true);
 		const double term = termDC.getTerm(asofDate, calcDate, isIncludeLast);
 
 		fwdFXRates[i] = pFXEntity->getRate(fxCurrencies[1], fxCurrencies[0], term);

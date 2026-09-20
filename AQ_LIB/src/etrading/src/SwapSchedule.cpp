@@ -3,7 +3,7 @@
 // Includes: This Library
 #include "ExceptionMacros.h"
 #include "SwapSchedule.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLMathBaseFuncUtility.h"
 #include "AQLObject.h"
 #include "AQLDataBasics.h"
@@ -55,9 +55,9 @@ namespace etrading
                                 const bool&         isFixingInAdvance )         // Fixing in Advance ( True ) or Arrears ( False )
     {
         // Date Validation
-        AQ_THROW_IF( !AQLDateScheduleHelpers::isValidDate( accrualStartDate ), "Invalid 'AccrualStartDate'." );
+        AQ_THROW_IF( !AQLDateSchedule::isValidDate( accrualStartDate ), "Invalid 'AccrualStartDate'." );
 
-        AQ_THROW_IF( !AQLDateScheduleHelpers::isValidDate( accrualEndDate ), "Invalid 'AccrualEndDate'." );
+        AQ_THROW_IF( !AQLDateSchedule::isValidDate( accrualEndDate ), "Invalid 'AccrualEndDate'." );
 
         AQ_THROW_IF( accrualStartDate >= accrualEndDate, "The 'AccrualStartDate' must be strictly greater than the 'AccrualEndDate'." );
 
@@ -71,12 +71,12 @@ namespace etrading
 
         if ( pFirstStub != NULL )
         {
-            AQ_THROW_IF( !AQLDateScheduleHelpers::isValidDate( firstStub ), "Invalid 'FirstStub'." );
+            AQ_THROW_IF( !AQLDateSchedule::isValidDate( firstStub ), "Invalid 'FirstStub'." );
         }
 
         if ( pLastStub != NULL )
         {
-            AQ_THROW_IF( !AQLDateScheduleHelpers::isValidDate( lastStub ), "Invalid 'LastStub'." );
+            AQ_THROW_IF( !AQLDateSchedule::isValidDate( lastStub ), "Invalid 'LastStub'." );
         }
 
         AQ_THROW_IF( pFirstStub != NULL && firstStub < accrualStartDate, "The 'FirstStub' cannot be before the 'AccrualStartDate'." );
@@ -148,7 +148,7 @@ namespace etrading
         }
 
         // Generate the Accrual Base Dates: This is a one dimensional vector representing accrual start and end dates
-        accrualBaseDates = AQLDateScheduleHelpers::generateSchedule( accrualStartDate,
+        accrualBaseDates = AQLDateSchedule::generateSchedule( accrualStartDate,
                            accrualEndDate,
                            accFrequency,
                            accRollConvention,    // aka Sliding Rule
@@ -170,7 +170,7 @@ namespace etrading
         AQLString    payCalendar         = paymentCalendar;
 
         // Generate the Payment Base Dates: This is a one dimensional vector representing payment start and end dates
-        paymentBaseDates = AQLDateScheduleHelpers::generateSchedule( accrualStartDate,
+        paymentBaseDates = AQLDateSchedule::generateSchedule( accrualStartDate,
 																	accrualEndDate,
 																	payFrequency,
 																	payRollConvention,
@@ -267,12 +267,12 @@ namespace etrading
                     }
 
                     // Apply Payment Lag
-                    thisFixingDateWithLag       = AQLDateScheduleHelpers::getDate( isFixingInAdvance ? thisFixingDateNoLag : thisEndDate,
+                    thisFixingDateWithLag       = AQLDateSchedule::getDate( isFixingInAdvance ? thisFixingDateNoLag : thisEndDate,
                                                   fixingLag,
                                                   fixingRollConvention,
                                                   fixingCalendar );
 
-                    thisPaymentDateWithLag      = AQLDateScheduleHelpers::getDate( thisPaymentDateNoLag,
+                    thisPaymentDateWithLag      = AQLDateSchedule::getDate( thisPaymentDateNoLag,
                                                   paymentLag,
                                                   paymentRollConvention,
                                                   paymentCalendar );
@@ -282,7 +282,7 @@ namespace etrading
                     // Important Note: If compound interest is being applied then we accrue interest to the
                     // payment date ( with no payment lag ) and not the accrual end date.
                     bool DONT_INCLUDE_LAST_PAYMENT_DATE = false;
-                    thisAccrualPeriod           = AQLDateScheduleHelpers::getTerm( thisStartDate,
+                    thisAccrualPeriod           = AQLDateSchedule::getTerm( thisStartDate,
                                                   thisEndDate,
                                                   dayCount,
                                                   DONT_INCLUDE_LAST_PAYMENT_DATE );
@@ -292,11 +292,11 @@ namespace etrading
                     AQ_THROW_IF( thisStartDate > thisEndDate, "Accrual start dates cannot be after the accrual end dates. Please check that the schedule inputs are correct." );
 
                     // Update the schedule's current row of results
-                    scheduleRow.push_back( ( double )( AQLDateScheduleHelpers::getExcelDate( thisFixingDateWithLag ) ) );
-                    scheduleRow.push_back( ( double )( AQLDateScheduleHelpers::getExcelDate( thisStartDate ) ) );
-                    scheduleRow.push_back( ( double )( AQLDateScheduleHelpers::getExcelDate( thisEndDate ) ) );
+                    scheduleRow.push_back( ( double )( AQLDateSchedule::getExcelDate( thisFixingDateWithLag ) ) );
+                    scheduleRow.push_back( ( double )( AQLDateSchedule::getExcelDate( thisStartDate ) ) );
+                    scheduleRow.push_back( ( double )( AQLDateSchedule::getExcelDate( thisEndDate ) ) );
                     scheduleRow.push_back( thisAccrualPeriod );
-                    scheduleRow.push_back( ( double )( AQLDateScheduleHelpers::getExcelDate( thisPaymentDateWithLag ) ) );
+                    scheduleRow.push_back( ( double )( AQLDateSchedule::getExcelDate( thisPaymentDateWithLag ) ) );
 
                     // Update the scheduleResults matrix
                     scheduleResults.push_back( scheduleRow );
@@ -355,12 +355,12 @@ namespace etrading
                     }
 
                     // Must check if fixing dates set in advance or arrears
-                    thisFixingDateWithLag       = AQLDateScheduleHelpers::getDate( isFixingInAdvance ? thisStartDate : thisEndDate,
+                    thisFixingDateWithLag       = AQLDateSchedule::getDate( isFixingInAdvance ? thisStartDate : thisEndDate,
                                                   fixingLag,
                                                   fixingRollConvention,
                                                   fixingCalendar );
 
-                    thisPaymentDateWithLag      = AQLDateScheduleHelpers::getDate( thisPaymentDateNoLag,
+                    thisPaymentDateWithLag      = AQLDateSchedule::getDate( thisPaymentDateNoLag,
                                                   paymentLag,
                                                   paymentRollConvention,
                                                   paymentCalendar );
@@ -370,7 +370,7 @@ namespace etrading
                     // Important Note: If compound interest is being applied then we accrue interest to the
                     // payment date ( with no payment lag ) and not the accrual end date.
                     bool DONT_INCLUDE_LAST_PAYMENT_DATE = false;
-                    thisAccrualPeriod           = AQLDateScheduleHelpers::getTerm( thisStartDate,
+                    thisAccrualPeriod           = AQLDateSchedule::getTerm( thisStartDate,
                                                   thisEndDate,
                                                   dayCount,
                                                   DONT_INCLUDE_LAST_PAYMENT_DATE );
@@ -380,11 +380,11 @@ namespace etrading
                     AQ_THROW_IF( thisStartDate > thisEndDate, "Accrual start dates cannot be after the accrual end dates. Please check that the schedule inputs are correct." );
 
                     // Update the schedule's current row of results
-                    scheduleRow.push_back( ( double )( AQLDateScheduleHelpers::getExcelDate( thisFixingDateWithLag ) ) );
-                    scheduleRow.push_back( ( double )( AQLDateScheduleHelpers::getExcelDate( thisStartDate ) ) );
-                    scheduleRow.push_back( ( double )( AQLDateScheduleHelpers::getExcelDate( thisEndDate ) ) );
+                    scheduleRow.push_back( ( double )( AQLDateSchedule::getExcelDate( thisFixingDateWithLag ) ) );
+                    scheduleRow.push_back( ( double )( AQLDateSchedule::getExcelDate( thisStartDate ) ) );
+                    scheduleRow.push_back( ( double )( AQLDateSchedule::getExcelDate( thisEndDate ) ) );
                     scheduleRow.push_back( thisAccrualPeriod );
-                    scheduleRow.push_back( ( double )( AQLDateScheduleHelpers::getExcelDate( thisPaymentDateWithLag ) ) );
+                    scheduleRow.push_back( ( double )( AQLDateSchedule::getExcelDate( thisPaymentDateWithLag ) ) );
 
                     // Update the scheduleResults matrix
                     scheduleResults.push_back( scheduleRow );

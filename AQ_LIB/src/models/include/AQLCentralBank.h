@@ -13,11 +13,11 @@
 // Provide access to the monetary committee meetings schedules of central banks 
 //
 // SYNPOSIS:
-//     #include "AQLMathCentralBank.h"
+//     #include "AQLCentralBank.h"
 //
-//     const std::vector<AQLDate>& ecbDates = AQLMathCentralBank::meetingSchedule("ECB"); 
+//     const std::vector<AQLDate>& ecbDates = AQLCentralBank::meetingSchedule("ECB"); 
 //
-class AQLMathCentralBank
+class AQLCentralBank
 {
 	friend void setupCBSchedule( const AQLString*, const bool );			// in LibSetup
 	friend void setupCBScheduleETrading( const AQLString*, const bool );	// in LibSetupETrading
@@ -31,8 +31,8 @@ public:
 
 private:
 	// disable instantiation
-	AQLMathCentralBank();
-	~AQLMathCentralBank();
+	AQLCentralBank();
+	~AQLCentralBank();
 
     // for use in LibSetup, which executes in single main thread; hence no need for this to be thread-safe
 	static Schedules& schedules();

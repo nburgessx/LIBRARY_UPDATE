@@ -8,7 +8,7 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "StructuredExceptionHandler.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "CurveUtilities.h"
 #include "AQObjUtilities.h"
 

@@ -1,7 +1,7 @@
 #include "DataFrame.h"
 #include "ExceptionMacros.h"
 #include "DataUtilities.h"			// For AQ_TO_STRING macros
-#include "AQLDateScheduleHelpers.h"	// isValidDate()
+#include "AQLDateSchedule.h"	// isValidDate()
 
 #include "Variant.h"
 #include "ExceptionMacros.h"
@@ -233,7 +233,7 @@ namespace etrading
 		for (size_t i = 0; i < nValues; i++)
 		{
 			AQLDate dateValue = values[i];
-			if ( AQLDateScheduleHelpers::isValidDate( dateValue ) )
+			if ( AQLDateSchedule::isValidDate( dateValue ) )
 			{
 				variantVector[i] = values[i];
 			}

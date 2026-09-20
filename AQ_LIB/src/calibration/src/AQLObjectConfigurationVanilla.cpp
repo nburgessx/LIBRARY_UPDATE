@@ -619,7 +619,7 @@ AQLObjectConfigurationVanilla::setUpLiborRateMap(AQLObjectPool &objPool) const
 			else if (eom) roll_conv = "EOM";
 			else roll_conv = "NORMAL";
 
-			AQLDate enddate = AQLMathDateCalculations::getDate(spotdate, termStr, sld, &cal, true, &roll_conv);
+			AQLDate enddate = AQLDateCalculations::getDate(spotdate, termStr, sld, &cal, true, &roll_conv);
 		
 			double term = dc.getTerm(spotdate,enddate,false);
 
@@ -827,7 +827,7 @@ AQLObjectConfigurationVanilla::setUpLiborRateMap(AQLObjectPool &objPool) const
 //						AQLPriceDataCalendar &cal = dynamic_cast<AQLPriceDataCalendar &>(dh->get());
 //						
 //						AQLDate spotdate = cal.getBusinessDay(asOf,spotlag);
-//						AQLDate enddate = AQLMathDateCalculations::getDate(spotdate, termStr, true);
+//						AQLDate enddate = AQLDateCalculations::getDate(spotdate, termStr, true);
 //						enddate = (!sld.isNull() && !cal.isNull()) ? sld.getDate(enddate, cal) : enddate;
 //						
 //						double term = dc.getTerm(spotdate,enddate,false);
@@ -925,7 +925,7 @@ AQLObjectConfigurationVanilla::setUpLiborRateMap(AQLObjectPool &objPool) const
 //						AQLPriceDataCalendar &cal = dynamic_cast<AQLPriceDataCalendar &>(dh->get());
 //						
 //						AQLDate spotdate = cal.getBusinessDay(asOf,spotlag);
-//						AQLDate enddate = AQLMathDateCalculations::getDate(spotdate, termStr, true);
+//						AQLDate enddate = AQLDateCalculations::getDate(spotdate, termStr, true);
 //						enddate = (!sld.isNull() && !cal.isNull()) ? sld.getDate(enddate, cal) : enddate;
 //						
 //						double term = dc.getTerm(spotdate,enddate,false);

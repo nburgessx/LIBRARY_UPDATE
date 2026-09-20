@@ -12,7 +12,7 @@
 #include "AQObjUtilities.h"
 #include "tryAqSwapObjectPricing.h"
 #include <boost/range/irange.hpp>
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "GetGoogleTestFolder.h"
 
 
@@ -99,7 +99,7 @@ namespace google_test
 				auto fixingDt = it[0];
 				auto rate = it[1];
 
-				if (etrading::AQLDateScheduleHelpers::getAQLDate(boost::get<double>(it[0])) == fixingDate)
+				if (etrading::AQLDateSchedule::getAQLDate(boost::get<double>(it[0])) == fixingDate)
 				{
 					fixingRateFromSwap = boost::get<double>(it[1]);
 					break;

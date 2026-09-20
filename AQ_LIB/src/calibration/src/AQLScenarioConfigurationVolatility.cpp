@@ -21,7 +21,7 @@
 #include "AQLDataProcedure.h"
 #include "AQLDataMultiReference.h"
 #include "AQLMathVolatility.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLScenarioConfigurationVolatility.h"
 #include "AQLMarketData.h"
 #include "AQLCalibrateVolatility.h"
@@ -1008,7 +1008,7 @@ AQLScenarioConfigurationVolatility::getCoordinatesMatrix(const AQLStringVector &
 		matrix[i].resize(COORDINATESNUM);
 		for (unsigned int j = 0; j < COORDINATESNUM; ++j)
 		{
-			matrix[i][j] = dayCount.getTerm(asOfDate, AQLMathDateCalculations::getDate(asOfDate, cdns[j], true));
+			matrix[i][j] = dayCount.getTerm(asOfDate, AQLDateCalculations::getDate(asOfDate, cdns[j], true));
 		}
 	}
 

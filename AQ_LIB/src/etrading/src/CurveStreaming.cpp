@@ -10,7 +10,7 @@
 #include "InitializeETrading.h"
 #include "ParameterValidation.h"
 #include "AQLDefinitions.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "AQLCurveCalibrationHelpers.h"
 #include "AQLPriceDataCalendar.h"

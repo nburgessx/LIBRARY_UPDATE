@@ -46,9 +46,9 @@
 #include "AQLDataMatrix.h"
 #include "AQLDataInstance.h"
 #include "AQLFunctionUtilities.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLMathCurveFuncUtility.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLAlgorithm.h"
 #include "AQLLinearSplineInterpolation.h"
 #include "AQLLinearMonotoneSplineInterpolation.h"
@@ -956,7 +956,7 @@ AQLMathYieldCurve::getBasisZeroRate(const double term) const
 double
 AQLMathYieldCurve::getZeroRate(const AQLDate& fromDate,	const AQLString& term_str, bool isFWDInter) const
 {
-	AQLDate toDate = AQLMathDateCalculations::getDate(fromDate, term_str, true);
+	AQLDate toDate = AQLDateCalculations::getDate(fromDate, term_str, true);
 	return getZeroRate(fromDate, toDate, isFWDInter);
 }
 
@@ -972,7 +972,7 @@ AQLMathYieldCurve::getZeroRate(const AQLDate& fromDate,	const AQLString& term_st
 double
 AQLMathYieldCurve::getBasisZeroRate(const AQLDate& fromDate, const AQLString& term_str) const
 {
-	AQLDate toDate = AQLMathDateCalculations::getDate(fromDate, term_str, true);
+	AQLDate toDate = AQLDateCalculations::getDate(fromDate, term_str, true);
 	return getBasisZeroRate(fromDate, toDate);
 }
 
@@ -1575,7 +1575,7 @@ double AQLMathYieldCurve::getStubRate( const DateVector& fixingDates,
 		{
 			// When we use a user-specified curve, we should use the corresponding curve tenor to calculate the
 			// stub end date instead of using the old stub end date
-			stubEnd = AQLMathDateCalculations::getDate(stubStart, curveTenors[idx], sr, &cal, true, NULL);
+			stubEnd = AQLDateCalculations::getDate(stubStart, curveTenors[idx], sr, &cal, true, NULL);
 
 			// Set the right curve to use
 			setCurveType(useCurveNameTemp);
@@ -1632,8 +1632,8 @@ double AQLMathYieldCurve::getStubRate( const DateVector& fixingDates,
 		}
 
 		// Pick the curves to interpolate from
-		AQLDate firstTenorDate = AQLMathDateCalculations::getDate(stubStart, curveTenors.at(0), sr, &cal, true, NULL);
-		AQLDate lastTenorDate = AQLMathDateCalculations::getDate(stubStart, curveTenors.at(curveTenors.size() - 1), sr, &cal, true, NULL);
+		AQLDate firstTenorDate = AQLDateCalculations::getDate(stubStart, curveTenors.at(0), sr, &cal, true, NULL);
+		AQLDate lastTenorDate = AQLDateCalculations::getDate(stubStart, curveTenors.at(curveTenors.size() - 1), sr, &cal, true, NULL);
 		if (stubEnd == firstTenorDate)
 		{
 			lowerIndex = 0;
@@ -1655,7 +1655,7 @@ double AQLMathYieldCurve::getStubRate( const DateVector& fixingDates,
 			for(size_t i = 0; i < curveCount; ++i)
 			{
 				AQLString curveTenor = curveTenors.at(i);
-				AQLDate tenorEnd = AQLMathDateCalculations::getDate(stubStart, curveTenor, sr, &cal, true, NULL);
+				AQLDate tenorEnd = AQLDateCalculations::getDate(stubStart, curveTenor, sr, &cal, true, NULL);
 
 				if (tenorEnd < stubEnd)
 				{
@@ -1688,8 +1688,8 @@ double AQLMathYieldCurve::getStubRate( const DateVector& fixingDates,
 			AQLDate nearbyDate;
 			if (useNearbyCurve)
 			{
-				AQLDate lowerToleranceDate = AQLMathDateCalculations::getDate(lowerDate, toleranceTenor, sr, &cal, true  /*forward add date*/ , NULL);
-				AQLDate upperToleranceDate = AQLMathDateCalculations::getDate(upperDate, toleranceTenor, sr, &cal, false /*backward add date*/, NULL);
+				AQLDate lowerToleranceDate = AQLDateCalculations::getDate(lowerDate, toleranceTenor, sr, &cal, true  /*forward add date*/ , NULL);
+				AQLDate upperToleranceDate = AQLDateCalculations::getDate(upperDate, toleranceTenor, sr, &cal, false /*backward add date*/, NULL);
 						
 				if (lowerToleranceDate >= stubEnd)
 				{
@@ -3041,7 +3041,7 @@ AQLMathYieldCurve::getParRate(const AQLDate& fromDate, const AQLDate& toDate,
 						   AQLString dfCurveName, bool isFWDInter, const AQLString* roll_convention)
 {
 	DateVector out;
-	AQLMathDateCalculations::generateSchedule(fromDate, toDate, getFrequency().get(),
+	AQLDateCalculations::generateSchedule(fromDate, toDate, getFrequency().get(),
 							true, firstStubDate, lastStubDate, pday, out, &getSlidingRule(), &getCalendar(), true, roll_convention);
 	if(out.front() != fromDate)
 		out.insert(out.begin(), fromDate);
@@ -3069,7 +3069,7 @@ AQLMathYieldCurve::getParRate(const AQLDate& fromDate, const AQLDate& toDate,
 		else if (accessary_forecast == AQLString("1M")) freq_float = MONTHLY;
 		else throw AQLCoreInvalidData("getParRate failed. Check accessary of forecast curve!!",__FILE__,__LINE__);
 
-		AQLMathDateCalculations::generateSchedule(fromDate, toDate, freq_float,
+		AQLDateCalculations::generateSchedule(fromDate, toDate, freq_float,
 								true, firstStubDate, lastStubDate, pday, dates_float, &getSlidingRule(), &getCalendar(), true, roll_convention);
 		if(dates_float.front() != fromDate)
 			dates_float.insert(dates_float.begin(), fromDate);
@@ -3094,7 +3094,7 @@ AQLMathYieldCurve::getParRate(const AQLDate& fromDate, const AQLString& term_str
 						   const AQLDate* firstStubDate, const AQLDate* lastStubDate, const int* pday, 
 						   AQLString foreCurveName, AQLString dfCurveName, bool isFWDInter, const AQLString* roll_convention)
 {
-	AQLDate toDate = AQLMathDateCalculations::getDate(fromDate, term_str, true, roll_convention);
+	AQLDate toDate = AQLDateCalculations::getDate(fromDate, term_str, true, roll_convention);
 	return getParRate(fromDate, toDate, firstStubDate, lastStubDate, pday, foreCurveName, dfCurveName, isFWDInter, roll_convention);
 }
 
@@ -3997,7 +3997,7 @@ AQLMathYieldCurve::addDFInterpolation(const AQLString &curveType) const
 //double        
 //AQLMathYieldCurve::getDF(const AQLDate& fromDate, const AQLString& term_str) const
 //{
-//	AQLDate toDate = AQLMathDateCalculations::getDate(fromDate, term_str, true);
+//	AQLDate toDate = AQLDateCalculations::getDate(fromDate, term_str, true);
 //	return getDF(fromDate, toDate);
 //}
 
@@ -4020,7 +4020,7 @@ double AQLMathYieldCurve::getDF(const AQLDate& fromDate, const AQLString& term_s
         AQLPriceDataSlidingRule attrBusinessDayAdjustment;
         attrBusinessDayAdjustment.convertFromString(bdc);
 
-        toDate = AQLMathDateCalculations::getDate( fromDate, 
+        toDate = AQLDateCalculations::getDate( fromDate, 
                                                term_str, 
                                                attrBusinessDayAdjustment,   // SlidingRule or BusinessDayAdjustment
                                                &attrCalendar,
@@ -4029,7 +4029,7 @@ double AQLMathYieldCurve::getDF(const AQLDate& fromDate, const AQLString& term_s
     }
     else
     {
-        toDate = AQLMathDateCalculations::getDate(fromDate, term_str, true);
+        toDate = AQLDateCalculations::getDate(fromDate, term_str, true);
     }
 
 	return getDF(fromDate, toDate);
@@ -4038,7 +4038,7 @@ double AQLMathYieldCurve::getDF(const AQLDate& fromDate, const AQLString& term_s
 double        
 AQLMathYieldCurve::getBasisDF(const AQLDate& fromDate, const AQLString& term_str) const
 {
-	AQLDate toDate = AQLMathDateCalculations::getDate(fromDate, term_str, true);
+	AQLDate toDate = AQLDateCalculations::getDate(fromDate, term_str, true);
 	return getBasisDF(fromDate, toDate);
 }
 
@@ -4131,11 +4131,11 @@ AQLMathYieldCurve::getBaseForwardRate(const AQLString &curveType, DoubleArray &t
 	else
 	{
 		fwd_datesmtx.resize(2);
-		AQLMathDateCalculations::convertToDateGrid(asofDate, fwd_termsmtx[0], fwd_datesmtx[0]);
+		AQLDateCalculations::convertToDateGrid(asofDate, fwd_termsmtx[0], fwd_datesmtx[0]);
 		DoubleArray s_fwdtermsmtx_1 = fwd_termsmtx[1];
 		sort(s_fwdtermsmtx_1.begin(), s_fwdtermsmtx_1.end());
 		DateVector tmpDates;
-		AQLMathDateCalculations::convertToDateGrid(asofDate, s_fwdtermsmtx_1, tmpDates);
+		AQLDateCalculations::convertToDateGrid(asofDate, s_fwdtermsmtx_1, tmpDates);
 		unsigned int pos;
 		for (unsigned int i = 0; i < fwd_termsmtx[1].size(); ++i)
 		{
@@ -4440,9 +4440,9 @@ AQLMathYieldCurve::getBasisSwapValue
   const AQLString& forecastCurveID, const AQLString& discountCurveID, double firstFixingRate, 
   bool isEOMRoll, bool isFRN)
 {
-	AQLDate endDate = AQLMathDateCalculations::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
+	AQLDate endDate = AQLDateCalculations::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
     DateVector payDates;
-	AQLMathDateCalculations::generateSchedule(startDate, endDate, frequency, true, NULL, NULL, 0, 
+	AQLDateCalculations::generateSchedule(startDate, endDate, frequency, true, NULL, NULL, 0, 
 		payDates, &getSlidingRule(), &getCalendar());
     
 	if (isEOMRoll)
@@ -4492,7 +4492,7 @@ AQLMathYieldCurve::getBasisSwapValue
 				else if (frequency == SEMI_ANNUAL) indexTerm = "6M";
 				else if (frequency == QUARTERLY) indexTerm = "3M";
 				else if (frequency == MONTHLY) indexTerm = "1M";
-				AQLDate calcEndDate = AQLMathDateCalculations::getDate(payDates[i-1], indexTerm, getSlidingRule(), &getCalendar(), true);
+				AQLDate calcEndDate = AQLDateCalculations::getDate(payDates[i-1], indexTerm, getSlidingRule(), &getCalendar(), true);
 				rates[i] = getZeroRate(payDates[i-1], calcEndDate);
 			}
 			else
@@ -4527,10 +4527,10 @@ AQLMathYieldCurve::getCurBasisSwapValue
  const AQLString& frequency, const AQLPriceDataDayCount& daycount, const AQLString& forecastCurveID, 
  const AQLString& discountCurveID, bool isEOMRoll, double firstFixingAmount, double firstFixingRate)
 {
-	AQLDate endDate = AQLMathDateCalculations::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
+	AQLDate endDate = AQLDateCalculations::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
 
 	DateVector payDates;
-	AQLMathDateCalculations::generateSchedule(startDate, endDate, frequency, true, NULL, NULL, 0, 
+	AQLDateCalculations::generateSchedule(startDate, endDate, frequency, true, NULL, NULL, 0, 
 		payDates, &getSlidingRule(), &getCalendar());
 
 	if (isEOMRoll)

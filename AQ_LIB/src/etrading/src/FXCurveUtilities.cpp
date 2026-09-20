@@ -11,7 +11,7 @@
 
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLDataReference.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include <algorithm>
 #include "CurveBuildDefaults.h"
 #include "AQObjUtilities.h"

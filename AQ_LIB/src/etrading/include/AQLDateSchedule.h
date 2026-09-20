@@ -1,5 +1,5 @@
 //
-// AQLDateScheduleHelpers.h
+// AQLDateSchedule.h
 #pragma once
 
 #ifdef __GNUG__
@@ -14,6 +14,7 @@
 #include "AQLString.h"
 #include "ConstantDeclarations.h"
 #include "AQLTime.h"
+#include "CoreEnumerations.h"
 //////////////////////////
 
 // Forward Declarations
@@ -23,7 +24,39 @@ class AQLPriceDataDayCount;
 
 namespace etrading
 {
-    class AQLDateScheduleHelpers
+    // Helper Struct for Stub Methods. Ported from models::AQLDateTools (2026-09-20) - the one
+    // piece of AQLDateSchedule::generateSchedule's stub-type logic that was never forked
+    // when this class was split off from AQLDateTools, leaving generateSchedule() reaching back
+    // into models::AQLDateTools::getStubDateAndType() for it - a backwards dependency (etrading
+    // depending on the legacy models layer, contrary to CLAUDE.md's architecture). Porting this
+    // struct/method removes that dependency entirely.
+    struct StubDateAndType
+    {
+        // Default to Short Start Stub
+        StubDateAndType()
+            :	stubDate_(AQLDate()),
+                stubTypeEnum_(etrading::SHORT_START_STUBTYPE),
+                usingDefaultStub_(true),
+                isFrontStub_(true),
+                isShortStub_(true),
+                isStartRoll_(false),
+                isHolidayAdjusted_(false),
+                isRegularSchedule_(false),
+                unadjustedSchedule_(std::vector<AQLDate>())
+        {}
+
+        AQLDate						stubDate_;
+        etrading::StubTypeEnum		stubTypeEnum_;
+        bool						usingDefaultStub_;
+        bool						isFrontStub_;
+        bool						isShortStub_;
+        bool						isStartRoll_;
+        bool						isHolidayAdjusted_;
+        bool						isRegularSchedule_;
+        std::vector<AQLDate>			unadjustedSchedule_;
+    };
+
+    class AQLDateSchedule
     {
     public:
         //change excel date into AQLDate
@@ -38,6 +71,10 @@ namespace etrading
         //change MDate into excel date
         static int getExcelDate(const AQLDate & date);
 
+        // Get Stub Date
+        // Note: To be able to calculate to roll dates correctly, we must provide the unadjusted start and end dates
+        static StubDateAndType getStubDateAndType( const AQLDate & unadjustedStartDate, const AQLDate & unadjustedEndDate, AQLString & term, const AQLPriceDataSlidingRule & busDayAdj, const AQLPriceDataCalendar & calendar, const AQLString* rollConvention = NULL, const etrading::StubTypeEnum & stubType = etrading::NONE_STUBTYPE );
+
         static AQLDate firstStubDateFromStubType(const AQLDate & startDate, const AQLDate & endDate, AQLString & term);
         static AQLDate lastStubDateFromStubType(const AQLDate & startDate, const AQLDate & endDate, AQLString & term);
 
@@ -49,8 +86,10 @@ namespace etrading
                                            const AQLString *					rollConvention);
 
 		// Generate a Date Schedule with appropriate use of stubs
-		// Note that there is a duplicate method AQLMathDateUtilities::generateSchedule
-		// Default Short/Long Start is determined by AQLMathDateUtilities::getStubDateAndType
+		// Default Short/Long Start is determined by getStubDateAndType. This is now the single
+		// canonical schedule generator - models::AQLDateTools/AQLDateCalculations's own
+		// generateSchedule()s (and the rest of AQLDateTools) were consolidated onto this class
+		// and deleted (2026-09-20); every prior caller was redirected here.
         static DateVector generateSchedule(const AQLDate&		start,
 										   const AQLDate&		end,
 										   AQLString&			data_frequency,
@@ -92,10 +131,10 @@ namespace etrading
             const std::vector<AQLDate>& enddates);
 
     private:
-        AQLDateScheduleHelpers(void);
-        ~AQLDateScheduleHelpers(void);
-        AQLDateScheduleHelpers(const AQLDateScheduleHelpers &rhs);
-        AQLDateScheduleHelpers &operator=(const AQLDateScheduleHelpers &rhs);
+        AQLDateSchedule(void);
+        ~AQLDateSchedule(void);
+        AQLDateSchedule(const AQLDateSchedule &rhs);
+        AQLDateSchedule &operator=(const AQLDateSchedule &rhs);
     };
 
     bool is_last_business_day_temp(const AQLDate& d, const AQLString& cal);

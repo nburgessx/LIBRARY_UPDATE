@@ -21,7 +21,7 @@
 #endif
 
 #include "AQLMathIndexEntityInterpolation.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLDataVector.h"
 #include "AQLPriceDataDayCount.h"
 #include "AQLMathPathEntity.h"
@@ -281,7 +281,7 @@ AQLMathIndexEntityInterpolation::setUp(void)
 	
     // Get Year, Month, Date --------
 	int Y_; int M_; int D_; int W_;
-    AQLMathDateCalculations::termStrtoYMDW(accessory, Y_, M_, D_, W_);
+    AQLDateCalculations::termStrtoYMDW(accessory, Y_, M_, D_, W_);
     
     // Error handle
     if(D_ != 0) { throw AQLCoreInvalidData("D_ != 0", __FILE__, __LINE__);	}

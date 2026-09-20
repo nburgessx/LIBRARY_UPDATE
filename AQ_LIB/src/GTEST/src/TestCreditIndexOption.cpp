@@ -16,8 +16,7 @@
 #include "ResultsProcessor.h"
 
 // etrading
-#include "AQLMathDateUtilities.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQObjUtilities.h"
 
 

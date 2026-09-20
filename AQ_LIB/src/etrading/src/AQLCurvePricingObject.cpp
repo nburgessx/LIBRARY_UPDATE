@@ -23,7 +23,7 @@
 #include "AQLCurvePricingObject.h"      // was #include "AQLCurvePricingObject.h"
 #include "AQLCurveForwardRateHelpers.h"  // was #include "AQLCurveForwardRateHelpers.h"
 #include "AQLDateHelpers.h"              // was #include "AQLDateHelpers.h"
-#include "AQLDateScheduleHelpers.h"      // was #include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"      // was #include "AQLDateSchedule.h"
 
 // External Includes
 #include <cmath>

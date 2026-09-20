@@ -18,7 +18,7 @@
 #include "AQLMathLeastSquareSABRQlib.h"
 #include "AQLMathSwaptionVolUtility.h"
 #include "AQLMathSwaptionSABR.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include <math.h>
 
 #include <boost/math/special_functions/asinh.hpp>

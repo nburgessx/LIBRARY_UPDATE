@@ -120,7 +120,13 @@ namespace google_test
         EXPECT_THROW( CreateDataFile p2( absent ), AQLCoreAppError );
         EXPECT_THROW( CreateDataFile p3( absent ), AQLCoreError );  // On Windows AQLCoreError inherits from std::exception; however on Linux it does not.
 
-        EXPECT_THROW( CreateDataFile::beginTestCount( -1 ), CreateDataFile::Exception );
+        // beginTestCount() validates via AQ_THROW, which always constructs AQLCoreInvalidData
+        // directly - not the component-specific CreateDataFile::Exception this test originally
+        // expected. That specific type is still real and still thrown elsewhere in this file (the
+        // OutputError cases above) - this one call site just never went through it, and the
+        // historical AQ_THROW/boost::format cleanup consolidated its validation onto the generic
+        // macro. Testing what the code now deliberately, consistently does.
+        EXPECT_THROW( CreateDataFile::beginTestCount( -1 ), AQLCoreInvalidData );
 
         try
         {

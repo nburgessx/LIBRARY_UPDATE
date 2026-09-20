@@ -13,7 +13,7 @@
 #include "AQObjUtilities.h"
 #include "ObjectUtilities.h"
 #include "DataUtilities.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 
 
 namespace etrading
@@ -318,10 +318,10 @@ namespace etrading
 		AQLString protectionLegName;
 
 		// Calculate the effective date for CDS calibration instruments
-		const AQLDate effectiveDate = AQLDateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
+		const AQLDate effectiveDate = AQLDateSchedule::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
 		LabelValueBlock swapExpressionLVB( setupSwapExpressionLVBforCalibration(),
                                            IRS_KEY::EFFECTIVE_DATE,
-		                                   std::to_string( static_cast<long long>( AQLDateScheduleHelpers::getExcelDate(effectiveDate) ) ) );
+		                                   std::to_string( static_cast<long long>( AQLDateSchedule::getExcelDate(effectiveDate) ) ) );
         
 		if ( cdsMarketDataMap.size() > 0 )
 		{
@@ -339,7 +339,7 @@ namespace etrading
             AQ_REQUIRE( immReferenceDate_ <= maturityDate, "Invalid IMM Reference Date: The IMM Reference Date cannot be greater than the CDS maturity date" )
 
             // Create a new swapExpressionLVB
-            swapExpressionLVB = LabelValueBlock( swapExpressionLVB,  IRS_KEY::MATURITY_DATE, AQ_TO_STRING_FROM_INT(AQLDateScheduleHelpers::getExcelDate( maturityDate ) ) );
+            swapExpressionLVB = LabelValueBlock( swapExpressionLVB,  IRS_KEY::MATURITY_DATE, AQ_TO_STRING_FROM_INT(AQLDateSchedule::getExcelDate( maturityDate ) ) );
 			auto swapInstrument = createSwapFromGenerator( creditIndex_, cdsGeneratorName_, swapExpressionLVB, swapPropertiesLVB, isXccySwap );
 			std::shared_ptr<CreditDefaultSwap> cdsInstrument = std::dynamic_pointer_cast<CreditDefaultSwap>( swapInstrument );
 
@@ -701,7 +701,7 @@ namespace etrading
 			const AQLDate maturityDate = it->first;
 			const double hazardRate = it->second;
 
-			const int dateAsInt = static_cast<long long> (AQLDateScheduleHelpers::getExcelDate( maturityDate ));
+			const int dateAsInt = static_cast<long long> (AQLDateSchedule::getExcelDate( maturityDate ));
 			row.push_back( dateAsInt );
 			row.push_back( hazardRate );
 
@@ -887,7 +887,7 @@ namespace etrading
 		// If an accrualStartDate is provided then use this. Otherwise default to the model asOfDate
 		const AQLDate asOfDate = accrualStartDate_ == AQLDate() ? asOfDate_ : accrualStartDate_;
 
-		const AQLDate effectiveDate = AQLDateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
+		const AQLDate effectiveDate = AQLDateSchedule::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
 
 		// Check if the maturityDate has already passed
 		if (maturityDate <= effectiveDate )
@@ -965,7 +965,7 @@ namespace etrading
 		// To match BBG, do not make businessDayAdjustment or calendar adjustment
 		const std::string businessDayAdjustment("");
 		const std::string calendar("");
-		const AQLDate effectiveDate = AQLDateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), businessDayAdjustment.c_str(), calendar.c_str() );
+		const AQLDate effectiveDate = AQLDateSchedule::getDate( asOfDate, spotLag_.c_str(), businessDayAdjustment.c_str(), calendar.c_str() );
 
 		auto cdsIndexStartingImmediately	= createCalibrationCDSWithSpecifiedMaturity( effectiveDate, endDate );
 		auto cdsIndexStartingAtOptionExpiry	= createCalibrationCDSWithSpecifiedMaturity( startDate, endDate );
@@ -1316,11 +1316,11 @@ namespace etrading
 	{
 		LabelValueBlock swapExpressionLVB(  setupSwapExpressionLVBforCalibration(),
 											IRS_KEY::EFFECTIVE_DATE,
-											std::to_string(static_cast<long long>(AQLDateScheduleHelpers::getExcelDate( cdsStartDate ))));
+											std::to_string(static_cast<long long>(AQLDateSchedule::getExcelDate( cdsStartDate ))));
 
 		LabelValueBlock swapExpressionLVBWithMaturity = LabelValueBlock(swapExpressionLVB,
 																		IRS_KEY::MATURITY_DATE,
-																		std::to_string(static_cast<long long>(AQLDateScheduleHelpers::getExcelDate( cdsMaturityDate ))));
+																		std::to_string(static_cast<long long>(AQLDateSchedule::getExcelDate( cdsMaturityDate ))));
 
 		// Additional parameters for creating CDS instrument
 		const bool isXccySwap = false;

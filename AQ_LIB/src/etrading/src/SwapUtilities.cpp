@@ -14,7 +14,7 @@
 #include "AQObjUtilities.h"
 #include "FeeLeg.h"
 #include "ContainerUtilities.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLDateHelpers.h"
 #include "ObjectUtilities.h"
 #include "Fra.h"

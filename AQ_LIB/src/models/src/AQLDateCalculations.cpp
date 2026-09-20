@@ -9,8 +9,8 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "AQLMathDateCalculations.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateCalculations.h"
+#include "AQLDateSchedule.h"
 
 #include <algorithm>
 #include <cmath>
@@ -164,7 +164,7 @@ static const unsigned short LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[2][2]
 	@brief get holiday adjust date
 */
 AQLDate
-AQLMathDateCalculations::getAdjDate(const AQLPriceDataSlidingRule* pbusdayrule,
+AQLDateCalculations::getAdjDate(const AQLPriceDataSlidingRule* pbusdayrule,
 								const AQLPriceDataCalendar* pcal, const AQLDate &date)
 {
 	if (pbusdayrule != NULL && pcal != NULL)
@@ -179,7 +179,7 @@ AQLMathDateCalculations::getAdjDate(const AQLPriceDataSlidingRule* pbusdayrule,
 
 
 void
-AQLMathDateCalculations::setDate(const int* pday, AQLDate &date, const RollConventionEnum rollConventionEnum)
+AQLDateCalculations::setDate(const int* pday, AQLDate &date, const RollConventionEnum rollConventionEnum)
 {
 	if ( rollConventionEnum == ROLLCONV_ENUM_NONE ||
 		 rollConventionEnum == ROLLCONV_ENUM_NORMAL ||
@@ -224,7 +224,7 @@ AQLMathDateCalculations::setDate(const int* pday, AQLDate &date, const RollConve
 */
 
 DateVector
-AQLMathDateCalculations::generateRegularSchedule(const AQLDate& start, 
+AQLDateCalculations::generateRegularSchedule(const AQLDate& start, 
 									 const AQLDate& end,
 									 const AQLString& data_frequency,
 									 const bool isarrear,
@@ -488,7 +488,7 @@ AQLMathDateCalculations::generateRegularSchedule(const AQLDate& start,
 	@param[in] pbusdayrule		pointer of SlidingRule
 	@param[in] pcal				pointer of Calender
 */
-void AQLMathDateCalculations::generateSchedule( const AQLDate& start,
+void AQLDateCalculations::generateSchedule( const AQLDate& start,
 											   const AQLDate& end,
 											   const AQLString& data_frequency,
 											   const bool isarrear,
@@ -581,7 +581,7 @@ void AQLMathDateCalculations::generateSchedule( const AQLDate& start,
 */
 
 void
-AQLMathDateCalculations::termStrtoYMDW(const AQLString& term, int& y, int& m, int& d, int& w)
+AQLDateCalculations::termStrtoYMDW(const AQLString& term, int& y, int& m, int& d, int& w)
 {
 	// place of year, month, day, week
     int pl_y, pl_m, pl_d, pl_w;		
@@ -688,13 +688,13 @@ AQLMathDateCalculations::termStrtoYMDW(const AQLString& term, int& y, int& m, in
 	
 */
 AQLDate
-AQLMathDateCalculations::getDate(const AQLDate& basedate, 
+AQLDateCalculations::getDate(const AQLDate& basedate, 
                              const AQLString& term, 
                              bool rollForwards, 
                              const AQLString* roll_conv)
 {
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(term, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(term, y, m, d, w);
 	AQLDate date = basedate;
 	if (!rollForwards)
 	{
@@ -736,7 +736,7 @@ AQLMathDateCalculations::getDate(const AQLDate& basedate,
 	@param[in] roll_conv		roll convention
 */
 AQLDate
-AQLMathDateCalculations::getDate(const AQLDate& basedate, 
+AQLDateCalculations::getDate(const AQLDate& basedate, 
                                 const AQLString& term, 
                                 const AQLPriceDataSlidingRule& busdayrule,
                                 const AQLPriceDataCalendar* pCal,
@@ -744,7 +744,7 @@ AQLMathDateCalculations::getDate(const AQLDate& basedate,
 							    const AQLString* roll_conv)
 {
 	int y, m, d,w;
-	AQLMathDateCalculations::termStrtoYMDW(term, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(term, y, m, d, w);
 	if (!rollForwards)
 	{
 		y = -y;
@@ -814,7 +814,7 @@ AQLMathDateCalculations::getDate(const AQLDate& basedate,
 	@return				date
 */
 AQLDate 
-AQLMathDateCalculations::slideDate(const AQLDate& date, const AQLPriceDataSlidingRule& srule, const AQLPriceDataCalendar* pCal)
+AQLDateCalculations::slideDate(const AQLDate& date, const AQLPriceDataSlidingRule& srule, const AQLPriceDataCalendar* pCal)
 {
 	if (srule.getSlidingRule() != SLIDING_RULE_NO_CHANGE) 
 	{
@@ -835,7 +835,7 @@ AQLMathDateCalculations::slideDate(const AQLDate& date, const AQLPriceDataSlidin
 	@return				date
 */
 AQLDate 
-AQLMathDateCalculations::rollDate(const AQLDate& basedate, const AQLString* roll)
+AQLDateCalculations::rollDate(const AQLDate& basedate, const AQLString* roll)
 {
 	AQLDate date = basedate;
 	const int day = date.dayOfMonth();
@@ -853,7 +853,7 @@ AQLMathDateCalculations::rollDate(const AQLDate& basedate, const AQLString* roll
 	@param[in] m				month	
 */
 AQLDate
-AQLMathDateCalculations::getIMMDate(const int& y, const int& m, bool isOddMonth)
+AQLDateCalculations::getIMMDate(const int& y, const int& m, bool isOddMonth)
 {
 	if ((m%3 && !isOddMonth) || m <= 0 || m>=13) 
 	{ 
@@ -910,7 +910,7 @@ AQLMathDateCalculations::getIMMDate(const int& y, const int& m, bool isOddMonth)
 	@param[in] lag				lag
 */
 AQLDate 
-AQLMathDateCalculations::getImmEndDate(const AQLDate& startDate, const AQLString& strTerm, int lag)
+AQLDateCalculations::getImmEndDate(const AQLDate& startDate, const AQLString& strTerm, int lag)
 {
 	AQLDate	endDate = getDate(startDate, strTerm, true);
 
@@ -971,7 +971,7 @@ AQLMathDateCalculations::getImmEndDate(const AQLDate& startDate, const AQLString
     @param[out]     returns the futures contract start date
 */
 AQLDate
-AQLMathDateCalculations::getFuturesContractStartDate(const unsigned int& month, const unsigned int& year )
+AQLDateCalculations::getFuturesContractStartDate(const unsigned int& month, const unsigned int& year )
 {
 	if ( month > 12 ) 
     {
@@ -1029,7 +1029,7 @@ AQLMathDateCalculations::getFuturesContractStartDate(const unsigned int& month, 
 	@param[in] futureTerm			term of future market(ex. EDV1,EDV2)
 */
 AQLDate
-AQLMathDateCalculations::getIMMDateFromTerm(const AQLDate& baseDate, const AQLString& futureTerm)
+AQLDateCalculations::getIMMDateFromTerm(const AQLDate& baseDate, const AQLString& futureTerm)
 {
 	AQ_THROW_IF(futureTerm.size() != 4, "Invalid Futures Contract Tenor: Futures contracts must be 4 letters" )
 	
@@ -1052,7 +1052,7 @@ AQLMathDateCalculations::getIMMDateFromTerm(const AQLDate& baseDate, const AQLSt
 	@param[in] futureTerm			term of future market(ex. EDV1,EDV2)
 */
 DateVector
-AQLMathDateCalculations::getFFDatesFromTerm(const AQLDate& baseDate, const AQLString& fedfundTerm)
+AQLDateCalculations::getFFDatesFromTerm(const AQLDate& baseDate, const AQLString& fedfundTerm)
 {
 	AQ_THROW_IF(fedfundTerm.size() != 4, "Invalid FED Fund Tenor Contract: FED Fund Futures contracts must be 4 letters");
 	
@@ -1087,7 +1087,7 @@ AQLMathDateCalculations::getFFDatesFromTerm(const AQLDate& baseDate, const AQLSt
 	@param[in] rollForwards				true:after, false:before(bool)
 */
 AQLDate
-AQLMathDateCalculations::getFXSpotDate(const AQLString& keyFX,
+AQLDateCalculations::getFXSpotDate(const AQLString& keyFX,
 								   const AQLDate& basedate,
 								   const AQLString& calStr,
 								   int spotlag,
@@ -1138,7 +1138,7 @@ AQLMathDateCalculations::getFXSpotDate(const AQLString& keyFX,
 }
 
 /* static */ bool
-AQLMathDateCalculations::haveNextCBDate(
+AQLDateCalculations::haveNextCBDate(
 	const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter)
 {
 	AQLDate ignore;
@@ -1146,7 +1146,7 @@ AQLMathDateCalculations::haveNextCBDate(
 }
 
 /* static */ AQLDate
-AQLMathDateCalculations::getNextCBDate(
+AQLDateCalculations::getNextCBDate(
 	const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter)
 {
 	AQLDate result;
@@ -1168,13 +1168,13 @@ AQLMathDateCalculations::getNextCBDate(
 }
 
 /* static */ bool
-AQLMathDateCalculations::getIfExistsNextCBDate(
+AQLDateCalculations::getIfExistsNextCBDate(
 	const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter, AQLDate& result)
 {
 	typedef vector<AQLDate> Schedule;
 	typedef Schedule::const_iterator cIter;
 
-	const Schedule& cbDates = AQLMathCentralBank::meetingSchedule(cb);
+	const Schedule& cbDates = AQLCentralBank::meetingSchedule(cb);
 
 	cIter it = std::lower_bound(cbDates.begin(), cbDates.end(), baseDate);
 
@@ -1206,7 +1206,7 @@ AQLMathDateCalculations::getIfExistsNextCBDate(
 	@param[in] futureMonth			string of future market format(ex. V,Z,K)
 */
 unsigned int
-AQLMathDateCalculations::changeFutureMonthFormat(const AQLString& futureMonth)
+AQLDateCalculations::changeFutureMonthFormat(const AQLString& futureMonth)
 {
     if (futureMonth == F_FUTURE_MONTH)
     {
@@ -1272,7 +1272,7 @@ AQLMathDateCalculations::changeFutureMonthFormat(const AQLString& futureMonth)
 	
 */
 void
-AQLMathDateCalculations::convertToDateGrid(const AQLDate &asofDate, const DoubleArray &terms, DateVector &dates)
+AQLDateCalculations::convertToDateGrid(const AQLDate &asofDate, const DoubleArray &terms, DateVector &dates)
 {
 	dates.clear();
 	
@@ -1282,7 +1282,7 @@ AQLMathDateCalculations::convertToDateGrid(const AQLDate &asofDate, const Double
 	{
 		const double term = terms[i];
 
-		AQLDate date = AQLMathDateUtilities::getDateFromTerm( asofDate, term, dc_act365 );
+		AQLDate date = etrading::AQLDateSchedule::getDateFromTerm( asofDate, term, dc_act365 );
 
 		dates.push_back(date);
 	}
@@ -1295,7 +1295,7 @@ AQLMathDateCalculations::convertToDateGrid(const AQLDate &asofDate, const Double
 
 // Return the frequency in months for comparing two frequencies, not for accurate calculations
 // *** Duplicate method in AQLDateHelpers.cpp ***
-double AQLMathDateCalculations::getPeriodFrequencyInMonths(const AQLString& freq)
+double AQLDateCalculations::getPeriodFrequencyInMonths(const AQLString& freq)
 {
 	double frequencyInMonths;
 
@@ -1325,7 +1325,7 @@ double AQLMathDateCalculations::getPeriodFrequencyInMonths(const AQLString& freq
 	@return compounding times
 */
 int
-AQLMathDateCalculations::calcCompoundingTimes(const AQLString& freq_rst, const AQLString& freq_pay)
+AQLDateCalculations::calcCompoundingTimes(const AQLString& freq_rst, const AQLString& freq_pay)
 {
 	int resetFrequency = getPeriodFrequencyInMonths(freq_rst);
 	int	paymentFrequency = getPeriodFrequencyInMonths(freq_pay); 
@@ -1338,7 +1338,7 @@ AQLMathDateCalculations::calcCompoundingTimes(const AQLString& freq_rst, const A
 }
 
 /* static */
-AQLDate AQLMathDateCalculations::getNextWeekdayDate(
+AQLDate AQLDateCalculations::getNextWeekdayDate(
 	AQLDayOfWeekEnum weekday, const AQLDate& baseDate, bool strictlyAfter)
 {
 	AQLDate res(baseDate);

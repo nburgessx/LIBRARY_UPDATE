@@ -264,10 +264,15 @@ AQLPriceVVValueModel::calcValue(const AQLDataValuation& att, AQLDataProvider* dp
 											gkOrg[0]->rd,gkOrg[0]->rf,dataProvider->mAsofDate,dataProvider->mAsofDate,
 											dataProvider->mMaturityDate,dataProvider->mDeliveryDate,high,low);
 			}
-			catch(AQLCoreNumericalError e)
+			// Catch by const reference, not by value - a by-value catch copies the whole exception
+			// object on every call through this path for no benefit (only e.getMsg() is read).
+			// Rethrow is bare `throw;`, not `throw e;` - see AQLFileAccessor.cpp's matching fix for
+			// why; `throw;` still carries the inspection in e.getMsg() above forward unaffected,
+			// since it rethrows the same currently-handled exception object, not a fresh copy.
+			catch(const AQLCoreNumericalError& e)
 			{
 				AQLString msg = e.getMsg();
-				if (msg.findString("Not Convergence from rtsafe") == -1) throw e;
+				if (msg.findString("Not Convergence from rtsafe") == -1) throw;
 				implyvol = 0.0; // if it cannot solve implied vol, set zero.
 			}
 		}

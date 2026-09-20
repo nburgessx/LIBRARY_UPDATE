@@ -1,5 +1,5 @@
 //
-// AQLDateScheduleHelpers.cpp
+// AQLDateSchedule.cpp
 
 #ifdef __GNUG__
 #pragma implementation
@@ -7,7 +7,7 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLFunctionUtilities.h"
 #include "AQLObject.h"
 #include "AQLDataBasics.h"
@@ -28,22 +28,46 @@
 #include "AQLCoreComponentManager.h"
 #include "AQLPriceDataConvention.h"
 #include "AQLDataMultiReference.h"
-#include "AQLMathDateUtilities.h"	// for getStubDateAndType
 #include "ExceptionMacros.h"		// AQ_REQUIRE, AQ_THROW
 
 #include <cmath>
 #include <map>
 #include <algorithm>
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 using namespace std;
 
 
 namespace etrading
 {
+    // Below this many elements, a parallel region's thread-pool spin-up cost likely exceeds the
+    // work being parallelized - same rationale and same threshold as AQLMatrix.cpp's
+    // OPENMP_SIZE_THRESHOLD. Only applied to getMultiDate/calcDatesWithLag below: every other loop
+    // in this file (generateSchedule, getStubDateAndType, calcRegularDates, ...) steps one date at
+    // a time off the previous one, which is inherently sequential - parallelizing those would be
+    // wrong, not just unhelpful.
+    static const int AQL_DATE_SCHEDULE_OPENMP_THRESHOLD = 64;
+
+    namespace
+    {
+        // A reusable "no calendar" default, replacing `&AQLPriceDataCalendar()` (address of a
+        // temporary, rebuilt on every call/loop iteration) at several call sites below. Safe either
+        // way (the temporary was always consumed synchronously within the same call), but this
+        // avoids constructing a fresh empty AQLPriceDataCalendar on every iteration of a
+        // stub-search loop for no reason.
+        const AQLPriceDataCalendar& defaultCalendar()
+        {
+            static const AQLPriceDataCalendar cal;
+            return cal;
+        }
+    }
 
     //change excel date into AQLDate
     AQLDate
-        AQLDateScheduleHelpers::getAQLDate(const int excel_date)
+        AQLDateSchedule::getAQLDate(const int excel_date)
     {
         AQLDate    ret_date("19900101");
         const int excel_base = 32874;
@@ -52,7 +76,7 @@ namespace etrading
     }
     //change excel date into AQLDate
     AQLDate
-        AQLDateScheduleHelpers::getAQLDate(const AQLString& excel_date_str)
+        AQLDateSchedule::getAQLDate(const AQLString& excel_date_str)
     {
         AQLDate    ret_date("19900101");
         const int excel_base = 32874;
@@ -61,7 +85,7 @@ namespace etrading
     }
     //change excel date into AQLString
     AQLString
-        AQLDateScheduleHelpers::getAQLStringDate(const int excel_date)
+        AQLDateSchedule::getAQLStringDate(const int excel_date)
     {
         AQLString  ret_str = getAQLDate(excel_date).stringWithFormat("YYYYMMDD");
         return ret_str;
@@ -69,19 +93,248 @@ namespace etrading
 
     //change MDate into excel date
     int
-        AQLDateScheduleHelpers::getExcelDate(const AQLDate & date)
+        AQLDateSchedule::getExcelDate(const AQLDate & date)
     {
         AQLDate    base("19900101");
         const int excel_base = 32874;
         return excel_base + base.intervalDays(date);
     }
 
-    AQLDate AQLDateScheduleHelpers::firstStubDateFromStubType(const AQLDate & startDate, const AQLDate & endDate, AQLString & term)
+    // Ported from models::AQLDateTools::getStubDateAndType (2026-09-20) - see the struct
+    // definition's comment in AQLDateSchedule.h for why. Faithful port: AQLDateCalculations::
+    // calls become AQLDateHelpers:: calls (this class's own low-level date-math counterpart),
+    // otherwise unchanged from the models version. Its original `&AQLPriceDataCalendar()`
+    // temporary-address pattern was replaced with the `defaultCalendar()` helper above
+    // (2026-09-20 efficiency pass) - was safe either way, this just avoids rebuilding an empty
+    // calendar on every loop iteration.
+    StubDateAndType AQLDateSchedule::getStubDateAndType( const AQLDate & unadjustedStartDate, const AQLDate & unadjustedEndDate, AQLString & term, const AQLPriceDataSlidingRule & busDayAdj, const AQLPriceDataCalendar & calendar, const AQLString* rollConvention, const etrading::StubTypeEnum & stubType )
+    {
+        // Validation
+        upper( term );
+        AQ_REQUIRE( unadjustedStartDate <= unadjustedEndDate, "Invalid Cashflow Date: The Start Date '" + unadjustedStartDate.stringWithFormat("DD-MMM-YY") + "' must be before the End Date '" + unadjustedEndDate.stringWithFormat("DD-MMM-YY") + "'" )
+
+
+        // 1.	Initialize Result - Default to Short Start if Missing
+        //		*****************************************************
+        StubDateAndType stubInfo;
+
+        // Default to EndDate for below Boundary Conditions
+        stubInfo.stubDate_			= unadjustedEndDate;
+
+        // Use Short Start by Default if the stub is missing
+        // Note: Below we apply adjust the Default StubType Market Convention, which may become LONG_START if stub days < 7 days
+        stubInfo.stubTypeEnum_		= stubType == etrading::NONE_STUBTYPE ? etrading::SHORT_START_STUBTYPE : stubType;
+
+        // Record if we are using the default stub type
+        stubInfo.usingDefaultStub_	= stubType == etrading::NONE_STUBTYPE;
+
+        // 2.	Populate StubDateAndType Parameters
+        //		****************************************************************
+
+        // isFrontStub
+        stubInfo.isFrontStub_ = false;
+        if( stubInfo.stubTypeEnum_ == etrading::SHORT_START_STUBTYPE || stubInfo.stubTypeEnum_ == etrading::LONG_START_STUBTYPE )
+        {
+            stubInfo.isFrontStub_ = true;
+        }
+
+        // isStartRoll
+        stubInfo.isStartRoll_ = !stubInfo.isFrontStub_;
+
+        // isShortStub
+        stubInfo.isShortStub_ = false;
+        if( stubInfo.stubTypeEnum_ == etrading::SHORT_START_STUBTYPE || stubInfo.stubTypeEnum_ == etrading::SHORT_END_STUBTYPE )
+        {
+            stubInfo.isShortStub_ = true;
+        }
+
+        // isHolidayAdjusted
+        stubInfo.isHolidayAdjusted_ = true;
+        if ( busDayAdj.getSlidingRule() == SlidingRuleType::SLIDING_RULE_NO_CHANGE )
+        {
+            stubInfo.isHolidayAdjusted_ = false;
+        }
+
+        // 3.	Boundary Condition(s) - Single Date
+        //		***********************************
+
+        // Single Date
+        if ( unadjustedStartDate == unadjustedEndDate )
+        {
+            stubInfo.unadjustedSchedule_.push_back(unadjustedStartDate);
+            stubInfo.unadjustedSchedule_.push_back(unadjustedEndDate);
+            stubInfo.isRegularSchedule_ = true;
+            return stubInfo;
+        }
+
+        // 4.	Front Stub - Roll Backwards from End Date
+        //		*****************************************
+
+        // Use 100 years of daily points as max search count guard
+        int maxCount    = 40000;
+        int counter     = 0;
+
+        if ( stubInfo.isFrontStub_ )
+        {
+            AQLDate previousStubDate = unadjustedEndDate;
+            AQLDate thisStubDate		= unadjustedEndDate;
+            AQLDate nextStubDate		= unadjustedEndDate;
+
+            // Initialize Coupon Schedule
+            stubInfo.unadjustedSchedule_.push_back(unadjustedEndDate);
+
+            // Rolling Backwards from the EndDate
+            while ( thisStubDate > unadjustedStartDate )
+            {
+                // Exit Condition
+                nextStubDate = AQLDateHelpers::getDate( thisStubDate, term, AQLPriceDataSlidingRule(), &defaultCalendar(), false, rollConvention ); // rollForwards = false
+                if( nextStubDate <= unadjustedStartDate )
+                {
+                    break;
+                }
+
+                // Update Stub Dates
+                previousStubDate = thisStubDate;
+                thisStubDate = nextStubDate;
+
+                // Update Schedule - Don't double-count the end date
+                if ( previousStubDate != unadjustedEndDate) stubInfo.unadjustedSchedule_.push_back(previousStubDate);
+
+                // Counter Guard
+                counter++;
+                AQ_REQUIRE( counter < maxCount, "Unable to find the stub date for the stub type provided." )
+            }
+
+            // Adjust For Holidays and Update Stub Date
+            // Note: Don't apply roll convention twice, since boundary start and end dates must not have roll convention applied to them
+            // -------------------
+            if ( stubInfo.isShortStub_ )
+            {
+                // Unadjusted Stub for Schedule
+                if ( thisStubDate > unadjustedStartDate ) stubInfo.unadjustedSchedule_.push_back(thisStubDate);
+
+                // *** Short Stubs ***
+                thisStubDate		= AQLDateHelpers::getDate( thisStubDate, "0D", busDayAdj, &calendar, false, NULL ); // rollForwards = false
+                stubInfo.stubDate_ = thisStubDate;
+
+            }
+            else
+            {
+                // *** Long Stubs ***
+                previousStubDate	= AQLDateHelpers::getDate( previousStubDate, "0D", busDayAdj, &calendar, false, NULL ); // rollForwards = false
+                stubInfo.stubDate_ = previousStubDate;
+            }
+
+            // Finalize Coupon Schedule - StartDate
+            // Note: We need to reverse schedule order for start stubs as we are rolling backwards since isStartRoll = false
+            stubInfo.unadjustedSchedule_.push_back(unadjustedStartDate);
+            std::reverse( stubInfo.unadjustedSchedule_.begin(), stubInfo.unadjustedSchedule_.end() );
+
+            // **************************************************************************************************
+            // *** Default StubType Market Convention - Only Applies to Front Stubs ***
+            // Default Stub is Short Start, however if stub is strictly less than 7 days the default should be Long Start
+            // **************************************************************************************************
+            if( stubInfo.usingDefaultStub_ )
+            {
+                const int stubDays = std::abs( unadjustedStartDate.intervalDays( thisStubDate ) );
+                if( stubDays < 7 )
+                {
+                    // Long Stub if Stub Days < 7 Days
+                    stubInfo.stubDate_		= previousStubDate;
+                    stubInfo.stubTypeEnum_	= etrading::LONG_START_STUBTYPE;
+                    stubInfo.isShortStub_	= false;
+                }
+            }
+
+            // Check if Regular Schedule
+            // Note: Don't apply roll convention twice, since boundary start and end dates must not have roll convention applied to them
+            AQLDate adjustedStartDate = AQLDateHelpers::getDate( unadjustedStartDate, "0D", busDayAdj, &calendar, false, NULL ); // rollForwards = false
+            stubInfo.isRegularSchedule_ = false;
+            if ( nextStubDate == adjustedStartDate )
+            {
+                stubInfo.isRegularSchedule_ = true;
+            }
+        }
+
+        // 5.	Back Stub - Roll Forwards from Start Date
+        //		******************************************
+        else
+        {
+            AQLDate previousStubDate = unadjustedStartDate;
+            AQLDate thisStubDate		= unadjustedStartDate;
+            AQLDate nextStubDate		= unadjustedStartDate;
+
+            // Initialize Coupon Schedule
+            stubInfo.unadjustedSchedule_.push_back(unadjustedStartDate);
+
+            // Rolling Forwards from the StartDate
+            while ( thisStubDate < unadjustedEndDate )
+            {
+                // Exit Condition
+                nextStubDate = AQLDateHelpers::getDate( thisStubDate, term, AQLPriceDataSlidingRule(), &defaultCalendar(), true, rollConvention ); // IsAfter = true i.e. roll forwards;
+                if( nextStubDate >= unadjustedEndDate )
+                {
+                    break;
+                }
+
+                // Update Stub Dates
+                previousStubDate = thisStubDate;
+                thisStubDate = nextStubDate;
+
+                // Update Schedule - Don't double-count the start date
+                if ( previousStubDate != unadjustedStartDate) stubInfo.unadjustedSchedule_.push_back(previousStubDate);
+
+                // Counter Guard
+                counter++;
+                AQ_REQUIRE( counter < maxCount, "Unable to find the stub date for the stub type provided." )
+            }
+
+            // Adjust For Holidays and Update Stub Date
+            // Note: Don't apply roll convention twice, since boundary start and end dates must not have roll convention applied to them
+            // -------------------
+            if ( stubInfo.isShortStub_ )
+            {
+                // Unadjusted Stub for Schedule
+                if ( thisStubDate < unadjustedEndDate ) stubInfo.unadjustedSchedule_.push_back(thisStubDate);
+
+                // *** Short Stubs ***
+                thisStubDate		= AQLDateHelpers::getDate( thisStubDate, "0D", busDayAdj, &calendar, true, NULL ); // rollForwards = true
+                stubInfo.stubDate_ = thisStubDate;
+
+            }
+            else
+            {
+                // *** Long Stubs ***
+                previousStubDate	= AQLDateHelpers::getDate( previousStubDate, "0D", busDayAdj, &calendar, true, NULL ); // rollForwards = true
+                stubInfo.stubDate_ = previousStubDate;
+            }
+
+            // Finalize Coupon Schedule - EndStubDate & EndDate
+            stubInfo.unadjustedSchedule_.push_back(unadjustedEndDate);
+
+            // *** Default StubType Market Convention  - Only Applies to Front Stubs ***
+            // No need to check for Default Stub Type
+
+            // Check if Regular Schedule
+            // Note: Don't apply roll convention twice, since boundary start and end dates must not have roll convention applied to them
+            AQLDate adjustedEndDate = AQLDateHelpers::getDate( unadjustedEndDate, "0D", busDayAdj, &calendar, false, NULL ); // rollForwards = false
+            stubInfo.isRegularSchedule_ = false;
+            if ( nextStubDate == adjustedEndDate )
+            {
+                stubInfo.isRegularSchedule_ = true;
+            }
+        }
+
+        return stubInfo;
+
+    }
+
+    AQLDate AQLDateSchedule::firstStubDateFromStubType(const AQLDate & startDate, const AQLDate & endDate, AQLString & term)
     {
         upper(term);
         bool isAfter = false; // This tells getDate to calculate dates backwards from the End Date
 
-        AQLDate result = AQLDateHelpers::getDate(endDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
+        AQLDate result = AQLDateHelpers::getDate(endDate, term, AQLPriceDataSlidingRule(), &defaultCalendar(), isAfter, NULL);
 
         // Ensure the first stub is not before the start date
         if (result < startDate)
@@ -101,7 +354,7 @@ namespace etrading
             longStubDate = shortStubDate;
 
             // Update the Short Stub Date
-            shortStubDate = AQLDateHelpers::getDate(shortStubDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
+            shortStubDate = AQLDateHelpers::getDate(shortStubDate, term, AQLPriceDataSlidingRule(), &defaultCalendar(), isAfter, NULL);
 
             // Update the result if the first stub is not before the start date else break out of the while loop
             if (shortStubDate > startDate)
@@ -127,12 +380,12 @@ namespace etrading
     }
 
     AQLDate
-        AQLDateScheduleHelpers::lastStubDateFromStubType(const AQLDate & startDate, const AQLDate & endDate, AQLString & term)
+        AQLDateSchedule::lastStubDateFromStubType(const AQLDate & startDate, const AQLDate & endDate, AQLString & term)
     {
         upper(term);
         bool isAfter = true; // This tells getDate to calculate dates forwards from the Start Date
 
-        AQLDate result = AQLDateHelpers::getDate(startDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
+        AQLDate result = AQLDateHelpers::getDate(startDate, term, AQLPriceDataSlidingRule(), &defaultCalendar(), isAfter, NULL);
 
         // Ensure the last stub is not after the end date
         if (result > endDate)
@@ -152,7 +405,7 @@ namespace etrading
             longStubDate = shortStubDate;
 
             // Update the Short Stub Date
-            shortStubDate = AQLDateHelpers::getDate(shortStubDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL);
+            shortStubDate = AQLDateHelpers::getDate(shortStubDate, term, AQLPriceDataSlidingRule(), &defaultCalendar(), isAfter, NULL);
 
             // Update the result if the last stub is not after the end date else break out of the while loop
             if (shortStubDate < endDate)
@@ -179,27 +432,33 @@ namespace etrading
     }
 
     DateVector
-        AQLDateScheduleHelpers::calcDatesWithLag(const DateVector &				dates,
+        AQLDateSchedule::calcDatesWithLag(const DateVector &				dates,
 												const AQLString &				term,
 												const AQLPriceDataSlidingRule &  slidingRule,
 												const AQLPriceDataCalendar *     pCalendar,
 												const bool &					isAfter,
 												const AQLString *				rollConvention)
     {
-        DateVector results;
+        // Pre-sized, not push_back-grown: each index is computed independently of every other
+        // (unlike generateSchedule's date-stepping loops), so this is also safe to run under OMP -
+        // AQLDate isn't trivially-copyable (carries std::atomic<long> julius_), so avoiding
+        // reallocate-and-copy-forward on every push_back is a real saving, not just tidiness.
+        DateVector results( dates.size() );
+        const int dateCount = static_cast<int>( dates.size() );
 
-        for (unsigned int i = 0; i < dates.size(); ++i)
+        #pragma omp parallel for if( dateCount > AQL_DATE_SCHEDULE_OPENMP_THRESHOLD )
+        for (int i = 0; i < dateCount; ++i)
         {
-            results.push_back(AQLDateHelpers::getDate(dates[i], term, slidingRule, pCalendar, isAfter, rollConvention));
+            results[i] = AQLDateHelpers::getDate(dates[i], term, slidingRule, pCalendar, isAfter, rollConvention);
         }
 
         return results;
     }
 
     // Generate a Date Schedule with appropriate use of stubs
-	// Note that there is a duplicate method AQLMathDateUtilities::generateSchedule
-	// Default Short/Long Start is determined by AQLMathDateUtilities::getStubDateAndType
-    DateVector AQLDateScheduleHelpers::generateSchedule(const AQLDate& unadjustedStart,
+	// Default Short/Long Start is determined by getStubDateAndType. Now the single canonical
+	// schedule generator - see the header's comment for the consolidation history.
+    DateVector AQLDateSchedule::generateSchedule(const AQLDate& unadjustedStart,
 													   const AQLDate& unadjustedEnd,
 													   AQLString& data_frequency,
 													   AQLString& slidingRuleString,
@@ -276,7 +535,7 @@ namespace etrading
 		if (stubType == NULL && firstStubDate == NULL && lastStubDate == NULL)
 		{
 			// Market Default to Short Start Stub, however if Stub Days is < 7 Days the Default becomes Long Start Stub
-			stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::NONE_STUBTYPE );
+			stubInfo = getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::NONE_STUBTYPE );
 
 			isStartRoll		= stubInfo.isStartRoll_;
 			pFirstStubDate	= &stubInfo.stubDate_;
@@ -294,7 +553,7 @@ namespace etrading
 				if ( firstStubDate == NULL || lastStubDate == NULL )
 				{ 
 					// Market Default to Short Start Stub, however if Stub Days is < 7 Days the Default becomes Long Start Stub
-					stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::NONE_STUBTYPE );
+					stubInfo = getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::NONE_STUBTYPE );
 				
 					isStartRoll		= stubInfo.isStartRoll_;
 					pFirstStubDate	= &stubInfo.stubDate_;
@@ -305,7 +564,7 @@ namespace etrading
             {
 				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
                 
-				stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_START_STUBTYPE );
+				stubInfo = getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_START_STUBTYPE );
                 
 				isStartRoll		= stubInfo.isStartRoll_;
                 pFirstStubDate	= &stubInfo.stubDate_;
@@ -315,7 +574,7 @@ namespace etrading
             {
 				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
-                stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_START_STUBTYPE );
+                stubInfo = getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_START_STUBTYPE );
                 
 				isStartRoll		= stubInfo.isStartRoll_;
                 pFirstStubDate	= &stubInfo.stubDate_;
@@ -325,7 +584,7 @@ namespace etrading
             {
 				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
-                stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_END_STUBTYPE );
+                stubInfo = getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_END_STUBTYPE );
 
                 isStartRoll		= stubInfo.isStartRoll_;
                 pFirstStubDate	= NULL;
@@ -335,7 +594,7 @@ namespace etrading
             {
 				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
-                stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_END_STUBTYPE );
+                stubInfo = getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_END_STUBTYPE );
 
                 isStartRoll		= stubInfo.isStartRoll_;
                 pFirstStubDate	= NULL;
@@ -379,7 +638,7 @@ namespace etrading
 
     */
     bool
-        AQLDateScheduleHelpers::isValidDate(const AQLDate & dateToValidate)
+        AQLDateSchedule::isValidDate(const AQLDate & dateToValidate)
     {
         const unsigned short  mDay = dateToValidate.dayOfMonth();
         const unsigned short  mMonth = dateToValidate.monthOfYear();
@@ -411,7 +670,7 @@ namespace etrading
     }
 
     AQLDate
-        AQLDateScheduleHelpers::getDateFromTerm(const AQLDate& fromdate, const double termy, const AQLPriceDataDayCount& daycount, bool includelast)
+        AQLDateSchedule::getDateFromTerm(const AQLDate& fromdate, const double termy, const AQLPriceDataDayCount& daycount, bool includelast)
     {
         AQLPriceDataConvention convention(daycount.getDayCount(), CONT); // Continous compounding rate convention
 
@@ -423,7 +682,7 @@ namespace etrading
     }
 
     AQLDate
-        AQLDateScheduleHelpers::getDateFromTerm(AQLDate& fromdate, double termy, AQLString& dayCountString, bool includelast)
+        AQLDateSchedule::getDateFromTerm(AQLDate& fromdate, double termy, AQLString& dayCountString, bool includelast)
     {
         includelast;
         //change nospace & upper
@@ -436,7 +695,7 @@ namespace etrading
     }
 
     double
-        AQLDateScheduleHelpers::getDayFromTerm(AQLDate& fromdate, double termy, AQLString& daycount, bool includelast)
+        AQLDateSchedule::getDayFromTerm(AQLDate& fromdate, double termy, AQLString& daycount, bool includelast)
     {
         //change nospace & upper
         upper(daycount);
@@ -450,7 +709,7 @@ namespace etrading
         return ret;
     }
     double
-        AQLDateScheduleHelpers::getTermFromDay(AQLDate& fromdate, double termd, AQLString& daycount, bool includelast)
+        AQLDateSchedule::getTermFromDay(AQLDate& fromdate, double termd, AQLString& daycount, bool includelast)
     {
         //change nospace & upper
         upper(daycount);
@@ -464,7 +723,7 @@ namespace etrading
         return ret;
     }
     double
-        AQLDateScheduleHelpers::getTerm(const AQLDate& fromdate, const AQLDate& todate, AQLString& daycount, bool includelast,
+        AQLDateSchedule::getTerm(const AQLDate& fromdate, const AQLDate& todate, AQLString& daycount, bool includelast,
             const AQLString* frequency,
             const AQLString* Calendar,
             const AQLString* SlidingRule,
@@ -479,7 +738,7 @@ namespace etrading
 
         if (dc.getDayCount() == ACT_ACT_ICMA)
         {
-            DateMatrix regular_startenddates = AQLDateScheduleHelpers::calcRegularDates(*frequency, *Calendar, *SlidingRule, *startdates, *enddates);
+            DateMatrix regular_startenddates = AQLDateSchedule::calcRegularDates(*frequency, *Calendar, *SlidingRule, *startdates, *enddates);
             dc.setCouponsInYear(12 / AQLDateHelpers::getPeriodFrequencyInMonths(*frequency));
             dc.setCouponStartDates(regular_startenddates[0]);
             dc.setCouponEndDates(regular_startenddates[1]);
@@ -492,7 +751,7 @@ namespace etrading
     }
 
     AQLDate
-        AQLDateScheduleHelpers::getDate(const AQLDate& basedate, const AQLString& term, const AQLString& slidingrule, const AQLString& calendar)
+        AQLDateSchedule::getDate(const AQLDate& basedate, const AQLString& term, const AQLString& slidingrule, const AQLString& calendar)
     {
         //calendar
         AQLPriceDataCalendar cal;
@@ -507,7 +766,7 @@ namespace etrading
     }
 
     AQLDate
-        AQLDateScheduleHelpers::getDateWithRollConv(const AQLDate& basedate, const AQLString& term, const AQLString& slidingRule, const AQLString& calendar, const AQLString* roll_conv)
+        AQLDateSchedule::getDateWithRollConv(const AQLDate& basedate, const AQLString& term, const AQLString& slidingRule, const AQLString& calendar, const AQLString* roll_conv)
     {
         //calendar
         AQLPriceDataCalendar cal;
@@ -522,7 +781,7 @@ namespace etrading
         return ret;
     }
 
-    DateVector AQLDateScheduleHelpers::getMultiDate(const DateVector& basedate, const AQLString& term, const AQLString& slidingrule, const AQLString& calendar, const AQLString* roll_conv)
+    DateVector AQLDateSchedule::getMultiDate(const DateVector& basedate, const AQLString& term, const AQLString& slidingrule, const AQLString& calendar, const AQLString* roll_conv)
     {
         //calendar
         AQLPriceDataCalendar cal;
@@ -532,8 +791,13 @@ namespace etrading
         AQLPriceDataSlidingRule sr;
         sr.convertFromString(slidingrule);
 
+        // Already pre-sized - each index independent of every other, so safe under OMP (see
+        // AQL_DATE_SCHEDULE_OPENMP_THRESHOLD's comment for why this file's other loops aren't).
         DateVector results( basedate.size() );
-        for (size_t i = 0; i < basedate.size(); i++)
+        const int dateCount = static_cast<int>( basedate.size() );
+
+        #pragma omp parallel for if( dateCount > AQL_DATE_SCHEDULE_OPENMP_THRESHOLD )
+        for (int i = 0; i < dateCount; i++)
         {
             results[i] = AQLDateHelpers::getDate(basedate[i], term, sr, &cal, true, roll_conv);
         }
@@ -541,7 +805,7 @@ namespace etrading
     }
 
     AQLDate
-        AQLDateScheduleHelpers::getDateWithRoll(AQLDate& basedate, AQLString& term, AQLString& slidingrule, AQLString& calendar, int roll)
+        AQLDateSchedule::getDateWithRoll(AQLDate& basedate, AQLString& term, AQLString& slidingrule, AQLString& calendar, int roll)
     {
         //change nospace & upper
         upper(term);
@@ -566,7 +830,7 @@ namespace etrading
     }
 
     AQLDate
-        AQLDateScheduleHelpers::getIMMDate1(const int& year, const int& month, AQLString& calendar, AQLString& slidingRule)
+        AQLDateSchedule::getIMMDate1(const int& year, const int& month, AQLString& calendar, AQLString& slidingRule)
     {
         upper(slidingRule);
         upper(calendar);
@@ -580,7 +844,7 @@ namespace etrading
     }
 
     AQLDate
-        AQLDateScheduleHelpers::getIMMDate2(const int& year, const int& number, AQLString& calendar, AQLString& slidingRule)
+        AQLDateSchedule::getIMMDate2(const int& year, const int& number, AQLString& calendar, AQLString& slidingRule)
     {
         if (number < 0 || number > 5) AQ_THROW( "IMM Dates in a year are 4 days." );
 
@@ -596,7 +860,7 @@ namespace etrading
     }
 
     AQLDate
-        AQLDateScheduleHelpers::getIMMDate3(const AQLDate& basedate, const int& number, AQLString& calendar, AQLString& slidingRule)
+        AQLDateSchedule::getIMMDate3(const AQLDate& basedate, const int& number, AQLString& calendar, AQLString& slidingRule)
     {
         upper(slidingRule);
         upper(calendar);
@@ -633,7 +897,7 @@ namespace etrading
 
     // calc regular (non-stub) payment dates for daycount ACT/ACT.ICMA
     DateMatrix
-        AQLDateScheduleHelpers::calcRegularDates(const AQLString& frequency,
+        AQLDateSchedule::calcRegularDates(const AQLString& frequency,
             const AQLString& Calendar,
             const AQLString& SlidingRule,
             const std::vector<AQLDate>& startdates,
@@ -727,7 +991,7 @@ namespace etrading
 
     bool is_last_business_day_temp(const AQLDate& d, const AQLString& cal)
     {
-        const AQLDate next_day = AQLDateScheduleHelpers::getDate(d, "1d", "FOLLOWING", cal);
+        const AQLDate next_day = AQLDateSchedule::getDate(d, "1d", "FOLLOWING", cal);
         return next_day.monthOfYear() != d.monthOfYear();
     }
 
@@ -775,7 +1039,16 @@ namespace etrading
 
     AQLPriceDataDayCount ModelDaycount()
     {
-        AQLString daycountConvention = AQLString("ACT/365");
+        // "ACT/365_ISDA", not "ACT/365" (Fixed) - these are genuinely different day-count
+        // conventions (see AQLPriceDataDayCount.h/.cpp's separate ACT_365/ACT_365_ISDA enum
+        // cases). This etrading fork of ModelDaycount()/ModelTime() had drifted to "ACT/365" and
+        // was never actually called from anywhere in etrading/validation/AQ_XLL/AQ_API/GTEST -
+        // dead code, harmlessly wrong. The 16 real call sites (all in models: CMS calibration,
+        // swaption vol, swap rate calc) all go through models::AQLDateTools::ModelDaycount(),
+        // which correctly used "ACT/365_ISDA" - matched here to that value (2026-09-20) so that
+        // redirecting those call sites onto this consolidated version doesn't silently change
+        // their day-count convention.
+        AQLString daycountConvention = AQLString("ACT/365_ISDA");
         return etrading::Daycount(daycountConvention);
     }
 
@@ -791,7 +1064,7 @@ namespace etrading
         int slushCheck = date.findString("/");
         if (slushCheck == -1)
         {
-            ret = AQLDateScheduleHelpers::getAQLDate(date);
+            ret = AQLDateSchedule::getAQLDate(date);
         }
         else
         {

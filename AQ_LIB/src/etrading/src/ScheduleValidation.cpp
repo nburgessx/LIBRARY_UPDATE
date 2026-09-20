@@ -12,7 +12,7 @@
 // LA Includes
 #include "AQLStaticData.h"
 #include "AQLDateHelpers.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataInterpolation.h"
@@ -94,11 +94,11 @@ namespace etrading
         if( !isInDateFormat )
         {
             // DateString is in Tenor Format
-            AQ_REQUIRE( AQLDateScheduleHelpers::isValidDate( asOfDate ), "Invalid Date: Unable to convert DateTenor to a date" )
-            resultDate = AQLDateScheduleHelpers::getDate( asOfDate, dateOrTenor, businessDayAdjustment, calendar );
+            AQ_REQUIRE( AQLDateSchedule::isValidDate( asOfDate ), "Invalid Date: Unable to convert DateTenor to a date" )
+            resultDate = AQLDateSchedule::getDate( asOfDate, dateOrTenor, businessDayAdjustment, calendar );
         }
 
-        AQ_REQUIRE( AQLDateScheduleHelpers::isValidDate( resultDate ), "Invalid Date " + dateOrTenor )
+        AQ_REQUIRE( AQLDateSchedule::isValidDate( resultDate ), "Invalid Date " + dateOrTenor )
         return resultDate;
     }
 
@@ -895,7 +895,7 @@ namespace etrading
             else if ( stubType == LONG_START_STUBTYPE )
             {
                 isStartRoll = false;
-                AQLDate pfoddTemp = AQLDateScheduleHelpers::firstStubDateFromStubType( startDate, endDate, term );
+                AQLDate pfoddTemp = AQLDateSchedule::firstStubDateFromStubType( startDate, endDate, term );
                 firstStubDtPtr = &pfoddTemp;
                 lastStubDtPtr = nullptr;
             }
@@ -908,7 +908,7 @@ namespace etrading
             else if ( stubType == LONG_END_STUBTYPE )
             {
                 isStartRoll = true;
-                AQLDate pfoddTemp = AQLDateScheduleHelpers::lastStubDateFromStubType( startDate, endDate, term );
+                AQLDate pfoddTemp = AQLDateSchedule::lastStubDateFromStubType( startDate, endDate, term );
                 firstStubDtPtr = nullptr;
                 lastStubDtPtr = &pfoddTemp;
             }
@@ -1205,7 +1205,7 @@ namespace etrading
 		DoubleVector dVec;
 		for(size_t i=0;i<dateVec.size(); ++i)
 		{
-			dVec.push_back((double)(AQLDateScheduleHelpers::getExcelDate(dateVec[i])));
+			dVec.push_back((double)(AQLDateSchedule::getExcelDate(dateVec[i])));
 		}
 		return dVec;
 	}
@@ -1221,7 +1221,7 @@ namespace etrading
 		{
 			return std::numeric_limits<double>::quiet_NaN();
 		}
-        return ((double)(AQLDateScheduleHelpers::getExcelDate(date)));
+        return ((double)(AQLDateSchedule::getExcelDate(date)));
 	}
 
     /* @brief Transform dates from double format to AQLDate format
@@ -1233,7 +1233,7 @@ namespace etrading
 		DateVector dVec;
 		for(size_t i=0;i<doubleVec.size(); ++i)
 		{
-			dVec.push_back( AQLDateScheduleHelpers::getAQLDate( (int)( doubleVec[i] ) ) );
+			dVec.push_back( AQLDateSchedule::getAQLDate( (int)( doubleVec[i] ) ) );
 		}
 		return dVec;
 	}
@@ -1389,7 +1389,7 @@ namespace etrading
         else
         {
 			AQLString dayCountStr( toString( dayCount ).c_str() );
-            tao = AQLDateScheduleHelpers::getTerm( fromDate, toDate, dayCountStr, includeLast );
+            tao = AQLDateSchedule::getTerm( fromDate, toDate, dayCountStr, includeLast );
         }
         return tao;
     }
@@ -1612,14 +1612,14 @@ namespace etrading
     {
         if ( !useRollConvention )
 		{
-			AQLDate adjustedDate = AQLDateScheduleHelpers::getDate(unadjustedDate, tenorAdjustment, busDayAdj, calendar);
+			AQLDate adjustedDate = AQLDateSchedule::getDate(unadjustedDate, tenorAdjustment, busDayAdj, calendar);
             return adjustedDate;
 		}
 		else
         {
             DateVector inputs, outputs;
 		    inputs.push_back(unadjustedDate);
-            outputs = AQLDateScheduleHelpers::getMultiDate( inputs, tenorAdjustment, busDayAdj, calendar, &rollConvention );
+            outputs = AQLDateSchedule::getMultiDate( inputs, tenorAdjustment, busDayAdj, calendar, &rollConvention );
             AQLDate adjustedDate = outputs[0];
             return adjustedDate;
         }

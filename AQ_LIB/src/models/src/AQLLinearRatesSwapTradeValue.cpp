@@ -47,7 +47,7 @@
 #include "AQLLinearInterpolation.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceCouponForDigital2.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLCoreUtility.h"
 
 #include "AQLLinearRatesOptionValue.h"
@@ -1381,8 +1381,8 @@ AQLLinearRatesSwapTradeValue::do_value(const AQLDate& basedate, AQLObject& objec
 													pastcfStartdate_vec[0] = pastcfStartdates[j];
 													pastcfEnddate_vec[0] = pastcfEnddates[j];
 
-													DateMatrix regular_startenddates = AQLMathDateUtilities::calcRegularDates(frequency, calendar, slidingrule, pastcfStartdate_vec, pastcfEnddate_vec);
-													dc.setCouponsInYear(12 / AQLMathDateCalculations::getPeriodFrequencyInMonths(frequency));
+													DateMatrix regular_startenddates = etrading::AQLDateSchedule::calcRegularDates(frequency, calendar, slidingrule, pastcfStartdate_vec, pastcfEnddate_vec);
+													dc.setCouponsInYear(12 / AQLDateCalculations::getPeriodFrequencyInMonths(frequency));
 													dc.setCouponStartDates(regular_startenddates[0]);
 													dc.setCouponEndDates(regular_startenddates[1]);
 												}
@@ -2415,7 +2415,7 @@ void AQLLinearRatesSwapTradeValue::doSetUpStubCoefficient(AQLObject& coupon, AQL
 			AQLPriceDataCalendar &cal = dynamic_cast<AQLPriceDataCalendar &>(dh->get());
 
 			AQLDate spotdate = cal.getBusinessDay(asOf,spotlag);
-			AQLDate enddate = AQLMathDateCalculations::getDate(spotdate, termStr, true);
+			AQLDate enddate = AQLDateCalculations::getDate(spotdate, termStr, true);
 			enddate = (!sld.isNull() && !cal.isNull()) ? sld.getDate(enddate, cal) : enddate;
 
 			double temp_term = dc.getTerm(spotdate,enddate,false);
@@ -2549,7 +2549,7 @@ void AQLLinearRatesSwapTradeValue::doSetUpStubCoefficient(AQLObject& coupon, AQL
 			AQLPriceDataCalendar &cal = dynamic_cast<AQLPriceDataCalendar &>(dh->get());
 
 			AQLDate spotdate = cal.getBusinessDay(asOf,spotlag);
-			AQLDate enddate = AQLMathDateCalculations::getDate(spotdate, termStr, true);
+			AQLDate enddate = AQLDateCalculations::getDate(spotdate, termStr, true);
 			enddate = (!sld.isNull() && !cal.isNull()) ? sld.getDate(enddate, cal) : enddate;
 
 			double term = dc.getTerm(spotdate,enddate,false);

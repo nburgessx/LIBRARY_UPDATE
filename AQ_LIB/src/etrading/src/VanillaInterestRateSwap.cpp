@@ -1,5 +1,5 @@
 #include "VanillaInterestRateSwap.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "CommonConstants.h"
 #include "AQLCoreComponentManager.h"

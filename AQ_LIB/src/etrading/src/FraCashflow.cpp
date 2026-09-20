@@ -1,5 +1,5 @@
 #include "FraCashflow.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "ExceptionMacros.h"
 
 namespace etrading

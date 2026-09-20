@@ -23,7 +23,7 @@
 #include "AQLPriceDataFunction.h"
 #include "AQLBasic.h"
 #include "AQLAlgorithm.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLPriceCFGenUtility.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLSplineInterpolation.h"
@@ -256,14 +256,14 @@ AQLMathJamshidianSwaption::setUpDataProvider(const AQLDate& basedate, AQLObject&
 	dh = &(object.getData(IR_MODEL_DATA_FREQUENCY,ISNOTNULL));
 	AQLString frequency = dynamic_cast<AQLDataString &>(dh->get()).get();
 
-	AQLDate expdate = AQLMathDateCalculations::getDate(asof,optionmatu,sr,&fixcal,true);
-	AQLDate valuedate = AQLMathDateCalculations::getDate(asof,spotlag,sr,&fixcal,true);
-	AQLDate tmpdate = AQLMathDateCalculations::getDate(expdate,spotlag,sr,&fixcal,true);
+	AQLDate expdate = AQLDateCalculations::getDate(asof,optionmatu,sr,&fixcal,true);
+	AQLDate valuedate = AQLDateCalculations::getDate(asof,spotlag,sr,&fixcal,true);
+	AQLDate tmpdate = AQLDateCalculations::getDate(expdate,spotlag,sr,&fixcal,true);
 	
 	AQLPriceDataDayCount dc(ACT_365_ISDA);
-	AQLDate swapenddate = AQLMathDateCalculations::getDate(tmpdate,swapterm,sr,&paycal,true);
+	AQLDate swapenddate = AQLDateCalculations::getDate(tmpdate,swapterm,sr,&paycal,true);
 	DateVector datevec;
-	AQLMathDateCalculations::generateSchedule(expdate,swapenddate,frequency,true,NULL,NULL,NULL,datevec,&sr,&paycal);
+	AQLDateCalculations::generateSchedule(expdate,swapenddate,frequency,true,NULL,NULL,NULL,datevec,&sr,&paycal);
 	
 	datevec.insert(datevec.begin(),expdate);
 	DoubleArray gridvec(datevec.size(),0.0);

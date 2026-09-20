@@ -1,6 +1,6 @@
 #include "InflationSchedule.h"
 #include "InflationCashflow.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 
 #include "CurveUtilities.h"
 
@@ -134,7 +134,7 @@ namespace etrading
 		}
 
 		// TODO: Should we apply payLag *after* businessDayAdjustment?
-		AQLDate paymentDate = AQLDateScheduleHelpers::getDate( accrualEnd, payLag_ , toString( paymentbusinessDayAdj_ ), paymentCalendar_ );
+		AQLDate paymentDate = AQLDateSchedule::getDate( accrualEnd, payLag_ , toString( paymentbusinessDayAdj_ ), paymentCalendar_ );
 		paymentDates_.push_back( paymentDate );
 
 	}

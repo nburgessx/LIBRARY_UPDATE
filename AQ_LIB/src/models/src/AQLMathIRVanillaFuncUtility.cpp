@@ -82,7 +82,7 @@ static const double q_[6] __attribute__ ((aligned(64))) = {
 #include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLFunctionUtilities.h"
 #include "AQLMathCurveFuncUtility.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLObject.h"
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
@@ -98,7 +98,7 @@ static const double q_[6] __attribute__ ((aligned(64))) = {
 #include "AQLInterpolationBase.h"
 #include "AQLPriceDataDayCount.h"
 #include "AQLPriceCFGenUtility.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 #include "AQLPriceYieldGenerator.h"
 #include "AQLDataReference.h"
 #include "AQLAnalyticFormula.h"
@@ -168,8 +168,8 @@ AQLMathIRVanillaFuncUtility::bkOption(AQLString& optiontype, AQLString& buysell,
 	param.K	  = strike;
 	param.Vol = vol;
 	param.rd  = localrate;
-	param.Te  = AQLMathDateUtilities::getTerm(basedate, expirydate, daycount, true);
-	param.Td  = AQLMathDateUtilities::getTerm(spotdate, deliverydate, daycount, true);
+	param.Te  = etrading::AQLDateSchedule::getTerm(basedate, expirydate, daycount, true);
+	param.Td  = etrading::AQLDateSchedule::getTerm(spotdate, deliverydate, daycount, true);
 	param.Nu  = AQLMath::exp(-param.rd * param.Td );
 	param.ErrorCheck();	
 	
@@ -255,7 +255,7 @@ AQLMathIRVanillaFuncUtility::bkOption(AQLString optiontype,
 	param.F   = futureprice;
 	param.K	  = strike;
 	param.Vol = vol;
-	param.Te  = AQLMathDateUtilities::getTerm(basedate,expirydate,daycount,true);
+	param.Te  = etrading::AQLDateSchedule::getTerm(basedate,expirydate,daycount,true);
 	param.Nu  = NumeraireRatio;
 	param.ErrorCheck();	
 	if (it==var.end())							throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
@@ -288,8 +288,8 @@ AQLMathIRVanillaFuncUtility::bkOptionIV(AQLString& buysell, AQLString& callput,
 	param.F   = futureprice;
 	param.K	  = strike;
 	param.rd  = localrate;
-	param.Te  = AQLMathDateUtilities::getTerm(basedate,expirydate,   daycount, true);
-	param.Td  = AQLMathDateUtilities::getTerm(spotdate,deliverydate, daycount, true);
+	param.Te  = etrading::AQLDateSchedule::getTerm(basedate,expirydate,   daycount, true);
+	param.Td  = etrading::AQLDateSchedule::getTerm(spotdate,deliverydate, daycount, true);
 	param.Nu  = AQLMath::exp(-param.rd * param.Td );
 	param.ErrorCheck();
 	//Ready for p->calc method1
@@ -360,7 +360,7 @@ AQLMathIRVanillaFuncUtility::bkOptionIV(const AQLString& callput,
 	AnalyticBKParam param;
 	param.F   = futureprice;
 	param.K	  = strike;
-	param.Te  = AQLMathDateUtilities::getTerm(basedate,expirydate,daycount,true);
+	param.Te  = etrading::AQLDateSchedule::getTerm(basedate,expirydate,daycount,true);
 	param.Nu  = numeraire;
 	param.ErrorCheck();	
 	
@@ -400,9 +400,9 @@ AQLMathIRVanillaFuncUtility::getAnnuity(const AQLDate& fromdate, AQLString& term
 	//change nospace & upper
 	upper(term_str);
 	
-	AQLDate toDate = AQLMathDateCalculations::getDate(fromdate, term_str, true);
+	AQLDate toDate = AQLDateCalculations::getDate(fromdate, term_str, true);
 	DateVector out;
-	AQLMathDateCalculations::generateSchedule(fromdate, toDate, yc.getFrequency().get(),
+	AQLDateCalculations::generateSchedule(fromdate, toDate, yc.getFrequency().get(),
 							true, NULL, NULL, NULL, out, &yc.getSlidingRule(), &yc.getCalendar());
 	if(out.front() != fromdate)
 		out.insert(out.begin(), fromdate);
@@ -417,10 +417,10 @@ AQLMathIRVanillaFuncUtility::getCashSettledAnnuity(const AQLDate& fromdate, AQLS
 	//change nospace & upper
 	upper(term_str);
 	
-	AQLDate toDate = AQLMathDateCalculations::getDate(fromdate, term_str, true);
+	AQLDate toDate = AQLDateCalculations::getDate(fromdate, term_str, true);
 	DateVector out;
 	AQLString freq = yc.getFrequency().get();
-	AQLMathDateCalculations::generateSchedule(fromdate, toDate, freq,
+	AQLDateCalculations::generateSchedule(fromdate, toDate, freq,
 							true, NULL, NULL, NULL, out, &yc.getSlidingRule(), &yc.getCalendar());
 	if(out.front() != fromdate)
 		out.insert(out.begin(), fromdate);
@@ -484,14 +484,14 @@ AQLMathIRVanillaFuncUtility::capfloorOption(AQLDataInstance* dataInstance, AQLSt
 	int N=payVec.size();
 	DateVector fixVec(N);
 	for(int i =0; i<N;i++)
-		fixVec[i] = AQLMathDateCalculations::getDate(payVec[i],spotlag,sr2,&cal2,false); 
+		fixVec[i] = AQLDateCalculations::getDate(payVec[i],spotlag,sr2,&cal2,false); 
 	if(fixingdate > valuedate)
 		fixVec[0] = fixingdate;
 
     /*AQLDate tradeDate;
     if(fixingdate > valuedate)
     {
-        tradeDate = AQLMathDateCalculations::getDate(valuedate,spotlag,sr2,&cal2,false);
+        tradeDate = AQLDateCalculations::getDate(valuedate,spotlag,sr2,&cal2,false);
     }
     else
     {
@@ -653,7 +653,7 @@ AQLMathIRVanillaFuncUtility::capfloorOption_SABRParams(AQLDataInstance* dataInst
 	int N = payVec.size();
 	DateVector fixVec(N);
 	for (int i = 0; i<N; i++)
-		fixVec[i] = AQLMathDateCalculations::getDate(payVec[i], spotlag, sr2, &cal2, false);
+		fixVec[i] = AQLDateCalculations::getDate(payVec[i], spotlag, sr2, &cal2, false);
 	if (fixingdate > valuedate)
 		fixVec[0] = fixingdate;
 
@@ -832,10 +832,10 @@ AQLMathIRVanillaFuncUtility::capfloorOption(AQLDataInstance* dataInstance, AQLSt
 	cal2.convertFromString(fixingcalendar);
 
 	//lastpaymentdate
-	AQLDate tmpstart = AQLMathDateCalculations::getDate(fixingdate,spotlag,sr,&cal2,true);
+	AQLDate tmpstart = AQLDateCalculations::getDate(fixingdate,spotlag,sr,&cal2,true);
 	AQLDate endpay(tmpstart);
 	int y=0,m=0,d=0,w=0;
-	AQLMathDateCalculations::termStrtoYMDW(capterm,y,m,d,w);
+	AQLDateCalculations::termStrtoYMDW(capterm,y,m,d,w);
 	endpay.addYears(y);
 	endpay.addMonths(m);
 	endpay.addDays(d);
@@ -849,7 +849,7 @@ AQLMathIRVanillaFuncUtility::capfloorOption(AQLDataInstance* dataInstance, AQLSt
 	
 	//paymentvec;
 	DateVector payVec; 
-	AQLMathDateCalculations::generateSchedule(tmpstart,endpay,frequency,true,NULL,NULL,&roll,payVec,&sr,&cal);
+	AQLDateCalculations::generateSchedule(tmpstart,endpay,frequency,true,NULL,NULL,&roll,payVec,&sr,&cal);
 	if(fixingdate > valuedate)
 		payVec.insert(payVec.begin(),tmpstart);
 	
@@ -893,10 +893,10 @@ AQLMathIRVanillaFuncUtility::capfloorOption_SABRParams(AQLDataInstance* dataInst
 
 	//lastpaymentdate
 	AQLString roll_conv = "TRUE";
-	AQLDate tmpstart = AQLMathDateCalculations::getDate(fixingdate, spotlag, sr, &cal2, true, &roll_conv);
+	AQLDate tmpstart = AQLDateCalculations::getDate(fixingdate, spotlag, sr, &cal2, true, &roll_conv);
 	AQLDate endpay(tmpstart);
 	int y = 0, m = 0, d = 0, w = 0;
-	AQLMathDateCalculations::termStrtoYMDW(capterm, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(capterm, y, m, d, w);
 	endpay.addYears(y);
 	endpay.addMonths(m);
 	endpay.addDays(d);
@@ -910,7 +910,7 @@ AQLMathIRVanillaFuncUtility::capfloorOption_SABRParams(AQLDataInstance* dataInst
 
 	//paymentvec;
 	DateVector payVec;
-	AQLMathDateCalculations::generateSchedule(tmpstart, endpay, frequency, true, NULL, NULL, &roll, payVec, &sr, &cal);
+	AQLDateCalculations::generateSchedule(tmpstart, endpay, frequency, true, NULL, NULL, &roll, payVec, &sr, &cal);
 	if (fixingdate > valuedate)
 		payVec.insert(payVec.begin(), tmpstart);
 
@@ -1131,14 +1131,14 @@ AQLMathIRVanillaFuncUtility::capfloorOptionVol(AQLDataInstance* dataInstance, AQ
 	int N=payVec.size();
 	DateVector fixVec(N);
 	for(int i =0; i<N;i++)
-		fixVec[i]= AQLMathDateCalculations::getDate(payVec[i],spotlag,sr2,&cal2,false); 
+		fixVec[i]= AQLDateCalculations::getDate(payVec[i],spotlag,sr2,&cal2,false); 
 	if(fixingdate > valuedate)
 		fixVec[0] = fixingdate;
 
     /*AQLDate tradeDate;
     if(fixingdate > valuedate)
     {
-        tradeDate = AQLMathDateCalculations::getDate(valuedate,spotlag,sr2,&cal2,false);
+        tradeDate = AQLDateCalculations::getDate(valuedate,spotlag,sr2,&cal2,false);
     }
     else
     {
@@ -1290,10 +1290,10 @@ AQLMathIRVanillaFuncUtility::capfloorOptionVol(AQLDataInstance* dataInstance, AQ
 	cal2.convertFromString(fixingcalendar);
 
 	//lastpaymentdate
-	AQLDate tmpstart = AQLMathDateCalculations::getDate(fixingdate,spotlag,sr,&cal2,true);
+	AQLDate tmpstart = AQLDateCalculations::getDate(fixingdate,spotlag,sr,&cal2,true);
 	AQLDate endpay(tmpstart);
 	int y=0,m=0,d=0,w=0;
-	AQLMathDateCalculations::termStrtoYMDW(capterm,y,m,d,w);
+	AQLDateCalculations::termStrtoYMDW(capterm,y,m,d,w);
 	endpay.addYears(y);
 	endpay.addMonths(m);
 	endpay.addDays(d);
@@ -1308,7 +1308,7 @@ AQLMathIRVanillaFuncUtility::capfloorOptionVol(AQLDataInstance* dataInstance, AQ
 	
 	//paymentvec;
 	DateVector payVec; 
-	AQLMathDateCalculations::generateSchedule(tmpstart,endpay,frequency,true,NULL,NULL,&roll,payVec,&sr,&cal);
+	AQLDateCalculations::generateSchedule(tmpstart,endpay,frequency,true,NULL,NULL,&roll,payVec,&sr,&cal);
 	if(fixingdate > valuedate)
 		payVec.insert(payVec.begin(),tmpstart);
 	
@@ -1341,7 +1341,7 @@ AQLMathIRVanillaFuncUtility::swaption(AQLDataInstance* dataInstance, const AQLSt
 	AQLString offset("2d");
 	AQLString daycount(AC_365);
 		
-	AQLDate tmpMDate = AQLMathDateUtilities::getDate(tradedate,optionmaturity,mod,cal);
+	AQLDate tmpMDate = etrading::AQLDateSchedule::getDate(tradedate,optionmaturity,mod,cal);
 	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
 	
 	double ret = AQLMathIRVanillaFuncUtility::swaption(dataInstance,curveid,buysell,callput,nominal,strike,vol,
@@ -1384,7 +1384,7 @@ AQLMathIRVanillaFuncUtility::swaption(AQLDataInstance* dataInstance, const AQLSt
 	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
 	double oterm = conv.getTerm(optiontradedate,optionmaturitydate); 
 	//slidingRule is "FOLLOWING";
-	AQLDate tmpDate = AQLMathDateUtilities::getDate(optionmaturitydate,spotlag,fol,fixingcalendar); 
+	AQLDate tmpDate = etrading::AQLDateSchedule::getDate(optionmaturitydate,spotlag,fol,fixingcalendar); 
 	yc.setCurveType(dfCurveName);
 
 	//Suppose that optiontradedate is as of date
@@ -1541,7 +1541,7 @@ AQLMathIRVanillaFuncUtility::swaptionVol(AQLDataInstance* dataInstance, const AQ
 	double oterm = conv.getTerm(optiontradedate,optionmaturitydate); 
 	//slidingRule is "FOLLOWING";
 	AQLString fol(FOL);
-	AQLDate tmpDate = AQLMathDateUtilities::getDate(optionmaturitydate,spotlag,fol,fixingcalendar);
+	AQLDate tmpDate = etrading::AQLDateSchedule::getDate(optionmaturitydate,spotlag,fol,fixingcalendar);
 	yc.setCurveType(dfCurveName);
 
 	//Suppose that optiontradedate is as of date
@@ -1637,7 +1637,7 @@ AQLMathIRVanillaFuncUtility::swaption_NormalDist(AQLDataInstance* dataInstance, 
 	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
 	double oterm = conv.getTerm(optiontradedate,optionmaturitydate); 
 	//slidingRule is "FOLLOWING";
-	AQLDate tmpDate = AQLMathDateUtilities::getDate(optionmaturitydate,spotlag,fol,fixingcalendar); 
+	AQLDate tmpDate = etrading::AQLDateSchedule::getDate(optionmaturitydate,spotlag,fol,fixingcalendar); 
 	yc.setCurveType(dfCurveName);
 
 	//Suppose that optiontradedate is as of date
@@ -1885,9 +1885,9 @@ getConvexityAdjust2(AQLDataInstance* dataInstance, const AQLDate& asof,
 
 	AQLDate date_nonadjust;
 	if (pCalendar)
-		date_nonadjust = AQLMathDateUtilities::getDate(fixingDate, AQLString("0D"), fol, *pCalendar);
+		date_nonadjust = etrading::AQLDateSchedule::getDate(fixingDate, AQLString("0D"), fol, *pCalendar);
 	else
-		date_nonadjust = AQLMathDateUtilities::getDate(fixingDate, AQLString("0D"), fol, AQLString("TKB"));
+		date_nonadjust = etrading::AQLDateSchedule::getDate(fixingDate, AQLString("0D"), fol, AQLString("TKB"));
 
     AQLDate date1 = date_nonadjust;
 
@@ -1900,16 +1900,16 @@ getConvexityAdjust2(AQLDataInstance* dataInstance, const AQLDate& asof,
         AQLString term = AQLString(int(i * 6)) + AQLString("M");
 
 		if (pCalendar)
-			date_nonadjust = AQLMathDateUtilities::getDate(fixingDate, term, AQLString("NO_CHANGE"), *pCalendar);
+			date_nonadjust = etrading::AQLDateSchedule::getDate(fixingDate, term, AQLString("NO_CHANGE"), *pCalendar);
 		else
-			date_nonadjust = AQLMathDateUtilities::getDate(fixingDate, term, AQLString("NO_CHANGE"), AQLString("TKB"));
+			date_nonadjust = etrading::AQLDateSchedule::getDate(fixingDate, term, AQLString("NO_CHANGE"), AQLString("TKB"));
 
         AQLDate tmpDate = date_nonadjust;
 
 		if (pCalendar)
-			date1 = AQLMathDateUtilities::getDate(tmpDate, AQLString("0D"), fol, *pCalendar);
+			date1 = etrading::AQLDateSchedule::getDate(tmpDate, AQLString("0D"), fol, *pCalendar);
 		else
-			date1 = AQLMathDateUtilities::getDate(tmpDate, AQLString("0D"), fol, AQLString("TKB"));
+			date1 = etrading::AQLDateSchedule::getDate(tmpDate, AQLString("0D"), fol, AQLString("TKB"));
         
         datevec[i] = date1;
 		AQLPriceDataConvention conv1(ACT_365_ISDA,CONT);

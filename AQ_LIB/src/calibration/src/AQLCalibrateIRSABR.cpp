@@ -28,7 +28,7 @@
 #include "AQLCoreDataService.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLMathVolFuncIRSABR.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLMathCurveFuncUtility.h"
 #include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathValuableEntity.h"
@@ -198,7 +198,7 @@ AQLCalibrateIRSABR::setUp(AQLObjectPool &objPool, const AQLScenarioParam &param,
 		
 		for (unsigned int i = 0; i < expiryvec.size(); i++)
 		{
-			AQLDate toDate = AQLMathDateCalculations::getDate(asofDate,strexpiryvec[i],sr,&cal,true);
+			AQLDate toDate = AQLDateCalculations::getDate(asofDate,strexpiryvec[i],sr,&cal,true);
 			expirydatevec[i] = toDate;
 			expiryvec[i] = dc_act.getTerm(asofDate,toDate,true);
 		}
@@ -209,7 +209,7 @@ AQLCalibrateIRSABR::setUp(AQLObjectPool &objPool, const AQLScenarioParam &param,
 		for (unsigned int i = 0; i < tenorvec.size(); i++)
 		{
 			int y,m,d,w;
-			AQLMathDateCalculations::termStrtoYMDW(strtenorvec[i], y, m, d, w);
+			AQLDateCalculations::termStrtoYMDW(strtenorvec[i], y, m, d, w);
 			tenorvec[i] = static_cast<double > (y) + static_cast<double > (m) / 12;
 		}
 

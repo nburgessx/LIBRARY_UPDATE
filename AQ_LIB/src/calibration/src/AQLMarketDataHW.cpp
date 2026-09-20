@@ -89,7 +89,7 @@ AQLMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const AQLDate &asOfDate, c
 	cal.convertFromString(CITY_LnB);
 
 	DateVector dates;
-	AQLMathDateCalculations::generateSchedule(start, end, freq, true, 0, 0, 0, dates, &sliding, &cal);
+	AQLDateCalculations::generateSchedule(start, end, freq, true, 0, 0, 0, dates, &sliding, &cal);
 	
 	DateVector exDates;
 	//if (freq == FREQ_SEMI_ANNUAL)
@@ -106,7 +106,7 @@ AQLMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const AQLDate &asOfDate, c
 		exDates.resize(exTSize);
 		for (unsigned int i = 0; i < exTSize; ++i)
 		{
-			exDates[i] = AQLMathDateCalculations::getDate(asOfDate, exTenor[i], sliding, &cal, true);
+			exDates[i] = AQLDateCalculations::getDate(asOfDate, exTenor[i], sliding, &cal, true);
 		}
 		if (exDates[0] == start)
 		{

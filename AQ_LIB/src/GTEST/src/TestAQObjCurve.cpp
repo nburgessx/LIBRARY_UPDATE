@@ -70,7 +70,10 @@ namespace google_test
                                             etrading::EUR, boost::gregorian::date( 2016, 5, 3 ),
                                             etrading::LINEAR_INTERPOLATION, etrading::SEMI_ANNUAL_COMPOUNDING ,
                                             etrading::CURVE_TENOR_6M,  etrading::ARITHMETIC_COMPOUNDING_METHOD, etrading::MOD_FOLLOWING, "TGT", {}, false ),
-                      ETradingException );
+                      // CurveBuildProperties' consistency check validates via AQ_THROW
+                      // (AQLCoreInvalidData directly), not ETradingException - same
+                      // AQ_THROW/boost::format cleanup fallout as the other tests in this batch.
+                      AQLCoreInvalidData );
 
         CurveBuildProperties conventionUsed(	etrading::OIS_CURVETYPE, "CBP_for_MyCurveOutput", "EURYC", "OIS", etrading::EUR,
                                                 boost::gregorian::date( 2016, 5, 3 ), etrading::LINEAR_INTERPOLATION,
@@ -127,7 +130,7 @@ namespace google_test
         ptrToCurveOutput->setCurveBuildStaticDataObject( newConventionUsed );
         double my_df2 = ptrToCurveOutput->calculateDiscountFactor( "3M" );
 
-        const std::string readWriteFileName = etrading::getEnvironmentVariable( "AQ" ) + "/resource/test/inputs/ETrading/AQObjects/AQObjCurve/" + ptrToCurveOutput->getName() + ".json";
+        const std::string readWriteFileName = etrading::getEnvironmentVariable( "AQ" ) + "/resources/test/inputs/ETrading/AQObjects/AQObjCurve/" + ptrToCurveOutput->getName() + ".json";
 
         // I want to serialize an object to a file (local or pointing to an object in the cache)
         ptrToCurveOutput->serialize( etrading::serialize::JSON, etrading::serialize::FILE, readWriteFileName );
@@ -172,7 +175,11 @@ namespace google_test
         std::cout << ptrToCheck->calculateForwardRate( date0 ) << std::endl;
         std::cout << ptrToCheck->calculateForwardRate( date3 ) << std::endl;
         std::cout << ptrToCheck->calculateForwardRateUsingDiscountFactors( date0, date3, etrading::ACT_ACT_DAYCOUNT ) << std::endl;
-        EXPECT_THROW( ptrToCheck->calculateForwardRateUsingDiscountFactors( date3, date3, etrading::ACT_ACT_DAYCOUNT ), ETradingException );
+        // Same AQ_THROW/boost::format cleanup fallout as the assertion earlier in this test -
+        // AQObjCurve.cpp's accrual-date check validates via AQ_THROW (AQLCoreInvalidData
+        // directly), not ETradingException. This one was previously masked entirely: the test used
+        // to throw uncaught (the /resource/test/ path bug) before execution ever reached this line.
+        EXPECT_THROW( ptrToCheck->calculateForwardRateUsingDiscountFactors( date3, date3, etrading::ACT_ACT_DAYCOUNT ), AQLCoreInvalidData );
 
         // ( 0.00568 )( 0.00912 )( 0.01444 )( 0.02685 )( 0.01799 );
         EXPECT_DOUBLE_EQ( 0.00568, fwdr0 );

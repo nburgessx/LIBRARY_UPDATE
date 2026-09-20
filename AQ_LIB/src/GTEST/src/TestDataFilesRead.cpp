@@ -53,7 +53,11 @@ namespace google_test
     TEST_F( TestDataFilesRead, UNIT_TestBasics )
     {
         const ReadDataFile::Load& inputFile = TestDataFilesRead::inputFile();
-        EXPECT_THROW( inputFile["non-existent key"], ReadDataFile::Exception );
+        // This lookup validates via AQ_THROW (constructs AQLCoreInvalidData directly), not the
+        // component-specific ReadDataFile::Exception - see the same note on TestDataFilesCreate's
+        // beginTestCount() test. AQLCoreAppError below still passes either way (both are its
+        // children) - keeping that line as the "catchable via the shared base" check.
+        EXPECT_THROW( inputFile["non-existent key"], AQLCoreInvalidData );
         EXPECT_THROW( inputFile["non-existent key"], AQLCoreAppError );
         EXPECT_THROW( inputFile["non-existent key"], std::exception );
 
@@ -259,7 +263,7 @@ namespace google_test
         EXPECT_THROW( oisRates( "5M", 17 ), AQLCoreAppError );
         EXPECT_THROW( oisRates( 88, 44 ), AQLCoreAppError );
 
-        EXPECT_THROW( std::vector<double> v = inputFile["OISRates"], ReadDataFile::Exception );
+        EXPECT_THROW( std::vector<double> v = inputFile["OISRates"], AQLCoreInvalidData );
         EXPECT_THROW( std::vector<double> v = inputFile["OISRates"], AQLCoreAppError );
 
         ReadDataFile x0( oisRates );

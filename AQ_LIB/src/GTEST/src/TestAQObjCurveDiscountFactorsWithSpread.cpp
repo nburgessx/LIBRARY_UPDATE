@@ -14,7 +14,7 @@
 #include <boost/range/irange.hpp>
 
 #include "CurveOis.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 
 #include "tryAqSwapObjectPricing.h"
 #include "JSONInfoBlock.h"          // JSON InfoBlock Helpers

@@ -32,7 +32,7 @@
 #include "AQLMarketData.h"
 #include "AQLPriceArbFreeGenerator.h"
 #include "AQLFunctionUtilities.h"
-#include "AQLMathDateCalculations.h"
+#include "AQLDateCalculations.h"
 
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 
@@ -3647,12 +3647,12 @@ AQLCalibrateModelIR::setUpGenCurveData(AQLDataInstance &dataInstance, AQLString 
 			else if (futureDataMtx[i].size() == 3)
 			{
 				term = futureDataMtx[i][0].toUpper();
-				startDate = AQLMathDateCalculations::getIMMDateFromTerm(asOfDate, term);
-				startDate = AQLMathDateCalculations::getDate(startDate, "0d", slidingF, &calF, true);
-				endDate = AQLMathDateCalculations::getDate(startDate, "3M", slidingF, &calF, true);
+				startDate = AQLDateCalculations::getIMMDateFromTerm(asOfDate, term);
+				startDate = AQLDateCalculations::getDate(startDate, "0d", slidingF, &calF, true);
+				endDate = AQLDateCalculations::getDate(startDate, "3M", slidingF, &calF, true);
 				int mm = endDate.monthOfYear();
 				int yy = endDate.yearOfEra();
-				endDate = AQLMathDateCalculations::getIMMDate(yy, mm, true);
+				endDate = AQLDateCalculations::getIMMDate(yy, mm, true);
 				
 				futurePrice = futureDataMtx[i][1].getDoubleValue();
 				rate = 1.0 - futurePrice * 0.01;
@@ -4179,7 +4179,7 @@ AQLCalibrateModelIR::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLStri
 		loBasisName == AQ_NO_DATA ? LOBASIS : loBasisName;
 		ycPro.AQLObject::remove(IR_CALIBRATION_DATA_LOBASISNAME + suffix_data);
 		ycPro.AQLObject::add(IR_CALIBRATION_DATA_LOBASISNAME + suffix_data, new AQLDataString(loBasisName));
-		date_lt = AQLMathDateCalculations::getDate(asOfDate, longTerm, true);
+		date_lt = AQLDateCalculations::getDate(asOfDate, longTerm, true);
 	}
 
 	unsigned int j2 = 0;
@@ -4279,7 +4279,7 @@ AQLCalibrateModelIR::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLStri
 					mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
 				else
 				{
-					bool IsInLongTerm = (AQLMathDateCalculations::getDate(asOfDate, term, true) >= date_lt);
+					bool IsInLongTerm = (AQLDateCalculations::getDate(asOfDate, term, true) >= date_lt);
 					if (!IsInLongTerm)
 						// In middle term
 						mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
@@ -4369,7 +4369,7 @@ AQLCalibrateModelIR::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLStri
 		else //FF non startdate type
 		{
 			AQLString term = fedFundFutureDataMtx[i][0].toUpper();
-			DateVector ffdates = AQLMathDateCalculations::getFFDatesFromTerm(asOfDate,term);
+			DateVector ffdates = AQLDateCalculations::getFFDatesFromTerm(asOfDate,term);
 			if (ffdates.size() != 2)
 				throw AQLCoreInvalidData("FF dates error",__FILE__,__LINE__);
 
@@ -4741,10 +4741,10 @@ AQLCalibrateModelIR::dataoutCurve(const AQLStringVector &curveNames, AQLObject &
 bool 
 AQLCalibrateModelIR::checkFrequency(const AQLString& freq, const AQLString& mktRateTerm) const
 {
-	int span = AQLMathDateCalculations::getPeriodFrequencyInMonths(freq);
+	int span = AQLDateCalculations::getPeriodFrequencyInMonths(freq);
 
 	int y, m, d, w;
-	AQLMathDateCalculations::termStrtoYMDW(mktRateTerm, y, m, d, w);
+	AQLDateCalculations::termStrtoYMDW(mktRateTerm, y, m, d, w);
 	int moth_mkt_term = 12 * y + m;
 
 	return (moth_mkt_term % span) == 0;
@@ -5041,7 +5041,7 @@ AQLCalibrateModelIR::setUpLiborOISBasisCurveData(AQLDataInstance &dataInstance, 
 	}
 
 	suffix_lo = AQLString("." + marketName).toLower();
-	date_lt = AQLMathDateCalculations::getDate(asOfDate, longTerm, true);
+	date_lt = AQLDateCalculations::getDate(asOfDate, longTerm, true);
 	AQLString lobasisFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + suffix_lo);
 	AQLFileAccessor lobasisFile(AQLMarketData::getNumFileName(lobasisFileName));
 	lobasisFile.readAllData(MARKET_DATA_DELIMITER, lobasisDataMtx);
@@ -5167,7 +5167,7 @@ AQLCalibrateModelIR::setUpLiborOISBasisCurveData(AQLDataInstance &dataInstance, 
 	{
 		// get term & check
 		AQLString term = lobasisDataMtx[i][0];
-		const AQLDate date = AQLMathDateCalculations::getDate(asOfDate, term, true);
+		const AQLDate date = AQLDateCalculations::getDate(asOfDate, term, true);
 		bool isLongTerm = true;
 		if (date < date_lt)
 		{

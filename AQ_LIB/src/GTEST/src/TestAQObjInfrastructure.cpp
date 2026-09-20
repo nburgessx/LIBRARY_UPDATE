@@ -568,16 +568,19 @@ namespace google_test
 		EXPECT_DOUBLE_EQ( secondColumn.at( 0 ).getValue<double>(),  1.231 );
 		EXPECT_DOUBLE_EQ( secondColumn.at( 4 ).getValue<double>(),  91224.124314 );
 
-		EXPECT_THROW( freeObject.getValuesCopy( "MATRIX2D", 2, true ), ETradingException );
-		EXPECT_THROW( freeObject.getValuesCopy( "MATRIX2D", 5, false ), ETradingException );
+		// DataHolder's bounds checks all validate via AQ_THROW (AQLCoreInvalidData directly), not
+		// ETradingException - same AQ_THROW/boost::format cleanup fallout as the other tests in
+		// this batch.
+		EXPECT_THROW( freeObject.getValuesCopy( "MATRIX2D", 2, true ), AQLCoreInvalidData );
+		EXPECT_THROW( freeObject.getValuesCopy( "MATRIX2D", 5, false ), AQLCoreInvalidData );
 
-		EXPECT_THROW( freeObject.getValueCopy( "MATRIX2D", 0, 5 ), ETradingException );
-		EXPECT_THROW( freeObject.getValueCopy( "MATRIX2D", 2, 4 ), ETradingException );
+		EXPECT_THROW( freeObject.getValueCopy( "MATRIX2D", 0, 5 ), AQLCoreInvalidData );
+		EXPECT_THROW( freeObject.getValueCopy( "MATRIX2D", 2, 4 ), AQLCoreInvalidData );
 
 		freeObject.clearAll();
 
-		EXPECT_THROW( freeObject.getValuesCopy( "MATRIX2D", 0 ), ETradingException );
-		EXPECT_THROW( freeObject.getValuesCopy( "MATRIX2D", 1 ), ETradingException );
+		EXPECT_THROW( freeObject.getValuesCopy( "MATRIX2D", 0 ), AQLCoreInvalidData );
+		EXPECT_THROW( freeObject.getValuesCopy( "MATRIX2D", 1 ), AQLCoreInvalidData );
 
 #define SK3(NAME,C1_TYPE,C2_TYPE,C3_TYPE, C1_NAME,C2_NAME, C3_NAME) \
 	#NAME, 3, boost::assign::list_of(etrading::C1_TYPE)(etrading::C2_TYPE)(etrading::C3_TYPE), boost::assign::list_of(#C1_NAME)(#C2_NAME)(#C3_NAME)   \

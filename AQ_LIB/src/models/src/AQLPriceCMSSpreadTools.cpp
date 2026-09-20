@@ -10,7 +10,7 @@
 #include "AQLMathParameterUtility.h"
 #include "AQLMathOptionTools.h"
 #include "AQLPriceCopulaCMSSpread.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLOptimumBrent.h"
 
 //================ Pricing ===================================
@@ -75,7 +75,7 @@ AQLPriceCMSMLATMTarget AQLPriceCMSSpreadUtility::WarmUpMLPrice(AQLDataInstance* 
     // Other inputs
     AQLString ccy = AQLFunctionUtilities::findElement(pricingConfig, "Currency");
     AQLString colCcy = ccy;
-    AQLDate valDate = AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    AQLDate valDate = etrading::AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
 
     // Curves
     CurveInfo discCurveInfo = AQLPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
@@ -92,16 +92,16 @@ AQLPriceCMSMLATMTarget AQLPriceCMSSpreadUtility::WarmUpMLPrice(AQLDataInstance* 
 
     // Generate month vector from fixing dates
     AQLString frequency = AQLFunctionUtilities::findElement(legScheduler, "Frequency");
-    AQLString freqTerm = FrequencyToTerm(frequency);
-    int monthLength = TermToMonthLength(freqTerm);
+    AQLString freqTerm = etrading::FrequencyToTerm(frequency);
+    int monthLength = etrading::TermToMonthLength(freqTerm);
     size_t nFlows = schedule.size();
     vector<size_t> months(nFlows);
     months[0] = 0;
     for (size_t i = 1; i < nFlows; i++)
         months[i] = months[i - 1] + monthLength;
 
-    int startLength = TermToMonthLength(startTerm);
-    int endLength = TermToMonthLength(endTerm);
+    int startLength = etrading::TermToMonthLength(startTerm);
+    int endLength = etrading::TermToMonthLength(endTerm);
 
     return AQLPriceCMSMLATMTarget(dataInstance, ccy, valDate, rate1, rate2, proxySpreadID, schedule, months, startLength, endLength,
                             discCurveInfo, copType, confidence);
@@ -121,12 +121,12 @@ void AQLPriceCMSSpreadUtility::WarmUpCMSSpread(AQLDataInstance* dataInstance, co
     AQLString colCcy = ccy;
     ReplicationConfig repConfig = GetReplicationConfig(pricingConfig);
     double shift = AQLFunctionUtilities::findElement(pricingConfig, "Shift").getDoubleValue();
-    AQLDate valDate = AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    AQLDate valDate = etrading::AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
 
     // Curves
     CurveInfo discCurveInfo = AQLPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
     AQLString cmsFloatFreq = AQLFunctionUtilities::findElement(cmsScheduler, "FloatLegFrequency");
-    CurveInfo cmsCurveInfo = AQLPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, FrequencyToTerm(cmsFloatFreq));
+    CurveInfo cmsCurveInfo = AQLPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, etrading::FrequencyToTerm(cmsFloatFreq));
 
     // Swap rate definitions and parameters
     rate1 = SwapRateInfo(dataInstance, ccy, tenor1, discCurveInfo, cmsCurveInfo, cmsScheduler, repConfig, shift);
@@ -140,7 +140,7 @@ double AQLPriceCMSSpreadUtility::CMSSpreadSLATM(AQLDataInstance* dataInstance, c
     SwapRateInfo rate1, rate2;
     WarmUpCMSSpread(dataInstance, tenor1, tenor2, expiryTerm, pricingConfig, legScheduler, cmsScheduler, rate1, rate2);
 
-    AQLDate valDate = AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    AQLDate valDate = etrading::AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
     CashFlowTiming cf = AQLMathScheduleUtility::CashFlowSchedule(valDate, expiryTerm, legScheduler, cmsScheduler);
     cf.accrual = 0.0;
 
@@ -162,7 +162,7 @@ double AQLPriceCMSSpreadUtility::CMSSpreadSLPrice(AQLDataInstance* dataInstance,
     // Other inputs
     AQLString ccy = AQLFunctionUtilities::findElement(pricingConfig, "Currency");
     AQLString colCcy = ccy;
-    AQLDate valDate = AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    AQLDate valDate = etrading::AQLStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
 
     // Curves
     CurveInfo discCurveInfo = AQLPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
@@ -180,7 +180,7 @@ double AQLPriceCMSSpreadUtility::CMSSpreadSLPrice(AQLDataInstance* dataInstance,
     rate2.CMSDistribution(valDate, cf, CMS2, vol2);
 
     // Copula parameters
-    double t = ModelTime(valDate, cf.fixing);
+    double t = etrading::ModelTime(valDate, cf.fixing);
     AQLString pairID = proxySpreadID;
     size_t nCopParams = 3;
     if (AQ_COP_NAMES.size() < nCopParams)
@@ -372,7 +372,7 @@ AQLPriceCMSMLATMTarget::AQLPriceCMSMLATMTarget(AQLDataInstance* dataInstance, co
             DoubleVector copParams(3);
             copParams[0] = theta1; copParams[1] = theta2; copParams[2] = rho;
 
-            double t = ModelTime(valDate, cf.fixing);
+            double t = etrading::ModelTime(valDate, cf.fixing);
             double df = AQLPriceCMSObject::DiscountFactor(mDiscCurveInfo, mValDate, cf.payment);
 
             mCMS1.push_back(CMS1); mVol1.push_back(vol1); mCMS2.push_back(CMS2); mVol2.push_back(vol2);

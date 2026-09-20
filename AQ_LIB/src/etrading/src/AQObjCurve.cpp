@@ -11,7 +11,7 @@
 #include "DateUtilities.h"
 #include "InterpolationFactory.h"
 #include "AQObjUtilities.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "EntityPoolUtilities.h"
 #include "AQLMathInterpolationUtilities.h"
 
@@ -834,7 +834,7 @@ aqMsg54 << "AQObjCurve::calculateForwardRate(date) => unadjustedFixingDate suppl
         // Forward Rates are saved and indexed by an ACT/365 yearFraction
         const bool includeLast = true;
 		AQLString dayCount("ACT/365");
-        const double yearFractionForFixingDate = AQLDateScheduleHelpers::getTerm( toAQLDateFromGregorianDate( asOfDate ), toAQLDateFromGregorianDate( unadjustedFixingDate ), dayCount, includeLast );
+        const double yearFractionForFixingDate = AQLDateSchedule::getTerm( toAQLDateFromGregorianDate( asOfDate ), toAQLDateFromGregorianDate( unadjustedFixingDate ), dayCount, includeLast );
 
         return calculateForwardRate( yearFractionForFixingDate );
     };

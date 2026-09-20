@@ -5,7 +5,7 @@
 #endif
 
 #include "AQLPriceSwapRateCalculator.h"
-#include "AQLMathDateUtilities.h"
+#include "AQLDateSchedule.h"
 #include "AQLFunctionUtilities.h"
 #include "AQLMathCurveFuncUtility.h"
 #include "AQLPriceSwaptionCalculator.h"
@@ -37,8 +37,8 @@ SwapRateInfo::SwapRateInfo(AQLDataInstance* dataInstance, const AQLString& ccy, 
         mTailIDs[k] = AQLPriceCMSObject::MatrixID("_" + AQ_TAIL_NAMES[k] + "_", ccy);
 
     // For CMSs
-    mTau = AQLPriceCMSObject::TermToTau(FrequencyToTerm(mFixedLegFreq));
-    double cmsLength = TermToYearLength(mTenor);
+    mTau = AQLPriceCMSObject::TermToTau(etrading::FrequencyToTerm(mFixedLegFreq));
+    double cmsLength = etrading::TermToYearLength(mTenor);
     mNCashFlows = cmsLength / mTau;
 }
 
@@ -59,7 +59,7 @@ double SwapRateInfo::ForwardSwapRate(AQLDate settlDate)
                                          fixedLegFreq, indexDaycount, indexSlidingRule, indexCalendar, interpolation,
                                          fwdCurveInfo.curveName, discCurveInfo.curveName,
                                          fwdCurveInfo.isFwdInterpolated,
-                                         eomroll && is_last_business_day_temp(settlDate, indexCalendar) ? &roll_convention : NULL);
+                                         eomroll && etrading::is_last_business_day_temp(settlDate, indexCalendar) ? &roll_convention : NULL);
 }
 
 double SwapRateInfo::Annuity(AQLDate settlDate)
@@ -73,7 +73,7 @@ double SwapRateInfo::Annuity(AQLDate settlDate)
     AQLPriceDataSlidingRule paySlidingRule = mPaySlidingRule;
     AQLPriceDataCalendar payCalendar = mPayCalendar;
 
-    AQLDate mtyDate = CalendarAdvance(settlDate, swapTerm, paySlidingRule, payCalendar);
+    AQLDate mtyDate = etrading::CalendarAdvance(settlDate, swapTerm, paySlidingRule, payCalendar);
     AQLDate* fodd = NULL;
     AQLDate* lodd = NULL;
     int* day = NULL;
@@ -122,7 +122,7 @@ double SwapRateInfo::CMSForward(AQLDate valDate, CashFlowTiming cf)
 {
     double fwd = ForwardSwapRate(cf.indexSettlement);
     double annuity = Annuity(cf.indexSettlement);
-    double expiry = ModelTime(valDate, cf.fixing);
+    double expiry = etrading::ModelTime(valDate, cf.fixing);
     double dfPay = AQLPriceCMSObject::DiscountFactor(mDiscCurveInfo, valDate, cf.payment);
     double tau = Tau();
     double nCashFlows = NCashFlows();
@@ -162,7 +162,7 @@ void SwapRateInfo::CMSDistribution(AQLDate valDate, CashFlowTiming cf, double& c
 {
     double fwd = ForwardSwapRate(cf.indexSettlement);
     double annuity = Annuity(cf.indexSettlement);
-    double expiry = ModelTime(valDate, cf.fixing);
+    double expiry = etrading::ModelTime(valDate, cf.fixing);
     double dfPay = AQLPriceCMSObject::DiscountFactor(mDiscCurveInfo, valDate, cf.payment);
     double tau = Tau();
     double nCashFlows = NCashFlows();

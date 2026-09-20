@@ -7,7 +7,7 @@
 #include "StructuredExceptionHandler.h"
 #include "CreateDataFile.h"
 #include "RecordMacros.h"
-#include "AQLDateScheduleHelpers.h"
+#include "AQLDateSchedule.h"
 #include "AQLCurveForwardRateHelpers.h"
 #include "ParameterValidation.h"
 #include "tryAqDate.h"
