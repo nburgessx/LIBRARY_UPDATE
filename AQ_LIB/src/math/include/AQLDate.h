@@ -13,6 +13,11 @@
 // AQLDate AQLDayOfWeekEnum Enumerator
 enum AQLDayOfWeekEnum {SUN = 0, MON, TUE, WED, THU, FRI, SAT};
 
+// Multipliers for cmp()'s decimal date-ranking fallback (digit of YYYYMMDD). Moved here from
+// AQLDate.cpp (2026-09-20) alongside cmp() itself becoming inline - see cmp()'s own comment.
+static const int AQLDATE_CMP_YEAR_RANK  = 10000;
+static const int AQLDATE_CMP_MONTH_RANK = 100;
+
 class AQLDate
 {
 
@@ -108,7 +113,39 @@ public:
     // Converters
     virtual AQLString    stringWithFormat(const char_t* format="YYYYMMDD") const;
     virtual AQLString    convertDateToString(const char_t* format="YYYYMMDD") const;
-    int					 cmp(const AQLDate& rTime) const noexcept;
+
+    // Defined inline (2026-09-20 profiling fix), not out-of-line in AQLDate.cpp as before.
+    // Every comparison operator below (operator==, <, >, ...) is already inline and calls this -
+    // but with WholeProgramOptimization/LTCG off in every build config (deliberately, per
+    // CLAUDE.md's "full build in minutes, not hours"), the compiler had no way to inline this
+    // trivial ~6-instruction body across the .cpp/.h translation-unit boundary. Every single date
+    // comparison anywhere in this codebase was paying a real out-of-line call for it - profiled
+    // and confirmed as a real hotspot (227 calls / 1.20% of a bond-pricing run's total time, with
+    // the two atomic loads and the final return individually showing up as hot lines, which is
+    // exactly what call/return overhead dominating a trivial body looks like). Defining it here
+    // instead fixes it for every caller, everywhere, permanently - without turning on LTCG (and
+    // its real link-time cost) library-wide just for this one function.
+    int cmp(const AQLDate& rTime) const noexcept
+    {
+        // julius_ is a lazy cache (see the field comment below): opportunistically use it if both
+        // sides already have it (one relaxed atomic load each, cheaper than the decimal ranking
+        // below and exact for any valid calendar date), but never force a computation neither side
+        // already paid for - most callers (schedule-generation loops that mutate a date and
+        // immediately compare it) never populate the cache at all, so the decimal path is the
+        // common case, not a fallback.
+        const long thisJulius = julius_.load(std::memory_order_relaxed);
+        const long thatJulius = rTime.julius_.load(std::memory_order_relaxed);
+        if ( thisJulius != 0 && thatJulius != 0 )
+        {
+            if ( thisJulius < thatJulius ) return -1;
+            if ( thisJulius > thatJulius ) return 1;
+            return 0;
+        }
+
+        return (((int)year_ - (int)(rTime.year_)) * AQLDATE_CMP_YEAR_RANK +
+                ((int)month_ - (int)(rTime.month_)) * AQLDATE_CMP_MONTH_RANK +
+                ((int)day_ - (int)(rTime.day_)));
+    }
 
     // Time Intervals
     int					intervalDays(const AQLDate& toDate) const noexcept;

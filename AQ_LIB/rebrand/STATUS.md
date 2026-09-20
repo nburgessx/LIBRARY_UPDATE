@@ -4397,3 +4397,55 @@ bitten this session before).
 divide-by-zero case included) against the fresh binary - **all 86 pass**, ~105s total, nothing
 anomalously slow. Full-suite timing comparison not done this session (token budget) - Nicholas to
 confirm the perceived slowdown is gone on his own full run.
+
+**Follow-up, same session:** the remaining `TestStructuredExceptionHandler.UNIT_IntegerDivideByZero`
+report was traced to Visual Studio Test Explorer's own test-host process intercepting the hardware
+exception ahead of `_set_se_translator` - confirmed by direct `.exe` invocation passing (both
+isolated and batched, matching the user's exact `--gtest_filter`) while Test Explorer fails
+consistently. Not a code bug; a known category of test-runner/SEH interaction. Running `GTEST.exe`
+directly remains the reliable way to verify this specific test.
+
+### `ExceptionHandling` audit across every project/config, prompted by the above (2026-09-20, same session)
+
+Nicholas asked to check exception handling was enabled on every config, every project, suspecting
+a gap related to the above. Audited all 8 `.vcxproj` files: **`/EHa` (Async) is correctly set on
+every real x64 build configuration everywhere** - `math`/`models`/`calibration`/`etrading`/
+`validation`/`AQ_API`/`AQ_XLL`/`GTEST`, including all 5 of `AQ_XLL`'s edition-gated
+`Release_XL_*` configs. Two apparent gaps (`GTEST` 8 declared configs vs 4 `Async` entries,
+`AQ_XLL` 17 vs 9) were both explained by vestigial `Win32` platform declarations that carry no
+real compile settings at all (confirmed by inspection - just a leftover linker option) - `CLAUDE.md`
+already states this codebase is x64-only. No fix needed here; the earlier SEH investigation's
+findings stand as the actual explanation.
+
+### `ReleaseProfiler` across every project was missing `<Optimization>` - real bug, fixed (2026-09-20, same session)
+
+Nicholas asked to check `ReleaseProfiler` configs specifically - intended as Release settings
+(full optimization) plus debug symbols so a profiler can resolve function names/line numbers, not
+a debug build. Investigating this surfaced a genuine, repo-wide bug, bigger than just
+`ReleaseProfiler`:
+
+- **`math`/`models`/`calibration`/`etrading`/`validation`/`GTEST` were all missing
+  `<Optimization>` entirely in both `Release|x64` AND `ReleaseProfiler|x64`** - when `cl.exe`
+  receives no `/O` flag at all, it defaults to no optimization, the same as `/Od`. So every
+  "Release" build of the actual business-logic static libraries in this solution has likely never
+  been genuinely optimized, despite `NDEBUG` being correctly defined and looking release-like.
+  **`AQ_XLL` was the one project already correctly configured** (`Optimization=MaxSpeed`
+  everywhere, including all `Release_XL_*` editions) - but since `AQ_XLL`/`GTEST` link against the
+  5 static libs that were all missing it, even AQ_XLL's own correctly-optimized compilation units
+  were sitting on top of unoptimized business logic.
+- **Linker-side settings were already correct** (checked before assuming the same bug there):
+  `GenerateDebugInformation` is `false` for `Release` and `true` for `ReleaseProfiler` in both
+  `GTEST` and `AQ_XLL` (the two projects that actually link a final binary) - so PDB
+  generation/linking was never the problem, only the missing compile-time optimization flag.
+- **Fix**: added `<Optimization>MaxSpeed</Optimization>` to both `Release|x64` and
+  `ReleaseProfiler|x64` in all 6 affected files, matching `AQ_XLL`'s existing value. Additionally
+  added `<OmitFramePointers>false</OmitFramePointers>` to `ReleaseProfiler|x64` only (not
+  `Release`) - keeps frame pointers so the profiler gets accurate call stacks even with full
+  optimization on, the one deliberate difference from plain `Release` beyond symbols.
+
+**Verification**: `math` full Rebuild in `ReleaseProfiler|x64` - clean (exit 0), confirms the
+added `<Optimization>` element doesn't break compilation. **Not yet rebuilt in every config for
+every project** (token budget) - recommend Nicholas do a full solution rebuild in both `Release`
+and `ReleaseProfiler` across all 6 fixed projects to confirm, and ideally a before/after timing
+comparison on a hot pricing path to see the real-world impact of years of builds running
+unoptimized.

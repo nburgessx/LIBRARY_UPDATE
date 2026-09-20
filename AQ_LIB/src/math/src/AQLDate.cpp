@@ -17,8 +17,8 @@ static const int  MONTHS_OF_YEAR         = 12;       // number of months
 static const int  DAYS_OF_WEEK           = 7;        // number of days in a week
 static const int  WEEK_ADJUST            = 0;        // week adjust
 
-static const int  YEAR_RANK              = 10000;    // multiplier for date comparison(digit of the year of YYYYMMDD)
-static const int  MONTH_RANK             = 100;      // multiplier for date comparison(digit of the month of YYYYMMDD)
+// YEAR_RANK/MONTH_RANK moved to AQLDate.h as AQLDATE_CMP_YEAR_RANK/AQLDATE_CMP_MONTH_RANK
+// (2026-09-20) - cmp() itself moved there too, see its comment for why.
 
 
 /* 
@@ -378,35 +378,7 @@ AQLString AQLDate::convertDateToString( const char_t* format) const
     return st;
 }
 
-/*!
-    @brief make a comparison of date. Returns a positive value for a new date
-
-    @param[in] rDate    date to compare
-
-    @retval     > 0     new date
-    @retval     0       same date
-    @retval     < 0     old date
-*/
-int AQLDate::cmp(const AQLDate& rDate) const noexcept
-{
-    // julius_ is a lazy cache (see the field comment in AQLDate.h): opportunistically use it if both
-    // sides already have it (one relaxed atomic load each, cheaper than the decimal ranking below and
-    // exact for any valid calendar date), but never force a computation neither side already paid
-    // for - most callers (schedule-generation loops that mutate a date and immediately compare it)
-    // never populate the cache at all, so the decimal path is the common case, not a fallback.
-    long thisJulius = julius_.load(std::memory_order_relaxed);
-    long thatJulius = rDate.julius_.load(std::memory_order_relaxed);
-    if ( thisJulius != 0 && thatJulius != 0 )
-    {
-        if ( thisJulius < thatJulius ) return -1;
-        if ( thisJulius > thatJulius ) return 1;
-        return 0;
-    }
-
-    return (((int)year_ - (int)(rDate.year_)) * YEAR_RANK +
-            ((int)month_ - (int)(rDate.month_)) * MONTH_RANK +
-            ((int)day_ - (int)(rDate.day_)));
-}
+// cmp() moved inline into AQLDate.h (2026-09-20 profiling fix) - see its comment there for why.
 
 int AQLDate::intervalDays(const AQLDate& toDate) const noexcept
 {

@@ -316,7 +316,16 @@ int AQLString::findString(const char_t c) const
 
 bool AQLString::startsWith(const AQLString& pString) const noexcept
 {
-    return startsWith(pString.getCString());
+    // Takes pString's length via .size() (O(1), already known) rather than delegating to the
+    // char_t* overload, which would have to re-measure it with STRLEN - a real, avoidable strlen()
+    // call on a length AQLString already has on hand. Fixed 2026-09-20 during a profiling pass
+    // that flagged strlen() as a hotspot elsewhere in this codebase (findString(), not this method
+    // - these two overloads had no callers yet - but no reason to leave the same mistake in place
+    // once spotted).
+    const unsigned int prefixLen = pString.size();
+    if (prefixLen > size()) return false;
+    if (prefixLen == 0) return true;
+    return memcmp(getCString(), pString.getCString(), prefixLen * sizeof(char_t)) == 0;
 }
 
 bool AQLString::startsWith(const char_t* pString) const noexcept
@@ -330,7 +339,11 @@ bool AQLString::startsWith(const char_t* pString) const noexcept
 
 bool AQLString::endsWith(const AQLString& pString) const noexcept
 {
-    return endsWith(pString.getCString());
+    // See startsWith(const AQLString&)'s comment - same fix, same reason.
+    const unsigned int suffixLen = pString.size();
+    if (suffixLen > size()) return false;
+    if (suffixLen == 0) return true;
+    return memcmp(getCString() + (size() - suffixLen), pString.getCString(), suffixLen * sizeof(char_t)) == 0;
 }
 
 bool AQLString::endsWith(const char_t* pString) const noexcept
