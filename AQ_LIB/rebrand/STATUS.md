@@ -4369,3 +4369,31 @@ vector below 64 elements) and `getMultiDate`/`calcDatesWithLag` are both covered
 targeted run from the consolidation batch above, but that run predates these specific edits.
 **Recommend a rerun of at least `TestStubDates`/`TestDatesSwapSchedule`/`TestSABRCalibration`
 next session before considering this batch fully closed.**
+
+### OMP reverted from `AQLDateSchedule.cpp` - it made the whole suite slower, not faster (2026-09-20, same session)
+
+Nicholas reported the whole test suite running ~2x slower after the date-schedule work, and
+separately reported `TestStructuredExceptionHandler.UNIT_IntegerDivideByZero` failing again despite
+the earlier same-session fix. **Root cause of the slowdown, diagnosed not guessed**: once any OMP
+parallel region fires in a process, the runtime's idle worker threads busy-spin-wait by default
+(instead of sleeping) so they can wake instantly for the next one - this steals CPU from every
+subsequent test for the rest of the process, not just ones touching the parallelized code. The
+OMP added to `getMultiDate`/`calcDatesWithLag` this session copied `AQLMatrix.cpp`'s threshold (64)
+without profiling *this* workload - date arithmetic is cheap per element and both functions are
+called very often (schedules routinely exceed 64 elements), so the threshold was firing constantly
+with nothing to offset the fork-join/spin-wait cost. **Reverted both to plain sequential loops**
+(kept the genuinely-free wins: `calcDatesWithLag` pre-sized instead of `push_back`-grown, the
+`defaultCalendar()` hoist from the earlier efficiency pass). Removed the now-unused
+`AQL_DATE_SCHEDULE_OPENMP_THRESHOLD` constant and `<omp.h>` include. Left a comment explaining why,
+so this isn't silently re-added without profiling evidence.
+
+The reported `TestStructuredExceptionHandler` failure was confirmed **not a regression** - the
+SIGFPE fix from earlier this session was still correctly in source; Nicholas was almost certainly
+running a stale `GTEST.exe` predating the rebuild that picked it up (the same class of trap that's
+bitten this session before).
+
+**Verification**: `etrading` full clean Rebuild, `GTEST` full clean Rebuild, both exit 0. Ran
+`TestStructuredExceptionHandler.*:TestStubDates.*:TestDatesSwapSchedule.*` (86 tests, the
+divide-by-zero case included) against the fresh binary - **all 86 pass**, ~105s total, nothing
+anomalously slow. Full-suite timing comparison not done this session (token budget) - Nicholas to
+confirm the perceived slowdown is gone on his own full run.

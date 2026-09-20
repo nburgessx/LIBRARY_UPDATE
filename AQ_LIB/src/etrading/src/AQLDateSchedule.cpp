@@ -34,22 +34,19 @@
 #include <map>
 #include <algorithm>
 
-#ifdef _OPENMP
-#include <omp.h>
-#endif
-
 using namespace std;
 
 
 namespace etrading
 {
-    // Below this many elements, a parallel region's thread-pool spin-up cost likely exceeds the
-    // work being parallelized - same rationale and same threshold as AQLMatrix.cpp's
-    // OPENMP_SIZE_THRESHOLD. Only applied to getMultiDate/calcDatesWithLag below: every other loop
-    // in this file (generateSchedule, getStubDateAndType, calcRegularDates, ...) steps one date at
-    // a time off the previous one, which is inherently sequential - parallelizing those would be
-    // wrong, not just unhelpful.
-    static const int AQL_DATE_SCHEDULE_OPENMP_THRESHOLD = 64;
+    // OMP was tried on getMultiDate/calcDatesWithLag below (2026-09-20) and reverted the same
+    // day: both are called very often with modest, cheap-per-element date vectors, and once any
+    // OMP parallel region fires in the process, the runtime's idle worker threads busy-spin-wait
+    // (rather than sleep) so they can wake instantly for the next one - stealing CPU from every
+    // subsequent test for the rest of the process, not just the ones touching this file. Measured
+    // as a clear, broad slowdown across the whole GTEST run, not a win. Left as plain sequential
+    // loops; do not re-add OMP here without real profiling evidence that a specific, large,
+    // infrequently-called call site actually benefits.
 
     namespace
     {
@@ -440,14 +437,18 @@ namespace etrading
 												const AQLString *				rollConvention)
     {
         // Pre-sized, not push_back-grown: each index is computed independently of every other
-        // (unlike generateSchedule's date-stepping loops), so this is also safe to run under OMP -
-        // AQLDate isn't trivially-copyable (carries std::atomic<long> julius_), so avoiding
-        // reallocate-and-copy-forward on every push_back is a real saving, not just tidiness.
+        // (unlike generateSchedule's date-stepping loops). AQLDate isn't trivially-copyable
+        // (carries std::atomic<long> julius_), so avoiding reallocate-and-copy-forward on every
+        // push_back is a real saving. Deliberately plain sequential, not OMP (see the 2026-09-20
+        // note where AQL_DATE_SCHEDULE_OPENMP_THRESHOLD was defined and then removed): per-element
+        // work here is cheap date arithmetic, schedules routinely exceed any threshold that would
+        // have been worth setting, and this function is called very often - OMP's thread-pool
+        // fork-join overhead (and idle worker threads busy-spin-waiting afterwards, stealing CPU
+        // from the rest of the process) made the whole test suite measurably slower, not faster.
         DateVector results( dates.size() );
-        const int dateCount = static_cast<int>( dates.size() );
+        const size_t dateCount = dates.size();
 
-        #pragma omp parallel for if( dateCount > AQL_DATE_SCHEDULE_OPENMP_THRESHOLD )
-        for (int i = 0; i < dateCount; ++i)
+        for (size_t i = 0; i < dateCount; ++i)
         {
             results[i] = AQLDateHelpers::getDate(dates[i], term, slidingRule, pCalendar, isAfter, rollConvention);
         }
@@ -791,13 +792,14 @@ namespace etrading
         AQLPriceDataSlidingRule sr;
         sr.convertFromString(slidingrule);
 
-        // Already pre-sized - each index independent of every other, so safe under OMP (see
-        // AQL_DATE_SCHEDULE_OPENMP_THRESHOLD's comment for why this file's other loops aren't).
+        // Already pre-sized - each index independent of every other. Deliberately plain
+        // sequential, not OMP - see calcDatesWithLag's comment above for why: this function is
+        // called constantly with modest vectors, and OMP's fork-join/thread-pool overhead here
+        // measurably slowed the whole test suite down rather than speeding anything up.
         DateVector results( basedate.size() );
-        const int dateCount = static_cast<int>( basedate.size() );
+        const size_t dateCount = basedate.size();
 
-        #pragma omp parallel for if( dateCount > AQL_DATE_SCHEDULE_OPENMP_THRESHOLD )
-        for (int i = 0; i < dateCount; i++)
+        for (size_t i = 0; i < dateCount; i++)
         {
             results[i] = AQLDateHelpers::getDate(basedate[i], term, sr, &cal, true, roll_conv);
         }
