@@ -115,12 +115,24 @@ paragraph, if the two ever drift again.**
   SWIG regen for Phase 5 not yet started.
 - **Not yet started:** Phase 6 (legacy extraction, licence headers, resources
   audit); Phase 7 (Linux/CMake, clang-format, clean repo).
-- **⚠ Reminder — Phase 6.11 (matrix/table-type consolidation) is
-  approved but unimplemented (2026-09-20).** `AQLFlattenedMatrix<T>` shared
-  base, `AQLMatrix`→`AQLNumericMatrix`, `AnyType`/`AnyTypeMatrix` retirement —
-  full 7-step staged plan in `MIGRATION_PLAN.md` §6.11, Nicholas signed off,
-  nothing built yet. Don't let this quietly slip — see `rebrand\STATUS.md`'s
-  "OPEN REMINDER" entry for the up-to-date state.
+- **⚠ Reminder — Phase 6.11 (matrix/table-type consolidation), steps 1–3
+  done (2026-09-20).** `AQLMatrix`→`AQLNumericMatrix` rename done, along
+  with a review-driven correctness fix (`throw "Invalid Matrix"`), an
+  efficiency fix (the four O(n³) decomposition kernels no longer write
+  through the checked `setValue()`), and a set of everyday methods
+  (`operator()`, `trace()`, `norm()`, `equals()`, static `identity()`, etc.).
+  The `AQLFlattenedMatrix<T>` shared base is now built and piloted on
+  `AQLIntMatrix`/`AQLComplexMatrix` (both thin aliases over it). Step 5
+  (`AnyType`/`AnyTypeMatrix` retirement onto `Variant`/`AQLAnyMatrix`) was
+  scoped in detail (79 files / 268 occurrences — genuinely bigger than the
+  pilot, it's the golden-source `validation` return type in 28 of those
+  files, and `AnyType`'s `boost::get<T>`/`NaN`-blanking behavior has no
+  equivalent in `Variant` today, so it's a real reconciliation, not a
+  rename) and then **deliberately paused at Nicholas's request** — zero
+  files changed. `AQLBoolMatrix` (step 4) remains unstarted too, smaller
+  and lower-risk. Full plan and staging in `MIGRATION_PLAN.md` §6.11. Don't
+  let this quietly slip — see `rebrand\STATUS.md`'s "OPEN REMINDER" entry
+  and the "Step 5 ... paused" entry for the up-to-date state.
 
 ### 2.2 Visualizer.natvis
 

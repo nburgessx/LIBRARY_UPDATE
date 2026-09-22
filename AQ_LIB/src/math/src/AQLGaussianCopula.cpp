@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Class declaration to generate a set of random numbers according to Gaussian Copula
 
 	This class derives from AQLRandoBase.
@@ -164,7 +164,7 @@ AQLGaussianCopula::setRandGenerator(const AQLRandBase& v)
 void
 AQLGaussianCopula::setParam(const DoubleMatrix& param)
 {
-	AQLMatrix mat(param.size(), param.size());
+	AQLNumericMatrix mat(param.size(), param.size());
 	for (unsigned int i = 0; i < param.size(); i++)
 	{
 		for (unsigned int j = 0; j < param.size(); j++)

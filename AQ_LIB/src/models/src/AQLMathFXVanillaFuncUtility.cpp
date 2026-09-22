@@ -1,4 +1,4 @@
-#ifdef __GNUG__
+﻿#ifdef __GNUG__
 #pragma implementation
 #else
 #pragma warning(disable:4786)
@@ -29,7 +29,7 @@
 #include "AQLDataMatrix.h"
 #include "AQLPriceDataInterpolation.h"
 #include "AQLDataMultiReference.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include <cmath>
 #include <map>
 

@@ -1,4 +1,4 @@
-// AQLMathYieldCurvePro.h
+﻿// AQLMathYieldCurvePro.h
 
 #ifdef __GNUG__
 #pragma implementation
@@ -36,7 +36,7 @@ const double INFINITESIMAL = 1E-7;
 #include <numeric>
 #include <cmath>
 #include "AQLAlgorithm.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLMathFXEntity.h"
 #include "ConstantDeclarations.h"
 #include "AQLObjectHolder.h"
@@ -2505,7 +2505,7 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 				break;
 			}
 
-			AQLMatrix divMat(b_size, b_size);
+			AQLNumericMatrix divMat(b_size, b_size);
 			// create divMat
 			for (unsigned int i = 0; i < b_size; ++i)
 			{
@@ -2527,9 +2527,9 @@ AQLMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 				}
 			}
 
-			AQLMatrix invMat = divMat.inverseMatrix();
-			AQLMatrix valMat(targetValVec1);
-			AQLMatrix deltaMat = invMat * valMat;
+			AQLNumericMatrix invMat = divMat.inverseMatrix();
+			AQLNumericMatrix valMat(targetValVec1);
+			AQLNumericMatrix deltaMat = invMat * valMat;
 			// plus delta
 			for (unsigned int i = 0; i < b_size; ++i)
 			{
@@ -5723,9 +5723,9 @@ AQLMathYieldCurvePro::setdNPVdm(const AQLString &curveType)
 	}
 
 	//inverse
-	AQLMatrix matobj(decompMat);
-	const AQLMatrix& invmat = matobj.inverseMatrix();
-	const AQLMatrix& transmat = invmat.transpose();
+	AQLNumericMatrix matobj(decompMat);
+	const AQLNumericMatrix& invmat = matobj.inverseMatrix();
+	const AQLNumericMatrix& transmat = invmat.transpose();
 
 	DoubleMatrix ret(sizeAll, DoubleVector(sizeAll,0.0));
 	for (unsigned int i = 0; i < sizeAll; i++)
@@ -6023,9 +6023,9 @@ AQLMathYieldCurvePro::changeZeroRiskIntoMarketRisk(AQLString curveType, const Do
 		}
 	}
 	
-	AQLMatrix convertMat(mat);
-	AQLMatrix dNPVdzeroMat(dNPVdzero);
-	const AQLMatrix& multimat = convertMat * dNPVdzeroMat;
+	AQLNumericMatrix convertMat(mat);
+	AQLNumericMatrix dNPVdzeroMat(dNPVdzero);
+	const AQLNumericMatrix& multimat = convertMat * dNPVdzeroMat;
 	for (unsigned int l = 0; l < riskMarketVals.size(); l++)
 		riskMarketVals[l] = multimat.getValue(l,0);
 

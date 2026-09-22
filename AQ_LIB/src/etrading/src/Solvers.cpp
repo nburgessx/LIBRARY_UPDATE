@@ -1,4 +1,4 @@
-#include "Solvers.h"
+﻿#include "Solvers.h"
 #include "AQLCoreAppError.h"
 #include "AQLBasic.h"
 #include "ExceptionMacros.h"
@@ -470,7 +470,7 @@ namespace etrading
 				results.numberOfIterations      = 0u;
 				results.inverseJacobian         = initialInverseJacobian;
 				// Jacobian Not Available - We could invert the Inverse Jacobian, but we choose not to for performance reasons
-				results.jacobian				= AQLMatrix(); 
+				results.jacobian				= AQLNumericMatrix(); 
 				results.epsilon                 = y0;
 
 				return results;
@@ -492,8 +492,8 @@ namespace etrading
 			std::vector<double> y1 = targetFunction( stateVariables );
 
 			// Stores the inverseJacobian matrix at each iteration
-			AQLMatrix inverseJacobian( numPoints, numPoints );
-			AQLMatrix jacobianMatrix;
+			AQLNumericMatrix inverseJacobian( numPoints, numPoints );
+			AQLNumericMatrix jacobianMatrix;
 
 			bool solutionFound = false;
 			unsigned int iterationCount;
@@ -561,10 +561,10 @@ namespace etrading
 				// X(n+1) = X(n) + J_inverse * f(X(n)),		where J_inverse = Inverse Jacobian = 1 / f'(X(n))
 				
 				//	a)		Newton-Raphson Term:	f(X(n))
-				AQLMatrix functionValues( y1 );
+				AQLNumericMatrix functionValues( y1 );
 
 				//	b)		Newton-Raphson Term:	J_inverse * f(X(n))
-				AQLMatrix inverseJ_times_function = inverseJacobian * functionValues;
+				AQLNumericMatrix inverseJ_times_function = inverseJacobian * functionValues;
 				
 				for (unsigned int i = 0; i < numPoints; ++i)
 				{

@@ -1,4 +1,4 @@
-//
+﻿//
 //  CurveInstruments.cpp
 //  This file was previously called YieldCurveBuildingUtilities.cpp
 //
@@ -25,7 +25,7 @@
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLBasic.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLDefinitions.h"		// Put legacy defines last
 #include "AQLMathDefine.h"       // Put legacy defines last
 #include "CurveUtilities.h"		// accrualPeriod method

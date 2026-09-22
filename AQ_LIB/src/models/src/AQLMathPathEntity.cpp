@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Source code for class to represent MC Path.
 
 			Following dataValues are registered automatically to data master<BR>
@@ -50,7 +50,7 @@
 #include "AQLModelDynamicsBase.h"
 #include "AQLModelDynamicsScalar.h"
 #include "AQLModelDynamicsCurve.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLCholeskyDecompSC.h"
 #include "AQLAlgorithm.h"
 #include "AQLRatesBM_BB.h"
@@ -1588,7 +1588,7 @@ AQLMathPathEntity::setUpSDE(void)
 DoubleMatrix
 AQLMathPathEntity::calcFactorLoading(const DoubleMatrix& cor)
 {
-	AQLMatrix mat_cor(cor);
+	AQLNumericMatrix mat_cor(cor);
 	for (unsigned int i = 0; i < cor.size(); i++)
 	{
 		for (unsigned int j = 0; j < cor.size(); j++)
@@ -1596,7 +1596,7 @@ AQLMathPathEntity::calcFactorLoading(const DoubleMatrix& cor)
 			mat_cor.setValue(i, j, cor.at(i).at(j));
 		}
 	}
-	const AQLMatrix& mat_fl = AQLCholeskyDecompSC::choleskyDecompositionSC(mat_cor);
+	const AQLNumericMatrix& mat_fl = AQLCholeskyDecompSC::choleskyDecompositionSC(mat_cor);
 	DoubleMatrix ret(cor.size());
 	for (unsigned int i = 0; i < cor.size(); i++)
 	{

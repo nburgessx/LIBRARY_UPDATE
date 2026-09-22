@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifdef __GNUG__
 #pragma interface
@@ -16,19 +16,19 @@ public:
 
 								//======================================
 								// Cholesky decomposition algorithm
-	static	AQLMatrix			choleskyDecompositionSC(const AQLMatrix& mat);
+	static	AQLNumericMatrix			choleskyDecompositionSC(const AQLNumericMatrix& mat);
 
 private:
-	static bool					cholesky(const AQLMatrix& in, AQLMatrix& out);
-	static bool					check_off_diagonal(const AQLMatrix& C);
-	static bool					check_eVal(const AQLMatrix& eVal);
-	static void					spectral_decomp(const AQLMatrix& eVec, AQLMatrix& eVal, AQLMatrix& L);
-	static bool					cholesky_decomp(const AQLMatrix& C, AQLMatrix& L);
-	static void					reduce_matrix(const AQLMatrix& C, size_t &size2,
-												AQLMatrix& C2, IntArray& rec_info);
-	static void					recover_matrix(const AQLMatrix& C, const IntArray& rec_info, AQLMatrix& C2);
-	static void					construct_matrix(const AQLMatrix& L, AQLMatrix& C);
-	static void					shift_diag(AQLMatrix& C);
+	static bool					cholesky(const AQLNumericMatrix& in, AQLNumericMatrix& out);
+	static bool					check_off_diagonal(const AQLNumericMatrix& C);
+	static bool					check_eVal(const AQLNumericMatrix& eVal);
+	static void					spectral_decomp(const AQLNumericMatrix& eVec, AQLNumericMatrix& eVal, AQLNumericMatrix& L);
+	static bool					cholesky_decomp(const AQLNumericMatrix& C, AQLNumericMatrix& L);
+	static void					reduce_matrix(const AQLNumericMatrix& C, size_t &size2,
+												AQLNumericMatrix& C2, IntArray& rec_info);
+	static void					recover_matrix(const AQLNumericMatrix& C, const IntArray& rec_info, AQLNumericMatrix& C2);
+	static void					construct_matrix(const AQLNumericMatrix& L, AQLNumericMatrix& C);
+	static void					shift_diag(AQLNumericMatrix& C);
 
 };
 

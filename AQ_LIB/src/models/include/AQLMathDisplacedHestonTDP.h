@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Class declaration to AQLMathDisplacedHestonTDP.
 */
 #ifndef __AQLMATHDISPLACEDHESTONTDP_H__
@@ -97,97 +97,97 @@ public:
 
 	static DoubleMatrix CalibrationHelper( const std::vector<FXOptionData >& datas,
 										   const DoubleMatrix& strikes,
-										   const IntMatrix& sgns,
+										   const AQLIntMatrix& sgns,
 										   HestonParams_TDP& hestonParam
 										   );
 
     static DoubleMatrix CalibrationHelperGL( const std::vector<FXOptionData >& datas,
 											 const DoubleMatrix& strikes,
-											 const IntMatrix& sgns,
+											 const AQLIntMatrix& sgns,
 											 HestonParams_TDP& hestonParam
                                              );
 #ifdef isQuantLib
 	static void FXCalibrationHestonTDP( const std::vector<FXOptionData >& datas,
 										const DoubleMatrix& vols,
 										const DoubleMatrix& strikes,
-										const IntMatrix& sgns,
+										const AQLIntMatrix& sgns,
 										HestonParams_TDP& hestonParam
 										);
 
     static void FXCalibrationHestonTDPV0Fix( const std::vector<FXOptionData >& datas,
 										     const DoubleMatrix& vols,
 										     const DoubleMatrix& strikes,
-										     const IntMatrix& sgns,
+										     const AQLIntMatrix& sgns,
 										     HestonParams_TDP& hestonParam
 										     );
 
 	static void FXCalibrationHestonTDPRhoFix( const std::vector<FXOptionData >& datas,
 											  const DoubleMatrix& vols,
 											  const DoubleMatrix& strikes,
-											  const IntMatrix& sgns,
+											  const AQLIntMatrix& sgns,
 											  HestonParams_TDP& hestonParam
 											  );
 
     static void FXCalibrationHestonTDPKappaFix( const std::vector<FXOptionData >& datas,
 										        const DoubleMatrix& vols,
 											    const DoubleMatrix& strikes,
-											    const IntMatrix& sgns,
+											    const AQLIntMatrix& sgns,
 											    HestonParams_TDP& hestonParam
 											    );
 
     static void FXCalibrationHestonTDPThetaFix( const std::vector<FXOptionData >& datas,
 												const DoubleMatrix& vols,
 												const DoubleMatrix& strikes,
-												const IntMatrix& sgns,
+												const AQLIntMatrix& sgns,
 												HestonParams_TDP& hestonParam
 												);
 
     static void FXCalibrationHestonTDP_Boot( const std::vector<FXOptionData >& datas,
 											 const DoubleMatrix& vols,
 											 const DoubleMatrix& strikes,
-											 const IntMatrix& sgns,
+											 const AQLIntMatrix& sgns,
 											 HestonParams_TDP& hestonParam
 											 );
 
     static void FXCalibrationHestonGlobal( const std::vector<FXOptionData >& datas,
                                            const DoubleMatrix& vols,
                                            const DoubleMatrix& strikes,
-                                           const IntMatrix& sgns,
+                                           const AQLIntMatrix& sgns,
                                            HestonParams_TDP& hestonParam
                                            );
 
     static void FXCalibrationHestonGlobalV0Fix( const std::vector<FXOptionData >& datas,
                                                 const DoubleMatrix& vols,
                                                 const DoubleMatrix& strikes,
-                                                const IntMatrix& sgns,
+                                                const AQLIntMatrix& sgns,
                                                 HestonParams_TDP& hestonParam
                                                 );
 
     static void FXCalibrationHestonGlobalKappaFix( const std::vector<FXOptionData >& datas,
                                                    const DoubleMatrix& vols,
                                                    const DoubleMatrix& strikes,
-                                                   const IntMatrix& sgns,
+                                                   const AQLIntMatrix& sgns,
                                                    HestonParams_TDP& hestonParam
                                                    );
 
     static void FXCalibrationHestonGlobalThetaFix( const std::vector<FXOptionData >& datas,
                                                    const DoubleMatrix& vols,
                                                    const DoubleMatrix& strikes,
-                                                   const IntMatrix& sgns,
+                                                   const AQLIntMatrix& sgns,
                                                    HestonParams_TDP& hestonParam
                                                    );
 
     static void FXCalibrationHestonTDTheta( const std::vector<FXOptionData >& datas,
                                             const DoubleMatrix& vols,
                                             const DoubleMatrix& strikes,
-                                            const IntMatrix& sgns,
+                                            const AQLIntMatrix& sgns,
                                             HestonParams_TDP& hestonParam
                                             );
 
     static void FXCalibrationHestonTDThetaFix( const std::vector<FXOptionData >& datas,
                                                const DoubleMatrix& vols,
                                                const DoubleMatrix& strikes,
-                                               const IntMatrix& sgns,
+                                               const AQLIntMatrix& sgns,
                                                HestonParams_TDP& hestonParam
                                                );
 #endif

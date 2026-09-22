@@ -428,7 +428,7 @@
     <ClInclude Include="..\src\math\include\AQLLinearFunc.h" />
     <ClInclude Include="..\src\math\include\AQLLinearInterpolation.h" />
     <ClInclude Include="..\src\math\include\AQLLinearSplineInterpolation.h" />
-    <ClInclude Include="..\src\math\include\AQLMatrix.h" />
+    <ClInclude Include="..\src\math\include\AQLNumericMatrix.h" />
     <ClInclude Include="..\src\math\include\AQLMaxFunc.h" />
     <ClInclude Include="..\src\math\include\AQLMersenneTwister.h" />
     <ClInclude Include="..\src\math\include\AQLMinFunc.h" />
@@ -547,7 +547,7 @@
     <ClCompile Include="..\src\math\src\AQLLinearFunc.cpp" />
     <ClCompile Include="..\src\math\src\AQLLinearInterpolation.cpp" />
     <ClCompile Include="..\src\math\src\AQLLinearSplineInterpolation.cpp" />
-    <ClCompile Include="..\src\math\src\AQLMatrix.cpp" />
+    <ClCompile Include="..\src\math\src\AQLNumericMatrix.cpp" />
     <ClCompile Include="..\src\math\src\AQLMaxFunc.cpp" />
     <ClCompile Include="..\src\math\src\AQLMersenneTwister.cpp" />
     <ClCompile Include="..\src\math\src\AQLMinFunc.cpp" />

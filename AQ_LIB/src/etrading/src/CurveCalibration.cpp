@@ -1,4 +1,4 @@
-//
+﻿//
 //  CurveCalibration.cpp
 //
 #ifdef __GNUG__
@@ -17,7 +17,7 @@
 #include "AQLDataMatrix.h"
 #include "AQLInterpolationBase.h"
 #include "AQLBasic.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLPriceDataInterpolation.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLDataMultiReference.h"
@@ -5598,7 +5598,7 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 
 			// -----------------------------------------------------------------------
 			// 3.1 Perturb x by amount 'delta' in order to calculate y_after_bump
-			AQLMatrix jacobianMatrix(swapCount, swapCount);
+			AQLNumericMatrix jacobianMatrix(swapCount, swapCount);
 			for (size_t i = 0; i < swapCount; ++i)
 			{
 				DoubleArray thisYieldVector(yields);
@@ -5619,12 +5619,12 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 
 			// -----------------------------------------------------------------------
 			// 3.2 Update x as in y = f(x) according to Newton Raphson
-			AQLMatrix valMat(allPVs_new);
+			AQLNumericMatrix valMat(allPVs_new);
 
-			AQLMatrix inverseJacobian(swapCount, swapCount);
+			AQLNumericMatrix inverseJacobian(swapCount, swapCount);
 			inverseJacobian = jacobianMatrix.inverseMatrix();
 
-			AQLMatrix deltaMat = inverseJacobian * valMat;
+			AQLNumericMatrix deltaMat = inverseJacobian * valMat;
 
 			for (size_t i = 0; i < swapCount; ++i)
 			{

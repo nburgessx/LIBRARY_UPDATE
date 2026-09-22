@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 
 #include <functional>
 #include <vector>
 #include <limits>		// for numerical limits / quiet nan
 #include <cmath>		// for std::isnan
 
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 
 namespace etrading
 {
@@ -114,8 +114,8 @@ namespace etrading
 			MultiVariateSolverResults()
 				:	solution(std::vector<double>()), 
 					numberOfIterations(0),
-					jacobian(AQLMatrix()),
-					inverseJacobian(AQLMatrix()),
+					jacobian(AQLNumericMatrix()),
+					inverseJacobian(AQLNumericMatrix()),
 					epsilon(std::vector<double>())
 			{};
 
@@ -123,8 +123,8 @@ namespace etrading
 
 			std::vector<double>		solution;
 			unsigned int			numberOfIterations;
-			AQLMatrix				jacobian;
-			AQLMatrix				inverseJacobian;
+			AQLNumericMatrix				jacobian;
+			AQLNumericMatrix				inverseJacobian;
             std::vector<double>		epsilon;     // Solver Error
 		};
 

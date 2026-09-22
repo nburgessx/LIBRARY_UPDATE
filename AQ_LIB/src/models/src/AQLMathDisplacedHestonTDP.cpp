@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Class declaration to AQLMathDisplacedHeston.
 */
 
@@ -238,7 +238,7 @@ double AQLMathDisplacedHestonTDP::BS_DDHestonImpVol_TDP(double T,
 
 DoubleMatrix AQLMathDisplacedHestonTDP::CalibrationHelper( const std::vector<FXOptionData >& datas,
 														const DoubleMatrix& strikes,
-														const IntMatrix& sgns,
+														const AQLIntMatrix& sgns,
 														HestonParams_TDP& hestonParam
 														)
 {
@@ -286,12 +286,12 @@ DoubleMatrix AQLMathDisplacedHestonTDP::CalibrationHelper( const std::vector<FXO
     gauss_laguerre.get(x, weight);
 
     //Set A,B,B_tau
-    ComplexMatrix A(termSize,ComplexVector(GL_Size));
-    ComplexMatrix B(termSize,ComplexVector(GL_Size));
+    AQLComplexMatrix A(termSize,ComplexVector(GL_Size));
+    AQLComplexMatrix B(termSize,ComplexVector(GL_Size));
     ComplexVector phi(GL_Size);
-    ComplexMatrix zeta(termSize,ComplexVector(GL_Size));
-    ComplexMatrix psi_plus(termSize,ComplexVector(GL_Size));
-    ComplexMatrix psi_minus(termSize,ComplexVector(GL_Size));
+    AQLComplexMatrix zeta(termSize,ComplexVector(GL_Size));
+    AQLComplexMatrix psi_plus(termSize,ComplexVector(GL_Size));
+    AQLComplexMatrix psi_minus(termSize,ComplexVector(GL_Size));
     for(k=0;k<GL_Size;k++)
 	{
 		phi[k] = DoubleComplex(0.5,-x[k]);
@@ -355,7 +355,7 @@ DoubleMatrix AQLMathDisplacedHestonTDP::CalibrationHelper( const std::vector<FXO
 
 DoubleMatrix AQLMathDisplacedHestonTDP::CalibrationHelperGL( const std::vector<FXOptionData >& datas,
 														  const DoubleMatrix& strikes,
-														  const IntMatrix& sgns,
+														  const AQLIntMatrix& sgns,
 														  HestonParams_TDP& hestonParam
 														  )
 {
@@ -395,8 +395,8 @@ DoubleMatrix AQLMathDisplacedHestonTDP::CalibrationHelperGL( const std::vector<F
     gauss_laguerre.get(x, weight);
 
     //Set A,B,B_tau
-    ComplexMatrix A(termSize,ComplexVector(GL_Size));
-    ComplexMatrix B(termSize,ComplexVector(GL_Size));
+    AQLComplexMatrix A(termSize,ComplexVector(GL_Size));
+    AQLComplexMatrix B(termSize,ComplexVector(GL_Size));
     ComplexVector phi(GL_Size);
     ComplexVector zeta(GL_Size);
     ComplexVector psi_plus(GL_Size);
@@ -471,7 +471,7 @@ public:
     HestonCalibratorGlobal( const std::vector<FXOptionData >& datas_,
                             const DoubleMatrix& vols_,
                             const DoubleMatrix& strikes_,
-                            const IntMatrix& sgns_,
+                            const AQLIntMatrix& sgns_,
                             HestonParams_TDP& hestonParam_)
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_)
     {
@@ -541,7 +541,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -573,7 +573,7 @@ class HestonGlobalConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonGlobal( const std::vector<FXOptionData >& datas,
                                                         const DoubleMatrix& vols,
                                                         const DoubleMatrix& strikes,
-                                                        const IntMatrix& sgns,
+                                                        const AQLIntMatrix& sgns,
                                                         HestonParams_TDP& hestonParam
                                                         )
  {
@@ -632,7 +632,7 @@ public:
     HestonCalibratorGlobalV0Fix( const std::vector<FXOptionData >& datas_,
                             const DoubleMatrix& vols_,
                             const DoubleMatrix& strikes_,
-                            const IntMatrix& sgns_,
+                            const AQLIntMatrix& sgns_,
                             HestonParams_TDP& hestonParam_)
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_)
     {
@@ -700,7 +700,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -731,7 +731,7 @@ class HestonGlobalV0FixConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonGlobalV0Fix( const std::vector<FXOptionData >& datas,
                                                              const DoubleMatrix& vols,
                                                              const DoubleMatrix& strikes,
-                                                             const IntMatrix& sgns,
+                                                             const AQLIntMatrix& sgns,
                                                              HestonParams_TDP& hestonParam
                                                              )
  {
@@ -788,7 +788,7 @@ public:
     HestonCalibratorGlobalKappaFix( const std::vector<FXOptionData >& datas_,
                             const DoubleMatrix& vols_,
                             const DoubleMatrix& strikes_,
-                            const IntMatrix& sgns_,
+                            const AQLIntMatrix& sgns_,
                             HestonParams_TDP& hestonParam_)
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_)
     {
@@ -856,7 +856,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -887,7 +887,7 @@ class HestonGlobalKappaFixConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonGlobalKappaFix( const std::vector<FXOptionData >& datas,
                                                                 const DoubleMatrix& vols,
                                                                 const DoubleMatrix& strikes,
-                                                                const IntMatrix& sgns,
+                                                                const AQLIntMatrix& sgns,
                                                                 HestonParams_TDP& hestonParam
                                                                 )
  {
@@ -945,7 +945,7 @@ public:
     HestonCalibratorGlobalThetaFix( const std::vector<FXOptionData >& datas_,
                             const DoubleMatrix& vols_,
                             const DoubleMatrix& strikes_,
-                            const IntMatrix& sgns_,
+                            const AQLIntMatrix& sgns_,
                             HestonParams_TDP& hestonParam_)
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_)
     {
@@ -1013,7 +1013,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -1044,7 +1044,7 @@ class HestonGlobalThetaFixConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonGlobalThetaFix( const std::vector<FXOptionData >& datas,
                                                                 const DoubleMatrix& vols,
                                                                 const DoubleMatrix& strikes,
-                                                                const IntMatrix& sgns,
+                                                                const AQLIntMatrix& sgns,
                                                                 HestonParams_TDP& hestonParam
                                                                 )
  {
@@ -1102,7 +1102,7 @@ public:
     HestonCalibratorTDP( const std::vector<FXOptionData >& datas_,
 						 const DoubleMatrix& vols_,
 						 const DoubleMatrix& strikes_,
-						 const IntMatrix& sgns_,
+						 const AQLIntMatrix& sgns_,
 						 HestonParams_TDP& hestonParam_ )
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_)
     {
@@ -1179,7 +1179,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -1214,7 +1214,7 @@ class HestonTDPConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonTDP( const std::vector<FXOptionData >& datas,
 													 const DoubleMatrix& vols,
 													 const DoubleMatrix& strikes,
-													 const IntMatrix& sgns,
+													 const AQLIntMatrix& sgns,
 													 HestonParams_TDP& hestonParam
 													 )
  {
@@ -1269,7 +1269,7 @@ public:
     HestonCalibratorTDPV0Fix( const std::vector<FXOptionData >& datas_,
 						      const DoubleMatrix& vols_,
 						      const DoubleMatrix& strikes_,
-						      const IntMatrix& sgns_,
+						      const AQLIntMatrix& sgns_,
 						      HestonParams_TDP& hestonParam_ )
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_)
     {
@@ -1344,7 +1344,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -1378,7 +1378,7 @@ class HestonTDPV0FixConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonTDPV0Fix( const std::vector<FXOptionData >& datas,
 													      const DoubleMatrix& vols,
 													      const DoubleMatrix& strikes,
-													      const IntMatrix& sgns,
+													      const AQLIntMatrix& sgns,
 													      HestonParams_TDP& hestonParam
 													      )
  {
@@ -1431,7 +1431,7 @@ public:
     HestonCalibratorTDPRhoFix( const std::vector<FXOptionData >& datas_,
 							   const DoubleMatrix& vols_,
 							   const DoubleMatrix& strikes_,
-							   const IntMatrix& sgns_,
+							   const AQLIntMatrix& sgns_,
 							   HestonParams_TDP& hestonParam_ )
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_)
     {
@@ -1505,7 +1505,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -1539,7 +1539,7 @@ class HestonTDPRhoFixConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonTDPRhoFix( const std::vector<FXOptionData >& datas,
 														   const DoubleMatrix& vols,
 														   const DoubleMatrix& strikes,
-														   const IntMatrix& sgns,
+														   const AQLIntMatrix& sgns,
 														   HestonParams_TDP& hestonParam
 														   )
  {
@@ -1592,7 +1592,7 @@ public:
     HestonCalibratorTDPKappaFix( const std::vector<FXOptionData >& datas_,
 							     const DoubleMatrix& vols_,
 							     const DoubleMatrix& strikes_,
-							     const IntMatrix& sgns_,
+							     const AQLIntMatrix& sgns_,
 							     HestonParams_TDP& hestonParam_ )
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_)
     {
@@ -1666,7 +1666,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -1699,7 +1699,7 @@ class HestonTDPKappaFixConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonTDPKappaFix( const std::vector<FXOptionData >& datas,
 														     const DoubleMatrix& vols,
 														     const DoubleMatrix& strikes,
-														     const IntMatrix& sgns,
+														     const AQLIntMatrix& sgns,
 														     HestonParams_TDP& hestonParam
 														     )
  {
@@ -1753,7 +1753,7 @@ public:
     HestonCalibratorTDPThetaFix( const std::vector<FXOptionData >& datas_,
 							     const DoubleMatrix& vols_,
 							     const DoubleMatrix& strikes_,
-							     const IntMatrix& sgns_,
+							     const AQLIntMatrix& sgns_,
 							     HestonParams_TDP& hestonParam_ )
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_)
     {
@@ -1827,7 +1827,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -1860,7 +1860,7 @@ class HestonTDPThetaFixConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonTDPThetaFix( const std::vector<FXOptionData >& datas,
 														     const DoubleMatrix& vols,
 														     const DoubleMatrix& strikes,
-														     const IntMatrix& sgns,
+														     const AQLIntMatrix& sgns,
 														     HestonParams_TDP& hestonParam
 														     )
  {
@@ -1914,7 +1914,7 @@ public:
     HestonCalibratorTDP_Boot( const std::vector<FXOptionData >& datas_,
 							  const DoubleMatrix& vols_,
 							  const DoubleMatrix& strikes_,
-							  const IntMatrix& sgns_,
+							  const AQLIntMatrix& sgns_,
 							  HestonParams_TDP& hestonParam_,
 							  int caliIndex_ )
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_), caliIndex(caliIndex_)
@@ -1988,7 +1988,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -2018,7 +2018,7 @@ class HestonTDP_BootConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonTDP_Boot( const std::vector<FXOptionData >& datas,
 														  const DoubleMatrix& vols,
 													      const DoubleMatrix& strikes,
-												          const IntMatrix& sgns,
+												          const AQLIntMatrix& sgns,
 													      HestonParams_TDP& hestonParam
 														  )
  {
@@ -2072,7 +2072,7 @@ public:
     HestonCalibratorTDTheta( const std::vector<FXOptionData >& datas_,
                              const DoubleMatrix& vols_,
                              const DoubleMatrix& strikes_,
-                             const IntMatrix& sgns_,
+                             const AQLIntMatrix& sgns_,
                              HestonParams_TDP& hestonParam_ )
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_)
     {
@@ -2148,7 +2148,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -2183,7 +2183,7 @@ class HestonTDTetaConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonTDTheta( const std::vector<FXOptionData >& datas,
                                                          const DoubleMatrix& vols,
                                                          const DoubleMatrix& strikes,
-                                                         const IntMatrix& sgns,
+                                                         const AQLIntMatrix& sgns,
                                                          HestonParams_TDP& hestonParam
                                                          )
  {
@@ -2242,7 +2242,7 @@ public:
     HestonCalibratorTDThetaFix( const std::vector<FXOptionData >& datas_,
                                 const DoubleMatrix& vols_,
                                 const DoubleMatrix& strikes_,
-                                const IntMatrix& sgns_,
+                                const AQLIntMatrix& sgns_,
                                 HestonParams_TDP& hestonParam_ )
             : datas(datas_), vols(vols_), strikes(strikes_), sgns(sgns_), hestonParam(hestonParam_)
     {
@@ -2311,7 +2311,7 @@ private:
     std::vector<FXOptionData > datas;
     DoubleMatrix vols;
     DoubleMatrix strikes;
-    IntMatrix sgns;
+    AQLIntMatrix sgns;
     HestonParams_TDP& hestonParam;
 };
 
@@ -2341,7 +2341,7 @@ class HestonTDThetaFixConstraint : public QuantLib::Constraint
 void AQLMathDisplacedHestonTDP::FXCalibrationHestonTDThetaFix( const std::vector<FXOptionData >& datas,
                                                             const DoubleMatrix& vols,
                                                             const DoubleMatrix& strikes,
-                                                            const IntMatrix& sgns,
+                                                            const AQLIntMatrix& sgns,
                                                             HestonParams_TDP& hestonParam )
  {
      //error check

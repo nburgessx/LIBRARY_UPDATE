@@ -350,7 +350,7 @@
     <ClInclude Include="..\src\math\include\AQLProductDistribution.h">
       <Filter>include\Distributions</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\math\include\AQLMatrix.h">
+    <ClInclude Include="..\src\math\include\AQLNumericMatrix.h">
       <Filter>include\DataTypes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\math\include\AQLNumericalConstants.h">
@@ -493,7 +493,7 @@
     <ClCompile Include="..\src\math\src\AQLCalendarSet.cpp">
       <Filter>src\DataTypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\math\src\AQLMatrix.cpp">
+    <ClCompile Include="..\src\math\src\AQLNumericMatrix.cpp">
       <Filter>src\DataTypes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\math\src\AQLDataBasics.cpp">

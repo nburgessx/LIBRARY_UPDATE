@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Source code of class of linear regression analysis
 */
 
@@ -11,7 +11,7 @@
 
 
 #include "AQLLinearRegression.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 
 using namespace std;
 
@@ -53,7 +53,7 @@ AQLLinearRegression::~AQLLinearRegression()
 /*void
 AQLLinearRegression::executeRegression()
 {
-	AQLMatrix x;
+	AQLNumericMatrix x;
 	if (mIsZeroInterception)
 	{
 		x.resize(mX.size(), mX[0].size());
@@ -72,11 +72,11 @@ AQLLinearRegression::executeRegression()
 		}
 	}
 
-	AQLMatrix y(mY);
+	AQLNumericMatrix y(mY);
 
-//	const AQLMatrix& beta = (x.transpose() * x).inverseMatrix() * x.transpose() * y;
-	AQLMatrix u, w, v;
-	const AQLMatrix& tmp = (x.transpose() * x);
+//	const AQLNumericMatrix& beta = (x.transpose() * x).inverseMatrix() * x.transpose() * y;
+	AQLNumericMatrix u, w, v;
+	const AQLNumericMatrix& tmp = (x.transpose() * x);
 	tmp.svDecomp(u, w, v);
 	const double TOL = 1.0E-13;
 	double wmax = 0.0;
@@ -88,7 +88,7 @@ AQLLinearRegression::executeRegression()
 		if (w[i][i] < thresh) w.setValue(i, i, 0.0);
 		else w.setValue(i, i, 1.0/w[i][i]);
 	}
-	const AQLMatrix& beta = v * w * u.transpose() * (x.transpose() * y);
+	const AQLNumericMatrix& beta = v * w * u.transpose() * (x.transpose() * y);
 
 	mCoefficient.resize(beta.row());
 	for (unsigned int i = 0; i < mCoefficient.size(); i++)
@@ -169,7 +169,7 @@ AQLLinearRegression::executeRegression()
 		}
 	}	
 		
-	AQLMatrix x, y;
+	AQLNumericMatrix x, y;
 	if (mIsExcludeOutlier_e)
 	{
 		y.resize(mY.size(), 1);
@@ -195,10 +195,10 @@ AQLLinearRegression::executeRegression()
 			}
 		}
 
-		AQLMatrix y(mY);
+		AQLNumericMatrix y(mY);
 
-		AQLMatrix u, w, v;
-		const AQLMatrix& tmp = (x.transpose() * x);
+		AQLNumericMatrix u, w, v;
+		const AQLNumericMatrix& tmp = (x.transpose() * x);
 		tmp.svDecomp(u, w, v);
 		const double TOL = 1.0E-13;
 		double wmax = 0.0;
@@ -210,9 +210,9 @@ AQLLinearRegression::executeRegression()
 			if (w[i][i] < thresh) w.setValue(i, i, 0.0);
 			else w.setValue(i, i, 1.0/w[i][i]);
 		}
-		const AQLMatrix& beta = v * w * u.transpose() * (x.transpose() * y);		
+		const AQLNumericMatrix& beta = v * w * u.transpose() * (x.transpose() * y);		
 
-		const AQLMatrix& residual = y - x * beta;
+		const AQLNumericMatrix& residual = y - x * beta;
 		double sum1 = 0.0, sum2 = 0.0;
 		for (unsigned int i = 0; i < residual.row(); i++)
 		{
@@ -270,9 +270,9 @@ AQLLinearRegression::executeRegression()
 		}
 	}
 
-//	const AQLMatrix& beta = (x.transpose() * x).inverseMatrix() * x.transpose() * y;
-	AQLMatrix u, w, v;
-	const AQLMatrix& tmp = (x.transpose() * x);
+//	const AQLNumericMatrix& beta = (x.transpose() * x).inverseMatrix() * x.transpose() * y;
+	AQLNumericMatrix u, w, v;
+	const AQLNumericMatrix& tmp = (x.transpose() * x);
 	tmp.svDecomp(u, w, v);
 	const double TOL = mSVDTolerance;
 	double wmax = 0.0;
@@ -284,7 +284,7 @@ AQLLinearRegression::executeRegression()
 		if (w[i][i] < thresh) w.setValue(i, i, 0.0);
 		else w.setValue(i, i, 1.0/w[i][i]);
 	}
-	const AQLMatrix& beta = v * w * u.transpose() * (x.transpose() * y);
+	const AQLNumericMatrix& beta = v * w * u.transpose() * (x.transpose() * y);
 
 	mCoefficient.resize(beta.row());
 	for (unsigned int i = 0; i < mCoefficient.size(); i++)

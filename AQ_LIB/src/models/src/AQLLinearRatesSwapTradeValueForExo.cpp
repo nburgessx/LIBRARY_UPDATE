@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Class declaration to evaluate trade.
 */
 #ifdef __GNUG__
@@ -40,7 +40,7 @@
 #include "AQLPriceCouponTool.h"
 #include "AQLPriceCashFlowGenerator.h"
 #include "AQLMathYieldCurvePro.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLLinearFunc.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLPriceDataSlidingRule.h"

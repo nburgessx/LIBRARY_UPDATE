@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Implementation to define a matrix operation.
 */
 
@@ -9,7 +9,7 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -35,7 +35,7 @@ using namespace std;
 // once this has actually been profiled against a real large-matrix workload.
 static const int OPENMP_SIZE_THRESHOLD = 64;
 
-AQLMatrix::AQLMatrixData::AQLMatrixData(unsigned int row, unsigned int col)
+AQLNumericMatrix::AQLMatrixData::AQLMatrixData(unsigned int row, unsigned int col)
 {
     if (row == 0 || col == 0)
     {
@@ -59,12 +59,12 @@ AQLMatrix::AQLMatrixData::AQLMatrixData(unsigned int row, unsigned int col)
 /*!
     @brief destructor
 */
-AQLMatrix::AQLMatrixData::~AQLMatrixData()
+AQLNumericMatrix::AQLMatrixData::~AQLMatrixData()
 {
 }
 
 void
-AQLMatrix::AQLMatrixData::resize(unsigned int row, unsigned int col)
+AQLNumericMatrix::AQLMatrixData::resize(unsigned int row, unsigned int col)
 {
     if (row == 0 || col == 0)
     {
@@ -106,36 +106,37 @@ AQLMatrix::AQLMatrixData::resize(unsigned int row, unsigned int col)
 /*! public methods                                                                                                             */
 /*!*********************************************************/
 
-AQLMatrix::AQLMatrix(unsigned int n, unsigned int m) :
+AQLNumericMatrix::AQLNumericMatrix(unsigned int n, unsigned int m) :
     pData_(NULL)
 {
     pData_ = std::make_shared<AQLMatrixData>(n, m);
 }
 
-AQLMatrix::AQLMatrix(const DoubleMatrix& mat) :
+AQLNumericMatrix::AQLNumericMatrix(const DoubleMatrix& mat) :
     pData_(NULL)
 {
-    try
+    // No catch-and-rethrow here (there used to be one that swallowed the real exception - a
+    // bad_alloc, say - and replaced it with a bare `throw "Invalid Matrix"`, a raw C-string that
+    // is not an exception object and cannot be caught by any `catch(const std::exception&)` or
+    // `catch(const AQLCoreError&)` upstream, including the AQ_CATCH/VALID_EXCEPTION_END machinery
+    // every validation wrapper relies on. Let the real exception (AQLMatrixData's constructor
+    // already translates bad_alloc into AQLCoreSystemError) propagate as itself.
+    size_t rows = mat.size();
+    size_t cols = rows == 0 ? 0 : mat[0].size(); // Access Violation Guard for mat[0]
+    pData_ = std::make_shared<AQLMatrixData>(rows, cols);
+    for (unsigned int i = 0; i < row(); i++)
     {
-        size_t rows = mat.size();
-        size_t cols = rows == 0 ? 0 : mat[0].size(); // Access Violation Guard for mat[0]
-        pData_ = std::make_shared<AQLMatrixData>(rows, cols);
-		unsigned int i, j;
-		for (i = 0; i < row(); i++)
-		{
-			for (j = 0; j < column(); j++)
-			{
-				(*pData_)[i][j] = mat[i][j];
-			}
-		}
-	}
-    catch (...)
-    {
-        throw "Invalid Matrix";
+        // Each source row is already contiguous (DoubleVector == std::vector<double>), so a
+        // single std::copy per row is both simpler and faster than indexing through operator[]
+        // on both sides element-by-element. Guards against a ragged mat (a row shorter or
+        // longer than mat[0]) the same way AQLMatrixData::resize()'s overlap-copy does - copies
+        // only what the source row actually has, never reads or writes past either buffer's end.
+        const size_t colsToCopy = (mat[i].size() < cols) ? mat[i].size() : cols;
+        std::copy(mat[i].begin(), mat[i].begin() + colsToCopy, (*pData_)[i]);
     }
 }
 
-AQLMatrix::AQLMatrix(const DoubleArray& array) :
+AQLNumericMatrix::AQLNumericMatrix(const DoubleArray& array) :
     pData_(NULL)
 {
     pData_ = std::make_shared<AQLMatrixData>(array.size(), 1);
@@ -146,18 +147,37 @@ AQLMatrix::AQLMatrix(const DoubleArray& array) :
 	}
 }
 
-AQLMatrix::AQLMatrix(const AQLMatrix& m)
+AQLNumericMatrix::AQLNumericMatrix(std::initializer_list<std::initializer_list<double>> rows) :
+    pData_(NULL)
+{
+    const size_t rowCount = rows.size();
+    const size_t colCount = rowCount == 0 ? 0 : rows.begin()->size();
+    pData_ = std::make_shared<AQLMatrixData>(rowCount, colCount);
+    unsigned int i = 0;
+    for (const auto& oneRow : rows)
+    {
+        if (oneRow.size() != colCount)
+        {
+            throw AQLCoreNumericalError(
+                "AQLNumericMatrix{{...}}: every row must be the same length", __FILE__, __LINE__);
+        }
+        std::copy(oneRow.begin(), oneRow.end(), (*pData_)[i]);
+        ++i;
+    }
+}
+
+AQLNumericMatrix::AQLNumericMatrix(const AQLNumericMatrix& m)
 {
     copy(m);
 }
 
 // Move constructor - steals m's shared_ptr outright: no allocation, no refcount traffic.
-AQLMatrix::AQLMatrix(AQLMatrix&& m) noexcept
+AQLNumericMatrix::AQLNumericMatrix(AQLNumericMatrix&& m) noexcept
     : pData_(std::move(m.pData_))
 {
 }
 
-AQLMatrix::AQLMatrix(void)
+AQLNumericMatrix::AQLNumericMatrix(void)
 {
     pData_ = std::make_shared<AQLMatrixData>(0, 0);
 }
@@ -165,13 +185,13 @@ AQLMatrix::AQLMatrix(void)
 /*!
     @brief destructor
 */
-AQLMatrix::~AQLMatrix(void)
+AQLNumericMatrix::~AQLNumericMatrix(void)
 {
     clear();
 }
 
 double 
-AQLMatrix::getValue(unsigned int i, unsigned int j) const
+AQLNumericMatrix::getValue(unsigned int i, unsigned int j) const
 {
     if (!isWithin(i, j)) 
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
@@ -179,7 +199,7 @@ AQLMatrix::getValue(unsigned int i, unsigned int j) const
 }
 
 double 
-AQLMatrix::maxValue(void) const
+AQLNumericMatrix::maxValue(void) const
 {
     if (!isWithin(0, 0)) 
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
@@ -198,7 +218,7 @@ AQLMatrix::maxValue(void) const
 }
 
 std::vector<double>
-AQLMatrix::getRow(unsigned int i) const
+AQLNumericMatrix::getRow(unsigned int i) const
 {
     if (!isWithin(i, 0))
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
@@ -212,7 +232,7 @@ AQLMatrix::getRow(unsigned int i) const
 }
 
 std::vector<double>
-AQLMatrix::getColumn(unsigned int j) const
+AQLNumericMatrix::getColumn(unsigned int j) const
 {
     if (!isWithin(0, j))
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
@@ -232,7 +252,7 @@ AQLMatrix::getColumn(unsigned int j) const
 }
 
 double
-AQLMatrix::dotRow(unsigned int i, const std::vector<double>& v) const
+AQLNumericMatrix::dotRow(unsigned int i, const std::vector<double>& v) const
 {
     if (!isWithin(i, 0))
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
@@ -255,7 +275,7 @@ AQLMatrix::dotRow(unsigned int i, const std::vector<double>& v) const
 }
 
 double
-AQLMatrix::dotCol(unsigned int j, const std::vector<double>& v) const
+AQLNumericMatrix::dotCol(unsigned int j, const std::vector<double>& v) const
 {
     if (!isWithin(0, j))
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
@@ -274,8 +294,20 @@ AQLMatrix::dotCol(unsigned int j, const std::vector<double>& v) const
     return sum;
 }
 
+std::vector<double>
+AQLNumericMatrix::getDiagonal(void) const
+{
+    const unsigned int n = static_cast<unsigned int>(AQLMath::min(row(), column()));
+    std::vector<double> result(n);
+    for (unsigned int i = 0; i < n; ++i)
+    {
+        result[i] = (*pData_)[i][i];
+    }
+    return result;
+}
+
 double
-AQLMatrix::minValue(void) const
+AQLNumericMatrix::minValue(void) const
 {
     if (!isWithin(0, 0)) 
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
@@ -294,13 +326,13 @@ AQLMatrix::minValue(void) const
 }
 
 double 
-AQLMatrix::conditionNumber(void) const
+AQLNumericMatrix::conditionNumber(void) const
 {
     double min, max;
     unsigned int i;
-    AQLMatrix u;
-    AQLMatrix w;
-    AQLMatrix v;
+    AQLNumericMatrix u;
+    AQLNumericMatrix w;
+    AQLNumericMatrix v;
     
     svDecomp(u, w, v);
     for (i = 0, max =double(0); i < w.row(); i++) 
@@ -316,14 +348,14 @@ AQLMatrix::conditionNumber(void) const
 } 
 
 int 
-AQLMatrix::rank(void) const
+AQLNumericMatrix::rank(void) const
 {
     int ret;
     unsigned int i;
     double max, wk;
-    AQLMatrix u;
-    AQLMatrix w;
-    AQLMatrix v;
+    AQLNumericMatrix u;
+    AQLNumericMatrix w;
+    AQLNumericMatrix v;
     
     svDecomp(u, w, v);
     for (i = 0, max =double(0); i < w.row(); i++)  {
@@ -337,7 +369,7 @@ AQLMatrix::rank(void) const
 } 
 
 bool 
-AQLMatrix::isSymmetric(void) const
+AQLNumericMatrix::isSymmetric(void) const
 {
     if (!isSquare()) return false;
 
@@ -353,17 +385,36 @@ AQLMatrix::isSymmetric(void) const
 }
 
 void 
-AQLMatrix::setValue(unsigned int i, unsigned int j, double value)
+AQLNumericMatrix::setValue(unsigned int i, unsigned int j, double value)
 {
     if (!isWithin(i, j)) 
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
 
     makeUnShared();
     (*pData_)[i][j] = value;
-} 		
+}
+
+double&
+AQLNumericMatrix::operator()(unsigned int i, unsigned int j)
+{
+    if (!isWithin(i, j))
+        throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
+
+    makeUnShared();
+    return (*pData_)[i][j];
+}
+
+double
+AQLNumericMatrix::operator()(unsigned int i, unsigned int j) const
+{
+    if (!isWithin(i, j))
+        throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
+
+    return (*pData_)[i][j];
+}
 
 void
-AQLMatrix::setValue(double value)
+AQLNumericMatrix::setValue(double value)
 {
     makeUnShared();
     const int rowCount = static_cast<int>(row());
@@ -384,8 +435,8 @@ AQLMatrix::setValue(double value)
     }
 }
 
-AQLMatrix&
-AQLMatrix::clearValues(void)
+AQLNumericMatrix&
+AQLNumericMatrix::clearValues(void)
 {
     makeUnShared();
     const int rowCount = static_cast<int>(row());
@@ -405,14 +456,14 @@ AQLMatrix::clearValues(void)
 }
 
 void 
-AQLMatrix::resize(unsigned int n, unsigned int m)
+AQLNumericMatrix::resize(unsigned int n, unsigned int m)
 {
     makeUnShared();
     pData_->resize(n, m);
 }
 
-AQLMatrix& 
-AQLMatrix::IdentityMatrix(void)
+AQLNumericMatrix& 
+AQLNumericMatrix::IdentityMatrix(void)
 {
     unsigned int i;
     unsigned int min = static_cast<unsigned int>(AQLMath::min(row(), column()));
@@ -423,10 +474,18 @@ AQLMatrix::IdentityMatrix(void)
     return *this;
 }
 
-AQLMatrix
-AQLMatrix::transpose(void) const
+AQLNumericMatrix
+AQLNumericMatrix::identity(unsigned int n)
 {
-    AQLMatrix ret(column(), row());
+    AQLNumericMatrix ret(n, n);
+    ret.IdentityMatrix();
+    return ret;
+}
+
+AQLNumericMatrix
+AQLNumericMatrix::transpose(void) const
+{
+    AQLNumericMatrix ret(column(), row());
     const int newRowCount = static_cast<int>(ret.row());   // == column()
     const unsigned int newColCount = ret.column();          // == row()
     // Parallelized over the *result's* rows (not the source's) so each thread writes a contiguous
@@ -448,10 +507,10 @@ AQLMatrix::transpose(void) const
     return ret;
 }
 
-AQLMatrix 
-AQLMatrix::subMatrix(unsigned int rs, unsigned int re, unsigned int cs, unsigned int ce) const
+AQLNumericMatrix 
+AQLNumericMatrix::subMatrix(unsigned int rs, unsigned int re, unsigned int cs, unsigned int ce) const
 {
-    AQLMatrix ret(re - rs + 1, ce - cs + 1);
+    AQLNumericMatrix ret(re - rs + 1, ce - cs + 1);
     if (!isWithin(rs, cs) || !isWithin(re, ce)) {
         throw AQLCoreNumericalError("Boundary Error", __FILE__, __LINE__);
     } 
@@ -465,15 +524,15 @@ AQLMatrix::subMatrix(unsigned int rs, unsigned int re, unsigned int cs, unsigned
 }
 /*! 
     @brief ()
-    @return AQLMatrix
+    @return AQLNumericMatrix
 */
-AQLMatrix 
-AQLMatrix::inverseMatrix(void) const
+AQLNumericMatrix 
+AQLNumericMatrix::inverseMatrix(void) const
 {
     if (!isSquare()) {
         throw AQLCoreNumericalError("Matrix is not square", __FILE__, __LINE__);
     }
-    AQLMatrix ret(*this);
+    AQLNumericMatrix ret(*this);
     vector<int> indx;
     try {
         indx.resize(row());
@@ -482,7 +541,7 @@ AQLMatrix::inverseMatrix(void) const
     {
         throw AQLCoreSystemError(__FILE__,__LINE__);
     }
-    AQLMatrix inv(row(), column());
+    AQLNumericMatrix inv(row(), column());
 
     vector<double> col(row());
     vector<double> col1(row());
@@ -507,9 +566,9 @@ AQLMatrix::inverseMatrix(void) const
     @return calc result(double type)
 */
 double 
-AQLMatrix::determinant(void) const
+AQLNumericMatrix::determinant(void) const
 {
-    AQLMatrix a(*this);
+    AQLNumericMatrix a(*this);
     vector<int> indx;
     try {
         indx.resize(row());
@@ -525,20 +584,58 @@ AQLMatrix::determinant(void) const
     return d;
 }
 
-/*! 
+double
+AQLNumericMatrix::trace(void) const
+{
+    if (!isSquare())
+        throw AQLCoreNumericalError("Matrix is not square", __FILE__, __LINE__);
+
+    double sum = double(0);
+    for (unsigned int i = 0; i < row(); ++i)
+    {
+        sum += (*pData_)[i][i];
+    }
+    return sum;
+}
+
+double
+AQLNumericMatrix::norm(void) const
+{
+    const int rowCount = static_cast<int>(row());
+    const unsigned int colCount = column();
+    double sumSquares = 0.0;
+    // Independent per row - safe to parallelize, same threshold pattern as every other
+    // embarrassingly-parallel reduction in this file.
+#ifdef _OPENMP
+    #pragma omp parallel for reduction(+:sumSquares) if(rowCount > OPENMP_SIZE_THRESHOLD)
+#endif
+    for (int i = 0; i < rowCount; ++i)
+    {
+        const double* rowPtr = (*pData_)[static_cast<unsigned int>(i)];
+        double rowSum = 0.0;
+        for (unsigned int j = 0; j < colCount; ++j)
+        {
+            rowSum += rowPtr[j] * rowPtr[j];
+        }
+        sumSquares += rowSum;
+    }
+    return AQLMath::sqrt(sumSquares);
+}
+
+/*!
 
     @brief Function to return Matrix after Cholesky decomposition
-    @return AQLMatrix class after it is resolved
+    @return AQLNumericMatrix class after it is resolved
 */
-AQLMatrix 
-AQLMatrix::choleskyDecomposition(void) const
+AQLNumericMatrix 
+AQLNumericMatrix::choleskyDecomposition(void) const
 {
     if (!isSymmetric()) {
         throw AQLCoreNumericalError(
             "Matrix is not symmetric", __FILE__, __LINE__);
     }
     
-    AQLMatrix ret(row(), row());
+    AQLNumericMatrix ret(row(), row());
     ret.clearValues();
 #if 1   
     unsigned int i, j, k;
@@ -572,7 +669,7 @@ AQLMatrix::choleskyDecomposition(void) const
     }
 
 #else // Correct Cholesky decomposition 
-    AQLMatrix w(row(), row());
+    AQLNumericMatrix w(row(), row());
     w.clearValues();
     double* d = new double[row()];
     double sum;
@@ -617,12 +714,12 @@ AQLMatrix::choleskyDecomposition(void) const
 }
 /*! 
     @brief Function to resolve base Matrix to u * w * v^T
-    @param[in] u AQLMatrix class after it is resolved
-    @param[in] w AQLMatrix class after it is resolved
-    @param[in] v AQLMatrix class after it is resolved
+    @param[in] u AQLNumericMatrix class after it is resolved
+    @param[in] w AQLNumericMatrix class after it is resolved
+    @param[in] v AQLNumericMatrix class after it is resolved
 */
 void 
-AQLMatrix:: svDecomp(AQLMatrix& u, AQLMatrix& w, AQLMatrix& v) const
+AQLNumericMatrix:: svDecomp(AQLNumericMatrix& u, AQLNumericMatrix& w, AQLNumericMatrix& v) const
 {
 #ifdef USE_QUANTLIB_SVD
     unsigned int is_qlib_used = 1;
@@ -638,10 +735,10 @@ AQLMatrix:: svDecomp(AQLMatrix& u, AQLMatrix& w, AQLMatrix& v) const
 #endif
     
     if (row() >= column()) {
-        u = AQLMatrix(*this);
+        u = AQLNumericMatrix(*this);
     } else {
 //      cout << "Matrix's Row is not larger than Column\n";
-        u = AQLMatrix(column(), column());
+        u = AQLNumericMatrix(column(), column());
         u.clearValues();
         for (unsigned int i = 0; i < row(); i++) {
             for (unsigned int j = 0; j < column(); j++) {
@@ -649,8 +746,8 @@ AQLMatrix:: svDecomp(AQLMatrix& u, AQLMatrix& w, AQLMatrix& v) const
             }
         }
     }
-    w = AQLMatrix(column(), column()).clearValues();
-    v = AQLMatrix(column(), column()).clearValues();
+    w = AQLNumericMatrix(column(), column()).clearValues();
+    v = AQLNumericMatrix(column(), column()).clearValues();
     vector<double> w1;
     try {
         w1.resize(column());
@@ -703,11 +800,11 @@ AQLMatrix:: svDecomp(AQLMatrix& u, AQLMatrix& w, AQLMatrix& v) const
 /*! 
     @brief Function to calculate eigenvalue and eigenvector \n 
     resolves base Matrix to vec^T * val * vec.
-    @param[in] vec AQLMatrix class after it is resolved
-    @param[in] val AQLMatrix class after it is resolved
+    @param[in] vec AQLNumericMatrix class after it is resolved
+    @param[in] val AQLNumericMatrix class after it is resolved
 */
 void 
-AQLMatrix::eigenMatrix(AQLMatrix& vec, AQLMatrix& val) const
+AQLNumericMatrix::eigenMatrix(AQLNumericMatrix& vec, AQLNumericMatrix& val) const
 {
     if (! isSymmetric()) 
     {
@@ -715,7 +812,7 @@ AQLMatrix::eigenMatrix(AQLMatrix& vec, AQLMatrix& val) const
                                         __FILE__, __LINE__);
     }
 
-    AQLMatrix d(row(), column());
+    AQLNumericMatrix d(row(), column());
     d.clearValues();
 
     vector<double> e;
@@ -726,8 +823,8 @@ AQLMatrix::eigenMatrix(AQLMatrix& vec, AQLMatrix& val) const
     {
         throw AQLCoreSystemError(__FILE__,__LINE__);
     }
-    vec = AQLMatrix(*this);
-    val = AQLMatrix(1, column());
+    vec = AQLNumericMatrix(*this);
+    val = AQLNumericMatrix(1, column());
     val.clearValues();
 
     // transpose to tri-diagonal
@@ -744,8 +841,8 @@ AQLMatrix::eigenMatrix(AQLMatrix& vec, AQLMatrix& val) const
 /*! 
     @brief Input
 */
-AQLMatrix&
-AQLMatrix::operator =(const AQLMatrix& other)
+AQLNumericMatrix&
+AQLNumericMatrix::operator =(const AQLNumericMatrix& other)
 {
     return copy(other);
 }
@@ -753,15 +850,15 @@ AQLMatrix::operator =(const AQLMatrix& other)
 /*! 
     @brief Product Matrix
 */
-AQLMatrix 
-AQLMatrix::operator *(const AQLMatrix &other) const
+AQLNumericMatrix 
+AQLNumericMatrix::operator *(const AQLNumericMatrix &other) const
 {
     if (column() != other.row()) 
     {
         throw 
         AQLCoreNumericalError("Can not multiply", __FILE__, __LINE__);
     }
-    AQLMatrix ret(row(), other.column());
+    AQLNumericMatrix ret(row(), other.column());
     unsigned int i, j, k;
     
     for (i = 0; i < row(); i++) {
@@ -778,8 +875,8 @@ AQLMatrix::operator *(const AQLMatrix &other) const
 /*! 
     @brief Operator to add for each Matrix
 */
-AQLMatrix 
-AQLMatrix::operator +(const AQLMatrix &other) const
+AQLNumericMatrix 
+AQLNumericMatrix::operator +(const AQLNumericMatrix &other) const
 {
     if (row() != other.row() || 
         column() != other.column()) 
@@ -787,7 +884,7 @@ AQLMatrix::operator +(const AQLMatrix &other) const
         throw 
             AQLCoreNumericalError("Can not add", __FILE__, __LINE__);
     }
-    AQLMatrix ret(row(),  column());
+    AQLNumericMatrix ret(row(),  column());
     unsigned int i, j;
     
     for (i = 0; i < row(); i++) {
@@ -802,8 +899,8 @@ AQLMatrix::operator +(const AQLMatrix &other) const
 /*! 
     @brief Operator to Subtract for each Matrix
 */
-AQLMatrix 
-AQLMatrix::operator -(const AQLMatrix& other) const
+AQLNumericMatrix 
+AQLNumericMatrix::operator -(const AQLNumericMatrix& other) const
 {
     if (row() != other.row() || 
         column() != other.column()) 
@@ -811,7 +908,7 @@ AQLMatrix::operator -(const AQLMatrix& other) const
         throw 
             AQLCoreNumericalError("Can not subtract", __FILE__, __LINE__);
     }
-    AQLMatrix ret(row(),  column());
+    AQLNumericMatrix ret(row(),  column());
     unsigned int i, j;
     
     for (i = 0; i < row(); i++) {
@@ -825,8 +922,8 @@ AQLMatrix::operator -(const AQLMatrix& other) const
 /*! 
     @brief input operation to malutiplier for each Matrix
 */
-AQLMatrix& 
-AQLMatrix::operator *=(const AQLMatrix &other)
+AQLNumericMatrix& 
+AQLNumericMatrix::operator *=(const AQLNumericMatrix &other)
 {
     if (column() != other.row()) {
         throw 
@@ -857,8 +954,8 @@ AQLMatrix::operator *=(const AQLMatrix &other)
 /*! 
     @brief input operation to add for each Matrix
 */
-AQLMatrix& 
-AQLMatrix::operator +=(const AQLMatrix &other)
+AQLNumericMatrix& 
+AQLNumericMatrix::operator +=(const AQLNumericMatrix &other)
 {
     if (column() != other.column() || row() != other.row()) {
         throw 
@@ -878,8 +975,8 @@ AQLMatrix::operator +=(const AQLMatrix &other)
     @brief input operation to Subtract for each Matrix
 
 */
-AQLMatrix& 
-AQLMatrix::operator-=(const AQLMatrix& other)
+AQLNumericMatrix& 
+AQLNumericMatrix::operator-=(const AQLNumericMatrix& other)
 {
     if (column() != other.row()) 
     {
@@ -901,10 +998,10 @@ AQLMatrix::operator-=(const AQLMatrix& other)
 /*! 
     @brief the Function to calculate eigenvalue and eigenvector 
 */
-AQLMatrix 
-AQLMatrix::operator *(const double& x) const
+AQLNumericMatrix 
+AQLNumericMatrix::operator *(const double& x) const
 {
-    AQLMatrix ret(*this);
+    AQLNumericMatrix ret(*this);
     ret *= x;
     return ret;
 }
@@ -912,7 +1009,7 @@ AQLMatrix::operator *(const double& x) const
 /*! 
     @brief malutiplier the constant to Matrix
 */
-AQLMatrix& AQLMatrix::operator *=(const double& x)
+AQLNumericMatrix& AQLNumericMatrix::operator *=(const double& x)
 {
     makeUnShared();
     const int rowCount = static_cast<int>(row());
@@ -935,7 +1032,7 @@ AQLMatrix& AQLMatrix::operator *=(const double& x)
     @brief Comparing operation for Matrix
 */
 bool 
-AQLMatrix::operator ==(const AQLMatrix &other) const 
+AQLNumericMatrix::operator ==(const AQLNumericMatrix &other) const 
 {
     if (row() != other.row() || 
         column() != other.column()) {
@@ -949,14 +1046,31 @@ AQLMatrix::operator ==(const AQLMatrix &other) const
                 return false;
             }
         }
-    }   
+    }
     return true;
 }
-/*! 
-    @brief the Function to calculate eigenvalue and eigenvector \n 
+
+bool
+AQLNumericMatrix::equals(const AQLNumericMatrix& other, double tolerance) const
+{
+    if (row() != other.row() || column() != other.column())
+        return false;
+
+    for (unsigned int i = 0; i < row(); i++) {
+        for (unsigned int j = 0; j < column(); j++) {
+            if (AQLMath::abs((*pData_)[i][j] - (*other.pData_)[i][j]) > tolerance) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+/*!
+    @brief the Function to calculate eigenvalue and eigenvector \n
 */
-void 
-AQLMatrix::print(const char* file) const
+void
+AQLNumericMatrix::print(const char* file) const
 {
     unsigned int i, j;
 
@@ -979,10 +1093,38 @@ AQLMatrix::print(const char* file) const
     FPRINTF(fp, "%.18f\n", (*pData_)[i][j]);
     fclose(fp);
 }
+
+DoubleMatrix
+AQLNumericMatrix::toDoubleMatrix(void) const
+{
+    DoubleMatrix result(row());
+    for (unsigned int i = 0; i < row(); ++i)
+    {
+        const double* rowPtr = (*pData_)[i];
+        result[i].assign(rowPtr, rowPtr + column());
+    }
+    return result;
+}
+
+std::ostream&
+operator<<(std::ostream& os, const AQLNumericMatrix& m)
+{
+    for (unsigned int i = 0; i < m.row(); ++i)
+    {
+        for (unsigned int j = 0; j < m.column(); ++j)
+        {
+            os << m(i, j);
+            if (j + 1 < m.column()) os << '\t';
+        }
+        os << '\n';
+    }
+    return os;
+}
+
 ///////////// PRIVATE METHODS ////////////////////////////
 // When data is shared, an original area is secured.
 void
-AQLMatrix::makeUnShared() const
+AQLNumericMatrix::makeUnShared() const
 {
     if (!pData_ || pData_.use_count() == 1) return;
     std::shared_ptr<AQLMatrixData> wk = pData_;
@@ -998,13 +1140,13 @@ AQLMatrix::makeUnShared() const
 }
 //
 void
-AQLMatrix::clear(void) // Call from destructor
+AQLNumericMatrix::clear(void) // Call from destructor
 {
     pData_.reset();
 }
 
-AQLMatrix&
-AQLMatrix::copy(const AQLMatrix& mat)
+AQLNumericMatrix&
+AQLNumericMatrix::copy(const AQLNumericMatrix& mat)
 {
     if (this != &mat)
 	{
@@ -1013,9 +1155,9 @@ AQLMatrix::copy(const AQLMatrix& mat)
     return *this;
 }
 
-// Move assignment - same rationale as the move constructor (AQLMatrix.h's declaration comment).
-AQLMatrix&
-AQLMatrix::operator=(AQLMatrix&& mat) noexcept
+// Move assignment - same rationale as the move constructor (AQLNumericMatrix.h's declaration comment).
+AQLNumericMatrix&
+AQLNumericMatrix::operator=(AQLNumericMatrix&& mat) noexcept
 {
     if (this != &mat)
     {
@@ -1031,7 +1173,7 @@ AQLMatrix::operator=(AQLMatrix&& mat) noexcept
 */
 // ret is copy of the Matrix. indx is the Matrix(memory size is itsRow)
 void 
-AQLMatrix::ludcmp(AQLMatrix& ret, std::vector<int>& indx, double& d)
+AQLNumericMatrix::ludcmp(AQLNumericMatrix& ret, std::vector<int>& indx, double& d)
 {
     unsigned int i,imax = 0,j,k;
     double big,dum,sum,temp;
@@ -1044,6 +1186,14 @@ AQLMatrix::ludcmp(AQLMatrix& ret, std::vector<int>& indx, double& d)
     {
         throw AQLCoreSystemError(__FILE__,__LINE__);
     }
+
+    // Detach from any sharer once, up front, rather than paying makeUnShared()'s use_count()
+    // check again on every single element write below (this is the O(n^3) inner loop -
+    // ludcmp/svdcmp/tred2/tqli are exactly where that per-element overhead costs the most).
+    // ret is a local, sole-owned-from-here-on for the rest of this function, so writing directly
+    // through (*ret.pData_)[i][j] afterwards is exactly as safe as the setValue() calls it
+    // replaces, just without re-checking what this one call already guaranteed.
+    ret.makeUnShared();
 
     d=double(1);
     for (i=0;i<ret.row();i++)
@@ -1065,14 +1215,14 @@ AQLMatrix::ludcmp(AQLMatrix& ret, std::vector<int>& indx, double& d)
         {
             sum=ret[i][j];
             for (k=0;k<i;k++) sum -= ret[i][k]*ret[k][j];
-            ret.setValue(i, j, sum);
+            (*ret.pData_)[i][j] = sum;
         }
         big=double(0);
         for (i=j;i<ret.row();i++)
         {
             sum=ret[i][j];
             for (k=0;k<j;k++) sum -= ret[i][k]*ret[k][j];
-            ret.setValue(i, j, sum);
+            (*ret.pData_)[i][j] = sum;
             if ( (dum=vv[i]*double(AQLMath::abs(double(sum)))) >= big)
             {
                 big=dum;
@@ -1084,8 +1234,8 @@ AQLMatrix::ludcmp(AQLMatrix& ret, std::vector<int>& indx, double& d)
             for (k=0;k<ret.row();k++)
             {
                 dum=ret[imax][k];
-                ret.setValue(imax, k, ret[j][k]);
-                ret.setValue(j, k, dum);
+                (*ret.pData_)[imax][k] = ret[j][k];
+                (*ret.pData_)[j][k] = dum;
             }
             d = -(d);
             vv[imax]=vv[j];
@@ -1095,20 +1245,20 @@ AQLMatrix::ludcmp(AQLMatrix& ret, std::vector<int>& indx, double& d)
         {
             double r = ret[j][j];
             AQLMath::minValue(r);
-            ret.setValue(j, j, r);
+            (*ret.pData_)[j][j] = r;
         }
 
         if (j != ret.row())
         {
             dum=double(1)/(ret[j][j]);
-            for (i=j+1;i<ret.row();i++) ret.setValue(i, j, ret[i][j] * dum);
+            for (i=j+1;i<ret.row();i++) (*ret.pData_)[i][j] = ret[i][j] * dum;
         }
     }
 }
 
 // input ret of ludcmp to a, input indx to indx, b(1. itsRow) is the answer
 void 
-AQLMatrix::lubksb(const AQLMatrix& a, const std::vector<int>& indx,std::vector<double>& b)
+AQLNumericMatrix::lubksb(const AQLNumericMatrix& a, const std::vector<int>& indx,std::vector<double>& b)
 {
     /*unsigned */int i,ii=0,ip,j;
     double sum;
@@ -1130,7 +1280,7 @@ AQLMatrix::lubksb(const AQLMatrix& a, const std::vector<int>& indx,std::vector<d
 }
 
 void 
-AQLMatrix::mprove(const AQLMatrix& a, const AQLMatrix& alud, 
+AQLNumericMatrix::mprove(const AQLNumericMatrix& a, const AQLNumericMatrix& alud, 
 												const std::vector<int>& indx, 
 												const std::vector<double>& b, 
 												std::vector<double>& x)
@@ -1160,7 +1310,7 @@ AQLMatrix::mprove(const AQLMatrix& a, const AQLMatrix& alud,
 }
 
 void 
-AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
+AQLNumericMatrix::svdcmp(AQLNumericMatrix& a, std::vector<double>& w, AQLNumericMatrix& v)
 {
 
     /*unsigned */int flag,i,its,j,jj,k,l=0,nm=0;
@@ -1168,10 +1318,16 @@ AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
     double scale;
     vector<double> rv1;
     rv1.resize(a.column());
-    
+
+    // Same rationale as ludcmp/tred2/tqli above: detach both matrices from any sharer once, up
+    // front, instead of paying makeUnShared()'s use_count() check on every element write in the
+    // O(n^3) loops below - by far the hottest of the four decomposition kernels.
+    a.makeUnShared();
+    v.makeUnShared();
+
     g=scale=anorm=0.0;
 
-    for (i=0;i<(int)a.column();i++) { 
+    for (i=0;i<(int)a.column();i++) {
         l=i+1;
         rv1[i]=scale*g;
         g=s=double(0);
@@ -1183,24 +1339,24 @@ AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
             }
             if (scale) {
                 for (k=i;k<(int)a.row();k++) {
-                    a.setValue(k, i, a[k][i] / double(scale));
+                    (*a.pData_)[k][i] = a[k][i] / double(scale);
                     s += a[k][i]*a[k][i];
                 }
                 f=a[i][i];
                 g = -AQLMath::sign(AQLMath::sqrt(double(s)), f);
                 h=f*g-s;
-                a.setValue(i, i, f-g);
+                (*a.pData_)[i][i] = f-g;
                 for (j=l;j<(int)a.column();j++) {
                     for (s=double(0),k=i;k<(int)a.row();k++) {
                         s += a[k][i]*a[k][j];
                     }
                     f=s/h;
                     for (k=i;k<(int)a.row();k++) {
-                        a.setValue(k, j, a[k][j] + f*a[k][i]);
+                        (*a.pData_)[k][j] = a[k][j] + f*a[k][i];
                     }
                 }
                 for (k=i;k<(int)a.row();k++) {
-                    a.setValue(k, i, a[k][i] * double(scale));
+                    (*a.pData_)[k][i] = a[k][i] * double(scale);
                 }
             }
         }
@@ -1214,24 +1370,24 @@ AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
             }
             if (scale) {
                 for (k=l;k<(int)a.column();k++) {
-                    a.setValue(i, k, a[i][k] / double(scale));
+                    (*a.pData_)[i][k] = a[i][k] / double(scale);
                     s += a[i][k]*a[i][k];
                 }
                 f=a[i][l];
                 g = -AQLMath::sign(AQLMath::sqrt(double(s)),f);
                 h=f*g-s;
-                a.setValue(i, l, f-g);
+                (*a.pData_)[i][l] = f-g;
                 for (k=l;k<(int)a.column();k++) rv1[k]=a[i][k]/h;
                 for (j=l;j<(int)a.row();j++) {
                     for (s=double(0),k=l;k<(int)a.column();k++) {
                         s += a[j][k]*a[i][k];
                     }
                     for (k=l;k<(int)a.column();k++) {
-                        a.setValue(j,k, a[j][k] + s*rv1[k]);
+                        (*a.pData_)[j][k] = a[j][k] + s*rv1[k];
                     }
                 }
                 for (k=l;k<(int)a.column();k++) {
-                    a.setValue(i, k, a[i][k] * double(scale));
+                    (*a.pData_)[i][k] = a[i][k] * double(scale);
                 }
             }
         }
@@ -1244,30 +1400,30 @@ AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
         if (i < (int)a.column() - 1) {
             if (g) {
                 for (j=l;j<(int)a.column();j++) {
-                    v.setValue(j, i, (a[i][j]/a[i][l])/g);
+                    (*v.pData_)[j][i] = (a[i][j]/a[i][l])/g;
                 }
                 for (j=l;j<(int)a.column();j++) {
-                    for (s=double(0),k=l;k< (int)a.column();k++) 
+                    for (s=double(0),k=l;k< (int)a.column();k++)
                         s += a[i][k]*v[k][j];
                     for (k=l;k<(int)a.column();k++) {
-                        v.setValue(k, j, v[k][j] + s*v[k][i]);
+                        (*v.pData_)[k][j] = v[k][j] + s*v[k][i];
                     }
                 }
             }
             for (j=l;j<(int)a.column();j++) {
-                v.setValue(i, j, 0.0);
-                v.setValue(j, i, 0.0);
+                (*v.pData_)[i][j] = 0.0;
+                (*v.pData_)[j][i] = 0.0;
             }
         }
-        v.setValue(i, i, double(1));
+        (*v.pData_)[i][i] = double(1);
         g=rv1[i];
         l=i;
     }
 
-    for (i=int(AQLMath::min(a.row(),a.column())) - 1;i>=0;i--) { 
+    for (i=int(AQLMath::min(a.row(),a.column())) - 1;i>=0;i--) {
         l=i+1;
         g=w[i];
-        for (j=l;j<(int)a.column();j++) a.setValue(i, j, double(0));
+        for (j=l;j<(int)a.column();j++) (*a.pData_)[i][j] = double(0);
         if (g) {
             g=double(1)/g;
             for (j=l;j<(int)a.column();j++) {
@@ -1276,12 +1432,12 @@ AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
                 }
                 f=(s/a[i][i])*g;
                 for (k=i;k<(int)a.row();k++) {
-                    a.setValue(k, j, a[k][j] + f*a[k][i]);
+                    (*a.pData_)[k][j] = a[k][j] + f*a[k][i];
                 }
             }
-            for (j=i;j<(int)a.row();j++) a.setValue(j, i, a[j][i] * g);
-        } else for (j=i;j<(int)a.row();j++) a.setValue(j, i, 0.0);
-        a.setValue(i, i, a[i][i]+1);
+            for (j=i;j<(int)a.row();j++) (*a.pData_)[j][i] = a[j][i] * g;
+        } else for (j=i;j<(int)a.row();j++) (*a.pData_)[j][i] = 0.0;
+        (*a.pData_)[i][i] = a[i][i]+1;
     }
 
     for (k=(int)a.column() - 1;k>=0;k--) {
@@ -1311,8 +1467,8 @@ AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
                     for (j=0;j<(int)a.row();j++) {
                         y=a[j][nm];
                         z=a[j][i];
-                        a.setValue(j, nm, y*c+z*s);
-                        a.setValue(j, i, z*c-y*s);
+                        (*a.pData_)[j][nm] = y*c+z*s;
+                        (*a.pData_)[j][i] = z*c-y*s;
                     }
                 }
             }
@@ -1321,7 +1477,7 @@ AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
                 if (z < double(0)) {
                     w[k] = -z;
                     for (j=0;j<(int)a.column();j++) {
-                        v.setValue(j, k, -v[j][k]);
+                        (*v.pData_)[j][k] = -v[j][k];
                     }
                 }
                 break;
@@ -1329,7 +1485,7 @@ AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
 
             if (its == ITERATION) {
                 throw AQLCoreNumericalError(
-                        "Error in svdcmp. Too many iterations", 
+                        "Error in svdcmp. Too many iterations",
                             __FILE__, __LINE__);
             }
 
@@ -1359,8 +1515,8 @@ AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
                 for (jj=0;jj<(int)a.column();jj++) {
                     x=v[jj][j];
                     z=v[jj][i];
-                    v.setValue(jj, j, x*c+z*s);
-                    v.setValue(jj, i, z*c-x*s);
+                    (*v.pData_)[jj][j] = x*c+z*s;
+                    (*v.pData_)[jj][i] = z*c-x*s;
                 }
                 z=AQLMath::pythag(f,h);
                 w[j]=z;
@@ -1374,8 +1530,8 @@ AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
                 for (jj=0;jj<(int)a.row();jj++) {
                     y=a[jj][j];
                     z=a[jj][i];
-                    a.setValue(jj, j, y*c+z*s);
-                    a.setValue(jj, i, z*c-y*s);
+                    (*a.pData_)[jj][j] = y*c+z*s;
+                    (*a.pData_)[jj][i] = z*c-y*s;
                 }
             }
             rv1[l]=0.0;
@@ -1386,13 +1542,19 @@ AQLMatrix::svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v)
 }
 
 void 
-AQLMatrix::tred2(AQLMatrix& a, AQLMatrix& d, std::vector<double>& e)
+AQLNumericMatrix::tred2(AQLNumericMatrix& a, AQLNumericMatrix& d, std::vector<double>& e)
 {
     int l, k, j, i;
 
     double scale,hh,h,g,f;
 
-    for (i = (int)a.row() - 1; i > 0; i--) 
+    // Same rationale as ludcmp above: detach both matrices from any sharer once, up front,
+    // instead of paying makeUnShared()'s use_count() check on every element write in the O(n^3)
+    // loops below.
+    a.makeUnShared();
+    d.makeUnShared();
+
+    for (i = (int)a.row() - 1; i > 0; i--)
 	{
         l = i - 1;
         h = scale = double(0);
@@ -1403,18 +1565,18 @@ AQLMatrix::tred2(AQLMatrix& a, AQLMatrix& d, std::vector<double>& e)
                 e[i] = a[i][l];
             else {
                 for (k = 0; k <= l; k++) {
-                    a.setValue(i, k, a[i][k] / scale);
+                    (*a.pData_)[i][k] = a[i][k] / scale;
                     h += a[i][k]*a[i][k];
                 }
                 f = a[i][l];
-                g = double(f >= double(0) ? -AQLMath::sqrt(double(h)) : 
+                g = double(f >= double(0) ? -AQLMath::sqrt(double(h)) :
                                             AQLMath::sqrt(double(h)));
                 e[i] = scale * g;
                 h -= f * g;
-                a.setValue(i, l, f-g);
+                (*a.pData_)[i][l] = f-g;
                 f = double(0);
                 for (j = 0; j <= l; j++) {
-                    a.setValue(j, i, a[i][j] / h);
+                    (*a.pData_)[j][i] = a[i][j] / h;
                     g = double(0);
                     for (k = 0; k <= j; k++)
                         g += a[j][k] * a[i][k];
@@ -1429,57 +1591,60 @@ AQLMatrix::tred2(AQLMatrix& a, AQLMatrix& d, std::vector<double>& e)
                     g = e[j] - hh * f;
                     e[j] = g;
                     for (k = 0; k <= j; k++)
-                        a.setValue(j, k, 
-                                a[j][k] - (f * e[k] + g * a[i][k]));
+                        (*a.pData_)[j][k] = a[j][k] - (f * e[k] + g * a[i][k]);
                 }
             }
-        } 
-		else 
+        }
+		else
 		{
             e[i] = a[i][l];
         }
-        d.setValue(i, i, h);
+        (*d.pData_)[i][i] = h;
     }
 
-    d.setValue(0, 0, double(0));
+    (*d.pData_)[0][0] = double(0);
     e[0] = double(0);
     // Contents of this loop can be omitted if eigenvectors not
-    //      wanted except for statement d[i]=a[i][i]; 
-    for (i = 0; i < (int)a.row(); i++) 
+    //      wanted except for statement d[i]=a[i][i];
+    for (i = 0; i < (int)a.row(); i++)
 	{
         l = i - 1;
-        if (d[i][i]) 
+        if (d[i][i])
 		{
-            for (j = 0; j <= l; j++) 
+            for (j = 0; j <= l; j++)
 			{
                 g = double(0);
                 for (k = 0; k <= l; k++)
                     g += a[i][k] * a[k][j];
                 for (k = 0; k <= l; k++)
-                    a.setValue(k, j, a[k][j] - g * a[k][i]);
+                    (*a.pData_)[k][j] = a[k][j] - g * a[k][i];
             }
         }
-        d.setValue(i, i, a[i][i]);
-        a.setValue(i, i, double(1));
-        for (j = 0; j <= l; j++) 
+        (*d.pData_)[i][i] = a[i][i];
+        (*a.pData_)[i][i] = double(1);
+        for (j = 0; j <= l; j++)
 		{
-            a.setValue(j, i, double(0));
-            a.setValue(i, j, double(0));
+            (*a.pData_)[j][i] = double(0);
+            (*a.pData_)[i][j] = double(0);
         }
     }
-    for (i = 0; i < (int)d.column() -1; i++) 
+    for (i = 0; i < (int)d.column() -1; i++)
 	{
-        d.setValue(i, i + 1, e[i+1]);
-        d.setValue(i + 1, i, e[i+1]);
+        (*d.pData_)[i][i + 1] = e[i+1];
+        (*d.pData_)[i + 1][i] = e[i+1];
     }
 }
 
 void 
-AQLMatrix::tqli(AQLMatrix& d, std::vector<double>& e,  AQLMatrix& z)
+AQLNumericMatrix::tqli(AQLNumericMatrix& d, std::vector<double>& e,  AQLNumericMatrix& z)
 {
     /*unsigned*/ int m,l,iter,i,k;
     double s,r,p,g,f,dd,c,b;
-    
+
+    // Same rationale as ludcmp/tred2 above.
+    d.makeUnShared();
+    z.makeUnShared();
+
     for (i = 1; i < (int)e.size(); i++) e[i - 1] = e[i];
     e[i - 1] = double(0);
     
@@ -1508,7 +1673,7 @@ AQLMatrix::tqli(AQLMatrix& d, std::vector<double>& e,  AQLMatrix& z)
                     b=c*e[i];
                     e[i+1]=(r=AQLMath::pythag(f,g));
                     if (r == double(0)) {
-                        d.setValue(i+1, i+1, d[i+1][i+1] - p);
+                        (*d.pData_)[i+1][i+1] = d[i+1][i+1] - p;
                         e[m]=double(0);
                         break;
                     }
@@ -1516,16 +1681,16 @@ AQLMatrix::tqli(AQLMatrix& d, std::vector<double>& e,  AQLMatrix& z)
                     c=g/r;
                     g=d[i+1][i+1]-p;
                     r=(d[i][i]-g)*s+2.0*c*b;
-                    d.setValue(i+1, i+1, g+(p=s*r));
+                    (*d.pData_)[i+1][i+1] = (g+(p=s*r));
                     g=c*r-b;
                     for (k=0;k<(int)z.row();k++) {
                         f=z[k][i+1];
-                        z.setValue(k, i+1, s*z[k][i]+c*f);
-                        z.setValue(k, i, c*z[k][i]-s*f);
+                        (*z.pData_)[k][i+1] = s*z[k][i]+c*f;
+                        (*z.pData_)[k][i] = c*z[k][i]-s*f;
                     }
                 }
                 if (r == double(0) && i >= l) continue;
-                d.setValue(l, l, d[l][l] - p);
+                (*d.pData_)[l][l] = d[l][l] - p;
                 e[l]=g;
                 e[m]=0.0;
             }
@@ -1534,7 +1699,7 @@ AQLMatrix::tqli(AQLMatrix& d, std::vector<double>& e,  AQLMatrix& z)
 }
 
 #if 0
-void AQLMatrix::eigsrt(AQLMatrix& d1, AQLMatrix& v1)
+void AQLNumericMatrix::eigsrt(AQLNumericMatrix& d1, AQLNumericMatrix& v1)
 {
     int k,j,i;
     double p;
@@ -1561,14 +1726,14 @@ void AQLMatrix::eigsrt(AQLMatrix& d1, AQLMatrix& v1)
 
 #ifdef USE_QUANTLIB_SVD
 void
-AQLMatrix::SVD(int m_, int n_, std::vector<double>& _a, std::vector<double>& _u, std::vector<double>& s_, std::vector<double>& _v){
+AQLNumericMatrix::SVD(int m_, int n_, std::vector<double>& _a, std::vector<double>& _u, std::vector<double>& s_, std::vector<double>& _v){
     int i, j, k;
 
     using std::swap;
 
-	AQLMatrix A(m_, n_);
-	AQLMatrix U_(m_, n_);
-	AQLMatrix V_(m_, n_);
+	AQLNumericMatrix A(m_, n_);
+	AQLNumericMatrix U_(m_, n_);
+	AQLNumericMatrix V_(m_, n_);
 
     for (i = 0; i < m_; i++) {
         for (j = 0; j < m_; j++) {

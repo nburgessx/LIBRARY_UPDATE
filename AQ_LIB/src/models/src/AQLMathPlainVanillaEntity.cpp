@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Source code for class to represent Market Parameter Data for Plain Vanilla Calculation.
 
 			Following dataValues are registered automatically to data master<BR>
@@ -33,7 +33,7 @@
 #include "AQLMathFXEntity.h"
 #include "AQLMathFXUtility.h"
 
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLCholeskyDecompSC.h"
 #include "AQLAlgorithm.h"
 #include "AQLMathYieldCurvePro.h"

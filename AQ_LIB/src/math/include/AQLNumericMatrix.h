@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifdef __GNUG__
 #pragma interface
@@ -10,6 +10,8 @@
 #include "AQLCoreTemplateType.h"
 #include <memory>
 #include <vector>
+#include <initializer_list>
+#include <iosfwd>
 
 
 /////////////////// Matrix class /////////////////////////////
@@ -17,35 +19,41 @@
     @brief Class declaration to define a matrix operation.
 */
 
-class AQLMatrix {
+class AQLNumericMatrix {
 public:
 
 	// constructor (n row, m column)
-	AQLMatrix(unsigned int n, unsigned int m);
+	AQLNumericMatrix(unsigned int n, unsigned int m);
 
 	// constructor
-	AQLMatrix(const DoubleMatrix& mat);
+	AQLNumericMatrix(const DoubleMatrix& mat);
 
 	// constructor
-	AQLMatrix(const DoubleArray& array);
+	AQLNumericMatrix(const DoubleArray& array);
 
 	//====================================================================
 	// copy constructor
-	AQLMatrix(const AQLMatrix& m);
+	AQLNumericMatrix(const AQLNumericMatrix& m);
 	//====================================================================
 
 	// move constructor - steals the other matrix's buffer outright, no allocation, no refcount
 	// traffic at all. Worth having here specifically: every arithmetic operator below
-	// (operator+, operator*, transpose(), inverseMatrix(), ...) returns AQLMatrix by value, so a
+	// (operator+, operator*, transpose(), inverseMatrix(), ...) returns AQLNumericMatrix by value, so a
 	// move constructor lets the compiler avoid even the shared_ptr refcount bump in the
 	// "build a temporary, return it" pattern all of them use.
-	AQLMatrix(AQLMatrix&& m) noexcept;
+	AQLNumericMatrix(AQLNumericMatrix&& m) noexcept;
+
+	// brace-init constructor, e.g. AQLNumericMatrix m{ {1,2}, {3,4} } - purely ergonomic, for
+	// tests and small hand-built matrices, so callers do not need a DoubleMatrix detour just to
+	// write a literal matrix down. Every row must be the same length (ragged input throws -
+	// silently zero-padding would hide what is almost always a typo at the call site).
+	AQLNumericMatrix(std::initializer_list<std::initializer_list<double>> rows);
 
 	// default constructor
-	AQLMatrix(void);
+	AQLNumericMatrix(void);
 
 	// destructor
-	~AQLMatrix(void);
+	~AQLNumericMatrix(void);
 
 	
 	//function to get row numbers
@@ -86,6 +94,14 @@ public:
 	bool					isWithin(unsigned int r, unsigned int c) const
 							{ return (r < row() && c < column());}
 
+	// Bounds-checked read/write element access, e.g. m(i,j) = x; x = m(i,j);. operator[] below
+	// only ever offered a const read (a raw row pointer); every write had to go through
+	// setValue(i,j,x) instead, an asymmetric read/write API that is easy to trip over. This is
+	// the idiomatic C++ matrix accessor pair (Eigen, Boost.uBLAS both use it) and correctly
+	// detaches from any COW sharer on the non-const path, exactly like setValue().
+	double&					operator()(unsigned int i, unsigned int j);
+	double					operator()(unsigned int i, unsigned int j) const;
+
 	//=============================================
 	// return row i as a plain vector<double> - a convenience for callers doing
 	// numerical work (e.g. numerical integration: dotRow(i, weights) * step)
@@ -107,7 +123,12 @@ public:
 	// dot product of column j with v (v.size() must equal row()).
 	double					dotCol(unsigned int j, const std::vector<double>& v) const;
 
-	
+	// return the diagonal as a plain vector<double> (size = min(row(),column()) for a
+	// non-square matrix). A common everyday need alongside getRow/getColumn - variance
+	// vectors, calibration diagnostics - currently hand-rolled at every call site that needs it.
+	std::vector<double>		getDiagonal(void) const;
+
+
 	// function to set the value(double) to element(i,j)
 	void					setValue(unsigned int i, unsigned int j, double value); 
 	
@@ -115,7 +136,7 @@ public:
 	void					setValue(double value);
 	
 	// let all of elements of the matrix be 0
-	AQLMatrix&				clearValues(void);
+	AQLNumericMatrix&				clearValues(void);
 	
 	// resize data, all data is cleared
 	void					resize(unsigned int n, unsigned int m);
@@ -123,71 +144,105 @@ public:
 							
 	// let set diagonal component by 0 and set other components 0. \n In case of not a square matrix,
 	// we regard it with diagonal part that a small matrix created by minimum numbers among row and column numbers 
-	AQLMatrix&				IdentityMatrix(void);
-	
+	AQLNumericMatrix&				IdentityMatrix(void);
+
+	// Static factory for the everyday "give me a fresh identity matrix" need, without first
+	// having to construct-then-mutate via the in-place IdentityMatrix() above.
+	static AQLNumericMatrix		identity(unsigned int n);
+
 	// transpose
-	AQLMatrix				transpose(void) const;
+	AQLNumericMatrix				transpose(void) const;
 	
 	// function to return submatrix with rs-re rows and with cs-ce columns
-	AQLMatrix				subMatrix(unsigned int rs, unsigned int re, 
+	AQLNumericMatrix				subMatrix(unsigned int rs, unsigned int re, 
 												unsigned int cs, unsigned int ce) const;
 	
 	// function that returns the inverse matrix (not square matrix is exceptions)
-	AQLMatrix				inverseMatrix(void) const;
+	AQLNumericMatrix				inverseMatrix(void) const;
 	
 	// function that returns a result of the determinant
 	double					determinant(void) const;
-							
+
+	// sum of the diagonal elements (not square is an exception, same convention as
+	// choleskyDecomposition()/isSymmetric() below)
+	double					trace(void) const;
+
+	// Frobenius norm: sqrt(sum of every element squared). Common convergence/scale check in
+	// calibration code - e.g. "has this Jacobian update stopped changing" - currently absent,
+	// so every caller that needs it hand-rolls the double loop.
+	double					norm(void) const;
+
 	// function that returns the matrix after Cholesky decomposition (not a symmetric matrix is exceptions)
-	AQLMatrix				choleskyDecomposition(void) const;
+	AQLNumericMatrix				choleskyDecomposition(void) const;
 							
-	//	void luDecomp(AQLMatrix& l, AQLMatrix& u) const;
+	//	void luDecomp(AQLNumericMatrix& l, AQLNumericMatrix& u) const;
 	
 	// function that performs the singular value decomposition, decompose the original function into u * w * v ^ T
-	void					svDecomp(AQLMatrix& u, AQLMatrix& w, AQLMatrix& v) const;
+	void					svDecomp(AQLNumericMatrix& u, AQLNumericMatrix& w, AQLNumericMatrix& v) const;
 							
 		// function to calculate the eigen value and eigen vectors, decompose the original function into vec^T * val * vec (not a symmetric matrix is exceptions)
-	void					eigenMatrix(AQLMatrix& vec, AQLMatrix& val) const;
+	void					eigenMatrix(AQLNumericMatrix& vec, AQLNumericMatrix& val) const;
 
 	// assignment
-	AQLMatrix&				operator =(const AQLMatrix& m);
+	AQLNumericMatrix&				operator =(const AQLNumericMatrix& m);
 	
 	// move assignment - same rationale as the move constructor above
-	AQLMatrix&				operator =(AQLMatrix&& m) noexcept;
+	AQLNumericMatrix&				operator =(AQLNumericMatrix&& m) noexcept;
 							
 	// product of the matrix
-	AQLMatrix				operator *(const AQLMatrix&) const;
+	AQLNumericMatrix				operator *(const AQLNumericMatrix&) const;
 							
 	// addition of a matrix
-	AQLMatrix				operator +(const AQLMatrix&) const;
+	AQLNumericMatrix				operator +(const AQLNumericMatrix&) const;
 							
 	// subtraction of the matrix
-	AQLMatrix				operator - (const AQLMatrix&) const;
+	AQLNumericMatrix				operator - (const AQLNumericMatrix&) const;
 							
 	// addition and assignment of a matrix
-	AQLMatrix&				operator +=(const AQLMatrix&);
+	AQLNumericMatrix&				operator +=(const AQLNumericMatrix&);
 							
 	// product and assignment of a matrix
-	AQLMatrix&				operator *=(const AQLMatrix&);
+	AQLNumericMatrix&				operator *=(const AQLNumericMatrix&);
 							
 	// subtraction and assignment of a matrix
-	AQLMatrix&				operator -=(const AQLMatrix&);
+	AQLNumericMatrix&				operator -=(const AQLNumericMatrix&);
 							
 	// multiple constant
-	AQLMatrix				operator *(const double& x) const;
+	AQLNumericMatrix				operator *(const double& x) const;
 							
 	// multiple constant and assignment 
-	AQLMatrix&				operator *=(const double& x);
+	AQLNumericMatrix&				operator *=(const double& x);
 
-	// relational operator
-	bool					operator ==(const AQLMatrix&) const;
-							
+	// relational operator - exact element-by-element double comparison. Genuinely wanted for
+	// identity/reference checks (e.g. "is this literally the same data I passed in"), but after
+	// any arithmetic (inverseMatrix(), operator*, a decomposition) two matrices that are
+	// numerically equal will almost never compare exactly equal - use equals() below for that.
+	bool					operator ==(const AQLNumericMatrix&) const;
+
+	// inequality - the natural complement to operator== above, same exact-comparison caveat.
+	bool					operator !=(const AQLNumericMatrix& other) const { return !(*this == other); }
+
+	// tolerance-based comparison for numerical work (tests, convergence checks) where exact
+	// double equality is the wrong question to ask. |a(i,j) - b(i,j)| <= tolerance for every
+	// element; dimension mismatch is always "not equal", never an exception.
+	bool					equals(const AQLNumericMatrix& other, double tolerance) const;
+
 	// return the first pointer
 	const double*			operator[](const int i) const {return (*pData_)[i];}
 
+	// Round-trips back out to the marshalling-friendly nested-vector shape - the reverse of the
+	// DoubleMatrix constructor above. Every caller that needs this today hand-rolls the double
+	// loop at the call site.
+	DoubleMatrix			toDoubleMatrix(void) const;
+
 //  DEBUG_METHODS
-	
+
 	void					print(const char* file="Matrix.csv") const;
+
+	// Stream a human-readable rendering, e.g. for a log line or an exception message, without
+	// going via print()'s file-on-disk path. Declared as a free function (not a member) per the
+	// usual operator<< convention, but listed here so it is discoverable alongside the class.
+	friend std::ostream&	operator<<(std::ostream& os, const AQLNumericMatrix& m);
 
 private:
 	/*!
@@ -203,7 +258,7 @@ private:
 		    win for anything past the smallest matrices, not a micro-optimisation.
 		  - operator[](n) still returns a double* (or const double*) pointing at the start of row n
 		    (now data_.data() + n*col_ instead of pData_[n]), so every existing call site in
-		    AQLMatrix.cpp that does (*pData_)[i][j] or pData_->row()/col() needed zero changes -
+		    AQLNumericMatrix.cpp that does (*pData_)[i][j] or pData_->row()/col() needed zero changes -
 		    the row-pointer *contract* is unchanged, only what is behind it.
 	*/
 	class AQLMatrixData {
@@ -262,25 +317,25 @@ private:
 	// and collapses the two heap allocations into one via make_shared. Kept as shared_ptr rather
 	// than moving to always-deep-copy (the way AQLString's internals ultimately did) because,
 	// unlike AQLString/AQLCalendar, this class's usage is genuinely copy-heavy: every arithmetic
-	// operator returns AQLMatrix by value, so O(1) sharing is actually earning its keep here.
+	// operator returns AQLNumericMatrix by value, so O(1) sharing is actually earning its keep here.
 	mutable std::shared_ptr<AQLMatrixData>	 pData_;
 
 	void					makeUnShared(void) const;
-	AQLMatrix&				copy(const AQLMatrix& tensor);
+	AQLNumericMatrix&				copy(const AQLNumericMatrix& tensor);
 	void					clear(void);
 
 	// LU Decomposition
-	static void				ludcmp(AQLMatrix& ret, std::vector<int>& indx, double& d);
+	static void				ludcmp(AQLNumericMatrix& ret, std::vector<int>& indx, double& d);
 	
 	// LU Decomposition
-	static void				lubksb(const AQLMatrix& a, const std::vector<int>& indx, std::vector<double>& b);
+	static void				lubksb(const AQLNumericMatrix& a, const std::vector<int>& indx, std::vector<double>& b);
 
-	static void				mprove(const AQLMatrix& a, const AQLMatrix& alud, const std::vector<int>& indx, 
+	static void				mprove(const AQLNumericMatrix& a, const AQLNumericMatrix& alud, const std::vector<int>& indx, 
 								   const std::vector<double>& b, std::vector<double>& x); 
 	
-	static void				svdcmp(AQLMatrix& a, std::vector<double>& w, AQLMatrix& v);
-	static void				tred2(AQLMatrix& a, AQLMatrix& d, std::vector<double>& e);
-	static void				tqli(AQLMatrix& d, std::vector<double>& e,  AQLMatrix& z);
+	static void				svdcmp(AQLNumericMatrix& a, std::vector<double>& w, AQLNumericMatrix& v);
+	static void				tred2(AQLNumericMatrix& a, AQLNumericMatrix& d, std::vector<double>& e);
+	static void				tqli(AQLNumericMatrix& d, std::vector<double>& e,  AQLNumericMatrix& z);
 
 #ifdef USE_QUANTLIB_SVD
 	static void             SVD(int m_, int n_, std::vector<double>& _a, std::vector<double>& _u, std::vector<double>& s_, std::vector<double>& _v);

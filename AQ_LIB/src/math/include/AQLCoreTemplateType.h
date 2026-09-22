@@ -17,6 +17,7 @@
 #include "AQLDateTime.h"
 #include "AQLDate.h"
 #include "AQLCoreAutoPtr.h"
+#include "AQLFlattenedMatrix.h"
 #include <boost/variant.hpp>
 
 class AQLObjectHolder;
@@ -43,8 +44,14 @@ typedef std::vector<unsigned long>	                            UlongArray;      
 typedef std::vector<double>	                                    DoubleArray;            // double valarray
 typedef std::complex<double>                                    DoubleComplex;          // double complex
 typedef std::vector<std::complex<double> >                      ComplexVector;          // complex vector
-typedef std::vector< std::vector< std::complex<double> > >	    ComplexMatrix;          // complex 2dim valarray
-typedef std::vector< std::vector<int> >                         IntMatrix;              // double 2dim valarray
+
+// Phase 6.11 matrix/table-type consolidation pilot (2026-09-20): ComplexMatrix/IntMatrix used to
+// be bare vector<vector<T>> typedefs (N+1 heap allocations, zero methods - not a transpose, not
+// a bounds check, nothing). Both are now thin aliases over the shared AQLFlattenedMatrix<T> base
+// (contiguous row-major storage, COW, operator()/operator[], transpose(), equals()/==/!=,
+// getRow/getColumn, operator<<). See AQLFlattenedMatrix.h and MIGRATION_PLAN.md Phase 6.11.
+typedef AQLFlattenedMatrix<std::complex<double>>                AQLComplexMatrix;
+typedef AQLFlattenedMatrix<int>                                 AQLIntMatrix;
 typedef AQLCoreAutoPtr<std::vector<AQLObjectHolder> >             Records_var;            // record data for storing
 
 typedef boost::variant<int, double, bool, std::string, AQLString, const char*> AnyType;

@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Source code of class to represent FX volatility function
 
 	This class derives from AQLFunctionBase
@@ -20,7 +20,7 @@
 #include "AQLDataReference.h"
 #include "AQLBlackScholesCalc.h"
 #include "AQLCoreComponentManager.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLLinearRatesOptionValueDataProvider.h"
 #include "AQLMathFXEntity.h"
 
@@ -268,10 +268,10 @@ AQLMathVolFuncFXVannaVolga::setUpVannaVolgaMatrix(AnalyticGKParam* gkParam, AQLD
 	I[1] =  (highprem - lowprem) - (highBSprem - lowBSprem);
 	I[2] = (0.5 * (highprem + lowprem) - atmprem) - (0.5 * (highBSprem + lowBSprem) - atmprem);
 
-	AQLMatrix matAT(AT);
-	const AQLMatrix& invmat = matAT.inverseMatrix();
-	AQLMatrix matI(I);
-	const AQLMatrix& Omega = invmat * matI;
+	AQLNumericMatrix matAT(AT);
+	const AQLNumericMatrix& invmat = matAT.inverseMatrix();
+	AQLNumericMatrix matI(I);
+	const AQLNumericMatrix& Omega = invmat * matI;
 	DoubleVector ret;
 	for (unsigned int i = 0; i < AT.size(); i++)
 		ret.push_back(Omega.getValue(i,0));

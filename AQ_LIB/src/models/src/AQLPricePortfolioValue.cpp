@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Source code for class to evaluate portfolio.
 */
 #ifdef __GNUG__
@@ -30,7 +30,7 @@
 #include "AQLMathFXEntity.h"
 #include "AQLDateSchedule.h"
 
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLMathYieldCurvePro.h"
 #include "AQLMathPlainVanillaEntity.h"
 #include "AQLMathPathEntity.h"

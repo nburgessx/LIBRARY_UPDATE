@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief 
             Only static functions are implemented on this class.
 */
@@ -13,7 +13,7 @@
 
 
 
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLCholeskyDecompSC.h"
 #include <limits>
 
@@ -24,8 +24,8 @@ using namespace std;
 	@
     
 */
-AQLMatrix
-AQLCholeskyDecompSC::choleskyDecompositionSC(const AQLMatrix& mat)
+AQLNumericMatrix
+AQLCholeskyDecompSC::choleskyDecompositionSC(const AQLNumericMatrix& mat)
 {
     if (! mat.isSymmetric()) 
     {
@@ -37,7 +37,7 @@ AQLCholeskyDecompSC::choleskyDecompositionSC(const AQLMatrix& mat)
 
 	IntArray rec_info(size);
 	
-	AQLMatrix red_C(mat);
+	AQLNumericMatrix red_C(mat);
 
 	// Working matrix in this routine
 	size_t red_size = size;
@@ -52,8 +52,8 @@ AQLCholeskyDecompSC::choleskyDecompositionSC(const AQLMatrix& mat)
 	}
 
 		
-	AQLMatrix eVal, eVec;	// eigen values, eigen vectors
-	AQLMatrix L(red_size, red_size);		// temporary matrix
+	AQLNumericMatrix eVal, eVec;	// eigen values, eigen vectors
+	AQLNumericMatrix L(red_size, red_size);		// temporary matrix
 	
 	red_C.eigenMatrix(eVec, eVal);
 	
@@ -68,7 +68,7 @@ AQLCholeskyDecompSC::choleskyDecompositionSC(const AQLMatrix& mat)
 	while(!cholesky_decomp(red_C, L)) shift_diag(red_C);	// to deal with precision error
 
 	// Create output M
-	AQLMatrix M(mat.row(), mat.row());
+	AQLNumericMatrix M(mat.row(), mat.row());
 	if (off_diagonal) recover_matrix(L, rec_info, M);
 	else M = L;
 	return M;
@@ -76,7 +76,7 @@ AQLCholeskyDecompSC::choleskyDecompositionSC(const AQLMatrix& mat)
 
 
 bool
-AQLCholeskyDecompSC::cholesky(const AQLMatrix& in,AQLMatrix& out)
+AQLCholeskyDecompSC::cholesky(const AQLNumericMatrix& in,AQLNumericMatrix& out)
 {
  	unsigned int size = in.row();
 	double x;
@@ -101,7 +101,7 @@ AQLCholeskyDecompSC::cholesky(const AQLMatrix& in,AQLMatrix& out)
 	return true;
 }
 bool
-AQLCholeskyDecompSC::check_off_diagonal(const AQLMatrix& C)
+AQLCholeskyDecompSC::check_off_diagonal(const AQLNumericMatrix& C)
 {
     size_t size = C.row();
 	for (size_t i = 0; i < size; i++)
@@ -119,7 +119,7 @@ AQLCholeskyDecompSC::check_off_diagonal(const AQLMatrix& C)
 }
 
 bool
-AQLCholeskyDecompSC::check_eVal(const AQLMatrix& eVal)
+AQLCholeskyDecompSC::check_eVal(const AQLNumericMatrix& eVal)
 {
     size_t size = eVal.column();
 	for (size_t i = 0; i < size; i++) if (eVal[0][i] < 0) return false;
@@ -127,9 +127,9 @@ AQLCholeskyDecompSC::check_eVal(const AQLMatrix& eVal)
 }
 
 void
-AQLCholeskyDecompSC::spectral_decomp(const AQLMatrix& eVec,
-                     AQLMatrix& eVal,
-                     AQLMatrix& L)
+AQLCholeskyDecompSC::spectral_decomp(const AQLNumericMatrix& eVec,
+                     AQLNumericMatrix& eVal,
+                     AQLNumericMatrix& L)
 {
     size_t size = eVal.column();
 	size_t i, j = 0;
@@ -156,7 +156,7 @@ AQLCholeskyDecompSC::spectral_decomp(const AQLMatrix& eVec,
 }
 
 bool
-AQLCholeskyDecompSC::cholesky_decomp(const AQLMatrix& C,AQLMatrix& L)
+AQLCholeskyDecompSC::cholesky_decomp(const AQLNumericMatrix& C,AQLNumericMatrix& L)
 {
     size_t size = C.row();
 	size_t i, j = 0;
@@ -173,9 +173,9 @@ AQLCholeskyDecompSC::cholesky_decomp(const AQLMatrix& C,AQLMatrix& L)
 }
 
 void
-AQLCholeskyDecompSC::reduce_matrix(const AQLMatrix& C,
+AQLCholeskyDecompSC::reduce_matrix(const AQLNumericMatrix& C,
                    size_t &size2,
-                   AQLMatrix& C2,
+                   AQLNumericMatrix& C2,
                    IntArray& rec_info)
 {
     size_t size = C.row();
@@ -203,9 +203,9 @@ AQLCholeskyDecompSC::reduce_matrix(const AQLMatrix& C,
 }
 
 void
-AQLCholeskyDecompSC::recover_matrix(const AQLMatrix& C,
+AQLCholeskyDecompSC::recover_matrix(const AQLNumericMatrix& C,
                     const IntArray& rec_info,
-                    AQLMatrix& C2)
+                    AQLNumericMatrix& C2)
 {
     size_t size = rec_info.size();
 
@@ -230,7 +230,7 @@ AQLCholeskyDecompSC::recover_matrix(const AQLMatrix& C,
 }
 
 void
-AQLCholeskyDecompSC::construct_matrix(const AQLMatrix& L,AQLMatrix& C)
+AQLCholeskyDecompSC::construct_matrix(const AQLNumericMatrix& L,AQLNumericMatrix& C)
 {
     size_t size = L.row();
 	size_t i, j, k;
@@ -246,7 +246,7 @@ AQLCholeskyDecompSC::construct_matrix(const AQLMatrix& L,AQLMatrix& C)
 }
 
 void
-AQLCholeskyDecompSC::shift_diag(AQLMatrix& C)
+AQLCholeskyDecompSC::shift_diag(AQLNumericMatrix& C)
 {
     static const double SMALL_NUMBER = numeric_limits<double>::epsilon();
     size_t size = C.row();

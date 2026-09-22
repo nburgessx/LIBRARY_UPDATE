@@ -481,7 +481,10 @@
     <ClCompile Include="..\src\GTEST\src\TestIMMFuturesTickers.cpp">
       <Filter>src\eTrading\Dates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestAQLMatrix.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAQLNumericMatrix.cpp">
+      <Filter>src\eTrading\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GTEST\src\TestAQLFlattenedMatrix.cpp">
       <Filter>src\eTrading\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestRandomNumbers.cpp">

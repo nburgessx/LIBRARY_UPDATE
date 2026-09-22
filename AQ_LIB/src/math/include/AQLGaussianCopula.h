@@ -1,7 +1,7 @@
-#pragma once
+﻿#pragma once
 
 #include "AQLRandBase.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 
 
 // AQLGaussianCopula Function ID
@@ -62,7 +62,7 @@ public:
 
 private:
 	AQLRandBase* mpRand;			// pointer to random number generator
-	AQLMatrix mMat;				// correlation matrix after cholesky
+	AQLNumericMatrix mMat;				// correlation matrix after cholesky
 	DoubleArray mVar;		// tempolary container for randomnumber
 
 protected:

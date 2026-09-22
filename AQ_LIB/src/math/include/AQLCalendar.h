@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #if defined(__GNUG__) && !defined(__INTEL_COMPILER)
 #pragma interface
@@ -30,7 +30,7 @@ public:
 
 	// copy constructor - a real (and cheap - a calendar's holiday deque is tiny) deep copy, not a
 	// shared one. See the pCalData_ field comment for why this class dropped copy-on-write entirely
-	// rather than just fixing its refcount race the way AQLMatrix did.
+	// rather than just fixing its refcount race the way AQLNumericMatrix did.
 	AQLCalendar(const AQLCalendar& cal);
 
 	// move constructor - steals the other calendar's data outright, no allocation at all
@@ -76,7 +76,7 @@ private:
 
 	// Sole owner, always - no more copy-on-write. This used to share AQLMathCalendarData behind a
 	// plain (non-atomic) int* refcount, the same "looks thread-safe, isn't" shape AQLString and
-	// AQLMatrix both had. Rather than just fix the race the way AQLMatrix's was fixed
+	// AQLNumericMatrix both had. Rather than just fix the race the way AQLNumericMatrix's was fixed
 	// (shared_ptr - appropriate there because matrix arithmetic returns by value pervasively, a
 	// genuinely copy-heavy usage shape), this class drops sharing entirely: an AQLCalendar is built
 	// once via the setWeekly/setDays/setFlowDate/setDate calls, then read many times, often via a

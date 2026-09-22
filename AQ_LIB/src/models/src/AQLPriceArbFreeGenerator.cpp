@@ -1,4 +1,4 @@
-/*! 
+﻿/*! 
 	@file
     @brief Class declaration to Generate ArbitrageFreeCurve.
 */
@@ -3739,7 +3739,7 @@ AQLPriceArbFreeGenerator::calcCurve_NewtonRaphson(
 			break;
 		}
 
-		AQLMatrix divMat(size_all, size_all);
+		AQLNumericMatrix divMat(size_all, size_all);
 		// create divMat
 		sixMLDF_div = sixMLDF, threeMLDF_div = threeMLDF, dfCurve_div = dfCurve;
 		for (unsigned int j = 0; j < size_all; ++j)
@@ -3796,9 +3796,9 @@ AQLPriceArbFreeGenerator::calcCurve_NewtonRaphson(
 			}
 		}
 
-		AQLMatrix invMat = divMat.inverseMatrix();
-		AQLMatrix valMat(valVec1);
-		AQLMatrix deltaMat = invMat * valMat;
+		AQLNumericMatrix invMat = divMat.inverseMatrix();
+		AQLNumericMatrix valMat(valVec1);
+		AQLNumericMatrix deltaMat = invMat * valMat;
 		// plus delta
 		for (unsigned int i = 0; i < size_all; ++i)
 		{

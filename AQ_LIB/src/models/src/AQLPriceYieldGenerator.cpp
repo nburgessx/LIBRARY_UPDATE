@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Source code for class to generate YieldCurve.
 */
 #ifdef __GNUG__
@@ -18,7 +18,7 @@
 #include "AQLDataMatrix.h"
 #include "AQLInterpolationBase.h"
 #include "AQLBasic.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLPriceDataInterpolation.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLDataMultiReference.h"
@@ -2610,7 +2610,7 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 				{
 					break;
 				}
-				AQLMatrix divMat(size_swaps, size_swaps);
+				AQLNumericMatrix divMat(size_swaps, size_swaps);
 				// create divMat
 				for (unsigned int i = 0; i < size_swaps; ++i)
 				{
@@ -2665,9 +2665,9 @@ AQLPriceYieldGenerator::calcDiscountFactor(const AQLDate& basedate,
 					}
 				}
 
-				AQLMatrix invMat = divMat.inverseMatrix();
-				AQLMatrix valMat(valVec1);
-				AQLMatrix deltaMat = invMat * valMat;
+				AQLNumericMatrix invMat = divMat.inverseMatrix();
+				AQLNumericMatrix valMat(valVec1);
+				AQLNumericMatrix deltaMat = invMat * valMat;
 				// plus delta
 				for (unsigned int i = 0; i < size_swaps; ++i)
 				{

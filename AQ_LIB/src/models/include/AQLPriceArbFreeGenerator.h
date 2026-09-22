@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifdef __GNUG__
 #pragma interface
@@ -6,7 +6,7 @@
 
 
 #include <AQLDataInstance.h>
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include <AQLMathDefine.h>
 #include <AQLObject.h>
 #include <AQLObjectHolder.h>

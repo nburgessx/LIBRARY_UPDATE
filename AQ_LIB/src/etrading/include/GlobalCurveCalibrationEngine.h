@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 
 #include "GlobalCalibrationComponentCurve.h"
 #include "AQLDataReference.h"
 #include "AQLDataMatrix.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include <vector>
 #include <map>
 
@@ -56,8 +56,8 @@ private:
 
 	DoubleMatrix previousInverseJacobian_;
 	bool previousJacobianAvailable_;
-	AQLMatrix inverseJacobian_;
-	AQLMatrix jacobian_;
+	AQLNumericMatrix inverseJacobian_;
+	AQLNumericMatrix jacobian_;
 
 	AQLDataStringMatrix jacobianLabels_;
 

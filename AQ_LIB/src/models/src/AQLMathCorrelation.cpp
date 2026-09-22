@@ -1,4 +1,4 @@
-/*! @file
+﻿/*! @file
     @brief Source code for class to represent correlation.
 
 			Following dataValues are registered automatically to data master<BR>
@@ -44,7 +44,7 @@
 #include "AQLConstant.h"
 #include "AQL1DDataSet.h"
 #include "AQLCombinationFunc.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLOptimumBFGS.h"
 #include "AQLCholeskyDecompSC.h"
 
@@ -1144,7 +1144,7 @@ AQLMathCorrelation::calcCorrelationFromCorrelation() const
 void
 AQLMathCorrelation::calcPCA(const DoubleMatrix& cor, DoubleMatrix& vec, DoubleArray& val, unsigned int factornum) const
 {
-	AQLMatrix mat(cor), mvec, mval;
+	AQLNumericMatrix mat(cor), mvec, mval;
     DoubleMatrix tempvec; 
 	DoubleArray tempval;
 
@@ -1218,7 +1218,7 @@ AQLMathCorrelation::calcFactorLoading(const DoubleMatrix& cor, DoubleMatrix& loa
 	loading.clear();
 	if(factornum > cor.size())
 	{
-		AQLMatrix mcor(cor), mat;
+		AQLNumericMatrix mcor(cor), mat;
 		mat = AQLCholeskyDecompSC::choleskyDecompositionSC(mcor);
 		loading.resize(cor.size());
 		for (i = 0; i < cor.size(); i++)
@@ -1475,7 +1475,7 @@ AQLMathCorrelation::AQLMathFactorLoadingFunction::operator()(const DoubleArray& 
 	DoubleArray y(mFactornum);
 	unsigned int i, j;
 	DoubleMatrix dmat = fromthitaTob(x, mCorr.size(), mFactornum);
-	AQLMatrix mat(dmat);
+	AQLNumericMatrix mat(dmat);
 	mat = mat * mat.transpose();
 	
 	double ret = 0.0;

@@ -1,4 +1,4 @@
-#include "ExceptionMacros.h"
+﻿#include "ExceptionMacros.h"
 #include "GlobalCurveCalibrationEngine.h"
 #include "AQLBasic.h"
 #include "AQLObjectHolder.h"
@@ -246,9 +246,9 @@ void GlobalCurveCalibrationEngine::calibrate()
 
 		// -----------------------------------------------------------------------
 		// Update x as in y = f(x) according to Newton Raphson
-		AQLMatrix valMat(allPVs_new);
+		AQLNumericMatrix valMat(allPVs_new);
 
-		AQLMatrix deltaMat = inverseJacobian_ * valMat;
+		AQLNumericMatrix deltaMat = inverseJacobian_ * valMat;
 
 		#ifdef _DEBUG
 		DoubleMatrix tempInverseJ;

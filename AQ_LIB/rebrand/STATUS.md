@@ -4450,15 +4450,238 @@ and `ReleaseProfiler` across all 6 fixed projects to confirm, and ideally a befo
 comparison on a hot pricing path to see the real-world impact of years of builds running
 unoptimized.
 
-### ⚠ OPEN REMINDER - Matrix/table-type consolidation (Phase 6.11) - approved, not started
+### ⚠ OPEN REMINDER - Matrix/table-type consolidation (Phase 6.11) - approved, steps 1/2/3 done, steps 4-6 not started
 
 Flagging so this doesn't quietly fall out of the plan across sessions: the matrix/table-type
 consolidation design (`AQLFlattenedMatrix<T>` shared base; `AQLMatrix`->`AQLNumericMatrix`;
 `AnyType`/`AnyTypeMatrix` retirement onto `etrading::Variant`/`AQLAnyMatrix`; see the "Matrix
-consolidation plan fleshed out" entry above, 2026-09-20) was **approved by Nicholas on 2026-09-20**
-but **no implementation has started** - no code, no renames, nothing built or tested. Full staged
-plan (7 steps, smallest/safest first) lives in `MIGRATION_PLAN.md` Phase 6.11. Next session picking
-this up should start at step 1 (`AQLFlattenedMatrix<T>` + migrating `AQLMatrix` internals onto it,
-zero external API change). Step 7 (`AQLStringMatrix`/`StandardStringMatrix`/`STDStringMatrix`,
-300/49/5 files) is deliberately excluded - still needs its own inventory before it can be scoped,
+consolidation plan fleshed out" entry above, 2026-09-20) was **approved by Nicholas on 2026-09-20**.
+**Update, same day:** step 2 (the `AQLMatrix`->`AQLNumericMatrix` rename) is **done** - see the
+"`AQLMatrix` -> `AQLNumericMatrix` rename..." entry above. **Second update, same day:** steps 1
+(the shared `AQLFlattenedMatrix<T>` base template) and 3 (piloting it on
+`AQLIntMatrix`/`AQLComplexMatrix`) are also **done**, kept deliberately pilot-first per Nicholas's
+explicit ask - see the "Phase 6.11 step 1 + step 3 pilot" entry above. `AQLNumericMatrix` itself
+was **not** re-based onto the new shared template (separate, larger step, deliberately deferred).
+Full staged plan lives in `MIGRATION_PLAN.md` Phase 6.11 (updated to reflect all three
+completions). Next session picking this up should move to **step 5**
+(`AnyType`/`AnyTypeMatrix` retirement onto `Variant`/`AQLAnyMatrix`) - Nicholas has already asked
+for this specifically as the next target, and the shared base is now proven against two real
+pilots. Step 4 (`AQLBoolMatrix`) sits between them in the original order but is smaller/lower-risk
+than step 5 - either order is defensible, use judgement or ask. Step 7
+(`AQLStringMatrix`/`StandardStringMatrix`/`STDStringMatrix`, 300/49/5 files) is deliberately
+excluded - still needs its own inventory before it can be scoped,
 separately reminded in the plan itself.
+
+### `AQLMatrix` -> `AQLNumericMatrix` rename, review-driven fixes, and everyday methods (2026-09-20, same session)
+
+Followed a code review of the existing matrix containers (scored `AQLMatrix` 6.5/10, the bare
+`vector<vector<T>>` typedef family 2/10 as containers) with the Phase 6.11 step 2 rename plus the
+concrete issues the review surfaced. All changes are to `AQLNumericMatrix` only - the
+`vector<vector<T>>` family (`DoubleMatrix`/`IntMatrix`/`ComplexMatrix`/`BoolMatrix`/`AnyTypeMatrix`/
+`VariantMatrix`/`AQLStringMatrix`/`StandardStringMatrix`) is untouched, still bare typedefs, still
+Phase 6.11 steps 3-6's job.
+
+**1. Rename, `AQLMatrix` -> `AQLNumericMatrix`.** Word-boundary, case-sensitive
+(`\bAQLMatrix\b` - correctly excludes the nested `AQLMatrixData`, left unrenamed since it is
+private and unambiguous). 381 occurrences across 32 source/project files (`math`/`etrading`/
+`models`, plus `math.vcxproj`/`.filters`), well beyond the plan's "~40 internal" estimate - the
+type is used across three projects, not just internally to `math`. Physical files `git mv`'d:
+`AQLMatrix.h`/`.cpp` -> `AQLNumericMatrix.h`/`.cpp`, `GTEST\TestAQLMatrix.cpp` ->
+`TestAQLNumericMatrix.cpp` (including its own `TEST(TestAQLMatrix,...)` suite name ->
+`TestAQLNumericMatrix`, and the `GTEST.vcxproj`/`.vcxproj.filters` entries pointing at the old
+filename, both missed by the first pass since `\bAQLMatrix\b` correctly does not match inside
+`TestAQLMatrix` - fixed in a second, explicit pass). Verified with a repo-wide grep for
+`\bAQLMatrix\b`/`TestAQLMatrix`: zero hits outside `CLAUDE.md`/`MIGRATION_PLAN.md`/`STATUS.md`
+(historical narrative, deliberately not rewritten - same precedent as every other rename in this
+file). `math`/`etrading`/`calibration`/`models`/`GTEST` all rebuild clean (Debug|x64) after.
+
+**2. Correctness fix: `throw "Invalid Matrix"` in the `DoubleMatrix` constructor.** Was a raw
+C-string throw wrapped around the whole constructor body in `catch(...)` - not an exception
+object, so it cannot be caught by any `catch(const std::exception&)`/`catch(const AQLCoreError&)`
+upstream, including the `AQ_CATCH`/`VALID_EXCEPTION_END` machinery fixed earlier this session -
+and it discarded whatever the real exception was (a `bad_alloc`, already correctly translated to
+`AQLCoreSystemError` by `AQLMatrixData`'s own constructor). Removed the swallowing `try`/`catch`
+entirely; the real exception now propagates as itself. Folded in a second fix found in the same
+constructor: the per-element copy loop indexed both sides up to `column()` regardless of each
+source row's actual length, an unguarded OOB read on a ragged `DoubleMatrix` (a row shorter than
+`mat[0]`). Replaced with a per-row `std::copy` bounded by `min(mat[i].size(), cols)` - both safe
+on ragged input (same overlap-copy spirit as `AQLMatrixData::resize()`) and faster (one
+contiguous copy per row instead of a doubly-indexed element loop).
+
+**3. Efficiency fix: the four O(n^3)/O(n^2) decomposition kernels (`ludcmp`, `svdcmp`, `tred2`,
+`tqli`) no longer write through the public `setValue(i,j,x)`.** `setValue` pays for an
+`isWithin()` bounds check *and* a `makeUnShared()` `use_count()` check on every call - overhead
+that is pure waste inside these kernels' tightest loops, since the matrices involved are always
+sole-owned locals for the kernel's whole (synchronous) execution once unshared once. Each of the
+four functions now calls `makeUnShared()` exactly once up front, then writes the ~50 combined
+call sites directly through `(*matrix.pData_)[i][j] = ...` (legal - these are `AQLNumericMatrix`'s
+own private static methods, same class, same access as any other member). The
+`#ifdef USE_QUANTLIB_SVD` alternate SVD path (a separate, conditionally-compiled implementation
+with its own `A`/`U_`/`V_` matrices) still uses `setValue` throughout - deliberately not touched,
+out of scope (not one of the four named kernels, and not the active path in a normal build).
+
+**4. Everyday/usability methods added** (all in `AQLNumericMatrix.h`/`.cpp`): brace-init
+constructor (`AQLNumericMatrix{ {1,2}, {3,4} }`, throws on a ragged row rather than silently
+zero-padding); bounds-checked `operator()(i,j)` read/write pair (the existing `operator[]` was
+const-only - every write had to go through `setValue`, an asymmetric API); `trace()`; `norm()`
+(Frobenius, OpenMP-guarded like every other reduction in this file); `static identity(n)` factory
+(alongside the existing in-place `IdentityMatrix()` mutator); `operator!=` (delegates to
+`operator==`); `equals(other, tolerance)` (`operator==`'s exact-`double`-equality is real but
+rarely what a caller after arithmetic actually wants); `getDiagonal()`; `toDoubleMatrix()` (the
+reverse of the existing `DoubleMatrix` constructor); `operator<<(ostream&)` (a friend free
+function - `print()` only ever wrote to a file). `transpose()` already existed and needed no
+change - the everyday-methods table from the review was for `AQLNumericMatrix` specifically;
+"add `transpose()` uniformly to the other matrix types" is Phase 6.11 steps 3-6's job, not
+actioned here.
+
+**Verification:** `math`/`etrading`/`calibration`/`models`/`GTEST` all rebuild clean (Debug|x64).
+19 new `TEST(TestAQLNumericMatrix,...)` cases added (14 for the new methods, 5 regression tests
+for the four rewritten kernels specifically - `determinant()`, `inverseMatrix()` via
+`A*A^-1==I`, `choleskyDecomposition()` via `L*L^T==A`, `svDecomp()` via `U*W*V^T==A`,
+`eigenMatrix()` via `trace(A)==sum(eigenvalues)` - **no prior GTEST coverage existed for any of
+these five methods at all**, worth calling out since they sit directly under the Jacobian-risk
+analytics `CLAUDE.md` §1 already flags as under-tested, and this session's kernel rewrite touched
+exactly this code). All 37 `TestAQLNumericMatrix.*` cases pass. Also ran
+`TestCurveResultsJacobian.*` (the actual production Jacobian analytical-risk path, 6 cases,
+SNAPSHOT + CONSISTENCY for USDOIS/USD3ML/USD6ML) plus `TestInflationCurve.*` (3 cases) as a
+broader downstream sanity check since both sit on top of `AQLNumericMatrix` - all 9 pass. Full
+suite rerun not done this session (token budget); recommend one before closing this out fully,
+same standing caveat as every other partial-suite verification in this file.
+
+### Phase 6.11 step 1 + step 3 pilot: `AQLFlattenedMatrix<T>` shared base, `AQLIntMatrix`/`AQLComplexMatrix` (2026-09-20, same session)
+
+Kept the "pilot-first" discipline the approved Phase 6.11 design calls for - built the shared
+base (step 1) and wrapped `IntMatrix`/`ComplexMatrix` in it (step 3's small, low-risk pilot
+pair), **not** `AQLNumericMatrix` itself (still on its own proven internals, un-migrated - a
+separate, larger step) and **not** `AnyTypeMatrix`/`VariantMatrix` (step 5, deliberately still
+last).
+
+**Scoping check done first, before writing any code:** grepped every caller of
+`AQLMathDisplacedHestonTDP::CalibrationHelper`/`CalibrationHelperGL` (the only two functions
+using `IntMatrix`/`ComplexMatrix` that are *not* behind `#ifdef isQuantLib`, which is commented
+out at the top of the header - `//#define isQuantLib`) and found **zero callers anywhere in the
+tree outside that same disabled block**. So in a normal build, `IntMatrix`/`ComplexMatrix` are
+touched by exactly two functions that are themselves never called - about as low-risk as a pilot
+gets, and confirms the plan's own "3 files/53 uses, 2 files/8 uses" inventory was already an
+accurate low-risk read.
+
+**1. New file `src\math\include\AQLFlattenedMatrix.h`** - a template class generalising
+`AQLNumericMatrix`'s proven design (contiguous row-major `std::vector<T>`, `shared_ptr`-based
+COW, move semantics) rather than reinventing it. Deliberately does **not** carry arithmetic
+(`+`/`-`/`*`/decompositions) - those stay `AQLNumericMatrix`-specific; `IntMatrix`/`ComplexMatrix`
+have zero real arithmetic-as-a-matrix call sites today, so adding it here would be speculative,
+against the working agreement's "don't build for hypothetical requirements." What it does carry:
+  - `AQLFlattenedMatrixRowView<T>`/`...ConstRowView<T>` - a thin (pointer, length) proxy for
+    `operator[](i)`, not a bare `T*`, per the approved design's own note that some typedef-family
+    call sites rely on `.size()` on a row, not just `[i][j]`.
+  - Three constructors: `(rows, cols)` (zero-initialized, matches `AQLNumericMatrix`); `(rows,
+    const std::vector<T>& rowTemplate)` - **specifically added to absorb the classic
+    `std::vector<std::vector<T>>(rows, std::vector<T>(cols))` fill-construction idiom** (e.g.
+    `ComplexMatrix A(termSize, ComplexVector(GL_Size));`, used ~12 times across
+    `AQLMathDisplacedHestonTDP.cpp`, live and dead code alike) so every such call site needed
+    **zero changes beyond the type name** - a real, deliberate reduction in the size and risk of
+    the migration diff, not just a nice-to-have; and brace-init (`AQLIntMatrix m{ {1,2}, {3,4} }`,
+    ragged-row rejection, same as `AQLNumericMatrix`'s).
+  - `operator()(i,j)` bounds-checked read/write; `operator[](i)` unchecked row access (matches the
+    old raw `vector<vector<T>>::operator[]` contract exactly - not a regression); `size()` as an
+    alias for `row()` (drop-in compatibility with the old convention where the *outer* vector's
+    `.size()` meant row count, e.g. `sgns.size()`); `getRow`/`getColumn`; `resize()`
+    (overlap-preserving); `transpose()`; `operator==`/`!=` (exact); `equals(other, tolerance)`
+    (generic via `std::abs(a-b) <= tolerance` - works uniformly for `int`/`double`/`complex<double>`
+    without any per-type specialization); `operator<<`.
+  - COW detach granularity note: non-const `operator[](i)` calls `makeUnShared()` once per *row*
+    access, not once per *element* - deliberately not hoisted further the way
+    `AQLNumericMatrix`'s O(n^3) kernels were, since the real call sites here are calibration-setup
+    loops, not tight decomposition kernels; the cheap `use_count()==1` re-check on every
+    already-unshared row is the right tradeoff for this usage shape, not the one the earlier
+    kernel fix targeted.
+
+**2. `AQLCoreTemplateType.h`** - removed the bare `ComplexMatrix`/`IntMatrix`
+`vector<vector<T>>` typedefs, replaced with `AQLComplexMatrix`/`AQLIntMatrix` as thin aliases over
+`AQLFlattenedMatrix<std::complex<double>>`/`AQLFlattenedMatrix<int>`. `ComplexVector` (the 1D
+vector typedef) untouched - out of scope, not part of the 2D matrix consolidation.
+
+**3. Renamed call sites** - word-boundary, case-sensitive `IntMatrix`→`AQLIntMatrix` (53
+occurrences) and `ComplexMatrix`→`AQLComplexMatrix` (8 occurrences) across
+`AQLMathDisplacedHestonTDP.h`/`.cpp` (the only two consumers) - including inside the
+`#ifdef isQuantLib` dead block, for grep-cleanliness and in case it's ever revived, but **that
+block was not compile-verified** (defining `isQuantLib` would pull in a separate, unrelated
+QuantLib dependency-chain verification burden out of scope for this pilot - it was already
+unverified/inactive before this change, and stays that way). Confirmed via repo-wide grep: zero
+bare `IntMatrix`/`ComplexMatrix` remain anywhere in `src\` (only two explanatory comments
+mentioning the old names by name, in `AQLCoreTemplateType.h` and `AQLFlattenedMatrix.h`
+themselves).
+
+**Verification:** `math`/`etrading`/`calibration`/`validation`/`models`/`GTEST` all rebuild clean
+(Debug|x64) - `models` is the real test of the fill-constructor-idiom compatibility constructor
+and the `.size()`/`[i][j]` drop-in behaviour, since it's the only project that actually consumes
+`AQLIntMatrix`/`AQLComplexMatrix`. New file `GTEST\TestAQLFlattenedMatrix.cpp`, 14 cases against
+the template directly through both pilot aliases (construction incl. the fill-idiom and
+brace-init, `operator()`/`operator[]` read-write incl. COW-independence, `getRow`/`getColumn`,
+`resize`, `transpose`, equality/`equals(tolerance)` incl. a `complex<double>` case, move
+semantics, `operator<<`) - wired into `GTEST.vcxproj`/`.vcxproj.filters` (`src\eTrading\Math`
+filter, alongside `TestAQLNumericMatrix.cpp`). All 14 pass, alongside the existing 37
+`TestAQLNumericMatrix.*` (51 total, re-run together to confirm no interaction). Also ran
+`*FX*:*Vanilla*` as a broader `models`-adjacent sanity check (2 tests, both pass) - no dedicated
+Heston GTEST coverage exists anywhere in the tree to re-run more specifically (consistent with
+the "zero live callers" finding above).
+
+**Not yet started:** step 1's other half (migrating `AQLNumericMatrix` itself onto
+`AQLFlattenedMatrix<T>` internally - deliberately deferred, see the scope note above); step 4
+(`AQLBoolMatrix`, needs the `uint8_t`-backing workaround the approved design already flags for
+`bool`); step 5 (`AnyType`/`AnyTypeMatrix` retirement onto `Variant`/`AQLAnyMatrix` - the
+user-requested next target, bigger and deliberately sequenced after this pilot); step 7
+(`AQLStringMatrix` family, still needs its own inventory).
+
+### Step 5 (`AnyType`/`AnyTypeMatrix` retirement) - scoped, findings recorded, deliberately paused (2026-09-20, same session)
+
+Nicholas asked to proceed with step 5 next. Did reconnaissance (no code changed) before touching
+anything, given the plan's own standing scope warning that this step is "bigger than everything
+else in 6.11 combined" - confirmed that warning concretely rather than taking it on faith, then
+**Nicholas asked to pause and defer**, so this is a findings-and-plan record, not a completed or
+in-progress migration.
+
+**Scale, counted not estimated:** 79 files / 268 occurrences of `AnyType`/`AnyTypeVector`/
+`AnyTypeMatrix`, across `etrading` (39 files), `validation` (28), `GTEST` (6), `AQ_XLL` (5),
+`AQ_API` (4), `math` (1 - the typedef itself in `AQLCoreTemplateType.h`).
+
+**Two concrete reasons this is not a repeat of the `IntMatrix`/`ComplexMatrix` pilot:**
+
+1. **Not dead code - it's the golden-source contract.** Unlike the pilot (confirmed zero live
+   callers), `AnyTypeMatrix` is the **return type of public `validation` wrapper functions**
+   (e.g. `tryAqBondObjectDisplay`, `tryAqBondObjectDisplaySchedule`,
+   `tryAqBondObjectDisplayCashflows` in `tryAqBondObject.cpp`). Per `CLAUDE.md` §4.1, `validation`
+   is the golden source "nothing bypasses" - its return types flow straight into `AQ_XLL`
+   marshalling, the `AQ_API`/SWIG bindings, and the `GTEST` input/output recording-and-playback
+   system. Confirms the plan's "touches SWIG bindings, Excel marshaling, dozens of `TableInfo`
+   call sites" warning concretely, not hypothetically.
+2. **Not a pure rename - the two types behave differently, verified by reading both
+   implementations side by side:**
+   - `AnyType` code inspects values via `boost::get<T>(anyValue)` + `anyValue.type() ==
+     typeid(T)` (`AnyTypeUtilities.cpp`'s `fromAnyTypeToString`); `Variant` uses
+     `getType()`/`ContainedTypeEnum` + `getValue<T>()` instead - a different API shape, not a
+     drop-in swap at any call site that inspects rather than just passes a value through.
+   - `fromAnyTypeToString` blanks `NaN` doubles to `""` and takes a configurable
+     `doublePrecision` (default 10dp). `Variant::getValueAsString()` does **neither** - no
+     `NaN` blanking, fixed precision 20 always. A blind mechanical swap would silently change
+     output for any NaN-valued cell or any caller relying on the old default precision - a real
+     behavior change hiding inside what looks like a rename.
+
+**Recommended staging, given to Nicholas, for whenever this is picked back up** (smallest/safest
+first, matching every other rename this session's discipline of "one project per batch, build
+between batches"):
+1. Reconcile the `NaN`-blanking/precision behavioral gap **first**, before any call site moves -
+   either port `fromAnyTypeToString`'s behavior into `Variant`, or keep it as a distinct helper.
+   Every call site inherits whichever decision is made here, so deciding after the fact means
+   redoing work.
+2. `etrading` (39 files) first - where `AnyTypeUtilities.cpp` and the core helpers live, not yet
+   the public contract layer.
+3. `validation` (28 files) - the golden-source return types; needs a `docs\api_map.csv`/
+   `rebrand\tools\api_pair_check.py` re-verification pass after, since these are public wrapper
+   signatures, not internal implementation detail.
+4. `AQ_XLL`/`AQ_API`/`GTEST` last (15 files combined) - these consume `validation`'s output type,
+   so they should follow once 2-3 are settled, not move in parallel with them.
+
+**Status: paused, not started.** Zero files changed. Revisit via this entry and
+`MIGRATION_PLAN.md` Phase 6.11 step 5 when picked back up - do not re-derive the scope/staging
+from scratch, it is recorded here.

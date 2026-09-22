@@ -1,4 +1,4 @@
-//
+﻿//
 // CurveCalibrationData.h
 // This file was previously called YieldCurvePro.h and before that AQLMathYieldCurvePro.h
 //
@@ -28,7 +28,7 @@
 #include "AQLDataInstance.h"
 #include "AQLOptimumBrent.h"
 #include "AQLAlgorithm.h"
-#include "AQLMatrix.h"
+#include "AQLNumericMatrix.h"
 #include "AQLMathFXEntity.h"
 
 #include "InitializeETrading.h"
@@ -3147,7 +3147,7 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 				break;
 			}
 
-			AQLMatrix divMat(numberOfBasisSwaps, numberOfBasisSwaps);
+			AQLNumericMatrix divMat(numberOfBasisSwaps, numberOfBasisSwaps);
 			// create divMat
 			for (unsigned int i = 0; i < numberOfBasisSwaps; ++i)
 			{
@@ -3166,9 +3166,9 @@ CurveCalibrationData::setBasisRates(const AQLString &curveType)
 				}
 			}
 
-			AQLMatrix invMat = divMat.inverseMatrix();
-			AQLMatrix valMat(targetValVec1);
-			AQLMatrix deltaMat = invMat * valMat;
+			AQLNumericMatrix invMat = divMat.inverseMatrix();
+			AQLNumericMatrix valMat(targetValVec1);
+			AQLNumericMatrix deltaMat = invMat * valMat;
 
 			// plus delta
 			for (unsigned int i = 0; i < numberOfBasisSwaps; ++i)
@@ -6039,9 +6039,9 @@ CurveCalibrationData::setdNPVdm(const AQLString &curveType)
 	}
 
 	//inverse
-	AQLMatrix matobj(decompMat);
-	const AQLMatrix& invmat = matobj.inverseMatrix();
-	const AQLMatrix& transmat = invmat.transpose();
+	AQLNumericMatrix matobj(decompMat);
+	const AQLNumericMatrix& invmat = matobj.inverseMatrix();
+	const AQLNumericMatrix& transmat = invmat.transpose();
 
 	DoubleMatrix ret(sizeAll, DoubleVector(sizeAll, 0.0));
 	for (unsigned int i = 0; i < sizeAll; i++)
@@ -6361,9 +6361,9 @@ CurveCalibrationData::changeZeroRiskIntoMarketRisk(AQLString curveType, const Do
 		}
 	}
 
-	AQLMatrix convertMat(mat);
-	AQLMatrix dNPVdzeroMat(dNPVdzero);
-	const AQLMatrix& multimat = convertMat * dNPVdzeroMat;
+	AQLNumericMatrix convertMat(mat);
+	AQLNumericMatrix dNPVdzeroMat(dNPVdzero);
+	const AQLNumericMatrix& multimat = convertMat * dNPVdzeroMat;
 	for (unsigned int l = 0; l < riskMarketVals.size(); l++)
 		riskMarketVals[l] = multimat.getValue(l, 0);
 
