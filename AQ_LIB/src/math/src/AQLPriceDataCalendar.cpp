@@ -12,6 +12,7 @@
 #include "AQLCalendarSet.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLBasic.h"
+#include "ExceptionMacros.h"
 using namespace std;
 
 AQLCalendar	AQLPriceDataCalendar::mStdCalendar;
@@ -487,7 +488,8 @@ AQLPriceDataCalendar::convertFromString(const AQLString& str)
 	setNull(false);
 	vector<AQLString> tokens = splitCalendarCentres( data );
 	vector<AQLString>::iterator it = tokens.end();
-	try {
+	try
+	{
 		if (tokens.size() > 1)
 		{
 			for (it = tokens.begin();it != tokens.end(); ++it)
@@ -515,15 +517,7 @@ AQLPriceDataCalendar::convertFromString(const AQLString& str)
 	catch (AQLCoreError& e)
 	{
 		setNull(true);
-		// exception
-		AQLCoreInvalidData invaldEx(e.getMsg(), __FILE__, __LINE__);
-		AQLString	msg("Invalid Calendar: Unable to load calendar - ");
-		if (it != tokens.end())
-		{
-			msg += *it;
-		}
-		invaldEx.addMsg(msg.getCString());
-		throw invaldEx;
+		AQ_THROW( "Invalid Holiday Calendar(s): " + str )
 	}
 	
 	// notify of the change

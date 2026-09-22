@@ -2,6 +2,7 @@
 
 #include "aqDate.h"
 #include "tryAqDate.h"
+#include "tryAqDateIsRegularSwapSchedule.h"
 #include "ExceptionMacros.h"
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 #include "ParameterValidation.h"
@@ -262,7 +263,7 @@ double aqDateYearFraction( const std::string& fromDate,
 *  @param [in]		rollConvention		Roll Convention
 *  @return			Swap Spot Date 
 */
-std::string aqObjSwapsUSDSpotDate( const std::string & asOfDate,
+std::string aqCurveUSDSpotDate( const std::string & asOfDate,
 							      const std::string & spotLag,
 							      const std::string & fixingCalendar,
 							      const std::string & paymentCalendar,
@@ -313,6 +314,147 @@ std::string aqDateShiftedSpotDate( const std::string& asOfDate,
     // Marshall Outputs
 	const std::string spotDateString = spotDate.stringWithFormat("YYYYMMDD").c_str();
 	return spotDateString;
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for the aqDateToday method
+*  @return			Today's date, from the system clock
+*/
+std::string aqDateToday()
+{
+    AQ_API_START
+
+	const AQLDate today = validation::tryAqDateToday();
+	const std::string result = today.stringWithFormat("YYYYMMDD").getCString();
+	return result;
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for the aqDateIsWorkingDay method
+*  @param [in]		date			The date to test
+*  @param [in]		holidayCentre	Holiday centre(s)
+*  @return			TRUE if the date is a working day for the given holiday centre
+*/
+bool aqDateIsWorkingDay( const std::string& date,
+                         const std::string& holidayCentre )
+{
+    AQ_API_START
+
+	// Input marshalling
+	AQLDate date_( etrading::stringToDate( date ) );
+	AQLString holidayCentre_( holidayCentre.c_str() );
+
+	bool result = validation::tryAqDateIsWorkingDay( date_, holidayCentre_ );
+	return result;
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for the aqDateIsHoliday method
+*  @param [in]		date			The date to test
+*  @param [in]		holidayCentre	Holiday centre(s)
+*  @return			TRUE if the date is a holiday for the given holiday centre
+*/
+bool aqDateIsHoliday( const std::string& date,
+                      const std::string& holidayCentre )
+{
+    AQ_API_START
+
+	// Input marshalling
+	AQLDate date_( etrading::stringToDate( date ) );
+	AQLString holidayCentre_( holidayCentre.c_str() );
+
+	bool result = validation::tryAqDateIsHoliday( date_, holidayCentre_ );
+	return result;
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for the aqDateIsWeekend method
+*  @param [in]		date	The date to test
+*  @return			TRUE if the date falls on a Saturday or Sunday
+*/
+bool aqDateIsWeekend( const std::string& date )
+{
+    AQ_API_START
+
+	// Input marshalling
+	AQLDate date_( etrading::stringToDate( date ) );
+
+	bool result = validation::tryAqDateIsWeekend( date_ );
+	return result;
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for the aqDateIsWeekday method
+*  @param [in]		date	The date to test
+*  @return			TRUE if the date falls on a Monday to Friday
+*/
+bool aqDateIsWeekday( const std::string& date )
+{
+    AQ_API_START
+
+	// Input marshalling
+	AQLDate date_( etrading::stringToDate( date ) );
+
+	bool result = validation::tryAqDateIsWeekday( date_ );
+	return result;
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for the aqDateFuturesContract method
+*  @param [in]		futuresTicker	The futures ticker, e.g. EDZ25, FFF26
+*  @return			The futures contract's expiry (start) date
+*/
+std::string aqDateFuturesContract( const std::string& futuresTicker )
+{
+    AQ_API_START
+
+	// Input marshalling
+	AQLString futuresTicker_( futuresTicker.c_str() );
+
+	const AQLDate result = validation::tryAqDateFuturesContract( futuresTicker_ );
+	return result.stringWithFormat("YYYYMMDD").getCString();
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for the aqDateIsRegularSwapSchedule method
+*  @param [in]		swapStart			Swap start date
+*  @param [in]		swapMaturity		Swap end date. Tenors are typically adjusted and end dates are not
+*  @param [in]		isMaturityAdjusted	Swap end date business day adjusted. Maturities derived from Tenors are adjusted, whereas explicit maturity dates are unadjusted
+*  @param [in]		frequency			Swap floating frequency
+*  @param [in]		busDayAdj			Swap business date adjustment convention
+*  @param [in]		calendar			Swap calendar
+*  @param [in]		rollDay				Roll day
+*  @param [in]		rollConvention		Optional. Swap roll convention e.g. IMM, EOM
+*  @return			TRUE if the swap schedule is regular (with no stub) and FALSE otherwise
+*/
+bool aqDateIsRegularSwapSchedule( const std::string& swapStart,
+                                  const std::string& swapMaturity,
+                                  const bool isMaturityAdjusted,
+                                  const std::string& frequency,
+                                  const std::string& busDayAdj,
+                                  const std::string& calendar,
+                                  const int rollDay,
+                                  const std::string& rollConvention )
+{
+    AQ_API_START
+
+	// Input marshalling
+	AQLDate swapStart_( etrading::stringToDate( swapStart ) );
+	AQLDate swapMaturity_( etrading::stringToDate( swapMaturity ) );
+	AQLString frequency_( frequency.c_str() );
+	AQLString busDayAdj_( busDayAdj.c_str() );
+	AQLString calendar_( calendar.c_str() );
+	AQLString rollConvention_( rollConvention.c_str() );
+
+	bool result = validation::tryAqDateIsRegularSwapSchedule( swapStart_, swapMaturity_, isMaturityAdjusted, frequency_, busDayAdj_, calendar_, rollDay, rollConvention_ );
+	return result;
 
     AQ_API_END
 }

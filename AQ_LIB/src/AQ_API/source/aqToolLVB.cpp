@@ -64,7 +64,7 @@ SWIG_STRINGMATRIX aqToolLVBCreate( const std::vector<std::string>& keys,
 *  @param [in]		value               The new value to add to the original string matrix
 *  @return			Returns the augmented LVB
 */
-std::vector<std::vector<std::string> > aqToolsLVBAppendAndCreate( const std::vector<std::vector<std::string> >& LVB,
+std::vector<std::vector<std::string> > aqToolsLVBAppend( const std::vector<std::vector<std::string> >& LVB,
                                                                     const std::string& key,
                                                                     const std::string& value )
 {
@@ -85,7 +85,7 @@ std::vector<std::vector<std::string> > aqToolsLVBAppendAndCreate( const std::vec
 *  @param [in]		value2              The new value to add to the original string matrix
 *  @return			Returns the augmented LVB
 */
-std::vector<std::vector<std::string> > aqToolsLVBAppendAndCreate( const std::vector<std::vector<std::string> >& LVB,
+std::vector<std::vector<std::string> > aqToolsLVBAppend( const std::vector<std::vector<std::string> >& LVB,
                                                                     const std::string& key,
                                                                     const std::string& value1,
                                                                     const std::string& value2 )

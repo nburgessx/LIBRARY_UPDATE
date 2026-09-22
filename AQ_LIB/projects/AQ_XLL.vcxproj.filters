@@ -37,78 +37,78 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllSupport.cpp">
       <Filter>src\Core XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqDate.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllDate.cpp">
       <Filter>src\Core XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqMain.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllMain.cpp">
       <Filter>src\Core XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqObject.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllObject.cpp">
       <Filter>src\Core XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqMath.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllMath.cpp">
       <Filter>src\Core XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqTool.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllTool.cpp">
       <Filter>src\Core XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqAssetSwap.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllAssetSwap.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqBond.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllBond.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqCapFloor.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllCapFloor.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqCMS.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllCMS.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqCredit.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllCredit.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqFuture.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllFuture.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqFX.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllFX.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqInflation.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllInflation.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqSwap.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllSwap.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqSwaption.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllSwaption.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqTRS.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllTRS.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqVolatility.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllVolatility.cpp">
       <Filter>src\Optional XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqCurve.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllCurve.cpp">
       <Filter>src\Core XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqIR.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllIR.cpp">
       <Filter>src\Core XL</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqGenerator.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllGenerator.cpp">
       <Filter>src\Core XL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\AQ_XLL\include\aqXllTools.h">
+    <ClInclude Include="..\src\AQ_XLL\include\xllSupport.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_XLL\include\aqMain.h">
+    <ClInclude Include="..\src\AQ_XLL\include\xllMain.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_XLL\include\generated\aqManifestList.h">
+    <ClInclude Include="..\src\AQ_XLL\include\generated\xllManifestList.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

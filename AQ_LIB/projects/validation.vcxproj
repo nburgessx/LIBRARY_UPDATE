@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="DebugEditAndContinue|x64">
-      <Configuration>DebugEditAndContinue</Configuration>
+    <ProjectConfiguration Include="Debug_EditAndContinue|x64">
+      <Configuration>Debug_EditAndContinue</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseProfiler|x64">
-      <Configuration>ReleaseProfiler</Configuration>
+    <ProjectConfiguration Include="Release_Profiler|x64">
+      <Configuration>Release_Profiler</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
@@ -241,7 +241,7 @@
     <CLRSupport>false</CLRSupport>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
@@ -254,7 +254,7 @@
     <CLRSupport>false</CLRSupport>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>false</CLRSupport>
@@ -267,7 +267,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
@@ -275,7 +275,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
@@ -283,13 +283,13 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -318,7 +318,7 @@
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -379,7 +379,7 @@
       </AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <OmitFramePointers>false</OmitFramePointers>

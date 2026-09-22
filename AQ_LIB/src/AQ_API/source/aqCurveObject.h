@@ -67,7 +67,7 @@ std::string aqCurveMarketDataCreate( const std::string& objectName,
 * @param [in] valueVector	The vector of datablocks
 * @param [out]              The objectName
 */
-std::string aqObjCurvesMarketDataCreateUsingMultipleBlocks( const std::string& objectName,
+std::string aqCurveMarketDataCreate( const std::string& objectName,
 														   const std::vector<std::string>& keyVector,
 														   const std::vector<SWIG_STRINGMATRIX>& valueVector );
 										

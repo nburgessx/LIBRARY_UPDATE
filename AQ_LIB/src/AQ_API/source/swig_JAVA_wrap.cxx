@@ -1324,6 +1324,7 @@ SWIGINTERN void std_vector_Sl_std_vector_Sl_std_string_Sg__Sg__doRemoveRange(std
 #include "aqCurveInterpolationJoinDate.h"
 #include "aqCurveDualBootstrap.h"
 #include "aqObject.h"
+#include "aqGenerator.h"
 #include "aqBondObjectCreate.h"
 #include "aqBondObjectPrice.h"
 #include "aqToolLVB.h"
@@ -1332,6 +1333,15 @@ SWIGINTERN void std_vector_Sl_std_vector_Sl_std_string_Sg__Sg__doRemoveRange(std
 #include "BondTypes.h"
 #include "aqBondCurve.h"
 #include "aqCreditObject.h"
+#include "aqCMSObject.h"
+#include "aqBondOptionObject.h"
+#include "aqInflationObject.h"
+#include "aqSwaptionObject.h"
+#include "aqCapFloorObject.h"
+#include "aqFXObject.h"
+#include "aqVolatilityObject.h"
+#include "aqBondFutureOptionObject.h"
+#include "aqFutureTicker.h"
 #include "aqCurveResults.h"
 #include "aqCurveObject.h"
 #include "aqToolGrids.h"
@@ -5996,7 +6006,7 @@ SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqDateYearFract
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqObjSwapsUSDSpotDate(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jstring jarg5, jstring jarg6) {
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCurveUSDSpotDate(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jstring jarg5, jstring jarg6) {
   jstring jresult = 0 ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -6062,7 +6072,7 @@ SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqObjSwapsUSDSp
   std::string arg6_str(arg6_pstr);
   arg6 = &arg6_str;
   jenv->ReleaseStringUTFChars(jarg6, arg6_pstr); 
-  result = aqObjSwapsUSDSpotDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+  result = aqCurveUSDSpotDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
   jresult = jenv->NewStringUTF((&result)->c_str()); 
   return jresult;
 }
@@ -7420,6 +7430,92 @@ SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqObjectLoad(JN
 }
 
 
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqGeneratorList(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = aqGeneratorList((std::string const &)*arg1);
+  *(std::vector< std::string > **)&jresult = new std::vector< std::string >((const std::vector< std::string > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqGeneratorDisplay(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  result = aqGeneratorDisplay((std::string const &)*arg1,(std::string const &)*arg2);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqGeneratorValidate(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  result = aqGeneratorValidate((std::string const &)*arg1,(std::string const &)*arg2);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
 SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqBondObjectCreate(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jboolean jarg4) {
   jstring jresult = 0 ;
   std::string *arg1 = 0 ;
@@ -7806,7 +7902,7 @@ SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqToolLVBCreate_1
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqToolsLVBAppendAndCreate_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jstring jarg3) {
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqToolsLVBAppend_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jstring jarg3) {
   jlong jresult = 0 ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -7839,13 +7935,13 @@ SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqToolsLVBAppendA
   std::string arg3_str(arg3_pstr);
   arg3 = &arg3_str;
   jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
-  result = aqToolsLVBAppendAndCreate((std::vector< std::vector< std::string > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+  result = aqToolsLVBAppend((std::vector< std::vector< std::string > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
   *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqToolsLVBAppendAndCreate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jstring jarg3, jstring jarg4) {
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqToolsLVBAppend_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jstring jarg3, jstring jarg4) {
   jlong jresult = 0 ;
   std::vector< std::vector< std::string > > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -7888,7 +7984,7 @@ SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqToolsLVBAppendA
   std::string arg4_str(arg4_pstr);
   arg4 = &arg4_str;
   jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
-  result = aqToolsLVBAppendAndCreate((std::vector< std::vector< std::string > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+  result = aqToolsLVBAppend((std::vector< std::vector< std::string > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
   *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
   return jresult;
 }
@@ -9442,7 +9538,7 @@ SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCreditModelHa
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqObjCreditModelRiskyDiscountFactor(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCreditModelRiskyDiscountFactor(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
   jdouble jresult = 0 ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -9468,7 +9564,7 @@ SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqObjCreditMode
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  result = (double)aqObjCreditModelRiskyDiscountFactor((std::string const &)*arg1,(std::string const &)*arg2);
+  result = (double)aqCreditModelRiskyDiscountFactor((std::string const &)*arg1,(std::string const &)*arg2);
   jresult = (jdouble)result; 
   return jresult;
 }
@@ -9503,7 +9599,7 @@ SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCreditModelRisk
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCreditObjectDefaultSwapPV(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3) {
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCDSObjectPV(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3) {
   jdouble jresult = 0 ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -9539,13 +9635,13 @@ SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCreditObjectD
   std::string arg3_str(arg3_pstr);
   arg3 = &arg3_str;
   jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
-  result = (double)aqCreditObjectDefaultSwapPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+  result = (double)aqCDSObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
   jresult = (jdouble)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCreditObjectDefaultSwapRiskyAnnuity(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3) {
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCDSObjectRiskyAnnuity(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3) {
   jdouble jresult = 0 ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -9581,13 +9677,13 @@ SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCreditObjectD
   std::string arg3_str(arg3_pstr);
   arg3 = &arg3_str;
   jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
-  result = (double)aqCreditObjectDefaultSwapRiskyAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+  result = (double)aqCDSObjectRiskyAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
   jresult = (jdouble)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCreditObjectDefaultSwapCS01(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3) {
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCDSObjectCS01(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3) {
   jdouble jresult = 0 ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -9623,13 +9719,13 @@ SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCreditObjectD
   std::string arg3_str(arg3_pstr);
   arg3 = &arg3_str;
   jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
-  result = (double)aqCreditObjectDefaultSwapCS01((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+  result = (double)aqCDSObjectCS01((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
   jresult = (jdouble)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCreditObjectDefaultSwapParSpread(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4) {
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCDSObjectParSpread(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4) {
   jdouble jresult = 0 ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -9675,7 +9771,7 @@ SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCreditObjectD
   std::string arg4_str(arg4_pstr);
   arg4 = &arg4_str;
   jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
-  result = (double)aqCreditObjectDefaultSwapParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+  result = (double)aqCDSObjectParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
   jresult = (jdouble)result; 
   return jresult;
 }
@@ -9956,7 +10052,3986 @@ SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqTRSObjectAnnu
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCurvesResultsDisplayDiscountFactors(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCMSObjectPVUsingConvexityAdjustment_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jdouble jarg3, jstring jarg4, jlong jarg5, jobject jarg5_) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string > > *arg5 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg5_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = (double)jarg3; 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = *(std::vector< std::vector< std::string > > **)&jarg5;
+  if (!arg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = (double)aqCMSObjectPVUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCMSObjectPVUsingConvexityAdjustment_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jdouble jarg3, jstring jarg4) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  std::string *arg4 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = (double)jarg3; 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = (double)aqCMSObjectPVUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3,(std::string const &)*arg4);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCMSObjectParRateUsingConvexityAdjustment_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jdouble jarg3, jlong jarg4, jobject jarg4_) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  std::vector< std::vector< std::string > > *arg4 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg4_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = (double)jarg3; 
+  arg4 = *(std::vector< std::vector< std::string > > **)&jarg4;
+  if (!arg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = (double)aqCMSObjectParRateUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3,(std::vector< std::vector< std::string > > const &)*arg4);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCMSObjectParRateUsingConvexityAdjustment_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jdouble jarg3) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = (double)jarg3; 
+  result = (double)aqCMSObjectParRateUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqBondOptionObjectCreate_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jboolean jarg3) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = jarg3 ? true : false; 
+  result = aqBondOptionObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqBondOptionObjectCreate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = aqBondOptionObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqBondOptionObjectDisplay(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = aqBondOptionObjectDisplay((std::string const &)*arg1);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqBondOptionObjectPV(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jdouble jarg3, jdouble jarg4, jstring jarg5, jdouble jarg6, jstring jarg7) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  std::string *arg5 = 0 ;
+  double arg6 ;
+  std::string *arg7 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = (double)jarg3; 
+  arg4 = (double)jarg4; 
+  if(!jarg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg5_pstr = (const char *)jenv->GetStringUTFChars(jarg5, 0); 
+  if (!arg5_pstr) return 0;
+  std::string arg5_str(arg5_pstr);
+  arg5 = &arg5_str;
+  jenv->ReleaseStringUTFChars(jarg5, arg5_pstr); 
+  arg6 = (double)jarg6; 
+  if(!jarg7) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg7_pstr = (const char *)jenv->GetStringUTFChars(jarg7, 0); 
+  if (!arg7_pstr) return 0;
+  std::string arg7_str(arg7_pstr);
+  arg7 = &arg7_str;
+  jenv->ReleaseStringUTFChars(jarg7, arg7_pstr); 
+  result = (double)aqBondOptionObjectPV((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3,arg4,(std::string const &)*arg5,arg6,(std::string const &)*arg7);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqBondOptionObjectGreeks_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jdouble jarg4, jdouble jarg5, jstring jarg6, jdouble jarg7, jstring jarg8, jdouble jarg9, jdouble jarg10, jdouble jarg11, jdouble jarg12, jdouble jarg13, jboolean jarg14) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  double arg12 ;
+  double arg13 ;
+  bool arg14 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg4 = (double)jarg4; 
+  arg5 = (double)jarg5; 
+  if(!jarg6) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg6_pstr = (const char *)jenv->GetStringUTFChars(jarg6, 0); 
+  if (!arg6_pstr) return 0;
+  std::string arg6_str(arg6_pstr);
+  arg6 = &arg6_str;
+  jenv->ReleaseStringUTFChars(jarg6, arg6_pstr); 
+  arg7 = (double)jarg7; 
+  if(!jarg8) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg8_pstr = (const char *)jenv->GetStringUTFChars(jarg8, 0); 
+  if (!arg8_pstr) return 0;
+  std::string arg8_str(arg8_pstr);
+  arg8 = &arg8_str;
+  jenv->ReleaseStringUTFChars(jarg8, arg8_pstr); 
+  arg9 = (double)jarg9; 
+  arg10 = (double)jarg10; 
+  arg11 = (double)jarg11; 
+  arg12 = (double)jarg12; 
+  arg13 = (double)jarg13; 
+  arg14 = jarg14 ? true : false; 
+  result = aqBondOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,(std::string const &)*arg8,arg9,arg10,arg11,arg12,arg13,arg14);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqBondOptionObjectGreeks_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jdouble jarg4, jdouble jarg5, jstring jarg6, jdouble jarg7, jstring jarg8, jdouble jarg9, jdouble jarg10, jdouble jarg11, jdouble jarg12, jdouble jarg13) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  double arg12 ;
+  double arg13 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg4 = (double)jarg4; 
+  arg5 = (double)jarg5; 
+  if(!jarg6) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg6_pstr = (const char *)jenv->GetStringUTFChars(jarg6, 0); 
+  if (!arg6_pstr) return 0;
+  std::string arg6_str(arg6_pstr);
+  arg6 = &arg6_str;
+  jenv->ReleaseStringUTFChars(jarg6, arg6_pstr); 
+  arg7 = (double)jarg7; 
+  if(!jarg8) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg8_pstr = (const char *)jenv->GetStringUTFChars(jarg8, 0); 
+  if (!arg8_pstr) return 0;
+  std::string arg8_str(arg8_pstr);
+  arg8 = &arg8_str;
+  jenv->ReleaseStringUTFChars(jarg8, arg8_pstr); 
+  arg9 = (double)jarg9; 
+  arg10 = (double)jarg10; 
+  arg11 = (double)jarg11; 
+  arg12 = (double)jarg12; 
+  arg13 = (double)jarg13; 
+  result = aqBondOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,(std::string const &)*arg8,arg9,arg10,arg11,arg12,arg13);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInflationCurveCreate_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jstring jarg4, jlong jarg5, jobject jarg5_) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string > > *arg5 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  (void)jarg5_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = *(std::vector< std::vector< std::string > > **)&jarg5;
+  if (!arg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = aqInflationCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInflationCurveCreate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jstring jarg4) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = aqInflationCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInflationCurveCreate_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = aqInflationCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInflationCurveCalibrationParameters(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = aqInflationCurveCalibrationParameters((std::string const &)*arg1);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInflationObjectCPI(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = (double)aqInflationObjectCPI((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInflationObjectZCSwapPV(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jstring jarg4) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = (double)aqInflationObjectZCSwapPV((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInflationObjectZCSwapPVFromIndex(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jdouble jarg3, jdouble jarg4, jstring jarg5) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  std::string *arg5 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = (double)jarg3; 
+  arg4 = (double)jarg4; 
+  if(!jarg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg5_pstr = (const char *)jenv->GetStringUTFChars(jarg5, 0); 
+  if (!arg5_pstr) return 0;
+  std::string arg5_str(arg5_pstr);
+  arg5 = &arg5_str;
+  jenv->ReleaseStringUTFChars(jarg5, arg5_pstr); 
+  result = (double)aqInflationObjectZCSwapPVFromIndex((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3,arg4,(std::string const &)*arg5);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInflationObjectZCSwapParRate(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = (double)aqInflationObjectZCSwapParRate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqInflationObjectZCSwapParRateFromIndex(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jdouble jarg3, jdouble jarg4) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = (double)jarg3; 
+  arg4 = (double)jarg4; 
+  result = (double)aqInflationObjectZCSwapParRateFromIndex((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3,arg4);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqSwaptionObjectCreate_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jboolean jarg3) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = jarg3 ? true : false; 
+  result = aqSwaptionObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqSwaptionObjectCreate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = aqSwaptionObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqSwaptionObjectDisplay(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = aqSwaptionObjectDisplay((std::string const &)*arg1);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqSwaptionObjectPV(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = (double)aqSwaptionObjectPV((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqSwaptionObjectImpliedVol(JNIEnv *jenv, jclass jcls, jstring jarg1, jdouble jarg2, jlong jarg3, jobject jarg3_) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  double arg2 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = (double)jarg2; 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = (double)aqSwaptionObjectImpliedVol((std::string const &)*arg1,arg2,(std::vector< std::vector< std::string > > const &)*arg3);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqSwaptionObjectDelta(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = (double)aqSwaptionObjectDelta((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqSwaptionObjectGamma(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = (double)aqSwaptionObjectGamma((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqSwaptionObjectVega(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = (double)aqSwaptionObjectVega((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqSwaptionObjectTheta(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = (double)aqSwaptionObjectTheta((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectCreate_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jboolean jarg3) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = jarg3 ? true : false; 
+  result = aqCapFloorObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectCreate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = aqCapFloorObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectDisplay(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = aqCapFloorObjectDisplay((std::string const &)*arg1);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectDisplayCashflows_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jboolean jarg5, jlong jarg6, jobject jarg6_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  std::vector< std::string > *arg6 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg6_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = jarg5 ? true : false; 
+  arg6 = *(std::vector< std::string > **)&jarg6;
+  if (!arg6) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,(std::vector< std::string > const &)*arg6);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectDisplayCashflows_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jboolean jarg5) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = jarg5 ? true : false; 
+  result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectDisplayCashflows_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectDisplayCashflows_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectPV_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = (double)aqCapFloorObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectPV_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  result = (double)aqCapFloorObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectGreeksAnalytical_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jboolean jarg5) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = jarg5 ? true : false; 
+  result = aqCapFloorObjectGreeksAnalytical((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectGreeksAnalytical_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = aqCapFloorObjectGreeksAnalytical((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectGreeksAnalytical_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  result = aqCapFloorObjectGreeksAnalytical((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectGreeks_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jdouble jarg4, jdouble jarg5, jdouble jarg6, jdouble jarg7, jstring jarg8, jboolean jarg9) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  bool arg9 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  arg4 = (double)jarg4; 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = (double)jarg7; 
+  if(!jarg8) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg8_pstr = (const char *)jenv->GetStringUTFChars(jarg8, 0); 
+  if (!arg8_pstr) return 0;
+  std::string arg8_str(arg8_pstr);
+  arg8 = &arg8_str;
+  jenv->ReleaseStringUTFChars(jarg8, arg8_pstr); 
+  arg9 = jarg9 ? true : false; 
+  result = aqCapFloorObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5,arg6,arg7,(std::string const &)*arg8,arg9);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectGreeks_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jdouble jarg4, jdouble jarg5, jdouble jarg6, jdouble jarg7, jstring jarg8) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  arg4 = (double)jarg4; 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = (double)jarg7; 
+  if(!jarg8) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg8_pstr = (const char *)jenv->GetStringUTFChars(jarg8, 0); 
+  if (!arg8_pstr) return 0;
+  std::string arg8_str(arg8_pstr);
+  arg8 = &arg8_str;
+  jenv->ReleaseStringUTFChars(jarg8, arg8_pstr); 
+  result = aqCapFloorObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5,arg6,arg7,(std::string const &)*arg8);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectGreeks_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jdouble jarg4, jdouble jarg5, jdouble jarg6, jdouble jarg7) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  arg4 = (double)jarg4; 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = (double)jarg7; 
+  result = aqCapFloorObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5,arg6,arg7);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectDisplayCashflowsFromRates_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jboolean jarg4, jlong jarg5, jobject jarg5_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double > > *arg3 = 0 ;
+  bool arg4 ;
+  std::vector< std::string > *arg5 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  (void)jarg5_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< double > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< double > > const & reference is null");
+    return 0;
+  } 
+  arg4 = jarg4 ? true : false; 
+  arg5 = *(std::vector< std::string > **)&jarg5;
+  if (!arg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqCapFloorObjectDisplayCashflowsFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double > > const &)*arg3,arg4,(std::vector< std::string > const &)*arg5);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectDisplayCashflowsFromRates_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jboolean jarg4) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double > > *arg3 = 0 ;
+  bool arg4 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< double > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< double > > const & reference is null");
+    return 0;
+  } 
+  arg4 = jarg4 ? true : false; 
+  result = aqCapFloorObjectDisplayCashflowsFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double > > const &)*arg3,arg4);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectDisplayCashflowsFromRates_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double > > *arg3 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< double > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< double > > const & reference is null");
+    return 0;
+  } 
+  result = aqCapFloorObjectDisplayCashflowsFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double > > const &)*arg3);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectGreeksAnalyticalFromRates_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jboolean jarg4) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double > > *arg3 = 0 ;
+  bool arg4 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< double > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< double > > const & reference is null");
+    return 0;
+  } 
+  arg4 = jarg4 ? true : false; 
+  result = aqCapFloorObjectGreeksAnalyticalFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double > > const &)*arg3,arg4);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectGreeksAnalyticalFromRates_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double > > *arg3 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< double > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< double > > const & reference is null");
+    return 0;
+  } 
+  result = aqCapFloorObjectGreeksAnalyticalFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double > > const &)*arg3);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectGreeksFromRates_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jdouble jarg4, jdouble jarg5, jdouble jarg6, jdouble jarg7, jboolean jarg8) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  bool arg8 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< double > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< double > > const & reference is null");
+    return 0;
+  } 
+  arg4 = (double)jarg4; 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = (double)jarg7; 
+  arg8 = jarg8 ? true : false; 
+  result = aqCapFloorObjectGreeksFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double > > const &)*arg3,arg4,arg5,arg6,arg7,arg8);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectGreeksFromRates_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jdouble jarg4, jdouble jarg5, jdouble jarg6, jdouble jarg7) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< double > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< double > > const & reference is null");
+    return 0;
+  } 
+  arg4 = (double)jarg4; 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = (double)jarg7; 
+  result = aqCapFloorObjectGreeksFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double > > const &)*arg3,arg4,arg5,arg6,arg7);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCapFloorObjectPVFromRates(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double > > *arg3 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< double > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< double > > const & reference is null");
+    return 0;
+  } 
+  result = (double)aqCapFloorObjectPVFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double > > const &)*arg3);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXCurveCreate(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  result = aqFXCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwardsFromDiscountCurves_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jstring jarg3, jstring jarg4, jboolean jarg5, jlong jarg6, jobject jarg6_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  std::vector< std::string > *arg6 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg6_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = jarg5 ? true : false; 
+  arg6 = *(std::vector< std::string > **)&jarg6;
+  if (!arg6) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqFXObjectForwardsFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,(std::vector< std::string > const &)*arg6);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwardsFromDiscountCurves_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jstring jarg3, jstring jarg4, jboolean jarg5) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = jarg5 ? true : false; 
+  result = aqFXObjectForwardsFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwardsFromDiscountCurves_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jstring jarg3, jstring jarg4) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = aqFXObjectForwardsFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwards_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jboolean jarg3, jlong jarg4, jobject jarg4_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  bool arg3 ;
+  std::vector< std::string > *arg4 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg4_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = jarg3 ? true : false; 
+  arg4 = *(std::vector< std::string > **)&jarg4;
+  if (!arg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqFXObjectForwards((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,arg3,(std::vector< std::string > const &)*arg4);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwards_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jboolean jarg3) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  bool arg3 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = jarg3 ? true : false; 
+  result = aqFXObjectForwards((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,arg3);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwards_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqFXObjectForwards((std::string const &)*arg1,(std::vector< std::string > const &)*arg2);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwapFromDiscountCurves_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jstring jarg4, jstring jarg5, jboolean jarg6, jboolean jarg7, jlong jarg8, jobject jarg8_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::vector< std::string > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  bool arg6 ;
+  bool arg7 ;
+  std::vector< std::string > *arg8 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg3_;
+  (void)jarg8_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = *(std::vector< std::string > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  if(!jarg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg5_pstr = (const char *)jenv->GetStringUTFChars(jarg5, 0); 
+  if (!arg5_pstr) return 0;
+  std::string arg5_str(arg5_pstr);
+  arg5 = &arg5_str;
+  jenv->ReleaseStringUTFChars(jarg5, arg5_pstr); 
+  arg6 = jarg6 ? true : false; 
+  arg7 = jarg7 ? true : false; 
+  arg8 = *(std::vector< std::string > **)&jarg8;
+  if (!arg8) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqFXObjectSwapFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::string > const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,arg7,(std::vector< std::string > const &)*arg8);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwapFromDiscountCurves_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jstring jarg4, jstring jarg5, jboolean jarg6, jboolean jarg7) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::vector< std::string > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  bool arg6 ;
+  bool arg7 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = *(std::vector< std::string > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  if(!jarg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg5_pstr = (const char *)jenv->GetStringUTFChars(jarg5, 0); 
+  if (!arg5_pstr) return 0;
+  std::string arg5_str(arg5_pstr);
+  arg5 = &arg5_str;
+  jenv->ReleaseStringUTFChars(jarg5, arg5_pstr); 
+  arg6 = jarg6 ? true : false; 
+  arg7 = jarg7 ? true : false; 
+  result = aqFXObjectSwapFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::string > const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,arg7);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwapFromDiscountCurves_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jstring jarg4, jstring jarg5, jboolean jarg6) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::vector< std::string > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  bool arg6 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = *(std::vector< std::string > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  if(!jarg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg5_pstr = (const char *)jenv->GetStringUTFChars(jarg5, 0); 
+  if (!arg5_pstr) return 0;
+  std::string arg5_str(arg5_pstr);
+  arg5 = &arg5_str;
+  jenv->ReleaseStringUTFChars(jarg5, arg5_pstr); 
+  arg6 = jarg6 ? true : false; 
+  result = aqFXObjectSwapFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::string > const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwap_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jboolean jarg4, jboolean jarg5, jlong jarg6, jobject jarg6_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::vector< std::string > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  std::vector< std::string > *arg6 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg3_;
+  (void)jarg6_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = *(std::vector< std::string > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg4 = jarg4 ? true : false; 
+  arg5 = jarg5 ? true : false; 
+  arg6 = *(std::vector< std::string > **)&jarg6;
+  if (!arg6) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqFXObjectSwap((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::string > const &)*arg3,arg4,arg5,(std::vector< std::string > const &)*arg6);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwap_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jboolean jarg4, jboolean jarg5) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::vector< std::string > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = *(std::vector< std::string > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg4 = jarg4 ? true : false; 
+  arg5 = jarg5 ? true : false; 
+  result = aqFXObjectSwap((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::string > const &)*arg3,arg4,arg5);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwap_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jboolean jarg4) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::vector< std::string > *arg3 = 0 ;
+  bool arg4 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = *(std::vector< std::string > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg4 = jarg4 ? true : false; 
+  result = aqFXObjectSwap((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::string > const &)*arg3,arg4);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwardsFromXccyCurveObject_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jdouble jarg3, jboolean jarg4, jlong jarg5, jobject jarg5_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  double arg3 ;
+  bool arg4 ;
+  std::vector< std::string > *arg5 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg5_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = (double)jarg3; 
+  arg4 = jarg4 ? true : false; 
+  arg5 = *(std::vector< std::string > **)&jarg5;
+  if (!arg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqFXObjectForwardsFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,arg3,arg4,(std::vector< std::string > const &)*arg5);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwardsFromXccyCurveObject_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jdouble jarg3, jboolean jarg4) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  double arg3 ;
+  bool arg4 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = (double)jarg3; 
+  arg4 = jarg4 ? true : false; 
+  result = aqFXObjectForwardsFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,arg3,arg4);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwardsFromXccyCurveObject_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jdouble jarg3) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  double arg3 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = (double)jarg3; 
+  result = aqFXObjectForwardsFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,arg3);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwardsFromXccyCurve_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jdouble jarg5, jdouble jarg6, jdouble jarg7, jlong jarg8, jobject jarg8_, jboolean jarg9, jlong jarg10, jobject jarg10_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::vector< std::string > *arg8 = 0 ;
+  bool arg9 ;
+  std::vector< std::string > *arg10 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg8_;
+  (void)jarg10_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = (double)jarg7; 
+  arg8 = *(std::vector< std::string > **)&jarg8;
+  if (!arg8) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg9 = jarg9 ? true : false; 
+  arg10 = *(std::vector< std::string > **)&jarg10;
+  if (!arg10) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqFXObjectForwardsFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,arg7,(std::vector< std::string > const &)*arg8,arg9,(std::vector< std::string > const &)*arg10);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwardsFromXccyCurve_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jdouble jarg5, jdouble jarg6, jdouble jarg7, jlong jarg8, jobject jarg8_, jboolean jarg9) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::vector< std::string > *arg8 = 0 ;
+  bool arg9 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg8_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = (double)jarg7; 
+  arg8 = *(std::vector< std::string > **)&jarg8;
+  if (!arg8) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg9 = jarg9 ? true : false; 
+  result = aqFXObjectForwardsFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,arg7,(std::vector< std::string > const &)*arg8,arg9);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectForwardsFromXccyCurve_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jdouble jarg5, jdouble jarg6, jdouble jarg7, jlong jarg8, jobject jarg8_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::vector< std::string > *arg8 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg8_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = (double)jarg7; 
+  arg8 = *(std::vector< std::string > **)&jarg8;
+  if (!arg8) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqFXObjectForwardsFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,arg7,(std::vector< std::string > const &)*arg8);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwapFromXccyCurveObject_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jboolean jarg4, jboolean jarg5, jlong jarg6, jobject jarg6_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::vector< std::string > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  std::vector< std::string > *arg6 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg3_;
+  (void)jarg6_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = *(std::vector< std::string > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg4 = jarg4 ? true : false; 
+  arg5 = jarg5 ? true : false; 
+  arg6 = *(std::vector< std::string > **)&jarg6;
+  if (!arg6) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqFXObjectSwapFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::string > const &)*arg3,arg4,arg5,(std::vector< std::string > const &)*arg6);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwapFromXccyCurveObject_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jboolean jarg4, jboolean jarg5) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::vector< std::string > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = *(std::vector< std::string > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg4 = jarg4 ? true : false; 
+  arg5 = jarg5 ? true : false; 
+  result = aqFXObjectSwapFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::string > const &)*arg3,arg4,arg5);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwapFromXccyCurveObject_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jboolean jarg4) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::string > *arg2 = 0 ;
+  std::vector< std::string > *arg3 = 0 ;
+  bool arg4 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::string > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg3 = *(std::vector< std::string > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg4 = jarg4 ? true : false; 
+  result = aqFXObjectSwapFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::string > const &)*arg3,arg4);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwapFromXccyCurve_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jdouble jarg5, jdouble jarg6, jlong jarg7, jobject jarg7_, jlong jarg8, jobject jarg8_, jboolean jarg9, jboolean jarg10, jlong jarg11, jobject jarg11_) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  std::vector< std::string > *arg7 = 0 ;
+  std::vector< std::string > *arg8 = 0 ;
+  bool arg9 ;
+  bool arg10 ;
+  std::vector< std::string > *arg11 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg7_;
+  (void)jarg8_;
+  (void)jarg11_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = *(std::vector< std::string > **)&jarg7;
+  if (!arg7) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg8 = *(std::vector< std::string > **)&jarg8;
+  if (!arg8) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg9 = jarg9 ? true : false; 
+  arg10 = jarg10 ? true : false; 
+  arg11 = *(std::vector< std::string > **)&jarg11;
+  if (!arg11) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  result = aqFXObjectSwapFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,(std::vector< std::string > const &)*arg7,(std::vector< std::string > const &)*arg8,arg9,arg10,(std::vector< std::string > const &)*arg11);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwapFromXccyCurve_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jdouble jarg5, jdouble jarg6, jlong jarg7, jobject jarg7_, jlong jarg8, jobject jarg8_, jboolean jarg9, jboolean jarg10) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  std::vector< std::string > *arg7 = 0 ;
+  std::vector< std::string > *arg8 = 0 ;
+  bool arg9 ;
+  bool arg10 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg7_;
+  (void)jarg8_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = *(std::vector< std::string > **)&jarg7;
+  if (!arg7) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg8 = *(std::vector< std::string > **)&jarg8;
+  if (!arg8) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg9 = jarg9 ? true : false; 
+  arg10 = jarg10 ? true : false; 
+  result = aqFXObjectSwapFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,(std::vector< std::string > const &)*arg7,(std::vector< std::string > const &)*arg8,arg9,arg10);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSwapFromXccyCurve_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jdouble jarg5, jdouble jarg6, jlong jarg7, jobject jarg7_, jlong jarg8, jobject jarg8_, jboolean jarg9) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  std::vector< std::string > *arg7 = 0 ;
+  std::vector< std::string > *arg8 = 0 ;
+  bool arg9 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg7_;
+  (void)jarg8_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = *(std::vector< std::string > **)&jarg7;
+  if (!arg7) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg8 = *(std::vector< std::string > **)&jarg8;
+  if (!arg8) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::string > const & reference is null");
+    return 0;
+  } 
+  arg9 = jarg9 ? true : false; 
+  result = aqFXObjectSwapFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,(std::vector< std::string > const &)*arg7,(std::vector< std::string > const &)*arg8,arg9);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectSpotToAsOfDate(JNIEnv *jenv, jclass jcls, jdouble jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jstring jarg5, jstring jarg6) {
+  jdouble jresult = 0 ;
+  double arg1 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (double)jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  if(!jarg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg5_pstr = (const char *)jenv->GetStringUTFChars(jarg5, 0); 
+  if (!arg5_pstr) return 0;
+  std::string arg5_str(arg5_pstr);
+  arg5 = &arg5_str;
+  jenv->ReleaseStringUTFChars(jarg5, arg5_pstr); 
+  if(!jarg6) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg6_pstr = (const char *)jenv->GetStringUTFChars(jarg6, 0); 
+  if (!arg6_pstr) return 0;
+  std::string arg6_str(arg6_pstr);
+  arg6 = &arg6_str;
+  jenv->ReleaseStringUTFChars(jarg6, arg6_pstr); 
+  result = (double)aqFXObjectSpotToAsOfDate(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFXObjectAsOfDateToSpot(JNIEnv *jenv, jclass jcls, jdouble jarg1, jstring jarg2, jstring jarg3, jstring jarg4, jstring jarg5, jstring jarg6) {
+  jdouble jresult = 0 ;
+  double arg1 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (double)jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  if(!jarg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg5_pstr = (const char *)jenv->GetStringUTFChars(jarg5, 0); 
+  if (!arg5_pstr) return 0;
+  std::string arg5_str(arg5_pstr);
+  arg5 = &arg5_str;
+  jenv->ReleaseStringUTFChars(jarg5, arg5_pstr); 
+  if(!jarg6) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg6_pstr = (const char *)jenv->GetStringUTFChars(jarg6, 0); 
+  if (!arg6_pstr) return 0;
+  std::string arg6_str(arg6_pstr);
+  arg6 = &arg6_str;
+  jenv->ReleaseStringUTFChars(jarg6, arg6_pstr); 
+  result = (double)aqFXObjectAsOfDateToSpot(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectCreate_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jboolean jarg3) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = jarg3 ? true : false; 
+  result = aqVolatilityObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectCreate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = aqVolatilityObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectSabrMarketDataCreate_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jstring jarg4, jlong jarg5, jobject jarg5_) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string > > *arg5 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  (void)jarg5_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = *(std::vector< std::vector< std::string > > **)&jarg5;
+  if (!arg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = aqVolatilityObjectSabrMarketDataCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectSabrMarketDataCreate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jstring jarg4) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = aqVolatilityObjectSabrMarketDataCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectSabrMarketDataCreate_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = aqVolatilityObjectSabrMarketDataCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectSabrModelCalibrate_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jstring jarg4, jlong jarg5, jobject jarg5_) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string > > *arg5 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  (void)jarg5_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  arg5 = *(std::vector< std::vector< std::string > > **)&jarg5;
+  if (!arg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = aqVolatilityObjectSabrModelCalibrate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string > > const &)*arg5);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectSabrModelCalibrate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jstring jarg4) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = aqVolatilityObjectSabrModelCalibrate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,(std::string const &)*arg4);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectSabrModelCalibrate_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  result = aqVolatilityObjectSabrModelCalibrate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectSabrVolatility(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jdouble jarg4, jdouble jarg5) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  arg4 = (double)jarg4; 
+  arg5 = (double)jarg5; 
+  result = (double)aqVolatilityObjectSabrVolatility((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectSabrParameter(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jstring jarg4) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = (double)aqVolatilityObjectSabrParameter((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectSabrMarketDataDisplay(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
   jlong jresult = 0 ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -9982,7 +14057,484 @@ SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCurvesResultsDi
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  result = aqCurvesResultsDisplayDiscountFactors((std::string const &)*arg1,(std::string const &)*arg2);
+  result = aqVolatilityObjectSabrMarketDataDisplay((std::string const &)*arg1,(std::string const &)*arg2);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqVolatilityObjectSabrModelDisplay(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  result = aqVolatilityObjectSabrModelDisplay((std::string const &)*arg1,(std::string const &)*arg2);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqBondFutureOptionObjectPV(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jdouble jarg3, jdouble jarg4, jstring jarg5) {
+  jdouble jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  std::string *arg5 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = *(std::vector< std::vector< std::string > > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg3 = (double)jarg3; 
+  arg4 = (double)jarg4; 
+  if(!jarg5) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg5_pstr = (const char *)jenv->GetStringUTFChars(jarg5, 0); 
+  if (!arg5_pstr) return 0;
+  std::string arg5_str(arg5_pstr);
+  arg5 = &arg5_str;
+  jenv->ReleaseStringUTFChars(jarg5, arg5_pstr); 
+  result = (double)aqBondFutureOptionObjectPV((std::string const &)*arg1,(std::vector< std::vector< std::string > > const &)*arg2,arg3,arg4,(std::string const &)*arg5);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqBondFutureOptionObjectGreeks_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jdouble jarg4, jdouble jarg5, jstring jarg6, jdouble jarg7, jdouble jarg8, jdouble jarg9, jdouble jarg10, jdouble jarg11, jboolean jarg12) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  double arg8 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  bool arg12 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg4 = (double)jarg4; 
+  arg5 = (double)jarg5; 
+  if(!jarg6) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg6_pstr = (const char *)jenv->GetStringUTFChars(jarg6, 0); 
+  if (!arg6_pstr) return 0;
+  std::string arg6_str(arg6_pstr);
+  arg6 = &arg6_str;
+  jenv->ReleaseStringUTFChars(jarg6, arg6_pstr); 
+  arg7 = (double)jarg7; 
+  arg8 = (double)jarg8; 
+  arg9 = (double)jarg9; 
+  arg10 = (double)jarg10; 
+  arg11 = (double)jarg11; 
+  arg12 = jarg12 ? true : false; 
+  result = aqBondFutureOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,arg8,arg9,arg10,arg11,arg12);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqBondFutureOptionObjectGreeks_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jdouble jarg4, jdouble jarg5, jstring jarg6, jdouble jarg7, jdouble jarg8, jdouble jarg9, jdouble jarg10, jdouble jarg11) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  double arg8 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg3_;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  arg3 = *(std::vector< std::vector< std::string > > **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::string > > const & reference is null");
+    return 0;
+  } 
+  arg4 = (double)jarg4; 
+  arg5 = (double)jarg5; 
+  if(!jarg6) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg6_pstr = (const char *)jenv->GetStringUTFChars(jarg6, 0); 
+  if (!arg6_pstr) return 0;
+  std::string arg6_str(arg6_pstr);
+  arg6 = &arg6_str;
+  jenv->ReleaseStringUTFChars(jarg6, arg6_pstr); 
+  arg7 = (double)jarg7; 
+  arg8 = (double)jarg8; 
+  arg9 = (double)jarg9; 
+  arg10 = (double)jarg10; 
+  arg11 = (double)jarg11; 
+  result = aqBondFutureOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,arg8,arg9,arg10,arg11);
+  *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFutureTickerCurrent_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jboolean jarg2, jboolean jarg3) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  bool arg3 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = jarg2 ? true : false; 
+  arg3 = jarg3 ? true : false; 
+  result = aqFutureTickerCurrent((std::string const &)*arg1,arg2,arg3);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFutureTickerCurrent_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jboolean jarg2) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = jarg2 ? true : false; 
+  result = aqFutureTickerCurrent((std::string const &)*arg1,arg2);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFutureTickerCurrent_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = aqFutureTickerCurrent((std::string const &)*arg1);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFutureTickerNext_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jboolean jarg2) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = jarg2 ? true : false; 
+  result = aqFutureTickerNext((std::string const &)*arg1,arg2);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFutureTickerNext_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = aqFutureTickerNext((std::string const &)*arg1);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFutureTickerPrevious_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jboolean jarg2) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = jarg2 ? true : false; 
+  result = aqFutureTickerPrevious((std::string const &)*arg1,arg2);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFutureTickerPrevious_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = aqFutureTickerPrevious((std::string const &)*arg1);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFutureTickerNth_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jint jarg2, jboolean jarg3, jboolean jarg4) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  bool arg3 ;
+  bool arg4 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = (int)jarg2; 
+  arg3 = jarg3 ? true : false; 
+  arg4 = jarg4 ? true : false; 
+  result = aqFutureTickerNth((std::string const &)*arg1,arg2,arg3,arg4);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFutureTickerNth_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jint jarg2, jboolean jarg3) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  bool arg3 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = (int)jarg2; 
+  arg3 = jarg3 ? true : false; 
+  result = aqFutureTickerNth((std::string const &)*arg1,arg2,arg3);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqFutureTickerNth_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jstring jarg1, jint jarg2) {
+  jstring jresult = 0 ;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  arg2 = (int)jarg2; 
+  result = aqFutureTickerNth((std::string const &)*arg1,arg2);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCurveResultsDiscountFactorsDisplayAll(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  result = aqCurveResultsDiscountFactorsDisplayAll((std::string const &)*arg1,(std::string const &)*arg2);
   *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
   return jresult;
 }
@@ -10134,7 +14686,7 @@ SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCurveObjectCa
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCurveMarketDataCreate(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jstring jarg4, jlong jarg5, jobject jarg5_, jstring jarg6, jlong jarg7, jobject jarg7_, jstring jarg8, jlong jarg9, jobject jarg9_) {
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCurveMarketDataCreate_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jstring jarg4, jlong jarg5, jobject jarg5_, jstring jarg6, jlong jarg7, jobject jarg7_, jstring jarg8, jlong jarg9, jobject jarg9_) {
   jstring jresult = 0 ;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -10224,7 +14776,7 @@ SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCurveMarketDa
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqObjCurvesMarketDataCreateUsingMultipleBlocks(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3) {
+SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCurveMarketDataCreate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3) {
   jstring jresult = 0 ;
   std::string *arg1 = 0 ;
   std::vector< std::string > *arg2 = 0 ;
@@ -10253,7 +14805,7 @@ SWIGEXPORT jstring JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqObjCurvesMark
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::vector< std::vector< std::string > > > const & reference is null");
     return 0;
   } 
-  result = aqObjCurvesMarketDataCreateUsingMultipleBlocks((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::vector< std::vector< std::string > > > const &)*arg3);
+  result = aqCurveMarketDataCreate((std::string const &)*arg1,(std::vector< std::string > const &)*arg2,(std::vector< std::vector< std::vector< std::string > > > const &)*arg3);
   jresult = jenv->NewStringUTF((&result)->c_str()); 
   return jresult;
 }
@@ -10451,7 +15003,7 @@ SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqCurveObjectDisc
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqToolObjectGridDisplay_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jboolean jarg2) {
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqGridObjectDisplay_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jboolean jarg2) {
   jlong jresult = 0 ;
   std::string *arg1 = 0 ;
   bool *arg2 = 0 ;
@@ -10471,13 +15023,13 @@ SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqToolObjectGridD
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   temp2 = jarg2 ? true : false; 
   arg2 = &temp2; 
-  result = aqToolObjectGridDisplay((std::string const &)*arg1,(bool const &)*arg2);
+  result = aqGridObjectDisplay((std::string const &)*arg1,(bool const &)*arg2);
   *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqToolObjectGridDisplay_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqGridObjectDisplay_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jstring jarg1) {
   jlong jresult = 0 ;
   std::string *arg1 = 0 ;
   std::vector< std::vector< std::string > > result;
@@ -10493,7 +15045,7 @@ SWIGEXPORT jlong JNICALL Java_com_algoquantlib_AlgoQuantLibJNI_aqToolObjectGridD
   std::string arg1_str(arg1_pstr);
   arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  result = aqToolObjectGridDisplay((std::string const &)*arg1);
+  result = aqGridObjectDisplay((std::string const &)*arg1);
   *(std::vector< std::vector< std::string > > **)&jresult = new std::vector< std::vector< std::string > >((const std::vector< std::vector< std::string > > &)result); 
   return jresult;
 }

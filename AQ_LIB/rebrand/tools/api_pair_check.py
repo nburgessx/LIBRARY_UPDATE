@@ -105,6 +105,19 @@ print("\nADVISORY -- wrappers with no public function yet: %d "
       "(expected until the Phase 4 port lands)" % len(orphan))
 print("\npublic surface by category:",
       dict(collections.Counter(category(n) for n in pub).most_common()))
+print("\nAQ_API coverage gap by category (validation wrappers with no AQ_API binding):")
+gap_by_cat = collections.Counter(category(n) for n in orphan)
+for c, n in gap_by_cat.most_common():
+    total_c = sum(1 for w in wrap if category(w) == c)
+    print("   %-14s %4d missing  (of %4d validation wrappers in category)" % (c, n, total_c))
+
+if "--gap-list" in sys.argv:
+    print("\nfull missing-binding list, by category:")
+    for c, _ in gap_by_cat.most_common():
+        names = sorted(n for n in orphan if category(n) == c)
+        print("\n  %s (%d):" % (c, len(names)))
+        for n in names:
+            print("    ", n)
 
 if "--write" in sys.argv:
     rows = []

@@ -308,7 +308,7 @@ Unchanged from before, still live:
 
 - VS2022, toolset v143, **x64 only**, `/std:c++17`, static runtime `/MT`,
   `/MP` on every project.
-- Run `SetEnvironmentVariables.bat` once, then **restart Visual Studio**.
+- Run `SetEnvVars.bat` once, then **restart Visual Studio**.
 - **Confirmed green, all configurations, GoogleTest passing.**
 
 Known landmines and fixes: `CLAUDE.md` §3.2 (MAX_PATH under Boost `b2`, the

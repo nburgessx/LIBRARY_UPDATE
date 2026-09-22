@@ -5527,6 +5527,18 @@ SWIGINTERN void std_vector_Sl_std_vector_Sl_std_string_Sg__Sg__insert__SWIG_1(st
 #include "BondTypes.h"
 #include "aqBondCurve.h"
 #include "aqCreditObject.h"
+#include "aqCMSObject.h"
+#include "aqAssetSwapObject.h"
+#include "aqIRObject.h"
+#include "aqBondOptionObject.h"
+#include "aqInflationObject.h"
+#include "aqSwaptionObject.h"
+#include "aqCapFloorObject.h"
+#include "aqFXObject.h"
+#include "aqVolatilityObject.h"
+#include "aqVolatilitySABR.h"
+#include "aqBondFutureOptionObject.h"
+#include "aqFutureTicker.h"
 #include "aqCurveResults.h"
 #include "aqCurveObject.h"
 #include "aqToolGrids.h"
@@ -26129,7 +26141,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqObjSwapsUSDSpotDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqCurveUSDSpotDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -26146,15 +26158,15 @@ SWIGINTERN PyObject *_wrap_aqObjSwapsUSDSpotDate(PyObject *SWIGUNUSEDPARM(self),
   PyObject *swig_obj[6] ;
   std::string result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqObjSwapsUSDSpotDate", 6, 6, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "aqCurveUSDSpotDate", 6, 6, swig_obj)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCurveUSDSpotDate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -26162,10 +26174,10 @@ SWIGINTERN PyObject *_wrap_aqObjSwapsUSDSpotDate(PyObject *SWIGUNUSEDPARM(self),
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCurveUSDSpotDate" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -26173,10 +26185,10 @@ SWIGINTERN PyObject *_wrap_aqObjSwapsUSDSpotDate(PyObject *SWIGUNUSEDPARM(self),
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCurveUSDSpotDate" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
@@ -26184,10 +26196,10 @@ SWIGINTERN PyObject *_wrap_aqObjSwapsUSDSpotDate(PyObject *SWIGUNUSEDPARM(self),
     std::string *ptr = (std::string *)0;
     res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCurveUSDSpotDate" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     arg4 = ptr;
   }
@@ -26195,10 +26207,10 @@ SWIGINTERN PyObject *_wrap_aqObjSwapsUSDSpotDate(PyObject *SWIGUNUSEDPARM(self),
     std::string *ptr = (std::string *)0;
     res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
     if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "5"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqCurveUSDSpotDate" "', argument " "5"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "5"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "5"" of type '" "std::string const &""'"); 
     }
     arg5 = ptr;
   }
@@ -26206,17 +26218,17 @@ SWIGINTERN PyObject *_wrap_aqObjSwapsUSDSpotDate(PyObject *SWIGUNUSEDPARM(self),
     std::string *ptr = (std::string *)0;
     res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
     if (!SWIG_IsOK(res6)) {
-      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "6"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqCurveUSDSpotDate" "', argument " "6"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "6"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "6"" of type '" "std::string const &""'"); 
     }
     arg6 = ptr;
   }
   {
     try
     {
-      result = aqObjSwapsUSDSpotDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+      result = aqCurveUSDSpotDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
     }
     catch (const std::exception& e)
     {
@@ -26367,6 +26379,586 @@ fail:
   if (SWIG_IsNewObj(res6)) delete arg6;
   if (SWIG_IsNewObj(res7)) delete arg7;
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateToday(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqDateToday", 0, 0, 0)) SWIG_fail;
+  {
+    try
+    {
+      result = aqDateToday();
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIsWorkingDay(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  bool result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqDateIsWorkingDay", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIsWorkingDay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsWorkingDay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqDateIsWorkingDay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsWorkingDay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (bool)aqDateIsWorkingDay((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIsHoliday(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  bool result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqDateIsHoliday", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIsHoliday" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsHoliday" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqDateIsHoliday" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsHoliday" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (bool)aqDateIsHoliday((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIsWeekend(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIsWeekend" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsWeekend" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = (bool)aqDateIsWeekend((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIsWeekday(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIsWeekday" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsWeekday" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = (bool)aqDateIsWeekday((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateFuturesContract(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::string result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateFuturesContract" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateFuturesContract" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqDateFuturesContract((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIsRegularSwapSchedule__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  bool arg3 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  int arg7 ;
+  std::string *arg8 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int val7 ;
+  int ecode7 = 0 ;
+  int res8 = SWIG_OLDOBJ ;
+  bool result;
+  
+  if ((nobjs < 8) || (nobjs > 8)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsRegularSwapSchedule" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsRegularSwapSchedule" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsRegularSwapSchedule" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsRegularSwapSchedule" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsRegularSwapSchedule" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  ecode7 = SWIG_AsVal_int(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "7"" of type '" "int""'");
+  } 
+  arg7 = static_cast< int >(val7);
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsRegularSwapSchedule" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    try
+    {
+      result = (bool)aqDateIsRegularSwapSchedule((std::string const &)*arg1,(std::string const &)*arg2,arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,arg7,(std::string const &)*arg8);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIsRegularSwapSchedule__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  bool arg3 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  int arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int val7 ;
+  int ecode7 = 0 ;
+  bool result;
+  
+  if ((nobjs < 7) || (nobjs > 7)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsRegularSwapSchedule" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsRegularSwapSchedule" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsRegularSwapSchedule" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsRegularSwapSchedule" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIsRegularSwapSchedule" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  ecode7 = SWIG_AsVal_int(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqDateIsRegularSwapSchedule" "', argument " "7"" of type '" "int""'");
+  } 
+  arg7 = static_cast< int >(val7);
+  {
+    try
+    {
+      result = (bool)aqDateIsRegularSwapSchedule((std::string const &)*arg1,(std::string const &)*arg2,arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,arg7);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIsRegularSwapSchedule(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[9] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqDateIsRegularSwapSchedule", 0, 8, argv))) SWIG_fail;
+  --argc;
+  if (argc == 7) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_int(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_aqDateIsRegularSwapSchedule__SWIG_1(self, argc, argv);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_int(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    return _wrap_aqDateIsRegularSwapSchedule__SWIG_0(self, argc, argv);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqDateIsRegularSwapSchedule'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqDateIsRegularSwapSchedule(std::string const &,std::string const &,bool const,std::string const &,std::string const &,std::string const &,int const,std::string const &)\n"
+    "    aqDateIsRegularSwapSchedule(std::string const &,std::string const &,bool const,std::string const &,std::string const &,std::string const &,int const)\n");
+  return 0;
 }
 
 
@@ -26540,6 +27132,261 @@ SWIGINTERN PyObject *_wrap_aqDateECBSwapEnd(PyObject *SWIGUNUSEDPARM(self), PyOb
     try
     {
       result = aqDateECBSwapEnd((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateNthECBMeetingDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  std::string result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqDateNthECBMeetingDate", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateNthECBMeetingDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateNthECBMeetingDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqDateNthECBMeetingDate" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  {
+    try
+    {
+      result = aqDateNthECBMeetingDate((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateNthECBSwapStartDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  std::string result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqDateNthECBSwapStartDate", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateNthECBSwapStartDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateNthECBSwapStartDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqDateNthECBSwapStartDate" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  {
+    try
+    {
+      result = aqDateNthECBSwapStartDate((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateNthECBSwapEndDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  std::string result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqDateNthECBSwapEndDate", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateNthECBSwapEndDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateNthECBSwapEndDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqDateNthECBSwapEndDate" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  {
+    try
+    {
+      result = aqDateNthECBSwapEndDate((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateNextECBMeetingDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::string result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateNextECBMeetingDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateNextECBMeetingDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqDateNextECBMeetingDate((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateNextECBSwapStartDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::string result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateNextECBSwapStartDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateNextECBSwapStartDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqDateNextECBSwapStartDate((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateNextECBSwapEndDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::string result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateNextECBSwapEndDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateNextECBSwapEndDate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqDateNextECBSwapEndDate((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -26766,6 +27613,356 @@ fail:
   if (SWIG_IsNewObj(res3)) delete arg3;
   if (SWIG_IsNewObj(res4)) delete arg4;
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIMMCurrent__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIMMCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIMMCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_bool(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqDateIMMCurrent" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  {
+    try
+    {
+      result = aqDateIMMCurrent((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIMMCurrent__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIMMCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIMMCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqDateIMMCurrent((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIMMCurrent(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[3] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqDateIMMCurrent", 0, 2, argv))) SWIG_fail;
+  --argc;
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_aqDateIMMCurrent__SWIG_1(self, argc, argv);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_bool(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_aqDateIMMCurrent__SWIG_0(self, argc, argv);
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqDateIMMCurrent'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqDateIMMCurrent(std::string const &,bool const)\n"
+    "    aqDateIMMCurrent(std::string const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIMMNext(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::string result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIMMNext" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIMMNext" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqDateIMMNext((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIMMPrevious(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::string result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIMMPrevious" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIMMPrevious" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqDateIMMPrevious((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIMMNth__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIMMNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIMMNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqDateIMMNth" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqDateIMMNth" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try
+    {
+      result = aqDateIMMNth((std::string const &)*arg1,arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIMMNth__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  int val2 ;
+  int ecode2 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqDateIMMNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqDateIMMNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqDateIMMNth" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  {
+    try
+    {
+      result = aqDateIMMNth((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqDateIMMNth(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqDateIMMNth", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_aqDateIMMNth__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqDateIMMNth__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqDateIMMNth'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqDateIMMNth(std::string const &,int const,bool const)\n"
+    "    aqDateIMMNth(std::string const &,int const)\n");
+  return 0;
 }
 
 
@@ -30105,7 +31302,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_aqToolsLVBAppend__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -30120,10 +31317,10 @@ SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate__SWIG_0(PyObject *SWIGUNUSE
     std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
     res1 = swig::asptr(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolsLVBAppend" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
     }
     arg1 = ptr;
   }
@@ -30131,10 +31328,10 @@ SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate__SWIG_0(PyObject *SWIGUNUSE
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolsLVBAppend" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -30142,17 +31339,17 @@ SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate__SWIG_0(PyObject *SWIGUNUSE
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqToolsLVBAppend" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   {
     try
     {
-      result = aqToolsLVBAppendAndCreate((std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = aqToolsLVBAppend((std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -30172,7 +31369,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_aqToolsLVBAppend__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -30189,10 +31386,10 @@ SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate__SWIG_1(PyObject *SWIGUNUSE
     std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
     res1 = swig::asptr(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolsLVBAppend" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
     }
     arg1 = ptr;
   }
@@ -30200,10 +31397,10 @@ SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate__SWIG_1(PyObject *SWIGUNUSE
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolsLVBAppend" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -30211,10 +31408,10 @@ SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate__SWIG_1(PyObject *SWIGUNUSE
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqToolsLVBAppend" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
@@ -30222,17 +31419,17 @@ SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate__SWIG_1(PyObject *SWIGUNUSE
     std::string *ptr = (std::string *)0;
     res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqToolsLVBAppend" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     arg4 = ptr;
   }
   {
     try
     {
-      result = aqToolsLVBAppendAndCreate((std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = aqToolsLVBAppend((std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -30254,13 +31451,13 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqToolsLVBAppend(PyObject *self, PyObject *args) {
   Py_ssize_t argc;
   PyObject *argv[5] = {
     0
   };
   
-  if (!(argc = SWIG_Python_UnpackTuple(args, "aqToolsLVBAppendAndCreate", 0, 4, argv))) SWIG_fail;
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqToolsLVBAppend", 0, 4, argv))) SWIG_fail;
   --argc;
   if (argc == 3) {
     int _v;
@@ -30273,7 +31470,7 @@ SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate(PyObject *self, PyObject *a
         int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_aqToolsLVBAppendAndCreate__SWIG_0(self, argc, argv);
+          return _wrap_aqToolsLVBAppend__SWIG_0(self, argc, argv);
         }
       }
     }
@@ -30292,7 +31489,7 @@ SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate(PyObject *self, PyObject *a
           int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
           _v = SWIG_CheckState(res);
           if (_v) {
-            return _wrap_aqToolsLVBAppendAndCreate__SWIG_1(self, argc, argv);
+            return _wrap_aqToolsLVBAppend__SWIG_1(self, argc, argv);
           }
         }
       }
@@ -30300,10 +31497,10 @@ SWIGINTERN PyObject *_wrap_aqToolsLVBAppendAndCreate(PyObject *self, PyObject *a
   }
   
 fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqToolsLVBAppendAndCreate'.\n"
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqToolsLVBAppend'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    aqToolsLVBAppendAndCreate(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &,std::string const &)\n"
-    "    aqToolsLVBAppendAndCreate(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &,std::string const &,std::string const &)\n");
+    "    aqToolsLVBAppend(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &,std::string const &)\n"
+    "    aqToolsLVBAppend(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &,std::string const &,std::string const &)\n");
   return 0;
 }
 
@@ -33597,7 +34794,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqObjCreditModelRiskyDiscountFactor(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqCreditModelRiskyDiscountFactor(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -33606,15 +34803,15 @@ SWIGINTERN PyObject *_wrap_aqObjCreditModelRiskyDiscountFactor(PyObject *SWIGUNU
   PyObject *swig_obj[2] ;
   double result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqObjCreditModelRiskyDiscountFactor", 2, 2, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "aqCreditModelRiskyDiscountFactor", 2, 2, swig_obj)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqObjCreditModelRiskyDiscountFactor" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCreditModelRiskyDiscountFactor" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjCreditModelRiskyDiscountFactor" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditModelRiskyDiscountFactor" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -33622,17 +34819,17 @@ SWIGINTERN PyObject *_wrap_aqObjCreditModelRiskyDiscountFactor(PyObject *SWIGUNU
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqObjCreditModelRiskyDiscountFactor" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCreditModelRiskyDiscountFactor" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjCreditModelRiskyDiscountFactor" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditModelRiskyDiscountFactor" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   {
     try
     {
-      result = (double)aqObjCreditModelRiskyDiscountFactor((std::string const &)*arg1,(std::string const &)*arg2);
+      result = (double)aqCreditModelRiskyDiscountFactor((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -34591,7 +35788,11538 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqCurvesResultsDisplayDiscountFactors(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqCMSObjectPVUsingConvexityAdjustment__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res5 = swig::asptr(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCMSObjectPVUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCMSObjectPVUsingConvexityAdjustment__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCMSObjectPVUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCMSObjectPVUsingConvexityAdjustment(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[6] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqCMSObjectPVUsingConvexityAdjustment", 0, 5, argv))) SWIG_fail;
+  --argc;
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqCMSObjectPVUsingConvexityAdjustment__SWIG_1(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = swig::asptr(argv[4], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_aqCMSObjectPVUsingConvexityAdjustment__SWIG_0(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqCMSObjectPVUsingConvexityAdjustment'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqCMSObjectPVUsingConvexityAdjustment(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,double const,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n"
+    "    aqCMSObjectPVUsingConvexityAdjustment(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,double const,std::string const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCMSObjectParRateUsingConvexityAdjustment__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res4 = swig::asptr(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCMSObjectParRateUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCMSObjectParRateUsingConvexityAdjustment__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    try
+    {
+      result = (double)aqCMSObjectParRateUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCMSObjectParRateUsingConvexityAdjustment(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqCMSObjectParRateUsingConvexityAdjustment", 0, 4, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqCMSObjectParRateUsingConvexityAdjustment__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = swig::asptr(argv[3], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqCMSObjectParRateUsingConvexityAdjustment__SWIG_0(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqCMSObjectParRateUsingConvexityAdjustment'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqCMSObjectParRateUsingConvexityAdjustment(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,double const,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n"
+    "    aqCMSObjectParRateUsingConvexityAdjustment(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,double const)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpread__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  double arg3 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqAssetSwapObjectSpread" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpread" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqAssetSwapObjectSpread" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpread" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqAssetSwapObjectSpread" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res4 = swig::asptr(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqAssetSwapObjectSpread" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpread" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res5 = swig::asptr(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqAssetSwapObjectSpread" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpread" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqAssetSwapObjectSpread((std::string const &)*arg1,(std::string const &)*arg2,arg3,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg4,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpread__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  double arg3 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqAssetSwapObjectSpread" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpread" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqAssetSwapObjectSpread" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpread" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqAssetSwapObjectSpread" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res4 = swig::asptr(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqAssetSwapObjectSpread" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpread" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqAssetSwapObjectSpread((std::string const &)*arg1,(std::string const &)*arg2,arg3,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpread(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[6] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqAssetSwapObjectSpread", 0, 5, argv))) SWIG_fail;
+  --argc;
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = swig::asptr(argv[3], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqAssetSwapObjectSpread__SWIG_1(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = swig::asptr(argv[3], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = swig::asptr(argv[4], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_aqAssetSwapObjectSpread__SWIG_0(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqAssetSwapObjectSpread'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqAssetSwapObjectSpread(std::string const &,std::string const &,double const,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n"
+    "    aqAssetSwapObjectSpread(std::string const &,std::string const &,double const,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpreadFromPrice__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  std::string *arg2 = 0 ;
+  bool arg3 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg5 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg6 = 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 6) || (nobjs > 6)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res5 = swig::asptr(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res6 = swig::asptr(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "6"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "6"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqAssetSwapObjectSpreadFromPrice(arg1,(std::string const &)*arg2,arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg5,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpreadFromPrice__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  std::string *arg2 = 0 ;
+  bool arg3 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg5 = 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res5 = swig::asptr(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromPrice" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqAssetSwapObjectSpreadFromPrice(arg1,(std::string const &)*arg2,arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpreadFromPrice(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[7] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqAssetSwapObjectSpreadFromPrice", 0, 6, argv))) SWIG_fail;
+  --argc;
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = swig::asptr(argv[4], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_aqAssetSwapObjectSpreadFromPrice__SWIG_1(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = swig::asptr(argv[4], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = swig::asptr(argv[5], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                return _wrap_aqAssetSwapObjectSpreadFromPrice__SWIG_0(self, argc, argv);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqAssetSwapObjectSpreadFromPrice'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqAssetSwapObjectSpreadFromPrice(double const,std::string const &,bool const,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n"
+    "    aqAssetSwapObjectSpreadFromPrice(double const,std::string const &,bool const,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpreadToCleanPrice__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  double arg2 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  double val2 ;
+  int ecode2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res4 = swig::asptr(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqAssetSwapObjectSpreadToCleanPrice((std::string const &)*arg1,arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpreadToCleanPrice__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  double arg2 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  double val2 ;
+  int ecode2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadToCleanPrice" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqAssetSwapObjectSpreadToCleanPrice((std::string const &)*arg1,arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpreadToCleanPrice(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqAssetSwapObjectSpreadToCleanPrice", 0, 4, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_aqAssetSwapObjectSpreadToCleanPrice__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = swig::asptr(argv[3], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqAssetSwapObjectSpreadToCleanPrice__SWIG_0(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqAssetSwapObjectSpreadToCleanPrice'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqAssetSwapObjectSpreadToCleanPrice(std::string const &,double const,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n"
+    "    aqAssetSwapObjectSpreadToCleanPrice(std::string const &,double const,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectFixedEqvCoupon__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  double arg3 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res4 = swig::asptr(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res5 = swig::asptr(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqAssetSwapObjectFixedEqvCoupon((std::string const &)*arg1,(std::string const &)*arg2,arg3,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg4,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectFixedEqvCoupon__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  double arg3 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res4 = swig::asptr(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectFixedEqvCoupon" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqAssetSwapObjectFixedEqvCoupon((std::string const &)*arg1,(std::string const &)*arg2,arg3,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectFixedEqvCoupon(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[6] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqAssetSwapObjectFixedEqvCoupon", 0, 5, argv))) SWIG_fail;
+  --argc;
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = swig::asptr(argv[3], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqAssetSwapObjectFixedEqvCoupon__SWIG_1(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = swig::asptr(argv[3], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = swig::asptr(argv[4], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_aqAssetSwapObjectFixedEqvCoupon__SWIG_0(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqAssetSwapObjectFixedEqvCoupon'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqAssetSwapObjectFixedEqvCoupon(std::string const &,std::string const &,double const,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n"
+    "    aqAssetSwapObjectFixedEqvCoupon(std::string const &,std::string const &,double const,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpreadFromFixedEqvCoupon__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  double arg2 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  double val2 ;
+  int ecode2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res4 = swig::asptr(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqAssetSwapObjectSpreadFromFixedEqvCoupon((std::string const &)*arg1,arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpreadFromFixedEqvCoupon__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  double arg2 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  double val2 ;
+  int ecode2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqAssetSwapObjectSpreadFromFixedEqvCoupon" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqAssetSwapObjectSpreadFromFixedEqvCoupon((std::string const &)*arg1,arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqAssetSwapObjectSpreadFromFixedEqvCoupon(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqAssetSwapObjectSpreadFromFixedEqvCoupon", 0, 4, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_aqAssetSwapObjectSpreadFromFixedEqvCoupon__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = swig::asptr(argv[3], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqAssetSwapObjectSpreadFromFixedEqvCoupon__SWIG_0(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqAssetSwapObjectSpreadFromFixedEqvCoupon'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqAssetSwapObjectSpreadFromFixedEqvCoupon(std::string const &,double const,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n"
+    "    aqAssetSwapObjectSpreadFromFixedEqvCoupon(std::string const &,double const,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRFuturePriceToFraRate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  PyObject *swig_obj[6] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqIRFuturePriceToFraRate", 6, 6, swig_obj)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "aqIRFuturePriceToFraRate" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRFuturePriceToFraRate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFuturePriceToFraRate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqIRFuturePriceToFraRate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFuturePriceToFraRate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqIRFuturePriceToFraRate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRFuturePriceToFraRate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqIRFuturePriceToFraRate" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqIRFuturePriceToFraRate" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  {
+    try
+    {
+      result = (double)aqIRFuturePriceToFraRate(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRFuturePriceToFraRateFromConvAdj(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqIRFuturePriceToFraRateFromConvAdj", 2, 2, swig_obj)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "aqIRFuturePriceToFraRateFromConvAdj" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqIRFuturePriceToFraRateFromConvAdj" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  {
+    try
+    {
+      result = (double)aqIRFuturePriceToFraRateFromConvAdj(arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraCreate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRObjectFraCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRObjectFraCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqIRObjectFraCreate" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try
+    {
+      result = aqIRObjectFraCreate((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraCreate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRObjectFraCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRObjectFraCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqIRObjectFraCreate((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraCreate(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqIRObjectFraCreate", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_aqIRObjectFraCreate__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqIRObjectFraCreate__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqIRObjectFraCreate'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqIRObjectFraCreate(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,bool const)\n"
+    "    aqIRObjectFraCreate(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraPV(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqIRObjectFraPV", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRObjectFraPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRObjectFraPV" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraPV" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqIRObjectFraPV((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraDisplay(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRObjectFraDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqIRObjectFraDisplay((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraDisplayCashflows__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  bool arg3 ;
+  std::vector< std::string,std::allocator< std::string > > *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res4 = swig::asptr(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqIRObjectFraDisplayCashflows((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,(std::vector< std::string,std::allocator< std::string > > const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraDisplayCashflows__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try
+    {
+      result = aqIRObjectFraDisplayCashflows((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraDisplayCashflows__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraDisplayCashflows" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqIRObjectFraDisplayCashflows((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraDisplayCashflows(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqIRObjectFraDisplayCashflows", 0, 4, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_aqIRObjectFraDisplayCashflows__SWIG_2(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqIRObjectFraDisplayCashflows__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = swig::asptr(argv[3], (std::vector< std::string,std::allocator< std::string > >**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqIRObjectFraDisplayCashflows__SWIG_0(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqIRObjectFraDisplayCashflows'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqIRObjectFraDisplayCashflows(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,bool const,std::vector< std::string,std::allocator< std::string > > const &)\n"
+    "    aqIRObjectFraDisplayCashflows(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,bool const)\n"
+    "    aqIRObjectFraDisplayCashflows(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraRate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqIRObjectFraRate", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRObjectFraRate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraRate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRObjectFraRate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraRate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqIRObjectFraRate((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraToFuturePrice(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqIRObjectFraToFuturePrice", 4, 4, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRObjectFraToFuturePrice" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraToFuturePrice" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRObjectFraToFuturePrice" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraToFuturePrice" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqIRObjectFraToFuturePrice" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqIRObjectFraToFuturePrice" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  {
+    try
+    {
+      result = (double)aqIRObjectFraToFuturePrice((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqIRObjectFraToFuturePriceFromConvAdj(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject *swig_obj[3] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqIRObjectFraToFuturePriceFromConvAdj", 3, 3, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqIRObjectFraToFuturePriceFromConvAdj" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraToFuturePriceFromConvAdj" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqIRObjectFraToFuturePriceFromConvAdj" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqIRObjectFraToFuturePriceFromConvAdj" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqIRObjectFraToFuturePriceFromConvAdj" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    try
+    {
+      result = (double)aqIRObjectFraToFuturePriceFromConvAdj((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondOptionObjectCreate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondOptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqBondOptionObjectCreate" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try
+    {
+      result = aqBondOptionObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondOptionObjectCreate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondOptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqBondOptionObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondOptionObjectCreate(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqBondOptionObjectCreate", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_aqBondOptionObjectCreate__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqBondOptionObjectCreate__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqBondOptionObjectCreate'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqBondOptionObjectCreate(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,bool const)\n"
+    "    aqBondOptionObjectCreate(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondOptionObjectDisplay(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqBondOptionObjectDisplay((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondOptionObjectPV(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  std::string *arg5 = 0 ;
+  double arg6 ;
+  std::string *arg7 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  int res5 = SWIG_OLDOBJ ;
+  double val6 ;
+  int ecode6 = 0 ;
+  int res7 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[7] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqBondOptionObjectPV", 7, 7, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondOptionObjectPV" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectPV" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqBondOptionObjectPV" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqBondOptionObjectPV" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqBondOptionObjectPV" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectPV" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqBondOptionObjectPV" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  {
+    std::string *ptr = (std::string *)0;
+    res7 = SWIG_AsPtr_std_string(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqBondOptionObjectPV" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectPV" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqBondOptionObjectPV((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,arg4,(std::string const &)*arg5,arg6,(std::string const &)*arg7);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondOptionObjectGreeks__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  double arg12 ;
+  double arg13 ;
+  bool arg14 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  int res6 = SWIG_OLDOBJ ;
+  double val7 ;
+  int ecode7 = 0 ;
+  int res8 = SWIG_OLDOBJ ;
+  double val9 ;
+  int ecode9 = 0 ;
+  double val10 ;
+  int ecode10 = 0 ;
+  double val11 ;
+  int ecode11 = 0 ;
+  double val12 ;
+  int ecode12 = 0 ;
+  double val13 ;
+  int ecode13 = 0 ;
+  bool val14 ;
+  int ecode14 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 14) || (nobjs > 14)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqBondOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqBondOptionObjectGreeks" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqBondOptionObjectGreeks" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqBondOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqBondOptionObjectGreeks" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqBondOptionObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  ecode9 = SWIG_AsVal_double(swig_obj[8], &val9);
+  if (!SWIG_IsOK(ecode9)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "aqBondOptionObjectGreeks" "', argument " "9"" of type '" "double""'");
+  } 
+  arg9 = static_cast< double >(val9);
+  ecode10 = SWIG_AsVal_double(swig_obj[9], &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "aqBondOptionObjectGreeks" "', argument " "10"" of type '" "double""'");
+  } 
+  arg10 = static_cast< double >(val10);
+  ecode11 = SWIG_AsVal_double(swig_obj[10], &val11);
+  if (!SWIG_IsOK(ecode11)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode11), "in method '" "aqBondOptionObjectGreeks" "', argument " "11"" of type '" "double""'");
+  } 
+  arg11 = static_cast< double >(val11);
+  ecode12 = SWIG_AsVal_double(swig_obj[11], &val12);
+  if (!SWIG_IsOK(ecode12)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode12), "in method '" "aqBondOptionObjectGreeks" "', argument " "12"" of type '" "double""'");
+  } 
+  arg12 = static_cast< double >(val12);
+  ecode13 = SWIG_AsVal_double(swig_obj[12], &val13);
+  if (!SWIG_IsOK(ecode13)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode13), "in method '" "aqBondOptionObjectGreeks" "', argument " "13"" of type '" "double""'");
+  } 
+  arg13 = static_cast< double >(val13);
+  ecode14 = SWIG_AsVal_bool(swig_obj[13], &val14);
+  if (!SWIG_IsOK(ecode14)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode14), "in method '" "aqBondOptionObjectGreeks" "', argument " "14"" of type '" "bool""'");
+  } 
+  arg14 = static_cast< bool >(val14);
+  {
+    try
+    {
+      result = aqBondOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,(std::string const &)*arg8,arg9,arg10,arg11,arg12,arg13,arg14);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondOptionObjectGreeks__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  double arg12 ;
+  double arg13 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  int res6 = SWIG_OLDOBJ ;
+  double val7 ;
+  int ecode7 = 0 ;
+  int res8 = SWIG_OLDOBJ ;
+  double val9 ;
+  int ecode9 = 0 ;
+  double val10 ;
+  int ecode10 = 0 ;
+  double val11 ;
+  int ecode11 = 0 ;
+  double val12 ;
+  int ecode12 = 0 ;
+  double val13 ;
+  int ecode13 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 13) || (nobjs > 13)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqBondOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqBondOptionObjectGreeks" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqBondOptionObjectGreeks" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqBondOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqBondOptionObjectGreeks" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqBondOptionObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  ecode9 = SWIG_AsVal_double(swig_obj[8], &val9);
+  if (!SWIG_IsOK(ecode9)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "aqBondOptionObjectGreeks" "', argument " "9"" of type '" "double""'");
+  } 
+  arg9 = static_cast< double >(val9);
+  ecode10 = SWIG_AsVal_double(swig_obj[9], &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "aqBondOptionObjectGreeks" "', argument " "10"" of type '" "double""'");
+  } 
+  arg10 = static_cast< double >(val10);
+  ecode11 = SWIG_AsVal_double(swig_obj[10], &val11);
+  if (!SWIG_IsOK(ecode11)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode11), "in method '" "aqBondOptionObjectGreeks" "', argument " "11"" of type '" "double""'");
+  } 
+  arg11 = static_cast< double >(val11);
+  ecode12 = SWIG_AsVal_double(swig_obj[11], &val12);
+  if (!SWIG_IsOK(ecode12)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode12), "in method '" "aqBondOptionObjectGreeks" "', argument " "12"" of type '" "double""'");
+  } 
+  arg12 = static_cast< double >(val12);
+  ecode13 = SWIG_AsVal_double(swig_obj[12], &val13);
+  if (!SWIG_IsOK(ecode13)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode13), "in method '" "aqBondOptionObjectGreeks" "', argument " "13"" of type '" "double""'");
+  } 
+  arg13 = static_cast< double >(val13);
+  {
+    try
+    {
+      result = aqBondOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,(std::string const &)*arg8,arg9,arg10,arg11,arg12,arg13);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondOptionObjectGreeks(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[15] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqBondOptionObjectGreeks", 0, 14, argv))) SWIG_fail;
+  --argc;
+  if (argc == 13) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    {
+                      int res = SWIG_AsVal_double(argv[8], NULL);
+                      _v = SWIG_CheckState(res);
+                    }
+                    if (_v) {
+                      {
+                        int res = SWIG_AsVal_double(argv[9], NULL);
+                        _v = SWIG_CheckState(res);
+                      }
+                      if (_v) {
+                        {
+                          int res = SWIG_AsVal_double(argv[10], NULL);
+                          _v = SWIG_CheckState(res);
+                        }
+                        if (_v) {
+                          {
+                            int res = SWIG_AsVal_double(argv[11], NULL);
+                            _v = SWIG_CheckState(res);
+                          }
+                          if (_v) {
+                            {
+                              int res = SWIG_AsVal_double(argv[12], NULL);
+                              _v = SWIG_CheckState(res);
+                            }
+                            if (_v) {
+                              return _wrap_aqBondOptionObjectGreeks__SWIG_1(self, argc, argv);
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 14) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    {
+                      int res = SWIG_AsVal_double(argv[8], NULL);
+                      _v = SWIG_CheckState(res);
+                    }
+                    if (_v) {
+                      {
+                        int res = SWIG_AsVal_double(argv[9], NULL);
+                        _v = SWIG_CheckState(res);
+                      }
+                      if (_v) {
+                        {
+                          int res = SWIG_AsVal_double(argv[10], NULL);
+                          _v = SWIG_CheckState(res);
+                        }
+                        if (_v) {
+                          {
+                            int res = SWIG_AsVal_double(argv[11], NULL);
+                            _v = SWIG_CheckState(res);
+                          }
+                          if (_v) {
+                            {
+                              int res = SWIG_AsVal_double(argv[12], NULL);
+                              _v = SWIG_CheckState(res);
+                            }
+                            if (_v) {
+                              {
+                                int res = SWIG_AsVal_bool(argv[13], NULL);
+                                _v = SWIG_CheckState(res);
+                              }
+                              if (_v) {
+                                return _wrap_aqBondOptionObjectGreeks__SWIG_0(self, argc, argv);
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqBondOptionObjectGreeks'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqBondOptionObjectGreeks(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,double const,double const,std::string const &,double const,std::string const &,double const,double const,double const,double const,double const,bool const)\n"
+    "    aqBondOptionObjectGreeks(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,double const,double const,std::string const &,double const,std::string const &,double const,double const,double const,double const,double const)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqInflationCurveCreate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqInflationCurveCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res5 = swig::asptr(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqInflationCurveCreate" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = aqInflationCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqInflationCurveCreate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqInflationCurveCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqInflationCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqInflationCurveCreate__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqInflationCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqInflationCurveCreate(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[6] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqInflationCurveCreate", 0, 5, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_aqInflationCurveCreate__SWIG_2(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqInflationCurveCreate__SWIG_1(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = swig::asptr(argv[4], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_aqInflationCurveCreate__SWIG_0(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqInflationCurveCreate'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqInflationCurveCreate(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n"
+    "    aqInflationCurveCreate(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &)\n"
+    "    aqInflationCurveCreate(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqInflationCurveCalibrationParameters(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationCurveCalibrationParameters" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCalibrationParameters" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqInflationCurveCalibrationParameters((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqInflationObjectCPI(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[4] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqInflationObjectCPI", 4, 4, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationObjectCPI" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectCPI" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationObjectCPI" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectCPI" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationObjectCPI" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectCPI" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqInflationObjectCPI" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectCPI" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqInflationObjectCPI((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqInflationObjectZCSwapPV(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[4] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqInflationObjectZCSwapPV", 4, 4, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationObjectZCSwapPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationObjectZCSwapPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationObjectZCSwapPV" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPV" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqInflationObjectZCSwapPV" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPV" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqInflationObjectZCSwapPV((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqInflationObjectZCSwapPVFromIndex(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  std::string *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  int res5 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[5] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqInflationObjectZCSwapPVFromIndex", 5, 5, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqInflationObjectZCSwapPVFromIndex((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,arg4,(std::string const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqInflationObjectZCSwapParRate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[3] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqInflationObjectZCSwapParRate", 3, 3, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationObjectZCSwapParRate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapParRate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationObjectZCSwapParRate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapParRate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationObjectZCSwapParRate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapParRate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqInflationObjectZCSwapParRate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqInflationObjectZCSwapParRateFromIndex(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqInflationObjectZCSwapParRateFromIndex", 4, 4, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationObjectZCSwapParRateFromIndex" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapParRateFromIndex" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationObjectZCSwapParRateFromIndex" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapParRateFromIndex" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqInflationObjectZCSwapParRateFromIndex" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqInflationObjectZCSwapParRateFromIndex" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  {
+    try
+    {
+      result = (double)aqInflationObjectZCSwapParRateFromIndex((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqSwaptionObjectCreate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqSwaptionObjectCreate" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try
+    {
+      result = aqSwaptionObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqSwaptionObjectCreate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqSwaptionObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqSwaptionObjectCreate(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqSwaptionObjectCreate", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_aqSwaptionObjectCreate__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqSwaptionObjectCreate__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqSwaptionObjectCreate'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqSwaptionObjectCreate(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,bool const)\n"
+    "    aqSwaptionObjectCreate(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqSwaptionObjectDisplay(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqSwaptionObjectDisplay((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqSwaptionObjectPV(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqSwaptionObjectPV", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectPV" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectPV" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectPV((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqSwaptionObjectImpliedVol(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  double arg2 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  double val2 ;
+  int ecode2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[3] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqSwaptionObjectImpliedVol", 3, 3, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectImpliedVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectImpliedVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqSwaptionObjectImpliedVol" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqSwaptionObjectImpliedVol" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectImpliedVol" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectImpliedVol((std::string const &)*arg1,arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqSwaptionObjectDelta(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqSwaptionObjectDelta", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectDelta" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectDelta" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectDelta" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectDelta" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectDelta((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqSwaptionObjectGamma(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqSwaptionObjectGamma", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectGamma" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectGamma" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectGamma" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectGamma" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectGamma((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqSwaptionObjectVega(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqSwaptionObjectVega", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectVega" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectVega" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectVega" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectVega" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectVega((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqSwaptionObjectTheta(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqSwaptionObjectTheta", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectTheta" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectTheta" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectTheta" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectTheta" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectTheta((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectCreate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqCapFloorObjectCreate" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try
+    {
+      result = aqCapFloorObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectCreate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectCreate(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqCapFloorObjectCreate", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_aqCapFloorObjectCreate__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqCapFloorObjectCreate__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqCapFloorObjectCreate'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqCapFloorObjectCreate(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,bool const)\n"
+    "    aqCapFloorObjectCreate(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectDisplay(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplay((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectDisplayCashflows__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  std::vector< std::string,std::allocator< std::string > > *arg6 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  int res6 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 6) || (nobjs > 6)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_bool(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res6 = swig::asptr(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,(std::vector< std::string,std::allocator< std::string > > const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectDisplayCashflows__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_bool(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectDisplayCashflows__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectDisplayCashflows__SWIG_3(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectDisplayCashflows(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[7] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqCapFloorObjectDisplayCashflows", 0, 6, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_aqCapFloorObjectDisplayCashflows__SWIG_3(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqCapFloorObjectDisplayCashflows__SWIG_2(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_aqCapFloorObjectDisplayCashflows__SWIG_1(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              int res = swig::asptr(argv[5], (std::vector< std::string,std::allocator< std::string > >**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                return _wrap_aqCapFloorObjectDisplayCashflows__SWIG_0(self, argc, argv);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqCapFloorObjectDisplayCashflows'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqCapFloorObjectDisplayCashflows(std::string const &,std::string const &,std::string const &,std::string const &,bool const,std::vector< std::string,std::allocator< std::string > > const &)\n"
+    "    aqCapFloorObjectDisplayCashflows(std::string const &,std::string const &,std::string const &,std::string const &,bool const)\n"
+    "    aqCapFloorObjectDisplayCashflows(std::string const &,std::string const &,std::string const &,std::string const &)\n"
+    "    aqCapFloorObjectDisplayCashflows(std::string const &,std::string const &,std::string const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectPV__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectPV" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCapFloorObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectPV__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCapFloorObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectPV(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqCapFloorObjectPV", 0, 4, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_aqCapFloorObjectPV__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqCapFloorObjectPV__SWIG_0(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqCapFloorObjectPV'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqCapFloorObjectPV(std::string const &,std::string const &,std::string const &,std::string const &)\n"
+    "    aqCapFloorObjectPV(std::string const &,std::string const &,std::string const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeksAnalytical__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_bool(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksAnalytical((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeksAnalytical__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksAnalytical((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeksAnalytical__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksAnalytical((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeksAnalytical(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[6] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqCapFloorObjectGreeksAnalytical", 0, 5, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_aqCapFloorObjectGreeksAnalytical__SWIG_2(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqCapFloorObjectGreeksAnalytical__SWIG_1(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_aqCapFloorObjectGreeksAnalytical__SWIG_0(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqCapFloorObjectGreeksAnalytical'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqCapFloorObjectGreeksAnalytical(std::string const &,std::string const &,std::string const &,std::string const &,bool const)\n"
+    "    aqCapFloorObjectGreeksAnalytical(std::string const &,std::string const &,std::string const &,std::string const &)\n"
+    "    aqCapFloorObjectGreeksAnalytical(std::string const &,std::string const &,std::string const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeks__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  bool arg9 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  double val7 ;
+  int ecode7 = 0 ;
+  int res8 = SWIG_OLDOBJ ;
+  bool val9 ;
+  int ecode9 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 9) || (nobjs > 9)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqCapFloorObjectGreeks" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqCapFloorObjectGreeks" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqCapFloorObjectGreeks" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqCapFloorObjectGreeks" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqCapFloorObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  ecode9 = SWIG_AsVal_bool(swig_obj[8], &val9);
+  if (!SWIG_IsOK(ecode9)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "aqCapFloorObjectGreeks" "', argument " "9"" of type '" "bool""'");
+  } 
+  arg9 = static_cast< bool >(val9);
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5,arg6,arg7,(std::string const &)*arg8,arg9);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeks__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  double val7 ;
+  int ecode7 = 0 ;
+  int res8 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 8) || (nobjs > 8)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqCapFloorObjectGreeks" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqCapFloorObjectGreeks" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqCapFloorObjectGreeks" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqCapFloorObjectGreeks" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqCapFloorObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5,arg6,arg7,(std::string const &)*arg8);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeks__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  double val7 ;
+  int ecode7 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 7) || (nobjs > 7)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqCapFloorObjectGreeks" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqCapFloorObjectGreeks" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqCapFloorObjectGreeks" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqCapFloorObjectGreeks" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5,arg6,arg7);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeks(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[10] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqCapFloorObjectGreeks", 0, 9, argv))) SWIG_fail;
+  --argc;
+  if (argc == 7) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_aqCapFloorObjectGreeks__SWIG_2(self, argc, argv);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    return _wrap_aqCapFloorObjectGreeks__SWIG_1(self, argc, argv);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 9) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    {
+                      int res = SWIG_AsVal_bool(argv[8], NULL);
+                      _v = SWIG_CheckState(res);
+                    }
+                    if (_v) {
+                      return _wrap_aqCapFloorObjectGreeks__SWIG_0(self, argc, argv);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqCapFloorObjectGreeks'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqCapFloorObjectGreeks(std::string const &,std::string const &,std::string const &,double const,double const,double const,double const,std::string const &,bool const)\n"
+    "    aqCapFloorObjectGreeks(std::string const &,std::string const &,std::string const &,double const,double const,double const,double const,std::string const &)\n"
+    "    aqCapFloorObjectGreeks(std::string const &,std::string const &,std::string const &,double const,double const,double const,double const)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  bool arg4 ;
+  std::vector< std::string,std::allocator< std::string > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  int res5 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res5 = swig::asptr(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflowsFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3,arg4,(std::vector< std::string,std::allocator< std::string > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflowsFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflowsFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectDisplayCashflowsFromRates(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[6] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqCapFloorObjectDisplayCashflowsFromRates", 0, 5, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_2(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_1(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            int res = swig::asptr(argv[4], (std::vector< std::string,std::allocator< std::string > >**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_0(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqCapFloorObjectDisplayCashflowsFromRates'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqCapFloorObjectDisplayCashflowsFromRates(std::string const &,std::string const &,std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &,bool const,std::vector< std::string,std::allocator< std::string > > const &)\n"
+    "    aqCapFloorObjectDisplayCashflowsFromRates(std::string const &,std::string const &,std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &,bool const)\n"
+    "    aqCapFloorObjectDisplayCashflowsFromRates(std::string const &,std::string const &,std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeksAnalyticalFromRates__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksAnalyticalFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeksAnalyticalFromRates__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksAnalyticalFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeksAnalyticalFromRates(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqCapFloorObjectGreeksAnalyticalFromRates", 0, 4, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_aqCapFloorObjectGreeksAnalyticalFromRates__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_aqCapFloorObjectGreeksAnalyticalFromRates__SWIG_0(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqCapFloorObjectGreeksAnalyticalFromRates'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqCapFloorObjectGreeksAnalyticalFromRates(std::string const &,std::string const &,std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &,bool const)\n"
+    "    aqCapFloorObjectGreeksAnalyticalFromRates(std::string const &,std::string const &,std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeksFromRates__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  bool arg8 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  double val7 ;
+  int ecode7 = 0 ;
+  bool val8 ;
+  int ecode8 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 8) || (nobjs > 8)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  ecode8 = SWIG_AsVal_bool(swig_obj[7], &val8);
+  if (!SWIG_IsOK(ecode8)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "8"" of type '" "bool""'");
+  } 
+  arg8 = static_cast< bool >(val8);
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3,arg4,arg5,arg6,arg7,arg8);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeksFromRates__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  double val7 ;
+  int ecode7 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 7) || (nobjs > 7)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3,arg4,arg5,arg6,arg7);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectGreeksFromRates(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[9] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqCapFloorObjectGreeksFromRates", 0, 8, argv))) SWIG_fail;
+  --argc;
+  if (argc == 7) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_aqCapFloorObjectGreeksFromRates__SWIG_1(self, argc, argv);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  {
+                    int res = SWIG_AsVal_bool(argv[7], NULL);
+                    _v = SWIG_CheckState(res);
+                  }
+                  if (_v) {
+                    return _wrap_aqCapFloorObjectGreeksFromRates__SWIG_0(self, argc, argv);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqCapFloorObjectGreeksFromRates'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqCapFloorObjectGreeksFromRates(std::string const &,std::string const &,std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &,double const,double const,double const,double const,bool const)\n"
+    "    aqCapFloorObjectGreeksFromRates(std::string const &,std::string const &,std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &,double const,double const,double const,double const)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCapFloorObjectPVFromRates(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[3] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqCapFloorObjectPVFromRates", 3, 3, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectPVFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPVFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectPVFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPVFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectPVFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPVFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCapFloorObjectPVFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXCurveCreate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[3] ;
+  std::string result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqFXCurveCreate", 3, 3, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXCurveCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXCurveCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromDiscountCurves__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  std::vector< std::string,std::allocator< std::string > > *arg6 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  int res6 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 6) || (nobjs > 6)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_bool(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res6 = swig::asptr(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,(std::vector< std::string,std::allocator< std::string > > const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromDiscountCurves__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_bool(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromDiscountCurves__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromDiscountCurves(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[7] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFXObjectForwardsFromDiscountCurves", 0, 6, argv))) SWIG_fail;
+  --argc;
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqFXObjectForwardsFromDiscountCurves__SWIG_2(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_aqFXObjectForwardsFromDiscountCurves__SWIG_1(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              int res = swig::asptr(argv[5], (std::vector< std::string,std::allocator< std::string > >**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                return _wrap_aqFXObjectForwardsFromDiscountCurves__SWIG_0(self, argc, argv);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFXObjectForwardsFromDiscountCurves'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFXObjectForwardsFromDiscountCurves(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::string const &,std::string const &,bool const,std::vector< std::string,std::allocator< std::string > > const &)\n"
+    "    aqFXObjectForwardsFromDiscountCurves(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::string const &,std::string const &,bool const)\n"
+    "    aqFXObjectForwardsFromDiscountCurves(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::string const &,std::string const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwards__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  std::vector< std::string,std::allocator< std::string > > *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqFXObjectForwards" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res4 = swig::asptr(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwards" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwards((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3,(std::vector< std::string,std::allocator< std::string > > const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwards__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqFXObjectForwards" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try
+    {
+      result = aqFXObjectForwards((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwards__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwards((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwards(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFXObjectForwards", 0, 4, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_aqFXObjectForwards__SWIG_2(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqFXObjectForwards__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = swig::asptr(argv[3], (std::vector< std::string,std::allocator< std::string > >**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqFXObjectForwards__SWIG_0(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFXObjectForwards'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFXObjectForwards(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,bool const,std::vector< std::string,std::allocator< std::string > > const &)\n"
+    "    aqFXObjectForwards(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,bool const)\n"
+    "    aqFXObjectForwards(std::string const &,std::vector< std::string,std::allocator< std::string > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromDiscountCurves__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  bool arg6 ;
+  bool arg7 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  bool val7 ;
+  int ecode7 = 0 ;
+  int res8 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 8) || (nobjs > 8)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  ecode6 = SWIG_AsVal_bool(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  ecode7 = SWIG_AsVal_bool(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "7"" of type '" "bool""'");
+  } 
+  arg7 = static_cast< bool >(val7);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectSwapFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromDiscountCurves__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  bool arg6 ;
+  bool arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  bool val7 ;
+  int ecode7 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 7) || (nobjs > 7)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  ecode6 = SWIG_AsVal_bool(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  ecode7 = SWIG_AsVal_bool(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "7"" of type '" "bool""'");
+  } 
+  arg7 = static_cast< bool >(val7);
+  {
+    try
+    {
+      result = aqFXObjectSwapFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,arg7);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromDiscountCurves__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  bool arg6 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 6) || (nobjs > 6)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  ecode6 = SWIG_AsVal_bool(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  {
+    try
+    {
+      result = aqFXObjectSwapFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromDiscountCurves(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[9] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFXObjectSwapFromDiscountCurves", 0, 8, argv))) SWIG_fail;
+  --argc;
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::string,std::allocator< std::string > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_aqFXObjectSwapFromDiscountCurves__SWIG_2(self, argc, argv);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::string,std::allocator< std::string > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_bool(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_aqFXObjectSwapFromDiscountCurves__SWIG_1(self, argc, argv);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::string,std::allocator< std::string > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_bool(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  int res = swig::asptr(argv[7], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    return _wrap_aqFXObjectSwapFromDiscountCurves__SWIG_0(self, argc, argv);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFXObjectSwapFromDiscountCurves'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFXObjectSwapFromDiscountCurves(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,std::string const &,std::string const &,bool const,bool const,std::vector< std::string,std::allocator< std::string > > const &)\n"
+    "    aqFXObjectSwapFromDiscountCurves(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,std::string const &,std::string const &,bool const,bool const)\n"
+    "    aqFXObjectSwapFromDiscountCurves(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,std::string const &,std::string const &,bool const)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwap__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  std::vector< std::string,std::allocator< std::string > > *arg6 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  int res6 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 6) || (nobjs > 6)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqFXObjectSwap" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  ecode5 = SWIG_AsVal_bool(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectSwap" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res6 = swig::asptr(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqFXObjectSwap" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectSwap((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5,(std::vector< std::string,std::allocator< std::string > > const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwap__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqFXObjectSwap" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  ecode5 = SWIG_AsVal_bool(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectSwap" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  {
+    try
+    {
+      result = aqFXObjectSwap((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwap__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqFXObjectSwap" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  {
+    try
+    {
+      result = aqFXObjectSwap((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwap(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[7] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFXObjectSwap", 0, 6, argv))) SWIG_fail;
+  --argc;
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::string,std::allocator< std::string > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_aqFXObjectSwap__SWIG_2(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::string,std::allocator< std::string > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_aqFXObjectSwap__SWIG_1(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::string,std::allocator< std::string > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              int res = swig::asptr(argv[5], (std::vector< std::string,std::allocator< std::string > >**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                return _wrap_aqFXObjectSwap__SWIG_0(self, argc, argv);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFXObjectSwap'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFXObjectSwap(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,bool const,bool const,std::vector< std::string,std::allocator< std::string > > const &)\n"
+    "    aqFXObjectSwap(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,bool const,bool const)\n"
+    "    aqFXObjectSwap(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,bool const)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromXccyCurveObject__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  bool arg4 ;
+  std::vector< std::string,std::allocator< std::string > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  int res5 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res5 = swig::asptr(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3,arg4,(std::vector< std::string,std::allocator< std::string > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromXccyCurveObject__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromXccyCurveObject__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromXccyCurveObject(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[6] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFXObjectForwardsFromXccyCurveObject", 0, 5, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqFXObjectForwardsFromXccyCurveObject__SWIG_2(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_aqFXObjectForwardsFromXccyCurveObject__SWIG_1(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            int res = swig::asptr(argv[4], (std::vector< std::string,std::allocator< std::string > >**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_aqFXObjectForwardsFromXccyCurveObject__SWIG_0(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFXObjectForwardsFromXccyCurveObject'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFXObjectForwardsFromXccyCurveObject(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,double const,bool const,std::vector< std::string,std::allocator< std::string > > const &)\n"
+    "    aqFXObjectForwardsFromXccyCurveObject(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,double const,bool const)\n"
+    "    aqFXObjectForwardsFromXccyCurveObject(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,double const)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromXccyCurve__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  bool arg9 ;
+  std::vector< std::string,std::allocator< std::string > > *arg10 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  double val7 ;
+  int ecode7 = 0 ;
+  int res8 = SWIG_OLDOBJ ;
+  bool val9 ;
+  int ecode9 = 0 ;
+  int res10 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 10) || (nobjs > 10)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  ecode9 = SWIG_AsVal_bool(swig_obj[8], &val9);
+  if (!SWIG_IsOK(ecode9)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "9"" of type '" "bool""'");
+  } 
+  arg9 = static_cast< bool >(val9);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res10 = swig::asptr(swig_obj[9], &ptr);
+    if (!SWIG_IsOK(res10)) {
+      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "10"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "10"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg10 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8,arg9,(std::vector< std::string,std::allocator< std::string > > const &)*arg10);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromXccyCurve__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  bool arg9 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  double val7 ;
+  int ecode7 = 0 ;
+  int res8 = SWIG_OLDOBJ ;
+  bool val9 ;
+  int ecode9 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 9) || (nobjs > 9)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  ecode9 = SWIG_AsVal_bool(swig_obj[8], &val9);
+  if (!SWIG_IsOK(ecode9)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "9"" of type '" "bool""'");
+  } 
+  arg9 = static_cast< bool >(val9);
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8,arg9);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromXccyCurve__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  double val7 ;
+  int ecode7 = 0 ;
+  int res8 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 8) || (nobjs > 8)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectForwardsFromXccyCurve(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[11] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFXObjectForwardsFromXccyCurve", 0, 10, argv))) SWIG_fail;
+  --argc;
+  if (argc == 8) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  int res = swig::asptr(argv[7], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    return _wrap_aqFXObjectForwardsFromXccyCurve__SWIG_2(self, argc, argv);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 9) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  int res = swig::asptr(argv[7], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    {
+                      int res = SWIG_AsVal_bool(argv[8], NULL);
+                      _v = SWIG_CheckState(res);
+                    }
+                    if (_v) {
+                      return _wrap_aqFXObjectForwardsFromXccyCurve__SWIG_1(self, argc, argv);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 10) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  int res = swig::asptr(argv[7], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    {
+                      int res = SWIG_AsVal_bool(argv[8], NULL);
+                      _v = SWIG_CheckState(res);
+                    }
+                    if (_v) {
+                      int res = swig::asptr(argv[9], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                      _v = SWIG_CheckState(res);
+                      if (_v) {
+                        return _wrap_aqFXObjectForwardsFromXccyCurve__SWIG_0(self, argc, argv);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFXObjectForwardsFromXccyCurve'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFXObjectForwardsFromXccyCurve(std::string const &,std::string const &,std::string const &,std::string const &,double const,double const,double const,std::vector< std::string,std::allocator< std::string > > const &,bool const,std::vector< std::string,std::allocator< std::string > > const &)\n"
+    "    aqFXObjectForwardsFromXccyCurve(std::string const &,std::string const &,std::string const &,std::string const &,double const,double const,double const,std::vector< std::string,std::allocator< std::string > > const &,bool const)\n"
+    "    aqFXObjectForwardsFromXccyCurve(std::string const &,std::string const &,std::string const &,std::string const &,double const,double const,double const,std::vector< std::string,std::allocator< std::string > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromXccyCurveObject__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  std::vector< std::string,std::allocator< std::string > > *arg6 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  int res6 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 6) || (nobjs > 6)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  ecode5 = SWIG_AsVal_bool(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res6 = swig::asptr(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5,(std::vector< std::string,std::allocator< std::string > > const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromXccyCurveObject__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  ecode5 = SWIG_AsVal_bool(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromXccyCurveObject__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromXccyCurveObject(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[7] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFXObjectSwapFromXccyCurveObject", 0, 6, argv))) SWIG_fail;
+  --argc;
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::string,std::allocator< std::string > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_aqFXObjectSwapFromXccyCurveObject__SWIG_2(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::string,std::allocator< std::string > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_aqFXObjectSwapFromXccyCurveObject__SWIG_1(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::string,std::allocator< std::string > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              int res = swig::asptr(argv[5], (std::vector< std::string,std::allocator< std::string > >**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                return _wrap_aqFXObjectSwapFromXccyCurveObject__SWIG_0(self, argc, argv);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFXObjectSwapFromXccyCurveObject'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFXObjectSwapFromXccyCurveObject(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,bool const,bool const,std::vector< std::string,std::allocator< std::string > > const &)\n"
+    "    aqFXObjectSwapFromXccyCurveObject(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,bool const,bool const)\n"
+    "    aqFXObjectSwapFromXccyCurveObject(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,bool const)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromXccyCurve__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  std::vector< std::string,std::allocator< std::string > > *arg7 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  bool arg9 ;
+  bool arg10 ;
+  std::vector< std::string,std::allocator< std::string > > *arg11 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  bool val9 ;
+  int ecode9 = 0 ;
+  bool val10 ;
+  int ecode10 = 0 ;
+  int res11 = SWIG_OLDOBJ ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 11) || (nobjs > 11)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res7 = swig::asptr(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  ecode9 = SWIG_AsVal_bool(swig_obj[8], &val9);
+  if (!SWIG_IsOK(ecode9)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "9"" of type '" "bool""'");
+  } 
+  arg9 = static_cast< bool >(val9);
+  ecode10 = SWIG_AsVal_bool(swig_obj[9], &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "10"" of type '" "bool""'");
+  } 
+  arg10 = static_cast< bool >(val10);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res11 = swig::asptr(swig_obj[10], &ptr);
+    if (!SWIG_IsOK(res11)) {
+      SWIG_exception_fail(SWIG_ArgError(res11), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "11"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "11"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg11 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,(std::vector< std::string,std::allocator< std::string > > const &)*arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8,arg9,arg10,(std::vector< std::string,std::allocator< std::string > > const &)*arg11);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromXccyCurve__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  std::vector< std::string,std::allocator< std::string > > *arg7 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  bool arg9 ;
+  bool arg10 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  bool val9 ;
+  int ecode9 = 0 ;
+  bool val10 ;
+  int ecode10 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 10) || (nobjs > 10)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res7 = swig::asptr(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  ecode9 = SWIG_AsVal_bool(swig_obj[8], &val9);
+  if (!SWIG_IsOK(ecode9)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "9"" of type '" "bool""'");
+  } 
+  arg9 = static_cast< bool >(val9);
+  ecode10 = SWIG_AsVal_bool(swig_obj[9], &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "10"" of type '" "bool""'");
+  } 
+  arg10 = static_cast< bool >(val10);
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,(std::vector< std::string,std::allocator< std::string > > const &)*arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8,arg9,arg10);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromXccyCurve__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  std::vector< std::string,std::allocator< std::string > > *arg7 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  bool arg9 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  bool val9 ;
+  int ecode9 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 9) || (nobjs > 9)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res7 = swig::asptr(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  ecode9 = SWIG_AsVal_bool(swig_obj[8], &val9);
+  if (!SWIG_IsOK(ecode9)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "9"" of type '" "bool""'");
+  } 
+  arg9 = static_cast< bool >(val9);
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,(std::vector< std::string,std::allocator< std::string > > const &)*arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8,arg9);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSwapFromXccyCurve(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[12] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFXObjectSwapFromXccyCurve", 0, 11, argv))) SWIG_fail;
+  --argc;
+  if (argc == 9) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                int res = swig::asptr(argv[6], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = swig::asptr(argv[7], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    {
+                      int res = SWIG_AsVal_bool(argv[8], NULL);
+                      _v = SWIG_CheckState(res);
+                    }
+                    if (_v) {
+                      return _wrap_aqFXObjectSwapFromXccyCurve__SWIG_2(self, argc, argv);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 10) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                int res = swig::asptr(argv[6], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = swig::asptr(argv[7], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    {
+                      int res = SWIG_AsVal_bool(argv[8], NULL);
+                      _v = SWIG_CheckState(res);
+                    }
+                    if (_v) {
+                      {
+                        int res = SWIG_AsVal_bool(argv[9], NULL);
+                        _v = SWIG_CheckState(res);
+                      }
+                      if (_v) {
+                        return _wrap_aqFXObjectSwapFromXccyCurve__SWIG_1(self, argc, argv);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 11) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                int res = swig::asptr(argv[6], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = swig::asptr(argv[7], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    {
+                      int res = SWIG_AsVal_bool(argv[8], NULL);
+                      _v = SWIG_CheckState(res);
+                    }
+                    if (_v) {
+                      {
+                        int res = SWIG_AsVal_bool(argv[9], NULL);
+                        _v = SWIG_CheckState(res);
+                      }
+                      if (_v) {
+                        int res = swig::asptr(argv[10], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                        _v = SWIG_CheckState(res);
+                        if (_v) {
+                          return _wrap_aqFXObjectSwapFromXccyCurve__SWIG_0(self, argc, argv);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFXObjectSwapFromXccyCurve'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFXObjectSwapFromXccyCurve(std::string const &,std::string const &,std::string const &,std::string const &,double const,double const,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,bool const,bool const,std::vector< std::string,std::allocator< std::string > > const &)\n"
+    "    aqFXObjectSwapFromXccyCurve(std::string const &,std::string const &,std::string const &,std::string const &,double const,double const,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,bool const,bool const)\n"
+    "    aqFXObjectSwapFromXccyCurve(std::string const &,std::string const &,std::string const &,std::string const &,double const,double const,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::string,std::allocator< std::string > > const &,bool const)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectSpotToAsOfDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[6] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqFXObjectSpotToAsOfDate", 6, 6, swig_obj)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqFXObjectSpotToAsOfDate(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFXObjectAsOfDateToSpot(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[6] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqFXObjectAsOfDateToSpot", 6, 6, swig_obj)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqFXObjectAsOfDateToSpot(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectCreate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqVolatilityObjectCreate" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try
+    {
+      result = aqVolatilityObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectCreate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectCreate" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectCreate((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectCreate(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqVolatilityObjectCreate", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_aqVolatilityObjectCreate__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqVolatilityObjectCreate__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqVolatilityObjectCreate'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqVolatilityObjectCreate(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,bool const)\n"
+    "    aqVolatilityObjectCreate(std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrMarketDataCreate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res5 = swig::asptr(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrMarketDataCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrMarketDataCreate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrMarketDataCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrMarketDataCreate__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrMarketDataCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrMarketDataCreate(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[6] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqVolatilityObjectSabrMarketDataCreate", 0, 5, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_aqVolatilityObjectSabrMarketDataCreate__SWIG_2(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqVolatilityObjectSabrMarketDataCreate__SWIG_1(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = swig::asptr(argv[4], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_aqVolatilityObjectSabrMarketDataCreate__SWIG_0(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqVolatilityObjectSabrMarketDataCreate'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqVolatilityObjectSabrMarketDataCreate(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n"
+    "    aqVolatilityObjectSabrMarketDataCreate(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &)\n"
+    "    aqVolatilityObjectSabrMarketDataCreate(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrModelCalibrate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res5 = swig::asptr(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrModelCalibrate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrModelCalibrate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrModelCalibrate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrModelCalibrate__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrModelCalibrate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrModelCalibrate(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[6] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqVolatilityObjectSabrModelCalibrate", 0, 5, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_aqVolatilityObjectSabrModelCalibrate__SWIG_2(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_aqVolatilityObjectSabrModelCalibrate__SWIG_1(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = swig::asptr(argv[4], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_aqVolatilityObjectSabrModelCalibrate__SWIG_0(self, argc, argv);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqVolatilityObjectSabrModelCalibrate'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqVolatilityObjectSabrModelCalibrate(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n"
+    "    aqVolatilityObjectSabrModelCalibrate(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &)\n"
+    "    aqVolatilityObjectSabrModelCalibrate(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrVolatility(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  PyObject *swig_obj[5] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqVolatilityObjectSabrVolatility", 5, 5, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  {
+    try
+    {
+      result = (double)aqVolatilityObjectSabrVolatility((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrParameter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[4] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqVolatilityObjectSabrParameter", 4, 4, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrParameter" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrParameter" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrParameter" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrParameter" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrParameter" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrParameter" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilityObjectSabrParameter" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrParameter" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqVolatilityObjectSabrParameter((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrMarketDataDisplay(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -34600,15 +47328,15 @@ SWIGINTERN PyObject *_wrap_aqCurvesResultsDisplayDiscountFactors(PyObject *SWIGU
   PyObject *swig_obj[2] ;
   std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqCurvesResultsDisplayDiscountFactors", 2, 2, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "aqVolatilityObjectSabrMarketDataDisplay", 2, 2, swig_obj)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCurvesResultsDisplayDiscountFactors" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrMarketDataDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurvesResultsDisplayDiscountFactors" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -34616,17 +47344,3706 @@ SWIGINTERN PyObject *_wrap_aqCurvesResultsDisplayDiscountFactors(PyObject *SWIGU
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCurvesResultsDisplayDiscountFactors" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrMarketDataDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurvesResultsDisplayDiscountFactors" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   {
     try
     {
-      result = aqCurvesResultsDisplayDiscountFactors((std::string const &)*arg1,(std::string const &)*arg2);
+      result = aqVolatilityObjectSabrMarketDataDisplay((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilityObjectSabrModelDisplay(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqVolatilityObjectSabrModelDisplay", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrModelDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrModelDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrModelDisplay((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRCalibrate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  std::string *arg7 = 0 ;
+  std::string *arg8 = 0 ;
+  std::string *arg9 = 0 ;
+  std::string *arg10 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg11 = 0 ;
+  std::string *arg12 = 0 ;
+  std::vector< double,std::allocator< double > > *arg13 = 0 ;
+  std::vector< int,std::allocator< int > > *arg14 = 0 ;
+  std::string *arg15 = 0 ;
+  double arg16 ;
+  std::string *arg17 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg18 = 0 ;
+  std::string *arg19 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  int res9 = SWIG_OLDOBJ ;
+  int res10 = SWIG_OLDOBJ ;
+  int res11 = SWIG_OLDOBJ ;
+  int res12 = SWIG_OLDOBJ ;
+  int res13 = SWIG_OLDOBJ ;
+  int res14 = SWIG_OLDOBJ ;
+  int res15 = SWIG_OLDOBJ ;
+  double val16 ;
+  int ecode16 = 0 ;
+  int res17 = SWIG_OLDOBJ ;
+  int res18 = SWIG_OLDOBJ ;
+  int res19 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 19) || (nobjs > 19)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABRCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilitySABRCalibrate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilitySABRCalibrate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilitySABRCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilitySABRCalibrate" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqVolatilitySABRCalibrate" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res7 = SWIG_AsPtr_std_string(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqVolatilitySABRCalibrate" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqVolatilitySABRCalibrate" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res9 = SWIG_AsPtr_std_string(swig_obj[8], &ptr);
+    if (!SWIG_IsOK(res9)) {
+      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "aqVolatilitySABRCalibrate" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    arg9 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res10 = SWIG_AsPtr_std_string(swig_obj[9], &ptr);
+    if (!SWIG_IsOK(res10)) {
+      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "aqVolatilitySABRCalibrate" "', argument " "10"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "10"" of type '" "std::string const &""'"); 
+    }
+    arg10 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res11 = swig::asptr(swig_obj[10], &ptr);
+    if (!SWIG_IsOK(res11)) {
+      SWIG_exception_fail(SWIG_ArgError(res11), "in method '" "aqVolatilitySABRCalibrate" "', argument " "11"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "11"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg11 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res12 = SWIG_AsPtr_std_string(swig_obj[11], &ptr);
+    if (!SWIG_IsOK(res12)) {
+      SWIG_exception_fail(SWIG_ArgError(res12), "in method '" "aqVolatilitySABRCalibrate" "', argument " "12"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "12"" of type '" "std::string const &""'"); 
+    }
+    arg12 = ptr;
+  }
+  {
+    std::vector< double,std::allocator< double > > *ptr = (std::vector< double,std::allocator< double > > *)0;
+    res13 = swig::asptr(swig_obj[12], &ptr);
+    if (!SWIG_IsOK(res13)) {
+      SWIG_exception_fail(SWIG_ArgError(res13), "in method '" "aqVolatilitySABRCalibrate" "', argument " "13"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "13"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+    }
+    arg13 = ptr;
+  }
+  {
+    std::vector< int,std::allocator< int > > *ptr = (std::vector< int,std::allocator< int > > *)0;
+    res14 = swig::asptr(swig_obj[13], &ptr);
+    if (!SWIG_IsOK(res14)) {
+      SWIG_exception_fail(SWIG_ArgError(res14), "in method '" "aqVolatilitySABRCalibrate" "', argument " "14"" of type '" "std::vector< int,std::allocator< int > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "14"" of type '" "std::vector< int,std::allocator< int > > const &""'"); 
+    }
+    arg14 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res15 = SWIG_AsPtr_std_string(swig_obj[14], &ptr);
+    if (!SWIG_IsOK(res15)) {
+      SWIG_exception_fail(SWIG_ArgError(res15), "in method '" "aqVolatilitySABRCalibrate" "', argument " "15"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "15"" of type '" "std::string const &""'"); 
+    }
+    arg15 = ptr;
+  }
+  ecode16 = SWIG_AsVal_double(swig_obj[15], &val16);
+  if (!SWIG_IsOK(ecode16)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode16), "in method '" "aqVolatilitySABRCalibrate" "', argument " "16"" of type '" "double""'");
+  } 
+  arg16 = static_cast< double >(val16);
+  {
+    std::string *ptr = (std::string *)0;
+    res17 = SWIG_AsPtr_std_string(swig_obj[16], &ptr);
+    if (!SWIG_IsOK(res17)) {
+      SWIG_exception_fail(SWIG_ArgError(res17), "in method '" "aqVolatilitySABRCalibrate" "', argument " "17"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "17"" of type '" "std::string const &""'"); 
+    }
+    arg17 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res18 = swig::asptr(swig_obj[17], &ptr);
+    if (!SWIG_IsOK(res18)) {
+      SWIG_exception_fail(SWIG_ArgError(res18), "in method '" "aqVolatilitySABRCalibrate" "', argument " "18"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "18"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg18 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res19 = SWIG_AsPtr_std_string(swig_obj[18], &ptr);
+    if (!SWIG_IsOK(res19)) {
+      SWIG_exception_fail(SWIG_ArgError(res19), "in method '" "aqVolatilitySABRCalibrate" "', argument " "19"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "19"" of type '" "std::string const &""'"); 
+    }
+    arg19 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilitySABRCalibrate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::vector< std::string,std::allocator< std::string > > const &)*arg11,(std::string const &)*arg12,(std::vector< double,std::allocator< double > > const &)*arg13,(std::vector< int,std::allocator< int > > const &)*arg14,(std::string const &)*arg15,arg16,(std::string const &)*arg17,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg18,(std::string const &)*arg19);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  if (SWIG_IsNewObj(res12)) delete arg12;
+  if (SWIG_IsNewObj(res13)) delete arg13;
+  if (SWIG_IsNewObj(res14)) delete arg14;
+  if (SWIG_IsNewObj(res15)) delete arg15;
+  if (SWIG_IsNewObj(res17)) delete arg17;
+  if (SWIG_IsNewObj(res18)) delete arg18;
+  if (SWIG_IsNewObj(res19)) delete arg19;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  if (SWIG_IsNewObj(res12)) delete arg12;
+  if (SWIG_IsNewObj(res13)) delete arg13;
+  if (SWIG_IsNewObj(res14)) delete arg14;
+  if (SWIG_IsNewObj(res15)) delete arg15;
+  if (SWIG_IsNewObj(res17)) delete arg17;
+  if (SWIG_IsNewObj(res18)) delete arg18;
+  if (SWIG_IsNewObj(res19)) delete arg19;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRCalibrate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  std::string *arg7 = 0 ;
+  std::string *arg8 = 0 ;
+  std::string *arg9 = 0 ;
+  std::string *arg10 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg11 = 0 ;
+  std::string *arg12 = 0 ;
+  std::vector< double,std::allocator< double > > *arg13 = 0 ;
+  std::vector< int,std::allocator< int > > *arg14 = 0 ;
+  std::string *arg15 = 0 ;
+  double arg16 ;
+  std::string *arg17 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg18 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  int res9 = SWIG_OLDOBJ ;
+  int res10 = SWIG_OLDOBJ ;
+  int res11 = SWIG_OLDOBJ ;
+  int res12 = SWIG_OLDOBJ ;
+  int res13 = SWIG_OLDOBJ ;
+  int res14 = SWIG_OLDOBJ ;
+  int res15 = SWIG_OLDOBJ ;
+  double val16 ;
+  int ecode16 = 0 ;
+  int res17 = SWIG_OLDOBJ ;
+  int res18 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 18) || (nobjs > 18)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABRCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilitySABRCalibrate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilitySABRCalibrate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilitySABRCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilitySABRCalibrate" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqVolatilitySABRCalibrate" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res7 = SWIG_AsPtr_std_string(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqVolatilitySABRCalibrate" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqVolatilitySABRCalibrate" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res9 = SWIG_AsPtr_std_string(swig_obj[8], &ptr);
+    if (!SWIG_IsOK(res9)) {
+      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "aqVolatilitySABRCalibrate" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    arg9 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res10 = SWIG_AsPtr_std_string(swig_obj[9], &ptr);
+    if (!SWIG_IsOK(res10)) {
+      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "aqVolatilitySABRCalibrate" "', argument " "10"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "10"" of type '" "std::string const &""'"); 
+    }
+    arg10 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res11 = swig::asptr(swig_obj[10], &ptr);
+    if (!SWIG_IsOK(res11)) {
+      SWIG_exception_fail(SWIG_ArgError(res11), "in method '" "aqVolatilitySABRCalibrate" "', argument " "11"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "11"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg11 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res12 = SWIG_AsPtr_std_string(swig_obj[11], &ptr);
+    if (!SWIG_IsOK(res12)) {
+      SWIG_exception_fail(SWIG_ArgError(res12), "in method '" "aqVolatilitySABRCalibrate" "', argument " "12"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "12"" of type '" "std::string const &""'"); 
+    }
+    arg12 = ptr;
+  }
+  {
+    std::vector< double,std::allocator< double > > *ptr = (std::vector< double,std::allocator< double > > *)0;
+    res13 = swig::asptr(swig_obj[12], &ptr);
+    if (!SWIG_IsOK(res13)) {
+      SWIG_exception_fail(SWIG_ArgError(res13), "in method '" "aqVolatilitySABRCalibrate" "', argument " "13"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "13"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+    }
+    arg13 = ptr;
+  }
+  {
+    std::vector< int,std::allocator< int > > *ptr = (std::vector< int,std::allocator< int > > *)0;
+    res14 = swig::asptr(swig_obj[13], &ptr);
+    if (!SWIG_IsOK(res14)) {
+      SWIG_exception_fail(SWIG_ArgError(res14), "in method '" "aqVolatilitySABRCalibrate" "', argument " "14"" of type '" "std::vector< int,std::allocator< int > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "14"" of type '" "std::vector< int,std::allocator< int > > const &""'"); 
+    }
+    arg14 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res15 = SWIG_AsPtr_std_string(swig_obj[14], &ptr);
+    if (!SWIG_IsOK(res15)) {
+      SWIG_exception_fail(SWIG_ArgError(res15), "in method '" "aqVolatilitySABRCalibrate" "', argument " "15"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "15"" of type '" "std::string const &""'"); 
+    }
+    arg15 = ptr;
+  }
+  ecode16 = SWIG_AsVal_double(swig_obj[15], &val16);
+  if (!SWIG_IsOK(ecode16)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode16), "in method '" "aqVolatilitySABRCalibrate" "', argument " "16"" of type '" "double""'");
+  } 
+  arg16 = static_cast< double >(val16);
+  {
+    std::string *ptr = (std::string *)0;
+    res17 = SWIG_AsPtr_std_string(swig_obj[16], &ptr);
+    if (!SWIG_IsOK(res17)) {
+      SWIG_exception_fail(SWIG_ArgError(res17), "in method '" "aqVolatilitySABRCalibrate" "', argument " "17"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "17"" of type '" "std::string const &""'"); 
+    }
+    arg17 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res18 = swig::asptr(swig_obj[17], &ptr);
+    if (!SWIG_IsOK(res18)) {
+      SWIG_exception_fail(SWIG_ArgError(res18), "in method '" "aqVolatilitySABRCalibrate" "', argument " "18"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRCalibrate" "', argument " "18"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg18 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilitySABRCalibrate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::vector< std::string,std::allocator< std::string > > const &)*arg11,(std::string const &)*arg12,(std::vector< double,std::allocator< double > > const &)*arg13,(std::vector< int,std::allocator< int > > const &)*arg14,(std::string const &)*arg15,arg16,(std::string const &)*arg17,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg18);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  if (SWIG_IsNewObj(res12)) delete arg12;
+  if (SWIG_IsNewObj(res13)) delete arg13;
+  if (SWIG_IsNewObj(res14)) delete arg14;
+  if (SWIG_IsNewObj(res15)) delete arg15;
+  if (SWIG_IsNewObj(res17)) delete arg17;
+  if (SWIG_IsNewObj(res18)) delete arg18;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  if (SWIG_IsNewObj(res12)) delete arg12;
+  if (SWIG_IsNewObj(res13)) delete arg13;
+  if (SWIG_IsNewObj(res14)) delete arg14;
+  if (SWIG_IsNewObj(res15)) delete arg15;
+  if (SWIG_IsNewObj(res17)) delete arg17;
+  if (SWIG_IsNewObj(res18)) delete arg18;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRCalibrate(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[20] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqVolatilitySABRCalibrate", 0, 19, argv))) SWIG_fail;
+  --argc;
+  if (argc == 18) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                int res = SWIG_AsPtr_std_string(argv[6], (std::string**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    int res = SWIG_AsPtr_std_string(argv[8], (std::string**)(0));
+                    _v = SWIG_CheckState(res);
+                    if (_v) {
+                      int res = SWIG_AsPtr_std_string(argv[9], (std::string**)(0));
+                      _v = SWIG_CheckState(res);
+                      if (_v) {
+                        int res = swig::asptr(argv[10], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                        _v = SWIG_CheckState(res);
+                        if (_v) {
+                          int res = SWIG_AsPtr_std_string(argv[11], (std::string**)(0));
+                          _v = SWIG_CheckState(res);
+                          if (_v) {
+                            int res = swig::asptr(argv[12], (std::vector< double,std::allocator< double > >**)(0));
+                            _v = SWIG_CheckState(res);
+                            if (_v) {
+                              int res = swig::asptr(argv[13], (std::vector< int,std::allocator< int > >**)(0));
+                              _v = SWIG_CheckState(res);
+                              if (_v) {
+                                int res = SWIG_AsPtr_std_string(argv[14], (std::string**)(0));
+                                _v = SWIG_CheckState(res);
+                                if (_v) {
+                                  {
+                                    int res = SWIG_AsVal_double(argv[15], NULL);
+                                    _v = SWIG_CheckState(res);
+                                  }
+                                  if (_v) {
+                                    int res = SWIG_AsPtr_std_string(argv[16], (std::string**)(0));
+                                    _v = SWIG_CheckState(res);
+                                    if (_v) {
+                                      int res = swig::asptr(argv[17], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+                                      _v = SWIG_CheckState(res);
+                                      if (_v) {
+                                        return _wrap_aqVolatilitySABRCalibrate__SWIG_1(self, argc, argv);
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 19) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                int res = SWIG_AsPtr_std_string(argv[6], (std::string**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    int res = SWIG_AsPtr_std_string(argv[8], (std::string**)(0));
+                    _v = SWIG_CheckState(res);
+                    if (_v) {
+                      int res = SWIG_AsPtr_std_string(argv[9], (std::string**)(0));
+                      _v = SWIG_CheckState(res);
+                      if (_v) {
+                        int res = swig::asptr(argv[10], (std::vector< std::string,std::allocator< std::string > >**)(0));
+                        _v = SWIG_CheckState(res);
+                        if (_v) {
+                          int res = SWIG_AsPtr_std_string(argv[11], (std::string**)(0));
+                          _v = SWIG_CheckState(res);
+                          if (_v) {
+                            int res = swig::asptr(argv[12], (std::vector< double,std::allocator< double > >**)(0));
+                            _v = SWIG_CheckState(res);
+                            if (_v) {
+                              int res = swig::asptr(argv[13], (std::vector< int,std::allocator< int > >**)(0));
+                              _v = SWIG_CheckState(res);
+                              if (_v) {
+                                int res = SWIG_AsPtr_std_string(argv[14], (std::string**)(0));
+                                _v = SWIG_CheckState(res);
+                                if (_v) {
+                                  {
+                                    int res = SWIG_AsVal_double(argv[15], NULL);
+                                    _v = SWIG_CheckState(res);
+                                  }
+                                  if (_v) {
+                                    int res = SWIG_AsPtr_std_string(argv[16], (std::string**)(0));
+                                    _v = SWIG_CheckState(res);
+                                    if (_v) {
+                                      int res = swig::asptr(argv[17], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+                                      _v = SWIG_CheckState(res);
+                                      if (_v) {
+                                        int res = SWIG_AsPtr_std_string(argv[18], (std::string**)(0));
+                                        _v = SWIG_CheckState(res);
+                                        if (_v) {
+                                          return _wrap_aqVolatilitySABRCalibrate__SWIG_0(self, argc, argv);
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqVolatilitySABRCalibrate'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqVolatilitySABRCalibrate(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::string const &,std::vector< double,std::allocator< double > > const &,std::vector< int,std::allocator< int > > const &,std::string const &,double const,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &)\n"
+    "    aqVolatilitySABRCalibrate(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::string const &,std::vector< double,std::allocator< double > > const &,std::vector< int,std::allocator< int > > const &,std::string const &,double const,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRGetPrem__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  double arg3 ;
+  int arg4 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  std::string *arg7 = 0 ;
+  std::string *arg8 = 0 ;
+  std::string *arg9 = 0 ;
+  std::string *arg10 = 0 ;
+  std::string *arg11 = 0 ;
+  double arg12 ;
+  std::string *arg13 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  int res9 = SWIG_OLDOBJ ;
+  int res10 = SWIG_OLDOBJ ;
+  int res11 = SWIG_OLDOBJ ;
+  double val12 ;
+  int ecode12 = 0 ;
+  int res13 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 13) || (nobjs > 13)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABRGetPrem" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilitySABRGetPrem" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqVolatilitySABRGetPrem" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqVolatilitySABRGetPrem" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilitySABRGetPrem" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqVolatilitySABRGetPrem" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res7 = SWIG_AsPtr_std_string(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqVolatilitySABRGetPrem" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqVolatilitySABRGetPrem" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res9 = SWIG_AsPtr_std_string(swig_obj[8], &ptr);
+    if (!SWIG_IsOK(res9)) {
+      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "aqVolatilitySABRGetPrem" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    arg9 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res10 = SWIG_AsPtr_std_string(swig_obj[9], &ptr);
+    if (!SWIG_IsOK(res10)) {
+      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "aqVolatilitySABRGetPrem" "', argument " "10"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "10"" of type '" "std::string const &""'"); 
+    }
+    arg10 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res11 = SWIG_AsPtr_std_string(swig_obj[10], &ptr);
+    if (!SWIG_IsOK(res11)) {
+      SWIG_exception_fail(SWIG_ArgError(res11), "in method '" "aqVolatilitySABRGetPrem" "', argument " "11"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "11"" of type '" "std::string const &""'"); 
+    }
+    arg11 = ptr;
+  }
+  ecode12 = SWIG_AsVal_double(swig_obj[11], &val12);
+  if (!SWIG_IsOK(ecode12)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode12), "in method '" "aqVolatilitySABRGetPrem" "', argument " "12"" of type '" "double""'");
+  } 
+  arg12 = static_cast< double >(val12);
+  {
+    std::string *ptr = (std::string *)0;
+    res13 = SWIG_AsPtr_std_string(swig_obj[12], &ptr);
+    if (!SWIG_IsOK(res13)) {
+      SWIG_exception_fail(SWIG_ArgError(res13), "in method '" "aqVolatilitySABRGetPrem" "', argument " "13"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "13"" of type '" "std::string const &""'"); 
+    }
+    arg13 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqVolatilitySABRGetPrem((std::string const &)*arg1,(std::string const &)*arg2,arg3,arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,arg12,(std::string const &)*arg13);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  if (SWIG_IsNewObj(res13)) delete arg13;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  if (SWIG_IsNewObj(res13)) delete arg13;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRGetPrem__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  double arg3 ;
+  int arg4 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  std::string *arg7 = 0 ;
+  std::string *arg8 = 0 ;
+  std::string *arg9 = 0 ;
+  std::string *arg10 = 0 ;
+  std::string *arg11 = 0 ;
+  double arg12 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  int res9 = SWIG_OLDOBJ ;
+  int res10 = SWIG_OLDOBJ ;
+  int res11 = SWIG_OLDOBJ ;
+  double val12 ;
+  int ecode12 = 0 ;
+  double result;
+  
+  if ((nobjs < 12) || (nobjs > 12)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABRGetPrem" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilitySABRGetPrem" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqVolatilitySABRGetPrem" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqVolatilitySABRGetPrem" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilitySABRGetPrem" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqVolatilitySABRGetPrem" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res7 = SWIG_AsPtr_std_string(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqVolatilitySABRGetPrem" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqVolatilitySABRGetPrem" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res9 = SWIG_AsPtr_std_string(swig_obj[8], &ptr);
+    if (!SWIG_IsOK(res9)) {
+      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "aqVolatilitySABRGetPrem" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    arg9 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res10 = SWIG_AsPtr_std_string(swig_obj[9], &ptr);
+    if (!SWIG_IsOK(res10)) {
+      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "aqVolatilitySABRGetPrem" "', argument " "10"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "10"" of type '" "std::string const &""'"); 
+    }
+    arg10 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res11 = SWIG_AsPtr_std_string(swig_obj[10], &ptr);
+    if (!SWIG_IsOK(res11)) {
+      SWIG_exception_fail(SWIG_ArgError(res11), "in method '" "aqVolatilitySABRGetPrem" "', argument " "11"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "11"" of type '" "std::string const &""'"); 
+    }
+    arg11 = ptr;
+  }
+  ecode12 = SWIG_AsVal_double(swig_obj[11], &val12);
+  if (!SWIG_IsOK(ecode12)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode12), "in method '" "aqVolatilitySABRGetPrem" "', argument " "12"" of type '" "double""'");
+  } 
+  arg12 = static_cast< double >(val12);
+  {
+    try
+    {
+      result = (double)aqVolatilitySABRGetPrem((std::string const &)*arg1,(std::string const &)*arg2,arg3,arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11,arg12);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRGetPrem__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  double arg3 ;
+  int arg4 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  std::string *arg7 = 0 ;
+  std::string *arg8 = 0 ;
+  std::string *arg9 = 0 ;
+  std::string *arg10 = 0 ;
+  std::string *arg11 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  int res9 = SWIG_OLDOBJ ;
+  int res10 = SWIG_OLDOBJ ;
+  int res11 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 11) || (nobjs > 11)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABRGetPrem" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilitySABRGetPrem" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqVolatilitySABRGetPrem" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqVolatilitySABRGetPrem" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilitySABRGetPrem" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqVolatilitySABRGetPrem" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res7 = SWIG_AsPtr_std_string(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqVolatilitySABRGetPrem" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqVolatilitySABRGetPrem" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res9 = SWIG_AsPtr_std_string(swig_obj[8], &ptr);
+    if (!SWIG_IsOK(res9)) {
+      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "aqVolatilitySABRGetPrem" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    arg9 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res10 = SWIG_AsPtr_std_string(swig_obj[9], &ptr);
+    if (!SWIG_IsOK(res10)) {
+      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "aqVolatilitySABRGetPrem" "', argument " "10"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "10"" of type '" "std::string const &""'"); 
+    }
+    arg10 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res11 = SWIG_AsPtr_std_string(swig_obj[10], &ptr);
+    if (!SWIG_IsOK(res11)) {
+      SWIG_exception_fail(SWIG_ArgError(res11), "in method '" "aqVolatilitySABRGetPrem" "', argument " "11"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetPrem" "', argument " "11"" of type '" "std::string const &""'"); 
+    }
+    arg11 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqVolatilitySABRGetPrem((std::string const &)*arg1,(std::string const &)*arg2,arg3,arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10,(std::string const &)*arg11);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRGetPrem(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[14] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqVolatilitySABRGetPrem", 0, 13, argv))) SWIG_fail;
+  --argc;
+  if (argc == 11) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                int res = SWIG_AsPtr_std_string(argv[6], (std::string**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    int res = SWIG_AsPtr_std_string(argv[8], (std::string**)(0));
+                    _v = SWIG_CheckState(res);
+                    if (_v) {
+                      int res = SWIG_AsPtr_std_string(argv[9], (std::string**)(0));
+                      _v = SWIG_CheckState(res);
+                      if (_v) {
+                        int res = SWIG_AsPtr_std_string(argv[10], (std::string**)(0));
+                        _v = SWIG_CheckState(res);
+                        if (_v) {
+                          return _wrap_aqVolatilitySABRGetPrem__SWIG_2(self, argc, argv);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 12) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                int res = SWIG_AsPtr_std_string(argv[6], (std::string**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    int res = SWIG_AsPtr_std_string(argv[8], (std::string**)(0));
+                    _v = SWIG_CheckState(res);
+                    if (_v) {
+                      int res = SWIG_AsPtr_std_string(argv[9], (std::string**)(0));
+                      _v = SWIG_CheckState(res);
+                      if (_v) {
+                        int res = SWIG_AsPtr_std_string(argv[10], (std::string**)(0));
+                        _v = SWIG_CheckState(res);
+                        if (_v) {
+                          {
+                            int res = SWIG_AsVal_double(argv[11], NULL);
+                            _v = SWIG_CheckState(res);
+                          }
+                          if (_v) {
+                            return _wrap_aqVolatilitySABRGetPrem__SWIG_1(self, argc, argv);
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 13) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                int res = SWIG_AsPtr_std_string(argv[6], (std::string**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    int res = SWIG_AsPtr_std_string(argv[8], (std::string**)(0));
+                    _v = SWIG_CheckState(res);
+                    if (_v) {
+                      int res = SWIG_AsPtr_std_string(argv[9], (std::string**)(0));
+                      _v = SWIG_CheckState(res);
+                      if (_v) {
+                        int res = SWIG_AsPtr_std_string(argv[10], (std::string**)(0));
+                        _v = SWIG_CheckState(res);
+                        if (_v) {
+                          {
+                            int res = SWIG_AsVal_double(argv[11], NULL);
+                            _v = SWIG_CheckState(res);
+                          }
+                          if (_v) {
+                            int res = SWIG_AsPtr_std_string(argv[12], (std::string**)(0));
+                            _v = SWIG_CheckState(res);
+                            if (_v) {
+                              return _wrap_aqVolatilitySABRGetPrem__SWIG_0(self, argc, argv);
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqVolatilitySABRGetPrem'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqVolatilitySABRGetPrem(std::string const &,std::string const &,double const,int const,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,double const,std::string const &)\n"
+    "    aqVolatilitySABRGetPrem(std::string const &,std::string const &,double const,int const,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,double const)\n"
+    "    aqVolatilitySABRGetPrem(std::string const &,std::string const &,double const,int const,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRGetVol__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  double arg3 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  std::string *arg7 = 0 ;
+  std::string *arg8 = 0 ;
+  std::string *arg9 = 0 ;
+  double arg10 ;
+  std::string *arg11 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  int res9 = SWIG_OLDOBJ ;
+  double val10 ;
+  int ecode10 = 0 ;
+  int res11 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 11) || (nobjs > 11)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABRGetVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilitySABRGetVol" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqVolatilitySABRGetVol" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilitySABRGetVol" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilitySABRGetVol" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqVolatilitySABRGetVol" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res7 = SWIG_AsPtr_std_string(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqVolatilitySABRGetVol" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqVolatilitySABRGetVol" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res9 = SWIG_AsPtr_std_string(swig_obj[8], &ptr);
+    if (!SWIG_IsOK(res9)) {
+      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "aqVolatilitySABRGetVol" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    arg9 = ptr;
+  }
+  ecode10 = SWIG_AsVal_double(swig_obj[9], &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "aqVolatilitySABRGetVol" "', argument " "10"" of type '" "double""'");
+  } 
+  arg10 = static_cast< double >(val10);
+  {
+    std::string *ptr = (std::string *)0;
+    res11 = SWIG_AsPtr_std_string(swig_obj[10], &ptr);
+    if (!SWIG_IsOK(res11)) {
+      SWIG_exception_fail(SWIG_ArgError(res11), "in method '" "aqVolatilitySABRGetVol" "', argument " "11"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "11"" of type '" "std::string const &""'"); 
+    }
+    arg11 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqVolatilitySABRGetVol((std::string const &)*arg1,(std::string const &)*arg2,arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,arg10,(std::string const &)*arg11);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRGetVol__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  double arg3 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  std::string *arg7 = 0 ;
+  std::string *arg8 = 0 ;
+  std::string *arg9 = 0 ;
+  double arg10 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  int res9 = SWIG_OLDOBJ ;
+  double val10 ;
+  int ecode10 = 0 ;
+  double result;
+  
+  if ((nobjs < 10) || (nobjs > 10)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABRGetVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilitySABRGetVol" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqVolatilitySABRGetVol" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilitySABRGetVol" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilitySABRGetVol" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqVolatilitySABRGetVol" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res7 = SWIG_AsPtr_std_string(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqVolatilitySABRGetVol" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqVolatilitySABRGetVol" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res9 = SWIG_AsPtr_std_string(swig_obj[8], &ptr);
+    if (!SWIG_IsOK(res9)) {
+      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "aqVolatilitySABRGetVol" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    arg9 = ptr;
+  }
+  ecode10 = SWIG_AsVal_double(swig_obj[9], &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "aqVolatilitySABRGetVol" "', argument " "10"" of type '" "double""'");
+  } 
+  arg10 = static_cast< double >(val10);
+  {
+    try
+    {
+      result = (double)aqVolatilitySABRGetVol((std::string const &)*arg1,(std::string const &)*arg2,arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,arg10);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRGetVol__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  double arg3 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  std::string *arg7 = 0 ;
+  std::string *arg8 = 0 ;
+  std::string *arg9 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  int res9 = SWIG_OLDOBJ ;
+  double result;
+  
+  if ((nobjs < 9) || (nobjs > 9)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABRGetVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilitySABRGetVol" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqVolatilitySABRGetVol" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilitySABRGetVol" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilitySABRGetVol" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqVolatilitySABRGetVol" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res7 = SWIG_AsPtr_std_string(swig_obj[6], &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqVolatilitySABRGetVol" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(swig_obj[7], &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqVolatilitySABRGetVol" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res9 = SWIG_AsPtr_std_string(swig_obj[8], &ptr);
+    if (!SWIG_IsOK(res9)) {
+      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "aqVolatilitySABRGetVol" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRGetVol" "', argument " "9"" of type '" "std::string const &""'"); 
+    }
+    arg9 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqVolatilitySABRGetVol((std::string const &)*arg1,(std::string const &)*arg2,arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRGetVol(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[12] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqVolatilitySABRGetVol", 0, 11, argv))) SWIG_fail;
+  --argc;
+  if (argc == 9) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                int res = SWIG_AsPtr_std_string(argv[6], (std::string**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    int res = SWIG_AsPtr_std_string(argv[8], (std::string**)(0));
+                    _v = SWIG_CheckState(res);
+                    if (_v) {
+                      return _wrap_aqVolatilitySABRGetVol__SWIG_2(self, argc, argv);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 10) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                int res = SWIG_AsPtr_std_string(argv[6], (std::string**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    int res = SWIG_AsPtr_std_string(argv[8], (std::string**)(0));
+                    _v = SWIG_CheckState(res);
+                    if (_v) {
+                      {
+                        int res = SWIG_AsVal_double(argv[9], NULL);
+                        _v = SWIG_CheckState(res);
+                      }
+                      if (_v) {
+                        return _wrap_aqVolatilitySABRGetVol__SWIG_1(self, argc, argv);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 11) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = SWIG_AsPtr_std_string(argv[4], (std::string**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                int res = SWIG_AsPtr_std_string(argv[6], (std::string**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    int res = SWIG_AsPtr_std_string(argv[8], (std::string**)(0));
+                    _v = SWIG_CheckState(res);
+                    if (_v) {
+                      {
+                        int res = SWIG_AsVal_double(argv[9], NULL);
+                        _v = SWIG_CheckState(res);
+                      }
+                      if (_v) {
+                        int res = SWIG_AsPtr_std_string(argv[10], (std::string**)(0));
+                        _v = SWIG_CheckState(res);
+                        if (_v) {
+                          return _wrap_aqVolatilitySABRGetVol__SWIG_0(self, argc, argv);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqVolatilitySABRGetVol'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqVolatilitySABRGetVol(std::string const &,std::string const &,double const,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,double const,std::string const &)\n"
+    "    aqVolatilitySABRGetVol(std::string const &,std::string const &,double const,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,double const)\n"
+    "    aqVolatilitySABRGetVol(std::string const &,std::string const &,double const,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &,std::string const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABROutputParameter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[1] ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABROutputParameter" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABROutputParameter" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilitySABROutputParameter((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRSetupConvention(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  bool result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqVolatilitySABRSetupConvention", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABRSetupConvention" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRSetupConvention" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilitySABRSetupConvention" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRSetupConvention" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (bool)aqVolatilitySABRSetupConvention((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRSetupParameter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[3] ;
+  bool result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqVolatilitySABRSetupParameter", 3, 3, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABRSetupParameter" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRSetupParameter" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilitySABRSetupParameter" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRSetupParameter" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilitySABRSetupParameter" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRSetupParameter" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = (bool)aqVolatilitySABRSetupParameter((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqVolatilitySABRSetupSwaptionVol(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[4] ;
+  bool result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqVolatilitySABRSetupSwaptionVol", 4, 4, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilitySABRSetupSwaptionVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRSetupSwaptionVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilitySABRSetupSwaptionVol" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRSetupSwaptionVol" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilitySABRSetupSwaptionVol" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRSetupSwaptionVol" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res4 = swig::asptr(swig_obj[3], &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilitySABRSetupSwaptionVol" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilitySABRSetupSwaptionVol" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (bool)aqVolatilitySABRSetupSwaptionVol((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondFutureOptionObjectPV(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  std::string *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  int res5 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[5] ;
+  double result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqBondFutureOptionObjectPV", 5, 5, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondFutureOptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondFutureOptionObjectPV" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectPV" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqBondFutureOptionObjectPV" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqBondFutureOptionObjectPV" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(swig_obj[4], &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqBondFutureOptionObjectPV" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectPV" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqBondFutureOptionObjectPV((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,arg4,(std::string const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondFutureOptionObjectGreeks__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  double arg8 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  bool arg12 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  int res6 = SWIG_OLDOBJ ;
+  double val7 ;
+  int ecode7 = 0 ;
+  double val8 ;
+  int ecode8 = 0 ;
+  double val9 ;
+  int ecode9 = 0 ;
+  double val10 ;
+  int ecode10 = 0 ;
+  double val11 ;
+  int ecode11 = 0 ;
+  bool val12 ;
+  int ecode12 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 12) || (nobjs > 12)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  ecode8 = SWIG_AsVal_double(swig_obj[7], &val8);
+  if (!SWIG_IsOK(ecode8)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "8"" of type '" "double""'");
+  } 
+  arg8 = static_cast< double >(val8);
+  ecode9 = SWIG_AsVal_double(swig_obj[8], &val9);
+  if (!SWIG_IsOK(ecode9)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "9"" of type '" "double""'");
+  } 
+  arg9 = static_cast< double >(val9);
+  ecode10 = SWIG_AsVal_double(swig_obj[9], &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "10"" of type '" "double""'");
+  } 
+  arg10 = static_cast< double >(val10);
+  ecode11 = SWIG_AsVal_double(swig_obj[10], &val11);
+  if (!SWIG_IsOK(ecode11)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode11), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "11"" of type '" "double""'");
+  } 
+  arg11 = static_cast< double >(val11);
+  ecode12 = SWIG_AsVal_bool(swig_obj[11], &val12);
+  if (!SWIG_IsOK(ecode12)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode12), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "12"" of type '" "bool""'");
+  } 
+  arg12 = static_cast< bool >(val12);
+  {
+    try
+    {
+      result = aqBondFutureOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,arg8,arg9,arg10,arg11,arg12);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondFutureOptionObjectGreeks__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  double arg8 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  int res6 = SWIG_OLDOBJ ;
+  double val7 ;
+  int ecode7 = 0 ;
+  double val8 ;
+  int ecode8 = 0 ;
+  double val9 ;
+  int ecode9 = 0 ;
+  double val10 ;
+  int ecode10 = 0 ;
+  double val11 ;
+  int ecode11 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if ((nobjs < 11) || (nobjs > 11)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(swig_obj[2], &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(swig_obj[5], &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  ecode7 = SWIG_AsVal_double(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  ecode8 = SWIG_AsVal_double(swig_obj[7], &val8);
+  if (!SWIG_IsOK(ecode8)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "8"" of type '" "double""'");
+  } 
+  arg8 = static_cast< double >(val8);
+  ecode9 = SWIG_AsVal_double(swig_obj[8], &val9);
+  if (!SWIG_IsOK(ecode9)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "9"" of type '" "double""'");
+  } 
+  arg9 = static_cast< double >(val9);
+  ecode10 = SWIG_AsVal_double(swig_obj[9], &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "10"" of type '" "double""'");
+  } 
+  arg10 = static_cast< double >(val10);
+  ecode11 = SWIG_AsVal_double(swig_obj[10], &val11);
+  if (!SWIG_IsOK(ecode11)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode11), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "11"" of type '" "double""'");
+  } 
+  arg11 = static_cast< double >(val11);
+  {
+    try
+    {
+      result = aqBondFutureOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,arg8,arg9,arg10,arg11);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqBondFutureOptionObjectGreeks(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[13] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqBondFutureOptionObjectGreeks", 0, 12, argv))) SWIG_fail;
+  --argc;
+  if (argc == 11) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  {
+                    int res = SWIG_AsVal_double(argv[7], NULL);
+                    _v = SWIG_CheckState(res);
+                  }
+                  if (_v) {
+                    {
+                      int res = SWIG_AsVal_double(argv[8], NULL);
+                      _v = SWIG_CheckState(res);
+                    }
+                    if (_v) {
+                      {
+                        int res = SWIG_AsVal_double(argv[9], NULL);
+                        _v = SWIG_CheckState(res);
+                      }
+                      if (_v) {
+                        {
+                          int res = SWIG_AsVal_double(argv[10], NULL);
+                          _v = SWIG_CheckState(res);
+                        }
+                        if (_v) {
+                          return _wrap_aqBondFutureOptionObjectGreeks__SWIG_1(self, argc, argv);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 12) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_double(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  {
+                    int res = SWIG_AsVal_double(argv[7], NULL);
+                    _v = SWIG_CheckState(res);
+                  }
+                  if (_v) {
+                    {
+                      int res = SWIG_AsVal_double(argv[8], NULL);
+                      _v = SWIG_CheckState(res);
+                    }
+                    if (_v) {
+                      {
+                        int res = SWIG_AsVal_double(argv[9], NULL);
+                        _v = SWIG_CheckState(res);
+                      }
+                      if (_v) {
+                        {
+                          int res = SWIG_AsVal_double(argv[10], NULL);
+                          _v = SWIG_CheckState(res);
+                        }
+                        if (_v) {
+                          {
+                            int res = SWIG_AsVal_bool(argv[11], NULL);
+                            _v = SWIG_CheckState(res);
+                          }
+                          if (_v) {
+                            return _wrap_aqBondFutureOptionObjectGreeks__SWIG_0(self, argc, argv);
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqBondFutureOptionObjectGreeks'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqBondFutureOptionObjectGreeks(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,double const,double const,std::string const &,double const,double const,double const,double const,double const,bool const)\n"
+    "    aqBondFutureOptionObjectGreeks(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,double const,double const,std::string const &,double const,double const,double const,double const,double const)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerCurrent__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_bool(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqFutureTickerCurrent" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqFutureTickerCurrent" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try
+    {
+      result = aqFutureTickerCurrent((std::string const &)*arg1,arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerCurrent__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_bool(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqFutureTickerCurrent" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  {
+    try
+    {
+      result = aqFutureTickerCurrent((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerCurrent__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFutureTickerCurrent((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerCurrent(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFutureTickerCurrent", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_aqFutureTickerCurrent__SWIG_2(self, argc, argv);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_bool(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_aqFutureTickerCurrent__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_bool(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqFutureTickerCurrent__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFutureTickerCurrent'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFutureTickerCurrent(std::string const &,bool const,bool const)\n"
+    "    aqFutureTickerCurrent(std::string const &,bool const)\n"
+    "    aqFutureTickerCurrent(std::string const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerNext__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerNext" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerNext" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_bool(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqFutureTickerNext" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  {
+    try
+    {
+      result = aqFutureTickerNext((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerNext__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerNext" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerNext" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFutureTickerNext((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerNext(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[3] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFutureTickerNext", 0, 2, argv))) SWIG_fail;
+  --argc;
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_aqFutureTickerNext__SWIG_1(self, argc, argv);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_bool(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_aqFutureTickerNext__SWIG_0(self, argc, argv);
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFutureTickerNext'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFutureTickerNext(std::string const &,bool const)\n"
+    "    aqFutureTickerNext(std::string const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerPrevious__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerPrevious" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerPrevious" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_bool(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqFutureTickerPrevious" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  {
+    try
+    {
+      result = aqFutureTickerPrevious((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerPrevious__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  std::string result;
+  
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerPrevious" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerPrevious" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFutureTickerPrevious((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerPrevious(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[3] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFutureTickerPrevious", 0, 2, argv))) SWIG_fail;
+  --argc;
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_aqFutureTickerPrevious__SWIG_1(self, argc, argv);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_bool(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_aqFutureTickerPrevious__SWIG_0(self, argc, argv);
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFutureTickerPrevious'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFutureTickerPrevious(std::string const &,bool const)\n"
+    "    aqFutureTickerPrevious(std::string const &)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerNth__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  bool arg3 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqFutureTickerNth" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqFutureTickerNth" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  ecode4 = SWIG_AsVal_bool(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "aqFutureTickerNth" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  {
+    try
+    {
+      result = aqFutureTickerNth((std::string const &)*arg1,arg2,arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerNth__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqFutureTickerNth" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_bool(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "aqFutureTickerNth" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  {
+    try
+    {
+      result = aqFutureTickerNth((std::string const &)*arg1,arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerNth__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  int val2 ;
+  int ecode2 = 0 ;
+  std::string result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqFutureTickerNth" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  {
+    try
+    {
+      result = aqFutureTickerNth((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqFutureTickerNth(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqFutureTickerNth", 0, 4, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_aqFutureTickerNth__SWIG_2(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_aqFutureTickerNth__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_aqFutureTickerNth__SWIG_0(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqFutureTickerNth'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqFutureTickerNth(std::string const &,int const,bool const,bool const)\n"
+    "    aqFutureTickerNth(std::string const &,int const,bool const)\n"
+    "    aqFutureTickerNth(std::string const &,int const)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCurveResultsDiscountFactorsDisplayAll(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject *swig_obj[2] ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "aqCurveResultsDiscountFactorsDisplayAll", 2, 2, swig_obj)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCurveResultsDiscountFactorsDisplayAll" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveResultsDiscountFactorsDisplayAll" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCurveResultsDiscountFactorsDisplayAll" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveResultsDiscountFactorsDisplayAll" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCurveResultsDiscountFactorsDisplayAll((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -34877,7 +51294,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqCurveMarketDataCreate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqCurveMarketDataCreate__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -34897,10 +51314,9 @@ SWIGINTERN PyObject *_wrap_aqCurveMarketDataCreate(PyObject *SWIGUNUSEDPARM(self
   int res7 = SWIG_OLDOBJ ;
   int res8 = SWIG_OLDOBJ ;
   int res9 = SWIG_OLDOBJ ;
-  PyObject *swig_obj[9] ;
   std::string result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqCurveMarketDataCreate", 9, 9, swig_obj)) SWIG_fail;
+  if ((nobjs < 9) || (nobjs > 9)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
@@ -35035,7 +51451,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_aqObjCurvesMarketDataCreateUsingMultipleBlocks(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_aqCurveMarketDataCreate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
@@ -35044,18 +51460,17 @@ SWIGINTERN PyObject *_wrap_aqObjCurvesMarketDataCreateUsingMultipleBlocks(PyObje
   int res2 = SWIG_OLDOBJ ;
   void *argp3 = 0 ;
   int res3 = 0 ;
-  PyObject *swig_obj[3] ;
   std::string result;
   
-  if (!SWIG_Python_UnpackTuple(args, "aqObjCurvesMarketDataCreateUsingMultipleBlocks", 3, 3, swig_obj)) SWIG_fail;
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCurveMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -35063,25 +51478,25 @@ SWIGINTERN PyObject *_wrap_aqObjCurvesMarketDataCreateUsingMultipleBlocks(PyObje
     std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
     res2 = swig::asptr(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCurveMarketDataCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveMarketDataCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     arg2 = ptr;
   }
   res3 = SWIG_ConvertPtr(swig_obj[2], &argp3, SWIGTYPE_p_std__vectorT_std__vectorT_std__vectorT_std__string_std__allocatorT_std__string_t_t_std__allocatorT_std__vectorT_std__string_std__allocatorT_std__string_t_t_t_t_std__allocatorT_std__vectorT_std__vectorT_std__string_std__allocatorT_std__string_t_t_std__allocatorT_std__vectorT_std__string_std__allocatorT_std__string_t_t_t_t_t_t,  0  | 0);
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "3"" of type '" "std::vector< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >,std::allocator< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > > > const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCurveMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >,std::allocator< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > > > const &""'"); 
   }
   if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "3"" of type '" "std::vector< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >,std::allocator< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > > > const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >,std::allocator< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > > > const &""'"); 
   }
   arg3 = reinterpret_cast< std::vector< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >,std::allocator< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > > > * >(argp3);
   {
     try
     {
-      result = aqObjCurvesMarketDataCreateUsingMultipleBlocks((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >,std::allocator< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > > > const &)*arg3);
+      result = aqCurveMarketDataCreate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >,std::allocator< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > > > const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -35096,6 +51511,80 @@ fail:
   if (SWIG_IsNewObj(res1)) delete arg1;
   if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_aqCurveMarketDataCreate(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[10] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "aqCurveMarketDataCreate", 0, 9, argv))) SWIG_fail;
+  --argc;
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = swig::asptr(argv[1], (std::vector< std::string,std::allocator< std::string > >**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_std__vectorT_std__vectorT_std__vectorT_std__string_std__allocatorT_std__string_t_t_std__allocatorT_std__vectorT_std__string_std__allocatorT_std__string_t_t_t_t_std__allocatorT_std__vectorT_std__vectorT_std__string_std__allocatorT_std__string_t_t_std__allocatorT_std__vectorT_std__string_std__allocatorT_std__string_t_t_t_t_t_t, SWIG_POINTER_NO_NULL | 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_aqCurveMarketDataCreate__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  if (argc == 9) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = swig::asptr(argv[2], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            int res = swig::asptr(argv[4], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              int res = SWIG_AsPtr_std_string(argv[5], (std::string**)(0));
+              _v = SWIG_CheckState(res);
+              if (_v) {
+                int res = swig::asptr(argv[6], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+                _v = SWIG_CheckState(res);
+                if (_v) {
+                  int res = SWIG_AsPtr_std_string(argv[7], (std::string**)(0));
+                  _v = SWIG_CheckState(res);
+                  if (_v) {
+                    int res = swig::asptr(argv[8], (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >**)(0));
+                    _v = SWIG_CheckState(res);
+                    if (_v) {
+                      return _wrap_aqCurveMarketDataCreate__SWIG_0(self, argc, argv);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'aqCurveMarketDataCreate'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    aqCurveMarketDataCreate(std::string const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &,std::string const &,std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)\n"
+    "    aqCurveMarketDataCreate(std::string const &,std::vector< std::string,std::allocator< std::string > > const &,std::vector< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > >,std::allocator< std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > > > const &)\n");
+  return 0;
 }
 
 
@@ -35854,15 +52343,32 @@ static PyMethodDef SwigMethods[] = {
 	 { "aqDateFromYearFraction", _wrap_aqDateFromYearFraction, METH_VARARGS, NULL},
 	 { "aqDateBusinessDays", _wrap_aqDateBusinessDays, METH_VARARGS, NULL},
 	 { "aqDateYearFraction", _wrap_aqDateYearFraction, METH_VARARGS, NULL},
-	 { "aqObjSwapsUSDSpotDate", _wrap_aqObjSwapsUSDSpotDate, METH_VARARGS, NULL},
+	 { "aqCurveUSDSpotDate", _wrap_aqCurveUSDSpotDate, METH_VARARGS, NULL},
 	 { "aqDateShiftedSpotDate", _wrap_aqDateShiftedSpotDate, METH_VARARGS, NULL},
+	 { "aqDateToday", _wrap_aqDateToday, METH_NOARGS, NULL},
+	 { "aqDateIsWorkingDay", _wrap_aqDateIsWorkingDay, METH_VARARGS, NULL},
+	 { "aqDateIsHoliday", _wrap_aqDateIsHoliday, METH_VARARGS, NULL},
+	 { "aqDateIsWeekend", _wrap_aqDateIsWeekend, METH_O, NULL},
+	 { "aqDateIsWeekday", _wrap_aqDateIsWeekday, METH_O, NULL},
+	 { "aqDateFuturesContract", _wrap_aqDateFuturesContract, METH_O, NULL},
+	 { "aqDateIsRegularSwapSchedule", _wrap_aqDateIsRegularSwapSchedule, METH_VARARGS, NULL},
 	 { "aqDateCentralBank", _wrap_aqDateCentralBank, METH_VARARGS, NULL},
 	 { "aqDateECB", _wrap_aqDateECB, METH_VARARGS, NULL},
 	 { "aqDateECBSwapStart", _wrap_aqDateECBSwapStart, METH_O, NULL},
 	 { "aqDateECBSwapEnd", _wrap_aqDateECBSwapEnd, METH_O, NULL},
+	 { "aqDateNthECBMeetingDate", _wrap_aqDateNthECBMeetingDate, METH_VARARGS, NULL},
+	 { "aqDateNthECBSwapStartDate", _wrap_aqDateNthECBSwapStartDate, METH_VARARGS, NULL},
+	 { "aqDateNthECBSwapEndDate", _wrap_aqDateNthECBSwapEndDate, METH_VARARGS, NULL},
+	 { "aqDateNextECBMeetingDate", _wrap_aqDateNextECBMeetingDate, METH_O, NULL},
+	 { "aqDateNextECBSwapStartDate", _wrap_aqDateNextECBSwapStartDate, METH_O, NULL},
+	 { "aqDateNextECBSwapEndDate", _wrap_aqDateNextECBSwapEndDate, METH_O, NULL},
 	 { "aqDateIMMFromMonth", _wrap_aqDateIMMFromMonth, METH_VARARGS, NULL},
 	 { "aqDateNthIMM", _wrap_aqDateNthIMM, METH_VARARGS, NULL},
 	 { "aqDateNthIMMFromStartDate", _wrap_aqDateNthIMMFromStartDate, METH_VARARGS, NULL},
+	 { "aqDateIMMCurrent", _wrap_aqDateIMMCurrent, METH_VARARGS, NULL},
+	 { "aqDateIMMNext", _wrap_aqDateIMMNext, METH_O, NULL},
+	 { "aqDateIMMPrevious", _wrap_aqDateIMMPrevious, METH_O, NULL},
+	 { "aqDateIMMNth", _wrap_aqDateIMMNth, METH_VARARGS, NULL},
 	 { "aqAssetSwapSpread", _wrap_aqAssetSwapSpread, METH_VARARGS, NULL},
 	 { "aqAssetSwapSpreadLVBKeys", _wrap_aqAssetSwapSpreadLVBKeys, METH_NOARGS, NULL},
 	 { "aqSwapOisParRate", _wrap_aqSwapOisParRate, METH_VARARGS, NULL},
@@ -35908,7 +52414,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "aqBondObjectYield", _wrap_aqBondObjectYield, METH_VARARGS, NULL},
 	 { "aqBondObjectForwardPrice", _wrap_aqBondObjectForwardPrice, METH_VARARGS, NULL},
 	 { "aqToolLVBCreate", _wrap_aqToolLVBCreate, METH_VARARGS, NULL},
-	 { "aqToolsLVBAppendAndCreate", _wrap_aqToolsLVBAppendAndCreate, METH_VARARGS, NULL},
+	 { "aqToolsLVBAppend", _wrap_aqToolsLVBAppend, METH_VARARGS, NULL},
 	 { "aqToolLVBAdd", _wrap_aqToolLVBAdd, METH_VARARGS, NULL},
 	 { "aqSwapObjectCreate", _wrap_aqSwapObjectCreate, METH_VARARGS, NULL},
 	 { "aqSwapObjectCreateFromGenerator", _wrap_aqSwapObjectCreateFromGenerator, METH_VARARGS, NULL},
@@ -35967,7 +52473,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "aqCreditModelSurvivalProbability", _wrap_aqCreditModelSurvivalProbability, METH_VARARGS, NULL},
 	 { "aqCreditModelDefaultProbability", _wrap_aqCreditModelDefaultProbability, METH_VARARGS, NULL},
 	 { "aqCreditModelHazardRate", _wrap_aqCreditModelHazardRate, METH_VARARGS, NULL},
-	 { "aqObjCreditModelRiskyDiscountFactor", _wrap_aqObjCreditModelRiskyDiscountFactor, METH_VARARGS, NULL},
+	 { "aqCreditModelRiskyDiscountFactor", _wrap_aqCreditModelRiskyDiscountFactor, METH_VARARGS, NULL},
 	 { "aqCreditModelRiskyDiscountFactors", _wrap_aqCreditModelRiskyDiscountFactors, METH_VARARGS, NULL},
 	 { "aqCDSObjectPV", _wrap_aqCDSObjectPV, METH_VARARGS, NULL},
 	 { "aqCDSObjectRiskyAnnuity", _wrap_aqCDSObjectRiskyAnnuity, METH_VARARGS, NULL},
@@ -35977,13 +52483,88 @@ static PyMethodDef SwigMethods[] = {
 	 { "aqTRSObjectParRate", _wrap_aqTRSObjectParRate, METH_VARARGS, NULL},
 	 { "aqTRSObjectParSpread", _wrap_aqTRSObjectParSpread, METH_VARARGS, NULL},
 	 { "aqTRSObjectAnnuity", _wrap_aqTRSObjectAnnuity, METH_VARARGS, NULL},
-	 { "aqCurvesResultsDisplayDiscountFactors", _wrap_aqCurvesResultsDisplayDiscountFactors, METH_VARARGS, NULL},
+	 { "aqCMSObjectPVUsingConvexityAdjustment", _wrap_aqCMSObjectPVUsingConvexityAdjustment, METH_VARARGS, NULL},
+	 { "aqCMSObjectParRateUsingConvexityAdjustment", _wrap_aqCMSObjectParRateUsingConvexityAdjustment, METH_VARARGS, NULL},
+	 { "aqAssetSwapObjectSpread", _wrap_aqAssetSwapObjectSpread, METH_VARARGS, NULL},
+	 { "aqAssetSwapObjectSpreadFromPrice", _wrap_aqAssetSwapObjectSpreadFromPrice, METH_VARARGS, NULL},
+	 { "aqAssetSwapObjectSpreadToCleanPrice", _wrap_aqAssetSwapObjectSpreadToCleanPrice, METH_VARARGS, NULL},
+	 { "aqAssetSwapObjectFixedEqvCoupon", _wrap_aqAssetSwapObjectFixedEqvCoupon, METH_VARARGS, NULL},
+	 { "aqAssetSwapObjectSpreadFromFixedEqvCoupon", _wrap_aqAssetSwapObjectSpreadFromFixedEqvCoupon, METH_VARARGS, NULL},
+	 { "aqIRFuturePriceToFraRate", _wrap_aqIRFuturePriceToFraRate, METH_VARARGS, NULL},
+	 { "aqIRFuturePriceToFraRateFromConvAdj", _wrap_aqIRFuturePriceToFraRateFromConvAdj, METH_VARARGS, NULL},
+	 { "aqIRObjectFraCreate", _wrap_aqIRObjectFraCreate, METH_VARARGS, NULL},
+	 { "aqIRObjectFraPV", _wrap_aqIRObjectFraPV, METH_VARARGS, NULL},
+	 { "aqIRObjectFraDisplay", _wrap_aqIRObjectFraDisplay, METH_O, NULL},
+	 { "aqIRObjectFraDisplayCashflows", _wrap_aqIRObjectFraDisplayCashflows, METH_VARARGS, NULL},
+	 { "aqIRObjectFraRate", _wrap_aqIRObjectFraRate, METH_VARARGS, NULL},
+	 { "aqIRObjectFraToFuturePrice", _wrap_aqIRObjectFraToFuturePrice, METH_VARARGS, NULL},
+	 { "aqIRObjectFraToFuturePriceFromConvAdj", _wrap_aqIRObjectFraToFuturePriceFromConvAdj, METH_VARARGS, NULL},
+	 { "aqBondOptionObjectCreate", _wrap_aqBondOptionObjectCreate, METH_VARARGS, NULL},
+	 { "aqBondOptionObjectDisplay", _wrap_aqBondOptionObjectDisplay, METH_O, NULL},
+	 { "aqBondOptionObjectPV", _wrap_aqBondOptionObjectPV, METH_VARARGS, NULL},
+	 { "aqBondOptionObjectGreeks", _wrap_aqBondOptionObjectGreeks, METH_VARARGS, NULL},
+	 { "aqInflationCurveCreate", _wrap_aqInflationCurveCreate, METH_VARARGS, NULL},
+	 { "aqInflationCurveCalibrationParameters", _wrap_aqInflationCurveCalibrationParameters, METH_O, NULL},
+	 { "aqInflationObjectCPI", _wrap_aqInflationObjectCPI, METH_VARARGS, NULL},
+	 { "aqInflationObjectZCSwapPV", _wrap_aqInflationObjectZCSwapPV, METH_VARARGS, NULL},
+	 { "aqInflationObjectZCSwapPVFromIndex", _wrap_aqInflationObjectZCSwapPVFromIndex, METH_VARARGS, NULL},
+	 { "aqInflationObjectZCSwapParRate", _wrap_aqInflationObjectZCSwapParRate, METH_VARARGS, NULL},
+	 { "aqInflationObjectZCSwapParRateFromIndex", _wrap_aqInflationObjectZCSwapParRateFromIndex, METH_VARARGS, NULL},
+	 { "aqSwaptionObjectCreate", _wrap_aqSwaptionObjectCreate, METH_VARARGS, NULL},
+	 { "aqSwaptionObjectDisplay", _wrap_aqSwaptionObjectDisplay, METH_O, NULL},
+	 { "aqSwaptionObjectPV", _wrap_aqSwaptionObjectPV, METH_VARARGS, NULL},
+	 { "aqSwaptionObjectImpliedVol", _wrap_aqSwaptionObjectImpliedVol, METH_VARARGS, NULL},
+	 { "aqSwaptionObjectDelta", _wrap_aqSwaptionObjectDelta, METH_VARARGS, NULL},
+	 { "aqSwaptionObjectGamma", _wrap_aqSwaptionObjectGamma, METH_VARARGS, NULL},
+	 { "aqSwaptionObjectVega", _wrap_aqSwaptionObjectVega, METH_VARARGS, NULL},
+	 { "aqSwaptionObjectTheta", _wrap_aqSwaptionObjectTheta, METH_VARARGS, NULL},
+	 { "aqCapFloorObjectCreate", _wrap_aqCapFloorObjectCreate, METH_VARARGS, NULL},
+	 { "aqCapFloorObjectDisplay", _wrap_aqCapFloorObjectDisplay, METH_O, NULL},
+	 { "aqCapFloorObjectDisplayCashflows", _wrap_aqCapFloorObjectDisplayCashflows, METH_VARARGS, NULL},
+	 { "aqCapFloorObjectPV", _wrap_aqCapFloorObjectPV, METH_VARARGS, NULL},
+	 { "aqCapFloorObjectGreeksAnalytical", _wrap_aqCapFloorObjectGreeksAnalytical, METH_VARARGS, NULL},
+	 { "aqCapFloorObjectGreeks", _wrap_aqCapFloorObjectGreeks, METH_VARARGS, NULL},
+	 { "aqCapFloorObjectDisplayCashflowsFromRates", _wrap_aqCapFloorObjectDisplayCashflowsFromRates, METH_VARARGS, NULL},
+	 { "aqCapFloorObjectGreeksAnalyticalFromRates", _wrap_aqCapFloorObjectGreeksAnalyticalFromRates, METH_VARARGS, NULL},
+	 { "aqCapFloorObjectGreeksFromRates", _wrap_aqCapFloorObjectGreeksFromRates, METH_VARARGS, NULL},
+	 { "aqCapFloorObjectPVFromRates", _wrap_aqCapFloorObjectPVFromRates, METH_VARARGS, NULL},
+	 { "aqFXCurveCreate", _wrap_aqFXCurveCreate, METH_VARARGS, NULL},
+	 { "aqFXObjectForwardsFromDiscountCurves", _wrap_aqFXObjectForwardsFromDiscountCurves, METH_VARARGS, NULL},
+	 { "aqFXObjectForwards", _wrap_aqFXObjectForwards, METH_VARARGS, NULL},
+	 { "aqFXObjectSwapFromDiscountCurves", _wrap_aqFXObjectSwapFromDiscountCurves, METH_VARARGS, NULL},
+	 { "aqFXObjectSwap", _wrap_aqFXObjectSwap, METH_VARARGS, NULL},
+	 { "aqFXObjectForwardsFromXccyCurveObject", _wrap_aqFXObjectForwardsFromXccyCurveObject, METH_VARARGS, NULL},
+	 { "aqFXObjectForwardsFromXccyCurve", _wrap_aqFXObjectForwardsFromXccyCurve, METH_VARARGS, NULL},
+	 { "aqFXObjectSwapFromXccyCurveObject", _wrap_aqFXObjectSwapFromXccyCurveObject, METH_VARARGS, NULL},
+	 { "aqFXObjectSwapFromXccyCurve", _wrap_aqFXObjectSwapFromXccyCurve, METH_VARARGS, NULL},
+	 { "aqFXObjectSpotToAsOfDate", _wrap_aqFXObjectSpotToAsOfDate, METH_VARARGS, NULL},
+	 { "aqFXObjectAsOfDateToSpot", _wrap_aqFXObjectAsOfDateToSpot, METH_VARARGS, NULL},
+	 { "aqVolatilityObjectCreate", _wrap_aqVolatilityObjectCreate, METH_VARARGS, NULL},
+	 { "aqVolatilityObjectSabrMarketDataCreate", _wrap_aqVolatilityObjectSabrMarketDataCreate, METH_VARARGS, NULL},
+	 { "aqVolatilityObjectSabrModelCalibrate", _wrap_aqVolatilityObjectSabrModelCalibrate, METH_VARARGS, NULL},
+	 { "aqVolatilityObjectSabrVolatility", _wrap_aqVolatilityObjectSabrVolatility, METH_VARARGS, NULL},
+	 { "aqVolatilityObjectSabrParameter", _wrap_aqVolatilityObjectSabrParameter, METH_VARARGS, NULL},
+	 { "aqVolatilityObjectSabrMarketDataDisplay", _wrap_aqVolatilityObjectSabrMarketDataDisplay, METH_VARARGS, NULL},
+	 { "aqVolatilityObjectSabrModelDisplay", _wrap_aqVolatilityObjectSabrModelDisplay, METH_VARARGS, NULL},
+	 { "aqVolatilitySABRCalibrate", _wrap_aqVolatilitySABRCalibrate, METH_VARARGS, NULL},
+	 { "aqVolatilitySABRGetPrem", _wrap_aqVolatilitySABRGetPrem, METH_VARARGS, NULL},
+	 { "aqVolatilitySABRGetVol", _wrap_aqVolatilitySABRGetVol, METH_VARARGS, NULL},
+	 { "aqVolatilitySABROutputParameter", _wrap_aqVolatilitySABROutputParameter, METH_O, NULL},
+	 { "aqVolatilitySABRSetupConvention", _wrap_aqVolatilitySABRSetupConvention, METH_VARARGS, NULL},
+	 { "aqVolatilitySABRSetupParameter", _wrap_aqVolatilitySABRSetupParameter, METH_VARARGS, NULL},
+	 { "aqVolatilitySABRSetupSwaptionVol", _wrap_aqVolatilitySABRSetupSwaptionVol, METH_VARARGS, NULL},
+	 { "aqBondFutureOptionObjectPV", _wrap_aqBondFutureOptionObjectPV, METH_VARARGS, NULL},
+	 { "aqBondFutureOptionObjectGreeks", _wrap_aqBondFutureOptionObjectGreeks, METH_VARARGS, NULL},
+	 { "aqFutureTickerCurrent", _wrap_aqFutureTickerCurrent, METH_VARARGS, NULL},
+	 { "aqFutureTickerNext", _wrap_aqFutureTickerNext, METH_VARARGS, NULL},
+	 { "aqFutureTickerPrevious", _wrap_aqFutureTickerPrevious, METH_VARARGS, NULL},
+	 { "aqFutureTickerNth", _wrap_aqFutureTickerNth, METH_VARARGS, NULL},
+	 { "aqCurveResultsDiscountFactorsDisplayAll", _wrap_aqCurveResultsDiscountFactorsDisplayAll, METH_VARARGS, NULL},
 	 { "aqCurveObjectDisplay", _wrap_aqCurveObjectDisplay, METH_O, NULL},
 	 { "aqCurveMarketDataDisplay", _wrap_aqCurveMarketDataDisplay, METH_VARARGS, NULL},
 	 { "aqCurveMarketDataDisplayFromCurve", _wrap_aqCurveMarketDataDisplayFromCurve, METH_VARARGS, NULL},
 	 { "aqCurveObjectCalibrate", _wrap_aqCurveObjectCalibrate, METH_VARARGS, NULL},
 	 { "aqCurveMarketDataCreate", _wrap_aqCurveMarketDataCreate, METH_VARARGS, NULL},
-	 { "aqObjCurvesMarketDataCreateUsingMultipleBlocks", _wrap_aqObjCurvesMarketDataCreateUsingMultipleBlocks, METH_VARARGS, NULL},
 	 { "aqIRFixingTableCreate", _wrap_aqIRFixingTableCreate, METH_VARARGS, NULL},
 	 { "aqIRFixingTableDisplay", _wrap_aqIRFixingTableDisplay, METH_O, NULL},
 	 { "aqIRFixingTableValue", _wrap_aqIRFixingTableValue, METH_VARARGS, NULL},

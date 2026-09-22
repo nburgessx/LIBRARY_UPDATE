@@ -38,7 +38,7 @@ On disk the dependency tree is at
 `REPO\.ALGO_QUANT_LIB\AQ_EXTERNAL_LIBS\library` (Boost 1.91, QuantLib-1.43,
 Eigen3, Adept203, googletest-1.17.0, swigwin-4.0.0, xlOil-0.19.0).
 
-`SetEnvironmentVariables.bat` derives its default as a folder *beside* `AQ_LIB`,
+`SetEnvVars.bat` derives its default as a folder *beside* `AQ_LIB`,
 which does not exist under `LIBRARY_UPDATE`. **Action for Nicholas:** run the
 script once and, at the external-libs prompt, enter the path above (or wherever
 you keep the real copy). Confirm `%AQ_EXTERNAL_LIB_PATH%` after, then restart VS.

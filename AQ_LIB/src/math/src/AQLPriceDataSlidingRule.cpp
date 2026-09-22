@@ -273,9 +273,9 @@ void
 AQLPriceDataSlidingRule::convertFromString(const AQLString& str)
 {
 
-	AQLString data;
-	bool ret = strToData(str, data);
-	if (ret || data.size() == 0) 
+	AQLString slidingRuleStr;
+	bool ret = strToData( str, slidingRuleStr );
+	if ( ret || slidingRuleStr.size() == 0 ) 
 	{
 		// notify of the change
 		update();
@@ -284,36 +284,33 @@ AQLPriceDataSlidingRule::convertFromString(const AQLString& str)
 	else
 	{
 		setNull(false);
-        data.toUpper();
+		slidingRuleStr.toUpper();
 
 		SlidingRuleType origType = mSlidingRuleType;
-		if (data == "MOD_FOLLOWING" || data == "MF" || data == "MOD_FOL")
+		if ( slidingRuleStr == "MOD_FOLLOWING" || slidingRuleStr == "MF" || slidingRuleStr == "MOD_FOL" )
 		{
 			mSlidingRuleType = SLIDING_RULE_MOD_FOLLOWING;
 		}
-		else if (data == "FOLLOWING" || data == "F" || data == "FOL")
+		else if ( slidingRuleStr == "FOLLOWING" || slidingRuleStr == "F" || slidingRuleStr == "FOL" )
 		{
 			mSlidingRuleType = SLIDING_RULE_FOLLOWING;
 		}
-		else if (data == "PRECEDING" || data == "P" || data == "PRE")
+		else if ( slidingRuleStr == "PRECEDING" || slidingRuleStr == "P" || slidingRuleStr == "PRE" )
 		{
 			mSlidingRuleType = SLIDING_RULE_PRECEDING;
 		}
-		else if (data == "MOD_PRECEDING" || data == "MP" || data == "MOD_PRE")
+		else if ( slidingRuleStr == "MOD_PRECEDING" || slidingRuleStr == "MP" || slidingRuleStr == "MOD_PRE" )
 		{
 			mSlidingRuleType = SLIDING_RULE_MOD_PRECEDING;
 		}
-		else if (data == "NO_CHANGE" || data == "U" || data == "UNADJUSTED" || data == "NO_CHG")
+		else if ( slidingRuleStr == "NO_CHANGE" || slidingRuleStr == "U" || slidingRuleStr == "UNADJUSTED" || slidingRuleStr == "NO_CHG" )
 		{
 			mSlidingRuleType = SLIDING_RULE_NO_CHANGE;
 		}
 		else
 		{
 			setNull();
-			// exception
-			AQLString	msg("InvalidData for AQLPriceDataSlidingRule : ");
-			msg += str;
-			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQ_THROW( "Invalid BusinessDayConvention: '" + slidingRuleStr + "', must be Following (F), Mod_Following (MF), Preceding (P), Mod_Preceding (MP) or Unadjusted (U)." )
 		}
 
 		if (origType != mSlidingRuleType)

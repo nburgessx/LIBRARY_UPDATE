@@ -63,13 +63,22 @@ namespace validation
 		AQLCoreDataService::setContext(CONTEXT_KEY_ISEXCELREQUEST, "FALSE");  // was set to true in previous statement
 		AQLCoreDataService::setContext(CONTEXT_KEY_ISSETCURVEID, "TRUE");
 
-        // Excel Addin Config: set the calendar filepath member variable
-		AQLString calendarFullFileName(calendarFullFilePath.c_str());
-		etrading::FolderConfig::set_calendar_path(calendarFullFileName);
-			
-        // Excel Addin Config: set the ir properties filepath member variable
-        AQLString irPropertiesFilePath(irPropsFullFilePath.c_str());
-		etrading::FolderConfig::set_ir_prop_path(irPropertiesFilePath);
+        // Excel Addin Config: set the calendar filepath member variable.
+        // An empty path is left unset rather than stored as-is, so a later lookup falls through to
+        // FolderConfig::calendar_path()'s own resolution chain (module-relative config folder first).
+        if (!calendarFullFilePath.empty())
+        {
+            AQLString calendarFullFileName(calendarFullFilePath.c_str());
+            etrading::FolderConfig::set_calendar_path(calendarFullFileName);
+        }
+
+        // Excel Addin Config: set the ir properties filepath member variable. Same empty-path handling
+        // as the calendar path above -- falls through to FolderConfig::ir_prop_path() when omitted.
+        if (!irPropsFullFilePath.empty())
+        {
+            AQLString irPropertiesFilePath(irPropsFullFilePath.c_str());
+            etrading::FolderConfig::set_ir_prop_path(irPropertiesFilePath);
+        }
 			
         // Excel Addin Config: set the central bank calendar filepath member variable
         if ( centralBankCalendarFullFilePath.size() == 0)

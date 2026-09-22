@@ -37,7 +37,7 @@ double aqCreditModelDefaultProbability( const std::string& creditModelName, cons
 double aqCreditModelHazardRate( const std::string& creditModelName, const std::string & paymentDate );
 
 // Calculates the Risky Discount Factor from the Credit Model
-double aqObjCreditModelRiskyDiscountFactor( const std::string& creditModelName, const std::string & paymentDate );
+double aqCreditModelRiskyDiscountFactor( const std::string& creditModelName, const std::string & paymentDate );
 
 // Calculates a Vector of Risky Discount Factors from the Credit Model
 std::vector<double> aqCreditModelRiskyDiscountFactors( const std::string& creditModelName, const std::vector<std::string>& paymentDates );

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="DebugEditAndContinue|Win32">
-      <Configuration>DebugEditAndContinue</Configuration>
+    <ProjectConfiguration Include="Debug_EditAndContinue|Win32">
+      <Configuration>Debug_EditAndContinue</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugEditAndContinue|x64">
-      <Configuration>DebugEditAndContinue</Configuration>
+    <ProjectConfiguration Include="Debug_EditAndContinue|x64">
+      <Configuration>Debug_EditAndContinue</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
@@ -17,12 +17,12 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseProfiler|Win32">
-      <Configuration>ReleaseProfiler</Configuration>
+    <ProjectConfiguration Include="Release_Profiler|Win32">
+      <Configuration>Release_Profiler</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseProfiler|x64">
-      <Configuration>ReleaseProfiler</Configuration>
+    <ProjectConfiguration Include="Release_Profiler|x64">
+      <Configuration>Release_Profiler</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release_XL_Bond|Win32">
@@ -131,7 +131,7 @@
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>NotSet</CharacterSet>
@@ -146,7 +146,7 @@
     <CLRSupport>false</CLRSupport>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>NotSet</CharacterSet>
@@ -174,13 +174,13 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -198,54 +198,54 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateManifest>
-    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">false</GenerateManifest>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">false</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'">false</LinkIncremental>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AlgoQuantLib</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">AlgoQuantLib</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">AlgoQuantLib</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">AlgoQuantLib</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">AlgoQuantLib</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">AlgoQuantLib</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">AlgoQuantLib</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'">AlgoQuantLib</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.xll</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">.xll</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">.xll</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">.xll</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">.xll</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">.xll</TargetExt>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">.xll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'">.xll</TargetExt>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AlgoQuantLib</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">AlgoQuantLib</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">AlgoQuantLib</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.xll</TargetExt>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">.xll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">.xll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -303,7 +303,7 @@
       </LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">
     <ClCompile>
       <AdditionalOptions>/D "XLLAPLI"
  %(AdditionalOptions)</AdditionalOptions>
@@ -623,10 +623,10 @@
       <!-- Force-include the per-function enable header the PreBuildEvent below
            regenerates from AQ_XLL_MANIFEST_FILE (CLAUDE.md Sec 4.4/9.5). Every
            XLO_FUNC_START/END site is wrapped #if AQ_XLL_ENABLED(name)...#endif;
-           AQ_XLL_ENABLED itself is defined once in aqXllTools.h. Written to a
+           AQ_XLL_ENABLED itself is defined once in xllSupport.h. Written to a
            fixed path (not $(IntDir)) so it can be a normal ClInclude item and
            show up in Solution Explorer under the "include" filter. -->
-      <AdditionalOptions>/FI"$(SolutionDir)src\$(ProjectName)\include\generated\aqManifestList.h" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/FI"$(SolutionDir)src\$(ProjectName)\include\generated\xllManifestList.h" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>math.lib;models.lib;calibration.lib;etrading.lib;validation.lib;QuantLib-vc143-x64-mt-s.lib;Adept203-vc143-x64.lib;xlOil-COM.lib;xlOil-Dynamic.lib;xlOil-External.lib;xlOil-Funcs.lib;xlOil-XLL.lib;xlOilHelpers.lib;Oleacc.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -647,11 +647,11 @@
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PreBuildEvent>
-      <Command>call "$(SolutionDir)src\$(ProjectName)\resources\manifest\generateManifestList.bat" "$(SolutionDir)" "$(AQ_XLL_MANIFEST_FILE)" "$(SolutionDir)src\$(ProjectName)\include\generated\aqManifestList.h"</Command>
-      <Message>Generating aqManifestList.h from $(AQ_XLL_MANIFEST_FILE)</Message>
+      <Command>call "$(SolutionDir)src\$(ProjectName)\resources\manifest\generateManifestList.bat" "$(SolutionDir)" "$(AQ_XLL_MANIFEST_FILE)" "$(SolutionDir)src\$(ProjectName)\include\generated\xllManifestList.h"</Command>
+      <Message>Generating xllManifestList.h from $(AQ_XLL_MANIFEST_FILE)</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -704,7 +704,7 @@
       <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|Win32'">
     <Link>
       <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -734,7 +734,7 @@
       <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|Win32'">
     <Link>
       <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -765,27 +765,27 @@
     <None Include="..\src\AQ_XLL\resources\manifest\generateManifestList.bat">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Manifest|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
     </None>
     <None Include="..\src\AQ_XLL\resources\SetUp.md">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_Profiler|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_EditAndContinue|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
@@ -796,79 +796,79 @@
     <None Include="..\src\AQ_XLL\resources\manifest\demoList.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\AQ_XLL\src\aqXllTools.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqAssetSwap.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllSupport.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\xllAssetSwap.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqBond.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllBond.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqCapFloor.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllCapFloor.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqCMS.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllCMS.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqCredit.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllCredit.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqCurve.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqDate.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqGenerator.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqFuture.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllCurve.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\xllDate.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\xllGenerator.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\xllFuture.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqFX.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllFX.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqInflation.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllInflation.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqMain.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqMath.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqObject.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqIR.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqSwap.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllMain.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\xllMath.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\xllObject.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\xllIR.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\xllSwap.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqSwaption.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqTool.cpp" />
-    <ClCompile Include="..\src\AQ_XLL\src\aqTRS.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllSwaption.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_XLL\src\aqVolatility.cpp">
+    <ClCompile Include="..\src\AQ_XLL\src\xllTool.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\xllTRS.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Swap|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_XLL\src\xllVolatility.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Bond|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Credit|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_XL_Curve|x64'">true</ExcludedFromBuild>
@@ -876,13 +876,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\AQ_XLL\include\aqXllTools.h" />
-    <ClInclude Include="..\src\AQ_XLL\include\aqMain.h" />
+    <ClInclude Include="..\src\AQ_XLL\include\xllSupport.h" />
+    <ClInclude Include="..\src\AQ_XLL\include\xllMain.h" />
     <!-- Regenerated by Release_XL_Manifest's PreBuildEvent from
          AQ_XLL_MANIFEST_FILE (see the ItemDefinitionGroup above); not
          checked in, see .gitignore. Referenced here only so it shows up in
          Solution Explorer; absent until the first Release_XL_Manifest build. -->
-    <ClInclude Include="..\src\AQ_XLL\include\generated\aqManifestList.h" />
+    <ClInclude Include="..\src\AQ_XLL\include\generated\xllManifestList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

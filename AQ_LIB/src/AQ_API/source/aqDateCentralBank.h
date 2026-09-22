@@ -31,3 +31,42 @@ std::string aqDateECBSwapStart(const std::string& date);
 *  @return			The end date of an ECB(European Central Bank) Swap based on the given date
 */
 std::string aqDateECBSwapEnd(const std::string& date);
+
+/* @brief			swig interface for the aqDateNthECBMeetingDate method
+*  @param [in]		asOfDate	The asOfDate
+*  @param [in]		n			Which meeting (1 = the next one)
+*  @return			Date of the nth ECB (European Central Bank) meeting on/after the asOfDate
+*/
+std::string aqDateNthECBMeetingDate(const std::string& asOfDate, int n);
+
+/* @brief			swig interface for the aqDateNthECBSwapStartDate method
+*  @param [in]		asOfDate	The asOfDate
+*  @param [in]		n			Which one (1 = the next)
+*  @return			Start date of the nth ECB-dated swap on/after the asOfDate
+*/
+std::string aqDateNthECBSwapStartDate(const std::string& asOfDate, int n);
+
+/* @brief			swig interface for the aqDateNthECBSwapEndDate method
+*  @param [in]		asOfDate	The asOfDate
+*  @param [in]		n			Which one (1 = the next)
+*  @return			End date of the nth ECB-dated swap on/after the asOfDate
+*/
+std::string aqDateNthECBSwapEndDate(const std::string& asOfDate, int n);
+
+/* @brief			swig interface for the aqDateNextECBMeetingDate method
+*  @param [in]		meetingDate		An ECB meeting date
+*  @return			The ECB meeting date immediately after the given meeting date
+*/
+std::string aqDateNextECBMeetingDate(const std::string& meetingDate);
+
+/* @brief			swig interface for the aqDateNextECBSwapStartDate method
+*  @param [in]		swapStartDate	An ECB-dated swap start date
+*  @return			The ECB-dated swap start date immediately after the given one
+*/
+std::string aqDateNextECBSwapStartDate(const std::string& swapStartDate);
+
+/* @brief			swig interface for the aqDateNextECBSwapEndDate method
+*  @param [in]		swapEndDate		An ECB-dated swap end date
+*  @return			The ECB-dated swap end date immediately after the given one
+*/
+std::string aqDateNextECBSwapEndDate(const std::string& swapEndDate);

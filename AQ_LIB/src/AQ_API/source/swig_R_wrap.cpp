@@ -3017,6 +3017,7 @@ SWIGINTERN void std_vector_Sl_std_vector_Sl_std_string_Sg__Sg__append(std::vecto
 #include "aqCurveInterpolationJoinDate.h"
 #include "aqCurveDualBootstrap.h"
 #include "aqObject.h"
+#include "aqGenerator.h"
 #include "aqBondObjectCreate.h"
 #include "aqBondObjectPrice.h"
 #include "aqToolLVB.h"
@@ -3025,6 +3026,15 @@ SWIGINTERN void std_vector_Sl_std_vector_Sl_std_string_Sg__Sg__append(std::vecto
 #include "BondTypes.h"
 #include "aqBondCurve.h"
 #include "aqCreditObject.h"
+#include "aqCMSObject.h"
+#include "aqBondOptionObject.h"
+#include "aqInflationObject.h"
+#include "aqSwaptionObject.h"
+#include "aqCapFloorObject.h"
+#include "aqFXObject.h"
+#include "aqVolatilityObject.h"
+#include "aqBondFutureOptionObject.h"
+#include "aqFutureTicker.h"
 #include "aqCurveResults.h"
 #include "aqCurveObject.h"
 #include "aqToolGrids.h"
@@ -15916,7 +15926,7 @@ R_swig_aqDateYearFraction__SWIG_1 ( SEXP fromDate, SEXP toDate, SEXP dayCount, S
 
 
 SWIGEXPORT SEXP
-R_swig_aqObjSwapsUSDSpotDate ( SEXP asOfDate, SEXP spotLag, SEXP fixingCalendar, SEXP paymentCalendar, SEXP businessDayAdj, SEXP rollConvention, SEXP s_swig_copy)
+R_swig_aqCurveUSDSpotDate ( SEXP asOfDate, SEXP spotLag, SEXP fixingCalendar, SEXP paymentCalendar, SEXP businessDayAdj, SEXP rollConvention, SEXP s_swig_copy)
 {
   std::string result;
   std::string *arg1 = 0 ;
@@ -15939,10 +15949,10 @@ R_swig_aqObjSwapsUSDSpotDate ( SEXP asOfDate, SEXP spotLag, SEXP fixingCalendar,
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(asOfDate, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCurveUSDSpotDate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -15950,10 +15960,10 @@ R_swig_aqObjSwapsUSDSpotDate ( SEXP asOfDate, SEXP spotLag, SEXP fixingCalendar,
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(spotLag, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCurveUSDSpotDate" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -15961,10 +15971,10 @@ R_swig_aqObjSwapsUSDSpotDate ( SEXP asOfDate, SEXP spotLag, SEXP fixingCalendar,
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(fixingCalendar, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCurveUSDSpotDate" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
@@ -15972,10 +15982,10 @@ R_swig_aqObjSwapsUSDSpotDate ( SEXP asOfDate, SEXP spotLag, SEXP fixingCalendar,
     std::string *ptr = (std::string *)0;
     res4 = SWIG_AsPtr_std_string(paymentCalendar, &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCurveUSDSpotDate" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     arg4 = ptr;
   }
@@ -15983,10 +15993,10 @@ R_swig_aqObjSwapsUSDSpotDate ( SEXP asOfDate, SEXP spotLag, SEXP fixingCalendar,
     std::string *ptr = (std::string *)0;
     res5 = SWIG_AsPtr_std_string(businessDayAdj, &ptr);
     if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "5"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqCurveUSDSpotDate" "', argument " "5"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "5"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "5"" of type '" "std::string const &""'"); 
     }
     arg5 = ptr;
   }
@@ -15994,17 +16004,17 @@ R_swig_aqObjSwapsUSDSpotDate ( SEXP asOfDate, SEXP spotLag, SEXP fixingCalendar,
     std::string *ptr = (std::string *)0;
     res6 = SWIG_AsPtr_std_string(rollConvention, &ptr);
     if (!SWIG_IsOK(res6)) {
-      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqObjSwapsUSDSpotDate" "', argument " "6"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqCurveUSDSpotDate" "', argument " "6"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjSwapsUSDSpotDate" "', argument " "6"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveUSDSpotDate" "', argument " "6"" of type '" "std::string const &""'"); 
     }
     arg6 = ptr;
   }
   {
     try
     {
-      result = aqObjSwapsUSDSpotDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+      result = aqCurveUSDSpotDate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
     }
     catch (const std::exception& e)
     {
@@ -18578,6 +18588,154 @@ R_swig_aqObjectLoad ( SEXP filePath, SEXP s_swig_copy)
 
 
 SWIGEXPORT SEXP
+R_swig_aqGeneratorList ( SEXP typeAsString, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(typeAsString, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqGeneratorList" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGeneratorList" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqGeneratorList((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqGeneratorDisplay ( SEXP typeAsString, SEXP generatorName, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(typeAsString, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqGeneratorDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGeneratorDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(generatorName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqGeneratorDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGeneratorDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqGeneratorDisplay((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqGeneratorValidate ( SEXP typeAsString, SEXP generatorName, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(typeAsString, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqGeneratorValidate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGeneratorValidate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(generatorName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqGeneratorValidate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGeneratorValidate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqGeneratorValidate((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
 R_swig_aqBondObjectCreate ( SEXP bondObjectName, SEXP bondLVB, SEXP scheduleLVB, SEXP validateKeys, SEXP s_swig_copy)
 {
   std::string result;
@@ -19217,7 +19375,7 @@ R_swig_aqToolLVBCreate ( SEXP keys, SEXP values, SEXP s_swig_copy)
 
 
 SWIGEXPORT SEXP
-R_swig_aqToolsLVBAppendAndCreate__SWIG_0 ( SEXP LVB, SEXP key, SEXP value, SEXP s_swig_copy)
+R_swig_aqToolsLVBAppend__SWIG_0 ( SEXP LVB, SEXP key, SEXP value, SEXP s_swig_copy)
 {
   std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
   std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg1 = 0 ;
@@ -19234,10 +19392,10 @@ R_swig_aqToolsLVBAppendAndCreate__SWIG_0 ( SEXP LVB, SEXP key, SEXP value, SEXP 
     std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
     res1 = swig::asptr(LVB, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolsLVBAppend" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
     }
     arg1 = ptr;
   }
@@ -19245,10 +19403,10 @@ R_swig_aqToolsLVBAppendAndCreate__SWIG_0 ( SEXP LVB, SEXP key, SEXP value, SEXP 
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(key, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolsLVBAppend" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -19256,17 +19414,17 @@ R_swig_aqToolsLVBAppendAndCreate__SWIG_0 ( SEXP LVB, SEXP key, SEXP value, SEXP 
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(value, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqToolsLVBAppend" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   {
     try
     {
-      result = aqToolsLVBAppendAndCreate((std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = aqToolsLVBAppend((std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -19285,7 +19443,7 @@ R_swig_aqToolsLVBAppendAndCreate__SWIG_0 ( SEXP LVB, SEXP key, SEXP value, SEXP 
 
 
 SWIGEXPORT SEXP
-R_swig_aqToolsLVBAppendAndCreate__SWIG_1 ( SEXP LVB, SEXP key, SEXP value1, SEXP value2, SEXP s_swig_copy)
+R_swig_aqToolsLVBAppend__SWIG_1 ( SEXP LVB, SEXP key, SEXP value1, SEXP value2, SEXP s_swig_copy)
 {
   std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > result;
   std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg1 = 0 ;
@@ -19304,10 +19462,10 @@ R_swig_aqToolsLVBAppendAndCreate__SWIG_1 ( SEXP LVB, SEXP key, SEXP value1, SEXP
     std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
     res1 = swig::asptr(LVB, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolsLVBAppend" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "1"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
     }
     arg1 = ptr;
   }
@@ -19315,10 +19473,10 @@ R_swig_aqToolsLVBAppendAndCreate__SWIG_1 ( SEXP LVB, SEXP key, SEXP value1, SEXP
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(key, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolsLVBAppend" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -19326,10 +19484,10 @@ R_swig_aqToolsLVBAppendAndCreate__SWIG_1 ( SEXP LVB, SEXP key, SEXP value1, SEXP
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(value1, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqToolsLVBAppend" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
@@ -19337,17 +19495,17 @@ R_swig_aqToolsLVBAppendAndCreate__SWIG_1 ( SEXP LVB, SEXP key, SEXP value1, SEXP
     std::string *ptr = (std::string *)0;
     res4 = SWIG_AsPtr_std_string(value2, &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqToolsLVBAppendAndCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqToolsLVBAppend" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppendAndCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolsLVBAppend" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     arg4 = ptr;
   }
   {
     try
     {
-      result = aqToolsLVBAppendAndCreate((std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = aqToolsLVBAppend((std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -22391,7 +22549,7 @@ R_swig_aqCreditModelHazardRate ( SEXP creditModelName, SEXP paymentDate, SEXP s_
 
 
 SWIGEXPORT SEXP
-R_swig_aqObjCreditModelRiskyDiscountFactor ( SEXP creditModelName, SEXP paymentDate, SEXP s_swig_copy)
+R_swig_aqCreditModelRiskyDiscountFactor ( SEXP creditModelName, SEXP paymentDate, SEXP s_swig_copy)
 {
   double result;
   std::string *arg1 = 0 ;
@@ -22406,10 +22564,10 @@ R_swig_aqObjCreditModelRiskyDiscountFactor ( SEXP creditModelName, SEXP paymentD
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(creditModelName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqObjCreditModelRiskyDiscountFactor" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCreditModelRiskyDiscountFactor" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjCreditModelRiskyDiscountFactor" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditModelRiskyDiscountFactor" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -22417,17 +22575,17 @@ R_swig_aqObjCreditModelRiskyDiscountFactor ( SEXP creditModelName, SEXP paymentD
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(paymentDate, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqObjCreditModelRiskyDiscountFactor" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCreditModelRiskyDiscountFactor" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjCreditModelRiskyDiscountFactor" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditModelRiskyDiscountFactor" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   {
     try
     {
-      result = (double)aqObjCreditModelRiskyDiscountFactor((std::string const &)*arg1,(std::string const &)*arg2);
+      result = (double)aqCreditModelRiskyDiscountFactor((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -22499,7 +22657,7 @@ R_swig_aqCreditModelRiskyDiscountFactors ( SEXP creditModelName, SEXP paymentDat
 
 
 SWIGEXPORT SEXP
-R_swig_aqCreditObjectDefaultSwapPV ( SEXP swapName, SEXP creditModelName, SEXP legName, SEXP s_swig_copy)
+R_swig_aqCDSObjectPV ( SEXP swapName, SEXP creditModelName, SEXP legName, SEXP s_swig_copy)
 {
   double result;
   std::string *arg1 = 0 ;
@@ -22516,10 +22674,10 @@ R_swig_aqCreditObjectDefaultSwapPV ( SEXP swapName, SEXP creditModelName, SEXP l
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swapName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCDSObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -22527,10 +22685,10 @@ R_swig_aqCreditObjectDefaultSwapPV ( SEXP swapName, SEXP creditModelName, SEXP l
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(creditModelName, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCDSObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -22538,17 +22696,17 @@ R_swig_aqCreditObjectDefaultSwapPV ( SEXP swapName, SEXP creditModelName, SEXP l
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(legName, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCDSObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapPV" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCDSObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -22567,7 +22725,7 @@ R_swig_aqCreditObjectDefaultSwapPV ( SEXP swapName, SEXP creditModelName, SEXP l
 
 
 SWIGEXPORT SEXP
-R_swig_aqCreditObjectDefaultSwapRiskyAnnuity ( SEXP swapName, SEXP creditModelName, SEXP legName, SEXP s_swig_copy)
+R_swig_aqCDSObjectRiskyAnnuity ( SEXP swapName, SEXP creditModelName, SEXP legName, SEXP s_swig_copy)
 {
   double result;
   std::string *arg1 = 0 ;
@@ -22584,10 +22742,10 @@ R_swig_aqCreditObjectDefaultSwapRiskyAnnuity ( SEXP swapName, SEXP creditModelNa
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swapName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -22595,10 +22753,10 @@ R_swig_aqCreditObjectDefaultSwapRiskyAnnuity ( SEXP swapName, SEXP creditModelNa
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(creditModelName, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -22606,17 +22764,17 @@ R_swig_aqCreditObjectDefaultSwapRiskyAnnuity ( SEXP swapName, SEXP creditModelNa
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(legName, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapRiskyAnnuity" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectRiskyAnnuity" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapRiskyAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCDSObjectRiskyAnnuity((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -22635,7 +22793,7 @@ R_swig_aqCreditObjectDefaultSwapRiskyAnnuity ( SEXP swapName, SEXP creditModelNa
 
 
 SWIGEXPORT SEXP
-R_swig_aqCreditObjectDefaultSwapCS01 ( SEXP swapName, SEXP creditModelName, SEXP legName, SEXP s_swig_copy)
+R_swig_aqCDSObjectCS01 ( SEXP swapName, SEXP creditModelName, SEXP legName, SEXP s_swig_copy)
 {
   double result;
   std::string *arg1 = 0 ;
@@ -22652,10 +22810,10 @@ R_swig_aqCreditObjectDefaultSwapCS01 ( SEXP swapName, SEXP creditModelName, SEXP
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swapName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCDSObjectCS01" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectCS01" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -22663,10 +22821,10 @@ R_swig_aqCreditObjectDefaultSwapCS01 ( SEXP swapName, SEXP creditModelName, SEXP
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(creditModelName, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCDSObjectCS01" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectCS01" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -22674,17 +22832,17 @@ R_swig_aqCreditObjectDefaultSwapCS01 ( SEXP swapName, SEXP creditModelName, SEXP
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(legName, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCDSObjectCS01" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapCS01" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectCS01" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapCS01((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+      result = (double)aqCDSObjectCS01((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -22703,7 +22861,7 @@ R_swig_aqCreditObjectDefaultSwapCS01 ( SEXP swapName, SEXP creditModelName, SEXP
 
 
 SWIGEXPORT SEXP
-R_swig_aqCreditObjectDefaultSwapParSpread ( SEXP swapName, SEXP creditModelName, SEXP premiumLegName, SEXP protectionLegName, SEXP s_swig_copy)
+R_swig_aqCDSObjectParSpread ( SEXP swapName, SEXP creditModelName, SEXP premiumLegName, SEXP protectionLegName, SEXP s_swig_copy)
 {
   double result;
   std::string *arg1 = 0 ;
@@ -22722,10 +22880,10 @@ R_swig_aqCreditObjectDefaultSwapParSpread ( SEXP swapName, SEXP creditModelName,
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(swapName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCDSObjectParSpread" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectParSpread" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -22733,10 +22891,10 @@ R_swig_aqCreditObjectDefaultSwapParSpread ( SEXP swapName, SEXP creditModelName,
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(creditModelName, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCDSObjectParSpread" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectParSpread" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -22744,10 +22902,10 @@ R_swig_aqCreditObjectDefaultSwapParSpread ( SEXP swapName, SEXP creditModelName,
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(premiumLegName, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCDSObjectParSpread" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectParSpread" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
@@ -22755,17 +22913,17 @@ R_swig_aqCreditObjectDefaultSwapParSpread ( SEXP swapName, SEXP creditModelName,
     std::string *ptr = (std::string *)0;
     res4 = SWIG_AsPtr_std_string(protectionLegName, &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCDSObjectParSpread" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCreditObjectDefaultSwapParSpread" "', argument " "4"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCDSObjectParSpread" "', argument " "4"" of type '" "std::string const &""'"); 
     }
     arg4 = ptr;
   }
   {
     try
     {
-      result = (double)aqCreditObjectDefaultSwapParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+      result = (double)aqCDSObjectParSpread((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
     }
     catch (const std::exception& e)
     {
@@ -23247,7 +23405,7624 @@ R_swig_aqTRSObjectAnnuity ( SEXP swapName, SEXP creditModelName, SEXP legName, S
 
 
 SWIGEXPORT SEXP
-R_swig_aqCurvesResultsDisplayDiscountFactors ( SEXP curveCollection, SEXP curveIndex, SEXP s_swig_copy)
+R_swig_aqCMSObjectPVUsingConvexityAdjustment__SWIG_0 ( SEXP swapName, SEXP valuationSettingsLVB, SEXP convexityAdjustment, SEXP legName, SEXP fixingTableNames, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swapName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = static_cast< double >(REAL(convexityAdjustment)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(legName, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res5 = swig::asptr(fixingTableNames, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "5"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCMSObjectPVUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,(std::string const &)*arg4,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCMSObjectPVUsingConvexityAdjustment__SWIG_1 ( SEXP swapName, SEXP valuationSettingsLVB, SEXP convexityAdjustment, SEXP legName, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swapName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = static_cast< double >(REAL(convexityAdjustment)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(legName, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectPVUsingConvexityAdjustment" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCMSObjectPVUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCMSObjectParRateUsingConvexityAdjustment__SWIG_0 ( SEXP swapName, SEXP valuationSettingsLVB, SEXP convexityAdjustment, SEXP fixingTableNames, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swapName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = static_cast< double >(REAL(convexityAdjustment)[0]);
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res4 = swig::asptr(fixingTableNames, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "4"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCMSObjectParRateUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCMSObjectParRateUsingConvexityAdjustment__SWIG_1 ( SEXP swapName, SEXP valuationSettingsLVB, SEXP convexityAdjustment, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swapName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCMSObjectParRateUsingConvexityAdjustment" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = static_cast< double >(REAL(convexityAdjustment)[0]);
+  {
+    try
+    {
+      result = (double)aqCMSObjectParRateUsingConvexityAdjustment((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqBondOptionObjectCreate__SWIG_0 ( SEXP objectName, SEXP optionLVB, SEXP validateKeys, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(optionLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondOptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = LOGICAL(validateKeys)[0] ? true : false;
+  {
+    try
+    {
+      result = aqBondOptionObjectCreate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqBondOptionObjectCreate__SWIG_1 ( SEXP objectName, SEXP optionLVB, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(optionLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondOptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqBondOptionObjectCreate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqBondOptionObjectDisplay ( SEXP objectName, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqBondOptionObjectDisplay((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqBondOptionObjectPV ( SEXP objectName, SEXP valuationSettings, SEXP bondPrice, SEXP repoRate, SEXP repoDaycount, SEXP discountRate, SEXP discountDayCount, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  std::string *arg5 = 0 ;
+  double arg6 ;
+  std::string *arg7 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(valuationSettings, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondOptionObjectPV" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectPV" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = static_cast< double >(REAL(bondPrice)[0]);
+  arg4 = static_cast< double >(REAL(repoRate)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(repoDaycount, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqBondOptionObjectPV" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectPV" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  arg6 = static_cast< double >(REAL(discountRate)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res7 = SWIG_AsPtr_std_string(discountDayCount, &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqBondOptionObjectPV" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectPV" "', argument " "7"" of type '" "std::string const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqBondOptionObjectPV((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3,arg4,(std::string const &)*arg5,arg6,(std::string const &)*arg7);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqBondOptionObjectGreeks__SWIG_0 ( SEXP greekType, SEXP objectName, SEXP valuationSettings, SEXP bondSpotPrice, SEXP repoRate, SEXP repoDaycount, SEXP discountRate, SEXP discountDayCount, SEXP deltaBump, SEXP gammaBump, SEXP vegaBump, SEXP thetaBump, SEXP rhoBump, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  double arg12 ;
+  double arg13 ;
+  bool arg14 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(greekType, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(valuationSettings, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqBondOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = static_cast< double >(REAL(bondSpotPrice)[0]);
+  arg5 = static_cast< double >(REAL(repoRate)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(repoDaycount, &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqBondOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  arg7 = static_cast< double >(REAL(discountRate)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(discountDayCount, &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqBondOptionObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  arg9 = static_cast< double >(REAL(deltaBump)[0]);
+  arg10 = static_cast< double >(REAL(gammaBump)[0]);
+  arg11 = static_cast< double >(REAL(vegaBump)[0]);
+  arg12 = static_cast< double >(REAL(thetaBump)[0]);
+  arg13 = static_cast< double >(REAL(rhoBump)[0]);
+  arg14 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqBondOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,(std::string const &)*arg8,arg9,arg10,arg11,arg12,arg13,arg14);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  
+  
+  
+  
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqBondOptionObjectGreeks__SWIG_1 ( SEXP greekType, SEXP objectName, SEXP valuationSettings, SEXP bondSpotPrice, SEXP repoRate, SEXP repoDaycount, SEXP discountRate, SEXP discountDayCount, SEXP deltaBump, SEXP gammaBump, SEXP vegaBump, SEXP thetaBump, SEXP rhoBump, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  double arg12 ;
+  double arg13 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(greekType, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(valuationSettings, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqBondOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = static_cast< double >(REAL(bondSpotPrice)[0]);
+  arg5 = static_cast< double >(REAL(repoRate)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(repoDaycount, &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqBondOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  arg7 = static_cast< double >(REAL(discountRate)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(discountDayCount, &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqBondOptionObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondOptionObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  arg9 = static_cast< double >(REAL(deltaBump)[0]);
+  arg10 = static_cast< double >(REAL(gammaBump)[0]);
+  arg11 = static_cast< double >(REAL(vegaBump)[0]);
+  arg12 = static_cast< double >(REAL(thetaBump)[0]);
+  arg13 = static_cast< double >(REAL(rhoBump)[0]);
+  {
+    try
+    {
+      result = aqBondOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,(std::string const &)*arg8,arg9,arg10,arg11,arg12,arg13);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  
+  
+  
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqInflationCurveCreate__SWIG_0 ( SEXP inflationCurveName, SEXP key1, SEXP value1, SEXP key2, SEXP value2, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(inflationCurveName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(key1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(value1, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(key2, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqInflationCurveCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res5 = swig::asptr(value2, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqInflationCurveCreate" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = aqInflationCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::string,std::allocator< std::string > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqInflationCurveCreate__SWIG_1 ( SEXP inflationCurveName, SEXP key1, SEXP value1, SEXP key2, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(inflationCurveName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(key1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(value1, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(key2, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqInflationCurveCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqInflationCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqInflationCurveCreate__SWIG_2 ( SEXP inflationCurveName, SEXP key1, SEXP value1, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(inflationCurveName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(key1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(value1, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqInflationCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqInflationCurveCalibrationParameters ( SEXP inflationCurveName, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(inflationCurveName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationCurveCalibrationParameters" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationCurveCalibrationParameters" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqInflationCurveCalibrationParameters((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqInflationObjectCPI ( SEXP inflationCurveName, SEXP date, SEXP inflationResetType, SEXP lag, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(inflationCurveName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationObjectCPI" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectCPI" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(date, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationObjectCPI" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectCPI" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(inflationResetType, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationObjectCPI" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectCPI" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(lag, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqInflationObjectCPI" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectCPI" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqInflationObjectCPI((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqInflationObjectZCSwapPV ( SEXP swapName, SEXP inflationCurveName, SEXP valuationSettingsLVB, SEXP legName, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swapName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationObjectZCSwapPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(inflationCurveName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationObjectZCSwapPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationObjectZCSwapPV" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPV" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(legName, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqInflationObjectZCSwapPV" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPV" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqInflationObjectZCSwapPV((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqInflationObjectZCSwapPVFromIndex ( SEXP swapName, SEXP valuationSettingsLVB, SEXP baseIndex, SEXP resetIndex, SEXP legName, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  std::string *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swapName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = static_cast< double >(REAL(baseIndex)[0]);
+  arg4 = static_cast< double >(REAL(resetIndex)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(legName, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapPVFromIndex" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqInflationObjectZCSwapPVFromIndex((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,arg4,(std::string const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqInflationObjectZCSwapParRate ( SEXP swapName, SEXP inflationCurveName, SEXP valuationSettingsLVB, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swapName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationObjectZCSwapParRate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapParRate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(inflationCurveName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationObjectZCSwapParRate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapParRate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res3 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqInflationObjectZCSwapParRate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapParRate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqInflationObjectZCSwapParRate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqInflationObjectZCSwapParRateFromIndex ( SEXP swapName, SEXP valuationSettingsLVB, SEXP baseIndex, SEXP resetIndex, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(swapName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqInflationObjectZCSwapParRateFromIndex" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapParRateFromIndex" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
+    res2 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqInflationObjectZCSwapParRateFromIndex" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqInflationObjectZCSwapParRateFromIndex" "', argument " "2"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = static_cast< double >(REAL(baseIndex)[0]);
+  arg4 = static_cast< double >(REAL(resetIndex)[0]);
+  {
+    try
+    {
+      result = (double)aqInflationObjectZCSwapParRateFromIndex((std::string const &)*arg1,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg2,arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqSwaptionObjectCreate__SWIG_0 ( SEXP objectName, SEXP tradeLVB, SEXP validateKeys, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(tradeLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = LOGICAL(validateKeys)[0] ? true : false;
+  {
+    try
+    {
+      result = aqSwaptionObjectCreate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqSwaptionObjectCreate__SWIG_1 ( SEXP objectName, SEXP tradeLVB, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(tradeLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqSwaptionObjectCreate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqSwaptionObjectDisplay ( SEXP objectName, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqSwaptionObjectDisplay((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqSwaptionObjectPV ( SEXP objectName, SEXP valuationSettingsLVB, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectPV" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectPV" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectPV((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqSwaptionObjectImpliedVol ( SEXP objectName, SEXP price, SEXP valuationSettingsLVB, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  double arg2 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectImpliedVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectImpliedVol" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  arg2 = static_cast< double >(REAL(price)[0]);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqSwaptionObjectImpliedVol" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectImpliedVol" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectImpliedVol((std::string const &)*arg1,arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqSwaptionObjectDelta ( SEXP objectName, SEXP valuationSettingsLVB, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectDelta" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectDelta" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectDelta" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectDelta" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectDelta((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqSwaptionObjectGamma ( SEXP objectName, SEXP valuationSettingsLVB, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectGamma" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectGamma" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectGamma" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectGamma" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectGamma((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqSwaptionObjectVega ( SEXP objectName, SEXP valuationSettingsLVB, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectVega" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectVega" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectVega" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectVega" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectVega((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqSwaptionObjectTheta ( SEXP objectName, SEXP valuationSettingsLVB, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqSwaptionObjectTheta" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectTheta" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(valuationSettingsLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqSwaptionObjectTheta" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqSwaptionObjectTheta" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqSwaptionObjectTheta((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectCreate__SWIG_0 ( SEXP objectName, SEXP tradeLVB, SEXP validateKeys, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(tradeLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = LOGICAL(validateKeys)[0] ? true : false;
+  {
+    try
+    {
+      result = aqCapFloorObjectCreate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectCreate__SWIG_1 ( SEXP objectName, SEXP tradeLVB, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(tradeLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectCreate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectDisplay ( SEXP objectName, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplay((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectDisplayCashflows__SWIG_0 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP fixingTableName, SEXP showColumnHeaders, SEXP columnList, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  std::vector< std::string,std::allocator< std::string > > *arg6 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(fixingTableName, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res6 = swig::asptr(columnList, &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,(std::vector< std::string,std::allocator< std::string > > const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectDisplayCashflows__SWIG_1 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP fixingTableName, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(fixingTableName, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectDisplayCashflows__SWIG_2 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP fixingTableName, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(fixingTableName, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectDisplayCashflows__SWIG_3 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflows" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflows((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectPV__SWIG_0 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP fixingTableName, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(fixingTableName, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectPV" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCapFloorObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectPV__SWIG_1 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPV" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCapFloorObjectPV((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectGreeksAnalytical__SWIG_0 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP fixingTableName, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(fixingTableName, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksAnalytical((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectGreeksAnalytical__SWIG_1 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP fixingTableName, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(fixingTableName, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksAnalytical((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectGreeksAnalytical__SWIG_2 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalytical" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksAnalytical((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectGreeks__SWIG_0 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP deltaBump, SEXP gammaBump, SEXP vegaBump, SEXP thetaBump, SEXP fixingTableName, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  bool arg9 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = static_cast< double >(REAL(deltaBump)[0]);
+  arg5 = static_cast< double >(REAL(gammaBump)[0]);
+  arg6 = static_cast< double >(REAL(vegaBump)[0]);
+  arg7 = static_cast< double >(REAL(thetaBump)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(fixingTableName, &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqCapFloorObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  arg9 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5,arg6,arg7,(std::string const &)*arg8,arg9);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  
+  
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectGreeks__SWIG_1 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP deltaBump, SEXP gammaBump, SEXP vegaBump, SEXP thetaBump, SEXP fixingTableName, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::string *arg8 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = static_cast< double >(REAL(deltaBump)[0]);
+  arg5 = static_cast< double >(REAL(gammaBump)[0]);
+  arg6 = static_cast< double >(REAL(vegaBump)[0]);
+  arg7 = static_cast< double >(REAL(thetaBump)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res8 = SWIG_AsPtr_std_string(fixingTableName, &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqCapFloorObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "8"" of type '" "std::string const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5,arg6,arg7,(std::string const &)*arg8);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  
+  
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectGreeks__SWIG_2 ( SEXP objectName, SEXP volObjectName, SEXP curveCollection, SEXP deltaBump, SEXP gammaBump, SEXP vegaBump, SEXP thetaBump, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeks" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = static_cast< double >(REAL(deltaBump)[0]);
+  arg5 = static_cast< double >(REAL(gammaBump)[0]);
+  arg6 = static_cast< double >(REAL(vegaBump)[0]);
+  arg7 = static_cast< double >(REAL(thetaBump)[0]);
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5,arg6,arg7);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_0 ( SEXP objectName, SEXP volObjectName, SEXP rateData, SEXP showColumnHeaders, SEXP columnList, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  bool arg4 ;
+  std::vector< std::string,std::allocator< std::string > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(rateData, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res5 = swig::asptr(columnList, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflowsFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3,arg4,(std::vector< std::string,std::allocator< std::string > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_1 ( SEXP objectName, SEXP volObjectName, SEXP rateData, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(rateData, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflowsFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_2 ( SEXP objectName, SEXP volObjectName, SEXP rateData, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(rateData, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectDisplayCashflowsFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectDisplayCashflowsFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectGreeksAnalyticalFromRates__SWIG_0 ( SEXP objectName, SEXP volObjectName, SEXP rateData, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(rateData, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksAnalyticalFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectGreeksAnalyticalFromRates__SWIG_1 ( SEXP objectName, SEXP volObjectName, SEXP rateData, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(rateData, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksAnalyticalFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksAnalyticalFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectGreeksFromRates__SWIG_0 ( SEXP objectName, SEXP volObjectName, SEXP rateData, SEXP deltaBump, SEXP gammaBump, SEXP vegaBump, SEXP thetaBump, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  bool arg8 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(rateData, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = static_cast< double >(REAL(deltaBump)[0]);
+  arg5 = static_cast< double >(REAL(gammaBump)[0]);
+  arg6 = static_cast< double >(REAL(vegaBump)[0]);
+  arg7 = static_cast< double >(REAL(thetaBump)[0]);
+  arg8 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3,arg4,arg5,arg6,arg7,arg8);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectGreeksFromRates__SWIG_1 ( SEXP objectName, SEXP volObjectName, SEXP rateData, SEXP deltaBump, SEXP gammaBump, SEXP vegaBump, SEXP thetaBump, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(rateData, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectGreeksFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = static_cast< double >(REAL(deltaBump)[0]);
+  arg5 = static_cast< double >(REAL(gammaBump)[0]);
+  arg6 = static_cast< double >(REAL(vegaBump)[0]);
+  arg7 = static_cast< double >(REAL(thetaBump)[0]);
+  {
+    try
+    {
+      result = aqCapFloorObjectGreeksFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3,arg4,arg5,arg6,arg7);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCapFloorObjectPVFromRates ( SEXP objectName, SEXP volObjectName, SEXP rateData, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCapFloorObjectPVFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPVFromRates" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(volObjectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCapFloorObjectPVFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPVFromRates" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
+    res3 = swig::asptr(rateData, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCapFloorObjectPVFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCapFloorObjectPVFromRates" "', argument " "3"" of type '" "std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqCapFloorObjectPVFromRates((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXCurveCreate ( SEXP objectName, SEXP curveGeneratorName, SEXP curveMarketDataName, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXCurveCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(curveGeneratorName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXCurveCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(curveMarketDataName, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXCurveCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXCurveCreate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXCurveCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwardsFromDiscountCurves__SWIG_0 ( SEXP objectName, SEXP settleDatesOrTenors, SEXP baseCurveCollection, SEXP termCurveCollection, SEXP showColumnHeaders, SEXP columnList, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  std::vector< std::string,std::allocator< std::string > > *arg6 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res6 = swig::asptr(columnList, &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,(std::vector< std::string,std::allocator< std::string > > const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwardsFromDiscountCurves__SWIG_1 ( SEXP objectName, SEXP settleDatesOrTenors, SEXP baseCurveCollection, SEXP termCurveCollection, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  bool arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwardsFromDiscountCurves__SWIG_2 ( SEXP objectName, SEXP settleDatesOrTenors, SEXP baseCurveCollection, SEXP termCurveCollection, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwards__SWIG_0 ( SEXP objectName, SEXP settleDatesOrTenors, SEXP showColumnHeaders, SEXP columnList, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  std::vector< std::string,std::allocator< std::string > > *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res4 = swig::asptr(columnList, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwards" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwards((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3,(std::vector< std::string,std::allocator< std::string > > const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwards__SWIG_1 ( SEXP objectName, SEXP settleDatesOrTenors, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectForwards((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwards__SWIG_2 ( SEXP objectName, SEXP settleDatesOrTenors, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwards" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwards((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwapFromDiscountCurves__SWIG_0 ( SEXP objectName, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP baseCurveCollection, SEXP termCurveCollection, SEXP outputFarLeg, SEXP showColumnHeaders, SEXP columnList, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  bool arg6 ;
+  bool arg7 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  arg6 = LOGICAL(outputFarLeg)[0] ? true : false;
+  arg7 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(columnList, &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectSwapFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  
+  
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwapFromDiscountCurves__SWIG_1 ( SEXP objectName, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP baseCurveCollection, SEXP termCurveCollection, SEXP outputFarLeg, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  bool arg6 ;
+  bool arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  arg6 = LOGICAL(outputFarLeg)[0] ? true : false;
+  arg7 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectSwapFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6,arg7);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwapFromDiscountCurves__SWIG_2 ( SEXP objectName, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP baseCurveCollection, SEXP termCurveCollection, SEXP outputFarLeg, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  bool arg6 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromDiscountCurves" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  arg6 = LOGICAL(outputFarLeg)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectSwapFromDiscountCurves((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwap__SWIG_0 ( SEXP objectName, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP outputFarLeg, SEXP showColumnHeaders, SEXP columnList, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  std::vector< std::string,std::allocator< std::string > > *arg6 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = LOGICAL(outputFarLeg)[0] ? true : false;
+  arg5 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res6 = swig::asptr(columnList, &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqFXObjectSwap" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectSwap((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5,(std::vector< std::string,std::allocator< std::string > > const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwap__SWIG_1 ( SEXP objectName, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP outputFarLeg, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = LOGICAL(outputFarLeg)[0] ? true : false;
+  arg5 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectSwap((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwap__SWIG_2 ( SEXP objectName, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP outputFarLeg, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwap" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = LOGICAL(outputFarLeg)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectSwap((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwardsFromXccyCurveObject__SWIG_0 ( SEXP xccyCurveObjectName, SEXP settleDatesOrTenors, SEXP xccyCurveSwapRateBumpSize, SEXP showColumnHeaders, SEXP columnList, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  bool arg4 ;
+  std::vector< std::string,std::allocator< std::string > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(xccyCurveObjectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = static_cast< double >(REAL(xccyCurveSwapRateBumpSize)[0]);
+  arg4 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res5 = swig::asptr(columnList, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3,arg4,(std::vector< std::string,std::allocator< std::string > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwardsFromXccyCurveObject__SWIG_1 ( SEXP xccyCurveObjectName, SEXP settleDatesOrTenors, SEXP xccyCurveSwapRateBumpSize, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(xccyCurveObjectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = static_cast< double >(REAL(xccyCurveSwapRateBumpSize)[0]);
+  arg4 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwardsFromXccyCurveObject__SWIG_2 ( SEXP xccyCurveObjectName, SEXP settleDatesOrTenors, SEXP xccyCurveSwapRateBumpSize, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(xccyCurveObjectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = static_cast< double >(REAL(xccyCurveSwapRateBumpSize)[0]);
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwardsFromXccyCurve__SWIG_0 ( SEXP baseCurveCollection, SEXP baseCurveIndex, SEXP termCurveCollection, SEXP termCurveIndex, SEXP fxSpotRate, SEXP pipSize, SEXP xccyCurveSwapRateBumpSize, SEXP settleDatesOrTenors, SEXP showColumnHeaders, SEXP columnList, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  bool arg9 ;
+  std::vector< std::string,std::allocator< std::string > > *arg10 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  int res10 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(baseCurveIndex, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(termCurveIndex, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = static_cast< double >(REAL(fxSpotRate)[0]);
+  arg6 = static_cast< double >(REAL(pipSize)[0]);
+  arg7 = static_cast< double >(REAL(xccyCurveSwapRateBumpSize)[0]);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  arg9 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res10 = swig::asptr(columnList, &ptr);
+    if (!SWIG_IsOK(res10)) {
+      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "10"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "10"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg10 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8,arg9,(std::vector< std::string,std::allocator< std::string > > const &)*arg10);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  
+  
+  
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwardsFromXccyCurve__SWIG_1 ( SEXP baseCurveCollection, SEXP baseCurveIndex, SEXP termCurveCollection, SEXP termCurveIndex, SEXP fxSpotRate, SEXP pipSize, SEXP xccyCurveSwapRateBumpSize, SEXP settleDatesOrTenors, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  bool arg9 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(baseCurveIndex, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(termCurveIndex, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = static_cast< double >(REAL(fxSpotRate)[0]);
+  arg6 = static_cast< double >(REAL(pipSize)[0]);
+  arg7 = static_cast< double >(REAL(xccyCurveSwapRateBumpSize)[0]);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  arg9 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8,arg9);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  
+  
+  
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectForwardsFromXccyCurve__SWIG_2 ( SEXP baseCurveCollection, SEXP baseCurveIndex, SEXP termCurveCollection, SEXP termCurveIndex, SEXP fxSpotRate, SEXP pipSize, SEXP xccyCurveSwapRateBumpSize, SEXP settleDatesOrTenors, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(baseCurveIndex, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(termCurveIndex, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = static_cast< double >(REAL(fxSpotRate)[0]);
+  arg6 = static_cast< double >(REAL(pipSize)[0]);
+  arg7 = static_cast< double >(REAL(xccyCurveSwapRateBumpSize)[0]);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(settleDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectForwardsFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectForwardsFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  
+  
+  
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwapFromXccyCurveObject__SWIG_0 ( SEXP xccyCurveObjectName, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP outputFarLeg, SEXP showColumnHeaders, SEXP columnList, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  std::vector< std::string,std::allocator< std::string > > *arg6 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(xccyCurveObjectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = LOGICAL(outputFarLeg)[0] ? true : false;
+  arg5 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res6 = swig::asptr(columnList, &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "6"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5,(std::vector< std::string,std::allocator< std::string > > const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwapFromXccyCurveObject__SWIG_1 ( SEXP xccyCurveObjectName, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP outputFarLeg, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(xccyCurveObjectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = LOGICAL(outputFarLeg)[0] ? true : false;
+  arg5 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwapFromXccyCurveObject__SWIG_2 ( SEXP xccyCurveObjectName, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP outputFarLeg, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(xccyCurveObjectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurveObject" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = LOGICAL(outputFarLeg)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurveObject((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwapFromXccyCurve__SWIG_0 ( SEXP baseCurveCollection, SEXP baseCurveIndex, SEXP termCurveCollection, SEXP termCurveIndex, SEXP fxSpotRate, SEXP pipSize, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP outputFarLeg, SEXP showColumnHeaders, SEXP columnList, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  std::vector< std::string,std::allocator< std::string > > *arg7 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  bool arg9 ;
+  bool arg10 ;
+  std::vector< std::string,std::allocator< std::string > > *arg11 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  int res11 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(baseCurveIndex, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(termCurveIndex, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = static_cast< double >(REAL(fxSpotRate)[0]);
+  arg6 = static_cast< double >(REAL(pipSize)[0]);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res7 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  arg9 = LOGICAL(outputFarLeg)[0] ? true : false;
+  arg10 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res11 = swig::asptr(columnList, &ptr);
+    if (!SWIG_IsOK(res11)) {
+      SWIG_exception_fail(SWIG_ArgError(res11), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "11"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "11"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg11 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,(std::vector< std::string,std::allocator< std::string > > const &)*arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8,arg9,arg10,(std::vector< std::string,std::allocator< std::string > > const &)*arg11);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  
+  
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  
+  
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwapFromXccyCurve__SWIG_1 ( SEXP baseCurveCollection, SEXP baseCurveIndex, SEXP termCurveCollection, SEXP termCurveIndex, SEXP fxSpotRate, SEXP pipSize, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP outputFarLeg, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  std::vector< std::string,std::allocator< std::string > > *arg7 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  bool arg9 ;
+  bool arg10 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(baseCurveIndex, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(termCurveIndex, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = static_cast< double >(REAL(fxSpotRate)[0]);
+  arg6 = static_cast< double >(REAL(pipSize)[0]);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res7 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  arg9 = LOGICAL(outputFarLeg)[0] ? true : false;
+  arg10 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,(std::vector< std::string,std::allocator< std::string > > const &)*arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8,arg9,arg10);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  
+  
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSwapFromXccyCurve__SWIG_2 ( SEXP baseCurveCollection, SEXP baseCurveIndex, SEXP termCurveCollection, SEXP termCurveIndex, SEXP fxSpotRate, SEXP pipSize, SEXP nearLegSettlementDatesOrTenors, SEXP farLegSettlementDatesOrTenors, SEXP outputFarLeg, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  double arg5 ;
+  double arg6 ;
+  std::vector< std::string,std::allocator< std::string > > *arg7 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg8 = 0 ;
+  bool arg9 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int res8 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(baseCurveIndex, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(termCurveIndex, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = static_cast< double >(REAL(fxSpotRate)[0]);
+  arg6 = static_cast< double >(REAL(pipSize)[0]);
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res7 = swig::asptr(nearLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "7"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg7 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res8 = swig::asptr(farLegSettlementDatesOrTenors, &ptr);
+    if (!SWIG_IsOK(res8)) {
+      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSwapFromXccyCurve" "', argument " "8"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg8 = ptr;
+  }
+  arg9 = LOGICAL(outputFarLeg)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFXObjectSwapFromXccyCurve((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,arg5,arg6,(std::vector< std::string,std::allocator< std::string > > const &)*arg7,(std::vector< std::string,std::allocator< std::string > > const &)*arg8,arg9);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  
+  
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectSpotToAsOfDate ( SEXP fxSpot, SEXP fxSpotDate, SEXP baseCurveCollection, SEXP baseDiscountCurveIndex, SEXP termCurveCollection, SEXP termDiscountCurveIndex, SEXP s_swig_copy)
+{
+  double result;
+  double arg1 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  arg1 = static_cast< double >(REAL(fxSpot)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(fxSpotDate, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(baseDiscountCurveIndex, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(termDiscountCurveIndex, &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectSpotToAsOfDate" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqFXObjectSpotToAsOfDate(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFXObjectAsOfDateToSpot ( SEXP fxAsOfDateRate, SEXP fxSpotDate, SEXP baseCurveCollection, SEXP baseDiscountCurveIndex, SEXP termCurveCollection, SEXP termDiscountCurveIndex, SEXP s_swig_copy)
+{
+  double result;
+  double arg1 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  std::string *arg6 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  arg1 = static_cast< double >(REAL(fxAsOfDateRate)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(fxSpotDate, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(baseCurveCollection, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(baseDiscountCurveIndex, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(termCurveCollection, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(termDiscountCurveIndex, &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFXObjectAsOfDateToSpot" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqFXObjectAsOfDateToSpot(arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectCreate__SWIG_0 ( SEXP objectName, SEXP volLVB, SEXP validateKeys, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(volLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = LOGICAL(validateKeys)[0] ? true : false;
+  {
+    try
+    {
+      result = aqVolatilityObjectCreate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectCreate__SWIG_1 ( SEXP objectName, SEXP volLVB, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(volLVB, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectCreate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectSabrMarketDataCreate__SWIG_0 ( SEXP objectName, SEXP key1, SEXP value1, SEXP key2, SEXP value2, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(key1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(value1, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(key2, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res5 = swig::asptr(value2, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrMarketDataCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::string,std::allocator< std::string > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectSabrMarketDataCreate__SWIG_1 ( SEXP objectName, SEXP key1, SEXP value1, SEXP key2, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(key1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(value1, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(key2, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrMarketDataCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectSabrMarketDataCreate__SWIG_2 ( SEXP objectName, SEXP key1, SEXP value1, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(key1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(value1, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrMarketDataCreate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectSabrModelCalibrate__SWIG_0 ( SEXP objectName, SEXP key1, SEXP value1, SEXP key2, SEXP value2, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(key1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(value1, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(key2, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res5 = swig::asptr(value2, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "5"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrModelCalibrate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4,(std::vector< std::string,std::allocator< std::string > > const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectSabrModelCalibrate__SWIG_1 ( SEXP objectName, SEXP key1, SEXP value1, SEXP key2, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(key1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(value1, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(key2, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrModelCalibrate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectSabrModelCalibrate__SWIG_2 ( SEXP objectName, SEXP key1, SEXP value1, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(key1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(value1, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelCalibrate" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrModelCalibrate((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectSabrVolatility ( SEXP volSurfaceName, SEXP expiry, SEXP tenor, SEXP strike, SEXP forward, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(volSurfaceName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(expiry, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(tenor, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrVolatility" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = static_cast< double >(REAL(strike)[0]);
+  arg5 = static_cast< double >(REAL(forward)[0]);
+  {
+    try
+    {
+      result = (double)aqVolatilityObjectSabrVolatility((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectSabrParameter ( SEXP volSurfaceName, SEXP expiry, SEXP tenor, SEXP paramName, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(volSurfaceName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrParameter" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrParameter" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(expiry, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrParameter" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrParameter" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(tenor, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqVolatilityObjectSabrParameter" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrParameter" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(paramName, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqVolatilityObjectSabrParameter" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrParameter" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqVolatilityObjectSabrParameter((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectSabrMarketDataDisplay ( SEXP marketDataObjectName, SEXP marketDataKey, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(marketDataObjectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrMarketDataDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(marketDataKey, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrMarketDataDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrMarketDataDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrMarketDataDisplay((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqVolatilityObjectSabrModelDisplay ( SEXP modelObjectName, SEXP modelKey, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(modelObjectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqVolatilityObjectSabrModelDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(modelKey, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqVolatilityObjectSabrModelDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqVolatilityObjectSabrModelDisplay" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqVolatilityObjectSabrModelDisplay((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqBondFutureOptionObjectPV ( SEXP objectName, SEXP valuationSettings, SEXP bondFuturePrice, SEXP discountRate, SEXP discountDayCount, SEXP s_swig_copy)
+{
+  double result;
+  std::string *arg1 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg2 = 0 ;
+  double arg3 ;
+  double arg4 ;
+  std::string *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondFutureOptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectPV" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res2 = swig::asptr(valuationSettings, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondFutureOptionObjectPV" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectPV" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  arg3 = static_cast< double >(REAL(bondFuturePrice)[0]);
+  arg4 = static_cast< double >(REAL(discountRate)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(discountDayCount, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqBondFutureOptionObjectPV" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectPV" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = (double)aqBondFutureOptionObjectPV((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,arg3,arg4,(std::string const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  
+  
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqBondFutureOptionObjectGreeks__SWIG_0 ( SEXP greekType, SEXP objectName, SEXP valuationSettings, SEXP bondFuturePrice, SEXP discountRate, SEXP discountDayCount, SEXP deltaBump, SEXP gammaBump, SEXP vegaBump, SEXP thetaBump, SEXP rhoBump, SEXP showColumnHeaders, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  double arg8 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  bool arg12 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(greekType, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(valuationSettings, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = static_cast< double >(REAL(bondFuturePrice)[0]);
+  arg5 = static_cast< double >(REAL(discountRate)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(discountDayCount, &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  arg7 = static_cast< double >(REAL(deltaBump)[0]);
+  arg8 = static_cast< double >(REAL(gammaBump)[0]);
+  arg9 = static_cast< double >(REAL(vegaBump)[0]);
+  arg10 = static_cast< double >(REAL(thetaBump)[0]);
+  arg11 = static_cast< double >(REAL(rhoBump)[0]);
+  arg12 = LOGICAL(showColumnHeaders)[0] ? true : false;
+  {
+    try
+    {
+      result = aqBondFutureOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,arg8,arg9,arg10,arg11,arg12);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  
+  
+  
+  
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqBondFutureOptionObjectGreeks__SWIG_1 ( SEXP greekType, SEXP objectName, SEXP valuationSettings, SEXP bondFuturePrice, SEXP discountRate, SEXP discountDayCount, SEXP deltaBump, SEXP gammaBump, SEXP vegaBump, SEXP thetaBump, SEXP rhoBump, SEXP s_swig_copy)
+{
+  std::vector< std::string,std::allocator< std::string > > result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::vector< std::string,std::allocator< std::string > > *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  std::string *arg6 = 0 ;
+  double arg7 ;
+  double arg8 ;
+  double arg9 ;
+  double arg10 ;
+  double arg11 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res6 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(greekType, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(objectName, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
+    res3 = swig::asptr(valuationSettings, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  arg4 = static_cast< double >(REAL(bondFuturePrice)[0]);
+  arg5 = static_cast< double >(REAL(discountRate)[0]);
+  {
+    std::string *ptr = (std::string *)0;
+    res6 = SWIG_AsPtr_std_string(discountDayCount, &ptr);
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqBondFutureOptionObjectGreeks" "', argument " "6"" of type '" "std::string const &""'"); 
+    }
+    arg6 = ptr;
+  }
+  arg7 = static_cast< double >(REAL(deltaBump)[0]);
+  arg8 = static_cast< double >(REAL(gammaBump)[0]);
+  arg9 = static_cast< double >(REAL(vegaBump)[0]);
+  arg10 = static_cast< double >(REAL(thetaBump)[0]);
+  arg11 = static_cast< double >(REAL(rhoBump)[0]);
+  {
+    try
+    {
+      result = aqBondFutureOptionObjectGreeks((std::string const &)*arg1,(std::string const &)*arg2,(std::vector< std::string,std::allocator< std::string > > const &)*arg3,arg4,arg5,(std::string const &)*arg6,arg7,arg8,arg9,arg10,arg11);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  
+  
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  
+  
+  
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFutureTickerCurrent__SWIG_0 ( SEXP valuationDate, SEXP includeToday, SEXP showYearWithTwoDigits, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(valuationDate, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  arg2 = LOGICAL(includeToday)[0] ? true : false;
+  arg3 = LOGICAL(showYearWithTwoDigits)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFutureTickerCurrent((std::string const &)*arg1,arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFutureTickerCurrent__SWIG_1 ( SEXP valuationDate, SEXP includeToday, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(valuationDate, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  arg2 = LOGICAL(includeToday)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFutureTickerCurrent((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFutureTickerCurrent__SWIG_2 ( SEXP valuationDate, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(valuationDate, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerCurrent" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFutureTickerCurrent((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFutureTickerNext__SWIG_0 ( SEXP referenceDate, SEXP showYearWithTwoDigits, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(referenceDate, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerNext" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerNext" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  arg2 = LOGICAL(showYearWithTwoDigits)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFutureTickerNext((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFutureTickerNext__SWIG_1 ( SEXP referenceDate, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(referenceDate, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerNext" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerNext" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFutureTickerNext((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFutureTickerPrevious__SWIG_0 ( SEXP referenceDate, SEXP showYearWithTwoDigits, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  bool arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(referenceDate, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerPrevious" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerPrevious" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  arg2 = LOGICAL(showYearWithTwoDigits)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFutureTickerPrevious((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFutureTickerPrevious__SWIG_1 ( SEXP referenceDate, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(referenceDate, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerPrevious" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerPrevious" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqFutureTickerPrevious((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFutureTickerNth__SWIG_0 ( SEXP valuationDate, SEXP nthIMM, SEXP includeToday, SEXP showYearWithTwoDigits, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  bool arg3 ;
+  bool arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(valuationDate, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  arg2 = static_cast< int >(INTEGER(nthIMM)[0]);
+  arg3 = LOGICAL(includeToday)[0] ? true : false;
+  arg4 = LOGICAL(showYearWithTwoDigits)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFutureTickerNth((std::string const &)*arg1,arg2,arg3,arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFutureTickerNth__SWIG_1 ( SEXP valuationDate, SEXP nthIMM, SEXP includeToday, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  bool arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(valuationDate, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  arg2 = static_cast< int >(INTEGER(nthIMM)[0]);
+  arg3 = LOGICAL(includeToday)[0] ? true : false;
+  {
+    try
+    {
+      result = aqFutureTickerNth((std::string const &)*arg1,arg2,arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqFutureTickerNth__SWIG_2 ( SEXP valuationDate, SEXP nthIMM, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(valuationDate, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqFutureTickerNth" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  arg2 = static_cast< int >(INTEGER(nthIMM)[0]);
+  {
+    try
+    {
+      result = aqFutureTickerNth((std::string const &)*arg1,arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqCurveResultsDiscountFactorsDisplayAll ( SEXP curveCollection, SEXP curveIndex, SEXP s_swig_copy)
 {
   std::vector< std::string,std::allocator< std::string > > result;
   std::string *arg1 = 0 ;
@@ -23262,10 +31037,10 @@ R_swig_aqCurvesResultsDisplayDiscountFactors ( SEXP curveCollection, SEXP curveI
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(curveCollection, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCurvesResultsDisplayDiscountFactors" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCurveResultsDiscountFactorsDisplayAll" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurvesResultsDisplayDiscountFactors" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveResultsDiscountFactorsDisplayAll" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -23273,17 +31048,17 @@ R_swig_aqCurvesResultsDisplayDiscountFactors ( SEXP curveCollection, SEXP curveI
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(curveIndex, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCurvesResultsDisplayDiscountFactors" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCurveResultsDiscountFactorsDisplayAll" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurvesResultsDisplayDiscountFactors" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveResultsDiscountFactorsDisplayAll" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   {
     try
     {
-      result = aqCurvesResultsDisplayDiscountFactors((std::string const &)*arg1,(std::string const &)*arg2);
+      result = aqCurveResultsDiscountFactorsDisplayAll((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -23539,7 +31314,7 @@ R_swig_aqCurveObjectCalibrate ( SEXP objectName, SEXP aqObjCurveGeneratorName, S
 
 
 SWIGEXPORT SEXP
-R_swig_aqCurveMarketDataCreate ( SEXP objectName, SEXP key1, SEXP value1, SEXP key2, SEXP value2, SEXP key3, SEXP value3, SEXP key4, SEXP value4, SEXP s_swig_copy)
+R_swig_aqCurveMarketDataCreate__SWIG_0 ( SEXP objectName, SEXP key1, SEXP value1, SEXP key2, SEXP value2, SEXP key3, SEXP value3, SEXP key4, SEXP value4, SEXP s_swig_copy)
 {
   std::string result;
   std::string *arg1 = 0 ;
@@ -23691,7 +31466,7 @@ R_swig_aqCurveMarketDataCreate ( SEXP objectName, SEXP key1, SEXP value1, SEXP k
 
 
 SWIGEXPORT SEXP
-R_swig_aqObjCurvesMarketDataCreateUsingMultipleBlocks ( SEXP objectName, SEXP keyVector, SEXP valueVector, SEXP s_swig_copy)
+R_swig_aqCurveMarketDataCreate__SWIG_1 ( SEXP objectName, SEXP keyVector, SEXP valueVector, SEXP s_swig_copy)
 {
   std::string result;
   std::string *arg1 = 0 ;
@@ -23708,10 +31483,10 @@ R_swig_aqObjCurvesMarketDataCreateUsingMultipleBlocks ( SEXP objectName, SEXP ke
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(objectName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqCurveMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveMarketDataCreate" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -23719,10 +31494,10 @@ R_swig_aqObjCurvesMarketDataCreateUsingMultipleBlocks ( SEXP objectName, SEXP ke
     std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
     res2 = swig::asptr(keyVector, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqCurveMarketDataCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveMarketDataCreate" "', argument " "2"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
     }
     arg2 = ptr;
   }
@@ -23730,17 +31505,17 @@ R_swig_aqObjCurvesMarketDataCreateUsingMultipleBlocks ( SEXP objectName, SEXP ke
     std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *ptr = (std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > *)0;
     res3 = swig::asptr(valueVector, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqCurveMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqObjCurvesMarketDataCreateUsingMultipleBlocks" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqCurveMarketDataCreate" "', argument " "3"" of type '" "std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &""'"); 
     }
     arg3 = ptr;
   }
   {
     try
     {
-      result = aqObjCurvesMarketDataCreateUsingMultipleBlocks((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3);
+      result = aqCurveMarketDataCreate((std::string const &)*arg1,(std::vector< std::string,std::allocator< std::string > > const &)*arg2,(std::vector< std::vector< std::string,std::allocator< std::string > >,std::allocator< std::vector< std::string,std::allocator< std::string > > > > const &)*arg3);
     }
     catch (const std::exception& e)
     {
@@ -24096,7 +31871,7 @@ R_swig_aqCurveObjectDiscountFactorsWithSpread ( SEXP paymentDates, SEXP curveCol
 
 
 SWIGEXPORT SEXP
-R_swig_aqToolObjectGridDisplay__SWIG_0 ( SEXP objectName, SEXP displayColumnNames, SEXP s_swig_copy)
+R_swig_aqGridObjectDisplay__SWIG_0 ( SEXP objectName, SEXP displayColumnNames, SEXP s_swig_copy)
 {
   std::vector< std::string,std::allocator< std::string > > result;
   std::string *arg1 = 0 ;
@@ -24113,23 +31888,23 @@ R_swig_aqToolObjectGridDisplay__SWIG_0 ( SEXP objectName, SEXP displayColumnName
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(objectName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolObjectGridDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqGridObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolObjectGridDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGridObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
   ecode2 = SWIG_AsVal_bool(displayColumnNames, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqToolObjectGridDisplay" "', argument " "2"" of type '" "bool""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "aqGridObjectDisplay" "', argument " "2"" of type '" "bool""'");
   } 
   temp2 = static_cast< bool >(val2);
   arg2 = &temp2;
   {
     try
     {
-      result = aqToolObjectGridDisplay((std::string const &)*arg1,(bool const &)*arg2);
+      result = aqGridObjectDisplay((std::string const &)*arg1,(bool const &)*arg2);
     }
     catch (const std::exception& e)
     {
@@ -24147,7 +31922,7 @@ R_swig_aqToolObjectGridDisplay__SWIG_0 ( SEXP objectName, SEXP displayColumnName
 
 
 SWIGEXPORT SEXP
-R_swig_aqToolObjectGridDisplay__SWIG_1 ( SEXP objectName, SEXP s_swig_copy)
+R_swig_aqGridObjectDisplay__SWIG_1 ( SEXP objectName, SEXP s_swig_copy)
 {
   std::vector< std::string,std::allocator< std::string > > result;
   std::string *arg1 = 0 ;
@@ -24160,17 +31935,17 @@ R_swig_aqToolObjectGridDisplay__SWIG_1 ( SEXP objectName, SEXP s_swig_copy)
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(objectName, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolObjectGridDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqGridObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolObjectGridDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqGridObjectDisplay" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
   {
     try
     {
-      result = aqToolObjectGridDisplay((std::string const &)*arg1);
+      result = aqGridObjectDisplay((std::string const &)*arg1);
     }
     catch (const std::exception& e)
     {
@@ -24540,19 +32315,23 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_VecString_pop_back", (DL_FUNC) &R_swig_VecString_pop_back, 1},
    {"R_swig_VecVecInteger_pop_back", (DL_FUNC) &R_swig_VecVecInteger_pop_back, 1},
    {"R_swig_VecVecDouble_pop_back", (DL_FUNC) &R_swig_VecVecDouble_pop_back, 1},
-   {"R_swig_aqCurveMarketDataCreate", (DL_FUNC) &R_swig_aqCurveMarketDataCreate, 10},
+   {"R_swig_aqFXCurveCreate", (DL_FUNC) &R_swig_aqFXCurveCreate, 4},
    {"R_swig_aqIRFixingTableCreate", (DL_FUNC) &R_swig_aqIRFixingTableCreate, 6},
    {"R_swig_VecString_pop", (DL_FUNC) &R_swig_VecString_pop, 2},
    {"R_swig_VecVecString_pop", (DL_FUNC) &R_swig_VecVecString_pop, 2},
    {"R_swig_aqCreditModelHazardRate", (DL_FUNC) &R_swig_aqCreditModelHazardRate, 3},
+   {"R_swig_aqSwaptionObjectGamma", (DL_FUNC) &R_swig_aqSwaptionObjectGamma, 3},
+   {"R_swig_aqGeneratorValidate", (DL_FUNC) &R_swig_aqGeneratorValidate, 3},
    {"R_swig_aqDateBusinessDays", (DL_FUNC) &R_swig_aqDateBusinessDays, 4},
    {"R_swig_VecDouble_back", (DL_FUNC) &R_swig_VecDouble_back, 2},
    {"R_swig_VecVecDouble_back", (DL_FUNC) &R_swig_VecVecDouble_back, 2},
+   {"R_swig_aqVolatilityObjectSabrParameter", (DL_FUNC) &R_swig_aqVolatilityObjectSabrParameter, 5},
    {"R_swig_aqMathInterpolation", (DL_FUNC) &R_swig_aqMathInterpolation, 5},
    {"R_swig_aqObjectSave", (DL_FUNC) &R_swig_aqObjectSave, 4},
    {"R_swig_aqCurveDualBootstrap", (DL_FUNC) &R_swig_aqCurveDualBootstrap, 28},
    {"R_swig_getInt", (DL_FUNC) &R_swig_getInt, 1},
    {"R_swig_aqToolVersion", (DL_FUNC) &R_swig_aqToolVersion, 1},
+   {"R_swig_aqVolatilityObjectSabrVolatility", (DL_FUNC) &R_swig_aqVolatilityObjectSabrVolatility, 6},
    {"R_swig_VecVecString_empty", (DL_FUNC) &R_swig_VecVecString_empty, 2},
    {"R_swig_VecString_empty", (DL_FUNC) &R_swig_VecString_empty, 2},
    {"R_swig_VecDouble_empty", (DL_FUNC) &R_swig_VecDouble_empty, 2},
@@ -24561,12 +32340,19 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_VecVecInteger_empty", (DL_FUNC) &R_swig_VecVecInteger_empty, 2},
    {"R_swig_aqCurveDiscountFactorsForwardStarting__SWIG_1", (DL_FUNC) &R_swig_aqCurveDiscountFactorsForwardStarting__SWIG_1, 5},
    {"R_swig_aqCurveDiscountFactorsForwardStarting__SWIG_0", (DL_FUNC) &R_swig_aqCurveDiscountFactorsForwardStarting__SWIG_0, 5},
+   {"R_swig_aqCMSObjectPVUsingConvexityAdjustment__SWIG_0", (DL_FUNC) &R_swig_aqCMSObjectPVUsingConvexityAdjustment__SWIG_0, 6},
+   {"R_swig_aqCMSObjectPVUsingConvexityAdjustment__SWIG_1", (DL_FUNC) &R_swig_aqCMSObjectPVUsingConvexityAdjustment__SWIG_1, 5},
+   {"R_swig_aqFXObjectForwardsFromXccyCurveObject__SWIG_0", (DL_FUNC) &R_swig_aqFXObjectForwardsFromXccyCurveObject__SWIG_0, 6},
+   {"R_swig_aqFXObjectForwardsFromXccyCurveObject__SWIG_1", (DL_FUNC) &R_swig_aqFXObjectForwardsFromXccyCurveObject__SWIG_1, 5},
+   {"R_swig_aqFXObjectForwardsFromXccyCurveObject__SWIG_2", (DL_FUNC) &R_swig_aqFXObjectForwardsFromXccyCurveObject__SWIG_2, 4},
+   {"R_swig_aqCMSObjectParRateUsingConvexityAdjustment__SWIG_0", (DL_FUNC) &R_swig_aqCMSObjectParRateUsingConvexityAdjustment__SWIG_0, 5},
+   {"R_swig_aqCMSObjectParRateUsingConvexityAdjustment__SWIG_1", (DL_FUNC) &R_swig_aqCMSObjectParRateUsingConvexityAdjustment__SWIG_1, 4},
    {"R_swig_aqCurveCalibrateOIS", (DL_FUNC) &R_swig_aqCurveCalibrateOIS, 12},
    {"R_swig_NelsonSiegelSvenssonCalibrationResults_parameters__set", (DL_FUNC) &R_swig_NelsonSiegelSvenssonCalibrationResults_parameters__set, 2},
    {"R_swig_NelsonSiegelSvenssonCalibrationResults_parameters__get", (DL_FUNC) &R_swig_NelsonSiegelSvenssonCalibrationResults_parameters__get, 1},
    {"R_swig_aqSwapObjectPV01", (DL_FUNC) &R_swig_aqSwapObjectPV01, 4},
    {"R_swig_aqSwapObjectAnnuity", (DL_FUNC) &R_swig_aqSwapObjectAnnuity, 4},
-   {"R_swig_aqCreditObjectDefaultSwapRiskyAnnuity", (DL_FUNC) &R_swig_aqCreditObjectDefaultSwapRiskyAnnuity, 4},
+   {"R_swig_aqCDSObjectRiskyAnnuity", (DL_FUNC) &R_swig_aqCDSObjectRiskyAnnuity, 4},
    {"R_swig_aqTRSObjectAnnuity", (DL_FUNC) &R_swig_aqTRSObjectAnnuity, 4},
    {"R_swig_VecString___len__", (DL_FUNC) &R_swig_VecString___len__, 2},
    {"R_swig_VecInteger___len__", (DL_FUNC) &R_swig_VecInteger___len__, 2},
@@ -24580,6 +32366,7 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_VecVecInteger_append", (DL_FUNC) &R_swig_VecVecInteger_append, 2},
    {"R_swig_VecVecDouble_append", (DL_FUNC) &R_swig_VecVecDouble_append, 2},
    {"R_swig_VecVecString_append", (DL_FUNC) &R_swig_VecVecString_append, 2},
+   {"R_swig_aqFXObjectSpotToAsOfDate", (DL_FUNC) &R_swig_aqFXObjectSpotToAsOfDate, 7},
    {"R_swig_echoInt", (DL_FUNC) &R_swig_echoInt, 2},
    {"R_swig_aqBondCurveNelsonSiegelYield", (DL_FUNC) &R_swig_aqBondCurveNelsonSiegelYield, 6},
    {"R_swig_aqBondCurvePolynomialYield", (DL_FUNC) &R_swig_aqBondCurvePolynomialYield, 3},
@@ -24588,12 +32375,13 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_aqObjectClearCache", (DL_FUNC) &R_swig_aqObjectClearCache, 1},
    {"R_swig_aqSwapObjectParSpread", (DL_FUNC) &R_swig_aqSwapObjectParSpread, 5},
    {"R_swig_aqSwapObjectSpread", (DL_FUNC) &R_swig_aqSwapObjectSpread, 5},
-   {"R_swig_aqCreditObjectDefaultSwapParSpread", (DL_FUNC) &R_swig_aqCreditObjectDefaultSwapParSpread, 5},
+   {"R_swig_aqCDSObjectParSpread", (DL_FUNC) &R_swig_aqCDSObjectParSpread, 5},
    {"R_swig_aqCurveObjectDiscountFactorsWithSpread", (DL_FUNC) &R_swig_aqCurveObjectDiscountFactorsWithSpread, 6},
    {"R_swig_getVectorOfVectorOfInt", (DL_FUNC) &R_swig_getVectorOfVectorOfInt, 1},
    {"R_swig_getVectorOfInt", (DL_FUNC) &R_swig_getVectorOfInt, 1},
    {"R_swig_aqCurveDiscountFactorsForwardStartingFromYearFractions__SWIG_1", (DL_FUNC) &R_swig_aqCurveDiscountFactorsForwardStartingFromYearFractions__SWIG_1, 6},
    {"R_swig_aqCurveDiscountFactorsForwardStartingFromYearFractions__SWIG_0", (DL_FUNC) &R_swig_aqCurveDiscountFactorsForwardStartingFromYearFractions__SWIG_0, 6},
+   {"R_swig_aqSwaptionObjectImpliedVol", (DL_FUNC) &R_swig_aqSwaptionObjectImpliedVol, 4},
    {"R_swig_aqCurveCalibrateFXForwards", (DL_FUNC) &R_swig_aqCurveCalibrateFXForwards, 6},
    {"R_swig_testVectorOfVectorOfDoubles", (DL_FUNC) &R_swig_testVectorOfVectorOfDoubles, 2},
    {"R_swig_VecVecString_capacity", (DL_FUNC) &R_swig_VecVecString_capacity, 2},
@@ -24603,6 +32391,7 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_VecVecInteger_capacity", (DL_FUNC) &R_swig_VecVecInteger_capacity, 2},
    {"R_swig_VecVecDouble_capacity", (DL_FUNC) &R_swig_VecVecDouble_capacity, 2},
    {"R_swig_aqToolParallelModeStatus", (DL_FUNC) &R_swig_aqToolParallelModeStatus, 1},
+   {"R_swig_aqInflationObjectZCSwapParRate", (DL_FUNC) &R_swig_aqInflationObjectZCSwapParRate, 4},
    {"R_swig_throwAnIllegalArgumentException", (DL_FUNC) &R_swig_throwAnIllegalArgumentException, 1},
    {"R_swig_throwAnException", (DL_FUNC) &R_swig_throwAnException, 1},
    {"R_swig_aqToolLoadCalendarFile", (DL_FUNC) &R_swig_aqToolLoadCalendarFile, 2},
@@ -24676,7 +32465,6 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_VecDouble_pop", (DL_FUNC) &R_swig_VecDouble_pop, 2},
    {"R_swig_VecVecDouble_pop", (DL_FUNC) &R_swig_VecVecDouble_pop, 2},
    {"R_swig_aqBondObjectYield", (DL_FUNC) &R_swig_aqBondObjectYield, 6},
-   {"R_swig_aqCreditObjectDefaultSwapCS01", (DL_FUNC) &R_swig_aqCreditObjectDefaultSwapCS01, 4},
    {"R_swig_getVectorOfVectorOfString", (DL_FUNC) &R_swig_getVectorOfVectorOfString, 1},
    {"R_swig_getVectorOfString", (DL_FUNC) &R_swig_getVectorOfString, 1},
    {"R_swig_getStdString", (DL_FUNC) &R_swig_getStdString, 1},
@@ -24702,7 +32490,11 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_delete_VecVecDouble", (DL_FUNC) &R_swig_delete_VecVecDouble, 1},
    {"R_swig_aqCurveDiscountFactorsFromYearFractions__SWIG_1", (DL_FUNC) &R_swig_aqCurveDiscountFactorsFromYearFractions__SWIG_1, 5},
    {"R_swig_aqCurveDiscountFactorsFromYearFractions__SWIG_0", (DL_FUNC) &R_swig_aqCurveDiscountFactorsFromYearFractions__SWIG_0, 5},
+   {"R_swig_aqVolatilityObjectSabrMarketDataCreate__SWIG_0", (DL_FUNC) &R_swig_aqVolatilityObjectSabrMarketDataCreate__SWIG_0, 6},
+   {"R_swig_aqVolatilityObjectSabrMarketDataCreate__SWIG_1", (DL_FUNC) &R_swig_aqVolatilityObjectSabrMarketDataCreate__SWIG_1, 5},
+   {"R_swig_aqVolatilityObjectSabrMarketDataCreate__SWIG_2", (DL_FUNC) &R_swig_aqVolatilityObjectSabrMarketDataCreate__SWIG_2, 4},
    {"R_swig_delete_NelsonSiegelSvenssonParameters", (DL_FUNC) &R_swig_delete_NelsonSiegelSvenssonParameters, 1},
+   {"R_swig_aqInflationCurveCalibrationParameters", (DL_FUNC) &R_swig_aqInflationCurveCalibrationParameters, 2},
    {"R_swig_aqDateNthIMMFromStartDate", (DL_FUNC) &R_swig_aqDateNthIMMFromStartDate, 5},
    {"R_swig_VecVecString_reserve", (DL_FUNC) &R_swig_VecVecString_reserve, 2},
    {"R_swig_VecDouble_reserve", (DL_FUNC) &R_swig_VecDouble_reserve, 2},
@@ -24714,8 +32506,15 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_aqDateECBSwapEnd", (DL_FUNC) &R_swig_aqDateECBSwapEnd, 2},
    {"R_swig_aqDateECB", (DL_FUNC) &R_swig_aqDateECB, 3},
    {"R_swig_aqToolParallelModeEnable", (DL_FUNC) &R_swig_aqToolParallelModeEnable, 2},
+   {"R_swig_aqCapFloorObjectPVFromRates", (DL_FUNC) &R_swig_aqCapFloorObjectPVFromRates, 4},
    {"R_swig_aqMathPCA", (DL_FUNC) &R_swig_aqMathPCA, 5},
+   {"R_swig_aqGeneratorDisplay", (DL_FUNC) &R_swig_aqGeneratorDisplay, 3},
    {"R_swig_aqCurveDisplay", (DL_FUNC) &R_swig_aqCurveDisplay, 3},
+   {"R_swig_aqBondOptionObjectDisplay", (DL_FUNC) &R_swig_aqBondOptionObjectDisplay, 2},
+   {"R_swig_aqSwaptionObjectDisplay", (DL_FUNC) &R_swig_aqSwaptionObjectDisplay, 2},
+   {"R_swig_aqCapFloorObjectDisplay", (DL_FUNC) &R_swig_aqCapFloorObjectDisplay, 2},
+   {"R_swig_aqVolatilityObjectSabrMarketDataDisplay", (DL_FUNC) &R_swig_aqVolatilityObjectSabrMarketDataDisplay, 3},
+   {"R_swig_aqVolatilityObjectSabrModelDisplay", (DL_FUNC) &R_swig_aqVolatilityObjectSabrModelDisplay, 3},
    {"R_swig_aqCurveObjectDisplay", (DL_FUNC) &R_swig_aqCurveObjectDisplay, 2},
    {"R_swig_aqCurveMarketDataDisplay", (DL_FUNC) &R_swig_aqCurveMarketDataDisplay, 3},
    {"R_swig_aqIRFixingTableDisplay", (DL_FUNC) &R_swig_aqIRFixingTableDisplay, 2},
@@ -24727,9 +32526,8 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_VecVecDouble_assign", (DL_FUNC) &R_swig_VecVecDouble_assign, 3},
    {"R_swig_aqSwapScheduleFloat", (DL_FUNC) &R_swig_aqSwapScheduleFloat, 3},
    {"R_swig_getBool", (DL_FUNC) &R_swig_getBool, 1},
-   {"R_swig_aqSwapObjectParRate__SWIG_0", (DL_FUNC) &R_swig_aqSwapObjectParRate__SWIG_0, 4},
    {"R_swig_aqToolLVBAdd__SWIG_0", (DL_FUNC) &R_swig_aqToolLVBAdd__SWIG_0, 3},
-   {"R_swig_aqToolsLVBAppendAndCreate__SWIG_0", (DL_FUNC) &R_swig_aqToolsLVBAppendAndCreate__SWIG_0, 4},
+   {"R_swig_aqToolsLVBAppend__SWIG_0", (DL_FUNC) &R_swig_aqToolsLVBAppend__SWIG_0, 4},
    {"R_swig_aqSwapSchedule__SWIG_0", (DL_FUNC) &R_swig_aqSwapSchedule__SWIG_0, 4},
    {"R_swig_aqSwapPV01__SWIG_0", (DL_FUNC) &R_swig_aqSwapPV01__SWIG_0, 3},
    {"R_swig_aqSwapPV__SWIG_0", (DL_FUNC) &R_swig_aqSwapPV__SWIG_0, 3},
@@ -24762,16 +32560,39 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_new_VecVecDouble__SWIG_0", (DL_FUNC) &R_swig_new_VecVecDouble__SWIG_0, 0},
    {"R_swig_VecVecDouble_resize__SWIG_0", (DL_FUNC) &R_swig_VecVecDouble_resize__SWIG_0, 2},
    {"R_swig_new_VecVecString__SWIG_0", (DL_FUNC) &R_swig_new_VecVecString__SWIG_0, 0},
+   {"R_swig_aqSwapObjectParRate__SWIG_0", (DL_FUNC) &R_swig_aqSwapObjectParRate__SWIG_0, 4},
    {"R_swig_new_NelsonSiegelSvenssonParameters__SWIG_0", (DL_FUNC) &R_swig_new_NelsonSiegelSvenssonParameters__SWIG_0, 0},
    {"R_swig_aqBondObjectDisplayCashflows__SWIG_0", (DL_FUNC) &R_swig_aqBondObjectDisplayCashflows__SWIG_0, 6},
    {"R_swig_aqBondObjectDisplaySchedule__SWIG_0", (DL_FUNC) &R_swig_aqBondObjectDisplaySchedule__SWIG_0, 3},
    {"R_swig_aqTRSObjectPV__SWIG_0", (DL_FUNC) &R_swig_aqTRSObjectPV__SWIG_0, 5},
    {"R_swig_aqTRSObjectParRate__SWIG_0", (DL_FUNC) &R_swig_aqTRSObjectParRate__SWIG_0, 4},
    {"R_swig_aqTRSObjectParSpread__SWIG_0", (DL_FUNC) &R_swig_aqTRSObjectParSpread__SWIG_0, 4},
-   {"R_swig_aqToolObjectGridDisplay__SWIG_0", (DL_FUNC) &R_swig_aqToolObjectGridDisplay__SWIG_0, 3},
-   {"R_swig_aqSwapObjectParRate__SWIG_1", (DL_FUNC) &R_swig_aqSwapObjectParRate__SWIG_1, 5},
+   {"R_swig_aqBondOptionObjectCreate__SWIG_0", (DL_FUNC) &R_swig_aqBondOptionObjectCreate__SWIG_0, 4},
+   {"R_swig_aqBondOptionObjectGreeks__SWIG_0", (DL_FUNC) &R_swig_aqBondOptionObjectGreeks__SWIG_0, 15},
+   {"R_swig_aqInflationCurveCreate__SWIG_0", (DL_FUNC) &R_swig_aqInflationCurveCreate__SWIG_0, 6},
+   {"R_swig_aqSwaptionObjectCreate__SWIG_0", (DL_FUNC) &R_swig_aqSwaptionObjectCreate__SWIG_0, 4},
+   {"R_swig_aqCapFloorObjectCreate__SWIG_0", (DL_FUNC) &R_swig_aqCapFloorObjectCreate__SWIG_0, 4},
+   {"R_swig_aqCapFloorObjectDisplayCashflows__SWIG_0", (DL_FUNC) &R_swig_aqCapFloorObjectDisplayCashflows__SWIG_0, 7},
+   {"R_swig_aqCapFloorObjectPV__SWIG_0", (DL_FUNC) &R_swig_aqCapFloorObjectPV__SWIG_0, 5},
+   {"R_swig_aqCapFloorObjectGreeksAnalytical__SWIG_0", (DL_FUNC) &R_swig_aqCapFloorObjectGreeksAnalytical__SWIG_0, 6},
+   {"R_swig_aqCapFloorObjectGreeks__SWIG_0", (DL_FUNC) &R_swig_aqCapFloorObjectGreeks__SWIG_0, 10},
+   {"R_swig_aqCapFloorObjectGreeksFromRates__SWIG_0", (DL_FUNC) &R_swig_aqCapFloorObjectGreeksFromRates__SWIG_0, 9},
+   {"R_swig_aqFXObjectForwards__SWIG_0", (DL_FUNC) &R_swig_aqFXObjectForwards__SWIG_0, 5},
+   {"R_swig_aqFXObjectSwapFromDiscountCurves__SWIG_0", (DL_FUNC) &R_swig_aqFXObjectSwapFromDiscountCurves__SWIG_0, 9},
+   {"R_swig_aqFXObjectSwap__SWIG_0", (DL_FUNC) &R_swig_aqFXObjectSwap__SWIG_0, 7},
+   {"R_swig_aqFXObjectForwardsFromXccyCurve__SWIG_0", (DL_FUNC) &R_swig_aqFXObjectForwardsFromXccyCurve__SWIG_0, 11},
+   {"R_swig_aqFXObjectSwapFromXccyCurveObject__SWIG_0", (DL_FUNC) &R_swig_aqFXObjectSwapFromXccyCurveObject__SWIG_0, 7},
+   {"R_swig_aqFXObjectSwapFromXccyCurve__SWIG_0", (DL_FUNC) &R_swig_aqFXObjectSwapFromXccyCurve__SWIG_0, 12},
+   {"R_swig_aqVolatilityObjectCreate__SWIG_0", (DL_FUNC) &R_swig_aqVolatilityObjectCreate__SWIG_0, 4},
+   {"R_swig_aqBondFutureOptionObjectGreeks__SWIG_0", (DL_FUNC) &R_swig_aqBondFutureOptionObjectGreeks__SWIG_0, 13},
+   {"R_swig_aqFutureTickerCurrent__SWIG_0", (DL_FUNC) &R_swig_aqFutureTickerCurrent__SWIG_0, 4},
+   {"R_swig_aqFutureTickerNext__SWIG_0", (DL_FUNC) &R_swig_aqFutureTickerNext__SWIG_0, 3},
+   {"R_swig_aqFutureTickerPrevious__SWIG_0", (DL_FUNC) &R_swig_aqFutureTickerPrevious__SWIG_0, 3},
+   {"R_swig_aqFutureTickerNth__SWIG_0", (DL_FUNC) &R_swig_aqFutureTickerNth__SWIG_0, 5},
+   {"R_swig_aqCurveMarketDataCreate__SWIG_0", (DL_FUNC) &R_swig_aqCurveMarketDataCreate__SWIG_0, 10},
+   {"R_swig_aqGridObjectDisplay__SWIG_0", (DL_FUNC) &R_swig_aqGridObjectDisplay__SWIG_0, 3},
    {"R_swig_aqToolLVBAdd__SWIG_1", (DL_FUNC) &R_swig_aqToolLVBAdd__SWIG_1, 4},
-   {"R_swig_aqToolsLVBAppendAndCreate__SWIG_1", (DL_FUNC) &R_swig_aqToolsLVBAppendAndCreate__SWIG_1, 5},
+   {"R_swig_aqToolsLVBAppend__SWIG_1", (DL_FUNC) &R_swig_aqToolsLVBAppend__SWIG_1, 5},
    {"R_swig_aqSwapSchedule__SWIG_1", (DL_FUNC) &R_swig_aqSwapSchedule__SWIG_1, 3},
    {"R_swig_aqSwapPV01__SWIG_1", (DL_FUNC) &R_swig_aqSwapPV01__SWIG_1, 2},
    {"R_swig_aqSwapPV__SWIG_1", (DL_FUNC) &R_swig_aqSwapPV__SWIG_1, 2},
@@ -24804,13 +32625,37 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_VecVecInteger_resize__SWIG_1", (DL_FUNC) &R_swig_VecVecInteger_resize__SWIG_1, 3},
    {"R_swig_new_VecVecDouble__SWIG_1", (DL_FUNC) &R_swig_new_VecVecDouble__SWIG_1, 1},
    {"R_swig_VecVecDouble_resize__SWIG_1", (DL_FUNC) &R_swig_VecVecDouble_resize__SWIG_1, 3},
+   {"R_swig_aqSwapObjectParRate__SWIG_1", (DL_FUNC) &R_swig_aqSwapObjectParRate__SWIG_1, 5},
    {"R_swig_new_NelsonSiegelSvenssonParameters__SWIG_1", (DL_FUNC) &R_swig_new_NelsonSiegelSvenssonParameters__SWIG_1, 6},
    {"R_swig_aqBondObjectDisplayCashflows__SWIG_1", (DL_FUNC) &R_swig_aqBondObjectDisplayCashflows__SWIG_1, 7},
    {"R_swig_aqBondObjectDisplaySchedule__SWIG_1", (DL_FUNC) &R_swig_aqBondObjectDisplaySchedule__SWIG_1, 4},
    {"R_swig_aqTRSObjectPV__SWIG_1", (DL_FUNC) &R_swig_aqTRSObjectPV__SWIG_1, 4},
    {"R_swig_aqTRSObjectParRate__SWIG_1", (DL_FUNC) &R_swig_aqTRSObjectParRate__SWIG_1, 3},
    {"R_swig_aqTRSObjectParSpread__SWIG_1", (DL_FUNC) &R_swig_aqTRSObjectParSpread__SWIG_1, 3},
-   {"R_swig_aqToolObjectGridDisplay__SWIG_1", (DL_FUNC) &R_swig_aqToolObjectGridDisplay__SWIG_1, 2},
+   {"R_swig_aqBondOptionObjectCreate__SWIG_1", (DL_FUNC) &R_swig_aqBondOptionObjectCreate__SWIG_1, 3},
+   {"R_swig_aqBondOptionObjectGreeks__SWIG_1", (DL_FUNC) &R_swig_aqBondOptionObjectGreeks__SWIG_1, 14},
+   {"R_swig_aqInflationCurveCreate__SWIG_1", (DL_FUNC) &R_swig_aqInflationCurveCreate__SWIG_1, 5},
+   {"R_swig_aqSwaptionObjectCreate__SWIG_1", (DL_FUNC) &R_swig_aqSwaptionObjectCreate__SWIG_1, 3},
+   {"R_swig_aqCapFloorObjectCreate__SWIG_1", (DL_FUNC) &R_swig_aqCapFloorObjectCreate__SWIG_1, 3},
+   {"R_swig_aqCapFloorObjectDisplayCashflows__SWIG_1", (DL_FUNC) &R_swig_aqCapFloorObjectDisplayCashflows__SWIG_1, 6},
+   {"R_swig_aqCapFloorObjectPV__SWIG_1", (DL_FUNC) &R_swig_aqCapFloorObjectPV__SWIG_1, 4},
+   {"R_swig_aqCapFloorObjectGreeksAnalytical__SWIG_1", (DL_FUNC) &R_swig_aqCapFloorObjectGreeksAnalytical__SWIG_1, 5},
+   {"R_swig_aqCapFloorObjectGreeks__SWIG_1", (DL_FUNC) &R_swig_aqCapFloorObjectGreeks__SWIG_1, 9},
+   {"R_swig_aqCapFloorObjectGreeksFromRates__SWIG_1", (DL_FUNC) &R_swig_aqCapFloorObjectGreeksFromRates__SWIG_1, 8},
+   {"R_swig_aqFXObjectForwards__SWIG_1", (DL_FUNC) &R_swig_aqFXObjectForwards__SWIG_1, 4},
+   {"R_swig_aqFXObjectSwapFromDiscountCurves__SWIG_1", (DL_FUNC) &R_swig_aqFXObjectSwapFromDiscountCurves__SWIG_1, 8},
+   {"R_swig_aqFXObjectSwap__SWIG_1", (DL_FUNC) &R_swig_aqFXObjectSwap__SWIG_1, 6},
+   {"R_swig_aqFXObjectForwardsFromXccyCurve__SWIG_1", (DL_FUNC) &R_swig_aqFXObjectForwardsFromXccyCurve__SWIG_1, 10},
+   {"R_swig_aqFXObjectSwapFromXccyCurveObject__SWIG_1", (DL_FUNC) &R_swig_aqFXObjectSwapFromXccyCurveObject__SWIG_1, 6},
+   {"R_swig_aqFXObjectSwapFromXccyCurve__SWIG_1", (DL_FUNC) &R_swig_aqFXObjectSwapFromXccyCurve__SWIG_1, 11},
+   {"R_swig_aqVolatilityObjectCreate__SWIG_1", (DL_FUNC) &R_swig_aqVolatilityObjectCreate__SWIG_1, 3},
+   {"R_swig_aqBondFutureOptionObjectGreeks__SWIG_1", (DL_FUNC) &R_swig_aqBondFutureOptionObjectGreeks__SWIG_1, 12},
+   {"R_swig_aqFutureTickerCurrent__SWIG_1", (DL_FUNC) &R_swig_aqFutureTickerCurrent__SWIG_1, 3},
+   {"R_swig_aqFutureTickerNext__SWIG_1", (DL_FUNC) &R_swig_aqFutureTickerNext__SWIG_1, 2},
+   {"R_swig_aqFutureTickerPrevious__SWIG_1", (DL_FUNC) &R_swig_aqFutureTickerPrevious__SWIG_1, 2},
+   {"R_swig_aqFutureTickerNth__SWIG_1", (DL_FUNC) &R_swig_aqFutureTickerNth__SWIG_1, 4},
+   {"R_swig_aqCurveMarketDataCreate__SWIG_1", (DL_FUNC) &R_swig_aqCurveMarketDataCreate__SWIG_1, 4},
+   {"R_swig_aqGridObjectDisplay__SWIG_1", (DL_FUNC) &R_swig_aqGridObjectDisplay__SWIG_1, 2},
    {"R_swig_aqDateFromTenor__SWIG_2", (DL_FUNC) &R_swig_aqDateFromTenor__SWIG_2, 3},
    {"R_swig_exampleInt", (DL_FUNC) &R_swig_exampleInt, 1},
    {"R_swig_new_VecVecString__SWIG_2", (DL_FUNC) &R_swig_new_VecVecString__SWIG_2, 1},
@@ -24820,6 +32665,18 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_new_VecVecInteger__SWIG_2", (DL_FUNC) &R_swig_new_VecVecInteger__SWIG_2, 1},
    {"R_swig_new_VecVecDouble__SWIG_2", (DL_FUNC) &R_swig_new_VecVecDouble__SWIG_2, 1},
    {"R_swig_getChar", (DL_FUNC) &R_swig_getChar, 1},
+   {"R_swig_aqInflationCurveCreate__SWIG_2", (DL_FUNC) &R_swig_aqInflationCurveCreate__SWIG_2, 4},
+   {"R_swig_aqCapFloorObjectDisplayCashflows__SWIG_2", (DL_FUNC) &R_swig_aqCapFloorObjectDisplayCashflows__SWIG_2, 5},
+   {"R_swig_aqCapFloorObjectGreeksAnalytical__SWIG_2", (DL_FUNC) &R_swig_aqCapFloorObjectGreeksAnalytical__SWIG_2, 4},
+   {"R_swig_aqCapFloorObjectGreeks__SWIG_2", (DL_FUNC) &R_swig_aqCapFloorObjectGreeks__SWIG_2, 8},
+   {"R_swig_aqFXObjectForwards__SWIG_2", (DL_FUNC) &R_swig_aqFXObjectForwards__SWIG_2, 3},
+   {"R_swig_aqFXObjectSwapFromDiscountCurves__SWIG_2", (DL_FUNC) &R_swig_aqFXObjectSwapFromDiscountCurves__SWIG_2, 7},
+   {"R_swig_aqFXObjectSwap__SWIG_2", (DL_FUNC) &R_swig_aqFXObjectSwap__SWIG_2, 5},
+   {"R_swig_aqFXObjectForwardsFromXccyCurve__SWIG_2", (DL_FUNC) &R_swig_aqFXObjectForwardsFromXccyCurve__SWIG_2, 9},
+   {"R_swig_aqFXObjectSwapFromXccyCurveObject__SWIG_2", (DL_FUNC) &R_swig_aqFXObjectSwapFromXccyCurveObject__SWIG_2, 5},
+   {"R_swig_aqFXObjectSwapFromXccyCurve__SWIG_2", (DL_FUNC) &R_swig_aqFXObjectSwapFromXccyCurve__SWIG_2, 10},
+   {"R_swig_aqFutureTickerCurrent__SWIG_2", (DL_FUNC) &R_swig_aqFutureTickerCurrent__SWIG_2, 2},
+   {"R_swig_aqFutureTickerNth__SWIG_2", (DL_FUNC) &R_swig_aqFutureTickerNth__SWIG_2, 3},
    {"R_swig_aqDateFromTenor__SWIG_3", (DL_FUNC) &R_swig_aqDateFromTenor__SWIG_3, 6},
    {"R_swig_new_VecVecString__SWIG_3", (DL_FUNC) &R_swig_new_VecVecString__SWIG_3, 2},
    {"R_swig_new_VecDouble__SWIG_3", (DL_FUNC) &R_swig_new_VecDouble__SWIG_3, 2},
@@ -24827,16 +32684,24 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_new_VecString__SWIG_3", (DL_FUNC) &R_swig_new_VecString__SWIG_3, 2},
    {"R_swig_new_VecVecInteger__SWIG_3", (DL_FUNC) &R_swig_new_VecVecInteger__SWIG_3, 2},
    {"R_swig_new_VecVecDouble__SWIG_3", (DL_FUNC) &R_swig_new_VecVecDouble__SWIG_3, 2},
+   {"R_swig_aqCapFloorObjectDisplayCashflows__SWIG_3", (DL_FUNC) &R_swig_aqCapFloorObjectDisplayCashflows__SWIG_3, 4},
    {"R_swig_aqDateECBSwapStart", (DL_FUNC) &R_swig_aqDateECBSwapStart, 2},
    {"R_swig_NelsonSiegelSvenssonParameters_beta2__get", (DL_FUNC) &R_swig_NelsonSiegelSvenssonParameters_beta2__get, 2},
    {"R_swig_NelsonSiegelSvenssonParameters_lambda2__get", (DL_FUNC) &R_swig_NelsonSiegelSvenssonParameters_lambda2__get, 2},
    {"R_swig_PolynomialCalibrationResults_iterations__set", (DL_FUNC) &R_swig_PolynomialCalibrationResults_iterations__set, 2},
    {"R_swig_exampleMatrixInt", (DL_FUNC) &R_swig_exampleMatrixInt, 1},
    {"R_swig_echoMatrixInt", (DL_FUNC) &R_swig_echoMatrixInt, 2},
+   {"R_swig_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_0", (DL_FUNC) &R_swig_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_0, 6},
+   {"R_swig_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_1", (DL_FUNC) &R_swig_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_1, 5},
+   {"R_swig_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_2", (DL_FUNC) &R_swig_aqCapFloorObjectDisplayCashflowsFromRates__SWIG_2, 4},
+   {"R_swig_aqCapFloorObjectGreeksAnalyticalFromRates__SWIG_0", (DL_FUNC) &R_swig_aqCapFloorObjectGreeksAnalyticalFromRates__SWIG_0, 5},
+   {"R_swig_aqCapFloorObjectGreeksAnalyticalFromRates__SWIG_1", (DL_FUNC) &R_swig_aqCapFloorObjectGreeksAnalyticalFromRates__SWIG_1, 4},
    {"R_swig_NelsonSiegelSvenssonParameters_beta3__set", (DL_FUNC) &R_swig_NelsonSiegelSvenssonParameters_beta3__set, 2},
    {"R_swig_aqToolClearEntityPool", (DL_FUNC) &R_swig_aqToolClearEntityPool, 1},
    {"R_swig_VecInteger_swap", (DL_FUNC) &R_swig_VecInteger_swap, 2},
    {"R_swig_VecVecInteger_swap", (DL_FUNC) &R_swig_VecVecInteger_swap, 2},
+   {"R_swig_aqGeneratorList", (DL_FUNC) &R_swig_aqGeneratorList, 2},
+   {"R_swig_aqSwaptionObjectTheta", (DL_FUNC) &R_swig_aqSwaptionObjectTheta, 3},
    {"R_swig_aqIRFixingTableValue", (DL_FUNC) &R_swig_aqIRFixingTableValue, 3},
    {"R_swig_VecVecString_get_allocator", (DL_FUNC) &R_swig_VecVecString_get_allocator, 2},
    {"R_swig_VecDouble_get_allocator", (DL_FUNC) &R_swig_VecDouble_get_allocator, 2},
@@ -24851,12 +32716,12 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_NelsonSiegelSvenssonCalibrationResults_iterations__get", (DL_FUNC) &R_swig_NelsonSiegelSvenssonCalibrationResults_iterations__get, 2},
    {"R_swig_NelsonSiegelSvenssonParameters_beta1__get", (DL_FUNC) &R_swig_NelsonSiegelSvenssonParameters_beta1__get, 2},
    {"R_swig_NelsonSiegelSvenssonParameters_lambda1__get", (DL_FUNC) &R_swig_NelsonSiegelSvenssonParameters_lambda1__get, 2},
-   {"R_swig_aqObjCreditModelRiskyDiscountFactor", (DL_FUNC) &R_swig_aqObjCreditModelRiskyDiscountFactor, 3},
-   {"R_swig_aqObjCurvesMarketDataCreateUsingMultipleBlocks", (DL_FUNC) &R_swig_aqObjCurvesMarketDataCreateUsingMultipleBlocks, 4},
+   {"R_swig_aqCreditModelRiskyDiscountFactor", (DL_FUNC) &R_swig_aqCreditModelRiskyDiscountFactor, 3},
    {"R_swig_VecInteger_size", (DL_FUNC) &R_swig_VecInteger_size, 2},
    {"R_swig_VecVecInteger_size", (DL_FUNC) &R_swig_VecVecInteger_size, 2},
    {"R_swig_aqCurveDiscountFactorsForwardStartingFromTenor__SWIG_1", (DL_FUNC) &R_swig_aqCurveDiscountFactorsForwardStartingFromTenor__SWIG_1, 7},
    {"R_swig_aqCurveDiscountFactorsForwardStartingFromTenor__SWIG_0", (DL_FUNC) &R_swig_aqCurveDiscountFactorsForwardStartingFromTenor__SWIG_0, 7},
+   {"R_swig_aqFXObjectAsOfDateToSpot", (DL_FUNC) &R_swig_aqFXObjectAsOfDateToSpot, 7},
    {"R_swig_NelsonSiegelSvenssonParameters_beta2__set", (DL_FUNC) &R_swig_NelsonSiegelSvenssonParameters_beta2__set, 2},
    {"R_swig_NelsonSiegelSvenssonParameters_lambda2__set", (DL_FUNC) &R_swig_NelsonSiegelSvenssonParameters_lambda2__set, 2},
    {"R_swig_new_NelsonSiegelSvenssonCalibrationResults", (DL_FUNC) &R_swig_new_NelsonSiegelSvenssonCalibrationResults, 0},
@@ -24874,7 +32739,6 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_aqCreditModelDefaultProbability", (DL_FUNC) &R_swig_aqCreditModelDefaultProbability, 4},
    {"R_swig_aqCurveDiscountFactors", (DL_FUNC) &R_swig_aqCurveDiscountFactors, 4},
    {"R_swig_aqCreditModelRiskyDiscountFactors", (DL_FUNC) &R_swig_aqCreditModelRiskyDiscountFactors, 3},
-   {"R_swig_aqCurvesResultsDisplayDiscountFactors", (DL_FUNC) &R_swig_aqCurvesResultsDisplayDiscountFactors, 3},
    {"R_swig_aqSwapScheduleFixed", (DL_FUNC) &R_swig_aqSwapScheduleFixed, 3},
    {"R_swig_aqBondObjectPrice", (DL_FUNC) &R_swig_aqBondObjectPrice, 5},
    {"R_swig_memmove", (DL_FUNC) &R_swig_memmove, 2},
@@ -24883,10 +32747,16 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_VecInteger_pop", (DL_FUNC) &R_swig_VecInteger_pop, 2},
    {"R_swig_VecVecInteger_pop", (DL_FUNC) &R_swig_VecVecInteger_pop, 2},
    {"R_swig_aqDateShiftedSpotDate", (DL_FUNC) &R_swig_aqDateShiftedSpotDate, 8},
-   {"R_swig_aqObjSwapsUSDSpotDate", (DL_FUNC) &R_swig_aqObjSwapsUSDSpotDate, 7},
+   {"R_swig_aqCurveUSDSpotDate", (DL_FUNC) &R_swig_aqCurveUSDSpotDate, 7},
    {"R_swig_PolynomialCalibrationResults_coefficients__set", (DL_FUNC) &R_swig_PolynomialCalibrationResults_coefficients__set, 2},
    {"R_swig_PolynomialCalibrationResults_coefficients__get", (DL_FUNC) &R_swig_PolynomialCalibrationResults_coefficients__get, 2},
    {"R_swig_NelsonSiegelSvenssonParameters_beta0__get", (DL_FUNC) &R_swig_NelsonSiegelSvenssonParameters_beta0__get, 2},
+   {"R_swig_aqFXObjectForwardsFromDiscountCurves__SWIG_0", (DL_FUNC) &R_swig_aqFXObjectForwardsFromDiscountCurves__SWIG_0, 7},
+   {"R_swig_aqFXObjectForwardsFromDiscountCurves__SWIG_1", (DL_FUNC) &R_swig_aqFXObjectForwardsFromDiscountCurves__SWIG_1, 6},
+   {"R_swig_aqFXObjectForwardsFromDiscountCurves__SWIG_2", (DL_FUNC) &R_swig_aqFXObjectForwardsFromDiscountCurves__SWIG_2, 5},
+   {"R_swig_aqVolatilityObjectSabrModelCalibrate__SWIG_0", (DL_FUNC) &R_swig_aqVolatilityObjectSabrModelCalibrate__SWIG_0, 6},
+   {"R_swig_aqVolatilityObjectSabrModelCalibrate__SWIG_1", (DL_FUNC) &R_swig_aqVolatilityObjectSabrModelCalibrate__SWIG_1, 5},
+   {"R_swig_aqVolatilityObjectSabrModelCalibrate__SWIG_2", (DL_FUNC) &R_swig_aqVolatilityObjectSabrModelCalibrate__SWIG_2, 4},
    {"R_swig_cdata", (DL_FUNC) &R_swig_cdata, 3},
    {"R_swig_VecInteger_back", (DL_FUNC) &R_swig_VecInteger_back, 2},
    {"R_swig_VecVecInteger_back", (DL_FUNC) &R_swig_VecVecInteger_back, 2},
@@ -24902,20 +32772,29 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_aqSwapOisPVLVBKeys", (DL_FUNC) &R_swig_aqSwapOisPVLVBKeys, 1},
    {"R_swig_aqSwapOisParRateLVBKeys", (DL_FUNC) &R_swig_aqSwapOisParRateLVBKeys, 1},
    {"R_swig_aqAssetSwapSpreadLVBKeys", (DL_FUNC) &R_swig_aqAssetSwapSpreadLVBKeys, 1},
+   {"R_swig_aqInflationObjectCPI", (DL_FUNC) &R_swig_aqInflationObjectCPI, 5},
    {"R_swig_VecVecString_back", (DL_FUNC) &R_swig_VecVecString_back, 2},
    {"R_swig_VecString_back", (DL_FUNC) &R_swig_VecString_back, 2},
    {"R_swig_aqSwapObjectPV", (DL_FUNC) &R_swig_aqSwapObjectPV, 5},
+   {"R_swig_aqCDSObjectPV", (DL_FUNC) &R_swig_aqCDSObjectPV, 4},
+   {"R_swig_aqBondOptionObjectPV", (DL_FUNC) &R_swig_aqBondOptionObjectPV, 8},
+   {"R_swig_aqSwaptionObjectPV", (DL_FUNC) &R_swig_aqSwaptionObjectPV, 3},
+   {"R_swig_aqBondFutureOptionObjectPV", (DL_FUNC) &R_swig_aqBondFutureOptionObjectPV, 6},
    {"R_swig_VecDouble_swap", (DL_FUNC) &R_swig_VecDouble_swap, 2},
    {"R_swig_VecVecDouble_swap", (DL_FUNC) &R_swig_VecVecDouble_swap, 2},
    {"R_swig_delete_NelsonSiegelSvenssonCalibrationResults", (DL_FUNC) &R_swig_delete_NelsonSiegelSvenssonCalibrationResults, 1},
+   {"R_swig_aqCDSObjectCS01", (DL_FUNC) &R_swig_aqCDSObjectCS01, 4},
+   {"R_swig_aqSwaptionObjectDelta", (DL_FUNC) &R_swig_aqSwaptionObjectDelta, 3},
    {"R_swig_exampleVectorInt", (DL_FUNC) &R_swig_exampleVectorInt, 1},
    {"R_swig_echoVectorInt", (DL_FUNC) &R_swig_echoVectorInt, 2},
    {"R_swig_aqDateFromYearFraction", (DL_FUNC) &R_swig_aqDateFromYearFraction, 4},
    {"R_swig_aqCurveForwardRatesFromYearFraction", (DL_FUNC) &R_swig_aqCurveForwardRatesFromYearFraction, 6},
+   {"R_swig_aqInflationObjectZCSwapPVFromIndex", (DL_FUNC) &R_swig_aqInflationObjectZCSwapPVFromIndex, 6},
+   {"R_swig_aqInflationObjectZCSwapParRateFromIndex", (DL_FUNC) &R_swig_aqInflationObjectZCSwapParRateFromIndex, 5},
    {"R_swig_NelsonSiegelSvenssonCalibrationResults_leastSquaresError__set", (DL_FUNC) &R_swig_NelsonSiegelSvenssonCalibrationResults_leastSquaresError__set, 2},
    {"R_swig_NelsonSiegelSvenssonCalibrationResults_leastSquaresError__get", (DL_FUNC) &R_swig_NelsonSiegelSvenssonCalibrationResults_leastSquaresError__get, 2},
-   {"R_swig_aqCreditObjectDefaultSwapPV", (DL_FUNC) &R_swig_aqCreditObjectDefaultSwapPV, 4},
    {"R_swig_tearDownAQL", (DL_FUNC) &R_swig_tearDownAQL, 1},
+   {"R_swig_aqInflationObjectZCSwapPV", (DL_FUNC) &R_swig_aqInflationObjectZCSwapPV, 5},
    {"R_swig_NelsonSiegelSvenssonParameters_beta0__set", (DL_FUNC) &R_swig_NelsonSiegelSvenssonParameters_beta0__set, 2},
    {"R_swig_aqSwapStubRate", (DL_FUNC) &R_swig_aqSwapStubRate, 6},
    {"R_swig_aqCurveInterpolationJoinDate", (DL_FUNC) &R_swig_aqCurveInterpolationJoinDate, 4},
@@ -24928,10 +32807,12 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_aqBondCurveSvenssonCalibrate", (DL_FUNC) &R_swig_aqBondCurveSvenssonCalibrate, 8},
    {"R_swig_aqBondCurvePolynomialCalibrate", (DL_FUNC) &R_swig_aqBondCurvePolynomialCalibrate, 8},
    {"R_swig_aqCurveObjectCalibrate", (DL_FUNC) &R_swig_aqCurveObjectCalibrate, 6},
+   {"R_swig_aqSwaptionObjectVega", (DL_FUNC) &R_swig_aqSwaptionObjectVega, 3},
    {"R_swig_aqToolRecord", (DL_FUNC) &R_swig_aqToolRecord, 6},
    {"R_swig_aqBondCurveSvenssonYield", (DL_FUNC) &R_swig_aqBondCurveSvenssonYield, 8},
    {"R_swig_aqCurveCalibrateSwap", (DL_FUNC) &R_swig_aqCurveCalibrateSwap, 17},
    {"R_swig_aqToolLoadStaticData", (DL_FUNC) &R_swig_aqToolLoadStaticData, 2},
+   {"R_swig_aqCurveResultsDiscountFactorsDisplayAll", (DL_FUNC) &R_swig_aqCurveResultsDiscountFactorsDisplayAll, 3},
    {"R_swig_aqSwapObjectCreate", (DL_FUNC) &R_swig_aqSwapObjectCreate, 6},
    {"R_swig_aqToolLVBCreate", (DL_FUNC) &R_swig_aqToolLVBCreate, 3},
    {"R_swig_aqBondObjectCreate", (DL_FUNC) &R_swig_aqBondObjectCreate, 5},

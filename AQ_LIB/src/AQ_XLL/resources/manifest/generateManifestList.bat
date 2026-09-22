@@ -6,7 +6,7 @@ rem
 rem  Generates the per-function enable header for the Release_XL_Manifest
 rem  AQ_XLL config (CLAUDE.md Sec 4.4/9.5). Every AQ_XLL worksheet function is
 rem  wrapped `#if AQ_XLL_ENABLED(name) ... #endif`; AQ_XLL_ENABLED is defined
-rem  once in src\AQ_XLL\include\aqXllTools.h as:
+rem  once in src\AQ_XLL\include\xllSupport.h as:
 rem
 rem      #define AQ_XLL_ENABLED(name)  (!AQ_XLL_MANIFEST_BUILD || AQ_XLL_ENABLE_##name)
 rem

@@ -1298,7 +1298,7 @@ namespace etrading
 			tenorToUse = tenor + "D";
 		}
 
-        AQ_TRY( result = AQLDateSchedule::getMultiDate( startDates, tenorToUse, businessDayAdj, calendar, rollConvention.size() == 0 ? nullptr : &rollConvention ) , "Invalid Date/Tenor Input: Invalid Date, TenorString (no spaces), Calendar or BusinessDayAdj" );
+        result = AQLDateSchedule::getMultiDate( startDates, tenorToUse, businessDayAdj, calendar, rollConvention.size() == 0 ? nullptr : &rollConvention );
         return result;
     }
 

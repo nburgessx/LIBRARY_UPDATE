@@ -9,4 +9,4 @@
 *  @param [in]		curveIndex			Index of the curve set
 *  @return			StandardStringMatrix of paymentDates and corresponding discount factors from the yield curve
 */
-SWIG_STRINGMATRIX aqCurvesResultsDisplayDiscountFactors (const std::string& curveCollection, const std::string& curveIndex );
+SWIG_STRINGMATRIX aqCurveResultsDiscountFactorsDisplayAll (const std::string& curveCollection, const std::string& curveIndex );

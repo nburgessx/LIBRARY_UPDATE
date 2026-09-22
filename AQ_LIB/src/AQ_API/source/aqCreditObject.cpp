@@ -109,7 +109,7 @@ double aqCreditModelHazardRate( const std::string& creditModelName, const std::s
 }
 
 // Calculates the Risky Discount Factor from the Credit Model
-double aqObjCreditModelRiskyDiscountFactor( const std::string& creditModelName, const std::string & paymentDate )
+double aqCreditModelRiskyDiscountFactor( const std::string& creditModelName, const std::string & paymentDate )
 {
     AQ_API_START
 

@@ -187,13 +187,13 @@ namespace etrading
 
 	const AQLString* FolderConfig::ir_prop_path()
 	{
-		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();		
+		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 		read_config_file( "vnl.ir.properties", ir_prop_path_ );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
-		ir_prop_path_.reset( new AQLString( DEFAULT_IRPROP_PATH ) );
-		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
-
+		// Module-relative: the config folder shipped next to the loaded AlgoQuantLib module itself
+		// (see getCurrentFolder()). Tried ahead of the working-directory and AQ-environment-variable
+		// defaults below, since the shipped config is always in this location regardless of caller cwd.
 		ir_prop_path_.reset( new AQLString( createFilePath( NULL, &IRPROP_FILE_NAME ) ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
@@ -207,6 +207,9 @@ namespace etrading
 		ir_prop_path_.reset( new AQLString( DEFAULT_IRPROP_PATH3 ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
+		ir_prop_path_.reset( new AQLString( DEFAULT_IRPROP_PATH ) );
+		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
+
 		return NULL;
 	}
 
@@ -216,13 +219,14 @@ namespace etrading
 		read_config_file( "vnl.calib.properties", calib_prop_path_ );
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 
-		calib_prop_path_.reset( new AQLString( DEFAULT_CALIBPROP_PATH ) );
-		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
-
+		// Module-relative first -- see the comment in ir_prop_path() above.
 		calib_prop_path_.reset( new AQLString( createFilePath( NULL, &CALIBPROP_FILE_NAME ) ) );
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 
 		calib_prop_path_.reset( new AQLString( DEFAULT_CALIBPROP_PATH2 ) );
+		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
+
+		calib_prop_path_.reset( new AQLString( DEFAULT_CALIBPROP_PATH ) );
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 
 		return NULL;
@@ -234,14 +238,15 @@ namespace etrading
 		read_config_file( "vnl.calendar", calendar_path_ );
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 
-		calendar_path_.reset( new AQLString( DEFAULT_CALENDAR_PATH ) );
-		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
-
+		// Module-relative first -- see the comment in ir_prop_path() above.
 		AQLString s = createFilePath( NULL, &CALENDAR_FILE_NAME );
 		calendar_path_.reset( new AQLString( createFilePath( NULL, &CALENDAR_FILE_NAME ) ) );
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 
 		calendar_path_.reset( new AQLString( DEFAULT_CALENDAR_PATH2 ) );
+		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
+
+		calendar_path_.reset( new AQLString( DEFAULT_CALENDAR_PATH ) );
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 
 		return NULL;
@@ -251,14 +256,15 @@ namespace etrading
 	{
 		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
 
-		cbschedule_path_.reset( new AQLString( DEFAULT_CBSCHEDULE_PATH ) );
-		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
-
+		// Module-relative first -- see the comment in ir_prop_path() above.
 		AQLString s = createFilePath( NULL, &CBSCHEDULE_FILE_NAME );
 		cbschedule_path_.reset( new AQLString( createFilePath( NULL, &CBSCHEDULE_FILE_NAME ) ) );
 		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
 
 		cbschedule_path_.reset( new AQLString( DEFAULT_CBSCHEDULE_PATH2 ) );
+		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
+
+		cbschedule_path_.reset( new AQLString( DEFAULT_CBSCHEDULE_PATH ) );
 		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
 
 		return NULL;
