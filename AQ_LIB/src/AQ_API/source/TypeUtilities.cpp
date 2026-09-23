@@ -557,6 +557,38 @@ namespace swig
 		return a;
 	}
 
+#if defined(SWIG_R) || defined(SWIGR)
+	/* @brief	Build a LabelValueBlock from R's flat SWIG_STRINGMATRIX (== vector<string>, column by column).
+	*          A LabelValueBlock is always 2 columns (label, value), so unflattening needs no dimension lookup.
+	*  @param [in]		input	R's flattened matrix representation
+    *  @return		One LabelValueBlock object
+    */
+	LabelValueBlock buildSingleLabelValueBlock(const SWIG_STRINGMATRIX& input)
+	{
+		const size_t nCols = 2;
+		const size_t nRows = input.size() / nCols;
+
+		AQLStringMatrix temp;
+		for ( size_t i = 0; i < nRows; ++i )
+		{
+			std::vector<AQLString> rowData;
+			for ( size_t j = 0; j < nCols; ++j )
+			{
+				rowData.push_back( AQLString( input[ nRows * j + i ].c_str() ) );
+			}
+			temp.push_back( rowData );
+		}
+
+		if (temp.size() == 0)
+		{
+			AQ_THROW( "an empty Label Value Block object is given" );
+		}
+
+		LabelValueBlock a(temp);
+		return a;
+	}
+#endif
+
 
      /* @brief			build Variant Matrix from a vector of string vectors
 	*  @param [out]		toMatrix			the variant matrix object being built

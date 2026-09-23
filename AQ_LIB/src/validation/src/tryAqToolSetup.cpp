@@ -23,65 +23,104 @@
 #include "SwapResultsContainer.h"   // Swap Results Container/Cache
 #include "CreditResultsContainer.h" // Credit Results Container/Cache
 #include "OMPThreadManager.h"       // OMP Macros and Thread Controls
+#include "AQLLinearRatesVolatilityManager.h" // Volatility Manager Clean-Up (tryAqToolTearDown)
 
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;
 
+namespace
+{
+    // Bare file names used when only a config-root folder is given (no per-file override).
+    // Matches the shipped config-folder layout documented in FolderConfig.cpp.
+    const AQLString CALENDAR_FILE_BASENAME( "Calendar.csv" );
+    const AQLString CBSCHEDULE_FILE_BASENAME( "CBSchedule.csv" );
+    const AQLString STARTUP_CONFIG_FILE_BASENAME( "startup.conf" );
+    const AQLString IRPROPS_FILE_BASENAME( "ir.properties" );
+
+    // Resolve one config file path for tryAqToolInitialize: an explicit full-path override wins
+    // outright; otherwise, if a config-root folder was given, look for the file there; otherwise
+    // leave it unset so FolderConfig's own default resolution chain applies unchanged.
+    AQLString resolveConfigFile( const AQLString& explicitPath, const AQLString& configFolder, const AQLString& baseName )
+    {
+        if ( !explicitPath.empty() )
+        {
+            return explicitPath;
+        }
+        if ( !configFolder.empty() )
+        {
+            return etrading::FolderConfig::createFilePath( &configFolder, &baseName );
+        }
+        return AQLString();
+    }
+}
+
 namespace validation
 {
-	/* @brief	Set up AlgoQuantLib - Not to be used with Excel
+	/* @brief	The single funnel every AlgoQuantLib consumer (GTEST, AQ_XLL, AQ_API) initializes
+     *          through. See tryAqToolSetup.h for the parameter contract.
+     *
+     *  NOTE: This always tears down first (like the legacy trySetupAQL it replaces) rather than
+     *  being idempotent. Reason: InitializeETrading::instance() only rebuilds the data instance
+     *  the *first* time it is called -- a second call just validates an existing instance. So
+     *  without a forced tear-down, override paths passed to a *second* Initialize call would
+     *  update FolderConfig's cached path but NOT actually reload the calendar/IR static data
+     *  behind it, leaving the library internally inconsistent (FolderConfig reports the new path,
+     *  the loaded data is still the old one). A guaranteed clean rebuild every call is worth more
+     *  than preserving a stale cache across a call whose entire purpose is to (re)load config.
+     *  See rebrand\STATUS.md for the fuller pros/cons writeup of this decision.
      *  @return	A notification string
      */
-	const std::string trySetupAQL(const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath, const std::string& centralBankCalendarFullFilePath)
+	const std::string tryAqToolInitialize( const AQLString& configFolder, const AQLString& calendarPath, const AQLString& cbSchedulePath,
+	                                        const AQLString& startupConfigPath, const AQLString& irPropsPath,
+	                                        bool checkStaticDataLoaded, bool checkCalendarLoaded )
 	{
-		
-		// TODO: Move the mutexes down to the AlgoQuantLib singleton on the Object pool 
-		// this fig leaf will NOT be thread safe unless AlgoQuantLib itself is made thread safe
-		// boost::lock_guard<boost::mutex> lock(g_initialization_mutex);
-		
-		// This function has it's own thread guard to ensure single threaded
-		tryTearDownAQL();
+		// This function has its own thread guard to ensure single-threaded execution --
+		// tryAqToolTearDown() takes (and releases) the normal guard itself, so this function's own
+		// body runs lock-free below rather than trying to take it again.
+		tryAqToolTearDown();
 
 		VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
 
-        if (irPropsFullFilePath.size() != 0 && !irPropsFullFilePath.empty())
+		const AQLString resolvedCalendarPath   = resolveConfigFile( calendarPath, configFolder, CALENDAR_FILE_BASENAME );
+		const AQLString resolvedCbSchedulePath = resolveConfigFile( cbSchedulePath, configFolder, CBSCHEDULE_FILE_BASENAME );
+		const AQLString resolvedStartupPath    = resolveConfigFile( startupConfigPath, configFolder, STARTUP_CONFIG_FILE_BASENAME );
+		const AQLString resolvedIrPropsPath    = resolveConfigFile( irPropsPath, configFolder, IRPROPS_FILE_BASENAME );
+
+        if ( !resolvedIrPropsPath.empty() )
         {
-            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(irPropsFullFilePath.c_str()), "Failed to initialize AlgoQuantLib. Invalid ir.properties path.");
+            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(resolvedIrPropsPath), "Failed to initialize AlgoQuantLib. Invalid ir.properties path.");
         }
 
-        if (calendarFullFilePath.size() != 0 && !calendarFullFilePath.empty())
+        if ( !resolvedCalendarPath.empty() )
         {
-            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(calendarFullFilePath.c_str()), "Failed to initialize AlgoQuantLib. Invalid calendar path.");
+            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(resolvedCalendarPath), "Failed to initialize AlgoQuantLib. Invalid calendar path.");
         }
 
-        if (centralBankCalendarFullFilePath.size() != 0 && !centralBankCalendarFullFilePath.empty())
+        if ( !resolvedCbSchedulePath.empty() )
         {
-            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(centralBankCalendarFullFilePath.c_str()), "Failed to initialize AlgoQuantLib. Invalid central bank calendar path.");
+            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(resolvedCbSchedulePath), "Failed to initialize AlgoQuantLib. Invalid central bank calendar path.");
         }
 
 		// Original LA Start-Up Code
 		AQLCoreDataService::setContext(CONTEXT_KEY_ISEXCELREQUEST, "FALSE");  // was set to true in previous statement
 		AQLCoreDataService::setContext(CONTEXT_KEY_ISSETCURVEID, "TRUE");
 
-        // Excel Addin Config: set the calendar filepath member variable.
         // An empty path is left unset rather than stored as-is, so a later lookup falls through to
         // FolderConfig::calendar_path()'s own resolution chain (module-relative config folder first).
-        if (!calendarFullFilePath.empty())
+        if ( !resolvedCalendarPath.empty() )
         {
-            AQLString calendarFullFileName(calendarFullFilePath.c_str());
-            etrading::FolderConfig::set_calendar_path(calendarFullFileName);
+            etrading::FolderConfig::set_calendar_path(resolvedCalendarPath);
         }
 
-        // Excel Addin Config: set the ir properties filepath member variable. Same empty-path handling
-        // as the calendar path above -- falls through to FolderConfig::ir_prop_path() when omitted.
-        if (!irPropsFullFilePath.empty())
+        // Same empty-path handling as the calendar path above -- falls through to
+        // FolderConfig::ir_prop_path() when omitted.
+        if ( !resolvedIrPropsPath.empty() )
         {
-            AQLString irPropertiesFilePath(irPropsFullFilePath.c_str());
-            etrading::FolderConfig::set_ir_prop_path(irPropertiesFilePath);
+            etrading::FolderConfig::set_ir_prop_path(resolvedIrPropsPath);
         }
-			
-        // Excel Addin Config: set the central bank calendar filepath member variable
-        if ( centralBankCalendarFullFilePath.size() == 0)
+
+        // Central bank calendar filepath
+        if ( resolvedCbSchedulePath.empty() )
         {
             // Use Default Central Bank Path if not provided
             const AQLString* defaultCentralBankPath =  etrading::FolderConfig::cbschedule_path();
@@ -92,27 +131,24 @@ namespace validation
         }
         else
         {
-            // Use the file path if provided
-            AQLString centralBankCalendarPath(centralBankCalendarFullFilePath.c_str());
-            etrading::FolderConfig::set_cbschedule_path(centralBankCalendarPath);
+            etrading::FolderConfig::set_cbschedule_path(resolvedCbSchedulePath);
         }
 
         // Load IR Properties - filepaths are set to AQLString* of type NULL if not found
         // ---------------------------------------------------------------------------------------------------------------
-        // Note: The InitializeETrading::instance() method below calls the InitializeETrading constructor,
-        // which checks if calendar files have been loaded
+        // Note: InitializeETrading::instance() below is idempotent -- see the note above the
+        // function; it only rebuilds the data instance the first time it is called.
         // ---------------------------------------------------------------------------------------------------------------
-        const bool checkIfStaticDataLoaded = true;
-        const bool checkIfCalendarFileLoaded = true;
         etrading::AQLUpdateStaticDataManager::setUpForIRServer(); // TODO: Stop making this lower layer refer to an interface (like Excel)
-        etrading::AQLUpdateStaticDataManager::setUpDefaultIRStaticData( *(etrading::InitializeETrading::instance( checkIfStaticDataLoaded, checkIfCalendarFileLoaded ).dataInstance()) );
+        etrading::AQLUpdateStaticDataManager::setUpDefaultIRStaticData( *(etrading::InitializeETrading::instance( checkStaticDataLoaded, checkCalendarLoaded ).dataInstance()) );
         // ---------------------------------------------------------------------------------------------------------------
-			
+
         // Disable Thread Locking - since we have a local thread guard
 		common::AQLCoreLockControl::enableThreadLocks( false );
 
-		// Initialize the Optional AQObj Configuration Files - will not throw if unsuccessful
-		validation::tryAqToolLoadConfigurationFiles();
+		// Initialize the Optional AQObj Configuration Files (SWAP/BOND/CURVE_GENERATOR etc.) -
+		// will not throw if unsuccessful (see tryAqToolLoadConfigurationFiles).
+		validation::tryAqToolLoadConfigurationFiles( resolvedStartupPath );
 
 		return "Initialized AlgoQuantLib";
 
@@ -120,16 +156,19 @@ namespace validation
 	}
 
 
-	/* @brief	Tear-down AlgoQuantLib - Not to be used with Excel
+	/* @brief	Tear-down counterpart to tryAqToolInitialize. Supersedes the legacy tryTearDownAQL --
+     *          also finalizes the volatility manager, which tryTearDownAQL left commented out but
+     *          GTEST's own (now-retired) hand-rolled teardown always did; folded in here so every
+     *          caller gets the same, complete clean-up.
      *  @return	A notification string
      */
-	const std::string tryTearDownAQL()
+	const std::string tryAqToolTearDown()
 	{
 		VALID_EXCEPTION_START
 
 		// Clear AQObj object cache
-		etrading::deleteAllObjects( etrading::Environment::defaultEnv() );  
-        
+		etrading::deleteAllObjects( etrading::Environment::defaultEnv() );
+
         // Clear the Curve- and Swap results objects
         etrading::CurveResultsContainer::getInstance().deleteAllCurveResults();
 		etrading::SwapResultsContainer::getInstance().deleteAllSwapResults();
@@ -137,10 +176,11 @@ namespace validation
 
 		// Clean-Up Object Pool
 		AQLCoreDataService::finalize();
-		etrading::InitializeETrading::destroyInstance();
 
-        // Clean-Up the Volatility Manager - Is this needed?
-        //AQLLinearRatesVolatilityManager::finalize();
+        // Clean-Up the Volatility Manager
+        AQLLinearRatesVolatilityManager::finalize();
+
+		etrading::InitializeETrading::destroyInstance();
 
 		return std::string("Finalized AlgoQuantLib");
 
@@ -264,13 +304,16 @@ namespace validation
     }
 	
    /*  @brief			validation interface for the setupOptionalConfiguration function
+    *  @param [in]		configPath (optional)		The full path for the config file startup.conf. If empty, the default path will be used.
     *  @return			A notification string
     */
-	AQLString tryAqToolLoadConfigurationFiles()
+	AQLString tryAqToolLoadConfigurationFiles( const AQLString& configPath )
 	{
 		VALID_EXCEPTION_START
 
-		const AQLString* aqObjStartUpConfigPath = etrading::FolderConfig::setupOptionalStartupConfig();
+		const AQLString* aqObjStartUpConfigPath = configPath.empty()
+		        ? etrading::FolderConfig::setupOptionalStartupConfig()
+		        : &configPath;
 
         if( aqObjStartUpConfigPath == nullptr )
         {

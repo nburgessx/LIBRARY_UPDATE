@@ -10,27 +10,6 @@
  *                    prefix despite being filed in the Swap leg/schedule
  *                    validation headers.
  *
- * All of these wrappers live in src/validation/include/tryAqSwapObjectPricing.h
- * alongside the (already-ported) CMS/TRS pricing functions - a pre-existing
- * filing quirk, not something this port changes; the golden name is what
- * decides the category, not the file it happens to live in (CLAUDE.md
- * Sec5.1a). `tryAqCreditObjectFeeLegCreate` lives in tryAqSwapObjectLeg.h and
- * `tryAqCreditObjectFeeScheduleCreate` in tryAqSwapObjectSchedule.h for the
- * same reason.
- *
- * Deferred (see rebrand/STATUS.md): one `tryAqCDSObjectHazard
- * RateFromParSpread` overload. Unlike its three siblings (PV/RiskyAnnuity/
- * ParSpread each have a hazard-rate-driven "...FromHazardRate" form and a
- * distinctly-named credit-model-driven form), this function's two overloads
- * share the exact same validation name - one takes a valuationSettingsLVB +
- * recoveryRate + includeAccruedInterest, the other a creditModelName - which
- * Excel cannot register as two worksheet functions of the same name. This
- * looks like a naming gap in the golden source relative to its siblings;
- * flagged for Nicholas rather than inventing a second name unilaterally. The
- * valuationSettingsLVB-driven overload is ported here as
- * `aqCDSObjectHazardRateFromParSpread`; the creditModelName-
- * driven overload is NOT YET exposed.
- *
  * Each function pairs with the identically named validation wrapper (plus the
  * `try` prefix). Marshalling to and from Excel is the aq_xll helpers in
  * xllSupport.h.

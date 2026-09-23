@@ -1,34 +1,10 @@
 /*
  * Curve category - xlOil worksheet functions.
  *
- * This is the rates yield-curve framework only (bond-curve fitting is under
- * Bond, credit/hazard curves under Credit - see CLAUDE.md Sec5.1).
- *
  * aqCurveObject*        - operate on a cached curve object (name in).
  * aqCurveGenerator*     - operate on a cached named sub-object (conventions).
  * aqCurveMarketData*    - operate on a cached named sub-object (rates).
  * aqCurveZeroRates*     - stateless: curve-collection/index in, values out.
- *
- * Batch 1: object lifecycle, calibrate (+hedge), discount factor / forward
- * rate / zero rate families, generator, market data.
- *
- * Batch 2: the legacy stateless curveCollection+curveIndex family that
- * predates the AQObj curve handle (CompoundRate, Delete, DiscountFactor,
- * ForwardRate, Display, Frequency, Interpolation join-date, HullWhite/
- * Vasicek forward-rate checks, EuroDollarConvexityAdjustment, the four heavy
- * one-shot Calibrate{Basis,CTD,FXForwards,OIS,Swap} functions and their
- * ObjectCreate{Basis,FXForwards,OIS,Swap} handle-returning twins), plus the
- * Results/Jacobian risk family, MarketData "ObjectData" LVB family, dual
- * bootstrap and engine calibrate, and curve groups. Decided with Nicholas
- * 2026-09-11: **both families are live and both get ported** - stateless
- * functions keep the `aqCurve<Function>` form (no `Object`), object/handle
- * functions keep `aqCurveObject<Function>`, exactly per the golden `tryAq*`
- * name (no renaming - these are pre-existing validation wrappers, not new
- * names being coined). This closes out the Curve category (93 functions) bar
- * three internal-only helpers deliberately NOT exposed: getDayCount,
- * isBasisFlag and populateDiscountFactorConventions (in
- * tryAqCurveDiscountFactor.h) are legacy default-population plumbing with no
- * `aqCurve` naming and nothing meaningful for a user to call directly.
  *
  * Each function pairs with the identically named validation wrapper (plus the
  * `try` prefix). Marshalling to and from Excel is the aq_xll helpers in
@@ -2533,9 +2509,7 @@ XLO_FUNC_END( aqCurveDualBootstrap )
 
 
 /* -------------------------------------------------------------------------
- *  Heavy one-shot curve calibration (stateless) and its handle-returning
- *  ObjectCreate twin - decided with Nicholas 2026-09-11: both are live,
- *  both get ported, verbatim golden names (no renaming).
+ *  Heavy one-shot curve calibration (stateless) and its handle-returning ObjectCreate twin.
  * ---------------------------------------------------------------------- */
 
 #if AQ_XLL_ENABLED(aqCurveCalibrateBasis)

@@ -53,7 +53,7 @@ namespace
     const AQLString CALIBPROP_FILE_NAME( "/config/calib.properties" );
     const AQLString IRPROP_FILE_NAME( "/config/ir.properties" );
     const AQLString IRPROP_FILE_NAME2( "/config/ir.properties" );
-	const AQLString OPTIONAL_CONFIG_PATH2 =( "/config/startup.conf" );
+	const AQLString OPTIONAL_CONFIG_PATH2( "/config/startup.conf" );
 
     // This is only for the Optional Config
 	const bool reportErrors = false;

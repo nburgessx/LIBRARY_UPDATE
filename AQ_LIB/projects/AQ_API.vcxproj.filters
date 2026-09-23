@@ -25,79 +25,143 @@
     <Filter Include="resources\Swig Generated Files">
       <UniqueIdentifier>{3342ec27-a21a-495f-b377-162422aea719}</UniqueIdentifier>
     </Filter>
-    <!-- Category filters: match the locked 21-category list (CLAUDE.md Sec 5.1) plus
-         Object (generic AQObj handle lifecycle, mirrors AQ_XLL's xllObject.cpp) and
-         Support (shared infra/helpers, not a public-API category). One filter per
-         category regardless of current file count, so a category's first file lands
-         in the right place without editing this list again. -->
-    <Filter Include="Date">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000001}</UniqueIdentifier>
+    <!-- Core API / Optional API split mirrors AQ_XLL's src\Core / src\Optional file
+         organisation (CLAUDE.md Sec 4.4/6.3): Core = always-needed infrastructure a
+         product depends on regardless of edition; Optional = one folder per product
+         category. Repeated under both "include" and "src" so headers and source files
+         land in the same category tree, browsable the same way AQ_XLL's category file
+         names are. -->
+    <Filter Include="include\Core API">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000001}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Curve">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000002}</UniqueIdentifier>
+    <Filter Include="include\Core API\Curve">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000002}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FX">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000003}</UniqueIdentifier>
+    <Filter Include="include\Core API\Date">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000003}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Inflation">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000004}</UniqueIdentifier>
+    <Filter Include="include\Core API\Generator">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000004}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Volatility">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000005}</UniqueIdentifier>
+    <Filter Include="include\Core API\IR">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000005}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IR">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000006}</UniqueIdentifier>
+    <Filter Include="include\Core API\Math">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000006}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Future">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000007}</UniqueIdentifier>
+    <Filter Include="include\Core API\Object">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000007}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Swap">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000008}</UniqueIdentifier>
+    <Filter Include="include\Core API\Support">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000008}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AssetSwap">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000009}</UniqueIdentifier>
+    <Filter Include="include\Core API\Tool">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000009}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CMS">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-00000000000a}</UniqueIdentifier>
+    <Filter Include="include\Optional API">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000000a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TRS">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-00000000000b}</UniqueIdentifier>
+    <Filter Include="include\Optional API\AssetSwap">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000000b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CapFloor">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-00000000000c}</UniqueIdentifier>
+    <Filter Include="include\Optional API\Bond">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000000c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Swaption">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-00000000000d}</UniqueIdentifier>
+    <Filter Include="include\Optional API\CapFloor">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000000d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BondOption">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-00000000000e}</UniqueIdentifier>
+    <Filter Include="include\Optional API\CMS">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000000e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BondFutureOption">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-00000000000f}</UniqueIdentifier>
+    <Filter Include="include\Optional API\Credit">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000000f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Bond">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000010}</UniqueIdentifier>
+    <Filter Include="include\Optional API\Future">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000010}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Credit">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000011}</UniqueIdentifier>
+    <Filter Include="include\Optional API\FX">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000011}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Math">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000012}</UniqueIdentifier>
+    <Filter Include="include\Optional API\Inflation">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000012}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Model">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000013}</UniqueIdentifier>
+    <Filter Include="include\Optional API\Swap">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000013}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Generator">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000014}</UniqueIdentifier>
+    <Filter Include="include\Optional API\Swaption">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000014}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tool">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000015}</UniqueIdentifier>
+    <Filter Include="include\Optional API\TRS">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000015}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000016}</UniqueIdentifier>
+    <Filter Include="include\Optional API\Volatility">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000016}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Support">
-      <UniqueIdentifier>{1a2b3c01-0000-4000-8000-000000000017}</UniqueIdentifier>
+    <Filter Include="src\Core API">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core API\Curve">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core API\Date">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000019}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core API\Generator">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000001a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core API\IR">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000001b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core API\Math">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000001c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core API\Object">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000001d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core API\Support">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000001e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core API\Tool">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000001f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000020}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\AssetSwap">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\Bond">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000022}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\CapFloor">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\CMS">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\Credit">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\Future">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\FX">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\Inflation">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000028}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\Swap">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-000000000029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\Swaption">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000002a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\TRS">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000002b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optional API\Volatility">
+      <UniqueIdentifier>{2a3b4c01-0000-4000-8000-00000000002c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -140,291 +204,386 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\AQ_API\source\APISetUp.h">
-      <Filter>Support</Filter>
+      <Filter>include\Core API\Support</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\BondTypes.h">
-      <Filter>Support</Filter>
+      <Filter>include\Core API\Support</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\BondUtilities.h">
-      <Filter>Support</Filter>
+      <Filter>include\Core API\Support</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\exposed_functions.h">
-      <Filter>Support</Filter>
+      <Filter>include\Core API\Support</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\SwigTypes.h">
-      <Filter>Support</Filter>
+      <Filter>include\Core API\Support</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\TypeUtilities.h">
-      <Filter>Support</Filter>
+      <Filter>include\Core API\Support</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCMSObject.h">
-      <Filter>CMS</Filter>
+      <Filter>include\Optional API\CMS</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveResults.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCreditObject.h">
-      <Filter>Credit</Filter>
+      <!-- Also carries the aqTRSObject* functions (PV/ParRate/ParSpread/Annuity):
+           no dedicated TRS file exists in AQ_API today, unlike AQ_XLL's aqTRS.cpp.
+           Filed under Credit since that is the majority of this file's content;
+           flagged to Nicholas for a call on whether to split it out. -->
+      <Filter>include\Optional API\Credit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqCDSObject.h">
+      <Filter>include\Optional API\Credit</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqBondCurve.h">
-      <Filter>Bond</Filter>
+      <Filter>include\Optional API\Bond</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveCalibrateBasis.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveCalibrateFXForwards.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveCalibrateOIS.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveCalibrateSwap.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveCompoundRate.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveDiscountFactor.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveDisplay.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveForwardRate.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveInterpolationJoinDate.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveZeroRate.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqDate.h">
-      <Filter>Date</Filter>
+      <Filter>include\Core API\Date</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqDateCentralBank.h">
-      <Filter>Date</Filter>
+      <Filter>include\Core API\Date</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqDateIMM.h">
-      <Filter>Date</Filter>
+      <Filter>include\Core API\Date</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveDualBootstrap.h">
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqObject.h">
-      <Filter>Object</Filter>
+      <Filter>include\Core API\Object</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqGenerator.h">
-      <Filter>Generator</Filter>
+      <Filter>include\Core API\Generator</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqBondOptionObject.h">
-      <Filter>BondOption</Filter>
+      <!-- BondOption/BondFutureOption are not their own AQ_XLL file (CLAUDE.md
+           Sec 5.1a): both operate on the same cached etrading::BondOption via
+           aqBondOptionObjectCreate, so AQ_XLL files them in aqBond.cpp. Mirrored
+           here under Bond rather than splitting out BondOption/BondFutureOption
+           folders that AQ_XLL itself does not have. -->
+      <Filter>include\Optional API\Bond</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqInflationObject.h">
-      <Filter>Inflation</Filter>
+      <Filter>include\Optional API\Inflation</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwaptionObject.h">
-      <Filter>Swaption</Filter>
+      <Filter>include\Optional API\Swaption</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCapFloorObject.h">
-      <Filter>CapFloor</Filter>
+      <Filter>include\Optional API\CapFloor</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqFXObject.h">
-      <Filter>FX</Filter>
+      <Filter>include\Optional API\FX</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqVolatilityObject.h">
-      <Filter>Volatility</Filter>
+      <Filter>include\Optional API\Volatility</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqVolatilitySABR.h">
-      <Filter>Volatility</Filter>
+      <Filter>include\Optional API\Volatility</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqBondFutureOptionObject.h">
-      <Filter>BondFutureOption</Filter>
+      <Filter>include\Optional API\Bond</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqFutureTicker.h">
-      <Filter>Future</Filter>
+      <Filter>include\Optional API\Future</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqBondObjectCreate.h">
-      <Filter>Bond</Filter>
+      <Filter>include\Optional API\Bond</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqBondObjectPrice.h">
-      <Filter>Bond</Filter>
+      <Filter>include\Optional API\Bond</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqBondObjectRisk.h">
+      <Filter>include\Optional API\Bond</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqBondObjectFRN.h">
+      <Filter>include\Optional API\Bond</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqBondObjectFuture.h">
+      <Filter>include\Optional API\Bond</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqBondSchedule.h">
+      <Filter>include\Optional API\Bond</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqToolLVB.h">
-      <Filter>Tool</Filter>
+      <Filter>include\Core API\Tool</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwapObjectCreate.h">
-      <Filter>Swap</Filter>
+      <Filter>include\Optional API\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwapObjectPrice.h">
-      <Filter>Swap</Filter>
+      <Filter>include\Optional API\Swap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqSwapLeg.h">
+      <Filter>include\Optional API\Swap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqSwapResults.h">
+      <Filter>include\Optional API\Swap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqSwapDelta.h">
+      <Filter>include\Optional API\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurveObject.h">
       <!-- Also carries the aqIRFixingTable* functions (bundled with Curve since the
            InterestRate->IR rename, CLAUDE.md Sec 5.1): filed under Curve rather than
            split across two files. -->
-      <Filter>Curve</Filter>
+      <Filter>include\Core API\Curve</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqToolGrids.h">
-      <Filter>Tool</Filter>
+      <Filter>include\Core API\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqGridObject.h">
+      <Filter>include\Core API\Tool</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqAssetSwapSpread.h">
-      <Filter>AssetSwap</Filter>
+      <Filter>include\Optional API\AssetSwap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqAssetSwapObject.h">
-      <Filter>AssetSwap</Filter>
+      <Filter>include\Optional API\AssetSwap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqIRObject.h">
-      <Filter>IR</Filter>
+      <Filter>include\Core API\IR</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwapOisParRate.h">
-      <Filter>Swap</Filter>
+      <Filter>include\Optional API\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwapOisPV.h">
-      <Filter>Swap</Filter>
+      <Filter>include\Optional API\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwapDV01.h">
-      <Filter>Swap</Filter>
+      <Filter>include\Optional API\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwapParRate.h">
-      <Filter>Swap</Filter>
+      <Filter>include\Optional API\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwapPV.h">
-      <Filter>Swap</Filter>
+      <Filter>include\Optional API\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwapPV01.h">
-      <Filter>Swap</Filter>
+      <Filter>include\Optional API\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwapSchedule.h">
-      <Filter>Swap</Filter>
+      <Filter>include\Optional API\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqSwapStubRate.h">
-      <Filter>Swap</Filter>
+      <Filter>include\Optional API\Swap</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqToolRecord.h">
-      <Filter>Tool</Filter>
+      <Filter>include\Core API\Tool</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqToolSetup.h">
-      <Filter>Tool</Filter>
+      <Filter>include\Core API\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqToolData.h">
+      <Filter>include\Core API\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqToolDate.h">
+      <Filter>include\Core API\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqToolDiagnostics.h">
+      <Filter>include\Core API\Tool</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqMathInterpolation.h">
-      <Filter>Math</Filter>
+      <Filter>include\Core API\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqMathPCA.h">
-      <Filter>Math</Filter>
+      <Filter>include\Core API\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqMathBlackScholes.h">
+      <Filter>include\Core API\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqMathCapletFloorlet.h">
+      <Filter>include\Core API\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqMathSwaption.h">
+      <Filter>include\Core API\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqMathVolatilityConversion.h">
+      <Filter>include\Core API\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqMathConvexity.h">
+      <Filter>include\Core API\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqMathStatistics.h">
+      <Filter>include\Core API\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqMathNumerical.h">
+      <Filter>include\Core API\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AQ_API\source\aqMathRates.h">
+      <Filter>include\Core API\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\AQ_API\source\BondUtilities.cpp">
-      <Filter>Support</Filter>
+      <Filter>src\Core API\Support</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\exposed_functions.cpp">
-      <Filter>Support</Filter>
+      <Filter>src\Core API\Support</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\TypeUtilities.cpp">
-      <Filter>Support</Filter>
+      <Filter>src\Core API\Support</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqBondCurve.cpp">
-      <Filter>Bond</Filter>
+      <Filter>src\Optional API\Bond</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveCalibrateBasis.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveCalibrateFXForwards.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveCalibrateOIS.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveCalibrateSwap.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveCompoundRate.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveDiscountFactor.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveDisplay.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveForwardRate.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveInterpolationJoinDate.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCMSObject.cpp">
-      <Filter>CMS</Filter>
+      <Filter>src\Optional API\CMS</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveResults.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveZeroRate.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqDate.cpp">
-      <Filter>Date</Filter>
+      <Filter>src\Core API\Date</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqDateCentralBank.cpp">
-      <Filter>Date</Filter>
+      <Filter>src\Core API\Date</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqDateIMM.cpp">
-      <Filter>Date</Filter>
+      <Filter>src\Core API\Date</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveDualBootstrap.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqObject.cpp">
-      <Filter>Object</Filter>
+      <Filter>src\Core API\Object</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqGenerator.cpp">
-      <Filter>Generator</Filter>
+      <Filter>src\Core API\Generator</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqBondOptionObject.cpp">
-      <Filter>BondOption</Filter>
+      <Filter>src\Optional API\Bond</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqInflationObject.cpp">
-      <Filter>Inflation</Filter>
+      <Filter>src\Optional API\Inflation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwaptionObject.cpp">
-      <Filter>Swaption</Filter>
+      <Filter>src\Optional API\Swaption</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCapFloorObject.cpp">
-      <Filter>CapFloor</Filter>
+      <Filter>src\Optional API\CapFloor</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqFXObject.cpp">
-      <Filter>FX</Filter>
+      <Filter>src\Optional API\FX</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqVolatilityObject.cpp">
-      <Filter>Volatility</Filter>
+      <Filter>src\Optional API\Volatility</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqVolatilitySABR.cpp">
-      <Filter>Volatility</Filter>
+      <Filter>src\Optional API\Volatility</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqBondFutureOptionObject.cpp">
-      <Filter>BondFutureOption</Filter>
+      <Filter>src\Optional API\Bond</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqFutureTicker.cpp">
-      <Filter>Future</Filter>
+      <Filter>src\Optional API\Future</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqBondObjectCreate.cpp">
-      <Filter>Bond</Filter>
+      <Filter>src\Optional API\Bond</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqBondObjectPrice.cpp">
-      <Filter>Bond</Filter>
+      <Filter>src\Optional API\Bond</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqBondObjectRisk.cpp">
+      <Filter>src\Optional API\Bond</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqBondObjectFRN.cpp">
+      <Filter>src\Optional API\Bond</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqBondObjectFuture.cpp">
+      <Filter>src\Optional API\Bond</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqBondSchedule.cpp">
+      <Filter>src\Optional API\Bond</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqToolLVB.cpp">
-      <Filter>Tool</Filter>
+      <Filter>src\Core API\Tool</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwapObjectCreate.cpp">
-      <Filter>Swap</Filter>
+      <Filter>src\Optional API\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwapObjectPrice.cpp">
-      <Filter>Swap</Filter>
+      <Filter>src\Optional API\Swap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqSwapLeg.cpp">
+      <Filter>src\Optional API\Swap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqSwapResults.cpp">
+      <Filter>src\Optional API\Swap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqSwapDelta.cpp">
+      <Filter>src\Optional API\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCreditObject.cpp">
-      <Filter>Credit</Filter>
+      <!-- Also carries the aqTRSObject* functions; see the matching note on
+           aqCreditObject.h above. -->
+      <Filter>src\Optional API\Credit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqCDSObject.cpp">
+      <Filter>src\Optional API\Credit</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\swig_CSharp_wrap.cxx">
       <Filter>resources\Swig Generated Files</Filter>
@@ -436,58 +595,94 @@
       <Filter>resources\Swig Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqCurveObject.cpp">
-      <Filter>Curve</Filter>
+      <Filter>src\Core API\Curve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqToolGrids.cpp">
-      <Filter>Tool</Filter>
+      <Filter>src\Core API\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqGridObject.cpp">
+      <Filter>src\Core API\Tool</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\swig_Python_wrap.cxx">
       <Filter>resources\Swig Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqAssetSwapSpread.cpp">
-      <Filter>AssetSwap</Filter>
+      <Filter>src\Optional API\AssetSwap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqAssetSwapObject.cpp">
-      <Filter>AssetSwap</Filter>
+      <Filter>src\Optional API\AssetSwap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqIRObject.cpp">
-      <Filter>IR</Filter>
+      <Filter>src\Core API\IR</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwapOisParRate.cpp">
-      <Filter>Swap</Filter>
+      <Filter>src\Optional API\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwapOisPV.cpp">
-      <Filter>Swap</Filter>
+      <Filter>src\Optional API\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwapDV01.cpp">
-      <Filter>Swap</Filter>
+      <Filter>src\Optional API\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwapParRate.cpp">
-      <Filter>Swap</Filter>
+      <Filter>src\Optional API\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwapPV.cpp">
-      <Filter>Swap</Filter>
+      <Filter>src\Optional API\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwapPV01.cpp">
-      <Filter>Swap</Filter>
+      <Filter>src\Optional API\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwapSchedule.cpp">
-      <Filter>Swap</Filter>
+      <Filter>src\Optional API\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqSwapStubRate.cpp">
-      <Filter>Swap</Filter>
+      <Filter>src\Optional API\Swap</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqToolRecord.cpp">
-      <Filter>Tool</Filter>
+      <Filter>src\Core API\Tool</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqToolSetup.cpp">
-      <Filter>Tool</Filter>
+      <Filter>src\Core API\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqToolData.cpp">
+      <Filter>src\Core API\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqToolDate.cpp">
+      <Filter>src\Core API\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqToolDiagnostics.cpp">
+      <Filter>src\Core API\Tool</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqMathInterpolation.cpp">
-      <Filter>Math</Filter>
+      <Filter>src\Core API\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqMathPCA.cpp">
-      <Filter>Math</Filter>
+      <Filter>src\Core API\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqMathBlackScholes.cpp">
+      <Filter>src\Core API\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqMathCapletFloorlet.cpp">
+      <Filter>src\Core API\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqMathSwaption.cpp">
+      <Filter>src\Core API\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqMathVolatilityConversion.cpp">
+      <Filter>src\Core API\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqMathConvexity.cpp">
+      <Filter>src\Core API\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqMathStatistics.cpp">
+      <Filter>src\Core API\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqMathNumerical.cpp">
+      <Filter>src\Core API\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_API\source\aqMathRates.cpp">
+      <Filter>src\Core API\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

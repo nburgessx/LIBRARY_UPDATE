@@ -44,16 +44,25 @@
 
 
 // boost::mutex g_initialization_mutex; // not real thread safety (cfr. inititializeAQL comments)
+//
+// NOTE: setUpAQL/setupAQL/initAQL/tearDownAQL predate the aq* rebrand and are superseded by
+// aqToolInitialize/aqToolTearDown (see aqToolSetup.h). Kept here, retargeted at the new
+// validation::tryAqToolInitialize/tryAqToolTearDown funnel, purely so existing SWIG bindings
+// built against these names keep working -- prefer aqToolInitialize/aqToolTearDown in new code.
 std::string setUpAQL(const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath)
 {
     // Disable OMP Threading by Default for the Server APIs
     etrading::OMPThreadManager::getInstance().setIsOMPEnabled( false );
 
 	std::string statusMsg;
-	
+
 	try
 	{
-		statusMsg = validation::trySetupAQL( irPropsFullFilePath, calendarFullFilePath );
+		// This legacy entry point never took a central-bank-schedule override; a prior version of
+		// this function silently dropped it even though the underlying setup supports one.
+		statusMsg = validation::tryAqToolInitialize( AQLString(), AQLString( calendarFullFilePath ),
+		                                              AQLString(), AQLString(), AQLString( irPropsFullFilePath ),
+		                                              true, true );
 	}
 	catch (AQLCoreError e)
 	{
@@ -90,7 +99,7 @@ std::string initAQL()  { return setUpAQL( "","" ); }
 
 std::string tearDownAQL()
 {
-	return validation::tryTearDownAQL();
+	return validation::tryAqToolTearDown();
 }
 
 

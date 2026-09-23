@@ -11,6 +11,7 @@
 #include "BondUtilities.h"
 #include "tryAqBondObject.h"
 #include "ParameterValidation.h"
+#include "JSONInfoBlock.h"          // JSON InfoBlock Container - tryAqBondCurveCreate
 
 
 /* @brief Fits a Nelson-Siegel parameterized curve to the supplied bond maturities and yields.
@@ -270,4 +271,115 @@ SWIG_STRINGMATRIX aqBondObjectDisplaySchedule( const std::string& bondObjectName
     AQ_API_END
 }
 
- 
+/* @brief			swig interface for aqBondCurveCreate function. Creates a fitted bond curve from one or two named data blocks.
+*  @param[in]		bondCurveName	Bond Curve object name
+*  @param[in]		key1			Name of the first data block
+*  @param[in]		dataBlock1		First data block
+*  @param[in]		key2			Optional. Name of the second data block; pass empty string / empty matrix to omit
+*  @param[in]		dataBlock2		Optional. Second data block
+*  @returns		Returns the bond curve object handle name
+*/
+std::string aqBondCurveCreate( const std::string& bondCurveName,
+                                const std::string& key1,
+                                const std::vector<std::vector<std::string> >& dataBlock1,
+                                const std::string& key2,
+                                const std::vector<std::vector<std::string> >& dataBlock2 )
+{
+    AQ_API_START
+
+    // Marshall Inputs - mirrors aqCreditModelCreate's pattern
+    etrading::VariantMatrix variantDataBlock1;
+    swig::buildVariantMatrix( variantDataBlock1, dataBlock1 );
+
+    etrading::VariantMatrix variantDataBlock2;
+    swig::buildVariantMatrix( variantDataBlock2, dataBlock2 );
+
+    const etrading::JSONInfoBlockTuple infoBlock1  = etrading::JSONInfoBlock::createInfoBlock( variantDataBlock1 );
+    const etrading::JSONInfoBlockTuple infoBlock2  = etrading::JSONInfoBlock::createInfoBlock( variantDataBlock2 );
+    const etrading::JSONInfoBlockTuples infoBlocks = { infoBlock1, infoBlock2 };
+
+    const std::vector<std::string> dataBlockNames = { key1, key2 };
+
+    // Call validation method
+    std::string result = validation::tryAqBondCurveCreate( bondCurveName, dataBlockNames, infoBlocks );
+    return result;
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for aqBondCurveDisplay function. Displays the bond curve calibration as a matrix of pillar dates and yield points.
+*  @param[in]		bondCurveName	The bond curve object name
+*  @returns		A matrix of pillar dates and yield points
+*/
+SWIG_STRINGMATRIX aqBondCurveDisplay( const std::string& bondCurveName )
+{
+    AQ_API_START
+
+    // Call the Function
+    AnyTypeMatrix display = validation::tryAqBondCurveDisplay( bondCurveName );
+
+    // Marshall Output(s)
+    SWIG_STRINGMATRIX result = swig::fromAnyTypeMatrixToMatrixOfString( display );
+    return result;
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for aqBondCurveYield function. Interpolated yield off a bond curve at a reference date.
+*  @param[in]		bondCurveName	The bond curve object name
+*  @param[in]		referenceDate	The forward reference date
+*  @returns		The interpolated yield
+*/
+double aqBondCurveYield( const std::string& bondCurveName, const std::string& referenceDate )
+{
+    AQ_API_START
+
+    // Marshall Inputs
+    AQLDate referenceDate_( etrading::stringToDate( referenceDate ) );
+
+    // Call validation method
+    double result = validation::tryAqBondCurveYield( bondCurveName, referenceDate_ );
+    return result;
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for aqBondObjectPriceFromBondCurve function. Prices a bond using a bond curve to discount the coupons.
+*  @param[in]		bondObjectName	Bond object name
+*  @param[in]		settlementDate	The settlement date to use for bond pricing
+*  @param[in]		bondCurveName	The bond curve object name
+*  @returns		The bond price
+*/
+double aqBondObjectPriceFromBondCurve( const std::string& bondObjectName, const std::string& settlementDate, const std::string& bondCurveName )
+{
+    AQ_API_START
+
+    // Marshall Inputs
+    AQLDate settlementDate_( etrading::stringToDate( settlementDate ) );
+
+    // Call validation method
+    double result = validation::tryAqBondObjectPriceFromBondCurve( bondObjectName, settlementDate_, bondCurveName );
+    return result;
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for aqBondObjectYieldFromBondCurve function. Calculates the yield-to-maturity of a bond using a bond curve to discount the coupons.
+*  @param[in]		bondObjectName	Bond object name
+*  @param[in]		settlementDate	The settlement date to use for bond pricing
+*  @param[in]		bondCurveName	The bond curve object name
+*  @returns		The bond yield-to-maturity
+*/
+double aqBondObjectYieldFromBondCurve( const std::string& bondObjectName, const std::string& settlementDate, const std::string& bondCurveName )
+{
+    AQ_API_START
+
+    // Marshall Inputs
+    AQLDate settlementDate_( etrading::stringToDate( settlementDate ) );
+
+    // Call validation method
+    double result = validation::tryAqBondObjectYieldFromBondCurve( bondObjectName, settlementDate_, bondCurveName );
+    return result;
+
+    AQ_API_END
+}

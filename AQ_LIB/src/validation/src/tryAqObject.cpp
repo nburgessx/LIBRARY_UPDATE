@@ -92,8 +92,8 @@ namespace validation
 
         // A bulk delete can remove objects that were originally loaded from
         // the AQObj configuration files (generators etc) - reload them so
-        // they come straight back, the same way tryAqObjectClearCache does
-        // (2026-09-12, Nicholas). Never throws (see tryAqToolLoadConfigurationFiles).
+        // they come straight back, the same way tryAqObjectClearCache does.
+        // Never throws (see tryAqToolLoadConfigurationFiles).
         tryAqToolLoadConfigurationFiles();
 
         return deletedCount;

@@ -4,6 +4,7 @@
 #include <xloil/XllEntryPoint.h>
 
 #include <InitializeETrading.h>   // etrading::InitializeETrading
+#include <tryAqToolSetup.h>       // validation::tryAqToolTearDown
 
 // Addin Manager Info
 struct AlgoQuantLib
@@ -21,9 +22,13 @@ struct AlgoQuantLib
         etrading::InitializeETrading::instance();
     }
 
+    // xlOil calls this from xlAutoClose / on unload. Goes through the same
+    // centralized teardown as GTEST and AQ_API (validation::tryAqToolTearDown)
+    // so the results containers, object pool and volatility manager are cleared
+    // too, not just the InitializeETrading singleton.
     ~AlgoQuantLib()
     {
-        etrading::InitializeETrading::destroyInstance();
+        validation::tryAqToolTearDown();
     }
 
     static std::wstring addInManagerInfo() { return L"Algo Quant Lib"; }

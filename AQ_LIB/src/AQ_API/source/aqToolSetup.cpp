@@ -1,5 +1,7 @@
 #include "aqToolSetup.h"
 #include "tryAqToolSetup.h"
+#include "InitializeETrading.h"		// etrading::InitializeETrading
+#include "FolderConfig.h"			// etrading::FolderConfig
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
@@ -89,5 +91,77 @@ std::string aqToolParallelModeStatus()
     const std::string result = validation::tryAqToolParallelModeStatus();
     return result;
 
+    AQ_API_END
+}
+
+/* @brief			swig interface for the aqToolLoadConfigurationFiles function. Reloads the configuration
+*                   files (calendars, static data, startup config) from the resolved config folder.
+*  @return			A notification string
+*/
+std::string aqToolLoadConfigurationFiles()
+{
+    AQ_API_START
+
+    const std::string ret = validation::tryAqToolLoadConfigurationFiles().getCString();
+    return ret;
+
+    AQ_API_END
+}
+
+/* @brief			swig interface for the aqToolInitialize function. Loads the configuration
+*                   files (calendars, static data, startup config) from the resolved config folder.
+*  @param [in]		configFolder (Optional)		Folder containing Calendar.csv / CBSchedule.csv /
+*                   startup.conf / ir.properties. If empty, each file falls through to its own
+*                   default resolution chain.
+*  @param [in]		calendarPath (Optional)			Full-path override for the calendar file. Wins over configFolder.
+*  @param [in]		cbSchedulePath (Optional)		Full-path override for the central-bank-schedule file. Wins over configFolder.
+*  @param [in]		startupConfigPath (Optional)	Full-path override for the startup.conf file. Wins over configFolder.
+*  @param [in]		irPropsPath (Optional)			Full-path override for the ir.properties file. Wins over configFolder.
+*  @return			A notification string
+*/
+std::string aqToolInitialize( const std::string& configFolder, const std::string& calendarPath, const std::string& cbSchedulePath,
+                               const std::string& startupConfigPath, const std::string& irPropsPath )
+{
+    AQ_API_START
+
+	// checkStaticDataLoaded = true, checkCalendarLoaded = true -> throw, with the offending path,
+	// if the calendars or static data did not load.
+	validation::tryAqToolInitialize( AQLString( configFolder ), AQLString( calendarPath ),
+	                                  AQLString( cbSchedulePath ), AQLString( startupConfigPath ),
+	                                  AQLString( irPropsPath ), true, true );
+	std::string message = "AlgoQuantLib initialised.";
+
+	const AQLString* resolvedCalendarPath = etrading::FolderConfig::calendar_path();
+	if ( resolvedCalendarPath == nullptr || resolvedCalendarPath->size() == 0 )
+	{
+		message += "Holiday calendars failed to load";
+	}
+	else
+	{
+		// LAMBDA FUNCION: Convert forward slashes to backslashes for display on Windows
+		auto toNativeSeparators = []( std::string path )
+		{
+			std::replace( path.begin(), path.end(), '/', '\\' );
+			return path;
+		};
+
+		message += " Holiday calendars loaded from: ";
+		message += toNativeSeparators( resolvedCalendarPath->getCString() );
+	}
+
+	return message;
+	AQ_API_END
+}
+
+/* @brief			swig interface for the aqToolTearDown function. Clears the AQObj object cache,
+*                   the curve/swap/credit results containers and the object pool, then destroys
+*                   the AlgoQuantLib data-instance singleton. Call before the process exits.
+*  @return			A notification string
+*/
+std::string aqToolTearDown()
+{
+    AQ_API_START
+    const std::string ret = validation::tryAqToolTearDown();
+    return ret;
     AQ_API_END
 }

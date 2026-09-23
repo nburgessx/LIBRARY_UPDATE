@@ -15,3 +15,8 @@ double aqSwapPV(const std::vector<std::vector <std::string> >& swapLVB,
 *  @return			expected keys
 */
 std::vector<std::string> tryAqSwapPVLVBKeys();
+
+/* @brief			swig interface for the aqSwapPVLVBKeys function - return a set of expected keys for a swap pv label value block
+*  @return			expected keys
+*/
+std::vector<std::string> aqSwapPVLVBKeys();

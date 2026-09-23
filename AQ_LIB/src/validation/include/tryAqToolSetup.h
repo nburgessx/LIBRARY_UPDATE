@@ -4,15 +4,40 @@
 
 namespace validation
 {
- 	 /* @brief	Set-up AlgoQuantLib - Not to be used with Excel
-     *  @return	A notification string
-     */
-	const std::string trySetupAQL( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath, const std::string& centralBankCalendarFullFilePath = "" );
+	/* @brief			The single funnel every AlgoQuantLib consumer (GTEST, AQ_XLL, AQ_API)
+	*                   initializes through. Always tears down first (clears the AQObj object
+	*                   cache, results containers and object pool, destroys the data-instance
+	*                   singleton), then resolves the calendar / central-bank-schedule /
+	*                   startup-config / ir-properties file paths, applies any overrides given,
+	*                   rebuilds the AlgoQuantLib data instance and loads the optional startup-config
+	*                   generators (SWAP/BOND/CURVE_GENERATOR etc.). Every call is therefore a
+	*                   guaranteed clean (re)load, not an idempotent no-op on a second call --
+	*                   see the NOTE above this function's definition for why.
+	*  @param [in]		configFolder (optional)		Folder containing Calendar.csv / CBSchedule.csv /
+	*                   startup.conf / ir.properties. If empty, each file falls through to its own
+	*                   default resolution chain (see FolderConfig).
+	*  @param [in]		calendarPath (optional)			Full-path override for the calendar file. Wins over configFolder.
+	*  @param [in]		cbSchedulePath (optional)		Full-path override for the central-bank-schedule file. Wins over configFolder.
+	*  @param [in]		startupConfigPath (optional)	Full-path override for the startup.conf file. Wins over configFolder.
+	*  @param [in]		irPropsPath (optional)			Full-path override for the ir.properties file. Wins over configFolder.
+	*  @param [in]		checkStaticDataLoaded (optional)	Throw if the ir static data failed to load. Default true.
+	*  @param [in]		checkCalendarLoaded (optional)		Throw if the holiday calendars failed to load. Default true.
+	*  @return			A notification string
+	*/
+	const std::string tryAqToolInitialize( const AQLString& configFolder = AQLString(),
+	                                        const AQLString& calendarPath = AQLString(),
+	                                        const AQLString& cbSchedulePath = AQLString(),
+	                                        const AQLString& startupConfigPath = AQLString(),
+	                                        const AQLString& irPropsPath = AQLString(),
+	                                        bool checkStaticDataLoaded = true,
+	                                        bool checkCalendarLoaded = true );
 
-	/* @brief	Tear-down AlgoQuantLib - Not to be used with Excel
-     *  @return	A notification string
-     */
-	const std::string tryTearDownAQL();
+	/* @brief			Tear-down counterpart to tryAqToolInitialize: clears the AQObj object cache,
+	*                   the curve/swap/credit results containers, the object pool and the volatility
+	*                   manager, then destroys the AlgoQuantLib data-instance singleton.
+	*  @return			A notification string
+	*/
+	const std::string tryAqToolTearDown();
 
     /* @brief	Clear the object pool
      *  @return	A notification string
@@ -38,9 +63,10 @@ namespace validation
     AQLString tryAqToolLoadStaticData( const AQLString& filepath );
 	
     /* @brief			validation interface for loading the optional AQObj configuration files
+    *  @param [in]		configPath (optional)		The full path for the config file startup.conf. If empty, the default path will be used  
     *  @return			A notification string
     */
-	AQLString tryAqToolLoadConfigurationFiles();
+	AQLString tryAqToolLoadConfigurationFiles( const AQLString& configPath = "" );
 
     /* @brief			validation interface for the aqToolVersion function
     *  @param [in]		expiryMonth			An integer representing license expiry month

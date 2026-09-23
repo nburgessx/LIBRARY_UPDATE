@@ -46,6 +46,12 @@ namespace swig
 	*/
 	void buildDateVector(DateVector& toDateVector, const std::vector<std::string>& fromStringVector );
 
+	/* @brief			build a vector of strings from a DateVector
+	*  @param [out]		toStringVector			Result vector of date strings (YYYYMMDD)
+	*  @param [in]		fromDateVector			A DateVector
+	*/
+	void buildStringVectorFromDateVector( StandardStringVector& toStringVector, const DateVector& fromDateVector );
+
     /* @brief			build boost::gregorian::date Vector from a vector of strings 
 	*  @param [out]		toDateVector			Result Vector of Dates
 	*  @param [in]		fromStringVector		A vector of strings
@@ -132,6 +138,16 @@ namespace swig
     *  @return		One LabelValueBlock object
     */
 	LabelValueBlock buildSingleLabelValueBlock(const std::vector<std::vector <std::string> >& input);
+
+	/* @brief			Build a LabelValueBlock from R's flat SWIG_STRINGMATRIX. A LabelValueBlock is always
+	*                   2 columns (label, value) by contract, so the column count needed to unflatten it
+	*                   is fixed rather than looked up.
+	*  @param [in]		input	R's flattened matrix representation, column by column
+    *  @return		One LabelValueBlock object
+    */
+#if defined(SWIG_R) || defined(SWIGR)
+	LabelValueBlock buildSingleLabelValueBlock(const SWIG_STRINGMATRIX& input);
+#endif
 
     /* @brief			build Variant Matrix from a vector of string vectors
 	*  @param [out]		toMatrix			the variant matrix object being built

@@ -626,6 +626,7 @@
     <ClInclude Include="..\src\AQ_API\source\aqIRObject.h" />
     <ClInclude Include="..\src\AQ_API\source\aqCurveResults.h" />
     <ClInclude Include="..\src\AQ_API\source\aqCreditObject.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqCDSObject.h" />
     <ClInclude Include="..\src\AQ_API\source\aqBondCurve.h" />
     <ClInclude Include="..\src\AQ_API\source\aqCurveCalibrateBasis.h" />
     <ClInclude Include="..\src\AQ_API\source\aqCurveCalibrateFXForwards.h" />
@@ -654,10 +655,18 @@
     <ClInclude Include="..\src\AQ_API\source\aqFutureTicker.h" />
     <ClInclude Include="..\src\AQ_API\source\aqBondObjectCreate.h" />
     <ClInclude Include="..\src\AQ_API\source\aqBondObjectPrice.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqBondObjectRisk.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqBondObjectFRN.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqBondObjectFuture.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqBondSchedule.h" />
     <ClInclude Include="..\src\AQ_API\source\aqCurveObject.h" />
     <ClInclude Include="..\src\AQ_API\source\aqToolGrids.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqGridObject.h" />
     <ClInclude Include="..\src\AQ_API\source\aqSwapObjectCreate.h" />
     <ClInclude Include="..\src\AQ_API\source\aqSwapObjectPrice.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqSwapLeg.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqSwapResults.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqSwapDelta.h" />
     <ClInclude Include="..\src\AQ_API\source\aqAssetSwapSpread.h" />
     <ClInclude Include="..\src\AQ_API\source\aqSwapOisParRate.h" />
     <ClInclude Include="..\src\AQ_API\source\aqSwapOisPV.h" />
@@ -670,8 +679,19 @@
     <ClInclude Include="..\src\AQ_API\source\aqToolLVB.h" />
     <ClInclude Include="..\src\AQ_API\source\aqToolRecord.h" />
     <ClInclude Include="..\src\AQ_API\source\aqToolSetup.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqToolData.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqToolDate.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqToolDiagnostics.h" />
     <ClInclude Include="..\src\AQ_API\source\aqMathInterpolation.h" />
     <ClInclude Include="..\src\AQ_API\source\aqMathPCA.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqMathBlackScholes.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqMathCapletFloorlet.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqMathSwaption.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqMathVolatilityConversion.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqMathConvexity.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqMathStatistics.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqMathNumerical.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqMathRates.h" />
     <ClInclude Include="..\src\AQ_API\source\SwigTypes.h" />
     <ClInclude Include="..\src\AQ_API\source\TypeUtilities.h" />
   </ItemGroup>
@@ -710,10 +730,18 @@
     <ClCompile Include="..\src\AQ_API\source\aqFutureTicker.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqBondObjectCreate.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqBondObjectPrice.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqBondObjectRisk.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqBondObjectFRN.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqBondObjectFuture.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqBondSchedule.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqCreditObject.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqCDSObject.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqCurveObject.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqSwapObjectCreate.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqSwapObjectPrice.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqSwapLeg.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqSwapResults.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqSwapDelta.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqAssetSwapSpread.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqSwapOisParRate.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqSwapOisPV.cpp" />
@@ -726,9 +754,21 @@
     <ClCompile Include="..\src\AQ_API\source\aqToolLVB.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqToolRecord.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqToolSetup.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqToolData.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqToolDate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqToolDiagnostics.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqMathInterpolation.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqMathPCA.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqMathBlackScholes.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqMathCapletFloorlet.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqMathSwaption.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqMathVolatilityConversion.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqMathConvexity.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqMathStatistics.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqMathNumerical.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqMathRates.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqToolGrids.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqGridObject.cpp" />
     <ClCompile Include="..\src\AQ_API\source\swig_CSharp_wrap.cxx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_API_Java|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_API_Java|x64'">true</ExcludedFromBuild>

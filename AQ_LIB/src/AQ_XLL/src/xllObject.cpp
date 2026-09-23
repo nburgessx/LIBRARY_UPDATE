@@ -224,8 +224,8 @@ XLO_FUNC_END( aqObjectDelete )
 
 /*
  * Delete every cached object of a given type, or every cached object of
- * every type if ObjectType is omitted (2026-09-12, Nicholas). Returns a
- * count message and stops the instance counter for each deleted name.
+ * every type if ObjectType is omitted. Returns a count message and stops
+ * the instance counter for each deleted name.
  */
 #if AQ_XLL_ENABLED(aqObjectDeleteAll)
 XLO_FUNC_START( aqObjectDeleteAll(
@@ -368,11 +368,7 @@ XLO_FUNC_END( aqObjectQuickSave )
  * already deletes every cached object of every type (etrading::deleteAllObjects
  * loops every CachedObjectEnum - see tryAqToolSetup.cpp), plus the curve/swap/
  * credit results containers, the entity pool and reloads the config files.
- * Confirmed 2026-09-12 (Nicholas asked that objects from every category be
- * deleted here too - they already were at the validation layer; what this
- * function was missing was resetting AQ_XLL's own handle-name instance
- * counters to match, added below). Returns an information string describing
- * what was cleared.
+ * All objects from every category need to be deleted here too.
  */
 #if AQ_XLL_ENABLED(aqObjectClearCache)
 XLO_FUNC_START( aqObjectClearCache() )

@@ -1,3 +1,128 @@
+# Rebrand status — 2026-09-23 (cont'd)
+
+## Fixed the Release_API_R build (pre-existing break, unrelated to this session's other work)
+
+`Release_API_R` failed to compile with a wave of `SWIG_STRINGMATRIX` / `StandardStringMatrix` /
+`AQLStringMatrix` conversion errors across `aqToolDiagnostics.cpp`, `aqToolData.cpp`,
+`aqCreditObject.cpp`, `aqSwapLeg.cpp`, `aqToolGrids.cpp`, `aqGridObject.cpp` and
+`aqCurveObject.cpp`. Root cause: `SwigTypes.h` deliberately makes `SWIG_STRINGMATRIX` a flat
+`vector<string>` for R (SWIG's R module has no `vector<vector<string>>` support) but a full
+`vector<vector<string>>` everywhere else. `TypeUtilities.cpp` already had a correct, working
+R-side *output* path (`fromStringMatrixToMatrixOfString` et al., flattening a real matrix for
+return) and one correct fixed-shape *input* path (`buildStringMatrix`'s R overload, unflattening
+via a `curveTypeEnum`/`curveMarketDataEnum`-driven column-count lookup) — but no R overload of
+`buildSingleLabelValueBlock` or the generic `buildVariantMatrix` ever existed. Two call sites
+(`aqToolData.cpp`, `aqCurveObject.cpp`) also carried an explicit but incorrect comment claiming
+"no conversion required" for R, evidently written and never verified against an actual R build.
+This is pre-existing breakage from whenever these functions were added/ported, not caused by
+anything else in this session — none of the affected files were touched by prior work here.
+
+**Fix (decided with Nicholas: exclude genuinely generic-shape inputs from R rather than invent an
+R-only calling convention for them):**
+
+- Added the missing R overload of `swig::buildSingleLabelValueBlock` (`TypeUtilities.h`/`.cpp`) —
+  a Label-Value Block is always exactly 2 columns by contract everywhere else in the codebase, so
+  unflattening needs no external dimension info, unlike the generic case. This alone fixed 15 call
+  sites with **zero changes to the files that call it** (`aqToolDiagnostics.cpp`,
+  `aqCreditObject.cpp` x6, `aqSwapLeg.cpp` x7, `aqCurveObject.cpp`) — they already just call
+  `swig::buildSingleLabelValueBlock(...)` and now resolve to the new overload under R.
+- Fixed `aqToolData.cpp`'s `aqToolValuationSettingsDisplay` (2-column in and out, confirmed by
+  `tryAqToolValuationSettingsDisplay`'s own doc — "the modified input", i.e. same shape) with an
+  explicit `#if SWIG_R` unflatten/flatten block, replacing the incorrect "no conversion required"
+  comment.
+- Fixed two **output**-direction sites in `aqCurveObject.cpp` (`aqCurveObjectDualBootstrap`,
+  `aqCurveObjectCalibrateHedge`) that hand-built the return value as `SWIG_STRINGMATRIX
+  result; result.push_back(row)` — under R this pushes a `vector<string>` row into a
+  `vector<string>`, not a `vector<vector<string>>`. Rebuilt as a real `AQLStringMatrix` and
+  flattened via the existing `swig::fromStringMatrixToMatrixOfString`, which already handles both
+  branches correctly.
+- **Excluded from the R binding** (both the header declaration and the `.cpp` definition, guarded
+  with `#if (!defined(SWIG_R)) && (!defined(SWIGR))`, mirroring the existing precedent for
+  `aqToolLVBCreate`'s 3-arg overload in `aqToolLVB.h`/`.cpp`): `aqToolAppend`, `aqToolClean`
+  (`aqToolData.h`/`.cpp`), `aqCreditBasketModelCreate` (`aqCreditObject.h`/`.cpp`),
+  `aqToolObjectMultiGridCreate` (`aqToolGrids.h`/`.cpp`), `aqGridObjectCreate`
+  (`aqGridObject.h`/`.cpp`), `aqCurveResultsDiscountFactorsUpdate`'s `forwardAdjustments` param
+  forced exclusion of the whole function (`aqCurveObject.h`/`.cpp`). Each of these takes at least
+  one arbitrary-shape range/data-block parameter with no fixed column count; R supplies no matrix
+  dimension metadata on a flat vector, so there is no way to unflatten it correctly, and guessing
+  would silently corrupt data rather than fail to compile. Reintroducing these to R would need an
+  explicit `numRows`/`numCols` parameter added to their R-facing signature — a real design
+  decision, not attempted here.
+- Build/test verification: not run this session (user builds themselves) — needs a
+  `Release_API_R` rebuild to confirm clean, and (separately, whenever R testing is ever picked
+  back up per CLAUDE.md §2.1's "shelved permanently, nice-to-have only" status) an actual R
+  interpreter run, which remains blocked on no test environment being available.
+
+# Rebrand status — 2026-09-23
+
+## Centralized library initialize/teardown across GTEST, AQ_XLL and AQ_API (2026-09-23)
+
+Six overlapping, hand-rolled init/teardown sequences (`etrading::InitializeETrading::instance()`,
+`validation::trySetupAQL`/`tryTearDownAQL`, `validation::tryAqToolLoadConfigurationFiles`,
+`AQ_API`'s `aqToolInitialize`, `AQ_XLL`'s `aqToolInitialize`, `GTEST`'s `InitializeGoogleTest`,
+plus the un-rebranded `setUpAQL`/`setupAQL`/`initAQL`/`tearDownAQL` synonyms) collapsed into one
+funnel in `validation`:
+
+- **New:** `validation::tryAqToolInitialize(configFolder, calendarPath, cbSchedulePath,
+  startupConfigPath, irPropsPath, checkStaticDataLoaded=true, checkCalendarLoaded=true)` and
+  `validation::tryAqToolTearDown()` in `tryAqToolSetup.{h,cpp}`. Resolution per file: explicit
+  full-path override wins outright > `configFolder` + the file's bare name (`Calendar.csv`,
+  `CBSchedule.csv`, `startup.conf`, `ir.properties`) > `FolderConfig`'s existing default chain,
+  unchanged.
+- **Decided (2026-09-23, Nicholas): `tryAqToolInitialize` always tears down first** (like the
+  legacy `trySetupAQL` it replaces), rather than being idempotent — reversed from this feature's
+  first pass, which had it skip the tear-down on a second call. Reason: `InitializeETrading::
+  instance()` only rebuilds on its *first* call; without a forced tear-down, override paths
+  passed to a *second* call would update `FolderConfig`'s cached path but never actually reload
+  the calendar/IR data behind it — the library ends up internally inconsistent (`FolderConfig`
+  reports the new path, the loaded data is still the old one). Overhead of the forced tear-down/
+  rebuild is low (in-memory data/function-table registration plus re-reading Calendar.csv/
+  CBSchedule.csv/startup.conf's generator JSON — file-I/O bound, not curve-calibration bound) and
+  is only paid when a consumer explicitly calls Initialize — never on the automatic addin-open
+  path (`AQ_XLL`'s `AlgoQuantLib` ctor calls `InitializeETrading::instance()` directly, not this
+  function). The real cost is losing already-cached `AQObj` handles (curves/swaps/credit trades)
+  built earlier in the session: in Excel, cells referencing them show `#VALUE!`/`#REF!` until a
+  full sheet recalculation (Ctrl+Alt+F9) rebuilds them — an accepted, documented cost, since the
+  alternative (silently-ignored override paths) is a correctness bug, not a convenience.
+- **Retired** (bodies retargeted at the new funnel where the public name had to survive for SWIG
+  compatibility; declarations removed where nothing outside `validation` needs them):
+  `trySetupAQL`/`tryTearDownAQL` (declarations removed); `AQ_API`'s `setUpAQL`/`setupAQL`/
+  `initAQL`/`tearDownAQL` (bodies retargeted, signatures/SWIG untouched — these were never
+  rebranded to `aq*` and are superseded by `aqToolInitialize`/`aqToolTearDown`; not removed from
+  the public surface this session, since removing them needs a SWIG `.i`/regeneration pass this
+  session didn't run).
+- **Bugs fixed as part of the centralization, not separately:** `AQ_XLL`'s `aqToolInitialize`
+  accepted a `ConfigPath` worksheet argument and silently never forwarded it (dead parameter) —
+  now widened to the same 5 optional overrides as `AQ_API` and actually forwarded. `AQ_API`'s
+  `setUpAQL` dropped the central-bank-calendar override that the old `trySetupAQL` it called
+  actually supported — now passes it through.
+- **New public functions:** `aqToolTearDown` added to both `AQ_API` (`aqToolSetup.{h,cpp}`) and
+  `AQ_XLL` (`xllTool.cpp`, new worksheet function) — no equivalent existed before beyond the
+  legacy `tearDownAQL` synonym.
+- **Automatic teardown:** `AQ_XLL`'s `AlgoQuantLib` addin destructor (`xllMain.cpp`, runs at
+  `xlAutoClose`/unload) and `GTEST`'s `InitializeGoogleTest` destructor (already RAII, per test
+  fixture) both now call `tryAqToolTearDown()` instead of their own hand-rolled cleanup —
+  `GTEST`'s previously included `AQLLinearRatesVolatilityManager::finalize()` which the old
+  `tryTearDownAQL` left commented out with "Is this needed?"; folded into the centralized
+  teardown as the safe superset. `AQ_API` has no automatic hook (deliberately — static
+  destruction order across a SWIG/language-runtime boundary is fragile); callers must still call
+  `aqToolTearDown()` explicitly before process exit, same as before.
+- **`GTEST`'s `InitializeGoogleTest` ctor** now calls `tryAqToolInitialize(..., false, false)` —
+  the `false, false` preserves this fixture's pre-existing behaviour of never throwing on a
+  calendar/static-data load failure; this was **not** widened to the loud-check defaults, to
+  avoid silently making every test fixture stricter than it was.
+- Updated `docs/api_map.csv` (added `aqToolInitialize`, `aqToolTearDown` rows — `aqToolInitialize`
+  had no row at all before this).
+- **Not done this session (flagged, not forgotten):** SWIG `.i` files / regeneration to actually
+  remove `setUpAQL`/`setupAQL`/`initAQL`/`tearDownAQL` from the public `AQ_API` surface per the
+  clean-break policy (CLAUDE.md §6.3) — deferred until the next SWIG regen pass, since running
+  codegen wasn't asked for this session. `resources\manifest\activeList.txt` /
+  `xllManifestList.h` also not updated — `aqToolTearDown` is therefore excluded from the
+  `Release_XL_Manifest` configuration for now, same as `aqToolInitialize` already was before this
+  change; unaffected in every other configuration.
+- **Build/test verification: not run this session** (user builds/tests AQ_LIB themselves) — needs
+  a full-configuration build and a GTEST run before treating this as verified green.
+
 # Rebrand status — 2026-09-22
 
 ## Legacy SABR wrappers ported to AQ_XLL and AQ_API (2026-09-22)
@@ -4720,3 +4845,608 @@ between batches"):
 **Status: paused, not started.** Zero files changed. Revisit via this entry and
 `MIGRATION_PLAN.md` Phase 6.11 step 5 when picked back up - do not re-derive the scope/staging
 from scratch, it is recorded here.
+
+---
+
+## AQ_API coverage-gap closure session (2026-09-22) — IN PROGRESS, paused on token/rate limit
+
+**Context:** user found via Streamlit that many validation-layer functions had no AQ_API (Python)
+binding, despite AQ_XLL being ~98% ported. `rebrand/tools/api_pair_check.py` was extended with a
+`--gap-list` flag (per-category missing-binding breakdown) to make this concrete instead of
+anecdotal.
+
+**Done this session, verified via `api_pair_check.py` (HARD GATE stayed 0 throughout):**
+- Fixed 5 AQ_API name-drift functions to match their `validation` wrapper per Sec 5.1a (files:
+  `aqCurveResults`, `aqCreditObject`, `aqCurveObject`, `aqDate`, `aqToolLVB`). SWIG `_wrap.*` files
+  regenerated by user, confirmed working.
+- Renamed all AQ_XLL source files `aq*.cpp/h` → `xll*.cpp/h` (21 `.cpp` + 2 `.h`, plus the
+  generated `aqManifestList.h` → `xllManifestList.h`), matching AQ_API's later `aq*` naming.
+  `aqXllTools.cpp/h` → `xllSupport.cpp/h` (avoided the redundant "XllTools" double-naming).
+- Reorganized `projects/AQ_API.vcxproj.filters`: replaced the old `include\eTrading\*`/`src\eTrading\*`
+  nesting with flat filters matching the locked 21-category list (Sec 5.1) plus `Object` (generic
+  AQObj lifecycle) and `Support` (infra/helpers). All 109 files verified present, none missing/stray.
+  Note: `aqCurveObject.h/.cpp` filed under `Curve` even though it also carries the `aqIRFixingTable*`
+  functions (bundled since the InterestRate→IR rename) — one file covering two categories, not split.
+- Closed the AQ_API coverage gap for these categories (validation→XLL was already done for all of
+  them; only the AQ_API binding was missing): **CMS, BondFutureOption, Future, BondOption, Inflation,
+  Swaption, CapFloor, FX, Volatility (incl. the 7 legacy SABR functions — ported to BOTH AQ_XLL and
+  AQ_API since AQ_XLL had never carried them either; see xllVolatility.cpp's updated header comment),
+  AssetSwap, IR, Date.** Public AQ_API surface grew from 121 to ~186 declared functions.
+- Fixed 4 missing-`#include` build failures surfaced by the user's first post-session build
+  (`aqSwaptionObject.h` missing `<vector>`; `aqFXObject.cpp`/`aqFutureTicker.cpp`/`aqInflationObject.cpp`
+  missing `ParameterValidation.h` for `etrading::stringToDate`). Build confirmed green + GoogleTest
+  passing by the user after these fixes.
+
+**Still open — the `--gap-list` categories remaining, in descending size:**
+`Curve` (66 missing of 94), `Math` (49 of 51), `Bond` (43 of 58), `Swap` (40 of 66), `(lifecycle)`
+(23 of 31 — `aqObject*` handle lifecycle ops), `Tool` (20 of 29), `Credit` (18 of 23, incl. 2
+`tryAqCreditBasketModel*` functions that also have NO AQ_XLL binding — same "port to both" question
+as SABR was, needs the same decision before binding). A `Tool`+`Credit` batch was launched and
+failed immediately on a session rate limit before writing anything — safe to just re-run, no
+partial state to clean up.
+
+**Established, working pattern for the remaining categories** (repeated successfully ~8 times this
+session): for each missing `tryAq*` wrapper, find its `AQ_XLL` counterpart (already ported, ~98%
+complete) for the parameter marshalling reference, add/extend an `aq<Category>Object.h/.cpp` (or
+similar per-subgroup) file in `src/AQ_API/source/`, reuse existing `TypeUtilities.h` marshalling
+helpers only (never invent new marshalling), register new files in `projects/AQ_API.vcxproj` +
+`.vcxproj.filters` + all 4 `swig_*.i` files via direct Read+Edit (never scripted string-replace
+with backslash-path literals — this reliably corrupts content in this shell environment via
+backslash-escape mangling, e.g. `\a` → bell character), then verify with
+`python rebrand/tools/api_pair_check.py --gap-list` (HARD GATE must stay 0).
+
+**Known outstanding advisory items (non-blocking):** 2 wrapper-name-drift false positives in the
+checker's own heuristic (`aqCreditModelRiskyDiscountFactor`→`tryAq...Factors` plural,
+`aqToolsLVBAppend`→`tryAqToolLVBAdd` different verb) — both intentional per user's naming choice,
+not real drift.
+
+### Tool + Credit AQ_API binding batch (2026-09-22, same session, re-run after the rate-limit stall)
+
+Closed the `Tool` and `Credit` gaps flagged above as "Still open". Both categories now show 0
+missing in `api_pair_check.py --gap-list`; HARD GATE stayed 0 throughout.
+
+**Tool (20 wrappers bound):**
+- Extended existing files (no new registration needed): `aqToolLVB.h/.cpp` +
+  `tryAqToolLVBFromKeysValues`/`tryAqToolLVB`/`tryAqToolLVBGroup`/
+  `tryAqToolLVBFromMultipleKeysValues`/`tryAqToolLVBFromKeysAndMultipleValues`; `aqToolSetup.h/.cpp`
+  + `tryAqToolLoadConfigurationFiles`; `aqToolGrids.h/.cpp` +
+  `tryAqToolObjectMultiGridCreate`/`Display`/`SubNames` (the Create path builds a `TableInfo`
+  per named grid via `etrading::JSONInfoBlock::createInfoBlock`, same helper `aqCreditModelCreate`
+  already used — `validation::TableInfo`'s third tuple element (`FlexibleData`) and
+  `etrading::JSONInfoBlockTuple`'s (`VariantMatrix`) are the identical underlying type
+  `std::vector<std::vector<etrading::Variant>>`, so no new marshalling was invented); `aqToolRecord.h/.cpp`
+  + `tryAqToolReplay` (paired with the existing `aqToolRecord`, both record/replay of the same csv
+  test-capture format).
+- New files, registered in `projects/AQ_API.vcxproj` + `.vcxproj.filters` (`Tool` filter) + all 4
+  `swig_*.i`: `aqToolData.h/.cpp` (`tryAqToolAppend`, `tryAqToolClean`, `tryAqToolDataFilter` —
+  `VariantMatrix`/`VariantVector` reshaping; `tryAqToolValuationSettingsDisplay` — `StandardStringMatrix`
+  passed straight through, since it and non-R `SWIG_STRINGMATRIX` are both literally
+  `std::vector<std::vector<std::string>>`); `aqToolDate.h/.cpp` (`tryAqToolTermsToDates`,
+  `tryAqToolDatesToTerms`); `aqToolDiagnostics.h/.cpp` (`tryAqToolEchoDouble`,
+  `tryAqToolBondAverageYield`, `tryAqToolBondYieldFromFuturePrice`, `tryAqToolSwapScheduleTemplate`
+  — golden-named `Tool` but product-flavoured; filed together since AQ_XLL codes all four in the
+  same `xllTool.cpp`, not split across `xllBond.cpp`/`xllSwap*.cpp`).
+- One small, additive `TypeUtilities.h` fix: `swig::buildStringVectorFromDateVector` (DateVector →
+  vector<string>, YYYYMMDD) was already implemented in `TypeUtilities.cpp` but had no header
+  declaration, so nothing could call it. Added the missing prototype (mirrors the existing
+  `buildDateVector` declaration immediately above it) rather than duplicating the loop inline.
+
+**Credit (18 wrappers bound), all added to the existing `aqCreditObject.h/.cpp` (no new files):**
+`tryAqCreditModelAsOfDate`, `tryAqCreditModelCalibrationParameters`,
+`tryAqCreditModelImpliedSurvivalDate`, `tryAqCreditObjectSpread`, `tryAqCreditObjectIndexSpread`,
+`tryAqCreditObjectOptionPV[FromForward]`, `tryAqCreditObjectOptionImpliedVol[FromForward]`,
+`tryAqCreditObjectIndexOptionPV`/`ImpliedVol`/`Vega`/`CS01`/`Theta`,
+`tryAqCreditBasketModelCreate`, `tryAqCreditBasketModelSurvivalProbability`,
+`tryAqCreditObjectFeeLegCreate`, `tryAqCreditObjectFeeScheduleCreate`.
+
+**Correction to the prior entry's note on the two `tryAqCreditBasketModel*` functions:** that entry
+said they had "NO AQ_XLL binding either", matching the SABR precedent. That was stale — checked
+`src/AQ_XLL/src/xllCredit.cpp` directly this session and both `aqCreditBasketModelCreate`
+(line ~792) and `aqCreditBasketModelSurvivalProbability` (line ~831) are real, non-stub AQ_XLL
+worksheet functions with full `.help()`/`.arg()` registrations. No "port to both" decision was
+needed — bound normally from the existing AQ_XLL marshalling, same as the other 16.
+`aqCreditBasketModelCreate`'s AQ_API binding mirrors the existing `aqCreditModelCreate` pattern
+(fixed two data blocks, `etrading::JSONInfoBlock::createInfoBlock`) rather than the AQ_XLL
+signature's optional-second-block shape, for consistency with the one Credit-model-create binding
+already in this file.
+
+**Verification:** `python rebrand/tools/api_pair_check.py --gap-list` — HARD GATE: 0. `Tool` and
+`Credit` no longer appear in the missing-binding list at all (previously 20 and 18 respectively).
+Remaining open categories unchanged from the prior entry: `Curve` (66/94), `Math` (49/51), `Bond`
+(43/58), `Swap` (40/66), `(lifecycle)` (23/31). Build not run (none available in this session) —
+verified by code review and the checker only, per the task's own constraint; the user should build
+and run GoogleTest before relying on this.
+
+### Math AQ_API binding batch (2026-09-22, same session)
+
+Closed the `Math` gap flagged above (49 missing). All 49 wrappers had an existing `AQ_XLL`
+worksheet function in `src/AQ_XLL/src/xllMath.cpp` to port the marshalling from — none skipped.
+
+**8 new files in `src/AQ_API/source/`, grouped by sub-topic** (mirroring how `AQ_XLL`'s
+`xllMath.cpp` itself groups these with `/* ===== */` section banners), registered in
+`projects/AQ_API.vcxproj` + `.vcxproj.filters` (`Math` filter) + all 4 `swig_*.i`:
+
+- `aqMathBlackScholes.h/.cpp` (10): `Price`, `Prices`, `ImpliedVol`, `ImpliedVols`,
+  `DeltaForward`, `DeltaSpot`, `Gamma`, `Vega`, `Theta`, `Rho`. `CallOrPut` strings convert via
+  `etrading::toCallOrPutEnum` (declared in `math/include/CoreEnumerations.h`, already the header
+  `tryAqMathBlackScholes.h`'s own validation signature depends on and `xllMath.cpp` already
+  includes) — no new marshalling invented, same conversion `xllMath.cpp` uses.
+- `aqMathCapletFloorlet.h/.cpp` (4): `Price`, `Prices`, `ImpliedVol`, `ImpliedVols`. Unlike
+  Black-Scholes, `capletOrFloorlet`/`volatilityType` are plain `std::string` in the `validation`
+  signature itself (`tryAqMathCapletFloorlet.h`) — passed straight through, no enum conversion.
+- `aqMathSwaption.h/.cpp` (9): `EuropeanIRSwaptionPrice`, `Prices`, `ImpliedVol`, `ImpliedVols`,
+  `CashAnnuity`, `Delta`, `Gamma`, `Vega`, `Theta` — same plain-string pattern as CapletFloorlet.
+- `aqMathVolatilityConversion.h/.cpp` (6): the `VolatilityTo*` pairwise conversions
+  (Normal/Lognormal/ShiftedLognormal) — plain doubles, no marshalling needed at all.
+- `aqMathConvexity.h/.cpp` (4): the `Libor*ConvexityAdjustment*`/`LiborRate*` in-arrears and
+  arbitrary-fixing-date functions. Here `volatilityType` **is** an enum in the validation
+  signature (`etrading::VolatilityTypeEnum`), converted via `etrading::toVolatilityTypeEnum`.
+- `aqMathStatistics.h/.cpp` (6): the `NormalDistribution*` family (Standard/StandardPDF/
+  StandardInverse/plain/PDF/Inverse) — plain doubles.
+- `aqMathNumerical.h/.cpp` (6): `PolynomialInterpolation(s)`, `PoynomialIntegration(s)` (the
+  "Poynomial" misspelling is the pre-existing `validation` wrapper name, kept verbatim per the
+  task's own instruction, not corrected), `IntegrateUsingTerms` (term/value doubles) and
+  `Integrate` (date/value form — `AQLDate`/`DateVector` via `etrading::stringToDate` +
+  `swig::buildDateVector`, optional `joinDate` defaults to blank string -> `AQLDate()`).
+- `aqMathRates.h/.cpp` (4): `ForwardRate(s)`, `DiscountFactor(s)` — the low-level raw
+  (dates, values) curve-fit primitives (not a cached curve object). Only the non-legacy overload
+  of each `tryAqMath*` was bound, per the `*** LEGACY METHOD ***` labelling already in
+  `tryAqMathForwardRate.h`; the `curveCollection`/`curveIndex`-based legacy overloads were left
+  unbound, matching how `xllMath.cpp` itself only ports the non-legacy overload. Five enum
+  conversions per call (`Interpolation`, `StateVariable`, `DayCount`, `BusinessDayAdjustment`,
+  `CompoundingFrequency`, all via existing `etrading::to*Enum` in `CoreEnumerations.h`), dates via
+  `swig::buildDateVector`/`etrading::stringToDate`, and the optional `forwardAdjustmentTable`
+  passed as a plain `std::vector<std::vector<std::string>>` (`StandardStringMatrix`'s own
+  underlying type) rather than the R-ambiguous `SWIG_STRINGMATRIX` macro, since it needs to be
+  correct for every language, not just non-R.
+
+**One checker false-positive hit and fixed:** the first `api_pair_check.py --gap-list` run after
+writing these files reported a HARD GATE of 2 (`aqMathDiscountFactor`, `aqMathForwardRate`
+flagged as "not routed through validation"). Root cause: the checker locates a function's body by
+regex-matching `aqMathForwardRate(` and taking the *first* match in the file — `aqMathRates.cpp`'s
+own top-of-file brief comment read "the aqMathForwardRate(s) and aqMathDiscountFactor(s) ...
+primitives", and `(s)` reads as an open-paren to the regex, so it matched inside the comment
+before the real function definition and grabbed the wrong (helper-namespace) function body, which
+has no `validation::` call in it. Fixed by rewording the two comments to
+"aqMathForwardRate / aqMathForwardRates" (spelled out, no trailing `(s)`) — comment-only change,
+no code semantics touched. Re-ran clean: **HARD GATE: 0**, `Math` no longer appears in the
+`--gap-list` breakdown at all (51 declared, 0 missing; was 49/51 missing before this batch).
+
+**Verification:** `python rebrand/tools/api_pair_check.py --gap-list` — HARD GATE: 0; `Math` gone
+from the missing-binding list. Build not run (none available in this session) — verified by code
+review, precedent-matching against `xllMath.cpp`'s marshalling, and the checker only; the user
+should build and run GoogleTest before relying on this. Remaining open categories unchanged:
+`Curve` (66/94), `Bond` (43/58), `Swap` (40/66), `(lifecycle)` (23/31).
+
+### Swap AQ_API binding batch (2026-09-22, same session)
+
+Closed the `Swap` gap flagged above (40 missing). All 40 wrappers had an existing `AQ_XLL`
+worksheet function in `src/AQ_XLL/src/xllSwap.cpp` to port the marshalling from (including
+`tryAqSwapGeneratorCreate`/`Display`, which turned out to be coded in `xllSwap.cpp` itself, not
+`xllGenerator.cpp` — confirming they belong with Swap, not Generator) — none skipped.
+
+**Extended existing files (no new registration needed):**
+- `aqSwapObjectCreate.h/.cpp` (+10): `aqSwapObjectLVBKeys`, `aqSwapObjectCreateFromLegs`,
+  `aqSwapObjectCreateFromLegLVBs`, `aqSwapObjectCreateFromSchedule`, `aqSwapObjectCreateBackToBack`,
+  `aqSwapObjectAddLeg`, `aqSwapObjectAddFee`, `aqSwapGeneratorCreate`, `aqSwapObjectDisplay`,
+  `aqSwapGeneratorDisplay` — all natural lifecycle/creation companions to the file's existing
+  `aqSwapObjectCreate`/`CreateFromGenerator`.
+- `aqSwapObjectPrice.h/.cpp` (+2): `aqSwapObjectAccruedInterest` (same shape as the file's existing
+  `ParSpread`/`Spread`), `aqSwapObjectPVs` (multi-swap batch PV; `valuationSettingsLVBs`/
+  `fixingTableNamesLVBs` tables marshalled via `swig::buildStringMatrix` +
+  `etrading::buildMultiLabelValueBlock`, an existing `etrading::LabelValueBlock.h` helper, not a
+  new one — mirrors `xllSwap.cpp`'s own `toLabelValueBlockVector` for the same "header row of
+  keys, one row per swap" table shape).
+- `aqSwapPV.h/.cpp` (+1): `aqSwapPVLVBKeys`. Note: the file already had a function named
+  `tryAqSwapPVLVBKeys` (validation-wrapper-name-shaped, not public-API-shaped — a pre-existing
+  naming slip, left untouched per the task's "never rename existing" rule) already generated into
+  all 4 `swig_*_wrap.cxx`. Added the correctly-named `aqSwapPVLVBKeys` alongside it as a second,
+  identical-body function so the golden name the checker expects actually exists.
+- `aqSwapStubRate.h/.cpp` (+1): `aqSwapStubFixingDate` (companion to the file's existing
+  `aqSwapStubRate`; `AQLDate` return marshalled via `etrading::toYYYYMMDDFromDate`, needing a new
+  `#include "DateUtilities.h"` in this file).
+- `aqSwapSchedule.h/.cpp` (+4): `aqSwapObjectScheduleCreate`, `aqSwapObjectScheduleDisplay`,
+  `aqSwapObjectScheduleCreateBespoke`, `aqSwapObjectScheduleCreateBespokeFromCashflows` — the
+  object/cached-handle counterparts to the file's existing stateless `aqSwapSchedule`; needed a
+  new `#include "tryAqSwapObjectSchedule.h"`.
+
+**3 new files, registered in `projects/AQ_API.vcxproj` + `.vcxproj.filters` (`Swap` filter) + all
+4 `swig_*.i`:**
+- `aqSwapLeg.h/.cpp` (9): `aqSwapLegLVBKeys`, `aqSwapLegDisplay`, `aqSwapLegPV`, `aqSwapLegAnnuity`
+  (stateless, single-leg-LVB-in) plus `aqSwapObjectLegCreate`, `aqSwapObjectLegCreateFromSchedule`,
+  `aqSwapObjectLegPV`, `aqSwapObjectLegDisplay`, `aqSwapObjectLegDisplayCashflows` (cached-leg
+  object lifecycle/pricing) — grouped together since `xllSwap.cpp` codes both under one
+  "Swap leg object lifecycle" section and they share no natural home in the PV/Create files.
+- `aqSwapResults.h/.cpp` (9): `aqSwapResultsEnable`, `IsEnabled`, `RiskUpdate`,
+  `DiscountRiskUpdate`, `ForwardRiskUpdate`, `Delete`, `DeleteAll`, `RiskTotals`, `Display` — the
+  Jacobian-risk cache-management surface, same shape as `aqCurveResults.cpp`
+  (`etrading::VariantMatrix` return via `swig::fromVariantMatrixToMatrixOfString`, same as that
+  file's `aqCurveResultsDiscountFactorsDisplayAll`). `riskType` string converts via the existing
+  `etrading::toRiskTypeEnum` (`CoreEnumerations.h`); `asOfDate` via `etrading::stringToDate`
+  (`ParameterValidation.h`).
+- `aqSwapDelta.h/.cpp` (4): `aqSwapDelta` (stateless, several inline trades), `aqSwapObjectDelta`,
+  `aqSwapObjectDeltaLadder`, `aqSwapObjectDeltaLadderHorizontally` (cached-swap risk, with
+  `AQLStringVector`/`DoubleMatrix` **output** parameters — a new shape for `AQ_API`, no prior
+  precedent in this project). Rather than invent new marshalling, this file ports
+  `xllSwap.cpp`'s own `toExcelLabeledMatrix` helper and the inline `VariantMatrix`-building bodies
+  of `aqSwapObjectDelta`/`DeltaLadderHorizontally` almost verbatim (same header-row-then-pillar-row
+  layout), swapping the `xloil::ExcelObj` return for `swig::fromVariantMatrixToMatrixOfString`
+  which was already used elsewhere in `AQ_API` (`aqSwapSchedule.cpp`, `aqCurveResults.cpp`) — the
+  matrix-shape decision is AQ_XLL's own precedent, not a new invention. `dealInfoLVBs`/multi-trade
+  tables use the same `etrading::buildMultiLabelValueBlock` helper as `aqSwapObjectPVs` above.
+  `etrading::getDataInstance()` (`ParameterValidation.h`) supplies the object-pool pointer
+  `tryAqSwapDelta` needs, matching `xllSwap.cpp`'s own call.
+
+**No functions skipped** — every one of the 40 had a matching `AQ_XLL` worksheet function to port
+marshalling from.
+
+**Verification:** `python rebrand/tools/api_pair_check.py --gap-list` — HARD GATE: 0; `Swap` gone
+from the missing-binding list entirely (66 declared, 0 missing; was 40/66 missing before this
+batch). Build not run (none available in this session) — verified by code review and
+precedent-matching against `xllSwap.cpp`'s marshalling only; the user should build and run
+GoogleTest before relying on this. Remaining open categories unchanged: `Curve` (66/94), `Bond`
+(43/58), `(lifecycle)` (23/31).
+
+### Bond AQ_API binding batch (2026-09-22, same session)
+
+Closed the `Bond` gap flagged above (42 missing per the task list — 43 as originally measured;
+the one-item drift traces to `tryAqBondObjectDisplay`, which the earlier count had folded in
+differently). All 42 wrappers had an existing `AQ_XLL` worksheet function in
+`src/AQ_XLL/src/xllBond.cpp` to port the marshalling from — none skipped.
+
+**Extended existing files (no new registration needed):**
+- `aqBondObjectCreate.h/.cpp` (+5): `aqBondObjectCreateFromLVB` (single-LVB create, mirrors
+  `aqCapFloorObjectCreate`'s `LabelValueBlock` construction), `aqBondObjectCreateAUDNotionalBond`
+  (plain string/date passthrough), `aqBondObjectDisplay` (input-parameter display, companion to
+  the file's existing `Create`/`CreateFromGenerator`, mirrors `aqSwapObjectDisplay` living beside
+  `aqSwapObjectCreate` in the Swap batch), `aqBondGeneratorCreate`/`aqBondGeneratorDisplay` (the
+  Bond-category generator *construction* functions — introspection-only `aqGeneratorList`/
+  `Display`/`Validate` already live in the separate `aqGenerator.cpp`, same category-vs-file
+  judgement call the Swap batch made for `aqSwapGeneratorCreate`). `aqBondGeneratorCreate` mirrors
+  `aqCreditModelCreate`'s two-data-block `JSONInfoBlock::createInfoBlock` pattern; confirmed
+  `etrading::JSONInfoBlockTuple` and `validation::TableInfo` (the type `tryAqBondGeneratorCreate`
+  declares) are the identical `std::tuple<vector<string>, vector<ContainedTypeEnum>,
+  VariantMatrix>` instantiation via their typedefs, so no separate conversion was needed — passing
+  a `JSONInfoBlockTuples` value where `vector<TableInfo>` is expected compiles directly. Needed a
+  new `#include "JSONInfoBlock.h"` in the .cpp.
+- `aqBondObjectPrice.h/.cpp` (+14, two as `AccruedInterest`/`OisSpread` overloads):
+  `PriceFromCleanToDirty`, `PriceFromDirtyToClean` (both `LabelValueBlock`-based, same shape as
+  the file's existing `ForwardPrice`), `YieldFromObject`, `YieldOptimized` (both take an
+  `etrading::BondPtr` in `validation`, not a bare name — resolved via `etrading::getBond`, needing
+  a new `#include "AQObjUtilities.h"`), `CompoundYield`, `AccruedInterest` (vector-of-dates
+  overload plus the single-`LabelValueBlock` FRN overload — SWIG supports the same C++ overload
+  resolution AQ_API already relies on elsewhere), `AccruedInterestDays` (returns `vector<int>`,
+  passed straight through — no marshalling needed), `Quote`, `PriceFromCreditModel`,
+  `LastCouponDate`, `OisSpread` (both the vector and single-date overloads), `RepoRate`,
+  `ForwardReinvestedCoupon` — the misc settle/forward-settle date-pair functions grouped here per
+  the task's own guidance, alongside the file's existing `ForwardPrice`.
+- `aqBondCurve.h/.cpp` (+5): `CurveCreate` (same `JSONInfoBlockTuple`/`createInfoBlock` two-block
+  pattern as `aqBondGeneratorCreate` above), `CurveDisplay` (`AnyTypeMatrix` via
+  `swig::fromAnyTypeMatrixToMatrixOfString`, same as the file's existing
+  `aqBondObjectDisplayCashflows`/`DisplaySchedule`), `CurveYield`, `PriceFromBondCurve`,
+  `YieldFromBondCurve` (all plain date/string/double, no matrix marshalling). Needed a new
+  `#include "JSONInfoBlock.h"`.
+
+**4 new files, registered in `projects/AQ_API.vcxproj` + `.vcxproj.filters` (`Bond` filter) + all
+4 `swig_*.i`:**
+- `aqBondObjectRisk.h/.cpp` (7): `DV01`, `DV01Numerical` (`bumpMode` string -> `AQLString` via
+  `.c_str()`, same pattern as `aqSwapDelta.cpp`'s `bumpModeAsAQLString`), `ModifiedDuration`,
+  `BPVPerTick` (`LabelValueBlock`-based), `ZSpread`, `ZSpreads`, `ZSpreadFromRates` — grouped as
+  the bond risk/sensitivity surface, mirroring how `xllBond.cpp` codes them together.
+- `aqBondObjectFRN.h/.cpp` (4): `FRNPriceFromDiscountMargin`, `FRNPriceFromYield`,
+  `FRNYieldFromPrice`, `FRNDiscountMarginFromPrice` — the floating-rate-note discount-margin/
+  price/yield conversions that don't require discount/forecast curves (BBG CalcType 21; all
+  plain date/double signatures).
+- `aqBondObjectFuture.h/.cpp` (7): `CheapestToDeliver`, `CheapestToDeliverByNetBasis`,
+  `ConversionFactor`, `FuturePrice`, `GrossBasis`, `NetBasis`, `RepoRateFromFuture` — the
+  bond-future analytics group (plain bond-name-list/date/double signatures; `CheapestToDeliver*`
+  bond-name lists are passed straight through as `vector<string>`, no handle-counter stripping
+  needed on the AQ_API side).
+- `aqBondSchedule.h/.cpp` (2): `ScheduleLVBKeys`, `Schedule` (stateless; `Schedule` returns
+  `AQLStringMatrix` from `validation`, marshalled via `swig::fromStringMatrixToMatrixOfString`,
+  same helper `aqSwapGeneratorDisplay` uses for the same return type).
+
+**No functions skipped** — every one of the 42 had a matching `AQ_XLL` worksheet function in
+`xllBond.cpp` to port marshalling from.
+
+**Verification:** `python rebrand/tools/api_pair_check.py --gap-list` (after `git add` on the 4
+new files — the checker enumerates `src/AQ_API/source/*.{h,cpp}` via `git ls-files`, so an
+unstaged new file is invisible to it) — HARD GATE: 0; `Bond` gone from the missing-binding list
+entirely (58 declared, 0 missing; was ~42-43/58 missing before this batch). Build not run (none
+available in this session) — verified by code review and precedent-matching against
+`xllBond.cpp`'s marshalling only; the user should build and run GoogleTest before relying on this.
+Remaining open categories: `Curve` (66/94), `(lifecycle)` (23/31).
+
+**AQ_API coverage-gap closure — `Curve` batch (2026-09-23).** Continued a prior session's
+partial attempt (interrupted by a rate limit after it added 11 unrelated `Curve` functions —
+`aqCurveObjectDataCreate/Display`, `aqCurveObjectDisplayConventions`, `aqCurveObjectDualBootstrap`,
+`aqCurveObjectCalibrateHedge`, `aqCurveObjectEngineCalibrate` — to the tail of
+`aqCurveObject.h/.cpp`; verified via `--gap-list` that none of those collided with this batch's
+target list before starting). Added 29 functions to the existing `src/AQ_API/source/aqCurveObject.h/.cpp`
+(no new files, no project-file changes needed):
+
+- **Curve object one-shot creation (4):** `aqCurveObjectCreateBasis`, `aqCurveObjectCreateFXForwards`,
+  `aqCurveObjectCreateOIS`, `aqCurveObjectCreateSwap` — raw-conventions-and-rates curve builders;
+  `SWIG_STRINGMATRIX` params marshalled to `AQLStringMatrix` via `swig::buildStringMatrix`, same
+  pattern as the existing `aqCurveObjectDataCreate`. Objects are cached under the name passed in
+  directly (no Excel-cell-location decoration/instance counter — that's an `AQ_XLL`-only concept).
+- **Curve object discount factors / forward rates, handle-based (11):**
+  `aqCurveObjectDiscountFactors[ForwardStarting[FromTenors|FromYearFractions]|FromTenors|FromYearFractions|Table]`,
+  `aqCurveObjectForwardRates[FromForwardDates|FromYearFraction|Table]` — dates marshalled via
+  `swig::buildGregorianDateVector` (the validation signatures here take
+  `std::vector<boost::gregorian::date>`, not `DateVector`/`AQLDate`, unlike the legacy stateless
+  `curveCollection`+`curveIndex` twins in `aqCurveDiscountFactor.cpp`). The two `*Table` functions
+  build a `Date` + one-column-per-curve-index `VariantMatrix` exactly mirroring
+  `xllCurve.cpp`'s `aqCurveObjectDiscountFactorsTable`/`aqCurveObjectForwardRatesTable`, then
+  `swig::fromVariantMatrixToMatrixOfString`.
+- **Bumping (6):** `aqCurveObjectBumpAll`, `aqCurveObjectBumpInstrument`, `aqCurveMarketDataBumpAll`,
+  `aqCurveMarketDataBumpClear`, `aqCurveMarketDataBumpInstrument`, `aqCurveMarketDataColumn` —
+  thin passthroughs (`validation`'s signatures here already take plain `std::string`/`double`/`bool`,
+  no marshalling needed); `MarketDataColumn`'s `etrading::VariantVector` wrapped into a
+  single-column `VariantMatrix`, same as `xllCurve.cpp` does for the same wrapper.
+- **Legacy stateless `curveCollection`+`curveIndex` surface (6):** `aqCurveDelete`,
+  `aqCurveDiscountFactorsDisplay` (the `DiscountFactorTable` struct's `terms_`/`paymentDates_`/
+  `discountFactors_` built into a Term/PaymentDate/DiscountFactor matrix, mirroring
+  `xllCurve.cpp`), `aqCurveDiscountFactorsOverride`, `aqCurveDiscountFactorsSetToOne`,
+  `aqCurveForwardRatesOverride`, `aqCurveForwardRatesFromForwardDatesFromObject` — `AQLString`/
+  `DateVector` marshalling here follows the existing `aqCurveDiscountFactor.cpp` precedent exactly
+  (`.c_str()` into `AQLString`, `swig::buildDateVector` for `DateVector` params).
+- **Jacobian risk display (2):** `aqCurveObjectEngineJacobianDisplay` (returns either the label
+  matrix via `swig::fromStringMatrixToMatrixOfString` or the `DoubleMatrix` values, depending on
+  the `displayLabels` flag, matching `xllCurve.cpp`'s branch), `aqCurveObjectJacobianDisplay` —
+  both convert the `DoubleMatrix` output to a `VariantMatrix` row-by-row (no existing shared
+  `DoubleMatrix`->string helper in `TypeUtilities.h`; same manual-loop pattern as `aqSwapDelta.cpp`'s
+  local `buildLabeledDeltaMatrix`, minus labels since the Jacobian wrappers don't return them).
+
+**No functions skipped** — every target had a matching `AQ_XLL` worksheet function in
+`xllCurve.cpp` (confirmed via `XLO_FUNC_START( aq... ` grep) to port marshalling from.
+
+**Verification:** `git add` on the two changed files, then `python rebrand/tools/api_pair_check.py
+--gap-list` — HARD GATE: 0; `Curve` missing-binding count dropped from 55 to 26 (68 declared now,
+up from 39). Build not run (none available in this session) — verified by code review and
+precedent-matching against `xllCurve.cpp`'s marshalling and existing `aqCurveDiscountFactor.cpp`/
+`aqCurveForwardRate.cpp`/`aqSwapDelta.cpp` siblings only; the user should build and run GoogleTest
+before relying on this. Remaining `Curve` gaps (26) are a distinct cluster not targeted by this
+batch: `CurveGenerator*`/`CurveGroup*` (not yet designed for `AQ_API`), the `CurveResults`
+Jacobian-store family (10 functions), `CurveVasicek*`/`CurveHullWhiteForwardRates`,
+`CurveCalibrateCTD`, `CurveCompoundRateWithFixingTable`, `CurveEuroDollarConvexityAdjustment`,
+`CurveFrequency`, `CurveTermsToDates`/`CurveDatesToTerms`. Remaining open categories: `Curve`
+(26/94), `(lifecycle)` (23/31).
+
+**AQ_API coverage-gap closure — `Curve` batch complete (2026-09-23).** Closed out the remaining
+26-function `Curve` gap left by the previous batch above, adding the last cluster to the same
+`src/AQ_API/source/aqCurveObject.h/.cpp` (no new files, no project-file changes needed). Ran
+`rebrand/tools/api_pair_check.py --gap-list` first per instructions; all 26 target wrappers were
+confirmed still missing before starting (none had been picked up by any other session in the
+interim). Marshalling was ported from `xllCurve.cpp`'s worksheet functions for each, per
+`validation`'s golden-source signatures (trusting the `.cpp` bodies over any stale header doc
+comments, as instructed):
+
+- **Curve results / Jacobian risk store (12):** `aqCurveResultsEnable`, `aqCurveResultsIsEnabled`,
+  `aqCurveResultsDiscountFactorsUpdate` (3 `AQLStringMatrix` label/value blocks plus an optional
+  `forwardAdjustments` block left as `StandardStringMatrix` — same type as non-R
+  `SWIG_STRINGMATRIX`, no conversion needed, matching the existing `aqToolValuationSettingsDisplay`
+  precedent), `aqCurveResultsDiscountFactorsDisplay`, `aqCurveResultsDelete`,
+  `aqCurveResultsDeleteAll`, `aqCurveResultsForwardRatesDisplay` (business-day-adjustment string
+  converted via `etrading::toBusinessDayAdjustmentEnum`, defaulting to `NONE_BUSINESS_DAY_ADJ` on
+  blank), `aqCurveResultsJacobianUpdate` (5 `AQLStringMatrix` blocks plus `vector<bool>`/
+  `vector<double>` passed straight through — SWIG already supports `std::vector<bool>`, evidenced
+  in the generated R wrapper), `aqCurveResultsJacobianDisplay`, `aqCurveResultsJacobianDiscountFactorDelta`,
+  `aqCurveResultsJacobianRiskTotals`, `aqCurveResultsJacobianImplyNewDiscountFactors` — risk-type
+  strings converted via `etrading::toRiskTypeEnum`, `VariantMatrix` results marshalled via
+  `swig::fromVariantMatrixToMatrixOfString`, same as the Jacobian-display functions from the prior
+  batch.
+- **Curve groups (2):** `aqCurveGroupCreate`, `aqCurveGroupCollectionName` — `validation`'s
+  signatures here take plain `StandardString`/`StandardStringVector` (i.e. `std::string`/
+  `std::vector<std::string>`), not the `AQL*` types, so these are thin passthroughs with no
+  marshalling at all.
+- **Curve terms/dates (2):** `aqCurveTermsToDates` (`DateVector` result converted back via
+  `swig::buildStringVectorFromDateVector`), `aqCurveDatesToTerms` (`swig::buildDateVector` on the
+  way in) — both already had their `validation` wrappers living in the already-included
+  `tryAqCurveDiscountFactor.h`.
+- **Curve compound rate with fixing table (2, one wrapper name, two overloads):**
+  `aqCurveCompoundRateWithFixingTable` — ported both the vector (`DateVector` start/end columns)
+  and single-date (`AQLDate` via `etrading::stringToDate`) overloads, mirroring the existing
+  `aqCurveCompoundRate` sibling pair in `aqCurveCompoundRate.cpp` exactly (same overload-by-name
+  pattern the R SWIG wrapper already dispatches on for that sibling).
+- **Curve one-shot CTD calibration (1):** `aqCurveCalibrateCTD` — `AQLStringMatrix` curve
+  conventions plus an `AQLStringVector` of collateral curve names.
+- **Curve frequency / EuroDollar convexity (2):** `aqCurveFrequency` (thin `AQLString` passthrough,
+  `.getCString()` back to `std::string`), `aqCurveEuroDollarConvexityAdjustment` (3 `AQLDate`
+  conversions via `etrading::stringToDate`).
+- **Short-rate model checks (3):** `aqCurveHullWhiteForwardRates`, `aqCurveVasicekChecking`
+  (`AnyTypeMatrix` result via `swig::fromAnyTypeMatrixToMatrixOfString`), `aqCurveVasicekForwardRates`
+  — all three take an optional `valuationDate` string defaulting to `AQLDate()` (the curve's own
+  as-of date) when blank, same empty-check pattern already used for `joinDate` in
+  `aqMathRates.cpp`/`aqMathNumerical.cpp`.
+- **Curve generator (3):** `aqCurveGeneratorCreate` (one or two named data blocks, reusing the
+  existing local `getTableInfoFromStringMatrix` helper already defined earlier in
+  `aqCurveObject.cpp` for `aqCurveMarketDataCreate` — the XLL's own `toTableInfo` helper is
+  functionally identical for this generic, curve-type-unaware case), `aqCurveGeneratorDisplay`,
+  `aqCurveGeneratorModify` (`swig::buildSingleLabelValueBlock` for the overrides block, same
+  helper already used throughout `aqAssetSwapObject.cpp`/`aqCMSObject.cpp`).
+
+**No functions skipped** — all 26 had matching `AQ_XLL` worksheet functions in `xllCurve.cpp` to
+port marshalling from.
+
+**Verification:** `git add -A src/AQ_API/ rebrand/STATUS.md`, then `python
+rebrand/tools/api_pair_check.py --gap-list` — HARD GATE stays 0; `Curve` category now shows **0
+missing** (94/94 declared, up from 68/94) and no longer appears in the coverage-gap listing at
+all. Build not run (none available in this session) — verified by code review and
+precedent-matching against `xllCurve.cpp`'s marshalling and the existing `aqCurveCompoundRate.cpp`/
+`aqSwapResults.cpp`/`aqToolData.cpp`/`aqMathRates.cpp` siblings only; the user should build and run
+GoogleTest before relying on this. `Curve` is now fully closed. Remaining open category:
+`(lifecycle)` (23/31) — `CDSObject*` (7), `GridObject*` (6), and the generic `Object*` handle
+lifecycle functions (10, e.g. `aqObjectDelete`/`aqObjectList`/`aqObjectQuickLoad`) — out of scope
+for this batch.
+
+### 2026-09-23 — `AQ_API` coverage gap CLOSED: `(lifecycle)` category bound (23 functions) — last remaining category, effort complete
+
+Bound the 23 `(lifecycle)` `validation` wrappers flagged in the previous entry — this was the
+**last remaining category** in the `AQ_API` coverage-gap effort. Marshalling ported from the
+matching `AQ_XLL` worksheet functions (`xllCredit.cpp`, `xllTool.cpp`, `xllObject.cpp`), trusting
+the `.cpp` implementations over header doc comments per the working brief. Three new files added
+(none of these 23 fit the 21 locked categories — they take the `aqObject<Lifecycle>` form or a
+same-file grouping with the existing `Credit`/`Tool` filters):
+
+- **`aqCDSObject.h`/`.cpp` (new, filed under the `Credit` filter) — 7 functions:**
+  `aqCDSObjectPVFromHazardRate`, `aqCDSObjectPVByIntegration`, `aqCDSObjectPVByMonteCarlo`
+  (`double&` out-param `standardError` has no `AQ_API` out-param precedent, so it is returned as a
+  2-element `std::vector<double>` `[PV, standardError]`, mirroring the 2-row column
+  `xllCredit.cpp` already returns to Excel for the same function),
+  `aqCDSObjectRiskyAnnuityFromHazardRate`, `aqCDSObjectAccruedYearFraction` (the
+  `creditModelName`-driven overload — the `...FromHazardRate` form doesn't exist for this
+  function), `aqCDSObjectParSpreadFromHazardRate`, `aqCDSObjectHazardRateFromParSpread` (the
+  `valuationSettingsLVB`-driven overload; `xllCredit.cpp`'s header notes a same-name
+  `creditModelName`-driven sibling overload was deliberately left unexposed there because Excel
+  cannot register two worksheet functions under one name — that restriction does not apply to
+  `AQ_API`/SWIG, but only the LVB-driven overload was in the gap list, so only that one is bound
+  here; the `creditModelName` overload remains a follow-up if ever requested). All four
+  `LabelValueBlock` inputs (`valuationSettingsLVB`/`mcParametersLVB`) use the existing
+  `swig::buildSingleLabelValueBlock` helper, same pattern as `aqAssetSwapObject.cpp`.
+  `aqCDSObjectPV`/`RiskyAnnuity`/`CS01`/`ParSpread` (the credit-model-driven siblings) were already
+  bound in `aqCreditObject.h`/`.cpp` — untouched.
+- **`aqGridObject.h`/`.cpp` (new, filed under the `Tool` filter) — 6 functions:**
+  `aqGridObjectCreate` (range marshalled to a `validation::TableInfo` via
+  `swig::buildVariantMatrix` + `etrading::JSONInfoBlock::createInfoBlock`, the same two-step
+  conversion `aqToolObjectMultiGridCreate` already uses per named grid in `aqToolGrids.cpp`),
+  `aqGridObjectSave`, `aqGridObjectLoad` (returns the `pair<bool,string>::second` status string,
+  matching `xllTool.cpp`), `aqGridObjectNames`, `aqGridObjectClearOne`, `aqGridObjectClearAll`.
+  `aqGridObjectDisplay` and the multi-grid functions were already bound in `aqToolGrids.h`/`.cpp` —
+  untouched.
+- **`aqObject.h`/`.cpp` (existing file, extended) — 10 functions:** `aqObjectExists`,
+  `aqObjectTypeAsString`, `aqObjectType`, `aqObjectList` (empty `typeAsString` calls
+  `validation::tryAqObjectList()` — the no-arg, every-type overload — matching `xllObject.cpp`'s
+  `ObjectType`-omitted branch), `aqObjectDelete` (returns `!stillExists`, since
+  `tryAqObjectDelete` returns `true` when the delete *failed* — same inverted sense
+  `xllObject.cpp` branches on), `aqObjectDeleteAll` (empty `typeAsString` likewise dispatches to
+  the every-type overload), `aqObjectLoadAndReturnTupleResults` (returns a 2-element
+  `std::vector<std::string>` `[handle, etrading::toString(cachedObjectType)]`, matching the 2-row
+  column `xllObject.cpp` returns), `aqObjectLoadFromString` (returns just
+  `std::get<0>()` of the tuple, matching `xllObject.cpp`), `aqObjectQuickLoad`, `aqObjectQuickSave`.
+  `aqObjectSave`/`aqObjectLoad`/`aqObjectClearCache` (the last living in `aqToolSetup.h`/`.cpp`)
+  were already bound — untouched.
+
+Registered in `projects/AQ_API.vcxproj` (`ClCompile`/`ClInclude`) and
+`projects/AQ_API.vcxproj.filters` (`aqCDSObject.*` under the existing `Credit` filter,
+`aqGridObject.*` under the existing `Tool` filter — both filters already existed, no new filter
+added), plus `#include`/`%include` for the two new headers in all four SWIG interface files
+(`swig_Python.i`, `swig_CSharp.i`, `swig_JAVA.i`, `swig_R.i`).
+
+**Verification:** `git add -A src/AQ_API/ projects/AQ_API.vcxproj projects/AQ_API.vcxproj.filters
+rebrand/STATUS.md`, then `python rebrand/tools/api_pair_check.py --gap-list` — HARD GATE stays 0;
+public `aq*` declared count 451 → 474 (+23, exactly the bound count); **the coverage-gap list is
+now completely empty — no category remains, closing the `AQ_API` binding effort that has spanned
+the last several `STATUS.md` entries.** The 4 pre-existing "wrapper name drift" advisories
+(`aqBondObjectAccruedInterestLVB`, `aqCreditModelRiskyDiscountFactor`, `aqToolInitialize`,
+`aqToolsLVBAppend`) are untouched by this batch and remain open as naming-convention cleanup, not
+coverage gaps. Build not run (none available in this session) — verified by code review and
+precedent-matching against `xllCredit.cpp`/`xllTool.cpp`/`xllObject.cpp`'s marshalling and the
+existing `aqCreditObject.cpp`/`aqToolGrids.cpp`/`aqAssetSwapObject.cpp` siblings only; the user
+should build and run GoogleTest before relying on this.
+
+### 2026-09-23 — AQ_API coverage-gap closure: final consolidated summary + filter-consistency pass
+
+**Coverage-gap effort closed.** Across this and the preceding several sessions, `AQ_API` went
+from missing many `validation` wrappers (surfaced by extending `rebrand/tools/api_pair_check.py`
+with a `--gap-list` flag) to full parity: `python rebrand/tools/api_pair_check.py --gap-list` now
+reports **HARD GATE 0** and an **empty coverage-gap list** — all 470 `validation` `tryAq*` wrappers
+have a matching `AQ_API` public function (474 declared, 477 implemented incl. overloads). Closed,
+in order, across the following batches: `CMS`, `BondFutureOption`/`Future`/`BondOption`,
+`Inflation`/`Swaption`, `CapFloor`/`FX`, `Volatility` (7 of 14 legacy SABR functions deliberately
+deferred, then ported), `AssetSwap`/`IR`/`Date`, `Tool`/`Credit`, `Math` (49 fns), `Swap` (40 fns),
+`Bond` (42 fns), `Curve` (55 fns across two batches, closing 94/94), and finally `(lifecycle)`
+(23 fns: CDS object, Grid object, generic `aqObject*` handle lifecycle — new `aqCDSObject.h/.cpp`,
+`aqGridObject.h/.cpp`, extended `aqObject.h/.cpp`). Marshalling throughout was ported from the
+matching `AQ_XLL` worksheet function as the reference (AQ_XLL being ~98% complete and treated as
+ground truth for parameter `[in]`/`[out]`/`[inout]` semantics — validation header doc comments were
+found stale/wrong in several places and the `.cpp` implementation was trusted instead), reusing only
+existing `TypeUtilities.h` helpers. 4 pre-existing "wrapper name drift" advisories remain open as
+naming-convention cleanup, not coverage gaps (`aqBondObjectAccruedInterestLVB`,
+`aqCreditModelRiskyDiscountFactor`, `aqToolInitialize`, `aqToolsLVBAppend`).
+
+**Filter-consistency pass (second half of the request — organise `AQ_API` `*.h`/`*.cpp` under the
+same category filter names `AQ_XLL` uses).** Cross-checked all 155 git-tracked files under
+`src/AQ_API/source/` against `projects/AQ_API.vcxproj.filters` (extracted every `ClCompile`/
+`ClInclude` `Include` + `Filter` pair via a read-only XML parse, diffed against `git ls-files`).
+Result: **every file that is actually part of the build (registered in `projects/AQ_API.vcxproj`)
+is correctly filed under its matching category filter** (`Date`, `Curve`, `FX`, `Inflation`,
+`Volatility`, `IR`, `Future`, `Swap`, `AssetSwap`, `CMS`, `TRS`, `CapFloor`, `Swaption`,
+`BondOption`, `BondFutureOption`, `Bond`, `Credit`, `Math`, `Model`, `Generator`, `Tool`, plus
+`Object` for generic handle lifecycle and `Support` for infra/helpers) — no reorganisation was
+needed; every batch in this effort self-registered its new files correctly as it went.
+
+Two pre-existing, unrelated loose ends surfaced by the cross-check, **left untouched pending
+Nicholas's decision** (neither is part of the active build — both are absent from
+`projects/AQ_API.vcxproj` entirely, so this is not a coverage or build-correctness issue):
+- `src/AQ_API/source/aqCurveGetInterpolationJoinDate.h`/`.cpp` — an orphaned, never-registered
+  duplicate of `aqCurveInterpolationJoinDate.h`/`.cpp` (created ~7 minutes earlier on 2026-09-09),
+  calling a stale wrapper name `tryAqCurveGetInterpolationJoinDate` that predates the current
+  golden name `tryAqCurveInterpolationJoinDate`. Likely dead code left behind when the file was
+  renamed/recreated correctly; candidate for deletion.
+- `src/AQ_API/source/targetver.h` — a stock VS SDK-version header, also never registered in the
+  `.vcxproj`; harmless either way.
+
+**Still open, not part of this task:** SWIG regeneration for everything added since the last
+confirmed regen (Curve/Tool/Credit/Math/Swap/Bond/lifecycle batches) — the user should re-run
+`generate*_2022.bat` for each language and confirm a clean regen; and a full build + GoogleTest run
+across `AQ_API`/`AQ_XLL`, which has not been possible in this environment (no MSBuild/devenv
+available) — everything above was verified via `api_pair_check.py` and precedent-matching code
+
+### 2026-09-23 — AQ_API Solution Explorer filters rebuilt: Core API / Optional API, mirroring AQ_XLL
+
+**Nicholas's correction:** the flat category filters added earlier (one filter per locked category,
+e.g. `Curve`, `Swap`, `Credit`) were not what he asked for. He wants the `AQ_API` project browsable
+the same way `AQ_XLL` is organised on disk — `src\Core`/`src\Optional` (CLAUDE.md Sec 4.4/6.3) — with
+a separate `include` and `src` top-level split (all `.h` under `include`, all `.cpp` under `src`,
+mirroring the existing top-level `include`/`src` filters, which were already there for extension
+grouping) and, inside each, a `Core API` filter and an `Optional API` filter.
+
+**Rebuilt `projects/AQ_API.vcxproj.filters`** with this structure:
+- `include\Core API\{Curve, Date, Generator, IR, Math, Object, Support, Tool}`
+- `include\Optional API\{AssetSwap, Bond, CapFloor, CMS, Credit, Future, FX, Inflation, Swap,
+  Swaption, TRS, Volatility}`
+- `src\Core API\{...}` / `src\Optional API\{...}` — identical subfolder set, mirrored.
+
+Every `ClCompile`/`ClInclude` entry moved from its old flat category filter into the matching
+`include\{Core|Optional} API\<Category>` or `src\{Core|Optional} API\<Category>` filter — Core vs.
+Optional and the category itself both taken directly from Nicholas's message, which matches
+`AQ_XLL`'s actual `src\Core`/`src\Optional` split (CLAUDE.md Sec 4.4) function-for-function. The old
+flat filters (`Date`, `Curve`, `FX`, ... `Object`, `Support`) are removed — the nested filters
+replace them entirely, not alongside them. `resources\Swig Generated Files` and the other pre-
+existing `resources\*` filters (Swig Interfaces, pre/post-build scripts) are untouched.
+
+Two judgement calls made without asking first, both flagged inline as XML comments on the affected
+entries so they're visible in Solution Explorer, not just here:
+- **`BondOption`/`BondFutureOption` folded into `Bond`.** Nicholas's category list has no separate
+  BondOption/BondFutureOption folder, only `Bond` — this matches `AQ_XLL`, which files both
+  categories' functions in `aqBond.cpp` rather than their own files (CLAUDE.md Sec 5.1a: both
+  operate on the same cached `etrading::BondOption`, created only via `aqBondOptionObjectCreate`).
+  `aqBondOptionObject.h/.cpp` and `aqBondFutureOptionObject.h/.cpp` now file under
+  `Optional API\Bond`, consistent with that precedent, even though their own file names still say
+  `BondOption`/`BondFutureOption` (unrenamed — out of scope here).
+- **`aqCreditObject.h/.cpp` filed under `Credit`, despite also containing the `aqTRSObject*`
+  functions (PV/ParRate/ParSpread/Annuity).** Unlike `AQ_XLL`, which has a dedicated `aqTRS.cpp`
+  (CLAUDE.md Sec 4.4), `AQ_API` never got one — the 4 TRS functions live inside `aqCreditObject.cpp`
+  alongside 26 genuine Credit functions. Filters apply per file, not per function, so the file went
+  to the filter matching its majority content; flagged to Nicholas with an inline XML comment in
+  case he'd rather split TRS out into its own `aqTRSObject.h/.cpp` pair (would need a small follow-up
+  to move those 4 function bodies and re-register in the `.vcxproj`/`.i` files).
+
+No `Model` filter was recreated — Nicholas's Core/Optional list doesn't include it, and it matches
+reality: zero `AQ_API` files exist for it (the `Model` category itself has zero `validation`
+wrappers so far, per CLAUDE.md Sec 2.1).
+
+**Verification:** cross-checked every `git ls-files`-tracked `.h`/`.cpp` under `src/AQ_API/source/`
+against the new filters via a read-only XML parse (no backslash-path scripting on the `.filters` file
+itself — only reading it to build the diff, all edits done via `Edit`/`Write` directly) — every file
+registered in `projects/AQ_API.vcxproj` still has exactly one filter entry, nothing dropped. Fixed two
+new `--` XML-comment validity errors while authoring the judgement-call notes above (same landmine
+hit earlier this project — `--` is invalid inside `<!-- -->`). Re-ran
+`python rebrand/tools/api_pair_check.py` after the rewrite: HARD GATE still 0, coverage counts
+unchanged (474 declared / 477 implemented) — this was a pure Solution-Explorer reorganisation, no
+source code touched. The two orphaned/unregistered files flagged in the previous entry
+(`aqCurveGetInterpolationJoinDate.h/.cpp`, `targetver.h`) remain outside the `.vcxproj` and so have
+no filter entry either — unchanged, still awaiting Nicholas's call.
+
+review only.

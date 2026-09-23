@@ -70,36 +70,31 @@ namespace google_test
 #endif
 	}
 
-    InitializeGoogleTest::InitializeGoogleTest() : dataInstance_( etrading::InitializeETrading::instance().dataInstance() )
+    InitializeGoogleTest::InitializeGoogleTest() : dataInstance_( nullptr )
     {
-        // Disable Thread Locking - since we have a local thread guard
-		common::AQLCoreLockControl::enableThreadLocks( false );
-
-        // Initialize the AQObj Configuration Files
-        AQLString loadAQObjConfigStatus = validation::tryAqToolLoadConfigurationFiles();
+        // Centralized funnel (see tryAqToolSetup.h): resolves config paths, builds the data
+        // instance and loads the optional startup-config generators in one call. checkStaticDataLoaded
+        // / checkCalendarLoaded are passed false, false -- unchanged from this fixture's previous
+        // behaviour (it never asked InitializeETrading::instance() to throw on a load failure).
+        validation::tryAqToolInitialize( AQLString(), AQLString(), AQLString(), AQLString(), AQLString(), false, false );
+        dataInstance_ = etrading::InitializeETrading::instance().dataInstance();
     }
 
     InitializeGoogleTest::~InitializeGoogleTest()
     {
-        tearDown(); 
+        tearDown();
     }
 
     void InitializeGoogleTest::tearDown()
     {
-        // TODO: Clean-up required for now Keep this in synch with the tearDown function within AQ_CLIENT_API exposed_functions.cpp
-        // This code should be centralized at some point soon
-
-        // Clear AQObj object cache
-        etrading::deleteAllObjects( etrading::Environment::defaultEnv() );  
-        
-        // Clean-Up Object Pool
-		AQLCoreDataService::finalize();
-		AQLLinearRatesVolatilityManager::finalize();
-		etrading::InitializeETrading::destroyInstance();
+        // Centralized funnel (see tryAqToolSetup.h) -- clears the AQObj object cache, the
+        // curve/swap/credit results containers, the object pool and the volatility manager,
+        // then destroys the data-instance singleton.
+        validation::tryAqToolTearDown();
 
         dataInstance_ = nullptr;
         // never delete the observational pointer ...
-		// if( dataInstance_ ) delete dataInstance_;  
+		// if( dataInstance_ ) delete dataInstance_;
     }
 
 }

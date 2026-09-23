@@ -15,3 +15,10 @@ std::string aqToolRecord( bool enable,
                              bool repeat,
                              int startIndex,
                              int maxIndex );
+
+/* @brief			validation interface for the aqToolReplay function. Replays a recorded input file
+*                   back through the validation layer.
+*  @param [in]		filepath		Full file path to the recorded test csv file
+*  @return			The result string
+*/
+std::string aqToolReplay( const std::string& filepath );

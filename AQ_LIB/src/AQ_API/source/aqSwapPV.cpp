@@ -38,3 +38,15 @@ std::vector<std::string> tryAqSwapPVLVBKeys()
 	return ret;
     AQ_API_END
 }
+
+/* @brief			swig interface for the aqSwapPVLVBKeys function - return a set of expected keys for a swap pv label value block
+*  @return			expected keys
+*/
+std::vector<std::string> aqSwapPVLVBKeys()
+{
+    AQ_API_START
+	std::vector<std::string> ret;
+    ret = validation::tryAqSwapPVLVBKeys();
+	return ret;
+    AQ_API_END
+}

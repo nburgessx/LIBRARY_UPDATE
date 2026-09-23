@@ -107,6 +107,7 @@ aqTRSObjectPV,TRS,object,tryAqTRSObjectPV,src/AQ_API/source/aqCreditObject.h,src
 aqTRSObjectParRate,TRS,object,tryAqTRSObjectParRate,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
 aqTRSObjectParSpread,TRS,object,tryAqTRSObjectParSpread,src/AQ_API/source/aqCreditObject.h,src/validation/include/tryAqSwapObjectPricing.h
 aqToolClearEntityPool,Tool,stateless,tryAqToolClearEntityPool,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
+aqToolInitialize,Tool,stateless,tryAqToolInitialize,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolLVBAdd,Tool,stateless,tryAqToolLVBAdd,src/AQ_API/source/aqToolLVB.h,src/validation/include/tryAqToolLVB.h
 aqToolLVBCreate,Tool,stateless,tryAqToolLVBCreate,src/AQ_API/source/aqToolLVB.h,src/validation/include/tryAqToolLVB.h
 aqToolLoadCalendarFile,Tool,stateless,tryAqToolLoadCalendarFile,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
@@ -115,5 +116,6 @@ aqGridObjectDisplay,Tool,object,tryAqGridObjectDisplay,src/AQ_API/source/aqToolG
 aqToolParallelModeEnable,Tool,stateless,tryAqToolParallelModeEnable,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolParallelModeStatus,Tool,stateless,tryAqToolParallelModeStatus,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolRecord,Tool,stateless,tryAqToolRecord,src/AQ_API/source/aqToolRecord.h,src/validation/include/tryAqToolRecord.h
+aqToolTearDown,Tool,stateless,tryAqToolTearDown,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolVersion,Tool,stateless,tryAqToolVersion,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolsLVBAppendAndCreate,Tool,stateless,tryAqToolLVBAdd,src/AQ_API/source/aqToolLVB.h,

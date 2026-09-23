@@ -1,15 +1,6 @@
 /*
  * Swap category - xlOil worksheet functions.
  *
- * `Ois` is not its own category - it is a product qualifier inside Swap
- * (decided, Nicholas 2026-09-11): an OIS is a vanilla swap whose floating leg
- * compounds an overnight index instead of a term rate, so its stateless
- * functions live here as `aqSwapOis<Function>`, not in a separate file. The
- * pre-existing `tryAqOisPV`/`tryAqOisParRate` wrappers (which predated the
- * category scheme) were renamed to `tryAqSwapOisPV`/`tryAqSwapOisParRate`
- * (validation/AQ_API/GTEST) before this file was written - see CLAUDE.md
- * Sec5.1 and rebrand/STATUS.md.
- *
  * aqSwap<Function>               - stateless: an LVB defining the whole swap
  *                                  in, value out (PV, PV01, ParRate, DV01,
  *                                  StubRate, schedule display).
@@ -21,16 +12,6 @@
  * aqSwapGenerator<Function>      - operate on a cached swap generator.
  * aqSwapResults<Function>        - the swap discount/forward risk (Jacobian)
  *                                  store.
- *
- * Deferred to a later batch (see rebrand/STATUS.md): `tryAqSwapDelta` and
- * `tryAqSwapObjectDeltaLadder(Horizontally)` (multi-trade risk ladders taking
- * a `std::vector<LabelValueBlock>` of deal definitions - no marshalling
- * helper for that shape exists yet), and `tryAqSwapObjectPVs` (the
- * vector-of-swaps batch-PV overload, same class of deferral as the Math
- * `*Prices` vector overloads elsewhere). `tryAqCreditObjectFeeLegCreate` /
- * `tryAqCreditObjectFeeScheduleCreate` (filed in the Swap leg/schedule
- * headers but golden-named Credit) and `tryAqToolSwapScheduleTemplate`
- * (golden-named Tool) belong to their own category files, not here.
  *
  * Each function pairs with the identically named validation wrapper (plus the
  * `try` prefix). Marshalling to and from Excel is the aq_xll helpers in

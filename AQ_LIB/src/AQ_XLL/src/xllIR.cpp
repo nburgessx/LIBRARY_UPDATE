@@ -1,7 +1,5 @@
 /*
- * IR (InterestRate) category - xlOil worksheet functions. Renamed from
- * `InterestRate` to `IR` 2026-09-12 (Nicholas); file renamed from
- * aqInterestRate.cpp -> xllIR.cpp to match.
+ * IR (InterestRate) category functions
  *
  * aqIR*             - stateless: data in, value out.
  * aqIRObjectFra*    - operate on a cached FRA object (name in).

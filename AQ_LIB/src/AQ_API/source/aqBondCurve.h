@@ -147,3 +147,46 @@ SWIG_STRINGMATRIX aqBondObjectDisplaySchedule( const std::string& bondObjectName
 *  @returns		Cashflow Display Information
 */
 SWIG_STRINGMATRIX aqBondObjectDisplaySchedule( const std::string& bondObjectName, const bool& showColumnHeaders, const std::vector<std::string>& columnList );
+
+/* @brief			swig interface for aqBondCurveCreate function. Creates a fitted bond curve from one or two named data blocks.
+*  @param[in]		bondCurveName	Bond Curve object name
+*  @param[in]		key1			Name of the first data block
+*  @param[in]		dataBlock1		First data block
+*  @param[in]		key2			Optional. Name of the second data block; pass empty string / empty matrix to omit
+*  @param[in]		dataBlock2		Optional. Second data block
+*  @returns		Returns the bond curve object handle name
+*/
+std::string aqBondCurveCreate( const std::string& bondCurveName,
+                                const std::string& key1,
+                                const std::vector<std::vector<std::string> >& dataBlock1,
+                                const std::string& key2,
+                                const std::vector<std::vector<std::string> >& dataBlock2 );
+
+/* @brief			swig interface for aqBondCurveDisplay function. Displays the bond curve calibration as a matrix of pillar dates and yield points.
+*  @param[in]		bondCurveName	The bond curve object name
+*  @returns		A matrix of pillar dates and yield points
+*/
+SWIG_STRINGMATRIX aqBondCurveDisplay( const std::string& bondCurveName );
+
+/* @brief			swig interface for aqBondCurveYield function. Interpolated yield off a bond curve at a reference date.
+*  @param[in]		bondCurveName	The bond curve object name
+*  @param[in]		referenceDate	The forward reference date
+*  @returns		The interpolated yield
+*/
+double aqBondCurveYield( const std::string& bondCurveName, const std::string& referenceDate );
+
+/* @brief			swig interface for aqBondObjectPriceFromBondCurve function. Prices a bond using a bond curve to discount the coupons.
+*  @param[in]		bondObjectName	Bond object name
+*  @param[in]		settlementDate	The settlement date to use for bond pricing
+*  @param[in]		bondCurveName	The bond curve object name
+*  @returns		The bond price
+*/
+double aqBondObjectPriceFromBondCurve( const std::string& bondObjectName, const std::string& settlementDate, const std::string& bondCurveName );
+
+/* @brief			swig interface for aqBondObjectYieldFromBondCurve function. Calculates the yield-to-maturity of a bond using a bond curve to discount the coupons.
+*  @param[in]		bondObjectName	Bond object name
+*  @param[in]		settlementDate	The settlement date to use for bond pricing
+*  @param[in]		bondCurveName	The bond curve object name
+*  @returns		The bond yield-to-maturity
+*/
+double aqBondObjectYieldFromBondCurve( const std::string& bondObjectName, const std::string& settlementDate, const std::string& bondCurveName );

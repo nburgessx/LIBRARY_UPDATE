@@ -40,3 +40,36 @@ std::string aqToolParallelModeEnable(const bool enable);
 
 // Method to get the Parallel Mode Status
 std::string aqToolParallelModeStatus();
+
+/* @brief			swig interface for the aqToolLoadConfigurationFiles function. Reloads the configuration
+*                   files (calendars, static data, startup config) from the resolved config folder.
+*  @return			A notification string
+*/
+std::string aqToolLoadConfigurationFiles();
+
+/* @brief			swig interface for the aqToolInitialize function. Loads the configuration
+*                   files (calendars, static data, startup config) from the resolved config folder.
+*                   Always tears down and rebuilds from scratch first, even if the library is
+*                   already initialized -- so any object handle returned by an earlier call is no
+*                   longer valid afterwards.
+*  @param [in]		configFolder (Optional)		Folder containing Calendar.csv / CBSchedule.csv /
+*                   startup.conf / ir.properties. If empty, each file falls through to its own
+*                   default resolution chain.
+*  @param [in]		calendarPath (Optional)			Full-path override for the calendar file. Wins over configFolder.
+*  @param [in]		cbSchedulePath (Optional)		Full-path override for the central-bank-schedule file. Wins over configFolder.
+*  @param [in]		startupConfigPath (Optional)	Full-path override for the startup.conf file. Wins over configFolder.
+*  @param [in]		irPropsPath (Optional)			Full-path override for the ir.properties file. Wins over configFolder.
+*  @return			A notification string
+*/
+std::string aqToolInitialize( const std::string& configFolder = "",
+                               const std::string& calendarPath = "",
+                               const std::string& cbSchedulePath = "",
+                               const std::string& startupConfigPath = "",
+                               const std::string& irPropsPath = "" );
+
+/* @brief			swig interface for the aqToolTearDown function. Clears the AQObj object cache,
+*                   the curve/swap/credit results containers and the object pool, then destroys
+*                   the AlgoQuantLib data-instance singleton. Call before the process exits.
+*  @return			A notification string
+*/
+std::string aqToolTearDown();
