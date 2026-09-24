@@ -119,17 +119,14 @@ namespace
 
 
 /*
- * Load and verify the AlgoQuantLib configuration (holiday calendars, IR static
- * data, optional startup config). The add-in already does this when Excel opens
- * it, so this function is only for testing and diagnosis: it re-runs the setup
- * with the loud checks enabled - a missing or wrong config folder throws here
- * and the error lands in the calling cell - and on success reports which
- * Calendar.csv the library resolved to. Calling it again always tears down and
- * rebuilds first (validation::tryAqToolInitialize is not idempotent, by design --
- * see its NOTE comment), which also clears every cached AQObj handle (curves,
- * swaps, ...); a full sheet recalculation (Ctrl+Alt+F9) rebuilds them.
+ * Ensure the AlgoQuantLib configuration is loaded (holiday calendars, IR static
+ * data, optional startup config). IDEMPOTENT: if AlgoQuantLib is already
+ * initialized, this is a no-op -- every argument below is ignored and every
+ * cached AQObj handle (curves, swaps, ...) remains valid. Call aqToolReset
+ * instead to force a reload, e.g. to point at a different config location or
+ * pick up an edited config file.
  *
- * Resolution order for each file, most specific first:
+ * Resolution order for each file, most specific first (first call only):
  *   1. An explicit full-path override argument (CalendarPath / CbSchedulePath /
  *      StartupConfigPath / IrPropsPath), if given.
  *   2. ConfigFolder + the file's standard name (Calendar.csv, CBSchedule.csv,
@@ -149,8 +146,9 @@ XLO_FUNC_START( aqToolInitialize(
 {
     AQ_XLL_GUARD
 
-    // checkStaticDataLoaded = true, checkCalendarLoaded = true -> throw, with
-    // the offending path, if the calendars or static data did not load.
+    // checkStaticDataLoaded = true, checkCalendarLoaded = true -> throw, with the offending path,
+    // if the calendars or static data did not load. No-ops (every argument ignored) if already
+    // initialized -- see validation::tryAqToolInitialize's NOTE comment.
     validation::tryAqToolInitialize( toAQLString( configFolder ), toAQLString( calendarPath ), toAQLString( cbSchedulePath ),
                                       toAQLString( startupConfigPath ), toAQLString( irPropsPath ), true, true );
 
@@ -164,10 +162,9 @@ XLO_FUNC_START( aqToolInitialize(
     return returnValue( message );
 }
 XLO_FUNC_END( aqToolInitialize )
-    .help( L"Load and verify the AlgoQuantLib configuration (holiday calendars, IR static data). "
-           L"Runs automatically when the add-in opens; call it manually to point at a different "
-           L"config location or reload after editing a config file. Always reloads from scratch, "
-           L"clearing every cached curve/swap handle -- recalculate the sheet afterwards." )
+    .help( L"Ensure the AlgoQuantLib configuration is loaded (holiday calendars, IR static data). "
+           L"Runs automatically when the add-in opens. Idempotent: a no-op if already initialized -- "
+           L"cached curve/swap handles are left untouched. Call AqToolReset instead to force a reload." )
     .arg( L"ConfigFolder",      L"Optional. Folder containing Calendar.csv/CBSchedule.csv/startup.conf/ir.properties" )
     .arg( L"CalendarPath",      L"Optional. Full-path override for the calendar file. Wins over ConfigFolder" )
     .arg( L"CbSchedulePath",    L"Optional. Full-path override for the central-bank-schedule file. Wins over ConfigFolder" )
@@ -177,24 +174,69 @@ XLO_FUNC_END( aqToolInitialize )
 
 
 /*
- * Tear down the AlgoQuantLib configuration: clears the AQObj object cache, the
- * curve/swap/credit results containers and the object pool, then destroys the
- * data-instance singleton. AqToolInitialize already does this itself before it
- * reloads, so this is mainly for freeing everything without immediately
- * reloading it; the add-in also runs it automatically when Excel closes.
+ * Force a clean reload of the AlgoQuantLib configuration (holiday calendars, IR
+ * static data, optional startup config): always tears down and rebuilds first,
+ * even if already initialized, which clears every cached AQObj handle (curves,
+ * swaps, ...); a full sheet recalculation (Ctrl+Alt+F9) rebuilds them. Use this
+ * to point at a different config location or reload after editing a config
+ * file -- AqToolInitialize will not do either once already initialized.
+ *
+ * Resolution order for each file, most specific first:
+ *   1. An explicit full-path override argument (CalendarPath / CbSchedulePath /
+ *      StartupConfigPath / IrPropsPath), if given.
+ *   2. ConfigFolder + the file's standard name (Calendar.csv, CBSchedule.csv,
+ *      startup.conf, ir.properties), if ConfigFolder is given.
+ *   3. The existing default chain:
+ *        .\config\                     (Excel's working directory)
+ *        %AQ%\resources\config\        (the AQ environment variable)
+ *        <folder of the .xll>\config\  (business-user layout)
  */
-#if AQ_XLL_ENABLED(aqToolTearDown)
-XLO_FUNC_START( aqToolTearDown() )
+#if AQ_XLL_ENABLED(aqToolReset)
+XLO_FUNC_START( aqToolReset(
+    const ExcelObj& configFolder,
+    const ExcelObj& calendarPath,
+    const ExcelObj& cbSchedulePath,
+    const ExcelObj& startupConfigPath,
+    const ExcelObj& irPropsPath ) )
 {
     AQ_XLL_GUARD
 
-    return returnValue( validation::tryAqToolTearDown() );
+    // checkStaticDataLoaded = true, checkCalendarLoaded = true -> throw, with
+    // the offending path, if the calendars or static data did not load.
+    validation::tryAqToolReset( toAQLString( configFolder ), toAQLString( calendarPath ), toAQLString( cbSchedulePath ),
+                                 toAQLString( startupConfigPath ), toAQLString( irPropsPath ), true, true );
+
+    const AQLString* resolvedCalendarPath = etrading::FolderConfig::calendar_path();
+
+    std::string message = "AlgoQuantLib reset and reinitialised. Calendar file: ";
+    message += ( resolvedCalendarPath != nullptr && resolvedCalendarPath->size() != 0 )
+                   ? toNativeSeparators( resolvedCalendarPath->getCString() )
+                   : std::string( "<not resolved>" );
+
+    return returnValue( message );
 }
-XLO_FUNC_END( aqToolTearDown )
-    .help( L"Tear down the AlgoQuantLib configuration (clears every cached curve/swap handle). "
-           L"AqToolInitialize already does this itself before reloading; call this on its own to "
-           L"free everything without reloading. Runs automatically when the add-in closes." );
+XLO_FUNC_END( aqToolReset )
+    .help( L"Force a clean reload of the AlgoQuantLib configuration (holiday calendars, IR static "
+           L"data). Call this to point at a different config location or reload after editing a "
+           L"config file. Always reloads from scratch, clearing every cached curve/swap handle -- "
+           L"recalculate the sheet afterwards." )
+    .arg( L"ConfigFolder",      L"Optional. Folder containing Calendar.csv/CBSchedule.csv/startup.conf/ir.properties" )
+    .arg( L"CalendarPath",      L"Optional. Full-path override for the calendar file. Wins over ConfigFolder" )
+    .arg( L"CbSchedulePath",    L"Optional. Full-path override for the central-bank-schedule file. Wins over ConfigFolder" )
+    .arg( L"StartupConfigPath", L"Optional. Full-path override for the startup.conf file. Wins over ConfigFolder" )
+    .arg( L"IrPropsPath",       L"Optional. Full-path override for the ir.properties file. Wins over ConfigFolder" );
 #endif
+
+
+// aqToolTearDown -- REMOVED FROM EXCEL (decided, Nicholas 2026-09-24): calling it from a cell left
+// every other AQObj-handle formula in the workbook broken until AqToolInitialize/AqToolReset was
+// called again and the sheet recalculated, with nothing re-initializing automatically in between --
+// unlike AQ_API/GTEST, where teardown is invoked by a script's or test's own controlled lifecycle,
+// not an end user typing a formula. AqToolReset already covers the realistic Excel use case ("I
+// want a clean reload"); a bare, no-reload teardown was more risk than value on this surface. The
+// add-in still tears down automatically when Excel closes it (see xllMain.cpp's AlgoQuantLib
+// destructor) -- only the manually-callable worksheet function is gone. validation::tryAqToolTearDown
+// itself is unchanged and still used by AQ_API/GTEST. See rebrand\STATUS.md for the full writeup.
 
 
 // Test Function

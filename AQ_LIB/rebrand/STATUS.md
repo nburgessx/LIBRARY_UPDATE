@@ -1,3 +1,83 @@
+# Rebrand status — 2026-09-24
+
+## Split tryAqToolInitialize into idempotent Initialize + explicit Reset; fixed the root cause of
+## RISK_FlatShiftDeltaXCCY_RebuildEURTenorBasis; removed AqToolTearDown from Excel
+
+Three related fixes, all stemming from one GTEST investigation.
+
+**1. `AQLString::empty()` fixed.** Added in the previous session's commit (`dffbe944`) alongside the
+`tryAqToolInitialize`/`tryAqToolTearDown` centralisation, `empty()` was implemented as `!stringData_
+.has_value()` -- i.e. "undefined", not "zero-length". Since `AQLString(std::string(""))` is always
+*defined* (just empty), every caller passing a plain `""` to mean "not provided" (GTEST, AQ_API,
+AQ_XLL) was silently treated as an explicit override, which is exactly why `tryAqToolInitialize("",
+"","","","")` threw "Invalid ir.properties path" in `TestUtilitiesSetupAQL`'s two UNIT tests. Fixed
+to `!stringData_.has_value() || stringData_->empty()`, matching `std::string::empty()` semantics.
+Safe to fix at the source: `empty()` is brand new, so nothing could have been calling it (and thus
+relying on the old, wrong meaning) before this session. `isDefined()` is untouched and still means
+"has a value at all, even ''".
+
+**2. `FolderConfig`'s default config-file search order changed** (decided, Nicholas 2026-09-24) to
+`.\config` (module folder) -> `$AQ\resources\config` -> `<module folder>` (bare) -> `$AQ` (bare),
+in that order, across `ir_prop_path()`/`calib_prop_path()`/`calendar_path()`/`cbschedule_path()`.
+The bare-module-folder and bare-`$AQ` fallback steps didn't exist before; added them. The legacy
+`irsvr_excel.conf` key lookup and the literal `.\config` (process cwd) fallback are unchanged,
+kept ahead of and behind this order respectively.
+
+**3. `TestAQObjSwapDelta.RISK_FlatShiftDeltaXCCY_RebuildEURTenorBasis` root-caused and fixed.**
+Failure was `"Missing Data: Terms does not exist"` / `"Invalid Curve: CurveIndex 'EURDF_USDCSA' in
+collection EURYC does not exist"`. Root cause: the test rebuilt the EUR tenor-basis curve mid-test
+by constructing `TryAqCurvesTenorBasis` as a standalone local (`TestAQObjSwapDelta.cpp:519`). That
+class virtually inherits `google_test::InitializeGoogleTest`, whose constructor unconditionally
+called `tryAqToolInitialize()` -- which, at the time, always tore everything down first. Building a
+*second*, independent `InitializeGoogleTest` virtual-base subobject mid-test wiped the entire
+environment (OIS/STD/XccyBasis) the fixture had already built, immediately before rebuilding only
+the tenor-basis curve on the now-empty pool -- orphaning the already-calibrated `EURDF_USDCSA` XCCY
+curve. Nothing to do with curve-calibration numerics. Diagnosed via temporary instrumentation
+(added and fully removed in the same session) rather than a live debugger, which wasn't available.
+Fixed by swapping the class construction for the existing free function `google_test::
+setUpAqTenorBasisCurve()` (`TryAqCurvesTenorBasis.cpp`), which runs the identical
+`tryAqCurveCalibrateBasis()` calibration with no base-class/environment side effect.
+
+**4. `tryAqToolInitialize`/`tryAqToolReset` split (decided, Nicholas 2026-09-24), closing off the
+whole class of bug #3 above, not just that one call site.** `tryAqToolInitialize` is now idempotent:
+a no-op, ignoring every argument, if AlgoQuantLib is already initialized. New `tryAqToolReset` owns
+the old "always tear down and rebuild from scratch" contract, for callers that explicitly want a
+clean reload (different config paths, an edited config file). `InitializeGoogleTest`'s constructor
+needed no change -- each test's destructor already calls `tryAqToolTearDown()`, so the next test's
+constructor still sees "not initialized" and does real work; only a *second* construction mid-test
+(the bug above) is now a safe no-op instead of a wipe. `InitializeETrading` got a small
+`isInitialized()` accessor to support the check.
+- Full surface: `validation::tryAqToolReset` (new) / `tryAqToolInitialize` (idempotent) in
+  `tryAqToolSetup.h`/`.cpp`; `aqToolReset` (new) added to `AQ_API`'s `aqToolSetup.h`/`.cpp`;
+  legacy `setUpAQL` shim (`exposed_functions.cpp`) retargeted to `tryAqToolReset` so its existing
+  "always reloads" behaviour is preserved unchanged for old callers; `docs/api_map.csv` updated;
+  `AQ_XLL`'s `xllTool.cpp` gained an `AqToolReset` worksheet function (today's old `AqToolInitialize`
+  body/help text, verbatim) and `AqToolInitialize`'s help text updated for the new idempotent
+  contract. `GTEST`'s `TestUtilitiesSetup.cpp` updated (stale comment fixed) plus two new cases
+  covering the idempotent no-op and Reset's always-validates contract.
+- **Outstanding:** `AQ_API`'s SWIG `.i`/generated wrapper files (`swig_Python_wrap.cxx` etc.) need
+  regenerating via the normal build step to expose `aqToolReset` to Python/C#/Java/R -- not done in
+  this session; hand-editing the generated files was deliberately avoided.
+
+**5. `AqToolTearDown` removed from `AQ_XLL` only** (decided, Nicholas 2026-09-24) -- clean break,
+no forwarding alias, per the existing Excel-function removal precedent (root `CLAUDE.md` §6.3/§5.6).
+Calling it from a cell left every other AQObj-handle formula in the workbook broken with nothing to
+re-initialize automatically on the next recalculation, unlike `AQ_API`/`GTEST` where teardown is
+invoked by a script's or test's own controlled lifecycle rather than an end user typing a formula.
+`AqToolReset` already covers the realistic Excel use case ("I want a clean reload"), so a bare,
+no-reload teardown was judged more risk than value on this surface. The add-in still tears down
+automatically when Excel closes it (`xllMain.cpp`'s `AlgoQuantLib` destructor, unaffected -- it
+calls `validation::tryAqToolTearDown()` directly, not through the removed worksheet function).
+`AQ_API`/`validation`/`GTEST` keep their own `tearDown`/`TearDown` entry points unchanged -- this
+removal is `AQ_XLL`-only. Add `AqToolTearDown` to the release notes' "removed Excel functions" list
+once that document exists.
+
+**Verification:** full solution rebuilt (`validation`/`GTEST`/`AQ_API`/`AQ_XLL`) and the full
+`GTEST` suite re-run by Nicholas after this session's changes -- all green, test performance
+unaffected (fast).
+
+---
+
 # Rebrand status — 2026-09-23 (cont'd)
 
 ## Fixed the Release_API_R build (pre-existing break, unrelated to this session's other work)

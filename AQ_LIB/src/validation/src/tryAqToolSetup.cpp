@@ -37,9 +37,10 @@ namespace
     const AQLString STARTUP_CONFIG_FILE_BASENAME( "startup.conf" );
     const AQLString IRPROPS_FILE_BASENAME( "ir.properties" );
 
-    // Resolve one config file path for tryAqToolInitialize: an explicit full-path override wins
-    // outright; otherwise, if a config-root folder was given, look for the file there; otherwise
-    // leave it unset so FolderConfig's own default resolution chain applies unchanged.
+    // Resolve one config file path for tryAqToolInitialize/tryAqToolReset: an explicit full-path
+    // override wins outright; otherwise, if a config-root folder was given, look for the file
+    // there; otherwise leave it unset so FolderConfig's own default resolution chain applies
+    // unchanged.
     AQLString resolveConfigFile( const AQLString& explicitPath, const AQLString& configFolder, const AQLString& baseName )
     {
         if ( !explicitPath.empty() )
@@ -52,34 +53,23 @@ namespace
         }
         return AQLString();
     }
-}
 
-namespace validation
-{
-	/* @brief	The single funnel every AlgoQuantLib consumer (GTEST, AQ_XLL, AQ_API) initializes
-     *          through. See tryAqToolSetup.h for the parameter contract.
-     *
-     *  NOTE: This always tears down first (like the legacy trySetupAQL it replaces) rather than
-     *  being idempotent. Reason: InitializeETrading::instance() only rebuilds the data instance
-     *  the *first* time it is called -- a second call just validates an existing instance. So
-     *  without a forced tear-down, override paths passed to a *second* Initialize call would
-     *  update FolderConfig's cached path but NOT actually reload the calendar/IR static data
-     *  behind it, leaving the library internally inconsistent (FolderConfig reports the new path,
-     *  the loaded data is still the old one). A guaranteed clean rebuild every call is worth more
-     *  than preserving a stale cache across a call whose entire purpose is to (re)load config.
-     *  See rebrand\STATUS.md for the fuller pros/cons writeup of this decision.
-     *  @return	A notification string
-     */
-	const std::string tryAqToolInitialize( const AQLString& configFolder, const AQLString& calendarPath, const AQLString& cbSchedulePath,
-	                                        const AQLString& startupConfigPath, const AQLString& irPropsPath,
-	                                        bool checkStaticDataLoaded, bool checkCalendarLoaded )
-	{
-		// This function has its own thread guard to ensure single-threaded execution --
-		// tryAqToolTearDown() takes (and releases) the normal guard itself, so this function's own
-		// body runs lock-free below rather than trying to take it again.
-		tryAqToolTearDown();
-
-		VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
+    // Shared setup body for tryAqToolInitialize's first call and every tryAqToolReset call: resolves
+    // the calendar / central-bank-schedule / startup-config / ir-properties file paths, applies any
+    // overrides given, builds the AlgoQuantLib data instance and loads the optional startup-config
+    // generators. Callers are responsible for tearing down first if a rebuild (not a from-scratch
+    // build) is intended -- this function itself never tears anything down.
+    //
+    // Runs lock-free (VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD): tryAqToolReset's caller just took
+    // and released the normal guard via tryAqToolTearDown(), so taking a second one immediately after
+    // is unwanted; tryAqToolInitialize's first-call path has nothing else running concurrently
+    // against it either, since InitializeETrading::instance() serializes the actual singleton build
+    // via its own mutex regardless.
+    const std::string doAqToolSetup( const AQLString& configFolder, const AQLString& calendarPath, const AQLString& cbSchedulePath,
+                                      const AQLString& startupConfigPath, const AQLString& irPropsPath,
+                                      bool checkStaticDataLoaded, bool checkCalendarLoaded )
+    {
+        VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
 
 		const AQLString resolvedCalendarPath   = resolveConfigFile( calendarPath, configFolder, CALENDAR_FILE_BASENAME );
 		const AQLString resolvedCbSchedulePath = resolveConfigFile( cbSchedulePath, configFolder, CBSCHEDULE_FILE_BASENAME );
@@ -136,8 +126,9 @@ namespace validation
 
         // Load IR Properties - filepaths are set to AQLString* of type NULL if not found
         // ---------------------------------------------------------------------------------------------------------------
-        // Note: InitializeETrading::instance() below is idempotent -- see the note above the
-        // function; it only rebuilds the data instance the first time it is called.
+        // Note: InitializeETrading::instance() below only builds the data instance if it doesn't
+        // already exist -- callers that want a genuine rebuild must tear down first (tryAqToolReset
+        // does; this function is also only reached by tryAqToolInitialize when nothing exists yet).
         // ---------------------------------------------------------------------------------------------------------------
         etrading::AQLUpdateStaticDataManager::setUpForIRServer(); // TODO: Stop making this lower layer refer to an interface (like Excel)
         etrading::AQLUpdateStaticDataManager::setUpDefaultIRStaticData( *(etrading::InitializeETrading::instance( checkStaticDataLoaded, checkCalendarLoaded ).dataInstance()) );
@@ -153,10 +144,59 @@ namespace validation
 		return "Initialized AlgoQuantLib";
 
 		VALID_EXCEPTION_END
+    }
+}
+
+namespace validation
+{
+	/* @brief	The single funnel every AlgoQuantLib consumer (GTEST, AQ_XLL, AQ_API) initializes
+     *          through. See tryAqToolSetup.h for the parameter contract.
+     *
+     *  IDEMPOTENT (decided, Nicholas 2026-09-24): if AlgoQuantLib is already initialized, this is a
+     *  no-op -- it does not tear anything down, does not re-resolve paths, and ignores every
+     *  argument. Use tryAqToolReset() to force a clean tear-down and reload. This replaces the
+     *  previous "always tears down first" contract: that design existed only so override paths
+     *  passed to a *second* Initialize call would actually take effect (InitializeETrading::
+     *  instance() only builds the data instance the first time it is called) -- tryAqToolReset now
+     *  owns that "force a rebuild" responsibility explicitly, by name, so a caller that merely wants
+     *  to *ensure* the library is set up (e.g. a helper object constructed mid-session that
+     *  virtually depends on initialization having happened) no longer silently wipes a live
+     *  environment as a side effect. See rebrand\STATUS.md for the fuller writeup of this decision
+     *  and the bug it fixes.
+     *  @return	A notification string
+     */
+	const std::string tryAqToolInitialize( const AQLString& configFolder, const AQLString& calendarPath, const AQLString& cbSchedulePath,
+	                                        const AQLString& startupConfigPath, const AQLString& irPropsPath,
+	                                        bool checkStaticDataLoaded, bool checkCalendarLoaded )
+	{
+		if ( etrading::InitializeETrading::isInitialized() )
+		{
+			return "AlgoQuantLib is already initialized. Call tryAqToolReset() to reinitialize with different settings.";
+		}
+
+		return doAqToolSetup( configFolder, calendarPath, cbSchedulePath, startupConfigPath, irPropsPath,
+		                       checkStaticDataLoaded, checkCalendarLoaded );
+	}
+
+	/* @brief	Forces a clean reload -- see tryAqToolSetup.h for the parameter contract and how this
+     *          differs from tryAqToolInitialize.
+     *  @return	A notification string
+     */
+	const std::string tryAqToolReset( const AQLString& configFolder, const AQLString& calendarPath, const AQLString& cbSchedulePath,
+	                                   const AQLString& startupConfigPath, const AQLString& irPropsPath,
+	                                   bool checkStaticDataLoaded, bool checkCalendarLoaded )
+	{
+		// This function has its own thread guard to ensure single-threaded execution --
+		// tryAqToolTearDown() takes (and releases) the normal guard itself, so doAqToolSetup's own
+		// body runs lock-free below rather than trying to take it again.
+		tryAqToolTearDown();
+
+		return doAqToolSetup( configFolder, calendarPath, cbSchedulePath, startupConfigPath, irPropsPath,
+		                       checkStaticDataLoaded, checkCalendarLoaded );
 	}
 
 
-	/* @brief	Tear-down counterpart to tryAqToolInitialize. Supersedes the legacy tryTearDownAQL --
+	/* @brief	Tear-down counterpart to tryAqToolInitialize/tryAqToolReset. Supersedes the legacy tryTearDownAQL --
      *          also finalizes the volatility manager, which tryTearDownAQL left commented out but
      *          GTEST's own (now-retired) hand-rolled teardown always did; folded in here so every
      *          caller gets the same, complete clean-up.

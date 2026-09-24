@@ -116,6 +116,7 @@ aqGridObjectDisplay,Tool,object,tryAqGridObjectDisplay,src/AQ_API/source/aqToolG
 aqToolParallelModeEnable,Tool,stateless,tryAqToolParallelModeEnable,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolParallelModeStatus,Tool,stateless,tryAqToolParallelModeStatus,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolRecord,Tool,stateless,tryAqToolRecord,src/AQ_API/source/aqToolRecord.h,src/validation/include/tryAqToolRecord.h
+aqToolReset,Tool,stateless,tryAqToolReset,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolTearDown,Tool,stateless,tryAqToolTearDown,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolVersion,Tool,stateless,tryAqToolVersion,src/AQ_API/source/aqToolSetup.h,src/validation/include/tryAqToolSetup.h
 aqToolsLVBAppendAndCreate,Tool,stateless,tryAqToolLVBAdd,src/AQ_API/source/aqToolLVB.h,

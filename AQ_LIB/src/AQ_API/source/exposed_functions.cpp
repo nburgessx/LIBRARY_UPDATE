@@ -46,9 +46,12 @@
 // boost::mutex g_initialization_mutex; // not real thread safety (cfr. inititializeAQL comments)
 //
 // NOTE: setUpAQL/setupAQL/initAQL/tearDownAQL predate the aq* rebrand and are superseded by
-// aqToolInitialize/aqToolTearDown (see aqToolSetup.h). Kept here, retargeted at the new
-// validation::tryAqToolInitialize/tryAqToolTearDown funnel, purely so existing SWIG bindings
-// built against these names keep working -- prefer aqToolInitialize/aqToolTearDown in new code.
+// aqToolInitialize/aqToolReset/aqToolTearDown (see aqToolSetup.h). Kept here, retargeted at the new
+// validation::tryAqToolReset/tryAqToolTearDown funnel, purely so existing SWIG bindings built
+// against these names keep working -- prefer aqToolInitialize/aqToolReset/aqToolTearDown in new
+// code. Deliberately calls tryAqToolReset, not the now-idempotent tryAqToolInitialize: this legacy
+// entry point's callers (e.g. a re-run notebook cell) have always expected it to actually reload on
+// every call, and this refactor should not silently change that for existing legacy callers.
 std::string setUpAQL(const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath)
 {
     // Disable OMP Threading by Default for the Server APIs
@@ -60,9 +63,9 @@ std::string setUpAQL(const std::string& irPropsFullFilePath, const std::string& 
 	{
 		// This legacy entry point never took a central-bank-schedule override; a prior version of
 		// this function silently dropped it even though the underlying setup supports one.
-		statusMsg = validation::tryAqToolInitialize( AQLString(), AQLString( calendarFullFilePath ),
-		                                              AQLString(), AQLString(), AQLString( irPropsFullFilePath ),
-		                                              true, true );
+		statusMsg = validation::tryAqToolReset( AQLString(), AQLString( calendarFullFilePath ),
+		                                         AQLString(), AQLString(), AQLString( irPropsFullFilePath ),
+		                                         true, true );
 	}
 	catch (AQLCoreError e)
 	{

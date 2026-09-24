@@ -55,6 +55,18 @@ namespace
     const AQLString IRPROP_FILE_NAME2( "/config/ir.properties" );
 	const AQLString OPTIONAL_CONFIG_PATH2( "/config/startup.conf" );
 
+    // #4. Bare-root variants -- the same files with no "config" subfolder, tried against the module
+    // folder and against $AQ directly. See the resolution-order comment above ir_prop_path() below.
+    const AQLString CBSCHEDULE_FILE_NAME_ROOT( "/CBSchedule.csv" );
+    const AQLString CALENDAR_FILE_NAME_ROOT( "/Calendar.csv" );
+    const AQLString CALIBPROP_FILE_NAME_ROOT( "/calib.properties" );
+    const AQLString IRPROP_FILE_NAME_ROOT( "/ir.properties" );
+
+    const AQLString DEFAULT_CBSCHEDULE_PATH_AQROOT = etrading::FolderConfig::toPath( "AQ", "/CBSchedule.csv" );
+    const AQLString DEFAULT_CALENDAR_PATH_AQROOT   = etrading::FolderConfig::toPath( "AQ", "/Calendar.csv" );
+    const AQLString DEFAULT_CALIBPROP_PATH_AQROOT  = etrading::FolderConfig::toPath( "AQ", "/calib.properties" );
+    const AQLString DEFAULT_IRPROP_PATH_AQROOT     = etrading::FolderConfig::toPath( "AQ", "/ir.properties" );
+
     // This is only for the Optional Config
 	const bool reportErrors = false;
 }
@@ -185,85 +197,136 @@ namespace etrading
 	}
 
 
+	// Default resolution order once no explicit override/config-root folder was given (decided,
+	// Nicholas 2026-09-24), searched in this order:
+	//   0. legacy irsvr_excel.conf key lookup (read_config_file) -- pre-existing, kept ahead of
+	//      everything for backwards compatibility, unrelated to the 4 folders below.
+	//   1. <module folder>\config   -- the config folder shipped next to the loaded AlgoQuantLib
+	//      module itself (see getCurrentFolder()). This is the default folder.
+	//   2. $AQ\resources\config     -- the shipped config seed in the source tree (developer setup).
+	//   3. <module folder>          -- bare module folder, no "config" subfolder.
+	//   4. $AQ                      -- bare $AQ root, no subfolder.
+	// (Numbering matches the folder list reviewed with Nicholas; item 3 in that list is searched
+	// last.) A final literal ".\config" (relative to the process's actual working directory, not
+	// the module folder) is kept as a last-resort legacy fallback.
 	const AQLString* FolderConfig::ir_prop_path()
 	{
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 		read_config_file( "vnl.ir.properties", ir_prop_path_ );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
-		// Module-relative: the config folder shipped next to the loaded AlgoQuantLib module itself
-		// (see getCurrentFolder()). Tried ahead of the working-directory and AQ-environment-variable
-		// defaults below, since the shipped config is always in this location regardless of caller cwd.
+		// 1. Module Config Folder -- <module folder>\config (.\config)
 		ir_prop_path_.reset( new AQLString( createFilePath( NULL, &IRPROP_FILE_NAME ) ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
 		ir_prop_path_.reset( new AQLString( createFilePath( NULL, &IRPROP_FILE_NAME2 ) ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
-
+		// 2. AQ Config Folder -- $AQ\resources\config
 		ir_prop_path_.reset( new AQLString( DEFAULT_IRPROP_PATH2 ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
 		ir_prop_path_.reset( new AQLString( DEFAULT_IRPROP_PATH3 ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
+		// 3. Current folder -- <module folder>
+		ir_prop_path_.reset( new AQLString( createFilePath( NULL, &IRPROP_FILE_NAME_ROOT ) ) );
+		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
+
+		// 4. AQ Folder -- $AQ <root folder>
+		ir_prop_path_.reset( new AQLString( DEFAULT_IRPROP_PATH_AQROOT ) );
+		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
+
+		// Last-resort legacy fallback: literal ".\config", relative to the process's actual cwd.
 		ir_prop_path_.reset( new AQLString( DEFAULT_IRPROP_PATH ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
 		return NULL;
 	}
 
+	// Resolution order: see the comment above ir_prop_path().
 	const AQLString* FolderConfig::calib_prop_path()
 	{
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 		read_config_file( "vnl.calib.properties", calib_prop_path_ );
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 
-		// Module-relative first -- see the comment in ir_prop_path() above.
+		// 1. Module Config Folder -- <module folder>\config (.\config)
 		calib_prop_path_.reset( new AQLString( createFilePath( NULL, &CALIBPROP_FILE_NAME ) ) );
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 
+		// 2. AQ Config Folder -- $AQ\resources\config
 		calib_prop_path_.reset( new AQLString( DEFAULT_CALIBPROP_PATH2 ) );
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 
+		// 3. Current folder -- <module folder>
+		calib_prop_path_.reset( new AQLString( createFilePath( NULL, &CALIBPROP_FILE_NAME_ROOT ) ) );
+		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
+
+		// 4. AQ Folder -- $AQ <root folder>
+		calib_prop_path_.reset( new AQLString( DEFAULT_CALIBPROP_PATH_AQROOT ) );
+		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
+
+		// Last-resort legacy fallback: literal ".\config", relative to the process's actual cwd.
 		calib_prop_path_.reset( new AQLString( DEFAULT_CALIBPROP_PATH ) );
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 
 		return NULL;
 	}
 
+	// Resolution order: see the comment above ir_prop_path().
 	const AQLString* FolderConfig::calendar_path()
 	{
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 		read_config_file( "vnl.calendar", calendar_path_ );
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 
-		// Module-relative first -- see the comment in ir_prop_path() above.
-		AQLString s = createFilePath( NULL, &CALENDAR_FILE_NAME );
+		// 1. Module Config Folder -- <module folder>\config (.\config)
 		calendar_path_.reset( new AQLString( createFilePath( NULL, &CALENDAR_FILE_NAME ) ) );
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 
+		// 2. AQ Config Folder -- $AQ\resources\config
 		calendar_path_.reset( new AQLString( DEFAULT_CALENDAR_PATH2 ) );
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 
+		// 3. Current folder -- <module folder>
+		calendar_path_.reset( new AQLString( createFilePath( NULL, &CALENDAR_FILE_NAME_ROOT ) ) );
+		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
+
+		// 4. AQ Folder -- $AQ <root folder>
+		calendar_path_.reset( new AQLString( DEFAULT_CALENDAR_PATH_AQROOT ) );
+		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
+
+		// Last-resort legacy fallback: literal ".\config", relative to the process's actual cwd.
 		calendar_path_.reset( new AQLString( DEFAULT_CALENDAR_PATH ) );
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 
 		return NULL;
 	}
 
+	// Resolution order: see the comment above ir_prop_path(). (No legacy irsvr_excel.conf key exists
+	// for the CB schedule file, so this starts straight at step 2.)
 	const AQLString* FolderConfig::cbschedule_path()
 	{
 		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
 
-		// Module-relative first -- see the comment in ir_prop_path() above.
-		AQLString s = createFilePath( NULL, &CBSCHEDULE_FILE_NAME );
+		// 1. Module Config Folder -- <module folder>\config (.\config)
 		cbschedule_path_.reset( new AQLString( createFilePath( NULL, &CBSCHEDULE_FILE_NAME ) ) );
 		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
 
+		// 2. AQ Config Folder -- $AQ\resources\config
 		cbschedule_path_.reset( new AQLString( DEFAULT_CBSCHEDULE_PATH2 ) );
 		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
 
+		// 3. Current folder -- <module folder>
+		cbschedule_path_.reset( new AQLString( createFilePath( NULL, &CBSCHEDULE_FILE_NAME_ROOT ) ) );
+		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
+
+		// 4. AQ Folder -- $AQ <root folder>
+		cbschedule_path_.reset( new AQLString( DEFAULT_CBSCHEDULE_PATH_AQROOT ) );
+		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
+
+		// Last-resort legacy fallback: literal ".\config", relative to the process's actual cwd.
 		cbschedule_path_.reset( new AQLString( DEFAULT_CBSCHEDULE_PATH ) );
 		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
 

@@ -30,6 +30,7 @@ namespace etrading
         // Singleton: Library Set-Up and Tear-down Methods
         static InitializeETrading& instance(const bool checkStaticDataLoaded = false, const bool checkIfCalendarLoaded = false); // Set-Up
         static void destroyInstance(); // Tear-Down
+        static bool isInitialized() { return instance_ != nullptr; } // Query only -- does not build or validate anything
 
         // Re-initialisation (used by google tests)
 		~InitializeETrading();

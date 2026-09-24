@@ -60918,6 +60918,372 @@ R_swig_aqToolInitialize__SWIG_5 ( SEXP s_swig_copy)
 
 
 SWIGEXPORT SEXP
+R_swig_aqToolReset__SWIG_0 ( SEXP configFolder, SEXP calendarPath, SEXP cbSchedulePath, SEXP startupConfigPath, SEXP irPropsPath, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  std::string *arg5 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  int res5 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(configFolder, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolReset" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(calendarPath, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolReset" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(cbSchedulePath, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqToolReset" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(startupConfigPath, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqToolReset" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res5 = SWIG_AsPtr_std_string(irPropsPath, &ptr);
+    if (!SWIG_IsOK(res5)) {
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "aqToolReset" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "5"" of type '" "std::string const &""'"); 
+    }
+    arg5 = ptr;
+  }
+  {
+    try
+    {
+      result = aqToolReset((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqToolReset__SWIG_1 ( SEXP configFolder, SEXP calendarPath, SEXP cbSchedulePath, SEXP startupConfigPath, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string *arg4 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  int res4 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(configFolder, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolReset" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(calendarPath, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolReset" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(cbSchedulePath, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqToolReset" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(startupConfigPath, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "aqToolReset" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  {
+    try
+    {
+      result = aqToolReset((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqToolReset__SWIG_2 ( SEXP configFolder, SEXP calendarPath, SEXP cbSchedulePath, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(configFolder, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolReset" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(calendarPath, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolReset" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(cbSchedulePath, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "aqToolReset" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  {
+    try
+    {
+      result = aqToolReset((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqToolReset__SWIG_3 ( SEXP configFolder, SEXP calendarPath, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(configFolder, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolReset" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(calendarPath, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "aqToolReset" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    try
+    {
+      result = aqToolReset((std::string const &)*arg1,(std::string const &)*arg2);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqToolReset__SWIG_4 ( SEXP configFolder, SEXP s_swig_copy)
+{
+  std::string result;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(configFolder, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "aqToolReset" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "aqToolReset" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    try
+    {
+      result = aqToolReset((std::string const &)*arg1);
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
+R_swig_aqToolReset__SWIG_5 ( SEXP s_swig_copy)
+{
+  std::string result;
+  unsigned int r_nprotect = 0;
+  SEXP r_ans = R_NilValue ;
+  VMAXTYPE r_vmax = vmaxget() ;
+  
+  {
+    try
+    {
+      result = aqToolReset();
+    }
+    catch (const std::exception& e)
+    {
+      SWIG_exception(SWIG_RuntimeError, e.what());
+    }
+  }
+  r_ans = SWIG_From_std_string(static_cast< std::string >(result));
+  vmaxset(r_vmax);
+  if(r_nprotect)  Rf_unprotect(r_nprotect);
+  
+  return r_ans;
+}
+
+
+SWIGEXPORT SEXP
 R_swig_aqToolTearDown ( SEXP s_swig_copy)
 {
   std::string result;
@@ -64126,6 +64492,7 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_aqToolLVBFromKeysValues__SWIG_0", (DL_FUNC) &R_swig_aqToolLVBFromKeysValues__SWIG_0, 4},
    {"R_swig_aqToolLVB__SWIG_0", (DL_FUNC) &R_swig_aqToolLVB__SWIG_0, 4},
    {"R_swig_aqToolInitialize__SWIG_0", (DL_FUNC) &R_swig_aqToolInitialize__SWIG_0, 6},
+   {"R_swig_aqToolReset__SWIG_0", (DL_FUNC) &R_swig_aqToolReset__SWIG_0, 6},
    {"R_swig_aqVolatilityObjectCreate__SWIG_0", (DL_FUNC) &R_swig_aqVolatilityObjectCreate__SWIG_0, 4},
    {"R_swig_aqVolatilitySABRCalibrate__SWIG_0", (DL_FUNC) &R_swig_aqVolatilitySABRCalibrate__SWIG_0, 20},
    {"R_swig_aqVolatilitySABRGetPrem__SWIG_0", (DL_FUNC) &R_swig_aqVolatilitySABRGetPrem__SWIG_0, 14},
@@ -64250,6 +64617,7 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_aqToolLVBFromKeysValues__SWIG_1", (DL_FUNC) &R_swig_aqToolLVBFromKeysValues__SWIG_1, 3},
    {"R_swig_aqToolLVB__SWIG_1", (DL_FUNC) &R_swig_aqToolLVB__SWIG_1, 3},
    {"R_swig_aqToolInitialize__SWIG_1", (DL_FUNC) &R_swig_aqToolInitialize__SWIG_1, 5},
+   {"R_swig_aqToolReset__SWIG_1", (DL_FUNC) &R_swig_aqToolReset__SWIG_1, 5},
    {"R_swig_aqVolatilityObjectCreate__SWIG_1", (DL_FUNC) &R_swig_aqVolatilityObjectCreate__SWIG_1, 3},
    {"R_swig_aqVolatilitySABRCalibrate__SWIG_1", (DL_FUNC) &R_swig_aqVolatilitySABRCalibrate__SWIG_1, 19},
    {"R_swig_aqVolatilitySABRGetPrem__SWIG_1", (DL_FUNC) &R_swig_aqVolatilitySABRGetPrem__SWIG_1, 13},
@@ -64298,6 +64666,7 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_aqMathEuropeanIRSwaptionTheta__SWIG_2", (DL_FUNC) &R_swig_aqMathEuropeanIRSwaptionTheta__SWIG_2, 7},
    {"R_swig_aqToolSwapScheduleTemplate__SWIG_2", (DL_FUNC) &R_swig_aqToolSwapScheduleTemplate__SWIG_2, 3},
    {"R_swig_aqToolInitialize__SWIG_2", (DL_FUNC) &R_swig_aqToolInitialize__SWIG_2, 4},
+   {"R_swig_aqToolReset__SWIG_2", (DL_FUNC) &R_swig_aqToolReset__SWIG_2, 4},
    {"R_swig_aqVolatilitySABRGetPrem__SWIG_2", (DL_FUNC) &R_swig_aqVolatilitySABRGetPrem__SWIG_2, 12},
    {"R_swig_aqVolatilitySABRGetVol__SWIG_2", (DL_FUNC) &R_swig_aqVolatilitySABRGetVol__SWIG_2, 10},
    {"R_swig_aqMathCapletFloorletImpliedVols__SWIG_3", (DL_FUNC) &R_swig_aqMathCapletFloorletImpliedVols__SWIG_3, 7},
@@ -64317,12 +64686,15 @@ SWIGINTERN R_CallMethodDef CallEntries[] = {
    {"R_swig_aqMathEuropeanIRSwaptionPrices__SWIG_3", (DL_FUNC) &R_swig_aqMathEuropeanIRSwaptionPrices__SWIG_3, 7},
    {"R_swig_aqMathEuropeanIRSwaptionImpliedVols__SWIG_3", (DL_FUNC) &R_swig_aqMathEuropeanIRSwaptionImpliedVols__SWIG_3, 7},
    {"R_swig_aqToolInitialize__SWIG_3", (DL_FUNC) &R_swig_aqToolInitialize__SWIG_3, 3},
+   {"R_swig_aqToolReset__SWIG_3", (DL_FUNC) &R_swig_aqToolReset__SWIG_3, 3},
    {"R_swig_aqMathForwardRate__SWIG_4", (DL_FUNC) &R_swig_aqMathForwardRate__SWIG_4, 11},
    {"R_swig_aqMathForwardRates__SWIG_4", (DL_FUNC) &R_swig_aqMathForwardRates__SWIG_4, 11},
    {"R_swig_aqMathDiscountFactor__SWIG_4", (DL_FUNC) &R_swig_aqMathDiscountFactor__SWIG_4, 11},
    {"R_swig_aqMathDiscountFactors__SWIG_4", (DL_FUNC) &R_swig_aqMathDiscountFactors__SWIG_4, 11},
    {"R_swig_aqToolInitialize__SWIG_4", (DL_FUNC) &R_swig_aqToolInitialize__SWIG_4, 2},
+   {"R_swig_aqToolReset__SWIG_4", (DL_FUNC) &R_swig_aqToolReset__SWIG_4, 2},
    {"R_swig_aqToolInitialize__SWIG_5", (DL_FUNC) &R_swig_aqToolInitialize__SWIG_5, 1},
+   {"R_swig_aqToolReset__SWIG_5", (DL_FUNC) &R_swig_aqToolReset__SWIG_5, 1},
    {"R_swig_aqDateShiftedSpotDate", (DL_FUNC) &R_swig_aqDateShiftedSpotDate, 8},
    {"R_swig_aqCurveUSDSpotDate", (DL_FUNC) &R_swig_aqCurveUSDSpotDate, 7},
    {"R_swig_aqCreditModelRiskyDiscountFactor", (DL_FUNC) &R_swig_aqCreditModelRiskyDiscountFactor, 3},

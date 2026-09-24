@@ -516,7 +516,16 @@ namespace google_test
     TEST_F( TestAQObjSwapDelta, RISK_FlatShiftDeltaXCCY_RebuildEURTenorBasis )
     {
 		// 0. Rebuild the EUR TenorBasis
-		TryAqCurvesTenorBasis tenorBasis( EURYC_3M6M );
+		// NOTE: deliberately the free function, not the TryAqCurvesTenorBasis class -- that class
+		// virtually inherits google_test::InitializeGoogleTest, whose constructor unconditionally
+		// calls tryAqToolInitialize() (which always tears down first). Constructing it here, as a
+		// second, independent object mid-test, would build a fresh InitializeGoogleTest virtual-base
+		// subobject and wipe the entire environment (OIS/STD/XccyBasis) this fixture just built,
+		// before rebuilding only the tenor-basis curve on the now-empty pool -- exactly the "Terms
+		// does not exist" / "CurveIndex 'EURDF_USDCSA' ... does not exist" failure this test used to
+		// hit. setUpAqTenorBasisCurve() runs the identical tryAqCurveCalibrateBasis() calibration
+		// with no base-class construction, so it rebuilds the curve in place instead.
+		setUpAqTenorBasisCurve( EURYC_3M6M );
 
 		// 1. Load the Input Files
 				

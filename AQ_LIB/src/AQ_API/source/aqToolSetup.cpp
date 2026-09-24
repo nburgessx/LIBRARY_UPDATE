@@ -4,6 +4,37 @@
 #include "FolderConfig.h"			// etrading::FolderConfig
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
+namespace
+{
+	// Shared message-building tail for aqToolInitialize/aqToolReset: reports which Calendar.csv
+	// the library resolved to, once the underlying validation call has already run (and thrown, if
+	// the load failed and checks were requested).
+	std::string buildInitializedMessage( const std::string& prefix )
+	{
+		std::string message = prefix;
+
+		const AQLString* resolvedCalendarPath = etrading::FolderConfig::calendar_path();
+		if ( resolvedCalendarPath == nullptr || resolvedCalendarPath->size() == 0 )
+		{
+			message += "Holiday calendars failed to load";
+		}
+		else
+		{
+			// LAMBDA FUNCION: Convert forward slashes to backslashes for display on Windows
+			auto toNativeSeparators = []( std::string path )
+			{
+				std::replace( path.begin(), path.end(), '/', '\\' );
+				return path;
+			};
+
+			message += " Holiday calendars loaded from: ";
+			message += toNativeSeparators( resolvedCalendarPath->getCString() );
+		}
+
+		return message;
+	}
+}
+
 
 /* @brief			swig interface for the aqToolLoadCalendarFile method
 *  @return			A notification string
@@ -110,6 +141,8 @@ std::string aqToolLoadConfigurationFiles()
 
 /* @brief			swig interface for the aqToolInitialize function. Loads the configuration
 *                   files (calendars, static data, startup config) from the resolved config folder.
+*                   IDEMPOTENT: a no-op (every argument ignored) if AlgoQuantLib is already
+*                   initialized -- call aqToolReset() to force a reload with different settings.
 *  @param [in]		configFolder (Optional)		Folder containing Calendar.csv / CBSchedule.csv /
 *                   startup.conf / ir.properties. If empty, each file falls through to its own
 *                   default resolution chain.
@@ -125,31 +158,40 @@ std::string aqToolInitialize( const std::string& configFolder, const std::string
     AQ_API_START
 
 	// checkStaticDataLoaded = true, checkCalendarLoaded = true -> throw, with the offending path,
-	// if the calendars or static data did not load.
+	// if the calendars or static data did not load. No-ops (arguments ignored) if already initialized.
 	validation::tryAqToolInitialize( AQLString( configFolder ), AQLString( calendarPath ),
 	                                  AQLString( cbSchedulePath ), AQLString( startupConfigPath ),
 	                                  AQLString( irPropsPath ), true, true );
-	std::string message = "AlgoQuantLib initialised.";
 
-	const AQLString* resolvedCalendarPath = etrading::FolderConfig::calendar_path();
-	if ( resolvedCalendarPath == nullptr || resolvedCalendarPath->size() == 0 )
-	{
-		message += "Holiday calendars failed to load";
-	}
-	else
-	{
-		// LAMBDA FUNCION: Convert forward slashes to backslashes for display on Windows
-		auto toNativeSeparators = []( std::string path )
-		{
-			std::replace( path.begin(), path.end(), '/', '\\' );
-			return path;
-		};
+	return buildInitializedMessage( "AlgoQuantLib initialised." );
+	AQ_API_END
+}
 
-		message += " Holiday calendars loaded from: ";
-		message += toNativeSeparators( resolvedCalendarPath->getCString() );
-	}
+/* @brief			swig interface for the aqToolReset function. Forces a clean reload: always tears
+*                   down and rebuilds from scratch first, even if the library is already initialized.
+*                   Use this -- not aqToolInitialize -- to pick up a different config location or an
+*                   edited config file on an already-initialized library.
+*  @param [in]		configFolder (Optional)		Folder containing Calendar.csv / CBSchedule.csv /
+*                   startup.conf / ir.properties. If empty, each file falls through to its own
+*                   default resolution chain.
+*  @param [in]		calendarPath (Optional)			Full-path override for the calendar file. Wins over configFolder.
+*  @param [in]		cbSchedulePath (Optional)		Full-path override for the central-bank-schedule file. Wins over configFolder.
+*  @param [in]		startupConfigPath (Optional)	Full-path override for the startup.conf file. Wins over configFolder.
+*  @param [in]		irPropsPath (Optional)			Full-path override for the ir.properties file. Wins over configFolder.
+*  @return			A notification string
+*/
+std::string aqToolReset( const std::string& configFolder, const std::string& calendarPath, const std::string& cbSchedulePath,
+                          const std::string& startupConfigPath, const std::string& irPropsPath )
+{
+    AQ_API_START
 
-	return message;
+	// checkStaticDataLoaded = true, checkCalendarLoaded = true -> throw, with the offending path,
+	// if the calendars or static data did not load.
+	validation::tryAqToolReset( AQLString( configFolder ), AQLString( calendarPath ),
+	                             AQLString( cbSchedulePath ), AQLString( startupConfigPath ),
+	                             AQLString( irPropsPath ), true, true );
+
+	return buildInitializedMessage( "AlgoQuantLib reset and reinitialised." );
 	AQ_API_END
 }
 

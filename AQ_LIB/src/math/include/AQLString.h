@@ -81,8 +81,8 @@ public:
     // return whether a string has been defined
     bool                isDefined(void) const noexcept {return stringData_.has_value();}
 
-    // return whether a string is empty or not defined
-	bool                empty(void) const noexcept {return !stringData_.has_value();}
+    // return whether a string is empty (zero-length) or not defined -- matches std::string::empty() semantics.
+	bool                empty(void) const noexcept {return !stringData_.has_value() || stringData_->empty();}
 
     // return the position of the beginning of the string to search for a string that you specify
     int                 findString(const AQLString& rStr) const;
